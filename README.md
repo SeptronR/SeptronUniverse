@@ -22,6 +22,9 @@ Multi-tenant Higher-Education ERP for **affiliated colleges, autonomous colleges
 
 ```
 README.md                         this file
+MASTER_PLAN.md                    approved master plan (design authority for the prompts)
+PROGRESS.md                       batch/prompt/phase checklist — the resume point for every session
+docs/HANDOFF.md                   session start/end protocol and the prompt to paste in a new session
 Architecture.md                   Mermaid diagrams (tenancy, authz, exam lifecycle, result versioning, module map, ERD, topology)
 Database_Schema.sql               canonical DDL — single source of truth for table/column names
 Prompts/00_HOW_TO_USE.md          how to run the phase prompts (rounds, gates, definition of done)
