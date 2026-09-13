@@ -14,8 +14,8 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | D | Prompts **07–13** (Round 1 student lifecycle) | ✅ done | `352a720` |
 | E | Prompts **14–18** (Round 2 examinations & outcomes); guard script now accepts views/triggers | ✅ done | `8ef555a` |
 | F | Prompts **19–26** (Round 3 campus services); guard script now accepts named indexes | ✅ done | `e336760` |
-| G | Prompts **27–34** (Round 4 engagement, research, quality) | ☐ next | |
-| H | Prompts **35–44** (Round 5 platform & delivery) | ☐ | |
+| G | Prompts **27–34** (Round 4 engagement, research, quality) | ✅ done | `dec5e8f` |
+| H | Prompts **35–44** (Round 5 platform & delivery) | ☐ next | |
 | I | `RUN_AFTER_PHASE.md`, `QA_Test_Plan.md` (skeleton), `Real_World_Launch_Plan.md` (skeleton), `.claude/launch.json`, `docker-compose.yml`, `nginx/nginx.conf`, `.gitignore`, `.github/workflows/*` | ☐ | |
 | J | Final review: run `scripts/verify_prompts_vs_schema.py` over all prompts, cross-check `docs/Coverage_Matrix.md` rows → prompts, merge `planning-docs` → `main` | ☐ | |
 
@@ -51,14 +51,14 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | 24 | `24_Phase24_Communication_Advanced.md` | ✅ |
 | 25 | `25_Phase25_Calendar_Events_Facilities.md` | ✅ |
 | 26 | `26_Phase26_Document_Templates_Certificates_Requests.md` | ✅ |
-| 27 | `27_Phase27_Mentoring_Grievances_Discipline_Surveys_Clubs.md` | ☐ |
-| 28 | `28_Phase28_Placement_Internships_Training.md` | ☐ |
-| 29 | `29_Phase29_Alumni_Endowments_Fundraising.md` | ☐ |
-| 30 | `30_Phase30_Research_Faculty_Development.md` | ☐ |
-| 31 | `31_Phase31_PhD_Research_Scholar_Management.md` | ☐ |
-| 32 | `32_Phase32_Accreditation_Compliance_IQAC.md` | ☐ |
-| 33 | `33_Phase33_Governance_Committees_Legal_EFile.md` | ☐ |
-| 34 | `34_Phase34_Affiliation_Management.md` | ☐ |
+| 27 | `27_Phase27_Mentoring_Grievances_Discipline_Surveys_Clubs.md` | ✅ |
+| 28 | `28_Phase28_Placement_Internships_Training.md` | ✅ |
+| 29 | `29_Phase29_Alumni_Endowments_Fundraising.md` | ✅ |
+| 30 | `30_Phase30_Research_Faculty_Development.md` | ✅ |
+| 31 | `31_Phase31_PhD_Research_Scholar_Management.md` | ✅ |
+| 32 | `32_Phase32_Accreditation_Compliance_IQAC.md` | ✅ |
+| 33 | `33_Phase33_Governance_Committees_Legal_EFile.md` | ✅ |
+| 34 | `34_Phase34_Affiliation_Management.md` | ✅ |
 | 35 | `35_Phase35_Dashboards_Analytics_Early_Warning.md` | ☐ |
 | 36 | `36_Phase36_Reports.md` | ☐ |
 | 37 | `37_Phase37_Audit_Logs_Settings.md` | ☐ |
@@ -140,3 +140,5 @@ psql -U postgres -c "CREATE DATABASE universe_schema_check;" && psql -U postgres
 - 2026-09-13 — Schema-first: Alembic `0001` applies `Database_Schema.sql`; phase migrations are delta-only; table count 406 (design grew from the ~270 estimate — accepted).
 - 2026-09-13 — One batch per session; `PROGRESS.md` + `docs/HANDOFF.md` are the resume points.
 - 2026-09-13 — Table ownership across Round 3: `amc_contracts` (§21) and `emergency_alerts` (§23) are owned by Phase 25 (facilities); `conversation_sessions`/`wa_processed_messages` are created in Phase 04 but the bot logic lives in Phase 24; Phase 22 seeds a `vendor` portal role; Phase 26 back-fills earlier `pdf_url` rows into `issued_documents` and becomes the single renderer/verify endpoint.
+- 2026-09-13 — Round 4 ownership: Phase 27 ships a minimal `committees` CRUD stub that Phase 33 replaces (same tables); `exam_centres` CRUD from Phase 14 moves under Phase 34; the metric registry (`app/core/metrics.py`) is defined in Phase 32 but every earlier module registers its computation functions (CI guard `check_metric_registry.py`); Phase 30 owns `publications` incl. scholar tagging used by Phase 31.
+- 2026-09-13 — User asked mid-batch why implementation has not started: Stage 1 (doc set) precedes Stage 2 (build) by design; Stage 2 may start any time after this batch since prompts 00–34 are complete — decide at the start of the next session (Batch H vs Stage 2 Phase 00/01).
