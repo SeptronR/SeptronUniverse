@@ -12,8 +12,8 @@ SCHEMA = ROOT / "Database_Schema.sql"
 PROMPTS = ROOT / "Prompts"
 
 TABLE_RE = re.compile(r"^CREATE TABLE (?:IF NOT EXISTS )?([a-z_]+)", re.M)
-# views and triggers are legitimate schema objects a prompt may cite in its tables section
-OBJECT_RE = re.compile(r"^CREATE (?:OR REPLACE )?(?:VIEW|TRIGGER) ([a-z_]+)", re.M)
+# views, triggers and named indexes are legitimate schema objects a prompt may cite in its tables section
+OBJECT_RE = re.compile(r"^CREATE (?:OR REPLACE )?(?:VIEW|TRIGGER|UNIQUE INDEX|INDEX) ([a-z_]+)", re.M)
 SECTION_RE = re.compile(r"^## \d\d\.1 Database tables\s*$(.*?)^## \d\d\.2", re.M | re.S)
 IDENT_RE = re.compile(r"\b([a-z][a-z0-9_]{2,})\b")
 IGNORE = {
@@ -55,7 +55,7 @@ def main(argv: list[str]) -> int:
         print(f"{f.name}: {len(refs)} refs, {len(missing)} missing")
         for m in missing:
             print(f"   MISSING: {m}"); bad += 1
-    print(f"schema tables (+views/triggers): {len(tables)}")
+    print(f"schema objects (tables + views/triggers/indexes): {len(tables)}")
     return 1 if bad else 0
 
 
