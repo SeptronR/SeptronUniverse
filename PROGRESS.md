@@ -13,8 +13,8 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | C | `Prompts/00_HOW_TO_USE.md`, `Prompts/00_PREREQUISITE_Project_Setup.md`, prompts **01–06**, `scripts/verify_prompts_vs_schema.py` | ✅ done | `60f1342` |
 | D | Prompts **07–13** (Round 1 student lifecycle) | ✅ done | `352a720` |
 | E | Prompts **14–18** (Round 2 examinations & outcomes); guard script now accepts views/triggers | ✅ done | `8ef555a` |
-| F | Prompts **19–26** (Round 3 campus services) | ☐ next | |
-| G | Prompts **27–34** (Round 4 engagement, research, quality) | ☐ | |
+| F | Prompts **19–26** (Round 3 campus services); guard script now accepts named indexes | ✅ done | `e336760` |
+| G | Prompts **27–34** (Round 4 engagement, research, quality) | ☐ next | |
 | H | Prompts **35–44** (Round 5 platform & delivery) | ☐ | |
 | I | `RUN_AFTER_PHASE.md`, `QA_Test_Plan.md` (skeleton), `Real_World_Launch_Plan.md` (skeleton), `.claude/launch.json`, `docker-compose.yml`, `nginx/nginx.conf`, `.gitignore`, `.github/workflows/*` | ☐ | |
 | J | Final review: run `scripts/verify_prompts_vs_schema.py` over all prompts, cross-check `docs/Coverage_Matrix.md` rows → prompts, merge `planning-docs` → `main` | ☐ | |
@@ -43,14 +43,14 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | 16 | `16_Phase16_Post_Result_Services.md` | ✅ |
 | 17 | `17_Phase17_OBE_Attainment_CQI.md` | ✅ |
 | 18 | `18_Phase18_Degrees_Convocation_Digital_Credentials.md` | ✅ |
-| 19 | `19_Phase19_Library.md` | ☐ |
-| 20 | `20_Phase20_Hostel_Mess_Staff_Accommodation.md` | ☐ |
-| 21 | `21_Phase21_Transport.md` | ☐ |
-| 22 | `22_Phase22_Inventory_Procurement_Bills.md` | ☐ |
-| 23 | `23_Phase23_Accounting_Budget.md` | ☐ |
-| 24 | `24_Phase24_Communication_Advanced.md` | ☐ |
-| 25 | `25_Phase25_Calendar_Events_Facilities.md` | ☐ |
-| 26 | `26_Phase26_Document_Templates_Certificates_Requests.md` | ☐ |
+| 19 | `19_Phase19_Library.md` | ✅ |
+| 20 | `20_Phase20_Hostel_Mess_Staff_Accommodation.md` | ✅ |
+| 21 | `21_Phase21_Transport.md` | ✅ |
+| 22 | `22_Phase22_Inventory_Procurement_Bills.md` | ✅ |
+| 23 | `23_Phase23_Accounting_Budget.md` | ✅ |
+| 24 | `24_Phase24_Communication_Advanced.md` | ✅ |
+| 25 | `25_Phase25_Calendar_Events_Facilities.md` | ✅ |
+| 26 | `26_Phase26_Document_Templates_Certificates_Requests.md` | ✅ |
 | 27 | `27_Phase27_Mentoring_Grievances_Discipline_Surveys_Clubs.md` | ☐ |
 | 28 | `28_Phase28_Placement_Internships_Training.md` | ☐ |
 | 29 | `29_Phase29_Alumni_Endowments_Fundraising.md` | ☐ |
@@ -139,3 +139,4 @@ psql -U postgres -c "CREATE DATABASE universe_schema_check;" && psql -U postgres
 - 2026-09-13 — **No unit tests**: verification via API scripts + UI functional checks; structural CI guards only (ADR 0006).
 - 2026-09-13 — Schema-first: Alembic `0001` applies `Database_Schema.sql`; phase migrations are delta-only; table count 406 (design grew from the ~270 estimate — accepted).
 - 2026-09-13 — One batch per session; `PROGRESS.md` + `docs/HANDOFF.md` are the resume points.
+- 2026-09-13 — Table ownership across Round 3: `amc_contracts` (§21) and `emergency_alerts` (§23) are owned by Phase 25 (facilities); `conversation_sessions`/`wa_processed_messages` are created in Phase 04 but the bot logic lives in Phase 24; Phase 22 seeds a `vendor` portal role; Phase 26 back-fills earlier `pdf_url` rows into `issued_documents` and becomes the single renderer/verify endpoint.
