@@ -15,8 +15,8 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | E | Prompts **14–18** (Round 2 examinations & outcomes); guard script now accepts views/triggers | ✅ done | `8ef555a` |
 | F | Prompts **19–26** (Round 3 campus services); guard script now accepts named indexes | ✅ done | `e336760` |
 | G | Prompts **27–34** (Round 4 engagement, research, quality) | ✅ done | `dec5e8f` |
-| H | Prompts **35–44** (Round 5 platform & delivery) | ☐ next | |
-| I | `RUN_AFTER_PHASE.md`, `QA_Test_Plan.md` (skeleton), `Real_World_Launch_Plan.md` (skeleton), `.claude/launch.json`, `docker-compose.yml`, `nginx/nginx.conf`, `.gitignore`, `.github/workflows/*` | ☐ | |
+| H | Prompts **35–44** (Round 5 platform & delivery); Phase 35 read models = materialized views only (no new tables) | ✅ done | `352cd3a` |
+| I | `RUN_AFTER_PHASE.md`, `QA_Test_Plan.md` (skeleton), `Real_World_Launch_Plan.md` (skeleton), `.claude/launch.json`, `docker-compose.yml`, `nginx/nginx.conf`, `.gitignore`, `.github/workflows/*` | ☐ next | |
 | J | Final review: run `scripts/verify_prompts_vs_schema.py` over all prompts, cross-check `docs/Coverage_Matrix.md` rows → prompts, merge `planning-docs` → `main` | ☐ | |
 
 ### Prompt inventory (Stage 1)
@@ -59,16 +59,16 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | 32 | `32_Phase32_Accreditation_Compliance_IQAC.md` | ✅ |
 | 33 | `33_Phase33_Governance_Committees_Legal_EFile.md` | ✅ |
 | 34 | `34_Phase34_Affiliation_Management.md` | ✅ |
-| 35 | `35_Phase35_Dashboards_Analytics_Early_Warning.md` | ☐ |
-| 36 | `36_Phase36_Reports.md` | ☐ |
-| 37 | `37_Phase37_Audit_Logs_Settings.md` | ☐ |
-| 38 | `38_Phase38_Super_Admin_SaaS.md` | ☐ |
-| 39 | `39_Phase39_Portals_PWA.md` | ☐ |
-| 40 | `40_Phase40_Public_Website_Catalogue_Admission_Portal.md` | ☐ |
-| 41 | `41_Phase41_Integrations_Hub_Data_Migration.md` | ☐ |
-| 42 | `42_Phase42_Flutter_Mobile_App.md` | ☐ |
-| 43 | `43_Phase43_Testing_Security_Privacy_Hardening.md` | ☐ |
-| 44 | `44_Phase44_Deployment_CICD_Operations.md` | ☐ |
+| 35 | `35_Phase35_Dashboards_Analytics_Early_Warning.md` | ✅ |
+| 36 | `36_Phase36_Reports.md` | ✅ |
+| 37 | `37_Phase37_Audit_Logs_Settings.md` | ✅ |
+| 38 | `38_Phase38_Super_Admin_SaaS.md` | ✅ |
+| 39 | `39_Phase39_Portals_PWA.md` | ✅ |
+| 40 | `40_Phase40_Public_Website_Catalogue_Admission_Portal.md` | ✅ |
+| 41 | `41_Phase41_Integrations_Hub_Data_Migration.md` | ✅ |
+| 42 | `42_Phase42_Flutter_Mobile_App.md` | ✅ |
+| 43 | `43_Phase43_Testing_Security_Privacy_Hardening.md` | ✅ |
+| 44 | `44_Phase44_Deployment_CICD_Operations.md` | ✅ |
 
 ## Stage 2 — Build (execute the prompts, one phase per session)
 
@@ -142,3 +142,4 @@ psql -U postgres -c "CREATE DATABASE universe_schema_check;" && psql -U postgres
 - 2026-09-13 — Table ownership across Round 3: `amc_contracts` (§21) and `emergency_alerts` (§23) are owned by Phase 25 (facilities); `conversation_sessions`/`wa_processed_messages` are created in Phase 04 but the bot logic lives in Phase 24; Phase 22 seeds a `vendor` portal role; Phase 26 back-fills earlier `pdf_url` rows into `issued_documents` and becomes the single renderer/verify endpoint.
 - 2026-09-13 — Round 4 ownership: Phase 27 ships a minimal `committees` CRUD stub that Phase 33 replaces (same tables); `exam_centres` CRUD from Phase 14 moves under Phase 34; the metric registry (`app/core/metrics.py`) is defined in Phase 32 but every earlier module registers its computation functions (CI guard `check_metric_registry.py`); Phase 30 owns `publications` incl. scholar tagging used by Phase 31.
 - 2026-09-13 — User asked mid-batch why implementation has not started: Stage 1 (doc set) precedes Stage 2 (build) by design; Stage 2 may start any time after this batch since prompts 00–34 are complete — decide at the start of the next session (Batch H vs Stage 2 Phase 00/01).
+- 2026-09-13 — Round 5 ownership: Phase 35 adds **materialized views only** (`mv_*` read models, created by `0035_…` and mirrored into `Database_Schema.sql` as a new section 37; drift guard treats them as views) and stores early-warning interventions as Phase 27 `mentoring_sessions` rows; Phase 36 retro-registers every Round 1–4 `/…/reports/{key}` export into the report registry (old routes stay as aliases) and owns the renderers Phase 32 calls; Phase 37 consolidates all retention/purge/archival jobs (incl. Phase 25 visitor PII purge) and adds `check_audit_coverage.py`; Phase 38 records SaaS billing on `institution_subscriptions`/`pending_registrations` (never tenant fee tables) and delegates tenant/user export implementation to Phase 41; Phase 39 aggregates portal pages without new visibility rules (self/wards/ownership only); Phase 43 seeds a 52nd role template `privacy_officer` and permissions `privacy:manage`, `security:manage`, `qa:run`; Phases 42–44 add no DDL.
