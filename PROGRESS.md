@@ -12,8 +12,8 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | B | `Architecture.md`, `Database_Schema.sql` (406 tables + 5 partition defaults; validated on PostgreSQL 18 incl. RLS + immutability trigger) | ✅ done | `89239ac` |
 | C | `Prompts/00_HOW_TO_USE.md`, `Prompts/00_PREREQUISITE_Project_Setup.md`, prompts **01–06**, `scripts/verify_prompts_vs_schema.py` | ✅ done | `60f1342` |
 | D | Prompts **07–13** (Round 1 student lifecycle) | ✅ done | `352a720` |
-| E | Prompts **14–18** (Round 2 examinations & outcomes) | ☐ next | |
-| F | Prompts **19–26** (Round 3 campus services) | ☐ | |
+| E | Prompts **14–18** (Round 2 examinations & outcomes); guard script now accepts views/triggers | ✅ done | `8ef555a` |
+| F | Prompts **19–26** (Round 3 campus services) | ☐ next | |
 | G | Prompts **27–34** (Round 4 engagement, research, quality) | ☐ | |
 | H | Prompts **35–44** (Round 5 platform & delivery) | ☐ | |
 | I | `RUN_AFTER_PHASE.md`, `QA_Test_Plan.md` (skeleton), `Real_World_Launch_Plan.md` (skeleton), `.claude/launch.json`, `docker-compose.yml`, `nginx/nginx.conf`, `.gitignore`, `.github/workflows/*` | ☐ | |
@@ -38,11 +38,11 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | 11 | `11_Phase11_Attendance_Eligibility.md` | ✅ |
 | 12 | `12_Phase12_Fees_Scholarships_NoDues.md` | ✅ |
 | 13 | `13_Phase13_Internal_Assessment_OBE_Definitions_LMS_Projects.md` | ✅ |
-| 14 | `14_Phase14_Exam_Administration.md` | ☐ |
-| 15 | `15_Phase15_Evaluation_Results.md` | ☐ |
-| 16 | `16_Phase16_Post_Result_Services.md` | ☐ |
-| 17 | `17_Phase17_OBE_Attainment_CQI.md` | ☐ |
-| 18 | `18_Phase18_Degrees_Convocation_Digital_Credentials.md` | ☐ |
+| 14 | `14_Phase14_Exam_Administration.md` | ✅ |
+| 15 | `15_Phase15_Evaluation_Results.md` | ✅ |
+| 16 | `16_Phase16_Post_Result_Services.md` | ✅ |
+| 17 | `17_Phase17_OBE_Attainment_CQI.md` | ✅ |
+| 18 | `18_Phase18_Degrees_Convocation_Digital_Credentials.md` | ✅ |
 | 19 | `19_Phase19_Library.md` | ☐ |
 | 20 | `20_Phase20_Hostel_Mess_Staff_Accommodation.md` | ☐ |
 | 21 | `21_Phase21_Transport.md` | ☐ |
