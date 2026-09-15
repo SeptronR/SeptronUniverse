@@ -1,0 +1,196 @@
+# Functional verification on an ephemeral stack (Phase 43 verification runner + Phase 44 44.6 cicd_service 1).
+# This is where the *functional* proof lives (ADR 0006): per-role API scripts (scripts/verify/NN_*.ps1 via run_all.py)
+# and Playwright round suites — no unit tests.
+#
+#   pull_request → the rounds touched by the diff (path → round mapping below)
+#   nightly      → api_all + e2e all + visibility + immutability + golden (against the ephemeral stack; staging lane in orbit-infra)
+#   weekly       → load scenarios (Phase 43 43.6 load_service) with threshold gates
+#
+# Self-enabling: jobs run once backend/scripts/verify/run_all.py (Phase 43) and docker-compose.ci.yml (Phase 44) exist.
+
+name: Verify
+
+on:
+  pull_request:
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'e2e/**'
+      - 'Database_Schema.sql'
+  schedule:
+    - cron: '30 20 * * *'     # nightly 02:00 IST — api_all + e2e all
+    - cron: '30 22 * * 6'     # Saturday 04:00 IST — load scenarios
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: 'run_all.py --suite'
+        required: true
+        default: api_all
+        type: choice
+        options: [smoke, api_all, api_round_0, api_round_1, api_round_2, api_round_3, api_round_4, api_round_5, visibility, immutability, golden, load]
+      institution_type:
+        description: 'Demo institution type'
+        required: false
+        default: university
+        type: choice
+        options: [university, autonomous, affiliated]
+
+permissions:
+  contents: read
+  checks: write
+
+concurrency:
+  group: verify-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  plan:
+    name: Plan suites
+    runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.plan.outputs.ready }}
+      suites: ${{ steps.plan.outputs.suites }}
+      e2e_projects: ${{ steps.plan.outputs.e2e_projects }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: plan
+        shell: bash
+        run: |
+          READY=$([ -f backend/scripts/verify/run_all.py ] && [ -f docker-compose.ci.yml ] && echo true || echo false)
+          echo "ready=$READY" >> "$GITHUB_OUTPUT"
+          if [ -n "${{ github.event.inputs.suite }}" ]; then
+            SUITES='["${{ github.event.inputs.suite }}"]'
+          elif [ "${{ github.event_name }}" = "schedule" ] && [ "${{ github.event.schedule }}" = "30 22 * * 6" ]; then
+            SUITES='["load"]'
+          elif [ "${{ github.event_name }}" = "schedule" ]; then
+            SUITES='["api_all","visibility","immutability","golden"]'
+          else
+            # Path → round mapping (Phase 43 41.: changed app/modules ↔ phases). Module directories are named after the
+            # phase prompts' module keys; anything under core/ or the schema touches every round.
+            BASE="${{ github.event.pull_request.base.sha }}"
+            CHANGED=$(git diff --name-only "$BASE" HEAD)
+            rounds=""
+            add() { case " $rounds " in *" $1 "*) ;; *) rounds="$rounds $1" ;; esac; }
+            while read -r f; do
+              case "$f" in
+                backend/app/core/*|backend/app/db/*|backend/main.py|Database_Schema.sql|backend/alembic/*) add 0; add 1; add 2; add 3; add 4; add 5 ;;
+                *auth*|*institution*|*comms*|*workflow*|*academics*|*programme*|*hr*|*staff*)                add 0 ;;
+                *student*|*admission*|*registration*|*offering*|*timetable*|*attendance*|*fee*|*assessment*|*lms*) add 1 ;;
+                *exam*|*result*|*post_result*|*attainment*|*obe*|*degree*|*convocation*)                     add 2 ;;
+                *library*|*hostel*|*transport*|*inventory*|*procurement*|*accounting*|*facilit*|*document*|*template*) add 3 ;;
+                *mentor*|*grievance*|*placement*|*alumni*|*research*|*phd*|*accreditation*|*governance*|*affiliation*) add 4 ;;
+                *analytics*|*report*|*audit*|*saas*|*portal*|*website*|*integration*|*mobile*|*hardening*|*ops*) add 5 ;;
+                frontend/*|e2e/*) ;;   # e2e projects are selected below
+                *) ;;
+              esac
+            done <<< "$CHANGED"
+            [ -z "$rounds" ] && rounds=" 0"
+            SUITES=$(printf '%s\n' $rounds | sort -u | sed 's/^/"api_round_/; s/$/"/' | paste -sd, | sed 's/^/[/; s/$/]/')
+          fi
+          echo "suites=$SUITES" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            E2E=$(echo "$SUITES" | sed 's/api_round_/round/g')
+          else
+            E2E='["round0","round1","round2","round3","round4","round5","portals"]'
+          fi
+          echo "e2e_projects=$E2E" >> "$GITHUB_OUTPUT"
+          echo "ready=$READY suites=$SUITES e2e=$E2E"
+
+  api:
+    name: API ${{ matrix.suite }}
+    needs: plan
+    if: needs.plan.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ${{ fromJSON(needs.plan.outputs.suites) }}
+    env:
+      INSTITUTION_TYPE: ${{ github.event.inputs.institution_type || 'university' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Ephemeral stack (postgres, redis, backend with RUN_MIGRATIONS=1, worker, beat)
+        run: |
+          docker compose -f docker-compose.ci.yml up -d --build --wait --wait-timeout 300
+          curl -fsS --retry 30 --retry-delay 5 --retry-all-errors http://localhost:8000/ready
+      - name: Seed platform + demo institution
+        run: |
+          docker compose -f docker-compose.ci.yml exec -T backend python scripts/seed_platform.py
+          docker compose -f docker-compose.ci.yml exec -T backend python scripts/seed_demo_institution.py --type "$INSTITUTION_TYPE" --all
+      - name: Run suite
+        run: |
+          pip install httpx
+          python backend/scripts/verify/run_all.py --suite "${{ matrix.suite }}" --env ci --base-url http://localhost:8000/api/v1 --report-dir reports
+      - name: Publish JUnit
+        if: always()
+        uses: mikepenz/action-junit-report@v5
+        with:
+          report_paths: reports/**/*.xml
+          check_name: API ${{ matrix.suite }}
+          fail_on_failure: true
+      - name: Artefacts (JUnit + Markdown + logs)
+        if: always()
+        run: docker compose -f docker-compose.ci.yml logs --no-color > reports/stack.log 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: verify-${{ matrix.suite }}-${{ github.run_id }}
+          path: reports
+          retention-days: 14
+      - if: always()
+        run: docker compose -f docker-compose.ci.yml down -v
+
+  e2e:
+    name: Playwright ${{ matrix.project }}
+    needs: [plan, api]
+    if: needs.plan.outputs.ready == 'true' && hashFiles('e2e/playwright.config.ts') != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJSON(needs.plan.outputs.e2e_projects) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            e2e/package-lock.json
+      - name: Ephemeral stack incl. web
+        run: |
+          docker compose -f docker-compose.ci.yml --profile web up -d --build --wait --wait-timeout 300
+          docker compose -f docker-compose.ci.yml exec -T backend python scripts/seed_platform.py
+          docker compose -f docker-compose.ci.yml exec -T backend python scripts/seed_demo_institution.py --type university --all
+      - run: cd e2e && npm ci && npx playwright install --with-deps chromium
+      - name: Run project (one test.step per NN.12 checklist line; axe on every page)
+        env:
+          E2E_BASE_URL: http://localhost:5173
+          E2E_API_URL: http://localhost:8000/api/v1
+        run: cd e2e && npx playwright test --project "${{ matrix.project }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-${{ matrix.project }}-${{ github.run_id }}
+          path: |
+            e2e/playwright-report
+            e2e/test-results
+          retention-days: 14
+      - if: always()
+        run: docker compose -f docker-compose.ci.yml down -v
+
+  not-ready:
+    name: Verification runner not present yet
+    needs: plan
+    if: needs.plan.outputs.ready != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "backend/scripts/verify/run_all.py (Phase 43) and docker-compose.ci.yml (Phase 44) enable this workflow"

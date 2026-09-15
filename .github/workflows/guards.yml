@@ -1,0 +1,255 @@
+# Structural guards — the CI counterpart of RUN_AFTER_PHASE.md §4 (Prompts/00_PREREQUISITE_Project_Setup.md §6, ADR 0006).
+# No unit-test suites: these guards prove structure (drift, authz/feature coverage, single Alembic head, registries,
+# lint/type, supply chain). Functional verification runs in verify.yml (API scripts per role + Playwright).
+#
+# Every job is gated on the `detect` job so the workflow is green on the planning branch (no backend/ yet) and each
+# guard script switches itself on the moment a phase adds it (check_metric_registry.py → Phase 32, … see the list below).
+
+name: Guards
+
+on:
+  push:
+    branches: ['**']
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'flutter/**'
+      - 'Database_Schema.sql'
+      - 'docs/Feature_Flags.md'
+      - 'docs/Roles_and_Permissions.md'
+      - 'docker-compose.yml'
+      - 'nginx/**'
+      - '.github/workflows/guards.yml'
+  pull_request:
+  workflow_dispatch:
+  workflow_call:          # build.yml runs the same guards before pushing images
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: guards-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: '3.12'
+  NODE_VERSION: '20'
+  FLUTTER_VERSION: '3.22.x'
+
+jobs:
+  detect:
+    name: Detect what exists
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.probe.outputs.backend }}
+      frontend: ${{ steps.probe.outputs.frontend }}
+      flutter: ${{ steps.probe.outputs.flutter }}
+      dockerfile: ${{ steps.probe.outputs.dockerfile }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: probe
+        run: |
+          echo "backend=$([ -f backend/requirements.txt ] && echo true || echo false)"     >> "$GITHUB_OUTPUT"
+          echo "frontend=$([ -f frontend/package.json ] && echo true || echo false)"       >> "$GITHUB_OUTPUT"
+          echo "flutter=$([ -f flutter/pubspec.yaml ] && echo true || echo false)"         >> "$GITHUB_OUTPUT"
+          echo "dockerfile=$([ -f backend/Dockerfile ] && echo true || echo false)"        >> "$GITHUB_OUTPUT"
+
+  planning-guards:
+    # Stage 1 guard: every table a prompt names exists in Database_Schema.sql (scripts/verify_prompts_vs_schema.py)
+    name: Prompts vs schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: python scripts/verify_prompts_vs_schema.py
+      - name: Table count (406 + 5 partition defaults)
+        run: |
+          n=$(grep -c '^CREATE TABLE' Database_Schema.sql)
+          echo "CREATE TABLE statements: $n"
+          [ "$n" -eq 411 ] || { echo "::error::expected 411 CREATE TABLE statements, found $n — update PROGRESS.md/validation if the schema changed deliberately"; exit 1; }
+
+  backend-guards:
+    name: Backend guards
+    needs: detect
+    if: needs.detect.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:15-alpine
+        env:
+          POSTGRES_DB: universe
+          POSTGRES_USER: universe_platform
+          POSTGRES_PASSWORD: pass
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U universe_platform -d universe" --health-interval 10s --health-timeout 5s --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    env:
+      APP_ENV: development
+      SECRET_KEY: ci-only-secret-key-not-for-production-0000000000000000
+      DATABASE_URL: postgresql+asyncpg://universe_platform:pass@localhost:5432/universe
+      PLATFORM_DATABASE_URL: postgresql+asyncpg://universe_platform:pass@localhost:5432/universe
+      REDIS_URL: redis://localhost:6379/0
+      CELERY_BROKER_URL: redis://localhost:6379/1
+      CELERY_RESULT_BACKEND: redis://localhost:6379/2
+      INTEGRATION_ENCRYPTION_KEY: Y2ktb25seS1rZXktbm90LWZvci1wcm9kdWN0aW9uLTAwMDA=
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+      - name: System libraries (WeasyPrint)
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq libpango-1.0-0 libpangoft2-1.0-0 libcairo2 libgdk-pixbuf-2.0-0 libffi8 libmagic1
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt -r requirements-dev.txt
+      - name: ruff
+        run: ruff check app scripts
+      - name: black --check
+        run: black --check app scripts
+      - name: mypy
+        run: mypy app
+      - name: import-linter
+        run: lint-imports
+      - name: Single Alembic head
+        run: |
+          heads=$(alembic heads 2>/dev/null | grep -c '(head)' || true)
+          echo "alembic heads: $heads"
+          if [ "$heads" -eq 0 ]; then echo "::warning::no Alembic revisions yet (Phase 01 adds 0001)"; exit 0; fi
+          [ "$heads" -eq 1 ] || { echo "::error::expected exactly one Alembic head, found $heads — run 'alembic merge heads' for the round"; exit 1; }
+      - name: Migrate an empty database (fresh install must reach head)
+        run: |
+          if [ -d alembic/versions ] && ls alembic/versions/*.py >/dev/null 2>&1; then alembic upgrade head; else echo "no revisions yet"; fi
+      - name: Structural guard scripts (each runs as soon as its file exists)
+        run: |
+          set -e
+          status=0
+          for g in check_schema_drift check_authz_coverage check_feature_registry \
+                   check_metric_registry check_report_registry check_adapter_registry \
+                   check_audit_coverage check_pii_masking check_access_matrix check_migration_safety; do
+            if [ -f "scripts/$g.py" ]; then
+              echo "::group::$g"
+              if python "scripts/$g.py"; then echo "OK $g"; else echo "::error::$g failed"; status=1; fi
+              echo "::endgroup::"
+            else
+              echo "-- $g not present yet"
+            fi
+          done
+          exit $status
+      - name: OpenAPI export + access matrix are reproducible
+        run: |
+          [ -f scripts/export_openapi.py ] && python scripts/export_openapi.py || echo "no export_openapi.py yet"
+          [ -f scripts/gen_access_matrix.py ] && python scripts/gen_access_matrix.py || echo "no gen_access_matrix.py yet"
+          git -C .. diff --exit-code -- backend/openapi.json docs/Access_Matrix.csv || { echo "::error::openapi.json / Access_Matrix.csv are stale — run RUN_AFTER_PHASE.md §8 and commit"; exit 1; }
+      - name: pip-audit
+        run: pip-audit -r requirements.txt --strict
+      - name: bandit
+        run: bandit -r app -q -ll
+
+  frontend-guards:
+    name: Frontend guards
+    needs: detect
+    if: needs.detect.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: eslint
+        run: npm run lint
+      - name: tsc --noEmit
+        run: npx tsc --noEmit
+      - name: Generated OpenAPI types are current
+        run: |
+          if [ -f ../backend/openapi.json ] && [ -f src/api/generated/openapi.d.ts ]; then
+            npx openapi-typescript ../backend/openapi.json -o /tmp/openapi.d.ts
+            diff -q /tmp/openapi.d.ts src/api/generated/openapi.d.ts || { echo "::error::src/api/generated/openapi.d.ts is stale — run 'npm run gen:api'"; exit 1; }
+          fi
+      - name: npm audit (high+)
+        run: npm audit --audit-level=high
+
+  flutter-guards:
+    name: Flutter guards
+    needs: detect
+    if: needs.detect.outputs.flutter == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart format --output=none --set-exit-if-changed lib
+      - run: flutter analyze --fatal-infos
+      - name: Screen registry ↔ docs/Mobile_App_UI_Structure.md
+        run: |
+          if [ -f tool/check_screen_registry.dart ]; then dart run tool/check_screen_registry.dart; else echo "registry check arrives in Phase 42"; fi
+
+  secrets-scan:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  image-scan:
+    name: trivy (backend image)
+    needs: [detect, backend-guards]
+    if: needs.detect.outputs.dockerfile == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - name: Build (no push)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./backend
+          push: false
+          load: true
+          tags: universe-api:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: universe-api:ci
+          format: sarif
+          output: trivy-image.sarif
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-image.sarif

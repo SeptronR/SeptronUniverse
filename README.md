@@ -46,6 +46,11 @@ docs/ADR/                         architecture decision records
 RUN_AFTER_PHASE.md                runbook after each phase (migrate, seed, drift/authz checks, API smoke, run apps)
 QA_Test_Plan.md                   per-role UI functional sweep plan
 Real_World_Launch_Plan.md         provider/government onboarding tracker
+docker-compose.yml                local 8-service stack (postgres, redis, backend, worker, beat, flower, frontend, nginx)
+docker/postgres/init/01_roles.sql creates universe_app (no BYPASSRLS) / universe_platform roles on first start
+nginx/nginx.conf                  single-host reverse proxy (/api, /ws, /uploads, /site → SSR, security headers)
+.github/workflows/                guards · security · verify · build · frontend-build · frontend-deploy · release · mobile-release
+.claude/launch.json               Claude Code launch targets (backend, celery-worker, celery-beat, frontend, flower, ssr)
 ```
 
 Source code lands in `backend/`, `frontend/` and `flutter/` as the phase prompts are executed.

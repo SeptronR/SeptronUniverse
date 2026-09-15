@@ -1,0 +1,155 @@
+# SeptronUniverse — local development stack (8 services, Prompts/00_PREREQUISITE_Project_Setup.md §3.27).
+# Production topology (replicas, one worker per queue, pgbouncer, exporters, backup sidecar) lives in
+# docker-compose.prod.yml (Phase 44) and in orbit-infra (compose/apps/universe-*.yml, Traefik).
+#
+#   docker compose up                 # everything; nginx on http://localhost, API :8000, web :5173, Flower :5555
+#   docker compose up -d postgres redis   # only the infrastructure for a locally-run backend/frontend
+#
+# backend/.env is created by Phase 00 (Copy-Item backend/.env.example backend/.env); until then the file is optional.
+
+name: universe
+
+x-backend-env: &backend-env
+  APP_ENV: development
+  DATABASE_URL: postgresql+asyncpg://universe_app:pass@postgres:5432/universe
+  PLATFORM_DATABASE_URL: postgresql+asyncpg://universe_platform:pass@postgres:5432/universe
+  REDIS_URL: redis://redis:6379/0
+  CELERY_BROKER_URL: redis://redis:6379/1
+  CELERY_RESULT_BACKEND: redis://redis:6379/2
+  STORAGE_BACKEND: local
+  UPLOAD_DIR: /app/uploads
+  ALLOWED_ORIGINS: '["http://localhost:5173","http://localhost"]'
+  PLATFORM_HOSTS: '["localhost","universe.septronr.com"]'
+  PYTHONUTF8: "1"
+
+x-backend: &backend
+  build:
+    context: ./backend
+    dockerfile: Dockerfile
+  image: universe-api:dev
+  env_file:
+    - path: ./backend/.env
+      required: false
+  volumes:
+    - ./backend:/app
+    - uploads:/app/uploads
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: universe
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    command: >
+      postgres -c shared_buffers=256MB -c work_mem=16MB -c max_connections=200
+               -c log_min_duration_statement=500 -c shared_preload_libraries=pg_stat_statements
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro   # 01_roles.sql → universe_app (no BYPASSRLS) + universe_platform
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d universe"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    # DB 0 cache/pub-sub/rate-limits/idempotency, DB 1 Celery broker, DB 2 Celery results — no eviction in dev
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy noeviction
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    <<: *backend
+    # The backend container owns migrations (docker-entrypoint.sh: RUN_MIGRATIONS=1 → alembic upgrade head under an advisory lock)
+    environment:
+      <<: *backend-env
+      RUN_MIGRATIONS: "1"
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  celery_worker:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      RUN_MIGRATIONS: "0"          # workers never migrate
+    command: celery -A app.tasks.celery_app worker --loglevel=info -Q notifications,emails,documents,reports,integrations,scheduled -c 4 --max-tasks-per-child 500
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  celery_beat:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      RUN_MIGRATIONS: "0"
+    # outbox.relay (5 s), jobs.cleanup, read_only.expire, integrations.health, partitions.ensure_next_month, … (app/tasks/beat.py)
+    command: celery -A app.tasks.celery_app beat --loglevel=info
+    depends_on:
+      backend:
+        condition: service_healthy
+
+  flower:
+    <<: *backend
+    environment:
+      <<: *backend-env
+      RUN_MIGRATIONS: "0"
+    command: celery -A app.tasks.celery_app flower --port=5555 --basic-auth=${FLOWER_USER:-admin}:${FLOWER_PASSWORD:-admin}
+    ports:
+      - "5555:5555"
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    command: sh -c "npm install && npm run dev -- --host --port 5173"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8000/api/v1
+      VITE_WS_URL: ws://localhost:8000/ws
+      VITE_APP_ENV: development
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - uploads:/srv/uploads:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+      - frontend
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads:
+  frontend_node_modules:

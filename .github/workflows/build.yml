@@ -1,0 +1,250 @@
+# Build & push images → dispatch orbit-infra (Prompts/00_PREREQUISITE_Project_Setup.md §6; completed by Phase 44 44.6 cicd_service 2).
+#
+# Branch → environment (Phase 44): develop → dev · main → demo (auto) · release/** or tag v* → staging (auto) → prod (manual
+# approval on the `prod` GitHub environment with required reviewers + change ticket id).
+# Images: ghcr.io/septronr/universe-api:{env}-{sha}, ghcr.io/septronr/universe-web:{env}-{sha}, ghcr.io/septronr/universe-ssr:{env}-{sha}
+# (+ :{semver} on tags). Each image is only built when its Dockerfile exists (frontend/Dockerfile → Phase 44, Dockerfile.ssr → Phase 40/44).
+# The receiver in orbit-infra (`universe-deploy` repository_dispatch) performs the rolling update and rollback.
+
+name: Build & Push
+
+on:
+  push:
+    branches: [develop, main, 'release/**']
+    tags: ['v*']
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+      - 'nginx/**'
+      - 'docker-compose*.yml'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Target environment'
+        required: true
+        default: dev
+        type: choice
+        options: [dev, demo, staging]
+
+permissions:
+  contents: read
+  packages: write
+  id-token: write
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_API: ghcr.io/septronr/universe-api
+  IMAGE_WEB: ghcr.io/septronr/universe-web
+  IMAGE_SSR: ghcr.io/septronr/universe-ssr
+
+jobs:
+  meta:
+    name: Resolve environment & tags
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.meta.outputs.env }}
+      sha_tag: ${{ steps.meta.outputs.sha_tag }}
+      semver: ${{ steps.meta.outputs.semver }}
+      api_tag: ${{ steps.meta.outputs.api_tag }}
+      web_tag: ${{ steps.meta.outputs.web_tag }}
+      ssr_tag: ${{ steps.meta.outputs.ssr_tag }}
+      has_backend: ${{ steps.meta.outputs.has_backend }}
+      has_web: ${{ steps.meta.outputs.has_web }}
+      has_ssr: ${{ steps.meta.outputs.has_ssr }}
+      migrations_risky: ${{ steps.meta.outputs.migrations_risky }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - id: meta
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.env }}" ]; then ENV="${{ github.event.inputs.env }}"
+          else
+            case "${GITHUB_REF}" in
+              refs/heads/develop)      ENV=dev ;;
+              refs/heads/main)         ENV=demo ;;
+              refs/heads/release/*)    ENV=staging ;;
+              refs/tags/v*)            ENV=staging ;;
+              *)                       ENV=dev ;;
+            esac
+          fi
+          SHORT=$(git rev-parse --short=12 HEAD)
+          SEMVER=""; case "${GITHUB_REF}" in refs/tags/v*) SEMVER="${GITHUB_REF_NAME#v}" ;; esac
+          echo "env=$ENV"                       >> "$GITHUB_OUTPUT"
+          echo "sha_tag=${ENV}-${SHORT}"        >> "$GITHUB_OUTPUT"
+          echo "semver=$SEMVER"                 >> "$GITHUB_OUTPUT"
+          echo "api_tag=${IMAGE_API}:${ENV}-${SHORT}" >> "$GITHUB_OUTPUT"
+          echo "web_tag=${IMAGE_WEB}:${ENV}-${SHORT}" >> "$GITHUB_OUTPUT"
+          echo "ssr_tag=${IMAGE_SSR}:${ENV}-${SHORT}" >> "$GITHUB_OUTPUT"
+          echo "has_backend=$([ -f backend/Dockerfile ] && echo true || echo false)"       >> "$GITHUB_OUTPUT"
+          echo "has_web=$([ -f frontend/Dockerfile ] && echo true || echo false)"          >> "$GITHUB_OUTPUT"
+          echo "has_ssr=$([ -f frontend/Dockerfile.ssr ] && echo true || echo false)"      >> "$GITHUB_OUTPUT"
+          # A revision flagged `# risky` (Phase 44 migration safety) makes the receiver open a read-only window first
+          RISKY=false
+          if [ -d backend/alembic/versions ]; then
+            BASE=$(git merge-base HEAD origin/main 2>/dev/null || git rev-parse HEAD~1 2>/dev/null || echo HEAD)
+            if git diff --name-only "$BASE" HEAD -- backend/alembic/versions | xargs -r grep -l '^# risky' >/dev/null 2>&1; then RISKY=true; fi
+          fi
+          echo "migrations_risky=$RISKY" >> "$GITHUB_OUTPUT"
+          echo "env=$ENV sha_tag=${ENV}-${SHORT} semver=$SEMVER risky=$RISKY"
+
+  guards:
+    name: Guards must be green
+    needs: meta
+    uses: ./.github/workflows/guards.yml
+    secrets: inherit
+
+  build-api:
+    name: universe-api
+    needs: [meta, guards]
+    if: needs.meta.outputs.has_backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        id: push
+        with:
+          context: ./backend
+          push: true
+          provenance: true
+          sbom: true
+          tags: |
+            ${{ needs.meta.outputs.api_tag }}
+            ${{ needs.meta.outputs.semver != '' && format('{0}:{1}', env.IMAGE_API, needs.meta.outputs.semver) || '' }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.version=${{ needs.meta.outputs.semver || needs.meta.outputs.sha_tag }}
+          build-args: |
+            APP_VERSION=${{ needs.meta.outputs.semver || needs.meta.outputs.sha_tag }}
+            GIT_SHA=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: SBOM (CycloneDX) as workflow artefact
+        uses: anchore/sbom-action@v0
+        with:
+          image: ${{ needs.meta.outputs.api_tag }}
+          format: cyclonedx-json
+          artifact-name: sbom-universe-api-${{ needs.meta.outputs.sha_tag }}.cdx.json
+
+  build-web:
+    name: universe-web
+    needs: [meta, guards]
+    if: needs.meta.outputs.has_web == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile
+          push: true
+          provenance: true
+          tags: |
+            ${{ needs.meta.outputs.web_tag }}
+            ${{ needs.meta.outputs.semver != '' && format('{0}:{1}', env.IMAGE_WEB, needs.meta.outputs.semver) || '' }}
+          build-args: |
+            VITE_MODE=${{ needs.meta.outputs.env == 'dev' && 'development' || needs.meta.outputs.env }}
+            APP_VERSION=${{ needs.meta.outputs.semver || needs.meta.outputs.sha_tag }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  build-ssr:
+    name: universe-ssr
+    needs: [meta, guards]
+    if: needs.meta.outputs.has_ssr == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ./frontend
+          file: ./frontend/Dockerfile.ssr
+          push: true
+          provenance: true
+          tags: |
+            ${{ needs.meta.outputs.ssr_tag }}
+            ${{ needs.meta.outputs.semver != '' && format('{0}:{1}', env.IMAGE_SSR, needs.meta.outputs.semver) || '' }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  dispatch:
+    # dev / demo / staging deploy automatically; orbit-infra's receiver pulls the tags and rolls replica by replica
+    name: Dispatch orbit-infra (${{ needs.meta.outputs.env }})
+    needs: [meta, build-api, build-web, build-ssr]
+    if: always() && needs.build-api.result == 'success' && (needs.build-web.result == 'success' || needs.build-web.result == 'skipped') && (needs.build-ssr.result == 'success' || needs.build-ssr.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.INFRA_DISPATCH_TOKEN }}
+          repository: septronr/orbit-infra
+          event-type: universe-deploy
+          client-payload: |
+            {
+              "app": "universe",
+              "env": "${{ needs.meta.outputs.env }}",
+              "sha": "${{ github.sha }}",
+              "api_tag": "${{ needs.meta.outputs.api_tag }}",
+              "web_tag": "${{ needs.meta.outputs.has_web == 'true' && needs.meta.outputs.web_tag || '' }}",
+              "ssr_tag": "${{ needs.meta.outputs.has_ssr == 'true' && needs.meta.outputs.ssr_tag || '' }}",
+              "migrations_risky": ${{ needs.meta.outputs.migrations_risky }},
+              "ref": "${{ github.ref_name }}",
+              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }
+
+  promote-prod:
+    # Staging builds (release/** and v* tags) can be promoted to prod after approval; the same image tags are re-dispatched.
+    name: Promote to prod (manual approval)
+    needs: [meta, dispatch]
+    if: needs.meta.outputs.env == 'staging'
+    runs-on: ubuntu-latest
+    environment:
+      name: prod
+      url: https://app.universe.septronr.com
+    steps:
+      - name: Require a change ticket id (Phase 44 — reviewers set CHANGE_TICKET on the prod environment)
+        run: |
+          [ -n "${{ vars.CHANGE_TICKET }}" ] || { echo "::error::set the CHANGE_TICKET environment variable on the prod environment before approving"; exit 1; }
+      - uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.INFRA_DISPATCH_TOKEN }}
+          repository: septronr/orbit-infra
+          event-type: universe-deploy
+          client-payload: |
+            {
+              "app": "universe",
+              "env": "prod",
+              "sha": "${{ github.sha }}",
+              "api_tag": "${{ needs.meta.outputs.api_tag }}",
+              "web_tag": "${{ needs.meta.outputs.has_web == 'true' && needs.meta.outputs.web_tag || '' }}",
+              "ssr_tag": "${{ needs.meta.outputs.has_ssr == 'true' && needs.meta.outputs.ssr_tag || '' }}",
+              "migrations_risky": ${{ needs.meta.outputs.migrations_risky }},
+              "change_ticket": "${{ vars.CHANGE_TICKET }}",
+              "ref": "${{ github.ref_name }}",
+              "run_url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }

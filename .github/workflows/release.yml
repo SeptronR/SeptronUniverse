@@ -1,0 +1,91 @@
+# Release process (Phase 44 44.6 cicd_service 4 + release_process): conventional commits → semver tag → CHANGELOG.md →
+# GitHub release with images/SBOM → platform announcement to institution admins (Phase 38) → API changelog (Phase 41).
+#
+# Flow: release-please opens/updates a release PR on main; merging it creates the tag vX.Y.Z, which (1) triggers build.yml
+# (staging images :X.Y.Z, prod after approval) and (2) runs `publish` below.
+# Phase 44 completes: deprecation entries (`deprecation_notice_days` = 90) and POST /platform/releases/{version}/announce.
+
+name: Release
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      announce:
+        description: 'Announce to institution admins (Phase 38)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  packages: read
+
+jobs:
+  release-please:
+    name: Release PR / tag from conventional commits
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          release-type: simple
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    name: Publish ${{ github.ref_name }}
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Release notes from CHANGELOG.md
+        id: notes
+        shell: bash
+        run: |
+          V="${GITHUB_REF_NAME#v}"
+          if [ -f CHANGELOG.md ]; then
+            awk -v v="$V" 'BEGIN{p=0} /^## /{ if (p) exit; if (index($0, v)) p=1 } p' CHANGELOG.md > RELEASE_NOTES.md
+          fi
+          [ -s RELEASE_NOTES.md ] || printf '## %s\n\nSee the commit history for this tag.\n' "$GITHUB_REF_NAME" > RELEASE_NOTES.md
+          {
+            echo; echo '### Images'
+            echo "- ghcr.io/septronr/universe-api:$V"
+            [ -f frontend/Dockerfile ] && echo "- ghcr.io/septronr/universe-web:$V"
+            [ -f frontend/Dockerfile.ssr ] && echo "- ghcr.io/septronr/universe-ssr:$V"
+          } >> RELEASE_NOTES.md
+          cat RELEASE_NOTES.md
+      - name: SBOM for the tagged source tree
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: cyclonedx-json
+          output-file: sbom-${{ github.ref_name }}.cdx.json
+          upload-artifact: false
+      - uses: softprops/action-gh-release@v2
+        with:
+          body_path: RELEASE_NOTES.md
+          files: sbom-${{ github.ref_name }}.cdx.json
+          generate_release_notes: false
+      - name: Announce to institutions (Phase 38/44)
+        if: github.event.inputs.announce == 'true' || vars.RELEASE_ANNOUNCE == 'true'
+        env:
+          PLATFORM_API_URL: ${{ vars.PLATFORM_API_URL }}
+          INTERNAL_OPS_TOKEN: ${{ secrets.INTERNAL_OPS_TOKEN }}
+        run: |
+          [ -n "$PLATFORM_API_URL" ] || { echo "PLATFORM_API_URL not configured; skipping announcement"; exit 0; }
+          python3 - <<'EOF'
+          import json, os, urllib.request
+          version = os.environ["GITHUB_REF_NAME"].lstrip("v")
+          body = {"version": version, "notes_md": open("RELEASE_NOTES.md", encoding="utf-8").read(),
+                  "sbom_url": f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/releases/tag/v{version}"}
+          req = urllib.request.Request(f"{os.environ['PLATFORM_API_URL']}/platform/releases/{version}/announce",
+                                       data=json.dumps(body).encode(), method="POST",
+                                       headers={"Content-Type": "application/json", "X-Internal-Token": os.environ["INTERNAL_OPS_TOKEN"]})
+          with urllib.request.urlopen(req, timeout=30) as r:
+              print(r.status, r.read()[:200])
+          EOF

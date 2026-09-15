@@ -1,0 +1,123 @@
+# Frontend build per mode (mirrors SeptronOrbit's frontend-build.yml; Prompts/00_PREREQUISITE_Project_Setup.md §6,
+# Phase 44 44.6 cicd_service 3: bundle-size budget < 350 KB gzipped per route chunk, Lighthouse CI on portal/site).
+#
+# Branch → Vite mode: develop → development · main → demo · release/** → staging · tag v* → production
+# (frontend/.env.<mode> carries VITE_API_URL / VITE_WS_URL / VITE_APP_ENV and feature hints — no secrets).
+
+name: Frontend Build
+
+on:
+  push:
+    branches: [develop, main, 'release/**']
+    tags: ['v*']
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-build.yml'
+  pull_request:
+    paths:
+      - 'frontend/**'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Vite mode'
+        required: true
+        default: development
+        type: choice
+        options: [development, demo, staging, production]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip until Phase 00 creates frontend/
+        id: present
+        run: echo "ok=$([ -f package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-node@v4
+        if: steps.present.outputs.ok == 'true'
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install
+        if: steps.present.outputs.ok == 'true'
+        run: npm ci
+
+      - name: Select build mode
+        if: steps.present.outputs.ok == 'true'
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.mode }}" ]; then MODE="${{ github.event.inputs.mode }}"
+          else
+            case "${GITHUB_REF}" in
+              refs/heads/develop)   MODE=development ;;
+              refs/heads/main)      MODE=demo ;;
+              refs/heads/release/*) MODE=staging ;;
+              refs/tags/v*)         MODE=production ;;
+              *)                    MODE=development ;;   # pull requests
+            esac
+          fi
+          echo "BUILD_MODE=$MODE" >> "$GITHUB_ENV"
+          echo "mode=$MODE"
+
+      - name: Lint + type-check
+        if: steps.present.outputs.ok == 'true'
+        run: |
+          npm run lint
+          npx tsc --noEmit
+
+      - name: Build
+        if: steps.present.outputs.ok == 'true'
+        run: npm run build -- --mode "$BUILD_MODE"
+
+      - name: Bundle-size budget (each JS chunk < 350 KB gzipped)
+        if: steps.present.outputs.ok == 'true'
+        shell: bash
+        run: |
+          LIMIT=$((350 * 1024)); fail=0
+          for f in dist/assets/*.js; do
+            [ -e "$f" ] || continue
+            gz=$(gzip -c "$f" | wc -c)
+            printf '%8d gz  %s\n' "$gz" "$f"
+            if [ "$gz" -gt "$LIMIT" ]; then echo "::error file=$f::chunk exceeds the 350 KB gzip budget ($gz bytes)"; fail=1; fi
+          done
+          exit $fail
+
+      - name: Upload dist
+        if: steps.present.outputs.ok == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-${{ env.BUILD_MODE }}-${{ github.sha }}
+          path: frontend/dist
+          retention-days: 7
+
+  lighthouse:
+    # Phase 44 completes: Lighthouse CI against the portal and the public site (frontend/lighthouserc.json with budgets: LCP < 2.5 s)
+    name: Lighthouse CI
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run when the config exists
+        run: |
+          if [ -f frontend/lighthouserc.json ]; then
+            npm i -g @lhci/cli@0.14.x
+            cd frontend && npm ci && npx lhci autorun --config=lighthouserc.json
+          else
+            echo "frontend/lighthouserc.json not present yet (Phase 44)"
+          fi
