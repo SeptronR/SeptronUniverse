@@ -1,0 +1,129 @@
+# Frontend deploy — branch → mode → target (mirrors SeptronOrbit's frontend-deploy.yml; Phase 44 44.6 cicd_service 3).
+#
+# Universe's primary web delivery is the `universe-web` container image built by build.yml and rolled out by orbit-infra.
+# This workflow covers the *static* delivery lanes that Orbit also used: object storage + CDN purge (S3-compatible) or
+# FTP (shared host). Which lane runs is chosen per environment through the repository/environment variable
+# FRONTEND_DEPLOY_TARGET = s3 | ftp | none (default none — the image path is used).
+#
+# Branch → mode → environment: develop → development → dev · main → demo → demo · release/** → staging → staging · tag v* → production → prod (approval).
+
+name: Frontend Deploy
+
+on:
+  push:
+    branches: [develop, main, 'release/**']
+    tags: ['v*']
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-deploy.yml'
+  workflow_dispatch:
+    inputs:
+      env:
+        description: 'Target environment'
+        required: true
+        default: dev
+        type: choice
+        options: [dev, demo, staging, prod]
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: frontend-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    name: Resolve mode & environment
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.r.outputs.env }}
+      mode: ${{ steps.r.outputs.mode }}
+      present: ${{ steps.r.outputs.present }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: r
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.env }}" ]; then ENV="${{ github.event.inputs.env }}"
+          else
+            case "${GITHUB_REF}" in
+              refs/heads/develop)   ENV=dev ;;
+              refs/heads/main)      ENV=demo ;;
+              refs/heads/release/*) ENV=staging ;;
+              refs/tags/v*)         ENV=prod ;;
+              *) echo "::error::unsupported ref ${GITHUB_REF}"; exit 1 ;;
+            esac
+          fi
+          case "$ENV" in
+            dev) MODE=development ;; demo) MODE=demo ;; staging) MODE=staging ;; prod) MODE=production ;;
+          esac
+          echo "env=$ENV"   >> "$GITHUB_OUTPUT"
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+          echo "present=$([ -f frontend/package.json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+
+  deploy:
+    name: Deploy ${{ needs.resolve.outputs.mode }} → ${{ needs.resolve.outputs.env }}
+    needs: resolve
+    if: needs.resolve.outputs.present == 'true'
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ needs.resolve.outputs.env }}
+    env:
+      TARGET: ${{ vars.FRONTEND_DEPLOY_TARGET || 'none' }}
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: Build (${{ needs.resolve.outputs.mode }})
+        run: npm run build -- --mode "${{ needs.resolve.outputs.mode }}"
+
+      - name: Nothing to do (image lane)
+        if: env.TARGET == 'none'
+        run: echo "FRONTEND_DEPLOY_TARGET=none — the universe-web image from build.yml is deployed by orbit-infra"
+
+      # ---- Lane A: object storage + CDN purge (S3-compatible; long-cache hashed assets, no-cache index.html) ----
+      - name: Upload to object storage
+        if: env.TARGET == 's3'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ vars.S3_REGION || 'ap-south-1' }}
+          ENDPOINT: ${{ vars.S3_ENDPOINT_URL }}
+          BUCKET: ${{ vars.FRONTEND_BUCKET }}
+        run: |
+          EP=""; [ -n "$ENDPOINT" ] && EP="--endpoint-url $ENDPOINT"
+          aws s3 sync dist/assets "s3://$BUCKET/assets" $EP --cache-control "public,max-age=31536000,immutable" --delete
+          aws s3 sync dist "s3://$BUCKET" $EP --exclude "assets/*" --cache-control "no-cache" --delete
+      - name: Purge CDN
+        if: env.TARGET == 's3' && vars.CDN_PURGE_URL != ''
+        run: |
+          curl -fsS -X POST "${{ vars.CDN_PURGE_URL }}" -H "Authorization: Bearer ${{ secrets.CDN_PURGE_TOKEN }}" -d '{"purge_everything":true}'
+
+      # ---- Lane B: FTP to a shared host (what Orbit uses for its marketing/demo sites) ----
+      - name: Deploy over FTP
+        if: env.TARGET == 'ftp'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: frontend/dist/
+          server-dir: ${{ vars.FTP_REMOTE_DIR || format('universe-{0}/', needs.resolve.outputs.env) }}
+          protocol: ftp
+          port: 21
+
+      - name: Smoke
+        if: env.TARGET != 'none' && vars.FRONTEND_URL != ''
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' "${{ vars.FRONTEND_URL }}/")
+          echo "GET ${{ vars.FRONTEND_URL }}/ -> $code"
+          [ "$code" = "200" ]

@@ -1,0 +1,162 @@
+# Supply-chain & static security scans (Phase 43 43.6 security_hardening 5; Technical_Architecture §11).
+# Runs on every PR, on main/develop pushes and weekly. High/critical findings block the release gate.
+# Phase 43 completes: scripts/push_scan_summary.py → platform_settings['security.scans'] (GET /security/scans), custom semgrep rules
+# (missing permission_required, raw SQL, unsafe mark_safe) in .semgrep/, osv-scanner for Dart.
+
+name: Security
+
+on:
+  pull_request:
+  push:
+    branches: [develop, main, 'release/**']
+  schedule:
+    - cron: '30 21 * * 0'     # Sunday 03:00 IST
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.p.outputs.backend }}
+      frontend: ${{ steps.p.outputs.frontend }}
+      flutter: ${{ steps.p.outputs.flutter }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: p
+        run: |
+          echo "backend=$([ -f backend/requirements.txt ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+          echo "frontend=$([ -f frontend/package.json ] && echo true || echo false)"   >> "$GITHUB_OUTPUT"
+          echo "flutter=$([ -f flutter/pubspec.yaml ] && echo true || echo false)"     >> "$GITHUB_OUTPUT"
+
+  gitleaks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  python:
+    name: pip-audit + bandit + semgrep
+    needs: detect
+    if: needs.detect.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements*.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - name: pip-audit
+        run: pip-audit -r requirements.txt --strict --desc
+      - name: bandit
+        run: bandit -r app -q -ll -f sarif -o ../bandit.sarif || true
+      - name: semgrep (OWASP + repo rules)
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: >-
+            p/owasp-top-ten
+            p/python
+            ${{ hashFiles('.semgrep/**') != '' && '.semgrep/' || '' }}
+          generateSarif: '1'
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: bandit.sarif
+          category: bandit
+
+  node:
+    name: npm audit
+    needs: detect
+    if: needs.detect.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm audit --audit-level=high
+
+  dart:
+    name: Dart dependencies (osv-scanner / pub outdated)
+    needs: detect
+    if: needs.detect.outputs.flutter == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: google/osv-scanner-action/osv-scanner-action@v1
+        with:
+          scan-args: --lockfile=flutter/pubspec.lock
+
+  trivy-fs:
+    name: trivy (repository filesystem)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aquasecurity/trivy-action@0.28.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: sarif
+          output: trivy-fs.sarif
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: trivy-fs.sarif
+          category: trivy-fs
+
+  sbom:
+    name: SBOM (syft, CycloneDX)
+    needs: detect
+    if: needs.detect.outputs.backend == 'true' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: anchore/sbom-action@v0
+        with:
+          path: .
+          format: cyclonedx-json
+          artifact-name: sbom-source-${{ github.sha }}.cdx.json
+
+  summary:
+    # Phase 43: python scripts/push_scan_summary.py → POST /internal/security/scans (tools, counts, report links); high findings → release gate blocked
+    name: Push scan summary
+    needs: [gitleaks, python, node, dart, trivy-fs]
+    if: always() && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          if [ -f backend/scripts/push_scan_summary.py ]; then
+            pip install httpx && python backend/scripts/push_scan_summary.py --run-id "${{ github.run_id }}" --results '${{ toJSON(needs) }}'
+          else
+            echo "push_scan_summary.py arrives in Phase 43; results: ${{ toJSON(needs.*.result) }}"
+          fi
+        env:
+          SCAN_SUMMARY_URL: ${{ vars.SCAN_SUMMARY_URL }}
+          INTERNAL_OPS_TOKEN: ${{ secrets.INTERNAL_OPS_TOKEN }}

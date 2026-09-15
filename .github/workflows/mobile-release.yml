@@ -1,0 +1,152 @@
+# Flutter release lanes (Phase 42 42.11 step 10, Phase 44 44.6 cicd_service 3; docs/Mobile_App_UI_Structure.md release section).
+#   beta    → internal testing (Play) / TestFlight — automatic on release/** pushes that touch flutter/, or by dispatch
+#   release → phased rollout 10 → 50 → 100 % gated on crash-free ≥ 99.5 % (Sentry API) — dispatch only, `mobile-prod` environment approval
+# Builds are unsigned when the signing secrets are absent (PR/CI check); signed in the release environment.
+# Phase 42 creates flutter/fastlane/{Fastfile,Appfile,metadata}; Phase 44 completes the phased-rollout gate and the deep-link verification job.
+
+name: Mobile Release
+
+on:
+  push:
+    branches: ['release/**']
+    paths:
+      - 'flutter/**'
+      - '.github/workflows/mobile-release.yml'
+  workflow_dispatch:
+    inputs:
+      lane:
+        description: 'Fastlane lane'
+        required: true
+        default: beta
+        type: choice
+        options: [beta, release]
+      platform:
+        description: 'Platform'
+        required: true
+        default: android
+        type: choice
+        options: [android, ios, both]
+      rollout:
+        description: 'release lane: initial rollout fraction (0.1 / 0.5 / 1.0)'
+        required: false
+        default: '0.1'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-${{ github.ref }}-${{ github.event.inputs.lane || 'beta' }}
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: '3.22.x'
+  LANE: ${{ github.event.inputs.lane || 'beta' }}
+  PLATFORM: ${{ github.event.inputs.platform || 'both' }}
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      flutter: ${{ steps.p.outputs.flutter }}
+      fastlane: ${{ steps.p.outputs.fastlane }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: p
+        run: |
+          echo "flutter=$([ -f flutter/pubspec.yaml ] && echo true || echo false)"          >> "$GITHUB_OUTPUT"
+          echo "fastlane=$([ -f flutter/fastlane/Fastfile ] && echo true || echo false)"    >> "$GITHUB_OUTPUT"
+
+  android:
+    name: Android (${{ env.LANE }})
+    needs: detect
+    if: needs.detect.outputs.flutter == 'true' && (github.event.inputs.platform == 'android' || github.event.inputs.platform == 'both' || github.event.inputs.platform == '')
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.lane == 'release' && 'mobile-prod' || 'mobile-beta' }}
+    defaults:
+      run:
+        working-directory: flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze --fatal-infos
+      - name: Firebase config + signing (only when the secrets exist)
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.ANDROID_GOOGLE_SERVICES_JSON }}
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          KEY_PROPERTIES: ${{ secrets.ANDROID_KEY_PROPERTIES }}
+        run: |
+          [ -n "$GOOGLE_SERVICES_JSON" ] && echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json || echo "no google-services.json secret (unsigned CI build)"
+          if [ -n "$KEYSTORE_B64" ]; then echo "$KEYSTORE_B64" | base64 -d > android/app/upload-keystore.jks; echo "$KEY_PROPERTIES" > android/key.properties; echo "signed=true" >> "$GITHUB_ENV"; else echo "signed=false" >> "$GITHUB_ENV"; fi
+      - name: Build AAB
+        run: flutter build appbundle --release --dart-define=APP_ENV=${{ env.LANE == 'release' && 'production' || 'staging' }} --build-number=${{ github.run_number }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-${{ env.LANE }}-${{ github.run_number }}
+          path: flutter/build/app/outputs/bundle/release/*.aab
+          retention-days: 30
+      - name: Fastlane ${{ env.LANE }} (internal testing / phased rollout)
+        if: needs.detect.outputs.fastlane == 'true' && env.signed == 'true'
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          ROLLOUT: ${{ github.event.inputs.rollout || '0.1' }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          gem install bundler && bundle install --gemfile fastlane/Gemfile
+          bundle exec --gemfile fastlane/Gemfile fastlane android ${{ env.LANE }} rollout:"$ROLLOUT"
+
+  ios:
+    name: iOS (${{ env.LANE }})
+    needs: detect
+    if: needs.detect.outputs.flutter == 'true' && (github.event.inputs.platform == 'ios' || github.event.inputs.platform == 'both' || github.event.inputs.platform == '')
+    runs-on: macos-14
+    environment: ${{ github.event.inputs.lane == 'release' && 'mobile-prod' || 'mobile-beta' }}
+    defaults:
+      run:
+        working-directory: flutter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Firebase config (when the secret exists)
+        env:
+          PLIST: ${{ secrets.IOS_GOOGLE_SERVICE_INFO_PLIST }}
+        run: |
+          [ -n "$PLIST" ] && echo "$PLIST" > ios/Runner/GoogleService-Info.plist || echo "no GoogleService-Info.plist secret"
+      - name: Build (unsigned when no signing secrets — CI compile check)
+        run: flutter build ios --release --no-codesign --dart-define=APP_ENV=${{ env.LANE == 'release' && 'production' || 'staging' }} --build-number=${{ github.run_number }}
+      - name: Fastlane ${{ env.LANE }} (match signing → TestFlight / phased App Store release)
+        if: needs.detect.outputs.fastlane == 'true' && secrets.APP_STORE_CONNECT_API_KEY != ''
+        env:
+          APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.MATCH_GIT_BASIC_AUTHORIZATION }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          bundle install --gemfile fastlane/Gemfile
+          bundle exec --gemfile fastlane/Gemfile fastlane ios ${{ env.LANE }}
+
+  deep-links:
+    # Store deep-link verification: assetlinks.json (Android) and apple-app-site-association (iOS) served by the platform
+    # hosts (Phase 39/42 deeplinks.dart map) — must match the bundle ids/fingerprints of the signed builds.
+    name: Deep-link verification
+    needs: detect
+    if: needs.detect.outputs.flutter == 'true' && vars.DEEPLINK_HOST != ''
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          set -e
+          curl -fsS "https://${{ vars.DEEPLINK_HOST }}/.well-known/assetlinks.json" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert any("com.septronr.universe" in t["target"].get("package_name","") for t in d), "package missing"; print("assetlinks OK")'
+          curl -fsS "https://${{ vars.DEEPLINK_HOST }}/.well-known/apple-app-site-association" | python3 -c 'import json,sys; d=json.load(sys.stdin); assert d["applinks"]["details"], "no applinks"; print("AASA OK")'

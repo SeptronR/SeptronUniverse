@@ -1,0 +1,115 @@
+# ---- Python / backend ----
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+.venv312/
+venv/
+env/
+*.egg-info/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+backend/openapi.json.tmp
+
+# ---- Environment files (only the examples are tracked) ----
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+!frontend/.env.development
+!frontend/.env.demo
+!frontend/.env.staging
+!frontend/.env.production
+
+# ---- Node / frontend / e2e ----
+node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+.cache/
+*.local
+*.tsbuildinfo
+# Playwright per-role storage state (live session tokens)
+e2e/.auth/
+e2e/test-results/
+e2e/playwright-report/
+e2e/results.json
+lighthouse-report/
+
+# ---- Uploads / generated files / reports ----
+backend/uploads/
+uploads/
+backend/reports/
+backend/exports/
+# JUnit/Markdown output of run_all (Phase 43)
+backend/scripts/verify/reports/
+docs/Access_Matrix.csv.tmp
+
+# ---- Flutter / mobile ----
+flutter/.dart_tool/
+flutter/.flutter-plugins
+flutter/.flutter-plugins-dependencies
+flutter/.packages
+flutter/build/
+flutter/android/.gradle/
+flutter/android/.kotlin/
+flutter/android/local.properties
+flutter/android/key.properties
+flutter/android/app/google-services.json
+flutter/ios/Pods/
+flutter/ios/.symlinks/
+flutter/ios/Flutter/Flutter.podspec
+flutter/ios/Runner/GoogleService-Info.plist
+flutter/ios/Runner.xcworkspace/xcuserdata/
+flutter/fastlane/report.xml
+flutter/fastlane/*.mobileprovision
+flutter/fastlane/*.p8
+flutter/fastlane/*.p12
+*.keystore
+*.jks
+
+# ---- Secrets that must never be committed ----
+# written by seed_demo_institution.py
+LOCAL_TEST_CREDENTIALS.md
+Demo_Credentials.md
+*.pem
+*.key
+nginx/ssl/
+docker/secrets/
+ops/backups/
+*.sbom.json.tmp
+
+# ---- Docker ----
+docker-compose.override.yml
+.docker/
+
+# ---- IDE / editors ----
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---- Claude Code local state (per-developer settings hold test credentials and worktrees) ----
+.claude/settings.local.json
+.claude/worktrees/
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Scratch / logs ----
+*.log
+logs/
+tmp/
+scratch/
+seed_errors_*.csv
+test_output*.txt
