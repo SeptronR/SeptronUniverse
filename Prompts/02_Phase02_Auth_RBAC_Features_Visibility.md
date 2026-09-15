@@ -7,7 +7,7 @@ Phase 01 complete (schema applied, platform models, jobs/outbox/WS/file service,
 Everything that decides *who may do what and see which rows*: login (password, OTP, SSO hook), refresh-token rotation with reuse detection, JTI blacklist, lockout, MFA (TOTP) for privileged roles, session management, login history, password policy, IP allow-lists for exam operations; roles and the permission matrix with **scopes**; the **feature-flag registry** with per-institution flags and the super-admin Features tab; the **visibility resolver** with ownership links; PII masking; time-boxed accounts (external examiner, auditor, applicant); credential sheets; subscription entitlements (seat/storage/SMS limits, grace); impersonation with banner and audit. Also the `/install` bootstrap and `seed_platform.py`.
 
 ## Feature keys
-`security.mfa` (on, starter), `security.session_management` (on), `security.ip_allowlist_exam_ops` (off, professional), `security.sso` (off, professional; depends `integrations.sso`), `privacy.dpdp_consent` (on), `privacy.data_subject_requests` (on, standard). Core keys are already registered.
+`security.mfa` (on, starter), `security.session_management` (on), `security.ip_allowlist_exam_ops` (off, professional), `security.sso` (off, professional; depends `integrations.sso`), `privacy.dpdp_consent` (on), `privacy.data_subject_requests` (on, standard). Core keys `core.auth` and `core.rbac` (non-toggleable) are already registered by Phase 01; this phase implements what they gate.
 
 ## Visibility rules
 - `users`: `users:view_all` @scope for institution_admin/hr_officer/registrar; everyone sees self (`/auth/me`).

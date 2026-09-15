@@ -7,7 +7,7 @@ Verification that every feature from the reference inventories has a home: **sou
 | SAMARTH module | Phase | Feature key(s) | Tables |
 |---|---|---|---|
 | Organizational Unit | 03 | core.institution, institution.multi_college, institution.faculties | institutions, colleges, faculties, departments |
-| User Management | 02 | core.auth, core.rbac, security.* | users, roles, permissions, user_roles, sessions |
+| User Management | 02 | core.auth, core.rbac, security.* | users, roles, permissions, user_roles, user_sessions |
 | Programme and Courses | 05 | academics.programs/regulations/curriculum/elective_baskets | programs, regulations, program_regulations, program_structure_terms, courses, curriculum_courses, elective_baskets |
 | Student | 07 | students.* | students, student_program_enrollments, student_term_records, student_holds, student_guardians |
 | Admissions | 08 | admissions.* | admission_cycles, seat_matrix, applicants, merit_lists, counselling_rounds, seat_allotments |
@@ -21,7 +21,7 @@ Verification that every feature from the reference inventories has a home: **sou
 | Recruitment | 06 | hr.recruitment, hr.reservation_roster | job_postings, job_applications, interview_panels |
 | Leave Management | 06 | hr.leaves, hr.leave_encashment | leave_types, staff_leaves, staff_leave_balances |
 | Payroll Management | 06 | hr.payroll, hr.statutory_payroll, hr.loans_advances | staff_payrolls, payroll_components, loans_advances |
-| Knowledge Management | 13, 19 | lms.content, lms.study_materials, library.eresources | course_contents, library e-resources |
+| Knowledge Management | 13, 19 | lms.content, lms.study_materials, library.eresources | course_contents, library_eresources |
 | Career Advancement Scheme | 06 | hr.appraisal_pbas, hr.cas_promotions, research.api_score | appraisals, cas_applications |
 | Training of Trainers | 30 | research.fdp | faculty_developments |
 | Budget & Accounts | 23 | accounting.core, accounting.budgets | income_records, expense_records, budget_heads |
@@ -37,8 +37,8 @@ Verification that every feature from the reference inventories has a home: **sou
 | Service Desk | 25 | facilities.service_desk | service_requests |
 | Sports Management | 25 | facilities.sports | sports_teams, sports_events, sports_participation |
 | Minutes & Resolutions Archive | 33 | governance.committees, governance.minutes | committees, meetings, resolutions, action_taken_reports |
-| Fleet Management | 21 | transport.* | vehicles, routes, trips |
-| Content Federation | 40 | website.core | website tables |
+| Fleet Management | 21 | transport.* | vehicles, transport_routes, transport_trips |
+| Content Federation | 40 | website.core | institution_website_config, website_notices, website_events, website_content_items, website_enquiries |
 | Essential Services | 25 | facilities.service_desk, facilities.canteen_wallet | service_requests, canteens |
 | Grievance Management | 27 | grievances.* | grievances, grievance_updates |
 | Security Management | 25 | facilities.visitor_gate, facilities.emergency_sos | visitor_passes, emergency_alerts |
@@ -65,7 +65,7 @@ Verification that every feature from the reference inventories has a home: **sou
 | Scholarships, career guidance, placement, higher-education progression, skills, alumni, grievances, mentoring | 12, 27, 28, 29 | fees.scholarships, mentoring.*, placement.*, alumni.*, grievances.* |
 | NAAC documentation, IQAC, AQAR, evidence repository, OBE attainment, feedback analysis | 32, 17, 27 | accreditation.*, obe.attainment, surveys.* |
 | Strategic planning, audit trails, RBAC, e-governance | 33, 37, 02 | governance.*, core.audit_logs, core.rbac |
-| Mobile apps for all stakeholders, live alerts, digital ID, notes distribution, assignment submission, centralised messaging | 42, 24, 26, 13 | mobile.*, comms.*, students.id_cards, lms.* |
+| Mobile apps for all stakeholders, live alerts, digital ID, notes distribution, assignment submission, centralised messaging | 42, 24, 26, 13, 07 | mobile.*, comms.*, students.id_cards, lms.* |
 | One-click dashboards, KPI tracking, compliance exports | 35, 36 | analytics.*, reports.* |
 | Moodle/LTI, Tally/SAP/Zoho, CRM, gateways, DigiLocker integrations | 41 | integrations.* |
 | 2FA, IP restriction, encryption, backups, uptime, audit | 02, 43, 44 | security.*, privacy.* |
