@@ -17,7 +17,7 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 | G | Prompts **27–34** (Round 4 engagement, research, quality) | ✅ done | `dec5e8f` |
 | H | Prompts **35–44** (Round 5 platform & delivery); Phase 35 read models = materialized views only (no new tables) | ✅ done | `352cd3a` |
 | I | `RUN_AFTER_PHASE.md`, `QA_Test_Plan.md` (skeleton), `Real_World_Launch_Plan.md` (skeleton), `.claude/launch.json`, `docker-compose.yml` (+ `docker/postgres/init/01_roles.sql`), `nginx/nginx.conf`, `.gitignore`, `.github/workflows/*` (8 workflows) | ✅ done | `c549c32` |
-| J | Final review: run `scripts/verify_prompts_vs_schema.py` over all prompts, cross-check `docs/Coverage_Matrix.md` rows → prompts, merge `planning-docs` → `main` | ☐ next | |
+| J | Final review: `scripts/verify_prompts_vs_schema.py` over all 44 prompts (0 missing, 481 schema objects); `docs/Coverage_Matrix.md` cross-checked row by row (116 rows → 0 uncovered after 5 matrix fixes + Phase 02 `core.rbac` cite); `planning-docs` merged → `main` (`--no-ff`) | ✅ done | `1c5bfbe` |
 
 ### Prompt inventory (Stage 1)
 
@@ -72,11 +72,11 @@ Branch: `planning-docs` (off `main`). Plan: [MASTER_PLAN.md](MASTER_PLAN.md).
 
 ## Stage 2 — Build (execute the prompts, one phase per session)
 
-Not started. When Stage 1 is complete, execute `Prompts/00_PREREQUISITE_Project_Setup.md` first, then phases in order; tick here with the commit hash and the verification script result (`scripts/verify/NN_*.ps1` pass/fail) after each phase.
+**Stage 1 is complete (Batch J, 2026-09-15).** Next session: execute `Prompts/00_PREREQUISITE_Project_Setup.md` first (row `00 Prerequisite` below is ☐ next), then phases in order; tick here with the commit hash and the verification script result (`scripts/verify/NN_*.ps1` pass/fail) after each phase.
 
 | Phase | Status | Commit | API verification | UI verification |
 |---|---|---|---|---|
-| 00 Prerequisite | ☐ | | n/a | n/a |
+| 00 Prerequisite | ☐ next | | n/a | n/a |
 | 01 | ☐ | | | |
 | 02 | ☐ | | | |
 | 03 | ☐ | | | |
@@ -144,3 +144,4 @@ psql -U postgres -c "CREATE DATABASE universe_schema_check;" && psql -U postgres
 - 2026-09-13 — User asked mid-batch why implementation has not started: Stage 1 (doc set) precedes Stage 2 (build) by design; Stage 2 may start any time after this batch since prompts 00–34 are complete — decide at the start of the next session (Batch H vs Stage 2 Phase 00/01).
 - 2026-09-13 — Round 5 ownership: Phase 35 adds **materialized views only** (`mv_*` read models, created by `0035_…` and mirrored into `Database_Schema.sql` as a new section 37; drift guard treats them as views) and stores early-warning interventions as Phase 27 `mentoring_sessions` rows; Phase 36 retro-registers every Round 1–4 `/…/reports/{key}` export into the report registry (old routes stay as aliases) and owns the renderers Phase 32 calls; Phase 37 consolidates all retention/purge/archival jobs (incl. Phase 25 visitor PII purge) and adds `check_audit_coverage.py`; Phase 38 records SaaS billing on `institution_subscriptions`/`pending_registrations` (never tenant fee tables) and delegates tenant/user export implementation to Phase 41; Phase 39 aggregates portal pages without new visibility rules (self/wards/ownership only); Phase 43 seeds a 52nd role template `privacy_officer` and permissions `privacy:manage`, `security:manage`, `qa:run`; Phases 42–44 add no DDL.
 - 2026-09-15 — Batch I: infra files are written so CI is green before any code exists — every workflow has a `detect` job and each guard script (`check_metric_registry.py` … `check_migration_safety.py`) switches itself on when its file appears; `guards.yml` is also `workflow_call`-ed by `build.yml`. Phase 43/44 workflows (`security.yml`, `verify.yml`, `release.yml`, `mobile-release.yml`) ship now as self-enabling skeletons those phases complete. The Postgres role bootstrap lives in `docker/postgres/init/01_roles.sql` (not named in the prerequisite prompt's tree; Phase 00 should reference it). `nginx.conf` keeps `/site/` on a `$ssr_upstream` map (default `backend`; Phase 40 switches it to `ssr:5175`). Prompts unchanged (guard: 0 missing).
+- 2026-09-15 — Batch J (Stage 1 sign-off): guard 44/44 prompts 0 missing; Coverage Matrix cross-check found no uncovered rows, only naming drift — matrix rows now use exact schema table names (`user_sessions`, `library_eresources`, `transport_routes`/`transport_trips`, the five website tables) and the mobile row lists Phase 07 as owner of `students.id_cards`; Phase 02 prompt names `core.auth`/`core.rbac` explicitly (registered in Phase 01, non-toggleable). `planning-docs` merged into `main` with `--no-ff`; **Stage 2 starts from `main`** — branch `phase-00` (or similar) off `main` per build session. Not pushed to `origin` (user to push).
