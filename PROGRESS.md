@@ -72,7 +72,7 @@ Branch: Stage 1 on `planning-docs` (merged to `main`); Stage 2 uses one branch p
 
 ## Stage 2 — Build (execute the prompts, one phase per session)
 
-**Stage 1 is complete (Batch J, 2026-09-15). Phase 00 done (2026-09-16, merged to `main`). Phase 01 done (2026-09-16, branch `phase-01`).** Next session: merge `phase-01` into `main` (or branch `phase-02` off `phase-01`), then execute `Prompts/02_Phase02_Auth_RBAC_Features_Visibility.md` (row `02` below is ☐ next); tick here with the commit hash and the verification script result (`scripts/verify/NN_*.ps1` pass/fail) after each phase. **Redis is required from Phase 01 onward** — the live `01_platform.ps1` run (worker + Beat) is still owed on a machine with Redis (see the Phase 01 row and decisions log 2026-09-16).
+**Stage 1 is complete (Batch J, 2026-09-15). Phase 00 done (2026-09-16, merged to `main`). Phase 01 done (2026-09-16, merged to `main` as `2001f1b`).** Next session: branch `phase-02` off `main`, then execute `Prompts/02_Phase02_Auth_RBAC_Features_Visibility.md` (row `02` below is ☐ next); tick here with the commit hash and the verification script result (`scripts/verify/NN_*.ps1` pass/fail) after each phase. **Redis is required from Phase 01 onward** — the live `01_platform.ps1` run (worker + Beat) is still owed on a machine with Redis (see the Phase 01 row and decisions log 2026-09-16).
 
 | Phase | Status | Commit | API verification | UI verification |
 |---|---|---|---|---|
