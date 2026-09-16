@@ -6,12 +6,11 @@ from typing import Any
 
 from fastapi import Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.errors import APIError, ErrorCode
 from app.core.security import decode_token
-from app.db.session import get_db, redis_client
+from app.db.session import bind_tenant, get_db, redis_client, set_tenant
 
 bearer = HTTPBearer(auto_error=False)
 
@@ -74,7 +73,8 @@ async def get_current_user(
         request.state.institution_id = principal.institution_id
     request.state.user_id = principal.id
     if request.state.institution_id:
-        await db.execute(text("SET LOCAL app.institution_id = :i"), {"i": str(request.state.institution_id)})
+        bind_tenant(db, request.state.institution_id)
+        await set_tenant(db, request.state.institution_id)
     return principal
 
 

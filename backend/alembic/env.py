@@ -1,6 +1,9 @@
 """Alembic environment (async) — Prompts/00_PREREQUISITE_Project_Setup.md §3.22.
 
-* ``sqlalchemy.url`` comes from ``settings.DATABASE_URL``.
+* ``sqlalchemy.url`` comes from ``settings.PLATFORM_DATABASE_URL`` (falls back to ``DATABASE_URL``): migrations run as
+  the BYPASSRLS platform role so every object is owned by it — the app role then works through grants and Row-Level
+  Security applies to it as a non-owner, while cross-tenant maintenance (outbox relay, partition creation,
+  ``search_documents`` refresh) runs unrestricted on the platform role (Phase 01 decision, PROGRESS.md 2026-09-16).
 * ``target_metadata = Base.metadata`` with ``import app.models`` so autogenerate sees every model.
 * ``include_object`` skips partition default children (``*_default``) and read-model views (``info.is_view``).
 * ``Base.metadata.create_all`` is forbidden outside ``scripts/check_schema_drift.py``.
@@ -23,8 +26,10 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-# Escape % for ConfigParser interpolation
-config.set_main_option("sqlalchemy.url", settings.DATABASE_URL.replace("%", "%%"))
+# Escape % for ConfigParser interpolation; DDL is owned by the platform role (see module docstring)
+config.set_main_option(
+    "sqlalchemy.url", (settings.PLATFORM_DATABASE_URL or settings.DATABASE_URL).replace("%", "%%")
+)
 
 target_metadata = Base.metadata
 

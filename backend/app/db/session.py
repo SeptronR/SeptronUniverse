@@ -1,7 +1,9 @@
 """Engine, Base and sessions — Prompts/00_PREREQUISITE_Project_Setup.md §3.5.
 
-Every tenant session runs ``SET LOCAL app.institution_id`` inside its transaction so PostgreSQL RLS is the backstop
-for every query (ADR 0002). ``universe_app`` is NOT BYPASSRLS; ``universe_platform`` (super admin / ops) is.
+Every tenant session pins ``app.institution_id`` inside its transaction so PostgreSQL RLS is the backstop for every
+query (ADR 0002). ``universe_app`` is NOT BYPASSRLS; ``universe_platform`` (super admin / ops) is. The setting is
+applied with ``SELECT set_config('app.institution_id', :i, true)`` — the transaction-local equivalent of ``SET LOCAL``
+that accepts a bind parameter (``SET`` itself cannot be parameterised under asyncpg).
 """
 
 from collections.abc import AsyncIterator
@@ -9,7 +11,7 @@ from typing import Any
 
 import redis.asyncio as aioredis
 from fastapi import Request
-from sqlalchemy import text
+from sqlalchemy import event, text
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
@@ -34,13 +36,36 @@ class Base(DeclarativeBase):
     pass
 
 
+SET_TENANT_SQL = text("SELECT set_config('app.institution_id', :i, true)")
+
+
+async def set_tenant(session: AsyncSession, institution_id: Any) -> None:
+    """Pin the RLS context for the current transaction (``SET LOCAL`` semantics, parameterised)."""
+    await session.execute(SET_TENANT_SQL, {"i": str(institution_id)})
+
+
+def bind_tenant(session: AsyncSession, institution_id: Any) -> None:
+    """Re-apply the tenant setting at the start of EVERY transaction of this session.
+
+    The setting dies with the transaction, so a session that commits mid-way (job progress checkpoints, chunked
+    imports) would silently lose its RLS context; the ``after_begin`` hook keeps the tenant pinned for the session's
+    whole life.
+    """
+    iid = str(institution_id)
+
+    @event.listens_for(session.sync_session, "after_begin")
+    def _set_tenant(_sync_session: Any, _transaction: Any, connection: Any) -> None:
+        connection.execute(SET_TENANT_SQL, {"i": iid})
+
+
 async def get_db(request: Request) -> AsyncIterator[AsyncSession]:
     """Tenant session: sets the RLS context from request.state.institution_id inside the transaction."""
     async with SessionLocal() as session:
         try:
             inst = getattr(request.state, "institution_id", None)
             if inst:
-                await session.execute(text("SET LOCAL app.institution_id = :i"), {"i": str(inst)})
+                bind_tenant(session, inst)
+                await set_tenant(session, inst)
             yield session
             await session.commit()
         except Exception:
@@ -60,7 +85,8 @@ async def get_platform_db() -> AsyncIterator[AsyncSession]:
 
 
 async def tenant_session(institution_id: Any) -> AsyncSession:
-    """For Celery tasks: ``db = await tenant_session(iid)`` — sets the RLS context explicitly; caller closes."""
+    """For Celery tasks: ``db = await tenant_session(iid)`` — RLS context pinned for every transaction; caller closes."""
     session = SessionLocal()
-    await session.execute(text("SET LOCAL app.institution_id = :i"), {"i": str(institution_id)})
+    bind_tenant(session, institution_id)
+    await set_tenant(session, institution_id)
     return session

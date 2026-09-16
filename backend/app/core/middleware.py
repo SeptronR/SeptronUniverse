@@ -20,21 +20,30 @@ CallNext = Callable[[Request], Awaitable[Response]]
 
 
 class RequestLoggerMiddleware(BaseHTTPMiddleware):
+    """Assigns ``X-Request-Id`` and binds ``request_id`` / ``institution_id`` / ``user_id`` to every log line of the request
+    (structlog contextvars — Prompts/01 §01.6 ``core/logging.py``); the access line is emitted once per request."""
+
     async def dispatch(self, request: Request, call_next: CallNext) -> Response:
-        request.state.request_id = request.headers.get("X-Request-Id") or uuid.uuid4().hex[:16]
+        request.state.request_id = (request.headers.get("X-Request-Id") or uuid.uuid4().hex[:16])[:40]
+        structlog.contextvars.clear_contextvars()
+        structlog.contextvars.bind_contextvars(request_id=request.state.request_id, path=request.url.path)
         start = time.perf_counter()
-        response = await call_next(request)
+        try:
+            response = await call_next(request)
+        finally:
+            # tenant/user are resolved downstream (InstitutionContext middleware, get_current_user) — bind for the access line
+            structlog.contextvars.bind_contextvars(
+                institution_id=str(getattr(request.state, "institution_id", "") or ""),
+                user_id=str(getattr(request.state, "user_id", "") or ""),
+            )
         response.headers["X-Request-Id"] = request.state.request_id
         log.info(
             "http",
             method=request.method,
-            path=request.url.path,
             status=response.status_code,
             ms=round((time.perf_counter() - start) * 1000, 1),
-            request_id=request.state.request_id,
-            institution_id=str(getattr(request.state, "institution_id", "") or ""),
-            user_id=str(getattr(request.state, "user_id", "") or ""),
         )
+        structlog.contextvars.clear_contextvars()
         return response
 
 
@@ -59,9 +68,12 @@ class ReadOnlyModeMiddleware(BaseHTTPMiddleware):
     """Writes are refused with ``503 READ_ONLY`` platform-wide (env) or per tenant (``read_only_modes`` cached in Redis)."""
 
     SAFE = {"GET", "HEAD", "OPTIONS"}
+    # auth flows stay open (people must be able to sign in), and the read-only switch itself must remain reachable so an
+    # operator can lift a window (Prompts/01 §01.8 POST /platform/read-only)
+    EXEMPT_PREFIXES = ("/api/v1/auth", "/api/v1/platform/read-only")
 
     async def dispatch(self, request: Request, call_next: CallNext) -> Response:
-        if request.method in self.SAFE or request.url.path.startswith("/api/v1/auth"):
+        if request.method in self.SAFE or request.url.path.startswith(self.EXEMPT_PREFIXES):
             return await call_next(request)
         if settings.READ_ONLY_MODE or await self._tenant_read_only(request):
             return error_response(request, 503, ErrorCode.READ_ONLY, "The platform is in read-only mode")

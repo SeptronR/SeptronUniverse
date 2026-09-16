@@ -3,18 +3,21 @@
 Run: ``uvicorn main:app --reload`` (dev) / ``gunicorn -k uvicorn.workers.UvicornWorker main:app`` (prod).
 """
 
+import contextlib
+import mimetypes
 import os
 import warnings
 from collections.abc import AsyncIterator, Awaitable
 from contextlib import asynccontextmanager
-from typing import cast
+from pathlib import Path
+from typing import Any, cast
 
+import structlog
 from fastapi import FastAPI, Request
 from fastapi.exceptions import FastAPIDeprecationWarning, RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
-from fastapi.responses import ORJSONResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, ORJSONResponse, RedirectResponse
 from prometheus_fastapi_instrumentator import Instrumentator
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
@@ -23,6 +26,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.errors import APIError, ErrorCode, error_response
+from app.core.files import storage, verify_signed_url
 from app.core.logging import configure_logging
 from app.core.middleware import (
     AuditMiddleware,
@@ -31,13 +35,14 @@ from app.core.middleware import (
     RequestLoggerMiddleware,
 )
 from app.core.ws import ws_router
-from app.db.session import engine, redis_client
+from app.db.session import PlatformSessionLocal, engine, redis_client
 
 # FastAPI 0.135 deprecates ORJSONResponse in favour of Pydantic-native serialisation; the envelope still uses it
 # (Prompts/00 §3.3/§3.7). Silence only this warning so error responses do not spam the logs; revisit in Phase 44.
 warnings.filterwarnings("ignore", category=FastAPIDeprecationWarning, message=".*ORJSONResponse.*")
 
 configure_logging()
+log = structlog.get_logger()
 
 
 @asynccontextmanager
@@ -46,6 +51,13 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         await conn.execute(text("SELECT 1"))
     await cast(Awaitable[bool], redis_client.ping())  # Redis is REQUIRED: fail loudly
     os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
+    # read-only windows live in the DB; the middleware reads only the Redis mirror — rebuild it on every start
+    from app.services.read_only_service import ReadOnlyService
+
+    with contextlib.suppress(Exception):  # a missing table on a fresh DB (before 0001) must not block start-up
+        async with PlatformSessionLocal() as db:
+            windows = await ReadOnlyService(db).refresh_cache()
+            log.info("read_only_cache_refreshed", windows=windows)
     yield
     await engine.dispose()
     await redis_client.aclose()
@@ -120,7 +132,6 @@ async def unhandled_handler(request: Request, exc: Exception) -> ORJSONResponse:
 app.include_router(api_router, prefix="/api/v1")
 app.include_router(ws_router)
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
-app.mount("/uploads", StaticFiles(directory=settings.UPLOAD_DIR), name="uploads")
 Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 
 
@@ -130,8 +141,36 @@ async def health() -> dict[str, str]:
 
 
 @app.get("/ready", include_in_schema=False)
-async def ready() -> dict[str, str]:
-    async with engine.connect() as conn:
-        await conn.execute(text("SELECT 1"))
-    await cast(Awaitable[bool], redis_client.ping())
-    return {"status": "ready"}
+async def ready() -> ORJSONResponse:
+    """DB + Redis + storage + migration head + outbox lag (RUN_AFTER_PHASE.md §5); 503 when a hard dependency fails."""
+    from app.services.platform_service import PlatformService
+
+    async with PlatformSessionLocal() as db:
+        ok_, checks = await PlatformService(db).readiness()
+    return ORJSONResponse(
+        status_code=200 if ok_ else 503,
+        content={"status": "ready" if ok_ else "degraded", "environment": settings.APP_ENV, "checks": checks},
+    )
+
+
+@app.get("/uploads/{key:path}", include_in_schema=False)
+async def serve_upload(key: str, request: Request, sig: str | None = None, exp: int | None = None) -> Any:
+    """Signed-URL gate for the local storage backend (Prompts/01 §01.6 file service).
+
+    ``/uploads/{key}?sig=…&exp=…`` — the HMAC signature (``core/files.py``) must match and not be expired; the S3
+    backend answers with a redirect to a presigned URL so clients can use one URL shape everywhere.
+    """
+    if not sig or not exp or not verify_signed_url(key, sig, exp):
+        return error_response(request, 403, ErrorCode.PERMISSION_DENIED, "Invalid or expired file link")
+    if settings.STORAGE_BACKEND == "s3":
+        return RedirectResponse(storage.signed_url(key), status_code=302)
+    root = Path(settings.UPLOAD_DIR).resolve()
+    path = (root / key).resolve()
+    if root not in path.parents or not path.is_file():
+        return error_response(request, 404, ErrorCode.NOT_FOUND, "File not found")
+    media_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+    return FileResponse(
+        path,
+        media_type=media_type,
+        headers={"Cache-Control": "private, max-age=300", "X-Content-Type-Options": "nosniff"},
+    )

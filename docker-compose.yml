@@ -18,6 +18,8 @@ x-backend-env: &backend-env
   CELERY_RESULT_BACKEND: redis://redis:6379/2
   STORAGE_BACKEND: local
   UPLOAD_DIR: /app/uploads
+  FILE_MIME_SNIFFER: magic          # libmagic1 is in the image; workstations without it use the builtin sniffer
+  SCHEMA_SQL_PATH: /app/Database_Schema.sql   # revision 0001 applies the canonical DDL (mounted below)
   ALLOWED_ORIGINS: '["http://localhost:5173","http://localhost"]'
   PLATFORM_HOSTS: '["localhost","universe.septronr.com"]'
   PYTHONUTF8: "1"
@@ -32,6 +34,7 @@ x-backend: &backend
       required: false
   volumes:
     - ./backend:/app
+    - ./Database_Schema.sql:/app/Database_Schema.sql:ro   # outside the build context; Alembic 0001 needs it
     - uploads:/app/uploads
   depends_on:
     postgres:
@@ -76,7 +79,8 @@ services:
 
   backend:
     <<: *backend
-    # The backend container owns migrations (docker-entrypoint.sh: RUN_MIGRATIONS=1 → alembic upgrade head under an advisory lock)
+    # The backend container owns migrations (docker-entrypoint.sh: RUN_MIGRATIONS=1 → alembic upgrade head); Alembic connects
+    # with PLATFORM_DATABASE_URL so the schema is owned by the BYPASSRLS platform role and RLS binds the app role (Phase 01)
     environment:
       <<: *backend-env
       RUN_MIGRATIONS: "1"
@@ -141,7 +145,6 @@ services:
     image: nginx:alpine
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - uploads:/srv/uploads:ro
     ports:
       - "80:80"
     depends_on:

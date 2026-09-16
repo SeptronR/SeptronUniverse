@@ -4,6 +4,23 @@
  */
 
 export interface paths {
+    "/api/v1/_dev/jobs/sleep": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enqueue a sleep job (dev only) */
+        post: operations["dev_sleep_job_api_v1__dev_jobs_sleep_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/login": {
         parameters: {
             query?: never;
@@ -21,14 +38,507 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit in-app feedback */
+        post: operations["create_feedback_api_v1_feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/articles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Help articles (platform + institution), optionally by module */
+        get: operations["list_articles_api_v1_help_articles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/articles/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Help article detail */
+        get: operations["get_article_api_v1_help_articles__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My background jobs (all with jobs:view_all) */
+        get: operations["list_jobs_api_v1_jobs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/jobs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Job status */
+        get: operations["get_job_api_v1_jobs__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/jobs/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request cancellation of a queued/running job */
+        post: operations["cancel_job_api_v1_jobs__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mobile/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mobile remote config (min versions, force update, maintenance banner) */
+        get: operations["mobile_config_get_api_v1_mobile_config_get"];
+        put?: never;
+        /** Mobile remote config (POST variant used by the app bootstrap) */
+        post: operations["mobile_config_post_api_v1_mobile_config_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/read-only": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current read-only state (platform + tenant) */
+        get: operations["read_only_state_api_v1_platform_read_only_get"];
+        put?: never;
+        /** Open or close a read-only window (tenant: settings:manage; platform: super admin) */
+        post: operations["set_read_only_api_v1_platform_read_only_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Platform configuration for clients (packs, themes, captcha, app versions) */
+        get: operations["public_config_api_v1_public_config_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Global search (students, staff, courses, applicants) — visibility-aware */
+        get: operations["search_api_v1_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** CollegeSummary */
+        CollegeSummary: {
+            /** Code */
+            code: string;
+            /** College Type */
+            college_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Main
+             * @default false
+             */
+            is_main: boolean;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Name */
+            name: string;
+        };
+        /** Envelope[FeedbackResponse] */
+        Envelope_FeedbackResponse_: {
+            data?: components["schemas"]["FeedbackResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HelpArticleResponse] */
+        Envelope_HelpArticleResponse_: {
+            data?: components["schemas"]["HelpArticleResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[JobResponse] */
+        Envelope_JobResponse_: {
+            data?: components["schemas"]["JobResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MobileConfigResponse] */
+        Envelope_MobileConfigResponse_: {
+            data?: components["schemas"]["MobileConfigResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PublicConfig] */
+        Envelope_PublicConfig_: {
+            data?: components["schemas"]["PublicConfig"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ReadOnlyState] */
+        Envelope_ReadOnlyState_: {
+            data?: components["schemas"]["ReadOnlyState"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[SearchResponse] */
+        Envelope_SearchResponse_: {
+            data?: components["schemas"]["SearchResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HelpArticleSummary]] */
+        Envelope_list_HelpArticleSummary__: {
+            /** Data */
+            data?: components["schemas"]["HelpArticleSummary"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[JobResponse]] */
+        Envelope_list_JobResponse__: {
+            /** Data */
+            data?: components["schemas"]["JobResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** FeedbackCreate */
+        FeedbackCreate: {
+            /**
+             * Category
+             * @default idea
+             * @enum {string}
+             */
+            category: "bug" | "idea" | "question" | "praise";
+            /**
+             * Client
+             * @default web
+             * @enum {string}
+             */
+            client: "web" | "mobile" | "pwa";
+            /** Message */
+            message: string;
+            /** Page */
+            page?: string | null;
+            /** Rating */
+            rating?: number | null;
+            /** Screenshot Url */
+            screenshot_url?: string | null;
+        };
+        /** FeedbackResponse */
+        FeedbackResponse: {
+            /** Category */
+            category?: string | null;
+            /** Client */
+            client?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Message */
+            message?: string | null;
+            /** Page */
+            page?: string | null;
+            /** Rating */
+            rating?: number | null;
+            /** Status */
+            status: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HelpArticleResponse */
+        HelpArticleResponse: {
+            /** Audience */
+            audience?: string[] | null;
+            /** Body */
+            body: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Platform
+             * @default false
+             */
+            is_platform: boolean;
+            /** Module */
+            module?: string | null;
+            /** Slug */
+            slug: string;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** HelpArticleSummary */
+        HelpArticleSummary: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Platform
+             * @default false
+             */
+            is_platform: boolean;
+            /** Module */
+            module?: string | null;
+            /** Slug */
+            slug: string;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** InstitutionSummary */
+        InstitutionSummary: {
+            /** Currency */
+            currency: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Locale */
+            locale: string;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /** Timezone */
+            timezone: string;
+            /** Type */
+            type: string;
+        };
+        /** JobResponse */
+        JobResponse: {
+            /**
+             * Cancel Requested
+             * @default false
+             */
+            cancel_requested: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Error */
+            error?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
+            /** Finished At */
+            finished_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Job Type */
+            job_type: string;
+            /** Message */
+            message?: string | null;
+            /** Progress Pct */
+            progress_pct: number;
+            /** Requested By */
+            requested_by?: string | null;
+            /** Result Url */
+            result_url?: string | null;
+            /** Started At */
+            started_at?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
         };
         /** LoginRequest */
         LoginRequest: {
@@ -41,6 +551,152 @@ export interface components {
             institution_slug?: string | null;
             /** Password */
             password: string;
+        };
+        /** MobileConfigRequest */
+        MobileConfigRequest: {
+            /** App Version */
+            app_version?: string | null;
+            /** Institution Slug */
+            institution_slug?: string | null;
+            /**
+             * Platform
+             * @default android
+             * @enum {string}
+             */
+            platform: "android" | "ios" | "web";
+        };
+        /** MobileConfigResponse */
+        MobileConfigResponse: {
+            /**
+             * Cache Ttl Seconds
+             * @default 300
+             */
+            cache_ttl_seconds: number;
+            /** Feature Hints */
+            feature_hints?: {
+                [key: string]: string;
+            };
+            /** Force Update */
+            force_update: boolean;
+            /** Force Update Below */
+            force_update_below: {
+                [key: string]: string;
+            };
+            /** Maintenance Banner */
+            maintenance_banner?: string | null;
+            /** Min Versions */
+            min_versions: {
+                [key: string]: string;
+            };
+            /**
+             * Read Only
+             * @default false
+             */
+            read_only: boolean;
+            /** Store Urls */
+            store_urls: {
+                [key: string]: string;
+            };
+            /** Update Available */
+            update_available: boolean;
+        };
+        /** PublicConfig */
+        PublicConfig: {
+            /** Api Version */
+            api_version: string;
+            /** Captcha */
+            captcha: {
+                [key: string]: unknown;
+            };
+            /** Colleges */
+            colleges?: components["schemas"]["CollegeSummary"][];
+            /** Default Pack */
+            default_pack: string;
+            /** Environment */
+            environment: string;
+            /** Features Public */
+            features_public?: string[];
+            institution?: components["schemas"]["InstitutionSummary"] | null;
+            /** Min App Versions */
+            min_app_versions: {
+                [key: string]: string;
+            };
+            /** Packs */
+            packs: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            /** Table Styles */
+            table_styles: string[];
+            /** Themes */
+            themes: string[];
+        };
+        /** ReadOnlyModeRequest */
+        ReadOnlyModeRequest: {
+            /** Enabled */
+            enabled: boolean;
+            /** Ends At */
+            ends_at?: string | null;
+            /**
+             * Institution Id
+             * @description Super admin only: target tenant (defaults to the caller's institution)
+             */
+            institution_id?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /**
+             * Scope
+             * @default institution
+             * @enum {string}
+             */
+            scope: "platform" | "institution";
+        };
+        /** ReadOnlyState */
+        ReadOnlyState: {
+            /** Ends At */
+            ends_at?: string | null;
+            /**
+             * Institution
+             * @default false
+             */
+            institution: boolean;
+            /** Institution Id */
+            institution_id?: string | null;
+            /** Platform */
+            platform: boolean;
+            /** Reason */
+            reason?: string | null;
+        };
+        /** SearchResponse */
+        SearchResponse: {
+            /** Entity Types */
+            entity_types: string[];
+            /** Q */
+            q: string;
+            /** Results */
+            results: components["schemas"]["SearchResult"][];
+        };
+        /** SearchResult */
+        SearchResult: {
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
+            /**
+             * Entity Type
+             * @enum {string}
+             */
+            entity_type: "student" | "staff" | "course" | "applicant";
+            /** Route */
+            route: string;
+            /** Subtitle */
+            subtitle?: string | null;
+            /** Title */
+            title: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -64,6 +720,39 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    dev_sleep_job_api_v1__dev_jobs_sleep_post: {
+        parameters: {
+            query?: {
+                seconds?: number;
+                /** @description run the job body in-process (no worker) — dev only */
+                inline?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     login_api_v1_auth_login_post: {
         parameters: {
             query?: never;
@@ -86,6 +775,384 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_feedback_api_v1_feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeedbackResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_articles_api_v1_help_articles_get: {
+        parameters: {
+            query?: {
+                module?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HelpArticleSummary__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_article_api_v1_help_articles__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HelpArticleResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_jobs_api_v1_jobs_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                status?: string | null;
+                job_type?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_JobResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_job_api_v1_jobs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_job_api_v1_jobs__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mobile_config_get_api_v1_mobile_config_get: {
+        parameters: {
+            query?: {
+                platform?: string;
+                app_version?: string | null;
+                institution_slug?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mobile_config_post_api_v1_mobile_config_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MobileConfigRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_only_state_api_v1_platform_read_only_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadOnlyState_"];
+                };
+            };
+        };
+    };
+    set_read_only_api_v1_platform_read_only_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReadOnlyModeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadOnlyState_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_config_api_v1_public_config_get: {
+        parameters: {
+            query?: {
+                /** @description institution slug (optional) */
+                institution?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicConfig_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_api_v1_search_get: {
+        parameters: {
+            query: {
+                q: string;
+                /** @description comma-separated entity types: student,staff,course,applicant */
+                types?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SearchResponse_"];
                 };
             };
             /** @description Validation Error */

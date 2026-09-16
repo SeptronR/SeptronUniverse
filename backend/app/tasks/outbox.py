@@ -1,12 +1,22 @@
-"""Transactional-outbox relay — Prompts/00_PREREQUISITE_Project_Setup.md §3.14 (ADR 0005).
+"""Transactional-outbox relay and the consumer contract — Prompts/00 §3.14, Prompts/01 §01.6 (ADR 0005).
 
-Beat runs ``outbox.relay`` every 5 s (Phase 01 adds the LISTEN/NOTIFY wake-up). Pending ``domain_events`` are
-locked with ``FOR UPDATE SKIP LOCKED``, sent to every subscribed consumer task (at-least-once) and marked
-``dispatched``; failures set ``next_attempt_at`` with exponential backoff and the event is ``dead`` after 10 attempts.
-Consumers must be idempotent: they insert into ``event_consumptions(consumer, event_id)`` first and skip duplicates.
+Beat runs ``outbox.relay`` every 5 s. Pending ``domain_events`` (``next_attempt_at`` due) are locked with
+``FOR UPDATE SKIP LOCKED`` on the **platform session** (BYPASSRLS — the relay is cross-tenant by nature), sent to every
+subscribed consumer task (at-least-once) and marked ``dispatched``. Delivery problems feed back into the event row:
+
+* a broker failure while sending, or a consumer raising, increments ``attempts``, stores ``last_error`` and re-arms the
+  event with exponential backoff ``next_attempt_at = now + 2^attempts min`` (capped at 2^8);
+* after ``MAX_ATTEMPTS`` (10) the event is ``dead`` (dead-letter — visible in Phase 37/38 ops screens).
+
+Consumers are declared with ``@consumer("search.reindex", events=["student.*", …])`` — an ``async def fn(db, event)``
+that receives a tenant session (RLS context from ``event["institution_id"]``) or the platform session for platform
+events. The wrapper is idempotent: it records ``event_consumptions(consumer, event_id)`` and skips duplicates, so a
+retry triggered by one failing consumer never re-runs the others. ``"*"`` subscribes to every event, ``"student.*"``
+to a prefix.
 """
 
 import asyncio
+from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
@@ -17,13 +27,17 @@ from app.tasks.celery_app import celery
 
 log = structlog.get_logger()
 
-CONSUMERS: dict[str, list[str]] = {}  # event_type → [celery task names]; phases register with subscribe()
+CONSUMERS: dict[str, list[str]] = {}  # event_type (or prefix.* / *) → [celery task names]
 MAX_ATTEMPTS = 10
+
+ConsumerFn = Callable[[Any, dict[str, Any]], Awaitable[None]]
 
 
 def subscribe(event_type: str, task_name: str) -> None:
-    """Register a Celery task as a consumer of an event type (``"*"`` receives every event)."""
-    CONSUMERS.setdefault(event_type, []).append(task_name)
+    """Register a Celery task as a consumer of an event type (``"*"`` receives every event, ``"x.*"`` a prefix)."""
+    tasks = CONSUMERS.setdefault(event_type, [])
+    if task_name not in tasks:
+        tasks.append(task_name)
 
 
 def consumers_for(event_type: str) -> list[str]:
@@ -34,6 +48,9 @@ def consumers_for(event_type: str) -> list[str]:
     return sorted(set(tasks))
 
 
+# ---- relay ---------------------------------------------------------------------------------------------------------
+
+
 @celery.task(name="outbox.relay", queue="scheduled")
 def relay(batch: int = 500) -> dict[str, int]:
     """Dispatch pending events to their consumers; returns counters for Flower / logs."""
@@ -41,12 +58,13 @@ def relay(batch: int = 500) -> dict[str, int]:
 
 
 async def _relay(batch: int) -> dict[str, int]:
-    from app.db.session import SessionLocal
+    from app.db.session import PlatformSessionLocal
     from app.models.platform import DomainEvent
 
+    celery.loader.import_default_modules()  # every ``include``d task module registers its consumers before routing
     dispatched = failed = 0
     now = datetime.now(UTC)
-    async with SessionLocal() as db:
+    async with PlatformSessionLocal() as db:
         q = (
             select(DomainEvent)
             .where(
@@ -59,29 +77,13 @@ async def _relay(batch: int) -> dict[str, int]:
         )
         events = list((await db.execute(q)).scalars().all())
         for ev in events:
-            targets = consumers_for(ev.event_type)
             try:
-                for task_name in targets:
-                    celery.send_task(
-                        task_name,
-                        kwargs={
-                            "institution_id": str(ev.institution_id) if ev.institution_id else None,
-                            "event_id": str(ev.id),
-                            "event_type": ev.event_type,
-                            "payload": ev.payload,
-                            "aggregate_type": ev.aggregate_type,
-                            "aggregate_id": str(ev.aggregate_id) if ev.aggregate_id else None,
-                        },
-                    )
-                ev.status, ev.dispatched_at, ev.attempts = "dispatched", now, ev.attempts + 1
+                for task_name in consumers_for(ev.event_type):
+                    celery.send_task(task_name, kwargs=_event_kwargs(ev))
+                ev.status, ev.dispatched_at, ev.last_error = "dispatched", now, None
                 dispatched += 1
             except Exception as exc:  # noqa: BLE001 - broker failures are retried with backoff
-                ev.attempts += 1
-                ev.last_error = str(exc)[:2000]
-                if ev.attempts >= MAX_ATTEMPTS:
-                    ev.status = "dead"
-                else:
-                    ev.next_attempt_at = now + timedelta(minutes=2 ** min(ev.attempts, 8))
+                _arm_retry(ev, str(exc))
                 failed += 1
         await db.commit()
     if dispatched or failed:
@@ -89,31 +91,133 @@ async def _relay(batch: int) -> dict[str, int]:
     return {"dispatched": dispatched, "failed": failed}
 
 
-async def mark_consumed(db: Any, consumer: str, event_id: str) -> bool:
-    """Idempotency guard for consumers: returns False when this consumer already handled the event."""
+def _event_kwargs(ev: Any) -> dict[str, Any]:
+    return {
+        "institution_id": str(ev.institution_id) if ev.institution_id else None,
+        "event_id": str(ev.id),
+        "event_type": ev.event_type,
+        "payload": ev.payload,
+        "aggregate_type": ev.aggregate_type,
+        "aggregate_id": str(ev.aggregate_id) if ev.aggregate_id else None,
+        "actor_user_id": str(ev.actor_user_id) if ev.actor_user_id else None,
+    }
+
+
+def backoff(attempts: int) -> timedelta:
+    return timedelta(minutes=2 ** min(max(attempts, 1), 8))
+
+
+def _arm_retry(ev: Any, error: str) -> None:
+    ev.attempts += 1
+    ev.last_error = error[:2000]
+    if ev.attempts >= MAX_ATTEMPTS:
+        ev.status = "dead"
+    else:
+        ev.status = "pending"
+        ev.next_attempt_at = datetime.now(UTC) + backoff(ev.attempts)
+
+
+async def record_consumer_failure(event_id: str, consumer_name: str, error: str) -> None:
+    """A consumer raised: re-arm the event with backoff (or dead-letter it) on the platform session."""
+    from app.db.session import PlatformSessionLocal
+    from app.models.platform import DomainEvent
+
+    async with PlatformSessionLocal() as db:
+        ev = (
+            await db.execute(select(DomainEvent).where(DomainEvent.id == event_id).with_for_update())
+        ).scalar_one_or_none()
+        if ev is None:
+            return
+        _arm_retry(ev, f"{consumer_name}: {error}")
+        await db.commit()
+        log.warning(
+            "outbox_consumer_failed",
+            consumer=consumer_name,
+            event_id=event_id,
+            attempts=ev.attempts,
+            status=ev.status,
+            error=error[:200],
+        )
+
+
+# ---- consumer contract -----------------------------------------------------------------------------------------------
+
+
+async def mark_consumed(db: Any, consumer_name: str, event_id: str) -> bool:
+    """Idempotency guard: returns False when this consumer already handled the event."""
     res = await db.execute(
         text(
             "INSERT INTO event_consumptions (consumer, event_id) VALUES (:c, :e) "
             "ON CONFLICT (consumer, event_id) DO NOTHING RETURNING consumer"
         ),
-        {"c": consumer, "e": event_id},
+        {"c": consumer_name, "e": event_id},
     )
     return res.first() is not None
 
 
-@celery.task(name="outbox.test_ping", queue="scheduled")
-def test_ping(**event: Any) -> None:
-    """Consumer for ``test.ping`` events (Phase 01 verification step 5)."""
-    asyncio.run(_test_ping(event))
+async def already_consumed(db: Any, consumer_name: str, event_id: str) -> bool:
+    row = await db.execute(
+        text("SELECT 1 FROM event_consumptions WHERE consumer = :c AND event_id = :e"),
+        {"c": consumer_name, "e": event_id},
+    )
+    return row.first() is not None
 
 
-async def _test_ping(event: dict[str, Any]) -> None:
-    from app.db.session import SessionLocal
+def consumer(name: str, events: list[str], queue: str = "scheduled") -> Callable[[ConsumerFn], Any]:
+    """Declare an outbox consumer: ``@consumer("search.reindex", events=["student.*"]) async def fn(db, event)``."""
 
-    async with SessionLocal() as db:
-        if await mark_consumed(db, "outbox.test_ping", event["event_id"]):
-            log.info("test_ping", event_id=event["event_id"], payload=event.get("payload"))
-        await db.commit()
+    def deco(fn: ConsumerFn) -> Any:
+        @celery.task(name=name, queue=queue)
+        def task(**event: Any) -> None:
+            asyncio.run(_consume(name, fn, event))
+
+        for e in events:
+            subscribe(e, name)
+        task.__consumer_events__ = list(events)  # type: ignore[attr-defined]
+        task.__consumer_fn__ = fn  # type: ignore[attr-defined]  # in-process verification drives the body directly
+        return task
+
+    return deco
 
 
-subscribe("test.ping", "outbox.test_ping")
+async def _consume(name: str, fn: ConsumerFn, event: dict[str, Any]) -> None:
+    from app.db.session import PlatformSessionLocal, tenant_session
+
+    event_id = event.get("event_id")
+    structlog.contextvars.bind_contextvars(consumer=name, event_id=event_id, event_type=event.get("event_type"))
+    try:
+        async with PlatformSessionLocal() as pdb:
+            if event_id and await already_consumed(pdb, name, event_id):
+                log.info("outbox_consumer_skip_duplicate")
+                return
+        inst = event.get("institution_id")
+        db = await tenant_session(inst) if inst else PlatformSessionLocal()
+        try:
+            await fn(db, event)
+            if event_id:
+                await mark_consumed(db, name, event_id)
+            await db.commit()
+        except Exception as exc:  # noqa: BLE001 - recorded on the event row, never re-raised into Celery retries
+            await db.rollback()
+            if event_id:
+                await record_consumer_failure(event_id, name, str(exc))
+            return
+        finally:
+            await db.close()
+    finally:
+        structlog.contextvars.unbind_contextvars("consumer", "event_id", "event_type")
+
+
+# ---- built-in consumers used by the Phase 01 verification (step 5) ---------------------------------------------------
+
+
+@consumer("outbox.test_ping", events=["test.ping"])
+async def test_ping(db: Any, event: dict[str, Any]) -> None:
+    """Consumer for ``test.ping`` events: logs the payload (one ``event_consumptions`` row per event)."""
+    log.info("test_ping", payload=event.get("payload"))
+
+
+@consumer("outbox.test_fail", events=["test.fail"])
+async def test_fail(db: Any, event: dict[str, Any]) -> None:
+    """Always-failing consumer: proves ``attempts`` increments and ``next_attempt_at`` is set (verification step 5)."""
+    raise RuntimeError("test.fail consumer failed on purpose")

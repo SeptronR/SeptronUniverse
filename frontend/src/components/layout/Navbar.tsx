@@ -1,14 +1,14 @@
-import { Building2, LogOut, Menu, Moon, Search, Sun, User } from 'lucide-react';
+import { Building2, LogOut, Menu, Search, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Avatar } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import { Dropdown } from '@/components/ui/Dropdown';
+import { AppearanceMenu } from '@/components/shared/AppearanceMenu';
 import { JobsTray } from '@/components/shared/JobsTray';
 import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
-import { applyThemePrefs, loadThemePrefs } from '@/styles/themes';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -24,13 +24,8 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
   const user = useAuthStore((s) => s.currentUser);
   const logout = useAuthStore((s) => s.logout);
   const { institutionName, collegeName, years, terms, academicYearId, termId, setYear, setTerm } = useSessionStore();
-  const showSwitcher = !!user?.is_super_admin || (user?.scopes.filter((s) => s.scope_type === 'college').length ?? 0) > 1;
-
-  const toggleMode = () => {
-    const prefs = loadThemePrefs();
-    const dark = document.documentElement.classList.contains('dark');
-    applyThemePrefs({ ...prefs, mode: dark ? 'light' : 'dark' });
-  };
+  const showSwitcher =
+    !!user?.is_super_admin || (user?.scopes.filter((s) => s.scope_type === 'college').length ?? 0) > 1;
 
   return (
     <header className="app-navbar flex h-14 items-center gap-2 border-b bg-card px-3 sm:px-4">
@@ -45,6 +40,14 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
         </Button>
       )}
 
+      {years.length === 0 && (
+        <span
+          className="hidden rounded-md border border-dashed px-2 py-1 text-xs text-muted-foreground md:inline"
+          title="Academic years arrive with Phase 03"
+        >
+          Academic year —
+        </span>
+      )}
       {years.length > 0 && (
         <div className="hidden items-center gap-1 md:flex">
           <select
@@ -84,19 +87,23 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
           className="hidden text-muted-foreground sm:inline-flex"
           onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }))}
         >
-          <Search className="h-4 w-4" /> {t('common.search')} <kbd className="ml-2 rounded border px-1 text-[10px]">Ctrl K</kbd>
+          <Search className="h-4 w-4" /> {t('common.search')}{' '}
+          <kbd className="ml-2 rounded border px-1 text-[10px]">Ctrl K</kbd>
         </Button>
-        <Button variant="ghost" size="icon" onClick={toggleMode} aria-label="Toggle dark mode">
-          <Sun className="h-5 w-5 dark:hidden" />
-          <Moon className="hidden h-5 w-5 dark:block" />
-        </Button>
+        <AppearanceMenu />
         <JobsTray />
         <NotificationCenter />
         <Dropdown
           trigger={
-            <button type="button" className="ml-1 flex items-center gap-2 rounded-md p-1 hover:bg-accent" aria-label="Account menu">
+            <button
+              type="button"
+              className="ml-1 flex items-center gap-2 rounded-md p-1 hover:bg-accent"
+              aria-label="Account menu"
+            >
               <Avatar name={user?.display_name ?? user?.username} src={user?.avatar_url} size="sm" />
-              <span className="hidden max-w-[10rem] truncate text-sm font-medium md:inline">{user?.display_name ?? user?.username}</span>
+              <span className="hidden max-w-[10rem] truncate text-sm font-medium md:inline">
+                {user?.display_name ?? user?.username}
+              </span>
             </button>
           }
           items={[

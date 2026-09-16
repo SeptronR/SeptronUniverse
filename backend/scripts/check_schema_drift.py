@@ -18,7 +18,8 @@ from pathlib import Path
 import _bootstrap  # noqa: F401
 from phase_manifest import VIEWS, tables_for
 
-CONSTRAINT_PREFIXES = ("PRIMARY KEY", "UNIQUE", "CONSTRAINT", "FOREIGN KEY", "CHECK", "EXCLUDE", "LIKE ")
+# whole-word match: a column named ``checked_at`` must not be mistaken for a CHECK constraint
+CONSTRAINT_RE = re.compile(r"^(PRIMARY\s+KEY|UNIQUE|CONSTRAINT|FOREIGN\s+KEY|CHECK|EXCLUDE|LIKE)\b", re.IGNORECASE)
 
 
 def strip_comments(sql: str) -> str:
@@ -79,7 +80,7 @@ def parse_schema(path: Path) -> dict[str, list[str]]:
         body = sql[start : i - 1]
         cols: list[str] = []
         for item in split_top_level(body):
-            if not item or item.upper().startswith(CONSTRAINT_PREFIXES):
+            if not item or CONSTRAINT_RE.match(item):
                 continue
             cols.append(item.split()[0].strip('"'))
         tables[name] = cols

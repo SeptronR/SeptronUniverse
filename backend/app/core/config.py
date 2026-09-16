@@ -35,6 +35,12 @@ class Settings(BaseSettings):
     AWS_ACCESS_KEY_ID: str | None = None
     AWS_SECRET_ACCESS_KEY: str | None = None
     SIGNED_URL_TTL_SECONDS: int = 900
+    MAX_UPLOAD_MB: int = 25
+    # builtin = signature sniffer (no native library); magic = python-magic/libmagic (Docker image, Linux)
+    FILE_MIME_SNIFFER: str = "builtin"
+    CLAMAV_HOST: str | None = None
+    CLAMAV_PORT: int = 3310
+    JOB_RETENTION_DAYS: int = 7
 
     SMS_PROVIDER: str = "mock"
     WHATSAPP_PROVIDER: str = "mock"
@@ -44,6 +50,7 @@ class Settings(BaseSettings):
     INTEGRATION_ENCRYPTION_KEY: str
     CAPTCHA_PROVIDER: str = "none"
     CAPTCHA_SECRET: str | None = None
+    CAPTCHA_SITE_KEY: str | None = None
 
     SENTRY_DSN: str | None = None
     LOG_LEVEL: str = "INFO"
@@ -65,6 +72,8 @@ class Settings(BaseSettings):
         "AWS_SECRET_ACCESS_KEY",
         "SENTRY_DSN",
         "CAPTCHA_SECRET",
+        "CAPTCHA_SITE_KEY",
+        "CLAMAV_HOST",
         mode="before",
     )
     @classmethod

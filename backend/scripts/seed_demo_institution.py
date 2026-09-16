@@ -139,6 +139,9 @@ def load_phase_seeders() -> None:
     import importlib
     import pkgutil
 
+    # seeders import ``from seed_demo_institution import seeder``: alias this module (running as __main__) so their
+    # registrations land in the same SEEDERS dict instead of a second copy of the module
+    sys.modules.setdefault("seed_demo_institution", sys.modules[__name__])
     pkg_dir = _bootstrap.BACKEND_DIR / "scripts" / "seeders"
     if not pkg_dir.exists():
         return

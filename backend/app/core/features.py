@@ -66,14 +66,23 @@ async def is_enabled(institution_id: Any, key: str) -> bool:
 
 
 def feature_required(key: str) -> Any:
-    """Router/route dependency: ``403 FEATURE_DISABLED`` unless the tenant has the key enabled."""
+    """Router/route dependency: ``403 FEATURE_DISABLED`` unless the tenant has the key enabled.
+
+    Without a tenant context (platform-level requests by the super admin) the key's platform default applies.
+    """
     assert key in FEATURE_REGISTRY, f"unregistered feature {key}"
 
     async def _dep(request: Request) -> None:
-        if FEATURE_REGISTRY[key].is_core:
+        f = FEATURE_REGISTRY[key]
+        if f.is_core:
             return
         inst = getattr(request.state, "institution_id", None)
-        if not inst or key not in await effective_features(inst):
+        if not inst:
+            # platform context (super admin / platform user without a tenant): the registry default decides
+            enabled = f.default_enabled
+        else:
+            enabled = key in await effective_features(inst)
+        if not enabled:
             raise APIError(403, ErrorCode.FEATURE_DISABLED, f"Feature '{key}' is not enabled", {"feature": key})
 
     _dep.__feature_key__ = key  # type: ignore[attr-defined]  # read by scripts/check_authz_coverage.py

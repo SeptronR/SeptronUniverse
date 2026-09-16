@@ -15,6 +15,7 @@ celery = Celery(
     include=[
         "app.tasks.outbox",
         "app.tasks.beat",
+        "app.tasks.platform",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",
@@ -40,6 +41,8 @@ celery.conf.update(
         "integrations.*": {"queue": "integrations"},
         "outbox.*": {"queue": "scheduled"},
         "beat.*": {"queue": "scheduled"},
+        "search.*": {"queue": "scheduled"},
+        "webhooks.*": {"queue": "integrations"},
         "jobs.*": {"queue": "reports"},
     },
 )
