@@ -1,0 +1,114 @@
+# SeptronUniverse — single-host production topology (skeleton; Phase 44 completes replicas, pgbouncer, exporters,
+# backup sidecar and the orbit-infra Traefik labels). Differences from docker-compose.yml:
+#   * no source mounts, prebuilt image ghcr.io/septronr/universe-api:<tag>, gunicorn + uvicorn workers
+#   * one Celery worker per queue, beat as a single instance, RUN_MIGRATIONS only on the api service
+#   * secrets from the host vault / .env.prod (never committed); Postgres/Redis are managed services or the
+#     hardened containers below with volumes on the host
+#
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+
+name: universe-prod
+
+x-api: &api
+  image: ${UNIVERSE_IMAGE:-ghcr.io/septronr/universe-api:latest}
+  env_file: .env.prod
+  restart: unless-stopped
+  depends_on:
+    postgres:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  volumes:
+    - uploads:/app/uploads
+  logging:
+    driver: json-file
+    options: { max-size: "20m", max-file: "5" }
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: universe
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env.prod}
+    command: postgres -c shared_buffers=1GB -c work_mem=32MB -c max_connections=300 -c wal_level=replica -c archive_mode=on -c archive_command='true'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d universe"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy noeviction --requirepass ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env.prod}
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a $$REDIS_PASSWORD ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    <<: *api
+    environment:
+      RUN_MIGRATIONS: "1"
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-4}
+    command: gunicorn -k uvicorn.workers.UvicornWorker -w ${WEB_CONCURRENCY:-4} -b 0.0.0.0:8000 --timeout 60 --graceful-timeout 30 --max-requests 5000 main:app
+    expose: ["8000"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
+
+  worker-notifications:
+    <<: *api
+    environment: { RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app worker -Q notifications,emails -c 4 --max-tasks-per-child 500 --without-gossip --loglevel=info
+  worker-documents:
+    <<: *api
+    environment: { RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app worker -Q documents -c 2 --max-tasks-per-child 200 --without-gossip --loglevel=info
+  worker-reports:
+    <<: *api
+    environment: { RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app worker -Q reports,scheduled -c 2 --max-tasks-per-child 200 --without-gossip --loglevel=info
+  worker-integrations:
+    <<: *api
+    environment: { RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app worker -Q integrations -c 2 --max-tasks-per-child 500 --without-gossip --loglevel=info
+  beat:
+    <<: *api
+    environment: { RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app beat --loglevel=info
+    deploy:
+      replicas: 1
+
+  web:
+    image: ${UNIVERSE_WEB_IMAGE:-ghcr.io/septronr/universe-web:latest}
+    restart: unless-stopped
+    expose: ["80"]
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - uploads:/srv/uploads:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - web
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads:
