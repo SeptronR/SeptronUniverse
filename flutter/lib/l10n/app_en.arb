@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "appName": "SeptronUniverse",
+  "login": "Sign in",
+  "identifier": "Username, email or phone",
+  "password": "Password",
+  "home": "Home",
+  "more": "More",
+  "approvals": "Approvals",
+  "notifications": "Notifications",
+  "profile": "Profile",
+  "scopeMine": "Mine",
+  "scopeDepartment": "Department",
+  "scopeCollege": "College",
+  "scopeAll": "All",
+  "readOnlyBanner": "The platform is in read-only mode. Changes are queued.",
+  "offlineBanner": "You are offline. Showing cached data.",
+  "featureDisabled": "This feature is not enabled for your institution.",
+  "accessDenied": "You do not have permission to view this screen.",
+  "notFound": "Screen not found",
+  "retry": "Retry"
+}

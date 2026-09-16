@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#4f46e5" />
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>SeptronUniverse</title>
+    <script>
+      // Anti-flash: apply the stored theme + mode before React paints (mirrors src/styles/themes.ts)
+      (function () {
+        try {
+          var raw = localStorage.getItem('universe-theme');
+          var t = raw ? JSON.parse(raw) : {};
+          var root = document.documentElement;
+          root.setAttribute('data-theme', t.theme || 'indigo');
+          root.setAttribute('data-table-style', t.tableStyle || 'default');
+          var dark = t.mode === 'dark' || (t.mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (dark) root.classList.add('dark');
+        } catch (e) { /* ignore */ }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

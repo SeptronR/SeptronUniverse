@@ -1,0 +1,7 @@
+# 11 locales (docs/Regulatory_Pack_IN.md §2.1): en, hi, bn, mr, te, ta, gu, kn, or, ml, as
+arb-dir: lib/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+output-class: AppLocalizations
+nullable-getter: false
+untranslated-messages-file: build/untranslated_messages.json

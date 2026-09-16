@@ -4,7 +4,7 @@ Multi-tenant Higher-Education ERP for **affiliated colleges, autonomous colleges
 
 | Layer | Stack |
 |---|---|
-| Backend | FastAPI (async) · SQLAlchemy 2 async + Alembic · PostgreSQL 15 (+ Row-Level Security) · Redis 7 · Celery 5 · Pydantic v2 · WeasyPrint + Jinja2 |
+| Backend | FastAPI (async, Python 3.12) · SQLAlchemy 2 async + Alembic · PostgreSQL 15+ (+ Row-Level Security) · Redis 7 · Celery 5 · Pydantic v2 · WeasyPrint + Jinja2 |
 | Frontend | React 18 + TypeScript + Vite · React Router v6 · TanStack Query v5 · Zustand · Tailwind + Radix · Recharts · FullCalendar · dnd-kit · TipTap |
 | Mobile | Flutter 3.22+ · Riverpod · go_router · dio · drift (offline) · FCM |
 | Infra | Docker Compose · GitHub Actions → `ghcr.io/septronr/universe-api` → `orbit-infra` (Traefik) |
@@ -18,54 +18,117 @@ Multi-tenant Higher-Education ERP for **affiliated colleges, autonomous colleges
 - **Campus & people:** hostel/mess, library, transport, inventory/procurement, HR/payroll/recruitment/CAS, research & PhD lifecycle, placement & alumni, mentoring/grievances/discipline/surveys, events & facilities, governance (committees, minutes, RTI, legal), accreditation (NAAC/NBA/NIRF/AISHE).
 - **Platform:** every feature is a super-admin-controlled flag per institution; every record is visible through a self / ownership / scoped / `view_all` model; approval-workflow engine; transactional outbox; integrations hub; data-migration toolkit.
 
-## Repository map (planning phase)
+Institution types (`institutions.institution_type`): `university`, `deemed_university`, `autonomous_college`, `affiliated_college`, `standalone_college`, `multi_campus`. Demo seeds: `--type university | autonomous | affiliated`.
+
+## Repository map
 
 ```
-README.md                         this file
-MASTER_PLAN.md                    approved master plan (design authority for the prompts)
-PROGRESS.md                       batch/prompt/phase checklist — the resume point for every session
-docs/HANDOFF.md                   session start/end protocol and the prompt to paste in a new session
-Architecture.md                   Mermaid diagrams (tenancy, authz, exam lifecycle, result versioning, module map, ERD, topology)
-Database_Schema.sql               canonical DDL — single source of truth for table/column names
-Prompts/00_HOW_TO_USE.md          how to run the phase prompts (rounds, gates, definition of done)
-Prompts/00_PREREQUISITE_...md     project setup with paste-ready boilerplate
-Prompts/NN_PhaseNN_*.md           one self-contained prompt per phase (01–44)
-docs/Academic_Core_Design.md      column-level design of the academic core (structure, admissions, registration, attendance, exams, OBE, …)
-docs/Feature_Flags.md             feature-key registry + super-admin control mechanism
-docs/Authorization_and_Visibility.md  four-layer authz + role × module visibility matrix
-docs/User_Flows.md                end-to-end journeys per role
-docs/Mobile_App_UI_Structure.md   Flutter role shells, tabs, screens, offline rules
-docs/Coverage_Matrix.md           source inventories → phase → feature key → tables
-docs/Glossary_and_Orbit_Mapping.md  glossary + Orbit → Universe rename table
-docs/Feature_Inventory.md         full feature list per module × institution type
-docs/Roles_and_Permissions.md     roles, permission registry, default role → permission map
-docs/Regulatory_Pack_IN.md        India pack (NEP, ABC/APAAR, NAAC/NBA/NIRF/AISHE, UGC PhD, DLT/DPDP/GST)
-docs/Integrations_Catalogue.md    adapter interfaces and providers
-docs/Technical_Architecture.md    platform building blocks (outbox, RLS, workflow, jobs, files, WS, search, observability, data lifecycle)
-docs/ADR/                         architecture decision records
-RUN_AFTER_PHASE.md                runbook after each phase (migrate, seed, drift/authz checks, API smoke, run apps)
-QA_Test_Plan.md                   per-role UI functional sweep plan
-Real_World_Launch_Plan.md         provider/government onboarding tracker
-docker-compose.yml                local 8-service stack (postgres, redis, backend, worker, beat, flower, frontend, nginx)
-docker/postgres/init/01_roles.sql creates universe_app (no BYPASSRLS) / universe_platform roles on first start
-nginx/nginx.conf                  single-host reverse proxy (/api, /ws, /uploads, /site → SSR, security headers)
+backend/                          FastAPI API, Celery workers, Alembic, scripts (see backend/app tree below)
+frontend/                         React + Vite web app (admin shell + portals)
+flutter/                          Flutter mobile app skeleton (Phase 42 builds the app)
+e2e/                              Playwright UI suites, one project per round
+docs/                             design authority (see list below) · docs/ADR/ decisions
+Prompts/                          one self-contained build prompt per phase (00 prerequisite, 01–44)
+Database_Schema.sql               canonical DDL — single source of truth for table/column names (411 CREATE TABLE)
+Architecture.md · MASTER_PLAN.md  diagrams and the approved plan
+PROGRESS.md · docs/HANDOFF.md     resume points: what is done, what comes next, session protocol
+RUN_AFTER_PHASE.md                runbook after each phase (deps, migrate, seed, guards, API script, UI checklist, commit)
+QA_Test_Plan.md · Real_World_Launch_Plan.md   QA sweeps and provider/government onboarding trackers
+docker-compose.yml                local 8-service stack (postgres, redis, backend, celery_worker, celery_beat, flower, frontend, nginx)
+docker-compose.prod.yml           single-host production topology skeleton (Phase 44 completes it)
+docker/postgres/init/01_roles.sql creates universe_app (NOT BYPASSRLS) / universe_platform (BYPASSRLS) roles
+nginx/nginx.conf                  reverse proxy (/api, /ws, /uploads, /site → SSR, security headers, 25M body)
 .github/workflows/                guards · security · verify · build · frontend-build · frontend-deploy · release · mobile-release
 .claude/launch.json               Claude Code launch targets (backend, celery-worker, celery-beat, frontend, flower, ssr)
 ```
 
-Source code lands in `backend/`, `frontend/` and `flutter/` as the phase prompts are executed.
+Backend layout (`Prompts/00_PREREQUISITE_Project_Setup.md` §2): `app/api/v1` (router + `PUBLIC_ROUTES`), `app/core` (config, security, middleware, errors, features, `authz/` visibility resolver + masking, `packs/` regulatory packs, events/outbox, idempotency, jobs, `workflow/engine.py`, audit, tenancy, files, rate limit, WebSocket hub, logging), `app/db/session.py` (RLS context), `app/models` (mixins + platform models), `app/schemas`, `app/repositories/base.py`, `app/services`, `app/integrations/registry.py`, `app/tasks` (Celery, outbox relay, Beat), `alembic/`, `scripts/` (guards, seeders, scaffolder, `verify/` API scripts).
 
-## How to use the prompts
+## Environment setup
 
-1. Read `Prompts/00_HOW_TO_USE.md`, then execute `Prompts/00_PREREQUISITE_Project_Setup.md`.
-2. Execute prompts in numeric order (rounds are sequential; prompts inside a round may run in parallel worktrees when they touch disjoint models).
-3. After each prompt run `RUN_AFTER_PHASE.md`: migrate, seed, run the schema-drift and authz/feature audits, then **verify through the API and the UI** (scripted API calls per role + UI functional checks). Commit before starting the next prompt.
+Requirements: Python 3.12, Node 20+, PostgreSQL 15+ and Redis 7 (both required — Redis is not optional), Flutter 3.22+ (mobile only), PowerShell 7 for the verification scripts.
+
+### Option A — Docker (recommended)
+
+```powershell
+docker compose up -d postgres redis      # infrastructure only, or `docker compose up` for all 8 services
+```
+
+### Option B — local services (Windows / Linux)
+
+```powershell
+psql -U postgres -f docker/postgres/init/01_roles.sql          # creates universe_app / universe_platform (password: pass)
+psql -U postgres -c "CREATE DATABASE universe OWNER universe_app;"
+# Redis: `redis-server` (Linux/macOS) or Memurai / Redis for Windows on :6379
+```
+
+### Backend
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1               # Linux/macOS: source .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt
+Copy-Item .env.example .env                # edit DATABASE_URL / PLATFORM_DATABASE_URL / REDIS_URL / SECRET_KEY
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Celery worker and Beat (separate terminals): `celery -A app.tasks.celery_app worker -Q notifications,emails,documents,reports,integrations,scheduled -c 4 --pool=solo` and `celery -A app.tasks.celery_app beat`. Flower: `celery -A app.tasks.celery_app flower --port=5555`.
+
+### Frontend
+
+```powershell
+cd frontend
+npm install
+Copy-Item .env.example .env
+npm run dev                                # http://localhost:5173 — /api, /ws, /uploads, /health proxy to :8000
+npm run gen:api                            # regenerate src/api/generated/openapi.d.ts from the running API
+```
+
+### Mobile
+
+```powershell
+cd flutter
+flutter pub get
+flutter analyze
+flutter run --dart-define=APP_API_URL=http://10.0.2.2:8000/api/v1
+```
+
+## Database bootstrap
+
+1. Roles + database as above (`01_roles.sql`).
+2. Schema: `alembic upgrade head` (Phase 01 provides `0001_phase01_initial_schema.py`, which applies `Database_Schema.sql`); until then `psql -U universe_app -d universe -f Database_Schema.sql`.
+3. `python scripts/seed_platform.py` — permissions, role templates, `platform_features` (from `docs/Feature_Flags.md`), plans, packs, super admin (credentials → `LOCAL_TEST_CREDENTIALS.md`, git-ignored).
+4. `python scripts/seed_demo_institution.py --type university --only base` (Phase 02) — demo institution, colleges, roles and one demo user per role.
+
+Health: `GET /health` → `{status:"ok"}`, `GET /ready` → DB + Redis reachable, `/api/v1/docs` for Swagger, `/metrics` for Prometheus.
+
+## How to run the phase prompts
+
+1. Read `Prompts/00_HOW_TO_USE.md`; `Prompts/00_PREREQUISITE_Project_Setup.md` is done (this skeleton).
+2. Execute prompts in numeric order — one phase per session (`docs/HANDOFF.md` §5). Rounds are sequential; prompts inside a round may run in parallel worktrees when they touch disjoint models (one Alembic revision each, `alembic merge heads` once per round).
+3. `python backend/scripts/scaffold_module.py <module> --feature <key> --permissions <module> --phase NN` generates the module skeleton following every convention.
+4. After each prompt run `RUN_AFTER_PHASE.md`: deps → migrate (`alembic heads` = 1, `check_schema_drift.py` = 0) → seed → guards → the phase's `scripts/verify/NN_<module>.ps1` → UI checklist → `export_openapi.py` + `gen_access_matrix.py` + `npm run gen:api` → commit `feat(phase-NN): …` → tick `PROGRESS.md`.
 
 ## Verification philosophy
 
-Phases are verified **functionally** — by calling the API directly (per-role smoke/functional scripts) and by exercising the UI (Playwright suites and per-role sweeps) — not by unit tests. Structural CI guards (schema drift, authz/feature audit, single Alembic head, supply-chain scans) remain.
+Phases are verified **functionally** (ADR 0006) — by calling the API per role (`backend/scripts/verify/*.ps1`, dot-sourcing `_common.ps1`) and by exercising the UI (Playwright suites in `e2e/`, per-role sweeps in `QA_Test_Plan.md`) — not by unit tests. Structural CI guards remain and must be green before the next phase:
+
+```powershell
+cd backend
+python scripts/check_schema_drift.py        # Base.metadata vs Database_Schema.sql (--phase NN, --strict)
+python scripts/check_authz_coverage.py      # every /api/v1 route has permission_required + feature_required or is in PUBLIC_ROUTES
+python scripts/check_feature_registry.py    # code registry ↔ docs/Feature_Flags.md (↔ platform_features with --db)
+ruff check app scripts; black --check app scripts; mypy app; lint-imports; bandit -r app -q -ll
+cd ../frontend; npm run lint; npx tsc --noEmit
+cd ../flutter; flutter analyze; dart format --set-exit-if-changed lib
+```
+
+## Deployment
+
+Images are built by `.github/workflows/build.yml` and pushed to `ghcr.io/septronr/universe-api:{env}-{sha}`; deployment runs on the shared **`../orbit-infra`** platform (Traefik, Postgres, Redis, monitoring) as `compose/apps/universe-{dev,demo,prod}-api.yml`. `docker-compose.prod.yml` documents the single-host topology; Phase 44 finishes the pipeline (release, migrations with advisory lock, backups, DR).
 
 ## Related repositories
 
 - `../SeptronOrbit` — the school ERP whose architecture and conventions this project mirrors.
-- `../orbit-infra` — shared production platform (Traefik, Postgres, Redis, monitoring); Universe deploys as `compose/apps/universe-{dev,demo,prod}-api.yml`.
+- `../orbit-infra` — shared production platform.

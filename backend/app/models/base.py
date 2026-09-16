@@ -1,0 +1,60 @@
+"""Model mixins — Prompts/00_PREREQUISITE_Project_Setup.md §3.6.
+
+Column names mirror Database_Schema.sql conventions: UUID PKs, ``institution_id`` on every tenant table (RLS),
+``college_id`` where scoped, soft delete (``is_active``, ``deleted_at``, ``deleted_by``), optimistic lock ``version``.
+"""
+
+import uuid
+from datetime import datetime
+
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, func
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import Mapped, declared_attr, mapped_column
+
+
+class UUIDPrimaryKeyMixin:
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+
+
+class TimestampMixin:
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+    )
+
+
+class SoftDeleteMixin:
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    deleted_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+class OptimisticLockMixin:
+    version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
+    # version is bumped by the DB trigger (trigger_bump_version); services compare on update (If-Match → 409 STALE_VERSION)
+    __mapper_args__ = {"version_id_col": None}
+
+
+class TenantMixin:
+    @declared_attr
+    def institution_id(cls) -> Mapped[uuid.UUID]:
+        return mapped_column(
+            UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), nullable=False, index=True
+        )
+
+
+class CollegeScopedMixin:
+    @declared_attr
+    def college_id(cls) -> Mapped[uuid.UUID | None]:
+        return mapped_column(UUID(as_uuid=True), ForeignKey("colleges.id", ondelete="CASCADE"), index=True)
+
+
+class CreatedByMixin:
+    created_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+# Standard base for editable tenant masters
+class TenantModelMixin(
+    UUIDPrimaryKeyMixin, TenantMixin, TimestampMixin, SoftDeleteMixin, OptimisticLockMixin, CreatedByMixin
+):
+    pass

@@ -1,0 +1,89 @@
+[project]
+name = "septron-universe-api"
+version = "0.1.0"
+description = "SeptronUniverse - multi-tenant College & University ERP (FastAPI backend)"
+requires-python = ">=3.12"
+
+# ---------------------------------------------------------------------------------------------------------------
+# Lint / format / type-check — RUN_AFTER_PHASE.md §4 and .github/workflows/guards.yml run exactly these.
+# ---------------------------------------------------------------------------------------------------------------
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+extend-exclude = ["alembic/versions", ".venv"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "C4", "SIM", "T20"]
+ignore = [
+  "B008",   # FastAPI Depends()/Query() in argument defaults
+  "B904",   # `raise ... from None` is used deliberately where the cause must not leak
+  "SIM108", # ternaries are not always clearer
+  "E501",   # black owns line length
+  "UP046",  # Generic[T] subclassing stays (pydantic/SQLAlchemy generics read clearer than PEP 695 here)
+  "UP047",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*" = ["T20"]          # scripts print by design
+"scripts/verify/*" = ["T20"]
+"alembic/env.py" = ["E402"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app", "scripts"]
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
+extend-exclude = "alembic/versions|\\.venv"
+
+[tool.mypy]
+python_version = "3.12"
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+warn_unused_ignores = false
+warn_redundant_casts = true
+warn_return_any = true
+no_implicit_optional = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+exclude = ["alembic/", "scripts/verify/"]
+
+[[tool.mypy.overrides]]
+module = ["app.core.packs.*"]
+disallow_untyped_defs = false
+
+# ---------------------------------------------------------------------------------------------------------------
+# Import contracts (lint-imports) — Route -> Service -> Repository -> Model (coding standard 1)
+# ---------------------------------------------------------------------------------------------------------------
+[tool.importlinter]
+root_package = "app"
+include_external_packages = false
+
+[[tool.importlinter.contracts]]
+name = "Layers: api -> services -> repositories -> models"
+type = "layers"
+layers = ["app.api", "app.services", "app.repositories", "app.models"]
+
+[[tool.importlinter.contracts]]
+name = "Core, models and repositories never import the API layer"
+type = "forbidden"
+source_modules = ["app.core", "app.models", "app.repositories", "app.schemas", "app.utils", "app.db"]
+forbidden_modules = ["app.api"]
+
+[[tool.importlinter.contracts]]
+name = "Models stay free of services, repositories and tasks"
+type = "forbidden"
+source_modules = ["app.models"]
+forbidden_modules = ["app.services", "app.repositories", "app.tasks", "app.integrations"]
+
+[[tool.importlinter.contracts]]
+name = "Schemas never import services or repositories"
+type = "forbidden"
+source_modules = ["app.schemas"]
+forbidden_modules = ["app.services", "app.repositories", "app.tasks"]
+
+# ---------------------------------------------------------------------------------------------------------------
+[tool.bandit]
+exclude_dirs = [".venv", "scripts/verify"]
+skips = ["B101"]  # asserts are used for registry invariants at import time

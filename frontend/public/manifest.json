@@ -1,0 +1,12 @@
+{
+  "name": "SeptronUniverse",
+  "short_name": "Universe",
+  "description": "College & University ERP",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "icons": [
+    { "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
