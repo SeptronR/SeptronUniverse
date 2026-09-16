@@ -1,14 +1,23 @@
-"""WebSocket hub on Redis pub/sub — Prompts/00 §2 tree; docs/Technical_Architecture.md §9.
+"""WebSocket hub on Redis pub/sub — Prompts/01 §01.6; docs/Technical_Architecture.md §9.
 
-``/ws?token=<access JWT>``; channels ``notifications:{user}``, ``jobs:{user}``, ``fleet:{institution}``,
-``exam-board:{session}``. Every connection gets a per-principal channel allow-list; heartbeat 30 s. Redis pub/sub
-makes fan-out multi-worker safe. Phase 01 completes the hub (principal-derived channels beyond self, reconnect
-semantics); the skeleton authenticates, subscribes to the self channels and relays messages.
+``/ws?token=<access JWT>``. Close codes: ``4401`` unauthenticated (missing / invalid / revoked token), ``1011`` server
+error. On connect the hub loads the principal, subscribes the socket to its channel allow-list and sends
+``{"channel":"system","data":{"type":"hello","channels":[…]}}``; every Redis message on those channels is relayed as
+``{"channel": <name>, "data": <json>}``. Heartbeat ``ping`` every 30 s (clients may also send ``"ping"`` → ``pong``).
+
+Channels (allow-list derived from the principal, never from the client alone):
+* ``notifications:{user}``, ``jobs:{user}`` — always;
+* ``fleet:{institution}`` — ``transport:view``; ``dashboard:{institution}`` — ``dashboard:view``;
+* ``exam-board:{session}`` — on request (``{"subscribe": "exam-board:<uuid>"}``) when the principal has ``exams:view``;
+  requests for channels outside the allow-list are answered with ``{"type":"denied"}`` and ignored.
+Redis pub/sub makes fan-out multi-worker safe; the tray/notification stores fall back to polling when disconnected.
 """
 
 import asyncio
 import contextlib
 import json
+import re
+import uuid
 from typing import Any
 
 import structlog
@@ -16,13 +25,14 @@ from fastapi import APIRouter, Query, WebSocket, WebSocketDisconnect
 
 from app.core.errors import APIError
 from app.core.security import decode_token
-from app.db.session import redis_client
+from app.db.session import SessionLocal, redis_client, set_tenant
 
 log = structlog.get_logger()
 ws_router = APIRouter()
 
 WS_CLOSE_UNAUTHENTICATED = 4401
 HEARTBEAT_SECONDS = 30
+_EXAM_BOARD = re.compile(r"^exam-board:[0-9a-fA-F-]{36}$")
 
 
 class WebSocketHub:
@@ -31,16 +41,31 @@ class WebSocketHub:
     def __init__(self) -> None:
         self.connections: dict[WebSocket, set[str]] = {}
 
-    def channels_for(self, claims: dict[str, Any]) -> set[str]:
+    @staticmethod
+    def channels_for(claims: dict[str, Any], principal: Any | None = None) -> set[str]:
         channels = {f"notifications:{claims['sub']}", f"jobs:{claims['sub']}"}
-        if claims.get("inst"):
-            channels.add(f"fleet:{claims['inst']}")
+        inst = claims.get("inst") or (str(principal.institution_id) if principal and principal.institution_id else None)
+        if inst and principal is not None:
+            if principal.has("transport", "view"):
+                channels.add(f"fleet:{inst}")
+            if principal.has("dashboard", "view"):
+                channels.add(f"dashboard:{inst}")
         return channels
 
-    async def serve(self, websocket: WebSocket, channels: set[str]) -> None:
+    @staticmethod
+    def may_subscribe(channel: str, principal: Any | None) -> bool:
+        """Dynamic channels a client may request after connecting."""
+        if principal is None:
+            return False
+        return bool(_EXAM_BOARD.match(channel)) and principal.has("exams", "view")
+
+    async def serve(self, websocket: WebSocket, channels: set[str], principal: Any | None = None) -> None:
         pubsub = redis_client.pubsub()
         await pubsub.subscribe(*channels)
         self.connections[websocket] = channels
+        await websocket.send_text(
+            json.dumps({"channel": "system", "data": {"type": "hello", "channels": sorted(channels)}})
+        )
 
         async def reader() -> None:
             while True:
@@ -56,13 +81,42 @@ class WebSocketHub:
 
         async def inbound() -> None:
             while True:
-                text = await websocket.receive_text()  # client pings / channel requests are accepted and ignored here
-                if text == "ping":
+                raw = await websocket.receive_text()
+                if raw == "ping":
                     await websocket.send_text(json.dumps({"channel": "system", "data": {"type": "pong"}}))
+                    continue
+                try:
+                    req = json.loads(raw)
+                except ValueError:
+                    continue
+                if not isinstance(req, dict):
+                    continue
+                if req.get("type") == "ping":
+                    await websocket.send_text(json.dumps({"channel": "system", "data": {"type": "pong"}}))
+                elif channel := req.get("subscribe"):
+                    if isinstance(channel, str) and (channel in channels or self.may_subscribe(channel, principal)):
+                        if channel not in channels:
+                            channels.add(channel)
+                            await pubsub.subscribe(channel)
+                        await websocket.send_text(
+                            json.dumps({"channel": "system", "data": {"type": "subscribed", "channel": channel}})
+                        )
+                    else:
+                        await websocket.send_text(
+                            json.dumps({"channel": "system", "data": {"type": "denied", "channel": channel}})
+                        )
+                elif (
+                    (channel := req.get("unsubscribe"))
+                    and isinstance(channel, str)
+                    and channel in channels
+                    and _EXAM_BOARD.match(channel)
+                ):
+                    channels.discard(channel)  # only dynamic channels can be dropped; self channels stay
+                    await pubsub.unsubscribe(channel)
 
         tasks = [asyncio.create_task(reader()), asyncio.create_task(heartbeat()), asyncio.create_task(inbound())]
         try:
-            done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_EXCEPTION)
+            done, _pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_EXCEPTION)
             for t in done:
                 with contextlib.suppress(WebSocketDisconnect, RuntimeError):
                     t.result()
@@ -89,6 +143,22 @@ async def publish(channel: str, payload: dict[str, Any]) -> None:
     await redis_client.publish(channel, json.dumps(payload, default=str))
 
 
+async def _load_principal(claims: dict[str, Any]) -> Any | None:
+    """Resolve permissions for the channel allow-list; a DB hiccup degrades to the self channels only."""
+    from app.services.auth_service import load_principal
+
+    try:
+        async with SessionLocal() as db:
+            if claims.get("inst"):
+                await set_tenant(db, claims["inst"])
+            return await load_principal(db, uuid.UUID(claims["sub"]))
+    except APIError:
+        raise
+    except Exception as exc:  # noqa: BLE001
+        log.warning("ws_principal_unavailable", error=str(exc))
+        return None
+
+
 @ws_router.websocket("/ws")
 async def ws_endpoint(websocket: WebSocket, token: str | None = Query(default=None)) -> None:
     if not token:
@@ -98,12 +168,13 @@ async def ws_endpoint(websocket: WebSocket, token: str | None = Query(default=No
         claims = decode_token(token, expected_type="access")
         if await redis_client.exists(f"blacklist:jti:{claims['jti']}"):
             raise APIError(401, "UNAUTHENTICATED", "Token revoked")
+        principal = await _load_principal(claims)
     except APIError:
         await websocket.close(code=WS_CLOSE_UNAUTHENTICATED)
         return
     await websocket.accept()
     try:
-        await hub.serve(websocket, hub.channels_for(claims))
+        await hub.serve(websocket, hub.channels_for(claims, principal), principal)
     except WebSocketDisconnect:
         pass
     except Exception as exc:  # noqa: BLE001

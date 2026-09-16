@@ -6,6 +6,7 @@ import { Navbar } from './Navbar';
 import { CommandPalette } from '@/components/shared/CommandPalette';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
+import { useReadOnlyPoll } from '@/features/platform/hooks';
 import { wsClient } from '@/lib/ws';
 
 /** Admin shell: sidebar + navbar + banners (impersonation, read-only). Portals use PortalLayout instead. */
@@ -21,6 +22,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const readOnly = useSessionStore((s) => s.readOnly);
   const impersonatorId = useAuthStore((s) => s.impersonatorId);
   const user = useAuthStore((s) => s.currentUser);
+  const readOnlyState = useReadOnlyPoll(); // GET /platform/read-only every minute → banner + disabled writes
 
   useEffect(() => {
     try {
@@ -49,9 +51,13 @@ export function AppLayout({ children }: { children: ReactNode }) {
           </div>
         )}
         {readOnly && (
-          <div role="status" className="flex items-center gap-2 bg-destructive px-4 py-1.5 text-sm text-destructive-foreground">
+          <div
+            role="status"
+            className="flex items-center gap-2 bg-destructive px-4 py-1.5 text-sm text-destructive-foreground"
+          >
             <AlertTriangle className="h-4 w-4" />
             {t('common.readOnly')}
+            {readOnlyState.data?.data.reason && <span className="opacity-80">— {readOnlyState.data.data.reason}</span>}
           </div>
         )}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6" data-read-only={readOnly || undefined}>

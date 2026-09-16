@@ -1,9 +1,10 @@
 """Platform models — sections 2-6 of Database_Schema.sql (copied, never retyped).
 
-Phase 00 maps the tables the core skeleton depends on (tenancy, auth, RBAC, features, jobs, events, idempotency,
-workflow, read-only mode, audit). Phase 01 completes the 44 platform models and the ``0001`` revision.
-Relationships are ``lazy="noload"``; repositories use explicit ``selectinload`` (Orbit convention).
-Partitioned parents (``domain_events``, ``audit_logs``) carry ``postgresql_partition_by``.
+Phase 00 mapped the 20 tables the core skeleton depends on; Phase 01 completes the 44 platform models
+(Prompts/01 §01.3) — ``scripts/phase_manifest.py["01"]`` lists them and ``check_schema_drift.py --phase 01`` must
+report 0 diffs. Relationships are ``lazy="noload"``; repositories use explicit ``selectinload`` (Orbit convention).
+Partitioned parents (``domain_events``, ``webhook_deliveries``, ``audit_logs``) carry ``postgresql_partition_by``;
+their monthly children are created by ``tasks/platform.py:ensure_next_month`` and never mapped.
 """
 
 import uuid
@@ -17,6 +18,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Integer,
+    LargeBinary,
     PrimaryKeyConstraint,
     SmallInteger,
     String,
@@ -24,11 +26,12 @@ from sqlalchemy import (
     UniqueConstraint,
     func,
 )
-from sqlalchemy.dialects.postgresql import INET, JSONB, UUID
+from sqlalchemy.dialects.postgresql import CIDR, INET, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.session import Base
 from app.models.base import (
+    CollegeScopedMixin,
     CreatedByMixin,
     OptimisticLockMixin,
     SoftDeleteMixin,
@@ -69,6 +72,25 @@ class Institution(UUIDPrimaryKeyMixin, TimestampMixin, SoftDeleteMixin, Optimist
     status: Mapped[str] = mapped_column(String(30), nullable=False, default="active")
 
 
+class InstitutionProfile(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "institution_profile"
+
+    institution_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), nullable=False, unique=True
+    )
+    established_year: Mapped[int | None] = mapped_column(SmallInteger)
+    vision: Mapped[str | None] = mapped_column(Text)
+    mission: Mapped[str | None] = mapped_column(Text)
+    accreditations: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)
+    recognitions: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)
+    social_links: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    head_title: Mapped[str | None] = mapped_column(String(60))
+    head_name: Mapped[str | None] = mapped_column(String(200))
+    head_signature_url: Mapped[str | None] = mapped_column(Text)
+    seal_url: Mapped[str | None] = mapped_column(Text)
+    letterhead_url: Mapped[str | None] = mapped_column(Text)
+
+
 class College(TenantModelMixin, Base):
     __tablename__ = "colleges"
     __table_args__ = (UniqueConstraint("institution_id", "code"),)
@@ -91,6 +113,74 @@ class College(TenantModelMixin, Base):
     logo_url: Mapped[str | None] = mapped_column(Text)
     timezone: Mapped[str | None] = mapped_column(String(60))
     is_main: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+
+
+class Faculty(TenantModelMixin, Base):
+    __tablename__ = "faculties"
+    __table_args__ = (UniqueConstraint("institution_id", "college_id", "code"),)
+
+    college_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("colleges.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    code: Mapped[str] = mapped_column(String(20), nullable=False)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    dean_staff_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))  # FK to staff added in §33
+
+
+class Department(TenantModelMixin, Base):
+    __tablename__ = "departments"
+    __table_args__ = (UniqueConstraint("institution_id", "college_id", "code"),)
+
+    college_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("colleges.id", ondelete="CASCADE"), nullable=False, index=True
+    )
+    faculty_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("faculties.id", ondelete="SET NULL")
+    )
+    code: Mapped[str] = mapped_column(String(20), nullable=False)
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    # academic | administrative | research_centre
+    department_type: Mapped[str] = mapped_column(String(30), nullable=False, default="academic")
+    hod_staff_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))  # FK to staff added in §33
+    established_year: Mapped[int | None] = mapped_column(SmallInteger)
+    description: Mapped[str | None] = mapped_column(Text)
+
+
+class InstitutionSetting(UUIDPrimaryKeyMixin, TenantMixin, CollegeScopedMixin, TimestampMixin, Base):
+    __tablename__ = "institution_settings"
+    __table_args__ = (UniqueConstraint("institution_id", "college_id", "category", "key"),)
+
+    category: Mapped[str] = mapped_column(String(40), nullable=False)
+    key: Mapped[str] = mapped_column(String(80), nullable=False)
+    value: Mapped[Any | None] = mapped_column(JSONB)
+    value_type: Mapped[str] = mapped_column(String(20), nullable=False, default="string")
+    is_public: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
+    updated_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+class Holiday(
+    UUIDPrimaryKeyMixin, TenantMixin, CollegeScopedMixin, TimestampMixin, SoftDeleteMixin, CreatedByMixin, Base
+):
+    __tablename__ = "holidays"
+    __table_args__ = (UniqueConstraint("institution_id", "college_id", "holiday_date", "name"),)
+
+    name: Mapped[str] = mapped_column(String(120), nullable=False)
+    holiday_date: Mapped[date] = mapped_column(Date, nullable=False)
+    end_date: Mapped[date | None] = mapped_column(Date)
+    # public | institution | restricted | exam_break
+    holiday_type: Mapped[str] = mapped_column(String(30), nullable=False, default="public")
+    applies_to: Mapped[str] = mapped_column(String(20), nullable=False, default="all")  # all | students | staff
+
+
+class NumberSequence(UUIDPrimaryKeyMixin, TenantMixin, CollegeScopedMixin, TimestampMixin, Base):
+    __tablename__ = "number_sequences"
+    __table_args__ = (UniqueConstraint("institution_id", "college_id", "scope_key"),)
+
+    scope_key: Mapped[str] = mapped_column(String(120), nullable=False)
+    pattern: Mapped[str] = mapped_column(String(120), nullable=False)
+    next_value: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    padding: Mapped[int] = mapped_column(SmallInteger, nullable=False, default=4)
+    reset_policy: Mapped[str] = mapped_column(String(20), nullable=False, default="never")  # never | yearly | per_term
 
 
 # ===================================== 3. AUTH =====================================
@@ -123,6 +213,107 @@ class User(UUIDPrimaryKeyMixin, TimestampMixin, SoftDeleteMixin, OptimisticLockM
     preferences: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
     valid_from: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     valid_to: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class PasswordResetToken(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "password_reset_tokens"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    token_hash: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class UserSession(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "user_sessions"
+
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), index=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    refresh_jti: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
+    refresh_family: Mapped[str] = mapped_column(String(64), nullable=False)
+    device_label: Mapped[str | None] = mapped_column(String(120))
+    platform: Mapped[str | None] = mapped_column(String(20))
+    ip: Mapped[str | None] = mapped_column(INET)
+    user_agent: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    last_seen_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    revoked_reason: Mapped[str | None] = mapped_column(String(60))
+
+
+class MfaSecret(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "mfa_secrets"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, unique=True
+    )
+    secret_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    recovery_codes_hashed: Mapped[list[str]] = mapped_column(JSONB, nullable=False)
+    confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class LoginHistory(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "login_history"
+
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), index=True
+    )
+    user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="SET NULL"))
+    identifier: Mapped[str | None] = mapped_column(String(200))
+    # success | bad_password | locked | mfa_failed | sso
+    outcome: Mapped[str] = mapped_column(String(30), nullable=False)
+    ip: Mapped[str | None] = mapped_column(INET)
+    user_agent: Mapped[str | None] = mapped_column(Text)
+    occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class IpAllowlist(UUIDPrimaryKeyMixin, TenantMixin, CreatedByMixin, Base):
+    __tablename__ = "ip_allowlists"
+    __table_args__ = (UniqueConstraint("institution_id", "purpose", "cidr"),)
+
+    purpose: Mapped[str] = mapped_column(String(40), nullable=False)  # exam_decode | results_publish | features | admin
+    cidr: Mapped[str] = mapped_column(CIDR, nullable=False)
+    label: Mapped[str | None] = mapped_column(String(80))
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class DeviceToken(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "device_tokens"
+    __table_args__ = (UniqueConstraint("provider", "token"),)
+
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), index=True
+    )
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    provider: Mapped[str] = mapped_column(String(20), nullable=False)  # fcm | webpush | expo
+    platform: Mapped[str] = mapped_column(String(20), nullable=False)
+    token: Mapped[str] = mapped_column(Text, nullable=False)
+    topics: Mapped[list[str] | None] = mapped_column(JSONB)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class CredentialSheet(UUIDPrimaryKeyMixin, TenantMixin, Base):
+    __tablename__ = "credential_sheets"
+
+    batch_label: Mapped[str | None] = mapped_column(String(120))
+    audience: Mapped[str] = mapped_column(String(20), nullable=False)  # students | guardians | staff
+    file_url: Mapped[str | None] = mapped_column(Text)
+    generated_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    generated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    job_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))  # FK to background_jobs added in §33
 
 
 # ===================================== 4. RBAC =====================================
@@ -379,6 +570,149 @@ class WorkflowDelegation(UUIDPrimaryKeyMixin, TenantMixin, Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
+class ApiKey(UUIDPrimaryKeyMixin, TenantMixin, CreatedByMixin, Base):
+    __tablename__ = "api_keys"
+
+    name: Mapped[str] = mapped_column(String(120), nullable=False)
+    key_prefix: Mapped[str] = mapped_column(String(12), nullable=False)
+    hashed_key: Mapped[str] = mapped_column(String(64), nullable=False, unique=True)
+    scopes: Mapped[list[str]] = mapped_column(JSONB, nullable=False, default=list)
+    rate_limit_per_minute: Mapped[int] = mapped_column(Integer, nullable=False, default=600)
+    expires_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_used_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class Webhook(UUIDPrimaryKeyMixin, TenantMixin, TimestampMixin, CreatedByMixin, Base):
+    __tablename__ = "webhooks"
+
+    name: Mapped[str] = mapped_column(String(120), nullable=False)
+    url: Mapped[str] = mapped_column(Text, nullable=False)
+    secret_encrypted: Mapped[bytes] = mapped_column(LargeBinary, nullable=False)
+    events: Mapped[list[str]] = mapped_column(JSONB, nullable=False, default=list)
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+
+class WebhookDelivery(Base):
+    """Outbound webhook attempts (Phase 41 delivers). Partitioned monthly by ``created_at``; default partition in the SQL."""
+
+    __tablename__ = "webhook_deliveries"
+    __table_args__ = (
+        PrimaryKeyConstraint("id", "created_at"),
+        {"postgresql_partition_by": "RANGE (created_at)"},
+    )
+
+    id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False, default=uuid.uuid4)
+    institution_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    webhook_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("webhooks.id", ondelete="CASCADE"), nullable=False
+    )
+    event_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    event_type: Mapped[str] = mapped_column(String(80), nullable=False)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="pending")
+    attempts: Mapped[int] = mapped_column(SmallInteger, nullable=False, default=0)
+    response_code: Mapped[int | None] = mapped_column(SmallInteger)
+    response_body: Mapped[str | None] = mapped_column(Text)
+    next_retry_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class IntegrationConnection(UUIDPrimaryKeyMixin, TenantMixin, TimestampMixin, CreatedByMixin, Base):
+    __tablename__ = "integration_connections"
+    __table_args__ = (UniqueConstraint("institution_id", "capability", "provider", "label"),)
+
+    capability: Mapped[str] = mapped_column(String(40), nullable=False)
+    provider: Mapped[str] = mapped_column(String(40), nullable=False)
+    label: Mapped[str | None] = mapped_column(String(120))
+    config_encrypted: Mapped[bytes | None] = mapped_column(LargeBinary)
+    public_config: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    is_sandbox: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    # configured | healthy | degraded | failed | disabled
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="configured")
+    last_health_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    last_error: Mapped[str | None] = mapped_column(Text)
+
+
+class IntegrationHealthCheck(UUIDPrimaryKeyMixin, TenantMixin, Base):
+    __tablename__ = "integration_health_checks"
+
+    connection_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("integration_connections.id", ondelete="CASCADE"), nullable=False
+    )
+    checked_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    ok: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    latency_ms: Mapped[int | None] = mapped_column(Integer)
+    detail: Mapped[str | None] = mapped_column(Text)
+
+
+class DataImport(UUIDPrimaryKeyMixin, TenantMixin, TimestampMixin, Base):
+    __tablename__ = "data_imports"
+
+    entity: Mapped[str] = mapped_column(String(60), nullable=False)
+    file_url: Mapped[str] = mapped_column(Text, nullable=False)
+    mapping: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    mode: Mapped[str] = mapped_column(String(20), nullable=False, default="dry_run")  # dry_run | apply
+    # uploaded | validated | applying | applied | failed | rolled_back
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="uploaded")
+    total_rows: Mapped[int | None] = mapped_column(Integer)
+    valid_rows: Mapped[int | None] = mapped_column(Integer)
+    error_rows: Mapped[int | None] = mapped_column(Integer)
+    report: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    job_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))  # FK to background_jobs added in §33
+    requested_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    applied_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    rolled_back_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class DataImportRow(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "data_import_rows"
+
+    institution_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), nullable=False)
+    import_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("data_imports.id", ondelete="CASCADE"), nullable=False
+    )
+    row_no: Mapped[int] = mapped_column(Integer, nullable=False)
+    raw: Mapped[dict[str, Any]] = mapped_column(JSONB, nullable=False)
+    normalized: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    errors: Mapped[list[dict[str, Any]] | None] = mapped_column(JSONB)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="pending")
+    created_entity_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+class ConsentRecord(UUIDPrimaryKeyMixin, TenantMixin, Base):
+    __tablename__ = "consent_records"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False
+    )
+    # academic | communication | marketing | health | photo | third_party
+    purpose: Mapped[str] = mapped_column(String(40), nullable=False)
+    granted: Mapped[bool] = mapped_column(Boolean, nullable=False)
+    text_version: Mapped[str | None] = mapped_column(String(20))
+    granted_by_user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    ip: Mapped[str | None] = mapped_column(INET)
+    recorded_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    withdrawn_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class DataSubjectRequest(UUIDPrimaryKeyMixin, TenantMixin, Base):
+    __tablename__ = "data_subject_requests"
+
+    user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    request_type: Mapped[str] = mapped_column(String(20), nullable=False)  # access | export | correction | erasure
+    # received | in_progress | completed | rejected
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="received")
+    details: Mapped[str | None] = mapped_column(Text)
+    due_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    handled_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    result_url: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 class ReadOnlyMode(UUIDPrimaryKeyMixin, Base):
     __tablename__ = "read_only_modes"
 
@@ -391,6 +725,39 @@ class ReadOnlyMode(UUIDPrimaryKeyMixin, Base):
     ends_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     set_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+class HelpArticle(UUIDPrimaryKeyMixin, TimestampMixin, Base):
+    __tablename__ = "help_articles"
+    __table_args__ = (UniqueConstraint("institution_id", "slug"),)
+
+    # NULL = platform article (visible to every institution)
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), index=True
+    )
+    slug: Mapped[str] = mapped_column(String(120), nullable=False)
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    module: Mapped[str | None] = mapped_column(String(60))
+    audience: Mapped[list[str] | None] = mapped_column(JSONB)
+    is_published: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+
+
+class FeedbackEntry(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "feedback_entries"
+
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE"), index=True
+    )
+    user_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    page: Mapped[str | None] = mapped_column(String(200))
+    category: Mapped[str | None] = mapped_column(String(30))  # bug | idea | question | praise
+    rating: Mapped[int | None] = mapped_column(SmallInteger)
+    message: Mapped[str | None] = mapped_column(Text)
+    screenshot_url: Mapped[str | None] = mapped_column(Text)
+    client: Mapped[str | None] = mapped_column(String(20))  # web | mobile | pwa
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="new")  # new | triaged | closed
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
 class AuditLog(Base):

@@ -34,12 +34,14 @@ Option A — Docker (recommended, matches `docker-compose.yml`):
 ```powershell
 docker compose up -d postgres redis
 ```
-Option B — local services. Create the two roles and the database exactly as `Prompts/00_PREREQUISITE_Project_Setup.md` §8 describes (`universe_app` is **not** `BYPASSRLS`; `universe_platform` is):
+Option B — local services. Create the two roles and the database exactly as `Prompts/00_PREREQUISITE_Project_Setup.md` §8 describes (`universe_app` is **not** `BYPASSRLS`; `universe_platform` is and **owns the schema** — Phase 01 decision):
 ```powershell
-psql -U postgres -f docker/postgres/init/01_roles.sql
-psql -U postgres -c "CREATE DATABASE universe OWNER universe_app;"
+psql -U postgres -c "CREATE DATABASE universe;"
+psql -U postgres -f docker/postgres/init/01_roles.sql      # roles + ownership + default privileges (idempotent)
 ```
-Defaults in `backend/.env.example`: `postgresql+asyncpg://universe_app:pass@localhost:5432/universe` and `redis://localhost:6379/0`.
+Defaults in `backend/.env.example`: `DATABASE_URL=postgresql+asyncpg://universe_app:pass@…` (runtime, RLS applies), `PLATFORM_DATABASE_URL=postgresql+asyncpg://universe_platform:pass@…` (**Alembic migrates with this one** — `alembic/env.py` picks it up; keep both set) and `redis://localhost:6379/0`.
+
+No Redis on the workstation? The API cannot start (`/ready`, Celery, WebSocket hub all need it). For shell/UI work only, `python backend/scripts/dev_api_fakeredis.py` (launcher `backend-noredis`) runs the API with an in-memory Redis stand-in — no worker/Beat, jobs stay queued unless enqueued with `inline=true` (dev route). The API verification scripts still need the real stack.
 
 ### Flutter (only when a phase touches `flutter/`)
 ```powershell
@@ -73,7 +75,9 @@ cd ..
 
 Rules (from `Prompts/00_PREREQUISITE_Project_Setup.md` §3.22 and ADR 0001/0007):
 - The phase's revision is hand-written as `NNNN_phaseNN_<module>.py` with a real `down_revision`. `alembic revision --autogenerate` may be used **only** to draft it; open the file and keep only this phase's changes.
-- `0001_phase01_initial_schema.py` applies `Database_Schema.sql`; every later revision is **delta-only** (most phases: data-only seed revisions — "Expected delta migration: none").
+- `0001_phase01_initial_schema.py` applies `Database_Schema.sql` through `alembic/sql_loader.py` (the file is resolved from the repo root, `SCHEMA_SQL_PATH` or `/app/Database_Schema.sql` in containers); every later revision is **delta-only** (most phases: data-only seed revisions — "Expected delta migration: none"). `alembic downgrade base` drops every object but keeps `alembic_version` and the schema grants.
+- Alembic connects as the **platform role** (`PLATFORM_DATABASE_URL`): the schema is owned by `universe_platform` (BYPASSRLS — outbox relay, partition maintenance and the `search_documents` refresh run on it) and `0001` grants the runtime privileges to `universe_app`, which is bound by RLS as a non-owner.
+- A phase that adds tables also appends them to `scripts/phase_manifest.py` (`check_schema_drift.py --phase NN`).
 - Never `Base.metadata.create_all` outside `check_schema_drift.py`. Never `alembic stamp` blindly: if the DB is out of sync, rebuild it (section 9).
 - Expand/contract: no destructive DDL in the same release as the code that stops using it (`# contract-of: <revision>` marker; lint `check_migration_safety.py` arrives in Phase 44).
 
@@ -172,6 +176,7 @@ cd backend
 cd ..
 ```
 - The script must pass **for every role listed in the prompt's NN.11** (status codes, envelope, `meta.visibility`, business outcomes). Fix the code, not the script, unless the prompt is wrong (then fix the prompt and note it in `PROGRESS.md`).
+- Phase 01 (`01_platform.ps1`) needs the API **and** a Celery worker + Beat (outbox step 5, job step 7); it mints the super-admin token with `scripts/dev_token.py` until Phase 02 ships login. `scripts/verify/01_platform_inprocess.py` (fakeredis, ASGI transport, no uvicorn) proves the same contracts on a machine without Redis and is a good pre-flight before the live run.
 - Regression: re-run the previous phase's script too (`scripts/verify/run_all.ps1 --suite api_round_<n>` once Phase 43 ships the runner; until then, run the scripts of the current round by hand).
 
 ## 7) UI verification — the prompt's NN.12 checklist
@@ -209,9 +214,10 @@ cd ..
 ### Option B — fresh rebuild (destructive, guaranteed clean baseline)
 ```powershell
 psql -U postgres -c "DROP DATABASE IF EXISTS universe;"
-psql -U postgres -c "CREATE DATABASE universe OWNER universe_app;"
+psql -U postgres -c "CREATE DATABASE universe;"
+psql -U postgres -f docker/postgres/init/01_roles.sql    # ownership → universe_platform, USAGE → universe_app
 cd backend; .\.venv\Scripts\Activate.ps1
-alembic upgrade head                                     # 0001 loads Database_Schema.sql, later revisions apply deltas/seeds
+alembic upgrade head                                     # runs as PLATFORM_DATABASE_URL: 0001 loads Database_Schema.sql, later revisions apply deltas/seeds
 python scripts/check_schema_drift.py
 python scripts/seed_platform.py
 python scripts/seed_demo_institution.py --type university --all   # (--only base until Phase 43 ships --all)

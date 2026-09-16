@@ -17,7 +17,7 @@ Nginx/Traefik → GZip → CORS → RequestLogger (request_id, tenant, user) →
 ## 2. Tenancy & isolation
 
 - `institutions` (tenant) → `colleges` → `faculties` → `departments`. Every tenant table has `institution_id`; academic tables also `college_id`.
-- **PostgreSQL RLS**: `ALTER TABLE … ENABLE ROW LEVEL SECURITY; CREATE POLICY tenant_isolation USING (institution_id = current_setting('app.institution_id')::uuid)`; the app role is not `BYPASSRLS`; `InstitutionContextMiddleware` issues `SET LOCAL app.institution_id` on the request transaction; Celery tasks set it explicitly; super-admin cross-tenant queries use a dedicated `platform` role with explicit audit.
+- **PostgreSQL RLS**: `ALTER TABLE … ENABLE ROW LEVEL SECURITY; CREATE POLICY tenant_isolation USING (institution_id = current_setting('app.institution_id')::uuid)`; the app role is not `BYPASSRLS`; the request session pins `app.institution_id` per transaction (`SELECT set_config('app.institution_id', :id, true)` — the parameterisable form of `SET LOCAL`, re-applied by an `after_begin` hook so mid-request/mid-job commits never drop it); Celery tasks open `tenant_session(institution_id)`; super-admin cross-tenant queries use a dedicated `platform` role with explicit audit.
 - `BaseRepository` still filters `institution_id` (belt and braces) + scope + `deleted_at IS NULL` + `visible_to(user, module)`.
 - Institution **timezone/locale/currency** on the tenant; UTC in DB; academic `DATE`s in institution TZ; `Fmt` helpers on all clients.
 - Per-tenant file prefixes (`{institution_id}/…`), plan quotas, signed URLs (time-limited), MIME sniffing, size limits, optional ClamAV, thumbnails, retention.

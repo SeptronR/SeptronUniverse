@@ -36,10 +36,10 @@ RUN_AFTER_PHASE.md                runbook after each phase (deps, migrate, seed,
 QA_Test_Plan.md · Real_World_Launch_Plan.md   QA sweeps and provider/government onboarding trackers
 docker-compose.yml                local 8-service stack (postgres, redis, backend, celery_worker, celery_beat, flower, frontend, nginx)
 docker-compose.prod.yml           single-host production topology skeleton (Phase 44 completes it)
-docker/postgres/init/01_roles.sql creates universe_app (NOT BYPASSRLS) / universe_platform (BYPASSRLS) roles
+docker/postgres/init/01_roles.sql creates universe_app (runtime, NOT BYPASSRLS) / universe_platform (schema owner, BYPASSRLS — Alembic migrates as it)
 nginx/nginx.conf                  reverse proxy (/api, /ws, /uploads, /site → SSR, security headers, 25M body)
 .github/workflows/                guards · security · verify · build · frontend-build · frontend-deploy · release · mobile-release
-.claude/launch.json               Claude Code launch targets (backend, celery-worker, celery-beat, frontend, flower, ssr)
+.claude/launch.json               Claude Code launch targets (backend, backend-noredis, celery-worker, celery-beat, frontend, flower, ssr)
 ```
 
 Backend layout (`Prompts/00_PREREQUISITE_Project_Setup.md` §2): `app/api/v1` (router + `PUBLIC_ROUTES`), `app/core` (config, security, middleware, errors, features, `authz/` visibility resolver + masking, `packs/` regulatory packs, events/outbox, idempotency, jobs, `workflow/engine.py`, audit, tenancy, files, rate limit, WebSocket hub, logging), `app/db/session.py` (RLS context), `app/models` (mixins + platform models), `app/schemas`, `app/repositories/base.py`, `app/services`, `app/integrations/registry.py`, `app/tasks` (Celery, outbox relay, Beat), `alembic/`, `scripts/` (guards, seeders, scaffolder, `verify/` API scripts).
@@ -57,8 +57,8 @@ docker compose up -d postgres redis      # infrastructure only, or `docker compo
 ### Option B — local services (Windows / Linux)
 
 ```powershell
-psql -U postgres -f docker/postgres/init/01_roles.sql          # creates universe_app / universe_platform (password: pass)
-psql -U postgres -c "CREATE DATABASE universe OWNER universe_app;"
+psql -U postgres -c "CREATE DATABASE universe;"
+psql -U postgres -f docker/postgres/init/01_roles.sql          # universe_app / universe_platform (password: pass), ownership + grants
 # Redis: `redis-server` (Linux/macOS) or Memurai / Redis for Windows on :6379
 ```
 
@@ -97,11 +97,11 @@ flutter run --dart-define=APP_API_URL=http://10.0.2.2:8000/api/v1
 ## Database bootstrap
 
 1. Roles + database as above (`01_roles.sql`).
-2. Schema: `alembic upgrade head` (Phase 01 provides `0001_phase01_initial_schema.py`, which applies `Database_Schema.sql`); until then `psql -U universe_app -d universe -f Database_Schema.sql`.
+2. Schema: `alembic upgrade head` — `0001_phase01_initial_schema.py` applies `Database_Schema.sql` (411 tables, RLS, triggers, seeds) as the platform role (`PLATFORM_DATABASE_URL`); `python scripts/check_schema_drift.py --phase 01` → 0 diffs.
 3. `python scripts/seed_platform.py` — permissions, role templates, `platform_features` (from `docs/Feature_Flags.md`), plans, packs, super admin (credentials → `LOCAL_TEST_CREDENTIALS.md`, git-ignored).
 4. `python scripts/seed_demo_institution.py --type university --only base` (Phase 02) — demo institution, colleges, roles and one demo user per role.
 
-Health: `GET /health` → `{status:"ok"}`, `GET /ready` → DB + Redis reachable, `/api/v1/docs` for Swagger, `/metrics` for Prometheus.
+Health: `GET /health` → `{status:"ok"}`, `GET /ready` → DB + Redis + storage + migration head + outbox lag (503 `degraded` when a hard dependency fails), `/api/v1/docs` for Swagger, `/metrics` for Prometheus. Without a local Redis, `python scripts/dev_api_fakeredis.py` starts the API with an in-memory stand-in (dev only, no workers).
 
 ## How to run the phase prompts
 

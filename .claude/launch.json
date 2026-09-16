@@ -4,14 +4,27 @@
     {
       "name": "frontend",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "frontend"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "frontend"
+      ],
       "port": 5173,
       "autoPort": true
     },
     {
       "name": "frontend-demo-api",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "--prefix", "frontend", "--", "--mode", "demo"],
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "frontend",
+        "--",
+        "--mode",
+        "demo"
+      ],
       "port": 5173,
       "autoPort": true
     },
@@ -21,6 +34,15 @@
       "runtimeArgs": [
         "/c",
         "cd /d backend && set \"PYTHONIOENCODING=utf-8\" && set \"PYTHONUTF8=1\" && .venv\\Scripts\\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+      ],
+      "port": 8000
+    },
+    {
+      "name": "backend-noredis",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "cd /d backend && set \"PYTHONUTF8=1\" && .venv\\Scripts\\python.exe scripts\\dev_api_fakeredis.py --host 0.0.0.0 --port 8000"
       ],
       "port": 8000
     },
@@ -52,21 +74,40 @@
     {
       "name": "ssr",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev:ssr", "--prefix", "frontend"],
+      "runtimeArgs": [
+        "run",
+        "dev:ssr",
+        "--prefix",
+        "frontend"
+      ],
       "port": 5175,
       "autoPort": true
     },
     {
       "name": "e2e-report",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["--prefix", "e2e", "playwright", "show-report", "e2e/playwright-report", "--port", "9323"],
+      "runtimeArgs": [
+        "--prefix",
+        "e2e",
+        "playwright",
+        "show-report",
+        "e2e/playwright-report",
+        "--port",
+        "9323"
+      ],
       "port": 9323,
       "autoPort": true
     },
     {
       "name": "docs-openapi",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8090", "--directory", "backend"],
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8090",
+        "--directory",
+        "backend"
+      ],
       "port": 8090,
       "autoPort": true
     }
