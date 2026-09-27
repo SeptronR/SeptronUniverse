@@ -10,7 +10,8 @@ and from the ``/install`` endpoint. Everything is idempotent (``ON CONFLICT DO N
 3. ``seed_features`` — ``platform_features`` from ``FEATURE_REGISTRY`` ∪ ``docs/Feature_Flags.md`` (doc wins for
    defaults/tier of keys no module has registered yet; both sources agree for registered keys — CI guard);
 4. ``seed_plans`` — the four §36.3 plans and their ``enabled_features`` per tier (Feature_Flags §3);
-5. ``seed_packs`` — ``platform_settings['regulatory_packs']``.
+5. ``seed_packs`` — ``platform_settings['regulatory_packs']``;
+6. Phase 03 templates — ``seed_phase03_platform`` (``app/services/institution_defaults.py``).
 
 Business rules of ``InstallService`` (rule 1 of the prompt): ``POST /install`` is guarded by ``INSTALL_SECRET_KEY``,
 runs once (``platform_settings['installed']`` → ``409 CONFLICT`` afterwards), seeds the registries, creates the
@@ -199,6 +200,9 @@ def seed_registries(conn: Connection) -> dict[str, Any]:
     features = seed_features(conn)
     plans, tiers = seed_plans(conn)
     packs = seed_packs(conn)
+    from app.services.institution_defaults import seed_phase03_platform
+
+    phase03 = seed_phase03_platform(conn)  # settings template, theme tokens, number-sequence patterns (Phase 03)
     return {
         "permissions": perms,
         "role_templates_created": roles_created,
@@ -207,6 +211,7 @@ def seed_registries(conn: Connection) -> dict[str, Any]:
         "plans": plans,
         "plan_tiers_updated": tiers,
         "packs": packs,
+        "settings_template_keys": phase03["settings_keys"],
     }
 
 

@@ -17,6 +17,7 @@ celery = Celery(
         "app.tasks.beat",
         "app.tasks.platform",
         "app.tasks.auth",
+        "app.tasks.institution",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",
@@ -48,6 +49,7 @@ celery.conf.update(
         "subscriptions.*": {"queue": "scheduled"},
         "usage.*": {"queue": "scheduled"},
         "auth.*": {"queue": "scheduled"},
+        "settings.*": {"queue": "scheduled"},
         "jobs.*": {"queue": "reports"},
     },
 )

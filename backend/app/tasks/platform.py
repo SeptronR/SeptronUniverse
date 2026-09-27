@@ -198,7 +198,7 @@ async def ensure_next_month(today: date | None = None) -> dict[str, list[str]]:
 # ---- outbox consumers ----------------------------------------------------------------------------------------------
 
 
-@consumer("search.reindex", events=["student.*", "staff.*", "course.*", "applicant.*"])
+@consumer("search.reindex", events=["student.*", "staff.*", "course.*", "applicant.*", "department.*"])
 async def search_reindex(db: Any, event: dict[str, Any]) -> None:
     """Refresh ``search_documents`` at most once per minute; a burst of events collapses into one delayed refresh."""
     await schedule_search_refresh()

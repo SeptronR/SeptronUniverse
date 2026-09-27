@@ -15,7 +15,21 @@ Phase 02: ``auth`` {core.auth}, ``rbac`` (roles/users) {core.rbac}, ``features``
 from fastapi import APIRouter
 
 import app.features  # noqa: F401  (registers every feature key before routers cite them)
-from app.api.v1.endpoints import auth, features, feedback, help, jobs, platform, privacy, rbac, search
+from app.api.v1.endpoints import (
+    academic_sessions,
+    auth,
+    features,
+    feedback,
+    help,
+    institution,
+    jobs,
+    platform,
+    platform_institutions,
+    privacy,
+    rbac,
+    search,
+)
+from app.api.v1.endpoints import settings as settings_routes
 from app.core.config import settings
 from app.core.features import feature_required
 
@@ -26,6 +40,10 @@ api_router.include_router(rbac.router, dependencies=[feature_required("core.rbac
 api_router.include_router(features.router, dependencies=[feature_required("core.rbac")])
 api_router.include_router(privacy.router, dependencies=[feature_required("core.settings")])
 api_router.include_router(platform.router)
+api_router.include_router(institution.router, dependencies=[feature_required("core.institution")])
+api_router.include_router(academic_sessions.router, dependencies=[feature_required("core.institution")])
+api_router.include_router(settings_routes.router, dependencies=[feature_required("core.settings")])
+api_router.include_router(platform_institutions.router, dependencies=[feature_required("core.institution")])
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])

@@ -140,6 +140,8 @@ Standard actions: `view` (self + ownership), `view_all` (role scope), `create`, 
 
 ## 3. Default role → permission map (excerpt of the seed; full map lives in `app/core/rbac/registry.py` and is regenerated into `docs/Access_Matrix.csv` by `scripts/gen_access_matrix.py`)
 
+Every role also carries `dashboard:view`, `jobs:view|cancel` and — since Phase 03 — `institutions:view`: the institution profile, colleges, faculties, departments, academic years/terms and holidays are institution-wide readable by any member (revision `0003` back-fills the grant into roles already cloned into tenants). The platform tenant routes (`/platform/institutions`) additionally require the super-admin flag, so an institution's own `institutions:manage` never reaches them.
+
 | Role | Grants |
 |---|---|
 | institution_admin | `*:manage` on all institution modules; `features:institution_toggle`; no `exams:decode` by default (assign explicitly) |

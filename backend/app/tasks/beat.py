@@ -5,7 +5,8 @@ Phases append entries with ``register_beat("<module>.<job>", task, schedule)``. 
 (15 min) and ``partitions.ensure_next_month`` (monthly on the 25th, 02:00 UTC — creates the current and next month's
 partitions ahead of time; the default partitions catch anything that arrives before it runs). Phase 02 adds the auth
 and entitlement jobs (``app/tasks/auth.py``): ``auth.cleanup_sessions`` (hourly), ``auth.expire_time_boxed_accounts``
-(daily 01:00), ``subscriptions.reminders`` (daily 06:00) and ``usage.meter`` (monthly, 1st 02:30).
+(daily 01:00), ``subscriptions.reminders`` (daily 06:00) and ``usage.meter`` (monthly, 1st 02:30). Phase 03 adds
+``sequences.reset`` (daily 00:05) and ``terms.auto_status`` (daily 00:15) — ``app/tasks/institution.py``.
 """
 
 from typing import Any
@@ -37,5 +38,9 @@ register_beat("auth.cleanup_sessions", "beat.auth.cleanup_sessions", crontab(min
 register_beat("auth.expire_time_boxed_accounts", "beat.auth.expire_time_boxed_accounts", crontab(hour=1, minute=0))
 register_beat("subscriptions.reminders", "beat.subscriptions.reminders", crontab(hour=6, minute=0))
 register_beat("usage.meter", "beat.usage.meter", crontab(day_of_month="1", hour=2, minute=30))
+
+# ---- Phase 03 institution structure / sessions (app/tasks/institution.py) ------------------------------------------------
+register_beat("sequences.reset", "beat.sequences.reset", crontab(hour=0, minute=5))
+register_beat("terms.auto_status", "beat.terms.auto_status", crontab(hour=0, minute=15))
 
 celery.conf.beat_schedule = BEAT_SCHEDULE

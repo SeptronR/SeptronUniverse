@@ -1,5 +1,12 @@
 import {
   Activity,
+  Building,
+  Building2,
+  CalendarDays,
+  CalendarRange,
+  Hash,
+  Landmark,
+  Settings,
   CreditCard,
   LayoutDashboard,
   LifeBuoy,
@@ -49,6 +56,37 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     title: 'ADMIN',
     items: [
+      // Phase 03 — institution structure, academic sessions, settings
+      { label: 'Institution', to: '/admin/institution', icon: Landmark, module: 'institutions', feature: 'core.institution' },
+      { label: 'Colleges', to: '/admin/colleges', icon: Building2, module: 'institutions', feature: 'core.institution' },
+      { label: 'Departments', to: '/admin/departments', icon: Building, module: 'institutions', feature: 'core.institution' },
+      {
+        label: 'Academic Years',
+        to: '/admin/academic-years',
+        icon: CalendarRange,
+        module: 'sessions',
+        altActions: ['manage'],
+        feature: 'core.institution',
+      },
+      { label: 'Holidays', to: '/admin/holidays', icon: CalendarDays, module: 'institutions', feature: 'institution.holidays' },
+      { label: 'Settings', to: '/admin/settings', icon: Settings, module: 'settings', feature: 'core.settings' },
+      {
+        label: 'Number Sequences',
+        to: '/admin/number-sequences',
+        icon: Hash,
+        module: 'settings',
+        action: 'manage',
+        feature: 'institution.number_sequences_custom',
+      },
+      // super admin only (features:manage is platform-only): tenants + onboarding wizard
+      {
+        label: 'Tenants',
+        to: '/super-admin/institutions',
+        icon: Landmark,
+        module: 'features',
+        action: 'manage',
+        feature: 'core.institution',
+      },
       // Phase 02 — auth, RBAC, features, entitlements
       { label: 'Users', to: '/admin/users', icon: Users, module: 'users', action: 'view_all', feature: 'core.rbac' },
       { label: 'Roles', to: '/admin/roles', icon: ShieldCheck, module: 'roles', feature: 'core.rbac' },
