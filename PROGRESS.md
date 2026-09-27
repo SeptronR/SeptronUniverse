@@ -72,7 +72,7 @@ Branch: Stage 1 on `planning-docs` (merged to `main`); Stage 2 uses one branch p
 
 ## Stage 2 — Build (execute the prompts, one phase per session)
 
-**Stage 1 is complete (Batch J, 2026-09-15). Phase 00 done (2026-09-16, merged to `main`). Phase 01 done (2026-09-16, merged to `main` as `2001f1b`). Phase 02 done (2026-09-22, branch `phase-02`, commit `4b933bb` — merge to `main` before Phase 03).** Next session: branch `phase-03` off `main`, then execute `Prompts/03_Phase03_Institution_Structure_Sessions_Settings.md` (row `03` below is ☐ next); tick here with the commit hash and the verification script result (`scripts/verify/NN_*.ps1` pass/fail) after each phase. **Redis is required from Phase 01 onward** — the live `01_platform.ps1` and `02_auth_rbac.ps1` runs (worker + Beat) are still owed on a machine with Redis (see the phase rows and the decisions log).
+**Stage 1 is complete (Batch J, 2026-09-15). Phase 00 done (2026-09-16, merged to `main`). Phase 01 done (2026-09-16, merged to `main` as `2001f1b`). Phase 02 done (2026-09-22, commit `4b933bb`, merged to `main` as `2a7d3a7`).** Next session: branch `phase-03` off `main`, then execute `Prompts/03_Phase03_Institution_Structure_Sessions_Settings.md` (row `03` below is ☐ next); tick here with the commit hash and the verification script result (`scripts/verify/NN_*.ps1` pass/fail) after each phase. **Redis is required from Phase 01 onward** — the live `01_platform.ps1` and `02_auth_rbac.ps1` runs (worker + Beat) are still owed on a machine with Redis (see the phase rows and the decisions log).
 
 | Phase | Status | Commit | API verification | UI verification |
 |---|---|---|---|---|
