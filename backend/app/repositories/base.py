@@ -26,9 +26,11 @@ class BaseRepository(Generic[M]):
     model: type[M]
     module: str
 
-    def __init__(self, db: AsyncSession, principal: Any = None):
+    def __init__(self, db: AsyncSession, principal: Any = None, institution_id: Any = None):
         self.db = db
         self.principal = principal
+        # explicit tenant (Phase 03): the super admin operating on ``X-Institution-Id`` is pinned to that tenant too
+        self.institution_id = institution_id
 
     @property
     def _m(self) -> Any:
@@ -40,9 +42,12 @@ class BaseRepository(Generic[M]):
         q = select(self.model)
         if hasattr(self.model, "deleted_at") and not include_deleted:
             q = q.where(self._m.deleted_at.is_(None))
-        if self.principal and not self.principal.is_super_admin and hasattr(self.model, "institution_id"):
-            # belt and braces (RLS is the backstop)
-            q = q.where(self._m.institution_id == self.principal.institution_id)
+        if hasattr(self.model, "institution_id"):
+            if self.institution_id is not None:
+                q = q.where(self._m.institution_id == self.institution_id)
+            elif self.principal and not self.principal.is_super_admin:
+                # belt and braces (RLS is the backstop)
+                q = q.where(self._m.institution_id == self.principal.institution_id)
         return q
 
     def visible(self, q: Select[tuple[M]], scope: str | None = None) -> Select[tuple[M]]:

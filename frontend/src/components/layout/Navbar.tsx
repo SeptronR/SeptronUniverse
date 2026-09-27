@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Building2, LogOut, Menu, Search, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -10,23 +12,59 @@ import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
 import { useLogout } from '@/features/auth/hooks';
+import { institutionApi } from '@/features/institution/api';
+import { useFeature } from '@/hooks/useFeature';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
 }
 
 /**
- * Admin-shell navbar: sidebar toggle, institution/college switcher (visible with >1 scope or super admin),
- * academic year/term selector (fed by Phase 03), global search (Ctrl+K), jobs tray, bell, user menu.
+ * Admin-shell navbar: sidebar toggle, institution/college switcher (live since Phase 03 — colleges from `/colleges`,
+ * shown with `institution.multi_college` and more than one college), academic year/term selector (from
+ * `/academic-years` + `/academic-terms`; `sessionStore` persists the choice and clears the query cache on a college
+ * switch), global search (Ctrl+K), jobs tray, bell, user menu.
  */
 export function Navbar({ onToggleSidebar }: NavbarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.currentUser);
   const logout = useLogout();
-  const { institutionName, collegeName, years, terms, academicYearId, termId, setYear, setTerm } = useSessionStore();
-  const showSwitcher =
-    !!user?.is_super_admin || (user?.scopes.filter((s) => s.scope_type === 'college').length ?? 0) > 1;
+  const { institutionName, collegeId, collegeName, years, terms, academicYearId, termId, setYear, setTerm, setYears, setCollege } =
+    useSessionStore();
+  const multiCollege = useFeature('institution.multi_college');
+  const hasTenant = !!user?.institution_id;
+  const colleges = useQuery({
+    queryKey: ['colleges', { scope: 'all', page_size: 200, switcher: true }],
+    queryFn: () => institutionApi.colleges({ scope: 'all', page_size: 200 }),
+    enabled: hasTenant && multiCollege,
+    staleTime: 5 * 60_000,
+  });
+  const sessions = useQuery({
+    queryKey: ['academic-years', { college_id: collegeId, navbar: true }],
+    queryFn: () => institutionApi.years({ college_id: collegeId ?? undefined, page_size: 50 }),
+    enabled: hasTenant,
+    staleTime: 5 * 60_000,
+  });
+  useEffect(() => {
+    const rows = sessions.data?.data;
+    if (!rows) return;
+    setYears(
+      rows.map((y) => ({ id: y.id, name: y.name, is_current: y.is_current })),
+      rows.flatMap((y) => y.terms.map((t) => ({ id: t.id, name: t.name, academic_year_id: y.id, is_current: t.is_current }))),
+    );
+    const state = useSessionStore.getState();
+    if (!state.academicYearId || !rows.some((y) => y.id === state.academicYearId)) {
+      const current = rows.find((y) => y.is_current && y.college_id === collegeId) ?? rows.find((y) => y.is_current) ?? rows[0];
+      if (current) {
+        setYear(current.id);
+        const term = current.terms.find((t) => t.is_current);
+        if (term) setTerm(term.id);
+      }
+    }
+  }, [sessions.data, collegeId, setYears, setYear, setTerm]);
+  const collegeRows = colleges.data?.data ?? [];
+  const showSwitcher = multiCollege && collegeRows.length > 1;
 
   return (
     <header className="app-navbar flex h-14 items-center gap-2 border-b bg-card px-3 sm:px-4">
@@ -35,18 +73,23 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
       </Button>
 
       {showSwitcher && (
-        <Button variant="outline" size="sm" className="hidden sm:inline-flex" onClick={() => navigate('/platform')}>
-          <Building2 className="h-4 w-4" />
-          <span className="max-w-[12rem] truncate">{collegeName ?? institutionName ?? 'Institution'}</span>
-        </Button>
+        <Dropdown
+          trigger={
+            <Button variant="outline" size="sm" className="hidden sm:inline-flex" aria-label="Switch college">
+              <Building2 className="h-4 w-4" />
+              <span className="max-w-[12rem] truncate">{collegeName ?? institutionName ?? 'Institution'}</span>
+            </Button>
+          }
+          items={[
+            { label: `All colleges · ${institutionName ?? 'Institution'}`, onSelect: () => setCollege(null, null) },
+            ...collegeRows.map((c) => ({ label: `${c.code} · ${c.name}`, onSelect: () => setCollege(c.id, c.name) })),
+          ]}
+        />
       )}
 
       {years.length === 0 && (
-        <span
-          className="hidden rounded-md border border-dashed px-2 py-1 text-xs text-muted-foreground md:inline"
-          title="Academic years arrive with Phase 03"
-        >
-          Academic year —
+        <span className="hidden rounded-md border border-dashed px-2 py-1 text-xs text-muted-foreground md:inline">
+          No academic year
         </span>
       )}
       {years.length > 0 && (

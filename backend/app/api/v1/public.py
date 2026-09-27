@@ -22,6 +22,8 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/auth/sso/{provider}/callback",
     # one-time bootstrap, guarded by INSTALL_SECRET_KEY
     "POST /api/v1/install",
+    # Phase 03 — public settings (is_public keys + resolved theme) for login pages / the website
+    "GET /api/v1/settings/public",
 }
 
 

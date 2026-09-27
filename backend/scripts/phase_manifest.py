@@ -87,6 +87,11 @@ PHASES: dict[str, list[str]] = {
         "usage_meters",
         "impersonation_logs",
     ],
+    "03": [
+        # section 7 academic sessions (Prompts/03 §03.1); the section 2 tenancy tables were mapped in Phase 01
+        "academic_years",
+        "academic_terms",
+    ],
 }
 
 VIEWS: set[str] = set()

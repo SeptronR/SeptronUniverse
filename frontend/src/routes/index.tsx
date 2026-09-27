@@ -31,6 +31,17 @@ const SettingsFeaturesPage = lazy(() => import('@/features/auth/pages/SettingsFe
 const EntitlementsPage = lazy(() => import('@/features/auth/pages/EntitlementsPage'));
 const InstitutionFeaturesPage = lazy(() => import('@/features/auth/pages/InstitutionFeaturesPage'));
 const FeatureMatrixPage = lazy(() => import('@/features/auth/pages/FeatureMatrixPage'));
+// Phase 03 — institution structure, academic sessions, settings
+const InstitutionProfilePage = lazy(() => import('@/features/institution/pages/InstitutionProfilePage'));
+const CollegesPage = lazy(() => import('@/features/institution/pages/CollegesPage'));
+const DepartmentsPage = lazy(() => import('@/features/institution/pages/DepartmentsPage'));
+const AcademicYearsPage = lazy(() => import('@/features/institution/pages/AcademicYearsPage'));
+const AcademicTermPage = lazy(() => import('@/features/institution/pages/AcademicTermPage'));
+const HolidaysPage = lazy(() => import('@/features/institution/pages/HolidaysPage'));
+const SettingsPage = lazy(() => import('@/features/institution/pages/SettingsPage'));
+const NumberSequencesPage = lazy(() => import('@/features/institution/pages/NumberSequencesPage'));
+const PlatformInstitutionsPage = lazy(() => import('@/features/institution/pages/PlatformInstitutionsPage'));
+const PlatformInstitutionDetailPage = lazy(() => import('@/features/institution/pages/PlatformInstitutionDetailPage'));
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -109,6 +120,28 @@ export const router = createBrowserRouter([
               </FeatureRoute>,
             ),
           },
+          // Phase 03 — institution structure, academic sessions, settings
+          ...(
+            [
+              ['/admin/institution', 'core.institution', 'institutions', 'view', <InstitutionProfilePage key="i" />],
+              ['/admin/colleges', 'core.institution', 'institutions', 'view', <CollegesPage key="c" />],
+              ['/admin/departments', 'core.institution', 'institutions', 'view', <DepartmentsPage key="d" />],
+              ['/admin/academic-years', 'core.institution', 'institutions', 'view', <AcademicYearsPage key="y" />],
+              ['/admin/academic-terms/:id', 'core.institution', 'institutions', 'view', <AcademicTermPage key="t" />],
+              ['/admin/holidays', 'institution.holidays', 'institutions', 'view', <HolidaysPage key="h" />],
+              ['/admin/settings', 'core.settings', 'settings', 'view', <SettingsPage key="s" />],
+              ['/admin/number-sequences', 'institution.number_sequences_custom', 'settings', 'manage', <NumberSequencesPage key="n" />],
+            ] as const
+          ).map(([path, feature, module, action, node]) => ({
+            path,
+            element: page(
+              <FeatureRoute feature={feature}>
+                <PermissionRoute module={module} action={action}>
+                  {node}
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          })),
           {
             path: '/jobs',
             element: page(
@@ -150,6 +183,8 @@ export const router = createBrowserRouter([
         path: '/super-admin',
         element: <SuperAdminRoute />,
         children: [
+          { path: 'institutions', element: page(<PlatformInstitutionsPage />) },
+          { path: 'institutions/:id', element: page(<PlatformInstitutionDetailPage />) },
           { path: 'institutions/:id/features', element: page(<InstitutionFeaturesPage />) },
           { path: 'features/matrix', element: page(<FeatureMatrixPage />) },
         ],

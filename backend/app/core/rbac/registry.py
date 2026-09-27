@@ -455,7 +455,9 @@ def MODULE_ALL(module: str, exclude: tuple[str, ...] = ()) -> set[str]:
     return {f"{module}:{a}" for a in ACTIONS_BY_MODULE[module] if a != "manage" and a not in exclude}
 
 
-COMMON: set[str] = P("dashboard", "view") | P("jobs", "view", "cancel")
+# Phase 03: ``institutions:view`` is granted to every role — institution, colleges, faculties, departments, academic
+# years/terms and holidays are institution-wide readable by any authenticated member (Prompts/03 "Visibility rules")
+COMMON: set[str] = P("dashboard", "view") | P("jobs", "view", "cancel") | P("institutions", "view")
 # staff self-service — always present where it makes sense (docs/Authorization_and_Visibility.md §4)
 STAFF_SELF: set[str] = (
     COMMON
@@ -860,6 +862,11 @@ assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactl
 for _slug, _grants in ROLE_TEMPLATES.items():
     _unknown = {g for g in _grants if g != "*:*" and g not in PERMISSIONS}
     assert not _unknown, f"role template {_slug} cites unknown permissions: {sorted(_unknown)}"
+
+
+# Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
+# ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
+BACKFILL_GRANTS: dict[str, frozenset[str]] = {"0003": frozenset({"institutions:view"})}
 
 
 def template_permissions(slug: str) -> set[str]:

@@ -17,6 +17,7 @@ from typing import Any
 import structlog
 from sqlalchemy import select, text
 
+from app.core.aio import run_async
 from app.core.jobs import JobContext, job
 from app.tasks.celery_app import celery
 from app.tasks.outbox import consumer
@@ -42,7 +43,7 @@ SEARCH_REINDEX_INTERVAL = 60
 
 @celery.task(name="beat.jobs.cleanup", queue="scheduled")
 def jobs_cleanup() -> dict[str, int]:
-    return asyncio.run(_jobs_cleanup())
+    return run_async(_jobs_cleanup())
 
 
 async def _jobs_cleanup() -> dict[str, int]:
@@ -57,7 +58,7 @@ async def _jobs_cleanup() -> dict[str, int]:
 
 @celery.task(name="beat.read_only.expire", queue="scheduled")
 def read_only_expire() -> int:
-    return asyncio.run(_read_only_expire())
+    return run_async(_read_only_expire())
 
 
 async def _read_only_expire() -> int:
@@ -72,7 +73,7 @@ async def _read_only_expire() -> int:
 
 @celery.task(name="beat.integrations.health", queue="scheduled")
 def integrations_health() -> dict[str, int]:
-    return asyncio.run(_integrations_health())
+    return run_async(_integrations_health())
 
 
 async def _integrations_health() -> dict[str, int]:
@@ -114,7 +115,7 @@ async def _integrations_health() -> dict[str, int]:
 
 @celery.task(name="beat.partitions.ensure_next_month", queue="scheduled")
 def partitions_ensure_next_month() -> dict[str, list[str]]:
-    return asyncio.run(ensure_next_month())
+    return run_async(ensure_next_month())
 
 
 def month_bounds(day: date) -> tuple[date, date]:
@@ -197,7 +198,7 @@ async def ensure_next_month(today: date | None = None) -> dict[str, list[str]]:
 # ---- outbox consumers ----------------------------------------------------------------------------------------------
 
 
-@consumer("search.reindex", events=["student.*", "staff.*", "course.*", "applicant.*"])
+@consumer("search.reindex", events=["student.*", "staff.*", "course.*", "applicant.*", "department.*"])
 async def search_reindex(db: Any, event: dict[str, Any]) -> None:
     """Refresh ``search_documents`` at most once per minute; a burst of events collapses into one delayed refresh."""
     await schedule_search_refresh()
@@ -222,7 +223,7 @@ async def schedule_search_refresh(force: bool = False) -> bool:
 @celery.task(name="search.refresh", queue="scheduled")
 def search_refresh() -> None:
     """Delayed refresh scheduled by a throttled ``search.reindex``."""
-    asyncio.run(_search_refresh_pending())
+    run_async(_search_refresh_pending())
 
 
 async def _search_refresh_pending() -> None:

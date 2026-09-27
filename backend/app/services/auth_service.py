@@ -28,7 +28,8 @@ Business rules
    single-use recovery codes; a limited-token confirmation also opens a session), ``disable`` (password + code),
    ``regenerate_recovery_codes``.
 7. Sessions: list (self, masked IPs), revoke one / all others; login history (self).
-8. ``load_principal``: user + valid role assignments (+ scopes) + flat permissions + effective features + impersonation
+8. ``load_principal``: (Phase 03: refused with 403 while the institution is suspended/archived — so is sign-in)
+   user + valid role assignments (+ scopes) + flat permissions + effective features + impersonation
    claims (``imp`` / ``imp_log`` / ``imp_ro``) + ``sid``.
 9. SSO hook (``security.sso``): ``start`` builds the provider redirect through the ``sso`` adapter (mock in this
    phase; ``login_hint`` picks the identity), ``callback`` verifies the signed ``state``, JIT-links a verified user by
@@ -148,6 +149,7 @@ async def load_principal(db: AsyncSession, user_id: uuid.UUID, request: Request 
     now = datetime.now(UTC)
     if user.valid_to is not None and user.valid_to < now:
         raise APIError(401, ErrorCode.UNAUTHENTICATED, "This account expired")
+    await ensure_institution_active(db, user.institution_id)
     assignments = (
         await db.execute(
             select(UserRole.role_id, UserRole.scope_type, UserRole.scope_id, Role.slug)
@@ -192,6 +194,20 @@ async def load_principal(db: AsyncSession, user_id: uuid.UUID, request: Request 
     )
 
 
+async def ensure_institution_active(db: AsyncSession, institution_id: uuid.UUID | None) -> None:
+    """Phase 03: a suspended / archived institution refuses sign-in and every existing token of its users."""
+    if institution_id is None:
+        return
+    status = (await db.execute(select(Institution.status).where(Institution.id == institution_id))).scalar_one_or_none()
+    if status is not None and status not in ("active", "pending"):
+        raise APIError(
+            403,
+            ErrorCode.PERMISSION_DENIED,
+            f"This institution is {status}; contact the SeptronUniverse team",
+            {"reason": f"institution_{status}"},
+        )
+
+
 # ---- service ------------------------------------------------------------------------------------------------------
 class AuthService:
     def __init__(self, db: AsyncSession, request: Request | None = None, principal: Principal | None = None):
@@ -210,6 +226,14 @@ class AuthService:
         if slug:
             inst = await self.config.institution_by_slug(slug)
             if inst is None:
+                # Phase 03: a suspended / archived tenant answers 403 institution_<status>, not "unknown"
+                other = (
+                    await self.db.execute(
+                        select(Institution.id).where(Institution.slug == slug, Institution.deleted_at.is_(None))
+                    )
+                ).scalar_one_or_none()
+                if other is not None:
+                    await ensure_institution_active(self.db, other)
                 raise APIError(404, ErrorCode.NOT_FOUND, "Unknown institution", {"institution_slug": slug})
             return inst
         header_id = getattr(state, "institution_id", None) if state else None
@@ -248,6 +272,7 @@ class AuthService:
             await self._failure(lock_scope, body.identifier, user, LoginOutcome.BAD_PASSWORD)
             raise APIError(401, ErrorCode.UNAUTHENTICATED, "Invalid credentials")
         await self._check_account_window(user, body.identifier)
+        await ensure_institution_active(self.db, user.institution_id)
         institution = institution or await self._institution_of(user)
         roles = await self._role_slugs(user)
         if await self._mfa_required(user, roles, institution):
@@ -298,6 +323,7 @@ class AuthService:
         outcome: str,
         lock_scope: str | None = None,
     ) -> tuple[LoginResponse, str]:
+        await ensure_institution_active(self.db, user.institution_id)
         now = datetime.now(UTC)
         family, jti = uuid.uuid4().hex, uuid.uuid4().hex
         session = await self.sessions.create(

@@ -9,6 +9,9 @@ Phase 02 adds the fixtures its verification script needs before the real modules
 ``PUT /_dev/users/{id}/validity`` (step 11 — expire a time-boxed account) and ``PUT /_dev/plans/{code}`` (step 14 —
 lower a plan's seat limit; Phase 38 ships the real super-admin plan editor). Both are super-admin only and vanish
 outside ``APP_ENV=development``.
+
+Phase 03 adds ``POST /_dev/number-sequences/{id}/next`` (step 9 — consume a value the way a business module will;
+``settings:manage`` + ``institution.number_sequences_custom``).
 """
 
 import asyncio
@@ -22,12 +25,15 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.authz.dependencies import Principal, permission_required, super_admin_required
 from app.core.errors import APIError, ErrorCode
+from app.core.features import feature_required
 from app.db.session import get_db, get_platform_db
 from app.models.platform import User
 from app.models.saas import SubscriptionPlan
 from app.schemas.common import Envelope
+from app.schemas.institution import NumberSequenceNext
 from app.schemas.platform import JobResponse
 from app.services.job_service import JobService
+from app.services.sequence_service import SequenceService
 from app.utils.response import ok
 
 router = APIRouter(prefix="/_dev", tags=["dev"])
@@ -96,3 +102,18 @@ async def set_plan_limits(
         .values(student_limit=student_limit, staff_limit=staff_limit)
     )
     return ok({"code": code, "student_limit": student_limit, "staff_limit": staff_limit})
+
+
+@router.post(
+    "/number-sequences/{id}/next",
+    summary="Reserve the next value of a sequence (dev fixture)",
+    dependencies=[feature_required("institution.number_sequences_custom")],
+    response_model=Envelope[NumberSequenceNext],
+)
+async def next_sequence_value(
+    id: uuid.UUID,
+    request: Request,
+    principal: Principal = Depends(permission_required("settings", "manage")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await SequenceService(db, principal, request).next_by_id(id))

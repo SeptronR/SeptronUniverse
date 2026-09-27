@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/auth/profile_screens.dart';
+import '../../features/settings/settings_screen.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
 
@@ -78,6 +79,12 @@ class ScreenRegistry {
       titleKey: 'sessions',
       feature: 'security.session_management',
       builder: (_, __) => const SessionsScreen(),
+    ),
+    // Phase 03 — language / theme / college (every role; no admin editing on mobile)
+    AppRoutes.settings: ScreenEntry(
+      route: AppRoutes.settings,
+      titleKey: 'settings',
+      builder: (_, __) => const AppSettingsScreen(),
     ),
   };
 

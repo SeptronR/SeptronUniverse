@@ -215,3 +215,17 @@ def super_admin_required() -> PermissionDependency:
 def get_scopes(principal: Principal = Depends(get_current_user)) -> list[tuple[str, uuid.UUID | None]]:
     """Scopes of the principal (union across role assignments)."""
     return principal.scopes
+
+
+def super_admin_permission(module: str, action: str) -> PermissionDependency:
+    """Platform tenant administration (Phase 03 ``/platform/institutions``): the super admin flag, recorded in the
+    access matrix as ``module:action`` — an institution admin also holds ``institutions:manage`` inside its own tenant,
+    so the permission alone must never open the cross-tenant routes."""
+
+    async def _dep(principal: Principal = Depends(get_current_user)) -> Principal:
+        if not principal.is_super_admin:
+            raise APIError(403, ErrorCode.PERMISSION_DENIED, "Super admin only", {"module": module, "action": action})
+        return principal
+
+    _dep.__permissions__ = [(module, action)]  # type: ignore[attr-defined]
+    return _dep

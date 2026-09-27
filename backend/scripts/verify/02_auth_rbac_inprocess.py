@@ -129,6 +129,11 @@ async def run() -> int:  # noqa: C901 - one linear walk through §02.11
                 ),
                 {"h": hash_password(password_of("student"))},
             )
+            # the live 02_auth_rbac.ps1 credential-sheet step rotates hr's password (must_change_password)
+            await db.execute(
+                text("UPDATE users SET password_hash = :h, must_change_password = FALSE WHERE username = 'hr'"),
+                {"h": hash_password(password_of("hr_officer"))},
+            )
             touched_keys = "feature_key LIKE 'hostel.%' OR feature_key IN ('comms.whatsapp','security.sso','fees.core')"
             await db.execute(text(f"DELETE FROM institution_feature_flags WHERE {touched_keys}"))
             await db.execute(text(f"DELETE FROM feature_flag_changes WHERE {touched_keys}"))

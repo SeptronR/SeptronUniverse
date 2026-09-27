@@ -88,7 +88,11 @@ List<ShellTab> tabsForRole(String role) {
 }
 
 /// More-grid modules registered by the phases (`moreMenuModules.add(...)` in NN.10).
-final List<MoreMenuModule> moreMenuModules = [];
+final List<MoreMenuModule> moreMenuModules = [
+  // Phase 03 — language / theme / college picker (every role)
+  const MoreMenuModule(
+      titleKey: 'settings', icon: Icons.settings_outlined, route: AppRoutes.settings, color: Colors.blueGrey),
+];
 
 List<MoreMenuModule> moreMenuFor(AuthState auth) =>
     moreMenuModules.where((m) => m.visibleFor(auth)).toList();

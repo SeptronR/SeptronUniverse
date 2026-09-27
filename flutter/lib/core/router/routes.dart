@@ -13,6 +13,7 @@ class AppRoutes {
   static const profilePassword = '/app/profile/password';
   static const profileMfa = '/app/profile/mfa';
   static const profileSessions = '/app/profile/sessions';
+  static const settings = '/app/settings';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

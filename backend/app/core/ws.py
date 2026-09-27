@@ -161,7 +161,10 @@ async def _load_principal(claims: dict[str, Any]) -> Any | None:
 
 @ws_router.websocket("/ws")
 async def ws_endpoint(websocket: WebSocket, token: str | None = Query(default=None)) -> None:
+    # A close before accept() is turned into an HTTP 403 handshake rejection by uvicorn (ASGI spec), so clients
+    # would never see 4401: accept first, then close with the application code (found by the live 01_platform.ps1).
     if not token:
+        await websocket.accept()
         await websocket.close(code=WS_CLOSE_UNAUTHENTICATED)
         return
     try:
@@ -170,6 +173,7 @@ async def ws_endpoint(websocket: WebSocket, token: str | None = Query(default=No
             raise APIError(401, "UNAUTHENTICATED", "Token revoked")
         principal = await _load_principal(claims)
     except APIError:
+        await websocket.accept()
         await websocket.close(code=WS_CLOSE_UNAUTHENTICATED)
         return
     await websocket.accept()

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/auth/auth_state.dart';
 import '../../core/providers.dart';
 import '../../core/router/role_shells.dart';
+import '../../core/session/academic_session.dart';
 import '../../l10n/app_localizations.dart';
 
 /// Role shell: bottom NavigationBar (≤ 5 tabs from role_shells.dart) + offline/read-only banners.
@@ -40,6 +41,15 @@ class RoleShellScaffold extends ConsumerWidget {
               content: Text(l10n.offlineBanner),
               leading: const Icon(Icons.cloud_off_outlined),
               actions: const [SizedBox.shrink()],
+            ),
+          // Phase 03: current term chip (tap → college picker for multi-college users)
+          if (auth.isAuthenticated)
+            const SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(12, 4, 12, 0),
+                child: Align(alignment: Alignment.centerLeft, child: CurrentTermChip()),
+              ),
             ),
           Expanded(child: child),
         ],
