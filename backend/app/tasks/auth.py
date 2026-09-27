@@ -10,7 +10,6 @@ Jobs: ``jobs.users.credential_sheet`` — generates temporary passwords for the 
 ``must_change_password``, writes an XLSX to the tenant's storage and records ``credential_sheets.file_url``.
 """
 
-import asyncio
 import uuid
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
@@ -18,6 +17,7 @@ from typing import Any
 import structlog
 from sqlalchemy import select, text
 
+from app.core.aio import run_async
 from app.core.jobs import JobContext, job
 from app.tasks.celery_app import celery
 from app.tasks.outbox import consumer
@@ -28,7 +28,7 @@ log = structlog.get_logger()
 # ---- Beat jobs -----------------------------------------------------------------------------------------------
 @celery.task(name="beat.auth.cleanup_sessions", queue="scheduled")
 def cleanup_sessions() -> dict[str, int]:
-    return asyncio.run(_cleanup_sessions())
+    return run_async(_cleanup_sessions())
 
 
 async def _cleanup_sessions() -> dict[str, int]:
@@ -48,7 +48,7 @@ async def _cleanup_sessions() -> dict[str, int]:
 
 @celery.task(name="beat.auth.expire_time_boxed_accounts", queue="scheduled")
 def expire_time_boxed_accounts() -> dict[str, int]:
-    return asyncio.run(_expire_time_boxed_accounts())
+    return run_async(_expire_time_boxed_accounts())
 
 
 async def _expire_time_boxed_accounts() -> dict[str, int]:
@@ -82,7 +82,7 @@ async def _expire_time_boxed_accounts() -> dict[str, int]:
 
 @celery.task(name="beat.subscriptions.reminders", queue="scheduled")
 def subscription_reminders() -> int:
-    return asyncio.run(_subscription_reminders())
+    return run_async(_subscription_reminders())
 
 
 async def _subscription_reminders() -> int:
@@ -97,7 +97,7 @@ async def _subscription_reminders() -> int:
 
 @celery.task(name="beat.usage.meter", queue="scheduled")
 def usage_meter() -> dict[str, Any]:
-    return asyncio.run(_usage_meter())
+    return run_async(_usage_meter())
 
 
 async def _usage_meter() -> dict[str, Any]:

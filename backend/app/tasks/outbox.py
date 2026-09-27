@@ -15,7 +15,6 @@ retry triggered by one failing consumer never re-runs the others. ``"*"`` subscr
 to a prefix.
 """
 
-import asyncio
 from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime, timedelta
 from typing import Any
@@ -23,6 +22,7 @@ from typing import Any
 import structlog
 from sqlalchemy import or_, select, text
 
+from app.core.aio import run_async
 from app.tasks.celery_app import celery
 
 log = structlog.get_logger()
@@ -54,7 +54,7 @@ def consumers_for(event_type: str) -> list[str]:
 @celery.task(name="outbox.relay", queue="scheduled")
 def relay(batch: int = 500) -> dict[str, int]:
     """Dispatch pending events to their consumers; returns counters for Flower / logs."""
-    return asyncio.run(_relay(batch))
+    return run_async(_relay(batch))
 
 
 async def _relay(batch: int) -> dict[str, int]:
@@ -169,7 +169,7 @@ def consumer(name: str, events: list[str], queue: str = "scheduled") -> Callable
     def deco(fn: ConsumerFn) -> Any:
         @celery.task(name=name, queue=queue)
         def task(**event: Any) -> None:
-            asyncio.run(_consume(name, fn, event))
+            run_async(_consume(name, fn, event))
 
         for e in events:
             subscribe(e, name)

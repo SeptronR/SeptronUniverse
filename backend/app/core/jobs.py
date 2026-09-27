@@ -8,7 +8,6 @@ marks ``running → succeeded | failed | cancelled``, honours ``cancel_requested
 (``services/job_service.py``) adds listing, cancel and cleanup on top.
 """
 
-import asyncio
 import contextlib
 import json
 import uuid
@@ -21,6 +20,7 @@ import structlog
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.aio import run_async
 from app.core.errors import APIError, ErrorCode
 from app.models.platform import BackgroundJob, DomainEvent
 
@@ -125,7 +125,7 @@ def job(job_type: str, queue: str = "reports") -> Callable[[Callable[..., Any]],
     def deco(fn: Callable[..., Any]) -> Callable[..., Any]:
         @wraps(fn)
         def wrapper(job_id: str, *args: Any, **kwargs: Any) -> Any:
-            return asyncio.run(_run(fn, uuid.UUID(job_id), *args, **kwargs))
+            return run_async(_run(fn, uuid.UUID(job_id), *args, **kwargs))
 
         wrapper.__job_type__ = job_type  # type: ignore[attr-defined]
         wrapper.__queue__ = queue  # type: ignore[attr-defined]

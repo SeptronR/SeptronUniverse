@@ -6,11 +6,11 @@ unless a real one is configured — Phase 04 replaces the bodies with the templa
 (``notification_templates`` + ``message_logs``) and Phase 41 wires the live providers.
 """
 
-import asyncio
 from typing import Any
 
 import structlog
 
+from app.core.aio import run_async
 from app.core.config import settings
 from app.tasks.celery_app import celery
 
@@ -21,14 +21,14 @@ log = structlog.get_logger()
 def send_sms_otp(
     institution_id: str | None = None, destination: str = "", code: str = "", ttl: int = 300
 ) -> dict[str, Any]:
-    return asyncio.run(_send("sms", settings.SMS_PROVIDER, destination, _otp_text(code, ttl)))
+    return run_async(_send("sms", settings.SMS_PROVIDER, destination, _otp_text(code, ttl)))
 
 
 @celery.task(name="notifications.send_email_otp", queue="emails")
 def send_email_otp(
     institution_id: str | None = None, destination: str = "", code: str = "", ttl: int = 300
 ) -> dict[str, Any]:
-    return asyncio.run(
+    return run_async(
         _send("email", settings.EMAIL_PROVIDER, destination, _otp_text(code, ttl), subject="Your sign-in code")
     )
 
@@ -45,7 +45,7 @@ def send_password_reset(
         f"Someone asked to reset the password of your SeptronUniverse account.\n\n{reset_url}\n\n"
         f"The link is valid for {ttl_minutes} minutes and can be used once. If this was not you, ignore this message."
     )
-    return asyncio.run(_send("email", settings.EMAIL_PROVIDER, email, body, subject="Reset your password"))
+    return run_async(_send("email", settings.EMAIL_PROVIDER, email, body, subject="Reset your password"))
 
 
 def _otp_text(code: str, ttl: int) -> str:

@@ -51,3 +51,44 @@ function Summary($phase) {
   Write-Host ""
   Write-Host "$phase : PASS ($script:Checks checks)" -ForegroundColor Green
 }
+
+function Get-VenvPython($backend) {
+  # backend/.venv on Windows (Scripts\python.exe) or Linux/macOS (bin/python); falls back to the PATH interpreter
+  foreach ($rel in @(".venv\Scripts\python.exe", ".venv/bin/python")) {
+    $p = Join-Path $backend $rel
+    if (Test-Path $p) { return $p }
+  }
+  return "python"
+}
+
+function Get-CredentialsFile { Join-Path $PSScriptRoot "../../../LOCAL_TEST_CREDENTIALS.md" }
+
+function Get-Totp($secret) {
+  $py = Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "../.."))
+  (& $py -c "import pyotp,sys;print(pyotp.TOTP(sys.argv[1]).now())" $secret).Trim()
+}
+
+function Login-SuperAdmin {
+  # The super admin is an MFA-required role. The first run enrols it (limited mfa_setup token -> setup -> confirm) and
+  # appends the TOTP secret to LOCAL_TEST_CREDENTIALS.md as role "super_admin_totp" (git-ignored), so every later
+  # verification script can sign in again without resetting MFA. Returns the access token.
+  $pwd = Get-DemoPassword 'super_admin'
+  $body = @{ identifier = 'superadmin'; password = $pwd }
+  $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body ($body | ConvertTo-Json) -SkipHttpErrorCheck
+  $j = $r.Content | ConvertFrom-Json
+  if ($r.StatusCode -eq 200) { return $j.data.access_token }
+  if ($r.StatusCode -ne 403 -or $j.error.code -ne 'MFA_REQUIRED') { throw "super admin login failed: $($r.StatusCode) $($r.Content)" }
+  if ($j.error.details.mfa_setup_required) {
+    $h = @{ Authorization = "Bearer $($j.error.details.mfa_setup_token)" }
+    $setup = (Invoke-RestMethod -Method Post -Uri "$script:BaseUrl/auth/mfa/setup" -Headers $h).data
+    Invoke-RestMethod -Method Post -Uri "$script:BaseUrl/auth/mfa/confirm" -Headers $h -ContentType 'application/json' -Body (@{ code = (Get-Totp $setup.secret) } | ConvertTo-Json) | Out-Null
+    Add-Content -Path (Get-CredentialsFile) -Value "`n| super_admin_totp | superadmin | ``$($setup.secret)`` |"
+    $secret = $setup.secret
+  } else {
+    $secret = Get-DemoPassword 'super_admin_totp'
+  }
+  $body['mfa_code'] = Get-Totp $secret
+  $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body ($body | ConvertTo-Json) -SkipHttpErrorCheck
+  if ($r.StatusCode -ne 200) { throw "super admin TOTP login failed: $($r.StatusCode) $($r.Content)" }
+  return ($r.Content | ConvertFrom-Json).data.access_token
+}

@@ -17,7 +17,7 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1")
 $Root = $BaseUrl -replace '/api/v1$', ''
 $WsUrl = ($Root -replace '^http', 'ws') + '/ws'
 $Backend = Resolve-Path (Join-Path $PSScriptRoot "..\..")
-$Python = if (Test-Path (Join-Path $Backend ".venv\Scripts\python.exe")) { Join-Path $Backend ".venv\Scripts\python.exe" } else { "python" }
+$Python = Get-VenvPython $Backend
 $env:PYTHONUTF8 = "1"
 Push-Location $Backend
 

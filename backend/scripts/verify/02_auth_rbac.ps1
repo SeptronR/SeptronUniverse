@@ -35,7 +35,7 @@ param(
 )
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 $Backend = Resolve-Path (Join-Path $PSScriptRoot "..\..")
-$Python = if (Test-Path (Join-Path $Backend ".venv\Scripts\python.exe")) { Join-Path $Backend ".venv\Scripts\python.exe" } else { "python" }
+$Python = Get-VenvPython $Backend
 $env:PYTHONUTF8 = "1"
 Push-Location $Backend
 
@@ -44,13 +44,28 @@ function LoginFull($identifier, $password, $extra = @{}) {
   $params = @{ Method = 'POST'; Uri = "$script:BaseUrl/auth/login"; ContentType = 'application/json'
     Body = ($body | ConvertTo-Json -Depth 6); SkipHttpErrorCheck = $true; SessionVariable = 'ws' }
   $r = Invoke-WebRequest @params
-  return @{ Status = $r.StatusCode; Body = (if ($r.Content) { $r.Content | ConvertFrom-Json } else { $null })
+  return @{ Status = $r.StatusCode; Body = $(if ($r.Content) { $r.Content | ConvertFrom-Json } else { $null })
     Session = $ws; Cookies = $r.Headers['Set-Cookie'] }
 }
 
 function Totp($secret) { (& $Python -c "import pyotp,sys;print(pyotp.TOTP(sys.argv[1]).now())" $secret).Trim() }
 
 try {
+  Write-Host "== 0. reset the fixtures of a previous run (same list as 02_auth_rbac_inprocess.py step 0)"
+  $probes = "SELECT id FROM users WHERE username IN ('verify.temp','support.verify')"
+  $touched = "feature_key LIKE 'hostel.%' OR feature_key IN ('comms.whatsapp','security.sso','fees.core')"
+  & $Python scripts/verify/_sql.py --write ("DELETE FROM mfa_secrets WHERE user_id IN (SELECT id FROM users WHERE username = 'coe'); " +
+    "UPDATE users SET mfa_enabled = FALSE WHERE username = 'coe'; " +
+    "DELETE FROM impersonation_logs WHERE impersonator_id IN ($probes) OR target_user_id IN ($probes); " +
+    "DELETE FROM audit_logs WHERE user_id IN ($probes); DELETE FROM users WHERE username IN ('verify.temp','support.verify'); " +
+    "DELETE FROM roles WHERE slug IN ('imp_probe','nope_role'); " +
+    "UPDATE subscription_plans SET student_limit = 200000, staff_limit = 20000 WHERE code = 'university'; " +
+    "UPDATE users SET valid_to = NOW() + INTERVAL '7 days' WHERE username = 'auditor.tmp'; " +
+    "DELETE FROM institution_feature_flags WHERE $touched; DELETE FROM feature_flag_changes WHERE $touched") | Out-Null
+  if ($LASTEXITCODE -ne 0) { throw "fixture reset failed" }
+  & $Python -c "import asyncio,sys;sys.path.insert(0,'scripts');import _bootstrap;import redis.asyncio as r;from app.core.config import settings;asyncio.run(r.from_url(settings.REDIS_URL).flushdb())" | Out-Null
+  Assert $true "coe MFA, probe users/roles, feature flags, plan limits and Redis lockouts reset"
+
   Write-Host "== 1. student login"
   $student = LoginFull 'student.1' (Get-DemoPassword 'student')
   Assert ($student.Status -eq 200) "POST /auth/login (student.1) -> 200"
@@ -132,12 +147,8 @@ try {
   Write-Host "== 8. scoped assignments"
   $users = Call $adminToken GET "/users?page_size=200&q=faculty.1"
   $facultyId = ($users.data | Where-Object { $_.username -eq 'faculty.1' }).id
-  $depts = & $Python -c "import asyncio,sys,json;sys.path.insert(0,'scripts');import _bootstrap;from sqlalchemy import text;from app.db.session import platform_engine
-async def m():
-    async with platform_engine.connect() as c:
-        rows=(await c.execute(text(\"SELECT code, id FROM departments d JOIN institutions i ON i.id=d.institution_id WHERE i.slug='demo-uni'\"))).all()
-        print(json.dumps({r[0]: str(r[1]) for r in rows}))
-asyncio.run(m())" | ConvertFrom-Json
+  $depts = @{}
+  (& $Python scripts/verify/_sql.py "SELECT d.code, d.id FROM departments d JOIN institutions i ON i.id = d.institution_id WHERE i.slug = 'demo-uni'" | ConvertFrom-Json) | ForEach-Object { $depts[$_.code] = $_.id }
   $assign = Call $adminToken POST "/users/$facultyId/roles" @{ role_id = $roleBySlug['hod'].id; scope_type = 'department'; scope_id = $depts.CSE } 201
   Assert ($assign.data.scope_label) "hod @department CSE assigned (scope_label = $($assign.data.scope_label))"
   $bad = Call $adminToken POST "/users/$facultyId/roles" @{ role_id = $roleBySlug['hod'].id; scope_type = 'department'; scope_id = [guid]::NewGuid().ToString() } 422
@@ -145,20 +156,9 @@ asyncio.run(m())" | ConvertFrom-Json
   Call $adminToken DELETE "/users/$facultyId/roles/$($assign.data.id)" | Out-Null
 
   Write-Host "== 9. feature flags (super admin)"
-  $saPwd = Get-DemoPassword 'super_admin'
-  $sa = LoginFull 'superadmin' $saPwd
-  if ($sa.Status -eq 403 -and $sa.Body.error.code -eq 'MFA_REQUIRED') {
-    Assert $true "the super admin account requires MFA"
-    if ($sa.Body.error.details.mfa_setup_required) {
-      $setup = Call $sa.Body.error.details.mfa_setup_token POST "/auth/mfa/setup"
-      Call $sa.Body.error.details.mfa_setup_token POST "/auth/mfa/confirm" @{ code = (Totp $setup.data.secret) } | Out-Null
-      $script:SaSecret = $setup.data.secret
-    }
-    if (-not $script:SaSecret) { throw "the super admin is already enrolled: pass its TOTP secret or reset MFA (scripts/verify/02_auth_rbac_inprocess.py resets the fixtures)" }
-    $sa = LoginFull 'superadmin' $saPwd @{ mfa_code = (Totp $script:SaSecret) }
-  }
-  Assert ($sa.Status -eq 200 -and $sa.Body.data.user.is_super_admin) "super admin signed in"
-  $saToken = $sa.Body.data.access_token
+  $saToken = Login-SuperAdmin   # enrols MFA on the first run and keeps the TOTP secret in LOCAL_TEST_CREDENTIALS.md
+  $me = Call $saToken GET "/auth/me"
+  Assert ($me.data.user.is_super_admin) "super admin signed in (MFA)"
   $instId = $admin.Body.data.user.institution_id
   $tenant = @{ 'X-Institution-Id' = $instId }
   $flags = Call $saToken GET "/institutions/$instId/features" $null 200 $tenant
@@ -230,7 +230,11 @@ asyncio.run(m())" | ConvertFrom-Json
   Call $second.Body.data.access_token GET "/auth/me" $null 401 | Out-Null
 
   Write-Host "== 16. install"
-  $installed = Call $null POST "/install" @{ install_key = 'change-me'; super_admin_email = 'platform.admin@septronuniverse.in'; super_admin_password = 'Install@2026Setup' } 409
+  $installBody = @{ install_key = 'change-me'; super_admin_email = 'platform.admin@septronuniverse.in'; super_admin_password = 'Install@2026Setup' }
+  # a freshly migrated box (alembic + seed_platform, never POSTed /install) installs once; every later call is 409
+  $first = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/install" -ContentType 'application/json' -Body ($installBody | ConvertTo-Json) -SkipHttpErrorCheck
+  Assert ($first.StatusCode -in 200, 409) "POST /install -> $($first.StatusCode) (200 on a never-installed box, else 409)"
+  $installed = Call $null POST "/install" $installBody 409
   Assert ($installed.error.code -eq 'CONFLICT') "POST /install on an installed platform -> 409 CONFLICT"
 
   if (-not $SkipWorkerSteps) {
