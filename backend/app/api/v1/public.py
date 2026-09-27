@@ -24,6 +24,9 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/install",
     # Phase 03 — public settings (is_public keys + resolved theme) for login pages / the website
     "GET /api/v1/settings/public",
+    # Phase 04 — signed one-click unsubscribe and provider callbacks (HMAC signature verified in the service)
+    "GET /api/v1/notification-preferences/unsubscribe",
+    "POST /api/v1/webhooks/{provider}/{channel}",
 }
 
 

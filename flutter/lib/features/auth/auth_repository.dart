@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/auth/auth_state.dart';
 import '../../core/auth/session.dart';
+import '../../core/notifications/push_registration.dart';
 import '../../core/network/api_exception.dart';
 import '../../core/providers.dart';
 
@@ -58,8 +59,10 @@ class AuthRepository {
         },
         options: Options(extra: {'idempotent': false}),
       );
-      return LoginOutcome.success(
-          await _store(res.data?['data'] as Map<String, dynamic>? ?? const {}));
+      final state = await _store(res.data?['data'] as Map<String, dynamic>? ?? const {});
+      // Phase 04: push token registration runs in the background (never blocks sign-in)
+      _ref.read(pushRegistrationProvider).register();
+      return LoginOutcome.success(state);
     } on DioException catch (e) {
       final api = ApiException.fromDio(e);
       if (api.code == ApiErrorCode.mfaRequired) {

@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { GraduationCap } from 'lucide-react';
 import { NAV_GROUPS } from '@/nav';
+import { useInbox } from '@/features/workflow/hooks';
 import { useFeatures } from '@/hooks/useFeature';
 import { usePermission } from '@/hooks/usePermission';
 import { useSessionStore } from '@/store/sessionStore';
@@ -16,6 +17,8 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
   const { can, canAny } = usePermission();
   const features = useFeatures();
   const institutionName = useSessionStore((s) => s.institutionName);
+  const inbox = useInbox();
+  const badges: Record<string, number> = { approvals: inbox.data?.data.length ?? 0 };
 
   const groups = NAV_GROUPS.map((g) => ({
     ...g,
@@ -64,6 +67,11 @@ export function Sidebar({ collapsed, onNavigate }: SidebarProps) {
                   >
                     <it.icon className="h-4 w-4 shrink-0" />
                     {!collapsed && <span className="truncate">{it.label}</span>}
+                    {it.badge && badges[it.badge] > 0 && (
+                      <span className="ml-auto rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
+                        {badges[it.badge]}
+                      </span>
+                    )}
                   </NavLink>
                 </li>
               ))}

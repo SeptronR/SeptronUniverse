@@ -6,7 +6,9 @@ Phases append entries with ``register_beat("<module>.<job>", task, schedule)``. 
 partitions ahead of time; the default partitions catch anything that arrives before it runs). Phase 02 adds the auth
 and entitlement jobs (``app/tasks/auth.py``): ``auth.cleanup_sessions`` (hourly), ``auth.expire_time_boxed_accounts``
 (daily 01:00), ``subscriptions.reminders`` (daily 06:00) and ``usage.meter`` (monthly, 1st 02:30). Phase 03 adds
-``sequences.reset`` (daily 00:05) and ``terms.auto_status`` (daily 00:15) — ``app/tasks/institution.py``.
+``sequences.reset`` (daily 00:05) and ``terms.auto_status`` (daily 00:15) — ``app/tasks/institution.py``; Phase 04
+``workflow.escalate`` (15 min), ``notifications.retry_failed`` (10 min) and ``notifications.digest`` (daily 08:00,
+weekly Mondays 08:05) — ``app/tasks/notifications.py``.
 """
 
 from typing import Any
@@ -42,5 +44,15 @@ register_beat("usage.meter", "beat.usage.meter", crontab(day_of_month="1", hour=
 # ---- Phase 03 institution structure / sessions (app/tasks/institution.py) ------------------------------------------------
 register_beat("sequences.reset", "beat.sequences.reset", crontab(hour=0, minute=5))
 register_beat("terms.auto_status", "beat.terms.auto_status", crontab(hour=0, minute=15))
+
+# ---- Phase 04 communication core / workflow engine (app/tasks/notifications.py) ------------------------------------------
+register_beat("workflow.escalate", "beat.workflow.escalate", crontab(minute="*/15"))
+register_beat("notifications.retry_failed", "beat.notifications.retry_failed", crontab(minute="*/10"))
+register_beat(
+    "notifications.digest", "beat.notifications.digest", crontab(hour=8, minute=0), kwargs={"period": "daily"}
+)
+register_beat(
+    "notifications.digest_weekly", "beat.notifications.digest", crontab(hour=8, minute=5), kwargs={"period": "weekly"}
+)
 
 celery.conf.beat_schedule = BEAT_SCHEDULE

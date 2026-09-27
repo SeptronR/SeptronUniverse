@@ -92,6 +92,24 @@ PHASES: dict[str, list[str]] = {
         "academic_years",
         "academic_terms",
     ],
+    "04": [
+        # section 23 communication (Prompts/04 §04.1); workflow tables + device_tokens were mapped in Phase 01
+        "notification_templates",
+        "dlt_templates",
+        "whatsapp_templates",
+        "notification_preferences",
+        "notifications",
+        "message_logs",
+        "announcements",
+        "announcement_acknowledgements",
+        "conversation_sessions",
+        "wa_processed_messages",
+        "workflow_definitions",
+        "workflow_instances",
+        "workflow_steps",
+        "workflow_delegations",
+        "device_tokens",
+    ],
 }
 
 VIEWS: set[str] = set()

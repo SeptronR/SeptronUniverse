@@ -17,17 +17,21 @@ from fastapi import APIRouter
 import app.features  # noqa: F401  (registers every feature key before routers cite them)
 from app.api.v1.endpoints import (
     academic_sessions,
+    announcements,
     auth,
+    communication,
     features,
     feedback,
     help,
     institution,
     jobs,
+    notifications,
     platform,
     platform_institutions,
     privacy,
     rbac,
     search,
+    workflow,
 )
 from app.api.v1.endpoints import settings as settings_routes
 from app.core.config import settings
@@ -44,6 +48,10 @@ api_router.include_router(institution.router, dependencies=[feature_required("co
 api_router.include_router(academic_sessions.router, dependencies=[feature_required("core.institution")])
 api_router.include_router(settings_routes.router, dependencies=[feature_required("core.settings")])
 api_router.include_router(platform_institutions.router, dependencies=[feature_required("core.institution")])
+api_router.include_router(communication.router, dependencies=[feature_required("core.notifications_inapp")])
+api_router.include_router(notifications.router, dependencies=[feature_required("core.notifications_inapp")])
+api_router.include_router(announcements.router, dependencies=[feature_required("comms.announcements")])
+api_router.include_router(workflow.router, dependencies=[feature_required("workflow.engine")])
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])

@@ -14,7 +14,8 @@ Two layers, same pattern as ``install_service`` (synchronous connection → usab
 Pack assets owned by later phases are **not** copied here: assessment schemes need a regulation (``assessment_schemes
 .regulation_id`` NOT NULL — Phase 05 seeds them from ``pack.default_assessment_schemes`` when the first regulation is
 created); accreditation frameworks are platform rows seeded by the canonical DDL (§36.4); document / notification
-templates arrive with Phases 04 and 26. ``seed_institution_defaults`` reports them as ``deferred``.
+templates arrive with Phase 26 (Phase 04 ships the platform notification templates and copies the 18 workflow
+templates into ``workflow_definitions``). ``seed_institution_defaults`` reports the deferred assets.
 """
 
 import json
@@ -160,12 +161,14 @@ def seed_institution_defaults(
                 {"i": iid, "k": s.scope_key, "p": s.pattern, "pad": s.padding, "r": s.reset_policy},
             )
             sequences += 1
+    workflows = seed_workflow_definitions(conn, iid)  # Phase 04
     return {
         "pack": pack.code,
+        "workflow_definitions": workflows,
         "settings": created_settings,
         "grading_scales": scales,
         "number_sequences": sequences,
-        "deferred": ["assessment_schemes (Phase 05)", "templates (Phases 04/26)"],
+        "deferred": ["assessment_schemes (Phase 05)", "document templates (Phase 26)"],
         "frameworks": [f.code for f in pack.accreditation_frameworks],
     }
 
@@ -180,3 +183,75 @@ def _pack_default(category: str, key: str, default: Any, pack: Any) -> Any:
     if category == "fees" and key == "gst_enabled":
         return pack.tax.tax_name == "GST"
     return default
+
+
+# ---- Phase 04: notification templates + workflow templates ------------------------------------------------------------
+def seed_phase04_platform(conn: Connection) -> dict[str, int]:
+    """Platform notification templates (``institution_id`` NULL, one row per event × language, version 1) and
+    ``platform_settings['workflow_templates']`` — Prompts/04 §04.2. Existing rows are left untouched (operators may
+    have edited the platform copy)."""
+    from app.core.notifications.catalogue import EVENTS
+    from app.core.workflow.templates import WORKFLOW_TEMPLATES
+
+    created = 0
+    for ev in EVENTS:
+        for lang, body in (("en", ev.body), ("hi", ev.hi_body)):
+            if body is None:
+                continue
+            exists = conn.execute(
+                text(
+                    "SELECT 1 FROM notification_templates WHERE institution_id IS NULL AND event_trigger = :e "
+                    "AND language = :l"
+                ),
+                {"e": ev.key, "l": lang},
+            ).first()
+            if exists is not None:
+                continue
+            conn.execute(
+                text(
+                    "INSERT INTO notification_templates (institution_id, event_trigger, name, channels, subject_template, "
+                    "body_template, variables, language, version, is_active) VALUES (NULL, :e, :n, CAST(:c AS jsonb), :s, "
+                    ":b, CAST(:v AS jsonb), :l, 1, TRUE)"
+                ),
+                {
+                    "e": ev.key,
+                    "n": ev.name,
+                    "c": json.dumps(list(ev.channels)),
+                    "s": ev.subject,
+                    "b": body,
+                    "v": json.dumps(list(ev.variables)),
+                    "l": lang,
+                },
+            )
+            created += 1
+    _put_platform_setting(conn, "workflow_templates", list(WORKFLOW_TEMPLATES))
+    return {"notification_templates": created, "workflow_templates": len(WORKFLOW_TEMPLATES)}
+
+
+def seed_workflow_definitions(conn: Connection, institution_id: uuid.UUID | str) -> int:
+    """Copy every shipped workflow template missing in the institution as version 1 (idempotent)."""
+    from app.core.workflow.templates import WORKFLOW_TEMPLATES
+
+    created = 0
+    for tmpl in WORKFLOW_TEMPLATES:
+        exists = conn.execute(
+            text("SELECT 1 FROM workflow_definitions WHERE institution_id = :i AND key = :k"),
+            {"i": str(institution_id), "k": tmpl["key"]},
+        ).first()
+        if exists is not None:
+            continue
+        conn.execute(
+            text(
+                "INSERT INTO workflow_definitions (institution_id, module, key, name, steps, version, is_active) "
+                "VALUES (:i, :m, :k, :n, CAST(:s AS jsonb), 1, TRUE)"
+            ),
+            {
+                "i": str(institution_id),
+                "m": tmpl["module"],
+                "k": tmpl["key"],
+                "n": tmpl["name"],
+                "s": json.dumps(tmpl["steps"]),
+            },
+        )
+        created += 1
+    return created
