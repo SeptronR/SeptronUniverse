@@ -57,6 +57,31 @@ class Settings(BaseSettings):
     INSTALL_SECRET_KEY: str
     SUPERADMIN_EMAIL: str = "superadmin@universe.local"
 
+    # ---- Phase 02: authentication policy (Prompts/02 §02.6) ----
+    LOGIN_LOCKOUT_ATTEMPTS: int = 5  # failures per identifier inside LOGIN_LOCKOUT_MINUTES -> 429 RATE_LIMITED
+    LOGIN_LOCKOUT_MINUTES: int = 15
+    OTP_TTL_SECONDS: int = 300
+    OTP_RESEND_SECONDS: int = 60
+    PASSWORD_MIN_LENGTH: int = 10
+    PASSWORD_HISTORY: int = 5
+    PASSWORD_RESET_TTL_MINUTES: int = 60
+    MFA_SETUP_TOKEN_MINUTES: int = 10
+    # web origin used in password-reset / SSO redirect links (first ALLOWED_ORIGINS entry when unset)
+    FRONTEND_URL: str | None = None
+    SSO_PROVIDER: str = "mock"
+    # development aid: run enqueued jobs inside the API process (set by scripts/dev_api_fakeredis.py; never in prod)
+    JOBS_INLINE: bool = False
+
+    @property
+    def cookie_secure(self) -> bool:
+        return self.APP_ENV == "production"
+
+    @property
+    def frontend_url(self) -> str:
+        return (
+            self.FRONTEND_URL or (self.ALLOWED_ORIGINS[0] if self.ALLOWED_ORIGINS else "http://localhost:5173")
+        ).rstrip("/")
+
     @field_validator("DATABASE_URL", "PLATFORM_DATABASE_URL", mode="before")
     @classmethod
     def _asyncpg(cls, v: str | None) -> str | None:
@@ -74,6 +99,7 @@ class Settings(BaseSettings):
         "CAPTCHA_SECRET",
         "CAPTCHA_SITE_KEY",
         "CLAMAV_HOST",
+        "FRONTEND_URL",
         mode="before",
     )
     @classmethod

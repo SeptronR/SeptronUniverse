@@ -6,6 +6,7 @@ Column names mirror Database_Schema.sql conventions: UUID PKs, ``institution_id`
 
 import uuid
 from datetime import datetime
+from typing import Any, ClassVar
 
 from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, func
 from sqlalchemy.dialects.postgresql import UUID
@@ -21,6 +22,10 @@ class TimestampMixin:
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
     )
+    # ``eager_defaults`` fetches server-generated values (``updated_at``, the ``version`` bump trigger) with RETURNING
+    # in the same statement. Without it SQLAlchemy expires those attributes after a flush and reloads them lazily,
+    # which raises ``MissingGreenlet`` as soon as a service serialises the row it just updated (Phase 02).
+    __mapper_args__: ClassVar[dict[str, Any]] = {"eager_defaults": True}
 
 
 class SoftDeleteMixin:
@@ -32,7 +37,7 @@ class SoftDeleteMixin:
 class OptimisticLockMixin:
     version: Mapped[int] = mapped_column(Integer, default=1, nullable=False)
     # version is bumped by the DB trigger (trigger_bump_version); services compare on update (If-Match → 409 STALE_VERSION)
-    __mapper_args__ = {"version_id_col": None}
+    __mapper_args__: ClassVar[dict[str, Any]] = {"version_id_col": None, "eager_defaults": True}
 
 
 class TenantMixin:

@@ -1,6 +1,8 @@
 # SeptronUniverse — Roles & Permissions
 
-Permission strings are `module:action`. Roles are seeded per institution from templates (`app/core/rbac/registry.py`, `seed_institution_defaults`) and are editable in the permission-matrix UI. A role assignment carries a **scope** (`user_roles.scope_type/scope_id`) and optional validity window. Row-level visibility is defined in `docs/Authorization_and_Visibility.md`.
+Permission strings are `module:action`. Roles are seeded per institution from the 51 platform templates (`app/core/rbac/registry.py` → `RbacService.seed_institution_roles`) and are editable in the permission-matrix UI. A role assignment carries a **scope** (`user_roles.scope_type/scope_id`) and an optional validity window. Row-level visibility is defined in `docs/Authorization_and_Visibility.md`.
+
+**Implemented in Phase 02.** The catalogue (916 `module:action` rows), the templates and their default grants live in `app/core/rbac/registry.py` and are written to the database by revision `0002_phase02_auth_seed`, `scripts/seed_platform.py` and `POST /install` (the same code path). `module:manage` is the module wildcard `Principal.has()` honours — with one exception: **`view_pii` is never implied** and must be granted explicitly, so `institution_admin` holds every `exams:*` action individually and `exams:decode` stays a deliberate, separate grant. The two platform roles (`super_admin`, `support_agent`) are never cloned into a tenant; `super_admin` carries no permission rows at all because the `users.is_super_admin` flag short-circuits `has()`.
 
 ## 1. Roles
 
@@ -194,6 +196,8 @@ Standard actions: `view` (self + ownership), `view_all` (role scope), `create`, 
 - `college_admin`, `college_exam_coordinator`, `exam_cell` (in university tenants), `admissions_officer`, `accountant`, `librarian`, `placement_officer` may be `college`-scoped; several assignments give the union.
 - `dean` → `faculty`; `hod` → `department`; `class_advisor` → `offering`/section; `hostel_warden`/`hostel_gate_staff` → hostel (stored as `scope_type='self'` + `hostels.warden_staff_id` ownership); `committee_secretary` → committee.
 - `external_examiner`, `auditor`, `applicant` carry `valid_from/valid_to`.
+- Enforced by `allowed_scope_types(role_slug, default_scope_type)` (Phase 02): a unit-scoped template (dean → faculty, hod → department, class_advisor → offering, committee_secretary → committee, college_admin/college_exam_coordinator → college, hostel/self roles → self) may only be assigned with that scope and a `scope_id` that exists **inside the institution** (otherwise `422 VALIDATION`); institution roles may additionally be college-scoped where §4 allows it. `users.valid_from/valid_to` time-box the account itself — an expired account answers `401 UNAUTHENTICATED` ("account expired") and the Beat job `auth.expire_time_boxed_accounts` revokes its sessions.
+- MFA: `security.mfa` plus the role list in `app/core/rbac/registry.py:MFA_REQUIRED_ROLES` (super_admin, controller_of_examinations, exam_decoder, registrar, institution_admin, accountant) decide who must present a TOTP code; an institution can narrow the list with `institution_settings[security.mfa_required_roles]` (the demo tenant does).
 
 ## 5. Verification (API + UI)
 

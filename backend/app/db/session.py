@@ -49,13 +49,17 @@ def bind_tenant(session: AsyncSession, institution_id: Any) -> None:
 
     The setting dies with the transaction, so a session that commits mid-way (job progress checkpoints, chunked
     imports) would silently lose its RLS context; the ``after_begin`` hook keeps the tenant pinned for the session's
-    whole life.
+    whole life. Calling it again re-points the same hook (Phase 02: ``get_current_user`` binds the tenant from the
+    token claims before the principal is loaded, then re-binds once the user row is known).
     """
-    iid = str(institution_id)
+    session.info["tenant_id"] = str(institution_id)
+    if session.info.get("tenant_hook"):
+        return
+    session.info["tenant_hook"] = True
 
     @event.listens_for(session.sync_session, "after_begin")
-    def _set_tenant(_sync_session: Any, _transaction: Any, connection: Any) -> None:
-        connection.execute(SET_TENANT_SQL, {"i": iid})
+    def _set_tenant(sync_session: Any, _transaction: Any, connection: Any) -> None:
+        connection.execute(SET_TENANT_SQL, {"i": sync_session.info["tenant_id"]})
 
 
 async def get_db(request: Request) -> AsyncIterator[AsyncSession]:

@@ -247,6 +247,19 @@ class PlatformConfigRepository:
         row = (await self.db.execute(text("SELECT value FROM platform_settings WHERE key = :k"), {"k": key})).first()
         return row[0] if row else None
 
+    async def institution_setting(self, institution_id: uuid.UUID, category: str, key: str) -> Any | None:
+        """Institution-wide setting value (``college_id IS NULL``) — Phase 03 models ``institution_settings`` in full."""
+        row = (
+            await self.db.execute(
+                text(
+                    "SELECT value FROM institution_settings WHERE institution_id = :i AND college_id IS NULL "
+                    "AND category = :c AND key = :k"
+                ),
+                {"i": institution_id, "c": category, "k": key},
+            )
+        ).first()
+        return row[0] if row else None
+
     async def plan_storage_gb(self, institution_id: uuid.UUID) -> int | None:
         """Storage quota of the tenant's current plan (``institution_subscriptions`` → ``subscription_plans``)."""
         row = (

@@ -29,7 +29,7 @@ institution_feature_flags ( institution_id, feature_key, platform_enabled BOOL, 
                             source (plan|override), config JSONB, set_by, set_at, UNIQUE(institution_id, feature_key) )
 feature_flag_changes ( institution_id, feature_key, old JSONB, new JSONB, changed_by, changed_at, reason )
 ```
-**Effective(key) = platform_enabled AND institution_enabled.** Missing row → registry `default_enabled` AND plan allows.
+**Effective(key) = platform_enabled AND institution_enabled.** Missing row → the tenant's plan (`subscription_plans.enabled_features`) decides; without a subscription the registry `default_enabled` applies. Implemented in Phase 02 (`app/services/feature_service.py`): every change writes `feature_flag_changes`, is audited, emits `feature_flag.changed` (consumer `features.invalidate_cache`) and drops the Redis key `features:{institution}` immediately; core keys are immutable (409), enabling a key auto-enables its `depends_on` chain only with `confirm_dependencies=true`, and disabling a key that enabled features depend on answers `409 RULE_VIOLATION` listing the dependants.
 
 ### 1.3 Plans
 `subscription_plans.enabled_features[]` are applied on onboarding and plan change (rows `source='plan'`). Overrides (`source='override'`) survive plan changes and are shown as "overridden" in the UI. A key above the plan's tier can still be enabled by override (super admin decision).

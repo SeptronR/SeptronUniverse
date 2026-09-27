@@ -79,6 +79,14 @@ PHASES: dict[str, list[str]] = {
         "feedback_entries",
         "audit_logs",
     ],
+    "02": [
+        # §32 SaaS tables the entitlement / impersonation services need (Prompts/02 §02.3); the auth, RBAC and
+        # feature tables of this phase were mapped in Phase 01
+        "subscription_plans",
+        "institution_subscriptions",
+        "usage_meters",
+        "impersonation_logs",
+    ],
 }
 
 VIEWS: set[str] = set()

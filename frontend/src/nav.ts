@@ -1,4 +1,13 @@
-import { Activity, LayoutDashboard, LifeBuoy, type LucideIcon } from 'lucide-react';
+import {
+  Activity,
+  CreditCard,
+  LayoutDashboard,
+  LifeBuoy,
+  ShieldCheck,
+  ToggleLeft,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
 
 /**
  * Sidebar navigation (Prompts/00 §4.5). Items are gated by `can(module, action ?? 'view') || canAny(altActions)`
@@ -37,5 +46,27 @@ export const NAV_GROUPS: NavGroup[] = [
   { title: 'ENGAGEMENT', items: [] },
   { title: 'QUALITY & GOVERNANCE', items: [] },
   { title: 'COMMUNICATION', items: [] },
-  { title: 'ADMIN', items: [] },
+  {
+    title: 'ADMIN',
+    items: [
+      // Phase 02 — auth, RBAC, features, entitlements
+      { label: 'Users', to: '/admin/users', icon: Users, module: 'users', action: 'view_all', feature: 'core.rbac' },
+      { label: 'Roles', to: '/admin/roles', icon: ShieldCheck, module: 'roles', feature: 'core.rbac' },
+      {
+        label: 'Features',
+        to: '/admin/settings/features',
+        icon: ToggleLeft,
+        module: 'features',
+        action: 'institution_toggle',
+        feature: 'core.settings',
+      },
+      {
+        label: 'Entitlements',
+        to: '/admin/settings/entitlements',
+        icon: CreditCard,
+        module: 'settings',
+        feature: 'core.settings',
+      },
+    ],
+  },
 ];

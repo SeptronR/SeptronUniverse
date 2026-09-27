@@ -35,6 +35,8 @@ class AuthState {
     this.features = const {},
     this.scopes = const [],
     this.visibilityByModule = const {},
+    this.mustChangePassword = false,
+    this.mfaEnabled = false,
   });
 
   final String? userId;
@@ -46,6 +48,10 @@ class AuthState {
   final Set<String> features;
   final List<({String scopeType, String? scopeId})> scopes;
   final Map<String, VisibilityMeta> visibilityByModule;
+
+  /// Set by `/auth/me`: until the password is changed every non-auth route answers 403 (Prompts/02 §02.6 rule 5).
+  final bool mustChangePassword;
+  final bool mfaEnabled;
 
   bool get isAuthenticated => userId != null;
 
@@ -76,6 +82,8 @@ class AuthState {
         features: features,
         scopes: scopes,
         visibilityByModule: visibilityByModule ?? this.visibilityByModule,
+        mustChangePassword: mustChangePassword,
+        mfaEnabled: mfaEnabled,
       );
 
   static AuthState fromMe(Map<String, dynamic> data) {
@@ -102,6 +110,8 @@ class AuthState {
                 scopeId: s['scope_id'] as String?
               ))
           .toList(),
+      mustChangePassword: user['must_change_password'] as bool? ?? false,
+      mfaEnabled: user['mfa_enabled'] as bool? ?? false,
     );
   }
 }

@@ -16,10 +16,21 @@ import NotFoundPage from '@/pages/NotFoundPage';
  * Phases add lazy pages here; keep route-level code splitting.
  */
 const LoginPage = lazy(() => import('@/pages/LoginPage'));
+const ForgotPasswordPage = lazy(() => import('@/pages/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage'));
+const MfaEnrolmentPage = lazy(() => import('@/pages/MfaEnrolmentPage'));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
 const AccessDeniedPage = lazy(() => import('@/pages/AccessDeniedPage'));
 const FeatureDisabledPage = lazy(() => import('@/pages/FeatureDisabledPage'));
 const PortalHomePage = lazy(() => import('@/pages/PortalHomePage'));
+// Phase 02 — auth, RBAC, features, entitlements
+const ProfilePage = lazy(() => import('@/features/auth/pages/ProfilePage'));
+const UsersPage = lazy(() => import('@/features/auth/pages/UsersPage'));
+const RolesPage = lazy(() => import('@/features/auth/pages/RolesPage'));
+const SettingsFeaturesPage = lazy(() => import('@/features/auth/pages/SettingsFeaturesPage'));
+const EntitlementsPage = lazy(() => import('@/features/auth/pages/EntitlementsPage'));
+const InstitutionFeaturesPage = lazy(() => import('@/features/auth/pages/InstitutionFeaturesPage'));
+const FeatureMatrixPage = lazy(() => import('@/features/auth/pages/FeatureMatrixPage'));
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -33,6 +44,10 @@ const page = (node: React.ReactNode) => (
 
 export const router = createBrowserRouter([
   { path: '/login', element: page(<LoginPage />) },
+  { path: '/forgot-password', element: page(<ForgotPasswordPage />) },
+  { path: '/reset-password', element: page(<ResetPasswordPage />) },
+  // enrolment with the limited mfa_setup token: the user has no session yet (403 MFA_REQUIRED)
+  { path: '/mfa-setup', element: page(<MfaEnrolmentPage />) },
   { path: '/access-denied', element: page(<AccessDeniedPage />) },
   { path: '/feature-disabled', element: page(<FeatureDisabledPage />) },
   {
@@ -48,6 +63,48 @@ export const router = createBrowserRouter([
               <FeatureRoute feature="core.dashboard">
                 <PermissionRoute module="dashboard">
                   <DashboardPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
+          // Phase 02 — my profile (password, MFA, sessions, consents) is reachable by every signed-in user
+          { path: '/profile', element: page(<ProfilePage />) },
+          {
+            path: '/admin/users',
+            element: page(
+              <FeatureRoute feature="core.rbac">
+                <PermissionRoute module="users" action="view_all">
+                  <UsersPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
+          {
+            path: '/admin/roles',
+            element: page(
+              <FeatureRoute feature="core.rbac">
+                <PermissionRoute module="roles">
+                  <RolesPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
+          {
+            path: '/admin/settings/features',
+            element: page(
+              <FeatureRoute feature="core.settings">
+                <PermissionRoute module="features">
+                  <SettingsFeaturesPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
+          {
+            path: '/admin/settings/entitlements',
+            element: page(
+              <FeatureRoute feature="core.settings">
+                <PermissionRoute module="settings">
+                  <EntitlementsPage />
                 </PermissionRoute>
               </FeatureRoute>,
             ),
@@ -88,6 +145,14 @@ export const router = createBrowserRouter([
         path: '/platform',
         element: <SuperAdminRoute />,
         children: [{ index: true, element: page(<DashboardPage />) }],
+      },
+      {
+        path: '/super-admin',
+        element: <SuperAdminRoute />,
+        children: [
+          { path: 'institutions/:id/features', element: page(<InstitutionFeaturesPage />) },
+          { path: 'features/matrix', element: page(<FeatureMatrixPage />) },
+        ],
       },
       // Portals (self-only). Phase 39 fills the pages; the shells exist so PORTAL_HOME targets resolve.
       {

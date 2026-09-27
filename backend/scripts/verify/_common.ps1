@@ -6,8 +6,10 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1")
 $script:BaseUrl = $BaseUrl
 $script:Checks = 0
 
-function Login($identifier, $password) {
-  $body = @{ identifier = $identifier; password = $password } | ConvertTo-Json
+function Login($identifier, $password, $extra = @{}) {
+  # Phase 02: POST /auth/login answers the principal envelope; the refresh token is an httpOnly cookie (web) or the
+  # body's refresh_token (platform=android|ios). Phase scripts that need the cookie use their own helper.
+  $body = (@{ identifier = $identifier; password = $password } + $extra) | ConvertTo-Json -Depth 6
   (Invoke-RestMethod -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body $body).data.access_token
 }
 
@@ -36,7 +38,8 @@ function Assert($cond, $msg) {
 }
 
 function Get-DemoPassword($role) {
-  # Demo credentials are written by scripts/seed_demo_institution.py to LOCAL_TEST_CREDENTIALS.md (git-ignored).
+  # Demo credentials are written by scripts/seed_demo_institution.py (and seed_platform.py for super_admin) to
+  # LOCAL_TEST_CREDENTIALS.md (git-ignored): | role | identifier | password |.
   $file = Join-Path $PSScriptRoot "../../../LOCAL_TEST_CREDENTIALS.md"
   if (-not (Test-Path $file)) { throw "LOCAL_TEST_CREDENTIALS.md not found - run scripts/seed_demo_institution.py --only base" }
   $line = Get-Content $file | Where-Object { $_ -match "^\|\s*$role\s*\|" } | Select-Object -Last 1

@@ -15,6 +15,18 @@ export const code = z
   .max(30)
   .regex(/^[A-Za-z0-9_-]+$/, 'Letters, digits, - and _ only');
 export const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Use YYYY-MM-DD');
+/**
+ * Password policy mirrored from the API (Prompts/02 §02.6 rule 5): ≥ 10 characters and 3 of 4 character classes.
+ * The server re-validates and additionally refuses the last 5 passwords.
+ */
+export const passwordPolicy = z
+  .string()
+  .min(10, 'At least 10 characters')
+  .refine(
+    (v) => [/[a-z]/, /[A-Z]/, /\d/, /[^A-Za-z0-9]/].filter((re) => re.test(v)).length >= 3,
+    'Use at least 3 of: lower case, upper case, digits, symbols',
+  );
+
 /** Money inputs are entered in rupees and converted to paise before the request. */
 export const rupees = z.coerce.number().min(0, 'Must be zero or more');
 export const optional = <T extends z.ZodTypeAny>(schema: T) =>

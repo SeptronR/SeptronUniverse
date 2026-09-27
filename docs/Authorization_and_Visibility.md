@@ -12,7 +12,7 @@ Every request passes four layers; every list is filtered by a single row-level r
 | 4 | **Visibility (row-level)** | `VisibilityResolver.predicate(user, module)` = `self ∪ ownership ∪ (scope if view_all)`, applied by `BaseRepository.visible_to()`; PostgreSQL RLS (`app.institution_id`) is the tenant backstop | rows filtered |
 
 Plus:
-- **Field-level masking**: Aadhaar, bank details, salary, medical notes, grievance identities are masked (`XXXX-1234`) unless the caller holds `<module>:view_pii`. Masking happens in the response schema layer (`mask_pii(schema, user)`), never in the DB.
+- **Field-level masking**: Aadhaar, bank details, salary, medical notes, grievance identities are masked (`XXXX-1234`) unless the caller holds `<module>:view_pii`. Masking happens in the response schema layer (`mask_pii(schema, user)`), never in the DB. Phase 02 ships `app/core/authz/masking.py`: schema fields are annotated `MaskedPhone` (last 4 kept), `MaskedEmail` (first 2 kept), `MaskedSecret` (hidden) or `Masked`/`MaskedStr` (generic last 4), and the service calls `mask_pii(obj, principal, modules)` — `users` records unmask for `users:view_pii` **or** `hr:view_pii`. `view_pii` is never implied by `module:manage`.
 - **Record-state rules**: published results, locked marks, finalized attendance, issued certificates are read-only regardless of permission; changes go through the corresponding request/workflow tables.
 - **Impersonation**: super admin/support impersonation sets `request.state.impersonator`; every write is audited with both ids; the UI shows a banner.
 - **Time-boxed roles**: `user_roles.valid_from/valid_to` (external examiners, auditors, applicants).

@@ -9,6 +9,7 @@ import { JobsTray } from '@/components/shared/JobsTray';
 import { NotificationCenter } from '@/components/shared/NotificationCenter';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
+import { useLogout } from '@/features/auth/hooks';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -22,7 +23,7 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.currentUser);
-  const logout = useAuthStore((s) => s.logout);
+  const logout = useLogout();
   const { institutionName, collegeName, years, terms, academicYearId, termId, setYear, setTerm } = useSessionStore();
   const showSwitcher =
     !!user?.is_super_admin || (user?.scopes.filter((s) => s.scope_type === 'college').length ?? 0) > 1;
@@ -107,16 +108,13 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
             </button>
           }
           items={[
-            { label: 'My profile', icon: <User className="h-4 w-4" />, onSelect: () => navigate('/profile') },
+            { label: t('common.profile'), icon: <User className="h-4 w-4" />, onSelect: () => navigate('/profile') },
             {
               label: t('common.logout'),
               icon: <LogOut className="h-4 w-4" />,
               destructive: true,
               separatorBefore: true,
-              onSelect: () => {
-                logout();
-                navigate('/login');
-              },
+              onSelect: () => logout.mutate(false), // revokes the session server-side, then clears the store
             },
           ]}
         />
