@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/auth/login_screen.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import '../../shared/widgets/role_shell_scaffold.dart';
 import '../auth/auth_events.dart';
@@ -54,9 +55,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           path: AppRoutes.splash,
           builder: (_, __) =>
               const PlaceholderScreen(title: 'SeptronUniverse')),
-      GoRoute(
-          path: AppRoutes.login,
-          builder: (_, __) => const PlaceholderScreen(title: 'Sign in')),
+      GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginScreen()),
       GoRoute(
           path: AppRoutes.verify,
           builder: (_, s) =>

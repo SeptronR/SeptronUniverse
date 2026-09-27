@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import AliasChoices, BaseModel, Field
 
 from app.schemas.common import ORMModel
 
@@ -136,7 +136,9 @@ class InstitutionSummary(ORMModel):
     id: uuid.UUID
     name: str
     slug: str
-    type: str = Field(validation_alias="institution_type", serialization_alias="type")
+    # ``AliasChoices`` so the schema validates both from the ORM row (``institution_type``) and from its own serialised
+    # form (``type``) — FastAPI re-validates every ``response_model`` against the encoded envelope (Phase 02 fix).
+    type: str = Field(validation_alias=AliasChoices("institution_type", "type"), serialization_alias="type")
     logo_url: str | None = None
     timezone: str
     locale: str

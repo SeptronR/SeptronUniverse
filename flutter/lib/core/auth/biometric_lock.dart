@@ -1,5 +1,12 @@
 import 'package:local_auth/local_auth.dart';
 
+/// User preference for the biometric gate (Phase 02 profile screen; Phase 42 persists it with the other settings).
+class BiometricLockPreference {
+  BiometricLockPreference._();
+
+  static bool enabled = false;
+}
+
 /// Biometric gate on resume after a timeout (feature `mobile.biometric_lock`); Phase 42 wires the lifecycle observer.
 class BiometricLock {
   BiometricLock(

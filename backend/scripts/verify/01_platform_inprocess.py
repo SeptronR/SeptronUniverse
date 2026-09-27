@@ -84,8 +84,9 @@ async def run() -> int:
         body = r.json()
         check(r.status_code == 200 and body["status"] == "ready", f"GET /ready -> ready ({sorted(body['checks'])})")
         check(
-            body["checks"]["migrations"]["ok"] and body["checks"]["migrations"]["current"] == "0001",
-            "database at head 0001",
+            body["checks"]["migrations"]["ok"]
+            and body["checks"]["migrations"]["current"] == body["checks"]["migrations"]["head"],
+            f"database at the Alembic head ({body['checks']['migrations']['current']})",
         )
         check(body["checks"]["storage"]["ok"], "storage writable")
 

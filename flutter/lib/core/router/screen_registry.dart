@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../features/auth/profile_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
 
@@ -55,10 +56,28 @@ class ScreenRegistry {
       titleKey: 'notifications',
       builder: (_, __) => const PlaceholderScreen(title: 'Notifications'),
     ),
+    // Phase 02 — profile, password, MFA and sessions (auth screens are reachable by every signed-in user)
     AppRoutes.profile: ScreenEntry(
       route: AppRoutes.profile,
       titleKey: 'profile',
-      builder: (_, __) => const PlaceholderScreen(title: 'Profile'),
+      builder: (_, __) => const ProfileScreen(),
+    ),
+    AppRoutes.profilePassword: ScreenEntry(
+      route: AppRoutes.profilePassword,
+      titleKey: 'changePassword',
+      builder: (_, __) => const ChangePasswordScreen(),
+    ),
+    AppRoutes.profileMfa: ScreenEntry(
+      route: AppRoutes.profileMfa,
+      titleKey: 'mfa',
+      feature: 'security.mfa',
+      builder: (_, __) => const MfaSetupScreen(),
+    ),
+    AppRoutes.profileSessions: ScreenEntry(
+      route: AppRoutes.profileSessions,
+      titleKey: 'sessions',
+      feature: 'security.session_management',
+      builder: (_, __) => const SessionsScreen(),
     ),
   };
 

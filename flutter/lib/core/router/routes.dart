@@ -10,6 +10,9 @@ class AppRoutes {
   static const approvals = '/app/approvals/inbox';
   static const notifications = '/app/notifications';
   static const profile = '/app/profile';
+  static const profilePassword = '/app/profile/password';
+  static const profileMfa = '/app/profile/mfa';
+  static const profileSessions = '/app/profile/sessions';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

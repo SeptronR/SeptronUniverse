@@ -6,12 +6,22 @@ Phases append their public routes (login/OTP, public config, website, verificati
 """
 
 PUBLIC_ROUTES: set[str] = {
-    "POST /api/v1/auth/login",  # Phase 00 placeholder (401 until Phase 02 ships authentication)
     # Phase 01 — platform configuration for clients before sign-in
     "GET /api/v1/public/config",
     "GET /api/v1/platform/read-only",
     "GET /api/v1/mobile/config",
     "POST /api/v1/mobile/config",
+    # Phase 02 — authentication (rate-limited; captcha on the public forms when configured)
+    "POST /api/v1/auth/login",
+    "POST /api/v1/auth/send-otp",
+    "POST /api/v1/auth/verify-otp",
+    "POST /api/v1/auth/refresh",
+    "POST /api/v1/auth/forgot-password",
+    "POST /api/v1/auth/reset-password",
+    "GET /api/v1/auth/sso/{provider}/start",
+    "GET /api/v1/auth/sso/{provider}/callback",
+    # one-time bootstrap, guarded by INSTALL_SECRET_KEY
+    "POST /api/v1/install",
 }
 
 

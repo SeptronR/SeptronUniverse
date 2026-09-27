@@ -48,9 +48,12 @@ class RequestLoggerMiddleware(BaseHTTPMiddleware):
 
 
 class InstitutionContextMiddleware(BaseHTTPMiddleware):
-    """Resolves the tenant from X-Institution-Id / X-Institution-Slug / custom host.
+    """Resolves the tenant from X-Institution-Id / X-Institution-Slug / custom host / the bearer token.
 
-    ``get_current_user`` later overrides with the JWT claim (super admins may keep the header override).
+    The token's ``inst`` claim is read here (Phase 02) because router-level dependencies — ``feature_required`` — and
+    the read-only gate run **before** ``get_current_user``: without it a client that does not send
+    ``X-Institution-Id`` would be gated against the platform defaults instead of its own tenant's flags.
+    ``get_current_user`` later overrides with the user row (super admins keep the header override).
     """
 
     async def dispatch(self, request: Request, call_next: CallNext) -> Response:
@@ -61,7 +64,23 @@ class InstitutionContextMiddleware(BaseHTTPMiddleware):
         if not request.state.institution_slug and host and host not in settings.PLATFORM_HOSTS:
             # <slug>.universe.septronr.com or a mapped custom domain (Phase 40 resolves domains → slug)
             request.state.institution_slug = host.split(".")[0] if host.count(".") >= 2 else host
+        if not request.state.institution_id:
+            request.state.institution_id = _tenant_from_token(request.headers.get("authorization"))
         return await call_next(request)
+
+
+def _tenant_from_token(header: str | None) -> str | None:
+    """``inst`` claim of a bearer access token (signature verified); ``None`` for anything else."""
+    if not header or not header.lower().startswith("bearer "):
+        return None
+    from app.core.security import decode_token
+
+    try:
+        claims = decode_token(header[7:].strip(), expected_type="access")
+    except Exception:  # noqa: BLE001 - an invalid/limited token simply carries no tenant; the route still authenticates
+        return None
+    inst = claims.get("inst")
+    return str(inst) if inst else None
 
 
 class ReadOnlyModeMiddleware(BaseHTTPMiddleware):

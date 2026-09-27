@@ -1,10 +1,18 @@
-"""Passwords, JWTs (kid rotation), TOTP, hashing, signed tokens — Prompts/00_PREREQUISITE_Project_Setup.md §3.18."""
+"""Passwords, JWTs (kid rotation), TOTP, hashing, signed tokens, secret encryption — Prompts/00 §3.18, Prompts/02 §02.6.
+
+Phase 02 additions: access tokens carry the session id (``sid``) and, during impersonation, ``imp`` / ``imp_log`` /
+``imp_ro`` claims; ``create_limited_token`` mints the short-lived ``mfa_setup`` token handed out with
+``403 MFA_REQUIRED``; ``encrypt_secret`` / ``decrypt_secret`` protect TOTP secrets at rest (AES-GCM keyed from
+``INTEGRATION_ENCRYPTION_KEY``); ``check_password_policy`` implements rule 5 (≥ 10 chars, 3 of 4 classes).
+"""
 
 import base64
 import hashlib
 import hmac
 import json
+import re
 import secrets
+import string
 import time
 import uuid
 from datetime import UTC, datetime, timedelta
@@ -12,6 +20,7 @@ from typing import Any
 
 import bcrypt
 import pyotp
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from jose import JWTError, jwt
 
 from app.core.config import settings
@@ -35,6 +44,43 @@ def verify_password(password: str, password_hash: str | None) -> bool:
         return False
 
 
+_CLASSES = (re.compile(r"[a-z]"), re.compile(r"[A-Z]"), re.compile(r"\d"), re.compile(r"[^A-Za-z0-9]"))
+
+
+def check_password_policy(password: str, history: list[str] | None = None) -> None:
+    """Rule 5: ≥ ``PASSWORD_MIN_LENGTH`` chars, 3 of 4 character classes, not one of the last N hashes."""
+    problems: list[str] = []
+    if len(password) < settings.PASSWORD_MIN_LENGTH:
+        problems.append(f"at least {settings.PASSWORD_MIN_LENGTH} characters")
+    if sum(1 for c in _CLASSES if c.search(password)) < 3:
+        problems.append("3 of 4 character classes (lower, upper, digit, symbol)")
+    if problems:
+        raise APIError(
+            422, ErrorCode.VALIDATION, "Password does not meet the policy", {"field": "password", "policy": problems}
+        )
+    for old in history or []:
+        if verify_password(password, old):
+            raise APIError(
+                422,
+                ErrorCode.VALIDATION,
+                f"Password was used recently (last {settings.PASSWORD_HISTORY} passwords cannot be reused)",
+                {"field": "password"},
+            )
+
+
+def generate_temp_password(length: int = 12) -> str:
+    """Temporary password that satisfies the policy (credential sheets, admin resets)."""
+    alphabet = string.ascii_letters + string.digits
+    while True:
+        pwd = (
+            "".join(secrets.choice(alphabet) for _ in range(length - 2))
+            + secrets.choice("!@#$%&*")
+            + secrets.choice(string.digits)
+        )
+        if sum(1 for c in _CLASSES if c.search(pwd)) >= 3:
+            return pwd
+
+
 # ---- JWT with kid rotation -----------------------------------------------------------------------------------
 def _keys() -> dict[str, str]:
     return {settings.JWT_KID: settings.SECRET_KEY, **settings.JWT_PREVIOUS_KEYS}
@@ -47,18 +93,27 @@ def _encode(claims: dict[str, Any], expires: timedelta) -> str:
 
 
 def create_access_token(
-    sub: uuid.UUID | str, institution_id: uuid.UUID | str | None, is_super_admin: bool = False, jti: str | None = None
+    sub: uuid.UUID | str,
+    institution_id: uuid.UUID | str | None,
+    is_super_admin: bool = False,
+    jti: str | None = None,
+    *,
+    session_id: uuid.UUID | str | None = None,
+    extra: dict[str, Any] | None = None,
+    minutes: int | None = None,
 ) -> str:
-    return _encode(
-        {
-            "sub": str(sub),
-            "type": "access",
-            "inst": str(institution_id) if institution_id else None,
-            "sa": is_super_admin,
-            "jti": jti or uuid.uuid4().hex,
-        },
-        timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
-    )
+    claims: dict[str, Any] = {
+        "sub": str(sub),
+        "type": "access",
+        "inst": str(institution_id) if institution_id else None,
+        "sa": is_super_admin,
+        "jti": jti or uuid.uuid4().hex,
+    }
+    if session_id:
+        claims["sid"] = str(session_id)
+    if extra:
+        claims.update(extra)
+    return _encode(claims, timedelta(minutes=minutes or settings.ACCESS_TOKEN_EXPIRE_MINUTES))
 
 
 def create_refresh_token(sub: uuid.UUID | str, family: str, jti: str | None = None) -> str:
@@ -67,6 +122,11 @@ def create_refresh_token(sub: uuid.UUID | str, family: str, jti: str | None = No
         {"sub": str(sub), "type": "refresh", "family": family, "jti": jti or uuid.uuid4().hex},
         timedelta(days=settings.REFRESH_TOKEN_EXPIRE_DAYS),
     )
+
+
+def create_limited_token(sub: uuid.UUID | str, purpose: str, minutes: int, **extra: Any) -> str:
+    """Short-lived single-purpose token (``type`` = purpose): e.g. ``mfa_setup`` handed out with 403 MFA_REQUIRED."""
+    return _encode({"sub": str(sub), "type": purpose, "jti": uuid.uuid4().hex, **extra}, timedelta(minutes=minutes))
 
 
 def decode_token(token: str, expected_type: str = "access") -> dict[str, Any]:
@@ -83,6 +143,11 @@ def decode_token(token: str, expected_type: str = "access") -> dict[str, Any]:
     return claims
 
 
+def token_ttl_seconds(claims: dict[str, Any]) -> int:
+    """Seconds until ``exp`` (≥ 1) — used to blacklist a JTI for exactly its remaining lifetime."""
+    return max(1, int(claims.get("exp", 0)) - int(time.time()))
+
+
 # ---- TOTP MFA ------------------------------------------------------------------------------------------------
 def generate_totp_secret() -> str:
     return pyotp.random_base32()
@@ -93,11 +158,33 @@ def totp_uri(secret: str, account: str) -> str:
 
 
 def verify_totp(secret: str, code: str) -> bool:
-    return pyotp.TOTP(secret).verify(code, valid_window=1)
+    return pyotp.TOTP(secret).verify(code.strip().replace(" ", ""), valid_window=1)
 
 
-def generate_recovery_codes(n: int = 8) -> list[str]:
-    return [secrets.token_hex(5) for _ in range(n)]
+def generate_recovery_codes(n: int = 10) -> list[str]:
+    return [f"{secrets.token_hex(2)}-{secrets.token_hex(2)}-{secrets.token_hex(2)}" for _ in range(n)]
+
+
+# ---- secret encryption (TOTP secrets, integration credentials) --------------------------------------------------
+def _aes_key() -> bytes:
+    raw = settings.INTEGRATION_ENCRYPTION_KEY
+    try:
+        decoded = base64.b64decode(raw, validate=True)
+        if len(decoded) == 32:
+            return decoded
+    except ValueError:
+        pass
+    return hashlib.sha256(raw.encode("utf-8")).digest()  # any string works; production sets base64 32 bytes
+
+
+def encrypt_secret(plain: str) -> bytes:
+    nonce = secrets.token_bytes(12)
+    return nonce + AESGCM(_aes_key()).encrypt(nonce, plain.encode("utf-8"), None)
+
+
+def decrypt_secret(blob: bytes) -> str:
+    data = bytes(blob)
+    return AESGCM(_aes_key()).decrypt(data[:12], data[12:], None).decode("utf-8")
 
 
 # ---- hashing for device tokens / API keys / recovery codes ---------------------------------------------------

@@ -7,8 +7,12 @@ import i18n from '@/lib/i18n';
 import { Toaster } from '@/components/ui/Toaster';
 import { TooltipProvider } from '@/components/ui/Tooltip';
 import { applyThemePrefs, loadThemePrefs } from '@/styles/themes';
+import { AuthBootstrap } from '@/features/auth/AuthBootstrap';
 
-/** Provider tree: QueryClient -> I18n -> Tooltip -> Router; Toaster mounted once (Prompts/00 §4, Phase 01 §01.9). */
+/**
+ * Provider tree: QueryClient -> I18n -> Tooltip -> AuthBootstrap -> Router; Toaster mounted once
+ * (Prompts/00 §4, Phase 01 §01.9, Phase 02 session restore).
+ */
 export default function App() {
   useEffect(() => {
     applyThemePrefs(loadThemePrefs());
@@ -25,7 +29,9 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <I18nextProvider i18n={i18n}>
         <TooltipProvider>
-          <AppRoutes />
+          <AuthBootstrap>
+            <AppRoutes />
+          </AuthBootstrap>
           <Toaster />
         </TooltipProvider>
       </I18nextProvider>

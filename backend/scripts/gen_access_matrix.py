@@ -1,9 +1,10 @@
 """Route × role access matrix → ``docs/Access_Matrix.csv`` (docs/Roles_and_Permissions.md §3/§5).
 
 Columns: method, path, module, permissions (``module:action|...``), feature, public, then one column per role slug
-with ``Y`` (the role template grants every required permission), ``N`` or ``public``. Role templates come from
-``app/core/rbac/registry.py:ROLE_TEMPLATES`` once Phase 02 ships it; until then the seeded role slugs in
-``Database_Schema.sql`` §36.2 are used with super_admin as the only grant, so the file is complete and deterministic.
+with ``Y`` (the role template grants one of the required permissions), ``N``, ``public`` (no authentication) or
+``auth`` (any signed-in user — the ``auth:authenticated`` marker of ``authenticated()``). Role templates come from
+``app/core/rbac/registry.py:ROLE_TEMPLATES`` (Phase 02); ``super_admin`` holds ``*:*`` because the
+``users.is_super_admin`` flag short-circuits ``Principal.has()``.
 """
 
 import csv
@@ -31,7 +32,12 @@ def role_templates() -> dict[str, set[str]]:
         return templates
 
 
+AUTHENTICATED = ("auth", "authenticated")  # marker of app/core/authz/dependencies.py:authenticated()
+
+
 def grants(template: set[str], module: str, action: str) -> bool:
+    if action == "view_pii":  # never implied by the module wildcard (docs/Authorization_and_Visibility.md §1)
+        return any(p in template for p in ("*:*", f"{module}:{action}"))
     return any(p in template for p in ("*:*", f"{module}:*", f"*:{action}", f"{module}:{action}", f"{module}:manage"))
 
 
@@ -56,6 +62,7 @@ def main() -> int:
             if method in {"HEAD", "OPTIONS"}:
                 continue
             public = f"{method} {route.path}" in PUBLIC_ROUTES
+            any_authenticated = AUTHENTICATED in perms
             row: list[Any] = [
                 method,
                 route.path,
@@ -67,6 +74,8 @@ def main() -> int:
             for slug in roles:
                 if public:
                     row.append("public")
+                elif any_authenticated:
+                    row.append("auth")
                 elif not perms:
                     row.append("N")
                 else:
