@@ -63,6 +63,8 @@ try {
     "UPDATE users SET valid_to = NOW() + INTERVAL '7 days' WHERE username = 'auditor.tmp'; " +
     "DELETE FROM institution_feature_flags WHERE $touched; DELETE FROM feature_flag_changes WHERE $touched") | Out-Null
   if ($LASTEXITCODE -ne 0) { throw "fixture reset failed" }
+  & $Python scripts/verify/_reset_password.py hr (Get-DemoPassword 'hr_officer')   # step 17 rotates hr's password
+  if ($LASTEXITCODE -ne 0) { throw "hr password reset failed" }
   & $Python -c "import asyncio,sys;sys.path.insert(0,'scripts');import _bootstrap;import redis.asyncio as r;from app.core.config import settings;asyncio.run(r.from_url(settings.REDIS_URL).flushdb())" | Out-Null
   Assert $true "coe MFA, probe users/roles, feature flags, plan limits and Redis lockouts reset"
 

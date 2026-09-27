@@ -83,6 +83,33 @@ async def publish_progress(user_id: uuid.UUID | None, payload: dict[str, Any]) -
         await redis_client.publish(f"jobs:{user_id}", json.dumps(payload, default=str))
 
 
+def send_after_commit(db: AsyncSession, task_name: str, args: list[Any], queue: str, task_id: str) -> None:
+    """Queue a Celery message to be sent once ``db`` commits (dropped if the transaction rolls back)."""
+    from sqlalchemy import event
+
+    sync = db.sync_session
+    pending: list[tuple[str, list[Any], str, str]] = sync.info.setdefault("celery_after_commit", [])
+    pending.append((task_name, args, queue, task_id))
+    if sync.info.get("celery_hooks"):
+        return
+    sync.info["celery_hooks"] = True
+
+    @event.listens_for(sync, "after_commit")
+    def _send(session: Any) -> None:
+        from app.tasks.celery_app import celery
+
+        messages = session.info.pop("celery_after_commit", [])
+        for name, task_args, q, tid in messages:
+            try:
+                celery.send_task(name, args=task_args, queue=q, task_id=tid)
+            except Exception as exc:  # noqa: BLE001 - the row stays queued; jobs.cleanup / a retry can pick it up
+                log.warning("job_send_failed", task=name, error=str(exc)[:200])
+
+    @event.listens_for(sync, "after_rollback")
+    def _drop(session: Any) -> None:
+        session.info.pop("celery_after_commit", None)
+
+
 async def enqueue(
     db: AsyncSession,
     principal: Any,
@@ -104,11 +131,13 @@ async def enqueue(
     )
     db.add(row)
     await db.flush()
-    from app.tasks.celery_app import celery
-
-    result = celery.send_task(task_name or f"jobs.{job_type}", args=[str(row.id)], queue=queue)
-    row.celery_task_id = result.id
+    # The worker claims the row by id, so the Celery message must not leave before the row is committed: an idle
+    # worker otherwise reads "no such queued job" and drops it (found by the live 01_platform.ps1). The task id is
+    # assigned now and the message is sent from the session's after_commit hook (discarded on rollback).
+    task_id = str(uuid.uuid4())
+    row.celery_task_id = task_id
     await db.flush()
+    send_after_commit(db, task_name or f"jobs.{job_type}", [str(row.id)], queue, task_id)
     await publish_progress(
         row.requested_by, {"job_id": str(row.id), "job_type": job_type, "status": "queued", "progress_pct": 0}
     )

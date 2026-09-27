@@ -45,7 +45,9 @@ async def cmd_tables() -> int:
             await db.execute(
                 text(
                     "SELECT count(*) FROM information_schema.tables WHERE table_schema='public' "
-                    "AND table_type='BASE TABLE' AND table_name <> 'alembic_version'"
+                    "AND table_type='BASE TABLE' AND table_name <> 'alembic_version' "
+                    # monthly partitions created by ``partitions.ensure_next_month`` (step 9 of a previous run)
+                    "AND table_name !~ '_y[0-9]{4}m[0-9]{2}$'"
                 )
             )
         ).scalar_one()
