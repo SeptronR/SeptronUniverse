@@ -175,7 +175,8 @@ try {
   Write-Host "== 11. parallel no-dues"
   $wf4 = Call $admin POST "/_dev/workflow/start" @{ key = 'no_dues.clearance'; context = @{ department_id = $cse }; requester = $studentId; title = "No dues $run" } 201
   Assert ((@($wf4.data.steps | Where-Object { $_.order -eq 1 })).Count -ge 6) "six parallel approvers"
-  $r = Call $admin POST "/workflow/instances/$($wf4.data.id)/act" @{ decision = 'reject'; comment = 'library dues' }
+  $librarian = Login 'librarian' (Get-DemoPassword 'librarian')   # one of the six parallel approvers
+  $r = Call $librarian POST "/workflow/instances/$($wf4.data.id)/act" @{ decision = 'reject'; comment = 'library dues' }
   Assert ($r.data.status -eq 'rejected') "one reject -> rejected"
 
   Write-Host "== 12. webhook"

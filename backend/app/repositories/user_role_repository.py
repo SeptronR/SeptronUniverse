@@ -7,7 +7,7 @@ from datetime import datetime
 from sqlalchemy import delete, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.rbac.registry import SCOPE_TABLES
+from app.core.rbac.registry import SCOPE_ALT_TABLES, SCOPE_TABLES
 from app.models.platform import Role, UserRole
 
 # label column per scope table (Database_Schema.sql §7, §11, §19, §30)
@@ -77,6 +77,16 @@ class UserRoleRepository:
             return None
         col = SCOPE_LABEL_COLUMNS.get(table, "name")
         row = (await self.db.execute(text(f"SELECT {col} FROM {table} WHERE id = :id"), {"id": scope_id})).first()
+        if row is None and "batch_sections" in SCOPE_ALT_TABLES.get(scope_type, ()):
+            row = (
+                await self.db.execute(
+                    text(
+                        "SELECT b.code || ' / ' || s.name FROM batch_sections s JOIN batches b ON b.id = s.batch_id "
+                        "WHERE s.id = :id"
+                    ),
+                    {"id": scope_id},
+                )
+            ).first()
         return str(row[0]) if row and row[0] is not None else None
 
     async def scope_exists(self, scope_type: str, scope_id: uuid.UUID, institution_id: uuid.UUID) -> bool:
@@ -84,10 +94,13 @@ class UserRoleRepository:
         table = SCOPE_TABLES.get(scope_type)
         if not table:
             return False
-        row = (
-            await self.db.execute(
-                text(f"SELECT 1 FROM {table} WHERE id = :id AND institution_id = :inst"),
-                {"id": scope_id, "inst": institution_id},
-            )
-        ).first()
-        return row is not None
+        for candidate in (table, *SCOPE_ALT_TABLES.get(scope_type, ())):
+            row = (
+                await self.db.execute(
+                    text(f"SELECT 1 FROM {candidate} WHERE id = :id AND institution_id = :inst"),
+                    {"id": scope_id, "inst": institution_id},
+                )
+            ).first()
+            if row is not None:
+                return True
+        return False

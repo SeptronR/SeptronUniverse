@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/v1/_dev/jobs/sleep": {
+    "/api/v1/auth/login": {
         parameters: {
             query?: never;
             header?: never;
@@ -13,15 +13,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Enqueue a sleep job (dev only) */
-        post: operations["dev_sleep_job_api_v1__dev_jobs_sleep_post"];
+        /** Password (+ MFA code) login */
+        post: operations["login_api_v1_auth_login_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v1/_dev/number-sequences/{id}/next": {
+    "/api/v1/auth/send-otp": {
         parameters: {
             query?: never;
             header?: never;
@@ -30,49 +30,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Reserve the next value of a sequence (dev fixture) */
-        post: operations["next_sequence_value_api_v1__dev_number_sequences__id__next_post"];
+        /** Send a one-time code to a phone or email */
+        post: operations["send_otp_api_v1_auth_send_otp_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v1/_dev/plans/{code}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Set a subscription plan's limits (dev fixture) */
-        put: operations["set_plan_limits_api_v1__dev_plans__code__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/_dev/users/{id}/validity": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Set a user's valid_from/valid_to (dev fixture) */
-        put: operations["set_user_validity_api_v1__dev_users__id__validity_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/_dev/workflow/escalate": {
+    "/api/v1/auth/verify-otp": {
         parameters: {
             query?: never;
             header?: never;
@@ -81,32 +47,15 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Run the escalation Beat body now (dev fixture) */
-        post: operations["dev_workflow_escalate_api_v1__dev_workflow_escalate_post"];
+        /** OTP login */
+        post: operations["verify_otp_api_v1_auth_verify_otp_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v1/_dev/workflow/markers/{instance_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Hook marker written by the dev approved/rejected hooks */
-        get: operations["dev_workflow_marker_api_v1__dev_workflow_markers__instance_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/_dev/workflow/start": {
+    "/api/v1/auth/refresh": {
         parameters: {
             query?: never;
             header?: never;
@@ -115,304 +64,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Start a workflow for a synthetic entity (dev fixture) */
-        post: operations["dev_workflow_start_api_v1__dev_workflow_start_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-terms": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Academic terms */
-        get: operations["list_terms_api_v1_academic_terms_get"];
-        put?: never;
-        /** Create a term */
-        post: operations["create_term_api_v1_academic_terms_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-terms/current": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Current term (the college's, else the institution-wide one) */
-        get: operations["current_term_api_v1_academic_terms_current_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-terms/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Term detail (next status + blocking close checks) */
-        get: operations["get_term_api_v1_academic_terms__id__get"];
-        /** Update a term (dates and windows) */
-        put: operations["update_term_api_v1_academic_terms__id__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-terms/{id}/set-current": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Make the term current (emits academic_term.changed) */
-        post: operations["set_current_term_api_v1_academic_terms__id__set_current_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-terms/{id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Advance the term status (forward only; closed needs sessions:close) */
-        post: operations["change_term_status_api_v1_academic_terms__id__status_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-years": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Academic years (with their terms) */
-        get: operations["list_years_api_v1_academic_years_get"];
-        put?: never;
-        /** Create an academic year */
-        post: operations["create_year_api_v1_academic_years_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-years/rollover": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Roll over to the next academic year (+ terms, optional batch promotion) */
-        post: operations["rollover_api_v1_academic_years_rollover_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-years/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Academic year detail */
-        get: operations["get_year_api_v1_academic_years__id__get"];
-        /** Update an academic year */
-        put: operations["update_year_api_v1_academic_years__id__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-years/{id}/lock": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Lock the year */
-        post: operations["lock_year_api_v1_academic_years__id__lock_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-years/{id}/set-current": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Make the year current in its scope (the previous one is cleared) */
-        post: operations["set_current_year_api_v1_academic_years__id__set_current_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/academic-years/{id}/unlock": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Unlock the year */
-        post: operations["unlock_year_api_v1_academic_years__id__unlock_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/announcements": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Announcements (audience-filtered; managers see drafts) */
-        get: operations["list_announcements_api_v1_announcements_get"];
-        put?: never;
-        /** Draft an announcement */
-        post: operations["create_announcement_api_v1_announcements_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/announcements/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Announcement (records the read) */
-        get: operations["get_announcement_api_v1_announcements__id__get"];
-        /** Edit a draft */
-        put: operations["update_announcement_api_v1_announcements__id__put"];
-        post?: never;
-        /** Delete an announcement */
-        delete: operations["delete_announcement_api_v1_announcements__id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/announcements/{id}/acknowledge": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Mark read / acknowledge */
-        post: operations["acknowledge_api_v1_announcements__id__acknowledge_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/announcements/{id}/publish": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Publish (notifies the audience) */
-        post: operations["publish_announcement_api_v1_announcements__id__publish_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/announcements/{id}/stats": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Read / acknowledgement statistics */
-        get: operations["announcement_stats_api_v1_announcements__id__stats_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/change-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Change the own password (policy enforced) */
-        post: operations["change_password_api_v1_auth_change_password_post"];
+        /** Rotate the refresh token → new access token */
+        post: operations["refresh_api_v1_auth_refresh_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -436,7 +89,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/impersonation/stop": {
+    "/api/v1/auth/reset-password": {
         parameters: {
             query?: never;
             header?: never;
@@ -445,40 +98,57 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** End the current impersonation */
-        post: operations["impersonation_stop_api_v1_auth_impersonation_stop_post"];
+        /** Set a new password with a reset token */
+        post: operations["reset_password_api_v1_auth_reset_password_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/login": {
+    "/api/v1/auth/sso/{provider}/start": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Begin an SSO login (redirect URL) */
+        get: operations["sso_start_api_v1_auth_sso__provider__start_get"];
         put?: never;
-        /** Password (+ MFA code) login */
-        post: operations["login_api_v1_auth_login_post"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/login-history": {
+    "/api/v1/auth/sso/{provider}/callback": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Recent sign-in attempts of the signed-in user */
-        get: operations["login_history_api_v1_auth_login_history_get"];
+        /** Complete an SSO login */
+        get: operations["sso_callback_api_v1_auth_sso__provider__callback_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Principal: user, permissions, features, scopes, visibility defaults */
+        get: operations["me_api_v1_auth_me_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -504,17 +174,34 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/me": {
+    "/api/v1/auth/change-password": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Principal: user, permissions, features, scopes, visibility defaults */
-        get: operations["me_api_v1_auth_me_get"];
+        get?: never;
         put?: never;
-        post?: never;
+        /** Change the own password (policy enforced) */
+        post: operations["change_password_api_v1_auth_change_password_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/mfa/setup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start TOTP enrolment (secret + QR); also accepts the mfa_setup token */
+        post: operations["mfa_setup_api_v1_auth_mfa_setup_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -572,74 +259,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/mfa/setup": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Start TOTP enrolment (secret + QR); also accepts the mfa_setup token */
-        post: operations["mfa_setup_api_v1_auth_mfa_setup_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Rotate the refresh token → new access token */
-        post: operations["refresh_api_v1_auth_refresh_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/reset-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Set a new password with a reset token */
-        post: operations["reset_password_api_v1_auth_reset_password_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/send-otp": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Send a one-time code to a phone or email */
-        post: operations["send_otp_api_v1_auth_send_otp_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/auth/sessions": {
         parameters: {
             query?: never;
@@ -675,15 +294,15 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/sso/{provider}/callback": {
+    "/api/v1/auth/login-history": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Complete an SSO login */
-        get: operations["sso_callback_api_v1_auth_sso__provider__callback_get"];
+        /** Recent sign-in attempts of the signed-in user */
+        get: operations["login_history_api_v1_auth_login_history_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -692,24 +311,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/auth/sso/{provider}/start": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Begin an SSO login (redirect URL) */
-        get: operations["sso_start_api_v1_auth_sso__provider__start_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/verify-otp": {
+    "/api/v1/auth/impersonation/stop": {
         parameters: {
             query?: never;
             header?: never;
@@ -718,929 +320,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** OTP login */
-        post: operations["verify_otp_api_v1_auth_verify_otp_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/colleges": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Colleges / campuses / study centres */
-        get: operations["list_colleges_api_v1_colleges_get"];
-        put?: never;
-        /** Create a college */
-        post: operations["create_college_api_v1_colleges_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/colleges/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** College detail */
-        get: operations["get_college_api_v1_colleges__id__get"];
-        /** Update a college (college scope) */
-        put: operations["update_college_api_v1_colleges__id__put"];
-        post?: never;
-        /** Delete a college (soft) */
-        delete: operations["delete_college_api_v1_colleges__id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/dlt-templates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** DLT template registry */
-        get: operations["list_dlt_api_v1_communication_dlt_templates_get"];
-        put?: never;
-        /** Register a DLT template */
-        post: operations["create_dlt_api_v1_communication_dlt_templates_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/logs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Message logs (recipients masked without view_pii) */
-        get: operations["logs_api_v1_communication_logs_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/logs/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Message log detail */
-        get: operations["log_detail_api_v1_communication_logs__id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/send": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Ad-hoc send of an event to an audience */
-        post: operations["send_api_v1_communication_send_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/templates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Notification templates (institution + platform defaults) */
-        get: operations["list_templates_api_v1_communication_templates_get"];
-        put?: never;
-        /** Create an institution template (new version) */
-        post: operations["create_template_api_v1_communication_templates_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/templates/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Template detail */
-        get: operations["get_template_api_v1_communication_templates__id__get"];
-        /** Edit a template (writes a new version) */
-        put: operations["update_template_api_v1_communication_templates__id__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/templates/{id}/activate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Make this version the active one */
-        post: operations["activate_template_api_v1_communication_templates__id__activate_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/templates/{id}/preview": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Render with a sample context */
-        post: operations["preview_template_api_v1_communication_templates__id__preview_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/templates/{id}/versions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Versions of a template */
-        get: operations["template_versions_api_v1_communication_templates__id__versions_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/whatsapp-templates": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** WhatsApp template registry */
-        get: operations["list_wa_api_v1_communication_whatsapp_templates_get"];
-        put?: never;
-        /** Submit a WhatsApp template */
-        post: operations["create_wa_api_v1_communication_whatsapp_templates_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/communication/whatsapp-templates/{id}/sync-status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Refresh the approval status from the provider */
-        post: operations["sync_wa_api_v1_communication_whatsapp_templates__id__sync_status_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/consents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Record or withdraw a consent */
-        post: operations["record_consent_api_v1_consents_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/consents/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My current consents (latest decision per purpose) */
-        get: operations["my_consents_api_v1_consents_me_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/data-subject-requests": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** All data-subject requests of the institution (privacy officer) */
-        get: operations["all_dsrs_api_v1_data_subject_requests_get"];
-        put?: never;
-        /** Raise a data-subject request (access / export / correction / erasure) */
-        post: operations["create_dsr_api_v1_data_subject_requests_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/data-subject-requests/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My data-subject requests */
-        get: operations["my_dsrs_api_v1_data_subject_requests_me_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/departments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Departments */
-        get: operations["list_departments_api_v1_departments_get"];
-        put?: never;
-        /** Create a department */
-        post: operations["create_department_api_v1_departments_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/departments/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Department detail */
-        get: operations["get_department_api_v1_departments__id__get"];
-        /** Update a department */
-        put: operations["update_department_api_v1_departments__id__put"];
-        post?: never;
-        /** Delete a department (soft) */
-        delete: operations["delete_department_api_v1_departments__id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/departments/{id}/hod": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Assign the HOD (grants hod @department) */
-        put: operations["assign_hod_api_v1_departments__id__hod_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/devices": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Register a push token */
-        post: operations["register_device_api_v1_devices_post"];
-        /** Unregister a push token */
-        delete: operations["unregister_device_api_v1_devices_delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/entitlements": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Plan, status, limits and usage */
-        get: operations["entitlements_api_v1_entitlements_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/faculties": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Faculties / schools */
-        get: operations["list_faculties_api_v1_faculties_get"];
-        put?: never;
-        /** Create a faculty (optional dean → dean @faculty) */
-        post: operations["create_faculty_api_v1_faculties_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/faculties/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update a faculty / assign the dean */
-        put: operations["update_faculty_api_v1_faculties__id__put"];
-        post?: never;
-        /** Delete a faculty (soft) */
-        delete: operations["delete_faculty_api_v1_faculties__id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/features": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Feature registry (definitions) */
-        get: operations["list_features_api_v1_features_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/features/{key}/institution-toggle": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Institution admin's own on/off switch for a feature */
-        put: operations["institution_toggle_api_v1_features__key__institution_toggle_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/feedback": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Submit in-app feedback */
-        post: operations["create_feedback_api_v1_feedback_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/help/articles": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Help articles (platform + institution), optionally by module */
-        get: operations["list_articles_api_v1_help_articles_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/help/articles/{slug}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Help article detail */
-        get: operations["get_article_api_v1_help_articles__slug__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/holidays": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Holiday calendar */
-        get: operations["list_holidays_api_v1_holidays_get"];
-        put?: never;
-        /** Add a holiday */
-        post: operations["create_holiday_api_v1_holidays_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/holidays/bulk-import": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Bulk import holidays from CSV (partial success) */
-        post: operations["bulk_import_holidays_api_v1_holidays_bulk_import_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/holidays/export.ics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Holiday calendar as iCal (RFC 5545) */
-        get: operations["export_holidays_ics_api_v1_holidays_export_ics_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/holidays/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update a holiday */
-        put: operations["update_holiday_api_v1_holidays__id__put"];
-        post?: never;
-        /** Delete a holiday */
-        delete: operations["delete_holiday_api_v1_holidays__id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/hostels": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Hostels (stub until Phase 20 — proves the feature gate) */
-        get: operations["list_hostels_api_v1_hostels_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/install": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** One-time platform bootstrap (INSTALL_SECRET_KEY) */
-        post: operations["install_api_v1_install_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/institution/profile": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Institution profile */
-        get: operations["get_profile_api_v1_institution_profile_get"];
-        /** Update the institution profile (audited diff) */
-        put: operations["update_profile_api_v1_institution_profile_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/institution/profile/logo": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Upload the logo / seal / head signature / letterhead */
-        post: operations["upload_logo_api_v1_institution_profile_logo_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/institutions/{id}/features": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Effective feature flags of an institution (+ change log) */
-        get: operations["institution_features_api_v1_institutions__id__features_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/institutions/{id}/features/apply-plan-defaults": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Reset flags to the plan defaults (overrides survive) */
-        post: operations["apply_plan_defaults_api_v1_institutions__id__features_apply_plan_defaults_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/institutions/{id}/features/{key}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Platform toggle for one feature (super admin) */
-        put: operations["set_platform_flag_api_v1_institutions__id__features__key__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/jobs": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My background jobs (all with jobs:view_all) */
-        get: operations["list_jobs_api_v1_jobs_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/jobs/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Job status */
-        get: operations["get_job_api_v1_jobs__id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/jobs/{id}/cancel": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Request cancellation of a queued/running job */
-        post: operations["cancel_job_api_v1_jobs__id__cancel_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/mobile/config": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Mobile remote config (min versions, force update, maintenance banner) */
-        get: operations["mobile_config_get_api_v1_mobile_config_get"];
-        put?: never;
-        /** Mobile remote config (POST variant used by the app bootstrap) */
-        post: operations["mobile_config_post_api_v1_mobile_config_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notification-preferences/me": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My notification preferences */
-        get: operations["my_preferences_api_v1_notification_preferences_me_get"];
-        /** Update my notification preferences */
-        put: operations["update_preferences_api_v1_notification_preferences_me_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notification-preferences/unsubscribe": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** One-click unsubscribe (signed link) */
-        get: operations["unsubscribe_link_api_v1_notification_preferences_unsubscribe_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notifications": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My notifications */
-        get: operations["my_notifications_api_v1_notifications_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notifications/read-all": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Mark every notification read */
-        post: operations["read_all_api_v1_notifications_read_all_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notifications/unread-count": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Unread notifications */
-        get: operations["unread_count_api_v1_notifications_unread_count_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/notifications/{id}/read": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Mark a notification read */
-        post: operations["read_one_api_v1_notifications__id__read_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/number-sequences": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Number sequences (registration / hall-ticket / receipt numbers) */
-        get: operations["list_sequences_api_v1_number_sequences_get"];
-        put?: never;
-        /** Create a number sequence */
-        post: operations["create_sequence_api_v1_number_sequences_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/number-sequences/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        /** Update a number sequence (pattern, next value, padding, reset policy) */
-        put: operations["update_sequence_api_v1_number_sequences__id__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/number-sequences/{id}/preview": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Preview the next values (nothing is consumed) */
-        post: operations["preview_sequence_api_v1_number_sequences__id__preview_post"];
+        /** End the current impersonation */
+        post: operations["impersonation_stop_api_v1_auth_impersonation_stop_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1656,128 +337,6 @@ export interface paths {
         };
         /** Permission catalogue (modules × actions) */
         get: operations["permissions_api_v1_permissions_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/platform/features/matrix": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Institutions × features (super admin) */
-        get: operations["feature_matrix_api_v1_platform_features_matrix_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/platform/institutions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Institutions (tenants) */
-        get: operations["list_institutions_api_v1_platform_institutions_get"];
-        put?: never;
-        /** Onboard a new institution (roles, pack defaults, plan, first admin) */
-        post: operations["onboard_api_v1_platform_institutions_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/platform/institutions/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Institution detail */
-        get: operations["get_institution_api_v1_platform_institutions__id__get"];
-        /** Update an institution */
-        put: operations["update_institution_api_v1_platform_institutions__id__put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/platform/institutions/{id}/activate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Re-activate a suspended institution */
-        post: operations["activate_api_v1_platform_institutions__id__activate_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/platform/institutions/{id}/suspend": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Suspend (logins refused, sessions revoked) */
-        post: operations["suspend_api_v1_platform_institutions__id__suspend_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/platform/read-only": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Current read-only state (platform + tenant) */
-        get: operations["read_only_state_api_v1_platform_read_only_get"];
-        put?: never;
-        /** Open or close a read-only window (tenant: settings:manage; platform: super admin) */
-        post: operations["set_read_only_api_v1_platform_read_only_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/public/config": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Platform configuration for clients (packs, themes, captcha, app versions) */
-        get: operations["public_config_api_v1_public_config_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1858,92 +417,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Global search (students, staff, courses, applicants) — visibility-aware */
-        get: operations["search_api_v1_search_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/settings": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Settings by category (typed template + values) */
-        get: operations["get_settings_api_v1_settings_get"];
-        /** Bulk update settings (typed, audited) */
-        put: operations["update_settings_api_v1_settings_put"];
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/settings/public": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Public settings + theme (no auth) */
-        get: operations["public_settings_api_v1_settings_public_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/settings/test-provider": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Send a test SMS / e-mail / WhatsApp / push (message_logs row) */
-        post: operations["test_provider_api_v1_settings_test_provider_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/students": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Create a student (stub until Phase 07 — proves the seat limit) */
-        post: operations["create_student_api_v1_students_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/users": {
         parameters: {
             query?: never;
@@ -2008,23 +481,6 @@ export interface paths {
         put?: never;
         /** Deactivate a user and revoke its sessions */
         post: operations["deactivate_user_api_v1_users__id__deactivate_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/users/{id}/impersonate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Impersonate a user (audited; support agents get read-only) */
-        post: operations["impersonate_api_v1_users__id__impersonate_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2100,6 +556,1190 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/users/{id}/impersonate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Impersonate a user (audited; support agents get read-only) */
+        post: operations["impersonate_api_v1_users__id__impersonate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/features": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Feature registry (definitions) */
+        get: operations["list_features_api_v1_features_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/institutions/{id}/features": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Effective feature flags of an institution (+ change log) */
+        get: operations["institution_features_api_v1_institutions__id__features_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/institutions/{id}/features/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Platform toggle for one feature (super admin) */
+        put: operations["set_platform_flag_api_v1_institutions__id__features__key__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/institutions/{id}/features/apply-plan-defaults": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reset flags to the plan defaults (overrides survive) */
+        post: operations["apply_plan_defaults_api_v1_institutions__id__features_apply_plan_defaults_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/features/{key}/institution-toggle": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Institution admin's own on/off switch for a feature */
+        put: operations["institution_toggle_api_v1_features__key__institution_toggle_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/features/matrix": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Institutions × features (super admin) */
+        get: operations["feature_matrix_api_v1_platform_features_matrix_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/consents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record or withdraw a consent */
+        post: operations["record_consent_api_v1_consents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/consents/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My current consents (latest decision per purpose) */
+        get: operations["my_consents_api_v1_consents_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/data-subject-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** All data-subject requests of the institution (privacy officer) */
+        get: operations["all_dsrs_api_v1_data_subject_requests_get"];
+        put?: never;
+        /** Raise a data-subject request (access / export / correction / erasure) */
+        post: operations["create_dsr_api_v1_data_subject_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/data-subject-requests/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My data-subject requests */
+        get: operations["my_dsrs_api_v1_data_subject_requests_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/entitlements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Plan, status, limits and usage */
+        get: operations["entitlements_api_v1_entitlements_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/install": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** One-time platform bootstrap (INSTALL_SECRET_KEY) */
+        post: operations["install_api_v1_install_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Platform configuration for clients (packs, themes, captcha, app versions) */
+        get: operations["public_config_api_v1_public_config_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/read-only": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current read-only state (platform + tenant) */
+        get: operations["read_only_state_api_v1_platform_read_only_get"];
+        put?: never;
+        /** Open or close a read-only window (tenant: settings:manage; platform: super admin) */
+        post: operations["set_read_only_api_v1_platform_read_only_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mobile/config": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mobile remote config (min versions, force update, maintenance banner) */
+        get: operations["mobile_config_get_api_v1_mobile_config_get"];
+        put?: never;
+        /** Mobile remote config (POST variant used by the app bootstrap) */
+        post: operations["mobile_config_post_api_v1_mobile_config_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/institution/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Institution profile */
+        get: operations["get_profile_api_v1_institution_profile_get"];
+        /** Update the institution profile (audited diff) */
+        put: operations["update_profile_api_v1_institution_profile_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/institution/profile/logo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload the logo / seal / head signature / letterhead */
+        post: operations["upload_logo_api_v1_institution_profile_logo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/colleges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Colleges / campuses / study centres */
+        get: operations["list_colleges_api_v1_colleges_get"];
+        put?: never;
+        /** Create a college */
+        post: operations["create_college_api_v1_colleges_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/colleges/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** College detail */
+        get: operations["get_college_api_v1_colleges__id__get"];
+        /** Update a college (college scope) */
+        put: operations["update_college_api_v1_colleges__id__put"];
+        post?: never;
+        /** Delete a college (soft) */
+        delete: operations["delete_college_api_v1_colleges__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/faculties": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Faculties / schools */
+        get: operations["list_faculties_api_v1_faculties_get"];
+        put?: never;
+        /** Create a faculty (optional dean → dean @faculty) */
+        post: operations["create_faculty_api_v1_faculties_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/faculties/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a faculty / assign the dean */
+        put: operations["update_faculty_api_v1_faculties__id__put"];
+        post?: never;
+        /** Delete a faculty (soft) */
+        delete: operations["delete_faculty_api_v1_faculties__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/departments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Departments */
+        get: operations["list_departments_api_v1_departments_get"];
+        put?: never;
+        /** Create a department */
+        post: operations["create_department_api_v1_departments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/departments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Department detail */
+        get: operations["get_department_api_v1_departments__id__get"];
+        /** Update a department */
+        put: operations["update_department_api_v1_departments__id__put"];
+        post?: never;
+        /** Delete a department (soft) */
+        delete: operations["delete_department_api_v1_departments__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/departments/{id}/hod": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Assign the HOD (grants hod @department) */
+        put: operations["assign_hod_api_v1_departments__id__hod_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/holidays": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Holiday calendar */
+        get: operations["list_holidays_api_v1_holidays_get"];
+        put?: never;
+        /** Add a holiday */
+        post: operations["create_holiday_api_v1_holidays_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/holidays/bulk-import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Bulk import holidays from CSV (partial success) */
+        post: operations["bulk_import_holidays_api_v1_holidays_bulk_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/holidays/export.ics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Holiday calendar as iCal (RFC 5545) */
+        get: operations["export_holidays_ics_api_v1_holidays_export_ics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/holidays/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a holiday */
+        put: operations["update_holiday_api_v1_holidays__id__put"];
+        post?: never;
+        /** Delete a holiday */
+        delete: operations["delete_holiday_api_v1_holidays__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/number-sequences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Number sequences (registration / hall-ticket / receipt numbers) */
+        get: operations["list_sequences_api_v1_number_sequences_get"];
+        put?: never;
+        /** Create a number sequence */
+        post: operations["create_sequence_api_v1_number_sequences_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/number-sequences/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a number sequence (pattern, next value, padding, reset policy) */
+        put: operations["update_sequence_api_v1_number_sequences__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/number-sequences/{id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Preview the next values (nothing is consumed) */
+        post: operations["preview_sequence_api_v1_number_sequences__id__preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-years": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Academic years (with their terms) */
+        get: operations["list_years_api_v1_academic_years_get"];
+        put?: never;
+        /** Create an academic year */
+        post: operations["create_year_api_v1_academic_years_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-years/rollover": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Roll over to the next academic year (+ terms, optional batch promotion) */
+        post: operations["rollover_api_v1_academic_years_rollover_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-years/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Academic year detail */
+        get: operations["get_year_api_v1_academic_years__id__get"];
+        /** Update an academic year */
+        put: operations["update_year_api_v1_academic_years__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-years/{id}/set-current": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Make the year current in its scope (the previous one is cleared) */
+        post: operations["set_current_year_api_v1_academic_years__id__set_current_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-years/{id}/lock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Lock the year */
+        post: operations["lock_year_api_v1_academic_years__id__lock_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-years/{id}/unlock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Unlock the year */
+        post: operations["unlock_year_api_v1_academic_years__id__unlock_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-terms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Academic terms */
+        get: operations["list_terms_api_v1_academic_terms_get"];
+        put?: never;
+        /** Create a term */
+        post: operations["create_term_api_v1_academic_terms_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-terms/current": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Current term (the college's, else the institution-wide one) */
+        get: operations["current_term_api_v1_academic_terms_current_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-terms/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Term detail (next status + blocking close checks) */
+        get: operations["get_term_api_v1_academic_terms__id__get"];
+        /** Update a term (dates and windows) */
+        put: operations["update_term_api_v1_academic_terms__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-terms/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Advance the term status (forward only; closed needs sessions:close) */
+        post: operations["change_term_status_api_v1_academic_terms__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/academic-terms/{id}/set-current": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Make the term current (emits academic_term.changed) */
+        post: operations["set_current_term_api_v1_academic_terms__id__set_current_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Settings by category (typed template + values) */
+        get: operations["get_settings_api_v1_settings_get"];
+        /** Bulk update settings (typed, audited) */
+        put: operations["update_settings_api_v1_settings_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/settings/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public settings + theme (no auth) */
+        get: operations["public_settings_api_v1_settings_public_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/settings/test-provider": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a test SMS / e-mail / WhatsApp / push (message_logs row) */
+        post: operations["test_provider_api_v1_settings_test_provider_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/institutions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Institutions (tenants) */
+        get: operations["list_institutions_api_v1_platform_institutions_get"];
+        put?: never;
+        /** Onboard a new institution (roles, pack defaults, plan, first admin) */
+        post: operations["onboard_api_v1_platform_institutions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/institutions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Institution detail */
+        get: operations["get_institution_api_v1_platform_institutions__id__get"];
+        /** Update an institution */
+        put: operations["update_institution_api_v1_platform_institutions__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/institutions/{id}/suspend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Suspend (logins refused, sessions revoked) */
+        post: operations["suspend_api_v1_platform_institutions__id__suspend_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/platform/institutions/{id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Re-activate a suspended institution */
+        post: operations["activate_api_v1_platform_institutions__id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notification templates (institution + platform defaults) */
+        get: operations["list_templates_api_v1_communication_templates_get"];
+        put?: never;
+        /** Create an institution template (new version) */
+        post: operations["create_template_api_v1_communication_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Template detail */
+        get: operations["get_template_api_v1_communication_templates__id__get"];
+        /** Edit a template (writes a new version) */
+        put: operations["update_template_api_v1_communication_templates__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Versions of a template */
+        get: operations["template_versions_api_v1_communication_templates__id__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Render with a sample context */
+        post: operations["preview_template_api_v1_communication_templates__id__preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Make this version the active one */
+        post: operations["activate_template_api_v1_communication_templates__id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/dlt-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** DLT template registry */
+        get: operations["list_dlt_api_v1_communication_dlt_templates_get"];
+        put?: never;
+        /** Register a DLT template */
+        post: operations["create_dlt_api_v1_communication_dlt_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/whatsapp-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** WhatsApp template registry */
+        get: operations["list_wa_api_v1_communication_whatsapp_templates_get"];
+        put?: never;
+        /** Submit a WhatsApp template */
+        post: operations["create_wa_api_v1_communication_whatsapp_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/whatsapp-templates/{id}/sync-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refresh the approval status from the provider */
+        post: operations["sync_wa_api_v1_communication_whatsapp_templates__id__sync_status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ad-hoc send of an event to an audience */
+        post: operations["send_api_v1_communication_send_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Message logs (recipients masked without view_pii) */
+        get: operations["logs_api_v1_communication_logs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/logs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Message log detail */
+        get: operations["log_detail_api_v1_communication_logs__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My notifications */
+        get: operations["my_notifications_api_v1_notifications_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/unread-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Unread notifications */
+        get: operations["unread_count_api_v1_notifications_unread_count_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark every notification read */
+        post: operations["read_all_api_v1_notifications_read_all_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark a notification read */
+        post: operations["read_one_api_v1_notifications__id__read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notification-preferences/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My notification preferences */
+        get: operations["my_preferences_api_v1_notification_preferences_me_get"];
+        /** Update my notification preferences */
+        put: operations["update_preferences_api_v1_notification_preferences_me_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notification-preferences/unsubscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One-click unsubscribe (signed link) */
+        get: operations["unsubscribe_link_api_v1_notification_preferences_unsubscribe_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a push token */
+        post: operations["register_device_api_v1_devices_post"];
+        /** Unregister a push token */
+        delete: operations["unregister_device_api_v1_devices_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/webhooks/{provider}/{channel}": {
         parameters: {
             query?: never;
@@ -2111,6 +1751,94 @@ export interface paths {
         put?: never;
         /** Provider delivery / bounce / read callback (signed) */
         post: operations["provider_webhook_api_v1_webhooks__provider___channel__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Announcements (audience-filtered; managers see drafts) */
+        get: operations["list_announcements_api_v1_announcements_get"];
+        put?: never;
+        /** Draft an announcement */
+        post: operations["create_announcement_api_v1_announcements_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Announcement (records the read) */
+        get: operations["get_announcement_api_v1_announcements__id__get"];
+        /** Edit a draft */
+        put: operations["update_announcement_api_v1_announcements__id__put"];
+        post?: never;
+        /** Delete an announcement */
+        delete: operations["delete_announcement_api_v1_announcements__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish (notifies the audience) */
+        post: operations["publish_announcement_api_v1_announcements__id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read / acknowledgement statistics */
+        get: operations["announcement_stats_api_v1_announcements__id__stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}/acknowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark read / acknowledge */
+        post: operations["acknowledge_api_v1_announcements__id__acknowledge_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2166,41 +1894,6 @@ export interface paths {
         /** Save a new version */
         post: operations["new_version_api_v1_workflow_definitions__id__versions_post"];
         delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/workflow/delegations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** My delegations (given and received) */
-        get: operations["delegations_api_v1_workflow_delegations_get"];
-        put?: never;
-        /** Delegate my approvals */
-        post: operations["create_delegation_api_v1_workflow_delegations_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/workflow/delegations/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Revoke a delegation */
-        delete: operations["delete_delegation_api_v1_workflow_delegations__id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2291,6 +1984,941 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/workflow/delegations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My delegations (given and received) */
+        get: operations["delegations_api_v1_workflow_delegations_get"];
+        put?: never;
+        /** Delegate my approvals */
+        post: operations["create_delegation_api_v1_workflow_delegations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/delegations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke a delegation */
+        delete: operations["delete_delegation_api_v1_workflow_delegations__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Programmes (institution-wide) */
+        get: operations["list_programs_api_v1_programs_get"];
+        put?: never;
+        /** Create a programme */
+        post: operations["create_program_api_v1_programs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Programme detail */
+        get: operations["get_program_api_v1_programs__id__get"];
+        /** Update a programme */
+        put: operations["update_program_api_v1_programs__id__put"];
+        post?: never;
+        /** Delete a programme (soft) */
+        delete: operations["delete_program_api_v1_programs__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close a programme (no active batches) */
+        post: operations["close_program_api_v1_programs__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Batches with their sections */
+        get: operations["list_batches_api_v1_batches_get"];
+        put?: never;
+        /** Create a batch (sections A…N) */
+        post: operations["create_batch_api_v1_batches_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batches/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Batch detail */
+        get: operations["get_batch_api_v1_batches__id__get"];
+        /** Update a batch */
+        put: operations["update_batch_api_v1_batches__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batches/{id}/sections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Replace the sections */
+        put: operations["replace_sections_api_v1_batches__id__sections_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batches/{id}/sections/{sid}/advisor": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Assign the class advisor (class_advisor @offering:<section>) */
+        put: operations["assign_advisor_api_v1_batches__id__sections__sid__advisor_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Regulations (status chips) */
+        get: operations["list_regulations_api_v1_regulations_get"];
+        put?: never;
+        /** Create a draft regulation */
+        post: operations["create_regulation_api_v1_regulations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/rules-schema": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every rules key with its default and help text (Rules tab) */
+        get: operations["rules_schema_api_v1_regulations_rules_schema_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Regulation detail */
+        get: operations["get_regulation_api_v1_regulations__id__get"];
+        /** Update (rules locked after approval) */
+        put: operations["update_regulation_api_v1_regulations__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve (or submit to the BoS workflow) */
+        post: operations["approve_regulation_api_v1_regulations__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/{id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Activate (locks courses & structure) */
+        post: operations["activate_regulation_api_v1_regulations__id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/{id}/clone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Deep-clone into a new draft */
+        post: operations["clone_regulation_api_v1_regulations__id__clone_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/{id}/diff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Diff vs the predecessor */
+        get: operations["regulation_diff_api_v1_regulations__id__diff_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/regulations/{id}/rules-effective": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** rules ⊕ programme rules_override */
+        get: operations["rules_effective_api_v1_regulations__id__rules_effective_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Courses (search code/title, filters) */
+        get: operations["list_courses_api_v1_courses_get"];
+        put?: never;
+        /** Create a course (draft) */
+        post: operations["create_course_api_v1_courses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export the filtered courses (XLSX) */
+        get: operations["export_courses_api_v1_courses_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/bulk-import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Bulk import courses from CSV (job) */
+        post: operations["bulk_import_courses_api_v1_courses_bulk_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Course detail (with prerequisites) */
+        get: operations["get_course_api_v1_courses__id__get"];
+        /** Update a course */
+        put: operations["update_course_api_v1_courses__id__put"];
+        post?: never;
+        /** Delete a draft course (soft) */
+        delete: operations["delete_course_api_v1_courses__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Move draft → approved → retired */
+        post: operations["change_course_status_api_v1_courses__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/courses/{id}/prerequisites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Replace pre-/co-/anti-requisites (acyclic) */
+        put: operations["set_prerequisites_api_v1_courses__id__prerequisites_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/grading-scales": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Grading scales */
+        get: operations["list_scales_api_v1_grading_scales_get"];
+        put?: never;
+        /** Create a grading scale */
+        post: operations["create_scale_api_v1_grading_scales_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/grading-scales/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a grading scale */
+        put: operations["update_scale_api_v1_grading_scales__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment-schemes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Assessment schemes */
+        get: operations["list_schemes_api_v1_assessment_schemes_get"];
+        put?: never;
+        /** Create an assessment scheme (+ components) */
+        post: operations["create_scheme_api_v1_assessment_schemes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment-schemes/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a scheme */
+        put: operations["update_scheme_api_v1_assessment_schemes__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assessment-schemes/{id}/components": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Replace the components (Σ scaled_to = cia_max) */
+        put: operations["replace_components_api_v1_assessment_schemes__id__components_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/program-regulations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Programme ↔ regulation bindings */
+        get: operations["list_program_regulations_api_v1_program_regulations_get"];
+        put?: never;
+        /** Bind a programme to a regulation */
+        post: operations["create_program_regulation_api_v1_program_regulations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/program-regulations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Credits required / rules override / status */
+        put: operations["update_program_regulation_api_v1_program_regulations__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/program-regulations/{id}/structure": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Structure terms, curriculum courses and baskets */
+        get: operations["get_structure_api_v1_program_regulations__id__structure_get"];
+        /** Replace the structure (transactional) */
+        put: operations["replace_structure_api_v1_program_regulations__id__structure_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/program-regulations/{id}/structure/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Credit totals and issues */
+        post: operations["validate_structure_api_v1_program_regulations__id__structure_validate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/elective-baskets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Elective baskets */
+        get: operations["list_baskets_api_v1_elective_baskets_get"];
+        put?: never;
+        /** Create a basket */
+        post: operations["create_basket_api_v1_elective_baskets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/elective-baskets/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a basket */
+        put: operations["update_basket_api_v1_elective_baskets__id__put"];
+        post?: never;
+        /** Delete a basket */
+        delete: operations["delete_basket_api_v1_elective_baskets__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/elective-baskets/{id}/courses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Replace the basket's courses */
+        put: operations["replace_basket_courses_api_v1_elective_baskets__id__courses_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/catalog": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public catalogue: programmes → public courses */
+        get: operations["public_catalog_api_v1_public_catalog_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/catalog/programs/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public programme page (courses + syllabus) */
+        get: operations["public_program_api_v1_public_catalog_programs__code__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/public/catalog/courses/{regulation}/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public course page */
+        get: operations["public_course_api_v1_public_catalog_courses__regulation___code__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My background jobs (all with jobs:view_all) */
+        get: operations["list_jobs_api_v1_jobs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/jobs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Job status */
+        get: operations["get_job_api_v1_jobs__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/jobs/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request cancellation of a queued/running job */
+        post: operations["cancel_job_api_v1_jobs__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Global search (students, staff, courses, applicants) — visibility-aware */
+        get: operations["search_api_v1_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/articles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Help articles (platform + institution), optionally by module */
+        get: operations["list_articles_api_v1_help_articles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/articles/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Help article detail */
+        get: operations["get_article_api_v1_help_articles__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit in-app feedback */
+        post: operations["create_feedback_api_v1_feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/jobs/sleep": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enqueue a sleep job (dev only) */
+        post: operations["dev_sleep_job_api_v1__dev_jobs_sleep_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/users/{id}/validity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set a user's valid_from/valid_to (dev fixture) */
+        put: operations["set_user_validity_api_v1__dev_users__id__validity_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/plans/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set a subscription plan's limits (dev fixture) */
+        put: operations["set_plan_limits_api_v1__dev_plans__code__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/number-sequences/{id}/next": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reserve the next value of a sequence (dev fixture) */
+        post: operations["next_sequence_value_api_v1__dev_number_sequences__id__next_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/workflow/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start a workflow for a synthetic entity (dev fixture) */
+        post: operations["dev_workflow_start_api_v1__dev_workflow_start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/workflow/markers/{instance_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hook marker written by the dev approved/rejected hooks */
+        get: operations["dev_workflow_marker_api_v1__dev_workflow_markers__instance_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/workflow/escalate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run the escalation Beat body now (dev fixture) */
+        post: operations["dev_workflow_escalate_api_v1__dev_workflow_escalate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hostels (stub until Phase 20 — proves the feature gate) */
+        get: operations["list_hostels_api_v1_hostels_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/students": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a student (stub until Phase 07 — proves the seat limit) */
+        post: operations["create_student_api_v1_students_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -2298,19 +2926,14 @@ export interface components {
         /** AcademicTermBrief */
         AcademicTermBrief: {
             /**
-             * End Date
-             * Format: date
-             */
-            end_date: string;
-            /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Current */
-            is_current: boolean;
             /** Name */
             name: string;
+            /** Term Type */
+            term_type: string;
             /** Sequence */
             sequence: number;
             /**
@@ -2318,10 +2941,15 @@ export interface components {
              * Format: date
              */
             start_date: string;
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
             /** Status */
             status: string;
-            /** Term Type */
-            term_type: string;
+            /** Is Current */
+            is_current: boolean;
         };
         /** AcademicTermCreate */
         AcademicTermCreate: {
@@ -2330,21 +2958,9 @@ export interface components {
              * Format: uuid
              */
             academic_year_id: string;
-            /** Add Drop End */
-            add_drop_end?: string | null;
-            /**
-             * End Date
-             * Format: date
-             */
-            end_date: string;
-            /** Last Instruction Date */
-            last_instruction_date?: string | null;
             /** Name */
             name: string;
-            /** Registration End */
-            registration_end?: string | null;
-            /** Registration Start */
-            registration_start?: string | null;
+            term_type: components["schemas"]["TermType"];
             /** Sequence */
             sequence: number;
             /**
@@ -2352,10 +2968,29 @@ export interface components {
              * Format: date
              */
             start_date: string;
-            term_type: components["schemas"]["TermType"];
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Add Drop End */
+            add_drop_end?: string | null;
+            /** Last Instruction Date */
+            last_instruction_date?: string | null;
         };
         /** AcademicTermResponse */
         AcademicTermResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** College Id */
+            college_id?: string | null;
             /**
              * Academic Year Id
              * Format: uuid
@@ -2363,36 +2998,10 @@ export interface components {
             academic_year_id: string;
             /** Academic Year Name */
             academic_year_name?: string | null;
-            /** Add Drop End */
-            add_drop_end?: string | null;
-            /** Blocking Checks */
-            blocking_checks?: components["schemas"]["TermCloseCheck"][];
-            /** College Id */
-            college_id?: string | null;
-            /**
-             * End Date
-             * Format: date
-             */
-            end_date: string;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Is Current */
-            is_current: boolean;
-            /** Is Locked */
-            is_locked: boolean;
-            /** Last Instruction Date */
-            last_instruction_date?: string | null;
             /** Name */
             name: string;
-            /** Next Status */
-            next_status?: string | null;
-            /** Registration End */
-            registration_end?: string | null;
-            /** Registration Start */
-            registration_start?: string | null;
+            /** Term Type */
+            term_type: string;
             /** Sequence */
             sequence: number;
             /**
@@ -2400,80 +3009,85 @@ export interface components {
              * Format: date
              */
             start_date: string;
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Add Drop End */
+            add_drop_end?: string | null;
+            /** Last Instruction Date */
+            last_instruction_date?: string | null;
+            /** Is Current */
+            is_current: boolean;
+            /** Is Locked */
+            is_locked: boolean;
             /** Status */
             status: string;
-            /** Term Type */
-            term_type: string;
             /** Version */
             version: number;
+            /** Next Status */
+            next_status?: string | null;
+            /** Blocking Checks */
+            blocking_checks?: components["schemas"]["TermCloseCheck"][];
         };
         /** AcademicTermUpdate */
         AcademicTermUpdate: {
-            /** Add Drop End */
-            add_drop_end?: string | null;
-            /** End Date */
-            end_date?: string | null;
-            /** Last Instruction Date */
-            last_instruction_date?: string | null;
             /** Name */
             name?: string | null;
-            /** Registration End */
-            registration_end?: string | null;
-            /** Registration Start */
-            registration_start?: string | null;
             /** Start Date */
             start_date?: string | null;
+            /** End Date */
+            end_date?: string | null;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Add Drop End */
+            add_drop_end?: string | null;
+            /** Last Instruction Date */
+            last_instruction_date?: string | null;
             /** Version */
             version?: number | null;
         };
         /** AcademicYearCreate */
         AcademicYearCreate: {
+            /** Name */
+            name: string;
+            /**
+             * Start Date
+             * Format: date
+             */
+            start_date: string;
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
             /**
              * College Id
              * @description NULL = institution-wide year
              */
             college_id?: string | null;
             /**
-             * End Date
-             * Format: date
-             */
-            end_date: string;
-            /**
              * Is Current
              * @default false
              */
             is_current: boolean;
-            /** Name */
-            name: string;
-            /**
-             * Start Date
-             * Format: date
-             */
-            start_date: string;
         };
         /** AcademicYearResponse */
         AcademicYearResponse: {
-            /** College Id */
-            college_id?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * End Date
-             * Format: date
-             */
-            end_date: string;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Current */
-            is_current: boolean;
-            /** Is Locked */
-            is_locked: boolean;
+            /** College Id */
+            college_id?: string | null;
             /** Name */
             name: string;
             /**
@@ -2481,30 +3095,44 @@ export interface components {
              * Format: date
              */
             start_date: string;
-            /** Terms */
-            terms?: components["schemas"]["AcademicTermBrief"][];
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
+            /** Is Current */
+            is_current: boolean;
+            /** Is Locked */
+            is_locked: boolean;
             /** Version */
             version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Terms */
+            terms?: components["schemas"]["AcademicTermBrief"][];
         };
         /** AcademicYearUpdate */
         AcademicYearUpdate: {
-            /** End Date */
-            end_date?: string | null;
             /** Name */
             name?: string | null;
             /** Start Date */
             start_date?: string | null;
+            /** End Date */
+            end_date?: string | null;
             /** Version */
             version?: number | null;
         };
         /** AckStats */
         AckStats: {
-            /** Acknowledged */
-            acknowledged: number;
-            /** Read */
-            read: number;
             /** Total */
             total: number;
+            /** Read */
+            read: number;
+            /** Acknowledged */
+            acknowledged: number;
         };
         /** AcknowledgeRequest */
         AcknowledgeRequest: {
@@ -2517,49 +3145,64 @@ export interface components {
         /** AdminResetPasswordResponse */
         AdminResetPasswordResponse: {
             /**
-             * Must Change Password
-             * @default true
-             */
-            must_change_password: boolean;
-            /** Temporary Password */
-            temporary_password: string;
-            /**
              * User Id
              * Format: uuid
              */
             user_id: string;
+            /** Temporary Password */
+            temporary_password: string;
+            /**
+             * Must Change Password
+             * @default true
+             */
+            must_change_password: boolean;
         };
+        /**
+         * AdvisorAssign
+         * @description ``staff_id`` may be a ``staff`` row (Phase 06) or — until staff records exist — the staff **user** id.
+         */
+        AdvisorAssign: {
+            /** Staff Id */
+            staff_id?: string | null;
+            /** User Id */
+            user_id?: string | null;
+        };
+        /**
+         * AllocationMode
+         * @enum {string}
+         */
+        AllocationMode: "priority_cgpa" | "fcfs" | "lottery" | "manual";
         /** AnnouncementCreate */
         AnnouncementCreate: {
-            /** Attachments */
-            attachments?: {
-                [key: string]: unknown;
-            }[] | null;
-            audience_rules?: components["schemas"]["AudienceRules"];
+            /** Title */
+            title: string;
             /** Body */
             body: string;
             /** Category */
             category?: string | null;
-            /** Channels */
-            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
             /** College Id */
             college_id?: string | null;
-            /** Expires At */
-            expires_at?: string | null;
-            /**
-             * Is Pinned
-             * @default false
-             */
-            is_pinned: boolean;
+            audience_rules?: components["schemas"]["AudienceRules"];
+            /** Attachments */
+            attachments?: {
+                [key: string]: unknown;
+            }[] | null;
             /** Publish At */
             publish_at?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
             /**
              * Requires Ack
              * @default false
              */
             requires_ack: boolean;
-            /** Title */
-            title: string;
+            /**
+             * Is Pinned
+             * @default false
+             */
+            is_pinned: boolean;
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
         };
         /** AnnouncementPublish */
         AnnouncementPublish: {
@@ -2568,88 +3211,84 @@ export interface components {
         };
         /** AnnouncementResponse */
         AnnouncementResponse: {
-            ack_stats?: components["schemas"]["AckStats"] | null;
-            /** Attachments */
-            attachments?: {
-                [key: string]: unknown;
-            }[] | null;
-            /** Audience Rules */
-            audience_rules?: {
-                [key: string]: unknown;
-            } | null;
-            /** Body */
-            body: string;
-            /** Category */
-            category?: string | null;
-            /** College Id */
-            college_id?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Created By */
-            created_by?: string | null;
-            /** Expires At */
-            expires_at?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Is Pinned */
-            is_pinned: boolean;
-            /** My Acknowledged At */
-            my_acknowledged_at?: string | null;
-            /** My Read At */
-            my_read_at?: string | null;
-            /** Publish At */
-            publish_at?: string | null;
-            /** Requires Ack */
-            requires_ack: boolean;
-            /**
-             * Status
-             * @default draft
-             */
-            status: string;
+            /** College Id */
+            college_id?: string | null;
             /** Title */
             title: string;
+            /** Body */
+            body: string;
+            /** Category */
+            category?: string | null;
+            /** Audience Rules */
+            audience_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /** Attachments */
+            attachments?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Publish At */
+            publish_at?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
+            /** Requires Ack */
+            requires_ack: boolean;
+            /** Is Pinned */
+            is_pinned: boolean;
+            /** Is Active */
+            is_active: boolean;
+            /** Created By */
+            created_by?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
+            /**
+             * Status
+             * @default draft
+             */
+            status: string;
+            /** My Read At */
+            my_read_at?: string | null;
+            /** My Acknowledged At */
+            my_acknowledged_at?: string | null;
+            ack_stats?: components["schemas"]["AckStats"] | null;
         };
         /** AnnouncementUpdate */
         AnnouncementUpdate: {
-            /** Attachments */
-            attachments?: {
-                [key: string]: unknown;
-            }[] | null;
-            audience_rules?: components["schemas"]["AudienceRules"] | null;
+            /** Title */
+            title?: string | null;
             /** Body */
             body?: string | null;
             /** Category */
             category?: string | null;
-            /** Expires At */
-            expires_at?: string | null;
-            /** Is Pinned */
-            is_pinned?: boolean | null;
+            audience_rules?: components["schemas"]["AudienceRules"] | null;
+            /** Attachments */
+            attachments?: {
+                [key: string]: unknown;
+            }[] | null;
             /** Publish At */
             publish_at?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
             /** Requires Ack */
             requires_ack?: boolean | null;
-            /** Title */
-            title?: string | null;
+            /** Is Pinned */
+            is_pinned?: boolean | null;
         };
         /** ApplyPlanDefaultsResponse */
         ApplyPlanDefaultsResponse: {
-            /** Applied */
-            applied: number;
-            /** Effective */
-            effective: string[];
             /**
              * Institution Id
              * Format: uuid
@@ -2657,6 +3296,10 @@ export interface components {
             institution_id: string;
             /** Plan Code */
             plan_code?: string | null;
+            /** Applied */
+            applied: number;
+            /** Effective */
+            effective: string[];
         };
         /** ApproverSpec */
         ApproverSpec: {
@@ -2668,14 +3311,186 @@ export interface components {
             /** Value */
             value: string;
         };
+        /** AssessmentComponentIn */
+        AssessmentComponentIn: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            category: components["schemas"]["ComponentCategory"];
+            /** Max Marks */
+            max_marks: number;
+            /** Scaled To */
+            scaled_to?: number | string | null;
+            /** Weight Pct */
+            weight_pct?: number | string | null;
+            best_of?: components["schemas"]["BestOf"] | null;
+            /**
+             * Sequence
+             * @default 1
+             */
+            sequence: number;
+            /**
+             * Is Mandatory
+             * @default true
+             */
+            is_mandatory: boolean;
+            /**
+             * Co Mappable
+             * @default true
+             */
+            co_mappable: boolean;
+        };
+        /** AssessmentComponentOut */
+        AssessmentComponentOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Category */
+            category: string;
+            /** Max Marks */
+            max_marks: number;
+            /** Scaled To */
+            scaled_to?: string | null;
+            /** Weight Pct */
+            weight_pct?: string | null;
+            /** Best Of */
+            best_of?: {
+                [key: string]: unknown;
+            } | null;
+            /** Sequence */
+            sequence: number;
+            /** Is Mandatory */
+            is_mandatory: boolean;
+            /** Co Mappable */
+            co_mappable: boolean;
+        };
+        /** AssessmentComponentsReplace */
+        AssessmentComponentsReplace: {
+            /** Components */
+            components: components["schemas"]["AssessmentComponentIn"][];
+        };
+        /** AssessmentSchemeCreate */
+        AssessmentSchemeCreate: {
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Applies To Course Types */
+            applies_to_course_types?: components["schemas"]["CourseType"][];
+            /**
+             * Cia Weight
+             * @default 40
+             */
+            cia_weight: number;
+            /**
+             * Ese Weight
+             * @default 60
+             */
+            ese_weight: number;
+            /**
+             * Cia Max
+             * @default 40
+             */
+            cia_max: number;
+            /**
+             * Ese Max
+             * @default 60
+             */
+            ese_max: number;
+            pass_rules?: components["schemas"]["PassRules"];
+            /**
+             * Is Default
+             * @default false
+             */
+            is_default: boolean;
+            /** Components */
+            components?: components["schemas"]["AssessmentComponentIn"][];
+        };
+        /** AssessmentSchemeResponse */
+        AssessmentSchemeResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Applies To Course Types */
+            applies_to_course_types: string[];
+            /** Cia Weight */
+            cia_weight: number;
+            /** Ese Weight */
+            ese_weight: number;
+            /** Cia Max */
+            cia_max: number;
+            /** Ese Max */
+            ese_max: number;
+            /** Pass Rules */
+            pass_rules: {
+                [key: string]: unknown;
+            };
+            /** Is Default */
+            is_default: boolean;
+            /** Version */
+            version: number;
+            /** Components */
+            components?: components["schemas"]["AssessmentComponentOut"][];
+            /** Regulation Code */
+            regulation_code?: string | null;
+        };
+        /** AssessmentSchemeUpdate */
+        AssessmentSchemeUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Applies To Course Types */
+            applies_to_course_types?: components["schemas"]["CourseType"][] | null;
+            /** Cia Weight */
+            cia_weight?: number | null;
+            /** Ese Weight */
+            ese_weight?: number | null;
+            /** Cia Max */
+            cia_max?: number | null;
+            /** Ese Max */
+            ese_max?: number | null;
+            pass_rules?: components["schemas"]["PassRules"] | null;
+            /** Is Default */
+            is_default?: boolean | null;
+            /** Version */
+            version?: number | null;
+        };
         /** Audience */
         Audience: {
-            /** Batch Id */
-            batch_id?: string | null;
+            /** User Ids */
+            user_ids?: string[];
+            /** Roles */
+            roles?: string[];
             /** College Id */
             college_id?: string | null;
             /** Department Id */
             department_id?: string | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Batch Id */
+            batch_id?: string | null;
             /** Direct Contacts */
             direct_contacts?: {
                 [key: string]: string;
@@ -2685,34 +3500,311 @@ export interface components {
              * @default false
              */
             include_guardians: boolean;
-            /** Program Id */
-            program_id?: string | null;
-            /** Roles */
-            roles?: string[];
-            /** User Ids */
-            user_ids?: string[];
         };
         /** AudienceRules */
         AudienceRules: {
-            /** Batch Ids */
-            batch_ids?: string[];
+            /** Roles */
+            roles?: string[];
             /** College Ids */
             college_ids?: string[];
             /** Department Ids */
             department_ids?: string[];
             /** Program Ids */
             program_ids?: string[];
-            /** Roles */
-            roles?: string[];
+            /** Batch Ids */
+            batch_ids?: string[];
             /** User Ids */
             user_ids?: string[];
         };
+        /** BasketCourseIn */
+        BasketCourseIn: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Offering Department Id */
+            offering_department_id?: string | null;
+        };
+        /** BasketCourseOut */
+        BasketCourseOut: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Offering Department Id */
+            offering_department_id?: string | null;
+            /** Code */
+            code?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Credits */
+            credits?: string | null;
+        };
+        /** BasketCoursesReplace */
+        BasketCoursesReplace: {
+            /** Courses */
+            courses: components["schemas"]["BasketCourseIn"][];
+        };
+        /** BasketCreate */
+        BasketCreate: {
+            /**
+             * Program Regulation Id
+             * Format: uuid
+             */
+            program_regulation_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            basket_type: components["schemas"]["BasketType"];
+            /** Term Number */
+            term_number?: number | null;
+            /**
+             * Min Choose
+             * @default 1
+             */
+            min_choose: number;
+            /**
+             * Max Choose
+             * @default 1
+             */
+            max_choose: number;
+            /** Credits Required */
+            credits_required?: number | string | null;
+            /** @default priority_cgpa */
+            allocation_mode: components["schemas"]["AllocationMode"];
+            /** Course Ids */
+            course_ids?: string[];
+        };
+        /** BasketIn */
+        BasketIn: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            basket_type: components["schemas"]["BasketType"];
+            /** Term Number */
+            term_number?: number | null;
+            /**
+             * Min Choose
+             * @default 1
+             */
+            min_choose: number;
+            /**
+             * Max Choose
+             * @default 1
+             */
+            max_choose: number;
+            /** Credits Required */
+            credits_required?: number | string | null;
+            /** @default priority_cgpa */
+            allocation_mode: components["schemas"]["AllocationMode"];
+            /** Course Ids */
+            course_ids?: string[];
+        };
+        /** BasketOut */
+        BasketOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Program Regulation Id
+             * Format: uuid
+             */
+            program_regulation_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Basket Type */
+            basket_type: string;
+            /** Term Number */
+            term_number?: number | null;
+            /** Min Choose */
+            min_choose: number;
+            /** Max Choose */
+            max_choose: number;
+            /** Credits Required */
+            credits_required?: string | null;
+            /** Allocation Mode */
+            allocation_mode: string;
+            /** Version */
+            version: number;
+            /** Courses */
+            courses?: components["schemas"]["BasketCourseOut"][];
+        };
+        /**
+         * BasketType
+         * @enum {string}
+         */
+        BasketType: "program_elective" | "open_elective" | "minor" | "honours" | "mooc" | "vertical";
+        /** BasketUpdate */
+        BasketUpdate: {
+            /** Name */
+            name?: string | null;
+            basket_type?: components["schemas"]["BasketType"] | null;
+            /** Term Number */
+            term_number?: number | null;
+            /** Min Choose */
+            min_choose?: number | null;
+            /** Max Choose */
+            max_choose?: number | null;
+            /** Credits Required */
+            credits_required?: number | string | null;
+            allocation_mode?: components["schemas"]["AllocationMode"] | null;
+            /** Version */
+            version?: number | null;
+        };
+        /** BatchCreate */
+        BatchCreate: {
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /**
+             * Program Regulation Id
+             * Format: uuid
+             */
+            program_regulation_id: string;
+            /** Admission Year */
+            admission_year: number;
+            /** @default regular */
+            entry_type: components["schemas"]["EntryType"];
+            /** Code */
+            code?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Expected Graduation Year */
+            expected_graduation_year?: number | null;
+            /** Sections */
+            sections?: components["schemas"]["BatchSectionIn"][] | null;
+            /**
+             * Section Count
+             * @default 1
+             */
+            section_count: number;
+            /** Section Capacity */
+            section_capacity?: number | null;
+        };
+        /** BatchResponse */
+        BatchResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /**
+             * Program Regulation Id
+             * Format: uuid
+             */
+            program_regulation_id: string;
+            /** Admission Year */
+            admission_year: number;
+            /** Entry Type */
+            entry_type: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name?: string | null;
+            /** Expected Graduation Year */
+            expected_graduation_year?: number | null;
+            /** Current Term Number */
+            current_term_number: number;
+            /** Status */
+            status: string;
+            /** Version */
+            version: number;
+            /** Sections */
+            sections?: components["schemas"]["BatchSectionOut"][];
+            /** Program Code */
+            program_code?: string | null;
+            /** Regulation Code */
+            regulation_code?: string | null;
+        };
+        /** BatchSectionIn */
+        BatchSectionIn: {
+            /** Name */
+            name: string;
+            /** Capacity */
+            capacity?: number | null;
+        };
+        /** BatchSectionOut */
+        BatchSectionOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /** Name */
+            name: string;
+            /** Capacity */
+            capacity?: number | null;
+            /** Class Advisor Staff Id */
+            class_advisor_staff_id?: string | null;
+            /** Class Advisor User Id */
+            class_advisor_user_id?: string | null;
+            /** Class Advisor Name */
+            class_advisor_name?: string | null;
+            /** Is Active */
+            is_active: boolean;
+        };
+        /** BatchSectionsReplace */
+        BatchSectionsReplace: {
+            /** Sections */
+            sections: components["schemas"]["BatchSectionIn"][];
+        };
+        /**
+         * BatchStatus
+         * @enum {string}
+         */
+        BatchStatus: "active" | "graduating" | "graduated" | "closed";
+        /** BatchUpdate */
+        BatchUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Expected Graduation Year */
+            expected_graduation_year?: number | null;
+            status?: components["schemas"]["BatchStatus"] | null;
+            /** Version */
+            version?: number | null;
+        };
+        /** BestOf */
+        BestOf: {
+            /** Take */
+            take: number;
+            /** Of */
+            of: number;
+            /** Group */
+            group?: string | null;
+        };
         /** Body_set_plan_limits_api_v1__dev_plans__code__put */
         Body_set_plan_limits_api_v1__dev_plans__code__put: {
-            /** Staff Limit */
-            staff_limit?: number | null;
             /** Student Limit */
             student_limit?: number | null;
+            /** Staff Limit */
+            staff_limit?: number | null;
         };
         /** Body_set_user_validity_api_v1__dev_users__id__validity_put */
         Body_set_user_validity_api_v1__dev_users__id__validity_put: {
@@ -2733,10 +3825,10 @@ export interface components {
         };
         /** BulkFailure */
         BulkFailure: {
-            /** Code */
-            code: string;
             /** Index */
             index: number;
+            /** Code */
+            code: string;
             /** Message */
             message: string;
         };
@@ -2749,90 +3841,51 @@ export interface components {
         };
         /** CollegeCreate */
         CollegeCreate: {
-            /** Address */
-            address?: {
-                [key: string]: unknown;
-            } | null;
-            /** Affiliated Since */
-            affiliated_since?: string | null;
-            /** Affiliation Number */
-            affiliation_number?: string | null;
-            /** Aicte Pid */
-            aicte_pid?: string | null;
-            /** Aishe Code */
-            aishe_code?: string | null;
-            /** Code */
-            code: string;
+            /** Name */
+            name: string;
+            /** Slug */
+            slug?: string | null;
             /** @default constituent */
             college_type: components["schemas"]["CollegeType"];
-            /** Contact */
-            contact?: {
-                [key: string]: unknown;
-            } | null;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Principal Staff Id */
+            principal_staff_id?: string | null;
             /** Exam Centre Code */
             exam_centre_code?: string | null;
-            /** Gstin */
-            gstin?: string | null;
             /**
              * Is Exam Centre
              * @default false
              */
             is_exam_centre: boolean;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Gstin */
+            gstin?: string | null;
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /** Contact */
+            contact?: {
+                [key: string]: unknown;
+            } | null;
+            /** Timezone */
+            timezone?: string | null;
+            /** Code */
+            code: string;
             /**
              * Is Main
              * @default false
              */
             is_main: boolean;
-            /** Name */
-            name: string;
-            /** Principal Staff Id */
-            principal_staff_id?: string | null;
-            /** Slug */
-            slug?: string | null;
-            /** Timezone */
-            timezone?: string | null;
         };
         /** CollegeResponse */
         CollegeResponse: {
-            /** Address */
-            address?: {
-                [key: string]: unknown;
-            } | null;
-            /** Affiliated Since */
-            affiliated_since?: string | null;
-            /** Affiliation Number */
-            affiliation_number?: string | null;
-            /** Aicte Pid */
-            aicte_pid?: string | null;
-            /** Aishe Code */
-            aishe_code?: string | null;
-            /**
-             * Can Edit
-             * @default false
-             */
-            can_edit: boolean;
-            /** Code */
-            code: string;
-            /** College Type */
-            college_type: string;
-            /** Contact */
-            contact?: {
-                [key: string]: unknown;
-            } | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
-             * Department Count
-             * @default 0
-             */
-            department_count: number;
-            /** Exam Centre Code */
-            exam_centre_code?: string | null;
-            /** Gstin */
-            gstin?: string | null;
             /**
              * Id
              * Format: uuid
@@ -2843,41 +3896,82 @@ export interface components {
              * Format: uuid
              */
             institution_id: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Is Exam Centre */
-            is_exam_centre: boolean;
-            /** Is Main */
-            is_main: boolean;
-            /** Logo Url */
-            logo_url?: string | null;
+            /** Code */
+            code: string;
             /** Name */
             name: string;
-            /** Principal Staff Id */
-            principal_staff_id?: string | null;
             /** Slug */
             slug?: string | null;
+            /** College Type */
+            college_type: string;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Principal Staff Id */
+            principal_staff_id?: string | null;
+            /** Exam Centre Code */
+            exam_centre_code?: string | null;
+            /** Is Exam Centre */
+            is_exam_centre: boolean;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Gstin */
+            gstin?: string | null;
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /** Contact */
+            contact?: {
+                [key: string]: unknown;
+            } | null;
+            /** Logo Url */
+            logo_url?: string | null;
             /** Timezone */
             timezone?: string | null;
+            /** Is Main */
+            is_main: boolean;
+            /** Is Active */
+            is_active: boolean;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
-            /** Version */
-            version: number;
+            /**
+             * Department Count
+             * @default 0
+             */
+            department_count: number;
+            /**
+             * Can Edit
+             * @default false
+             */
+            can_edit: boolean;
         };
         /** CollegeSummary */
         CollegeSummary: {
-            /** Code */
-            code: string;
-            /** College Type */
-            college_type: string;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** College Type */
+            college_type: string;
             /**
              * Is Main
              * @default false
@@ -2885,8 +3979,6 @@ export interface components {
             is_main: boolean;
             /** Logo Url */
             logo_url?: string | null;
-            /** Name */
-            name: string;
         };
         /**
          * CollegeType
@@ -2895,58 +3987,61 @@ export interface components {
         CollegeType: "constituent" | "affiliated" | "autonomous" | "campus" | "deemed_unit" | "study_centre" | "main";
         /** CollegeUpdate */
         CollegeUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Slug */
+            slug?: string | null;
+            college_type?: components["schemas"]["CollegeType"] | null;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Principal Staff Id */
+            principal_staff_id?: string | null;
+            /** Exam Centre Code */
+            exam_centre_code?: string | null;
+            /** Is Exam Centre */
+            is_exam_centre?: boolean | null;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Gstin */
+            gstin?: string | null;
             /** Address */
             address?: {
                 [key: string]: unknown;
             } | null;
-            /** Affiliated Since */
-            affiliated_since?: string | null;
-            /** Affiliation Number */
-            affiliation_number?: string | null;
-            /** Aicte Pid */
-            aicte_pid?: string | null;
-            /** Aishe Code */
-            aishe_code?: string | null;
-            college_type?: components["schemas"]["CollegeType"] | null;
             /** Contact */
             contact?: {
                 [key: string]: unknown;
             } | null;
-            /** Exam Centre Code */
-            exam_centre_code?: string | null;
-            /** Gstin */
-            gstin?: string | null;
-            /** Is Exam Centre */
-            is_exam_centre?: boolean | null;
-            /** Is Main */
-            is_main?: boolean | null;
-            /** Name */
-            name?: string | null;
-            /** Principal Staff Id */
-            principal_staff_id?: string | null;
-            /** Slug */
-            slug?: string | null;
             /** Timezone */
             timezone?: string | null;
+            /** Is Main */
+            is_main?: boolean | null;
             /** Version */
             version?: number | null;
         };
+        /**
+         * ComponentCategory
+         * @enum {string}
+         */
+        ComponentCategory: "cia" | "ese_theory" | "ese_practical" | "viva" | "project_review";
         /** ConsentRequest */
         ConsentRequest: {
-            /** Granted */
-            granted: boolean;
             /**
              * Purpose
              * @enum {string}
              */
             purpose: "academic" | "communication" | "marketing" | "health" | "photo" | "third_party";
+            /** Granted */
+            granted: boolean;
             /** Text Version */
             text_version?: string | null;
         };
         /** ConsentResponse */
         ConsentResponse: {
-            /** Granted */
-            granted: boolean;
             /**
              * Id
              * Format: uuid
@@ -2954,15 +4049,261 @@ export interface components {
             id: string;
             /** Purpose */
             purpose: string;
+            /** Granted */
+            granted: boolean;
+            /** Text Version */
+            text_version?: string | null;
             /**
              * Recorded At
              * Format: date-time
              */
             recorded_at: string;
-            /** Text Version */
-            text_version?: string | null;
             /** Withdrawn At */
             withdrawn_at?: string | null;
+        };
+        /** CourseBrief */
+        CourseBrief: {
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
+            /** Credits */
+            credits: string;
+            /** Course Type */
+            course_type: string;
+        };
+        /** CourseBulkImportRequest */
+        CourseBulkImportRequest: {
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Csv */
+            csv: string;
+        };
+        /** CourseChange */
+        CourseChange: {
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
+            /** Fields */
+            fields: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        /** CourseCreate */
+        CourseCreate: {
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /**
+             * Department Id
+             * Format: uuid
+             */
+            department_id: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
+            /** Short Title */
+            short_title?: string | null;
+            course_type: components["schemas"]["CourseType"];
+            /**
+             * Lecture Hours
+             * @default 0
+             */
+            lecture_hours: number;
+            /**
+             * Tutorial Hours
+             * @default 0
+             */
+            tutorial_hours: number;
+            /**
+             * Practical Hours
+             * @default 0
+             */
+            practical_hours: number;
+            /**
+             * Credits
+             * @default 0
+             */
+            credits: number | string;
+            /** Assessment Scheme Id */
+            assessment_scheme_id?: string | null;
+            /** Cia Max */
+            cia_max?: number | null;
+            /** Ese Max */
+            ese_max?: number | null;
+            /**
+             * Is Gradable
+             * @default true
+             */
+            is_gradable: boolean;
+            /** Min Seats */
+            min_seats?: number | null;
+            /** Max Seats */
+            max_seats?: number | null;
+            /** Syllabus */
+            syllabus?: components["schemas"]["SyllabusUnit"][] | null;
+            /** Textbooks */
+            textbooks?: unknown[] | null;
+            /** References List */
+            references_list?: unknown[] | null;
+            /**
+             * Is Public Catalog
+             * @default true
+             */
+            is_public_catalog: boolean;
+        };
+        /** CourseResponse */
+        CourseResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /**
+             * Department Id
+             * Format: uuid
+             */
+            department_id: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
+            /** Short Title */
+            short_title?: string | null;
+            /** Course Type */
+            course_type: string;
+            /** Lecture Hours */
+            lecture_hours: number;
+            /** Tutorial Hours */
+            tutorial_hours: number;
+            /** Practical Hours */
+            practical_hours: number;
+            /** Credits */
+            credits: string;
+            /** Contact Hours Per Week */
+            contact_hours_per_week?: number | null;
+            /** Assessment Scheme Id */
+            assessment_scheme_id?: string | null;
+            /** Cia Max */
+            cia_max?: number | null;
+            /** Ese Max */
+            ese_max?: number | null;
+            /** Is Credit Bearing */
+            is_credit_bearing: boolean;
+            /** Is Gradable */
+            is_gradable: boolean;
+            /** Min Seats */
+            min_seats?: number | null;
+            /** Max Seats */
+            max_seats?: number | null;
+            /** Syllabus */
+            syllabus?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Textbooks */
+            textbooks?: unknown[] | null;
+            /** References List */
+            references_list?: unknown[] | null;
+            /** Is Public Catalog */
+            is_public_catalog: boolean;
+            /** Status */
+            status: string;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Regulation Code */
+            regulation_code?: string | null;
+            /** Regulation Status */
+            regulation_status?: string | null;
+            /** Department Code */
+            department_code?: string | null;
+            /** Scheme Code */
+            scheme_code?: string | null;
+            /** Ltpc */
+            ltpc?: string | null;
+            /**
+             * Can Edit
+             * @default false
+             */
+            can_edit: boolean;
+            /** Prerequisites */
+            prerequisites?: components["schemas"]["PrerequisiteOut"][];
+        };
+        /**
+         * CourseStatus
+         * @enum {string}
+         */
+        CourseStatus: "draft" | "approved" | "active" | "retired";
+        /** CourseStatusChange */
+        CourseStatusChange: {
+            status: components["schemas"]["CourseStatus"];
+        };
+        /**
+         * CourseType
+         * @enum {string}
+         */
+        CourseType: "core" | "program_elective" | "open_elective" | "lab" | "integrated_lab" | "project" | "internship" | "seminar" | "mooc" | "audit" | "mandatory_non_credit" | "ability_enhancement" | "skill_enhancement" | "value_added" | "minor" | "honours";
+        /** CourseUpdate */
+        CourseUpdate: {
+            /** Department Id */
+            department_id?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Short Title */
+            short_title?: string | null;
+            course_type?: components["schemas"]["CourseType"] | null;
+            /** Lecture Hours */
+            lecture_hours?: number | null;
+            /** Tutorial Hours */
+            tutorial_hours?: number | null;
+            /** Practical Hours */
+            practical_hours?: number | null;
+            /** Credits */
+            credits?: number | string | null;
+            /** Assessment Scheme Id */
+            assessment_scheme_id?: string | null;
+            /** Cia Max */
+            cia_max?: number | null;
+            /** Ese Max */
+            ese_max?: number | null;
+            /** Is Gradable */
+            is_gradable?: boolean | null;
+            /** Min Seats */
+            min_seats?: number | null;
+            /** Max Seats */
+            max_seats?: number | null;
+            /** Syllabus */
+            syllabus?: components["schemas"]["SyllabusUnit"][] | null;
+            /** Textbooks */
+            textbooks?: unknown[] | null;
+            /** References List */
+            references_list?: unknown[] | null;
+            /** Is Public Catalog */
+            is_public_catalog?: boolean | null;
+            /** Version */
+            version?: number | null;
         };
         /** CredentialSheetRequest */
         CredentialSheetRequest: {
@@ -2972,17 +4313,13 @@ export interface components {
              * @enum {string}
              */
             audience: "students" | "guardians" | "staff";
-            /** Batch Label */
-            batch_label?: string | null;
             /** Ids */
             ids: string[];
+            /** Batch Label */
+            batch_label?: string | null;
         };
         /** CredentialSheetResponse */
         CredentialSheetResponse: {
-            /** Audience */
-            audience: string;
-            /** Count */
-            count: number;
             /**
              * Job Id
              * Format: uuid
@@ -2993,100 +4330,142 @@ export interface components {
              * Format: uuid
              */
             sheet_id: string;
+            /** Audience */
+            audience: string;
+            /** Count */
+            count: number;
         };
-        /** DataSubjectRequestCreate */
-        DataSubjectRequestCreate: {
-            /** Details */
-            details?: string | null;
+        /** CurriculumCourseIn */
+        CurriculumCourseIn: {
+            /** Term Number */
+            term_number: number;
             /**
-             * Request Type
-             * @enum {string}
+             * Course Id
+             * Format: uuid
              */
-            request_type: "access" | "export" | "correction" | "erasure";
+            course_id: string;
+            /** Basket Code */
+            basket_code?: string | null;
+            /**
+             * Is Mandatory
+             * @default true
+             */
+            is_mandatory: boolean;
+            /** Credit Bucket */
+            credit_bucket?: ("HS" | "BS" | "ES" | "PC" | "PE" | "OE" | "EEC" | "MC" | "VAC" | "AEC" | "SEC") | null;
+            /**
+             * Sequence
+             * @default 1
+             */
+            sequence: number;
         };
-        /** DataSubjectRequestResponse */
-        DataSubjectRequestResponse: {
-            /** Closed At */
-            closed_at?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Details */
-            details?: string | null;
-            /** Due At */
-            due_at?: string | null;
+        /** CurriculumCourseOut */
+        CurriculumCourseOut: {
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Request Type */
-            request_type: string;
-            /** Result Url */
-            result_url?: string | null;
-            /** Status */
-            status: string;
+            /** Term Number */
+            term_number: number;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Elective Basket Id */
+            elective_basket_id?: string | null;
+            /** Basket Code */
+            basket_code?: string | null;
+            /** Is Mandatory */
+            is_mandatory: boolean;
+            /** Credit Bucket */
+            credit_bucket?: string | null;
+            /** Sequence */
+            sequence: number;
+            /** Course Code */
+            course_code?: string | null;
+            /** Course Title */
+            course_title?: string | null;
+            /** Course Type */
+            course_type?: string | null;
+            /** Credits */
+            credits?: string | null;
+            /** Ltpc */
+            ltpc?: string | null;
+        };
+        /** DataSubjectRequestCreate */
+        DataSubjectRequestCreate: {
+            /**
+             * Request Type
+             * @enum {string}
+             */
+            request_type: "access" | "export" | "correction" | "erasure";
+            /** Details */
+            details?: string | null;
+        };
+        /** DataSubjectRequestResponse */
+        DataSubjectRequestResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
             /** User Id */
             user_id?: string | null;
+            /** Request Type */
+            request_type: string;
+            /** Status */
+            status: string;
+            /** Details */
+            details?: string | null;
+            /** Due At */
+            due_at?: string | null;
+            /** Result Url */
+            result_url?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Closed At */
+            closed_at?: string | null;
         };
         /** DelegationCreate */
         DelegationCreate: {
             /**
-             * From On
-             * Format: date
+             * To User Id
+             * Format: uuid
              */
-            from_on: string;
+            to_user_id: string;
             /**
              * Module
              * @description NULL = every module
              */
             module?: string | null;
             /**
-             * To On
-             * Format: date
-             */
-            to_on: string;
-            /**
-             * To User Id
-             * Format: uuid
-             */
-            to_user_id: string;
-        };
-        /** DelegationResponse */
-        DelegationResponse: {
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
              * From On
              * Format: date
              */
             from_on: string;
             /**
-             * From User Id
-             * Format: uuid
+             * To On
+             * Format: date
              */
-            from_user_id: string;
-            /** From User Name */
-            from_user_name?: string | null;
+            to_on: string;
+        };
+        /** DelegationResponse */
+        DelegationResponse: {
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Module */
-            module?: string | null;
             /**
-             * To On
-             * Format: date
+             * From User Id
+             * Format: uuid
              */
-            to_on: string;
+            from_user_id: string;
             /**
              * To User Id
              * Format: uuid
@@ -3094,65 +4473,86 @@ export interface components {
             to_user_id: string;
             /** To User Name */
             to_user_name?: string | null;
+            /** From User Name */
+            from_user_name?: string | null;
+            /** Module */
+            module?: string | null;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /**
+             * To On
+             * Format: date
+             */
+            to_on: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** DepartmentCreate */
         DepartmentCreate: {
-            /** Code */
-            code: string;
             /**
              * College Id
              * Format: uuid
              */
             college_id: string;
-            /** @default academic */
-            department_type: components["schemas"]["DepartmentType"];
-            /** Description */
-            description?: string | null;
-            /** Established Year */
-            established_year?: number | null;
             /** Faculty Id */
             faculty_id?: string | null;
+            /** Code */
+            code: string;
             /** Name */
             name: string;
+            /** @default academic */
+            department_type: components["schemas"]["DepartmentType"];
+            /** Established Year */
+            established_year?: number | null;
+            /** Description */
+            description?: string | null;
         };
         /** DepartmentResponse */
         DepartmentResponse: {
-            /** Code */
-            code: string;
-            /** College Code */
-            college_code?: string | null;
-            /**
-             * College Id
-             * Format: uuid
-             */
-            college_id: string;
-            /** Department Type */
-            department_type: string;
-            /** Description */
-            description?: string | null;
-            /** Established Year */
-            established_year?: number | null;
-            /** Faculty Code */
-            faculty_code?: string | null;
-            /** Faculty Id */
-            faculty_id?: string | null;
-            /** Hod Name */
-            hod_name?: string | null;
-            /** Hod Staff Id */
-            hod_staff_id?: string | null;
-            /** Hod User Id */
-            hod_user_id?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Active */
-            is_active: boolean;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Faculty Id */
+            faculty_id?: string | null;
+            /** Code */
+            code: string;
             /** Name */
             name: string;
+            /** Department Type */
+            department_type: string;
+            /** Hod Staff Id */
+            hod_staff_id?: string | null;
+            /** Hod User Id */
+            hod_user_id?: string | null;
+            /** Hod Name */
+            hod_name?: string | null;
+            /** Established Year */
+            established_year?: number | null;
+            /** Description */
+            description?: string | null;
+            /** Is Active */
+            is_active: boolean;
             /** Version */
             version: number;
+            /** College Code */
+            college_code?: string | null;
+            /** Faculty Code */
+            faculty_code?: string | null;
         };
         /**
          * DepartmentType
@@ -3161,48 +4561,48 @@ export interface components {
         DepartmentType: "academic" | "administrative" | "research_centre";
         /** DepartmentUpdate */
         DepartmentUpdate: {
-            department_type?: components["schemas"]["DepartmentType"] | null;
-            /** Description */
-            description?: string | null;
-            /** Established Year */
-            established_year?: number | null;
             /** Faculty Id */
             faculty_id?: string | null;
             /** Name */
             name?: string | null;
+            department_type?: components["schemas"]["DepartmentType"] | null;
+            /** Established Year */
+            established_year?: number | null;
+            /** Description */
+            description?: string | null;
             /** Version */
             version?: number | null;
         };
         /** DevWorkflowStart */
         DevWorkflowStart: {
+            /** Key */
+            key: string;
             /** Context */
             context?: {
                 [key: string]: unknown;
             };
-            /** Entity Id */
-            entity_id?: string | null;
-            /** Key */
-            key: string;
+            /** Title */
+            title?: string | null;
             /**
              * Requester
              * @description started_by (defaults to the caller)
              */
             requester?: string | null;
-            /** Title */
-            title?: string | null;
+            /** Entity Id */
+            entity_id?: string | null;
         };
         /** DeviceRegister */
         DeviceRegister: {
-            /**
-             * Platform
-             * @enum {string}
-             */
-            platform: "android" | "ios" | "web";
             /**
              * Provider
              * @enum {string}
              */
             provider: "fcm" | "webpush" | "expo";
+            /**
+             * Platform
+             * @enum {string}
+             */
+            platform: "android" | "ios" | "web";
             /** Token */
             token: string;
             /** Topics */
@@ -3211,58 +4611,49 @@ export interface components {
         /** DeviceResponse */
         DeviceResponse: {
             /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Platform */
-            platform: string;
             /** Provider */
             provider: string;
+            /** Platform */
+            platform: string;
             /** Topics */
             topics?: string[] | null;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** DltTemplateCreate */
         DltTemplateCreate: {
+            /** Sender Id */
+            sender_id: string;
+            /** Entity Id */
+            entity_id?: string | null;
+            /** Template Id */
+            template_id: string;
+            /** Template Text */
+            template_text: string;
             /**
              * Category
              * @default transactional
              * @enum {string}
              */
             category: "transactional" | "service_implicit" | "service_explicit" | "promotional";
-            /** Entity Id */
-            entity_id?: string | null;
-            /** Sender Id */
-            sender_id: string;
             /**
              * Status
              * @default approved
              * @enum {string}
              */
             status: "approved" | "pending" | "rejected";
-            /** Template Id */
-            template_id: string;
-            /** Template Text */
-            template_text: string;
         };
         /** DltTemplateResponse */
         DltTemplateResponse: {
-            /** Category */
-            category: string;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Entity Id */
-            entity_id?: string | null;
             /**
              * Id
              * Format: uuid
@@ -3270,33 +4661,40 @@ export interface components {
             id: string;
             /** Sender Id */
             sender_id: string;
-            /** Status */
-            status: string;
+            /** Entity Id */
+            entity_id?: string | null;
             /** Template Id */
             template_id: string;
             /** Template Text */
             template_text: string;
+            /** Category */
+            category: string;
+            /** Status */
+            status: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** EntitlementLimits */
         EntitlementLimits: {
-            /** Sms Credits */
-            sms_credits?: number | null;
+            /** Students */
+            students?: number | null;
             /** Staff */
             staff?: number | null;
             /** Storage Gb */
             storage_gb?: number | null;
-            /** Students */
-            students?: number | null;
+            /** Sms Credits */
+            sms_credits?: number | null;
         };
         /** EntitlementUsage */
         EntitlementUsage: {
-            /** Period Month */
-            period_month?: string | null;
             /**
-             * Sms Sent
+             * Students
              * @default 0
              */
-            sms_sent: number;
+            students: number;
             /**
              * Staff
              * @default 0
@@ -3308,23 +4706,20 @@ export interface components {
              */
             storage_bytes: number;
             /**
-             * Students
+             * Sms Sent
              * @default 0
              */
-            students: number;
+            sms_sent: number;
+            /** Period Month */
+            period_month?: string | null;
         };
         /** EntitlementsResponse */
         EntitlementsResponse: {
-            /** Ends On */
-            ends_on?: string | null;
-            /** Grace Until */
-            grace_until?: string | null;
             /**
              * Institution Id
              * Format: uuid
              */
             institution_id: string;
-            limits: components["schemas"]["EntitlementLimits"];
             /**
              * Plan
              * @description plan code
@@ -3332,15 +4727,20 @@ export interface components {
             plan?: string | null;
             /** Plan Name */
             plan_name?: string | null;
-            /** Starts On */
-            starts_on?: string | null;
+            /** Tier */
+            tier?: string | null;
             /**
              * Status
              * @description trial | active | grace | expired | cancelled | none
              */
             status: string;
-            /** Tier */
-            tier?: string | null;
+            /** Starts On */
+            starts_on?: string | null;
+            /** Ends On */
+            ends_on?: string | null;
+            /** Grace Until */
+            grace_until?: string | null;
+            limits: components["schemas"]["EntitlementLimits"];
             usage: components["schemas"]["EntitlementUsage"];
             /**
              * Writable
@@ -3349,8 +4749,18 @@ export interface components {
              */
             writable: boolean;
         };
+        /**
+         * EntryType
+         * @enum {string}
+         */
+        EntryType: "regular" | "lateral";
         /** Envelope[AcademicTermResponse] */
         Envelope_AcademicTermResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["AcademicTermResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3358,14 +4768,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[AcademicYearResponse] */
+        Envelope_AcademicYearResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[AcademicYearResponse] */
-        Envelope_AcademicYearResponse_: {
             data?: components["schemas"]["AcademicYearResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3373,14 +4783,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[AckStats] */
+        Envelope_AckStats_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[AckStats] */
-        Envelope_AckStats_: {
             data?: components["schemas"]["AckStats"] | null;
             /** Message */
             message?: string | null;
@@ -3388,14 +4798,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[AdminResetPasswordResponse] */
+        Envelope_AdminResetPasswordResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[AdminResetPasswordResponse] */
-        Envelope_AdminResetPasswordResponse_: {
             data?: components["schemas"]["AdminResetPasswordResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3403,14 +4813,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[AnnouncementResponse] */
+        Envelope_AnnouncementResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[AnnouncementResponse] */
-        Envelope_AnnouncementResponse_: {
             data?: components["schemas"]["AnnouncementResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3418,14 +4828,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[ApplyPlanDefaultsResponse] */
+        Envelope_ApplyPlanDefaultsResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[ApplyPlanDefaultsResponse] */
-        Envelope_ApplyPlanDefaultsResponse_: {
             data?: components["schemas"]["ApplyPlanDefaultsResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3433,14 +4843,59 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[AssessmentSchemeResponse] */
+        Envelope_AssessmentSchemeResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["AssessmentSchemeResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[BasketOut] */
+        Envelope_BasketOut_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["BasketOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[BatchResponse] */
+        Envelope_BatchResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["BatchResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[CollegeResponse] */
         Envelope_CollegeResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["CollegeResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3448,14 +4903,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[ConsentResponse] */
+        Envelope_ConsentResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[ConsentResponse] */
-        Envelope_ConsentResponse_: {
             data?: components["schemas"]["ConsentResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3463,14 +4918,29 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[CourseResponse] */
+        Envelope_CourseResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["CourseResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[CredentialSheetResponse] */
         Envelope_CredentialSheetResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["CredentialSheetResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3478,14 +4948,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[DataSubjectRequestResponse] */
+        Envelope_DataSubjectRequestResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[DataSubjectRequestResponse] */
-        Envelope_DataSubjectRequestResponse_: {
             data?: components["schemas"]["DataSubjectRequestResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3493,14 +4963,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[DelegationResponse] */
+        Envelope_DelegationResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[DelegationResponse] */
-        Envelope_DelegationResponse_: {
             data?: components["schemas"]["DelegationResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3508,14 +4978,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[DepartmentResponse] */
+        Envelope_DepartmentResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[DepartmentResponse] */
-        Envelope_DepartmentResponse_: {
             data?: components["schemas"]["DepartmentResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3523,14 +4993,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[DeviceResponse] */
+        Envelope_DeviceResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[DeviceResponse] */
-        Envelope_DeviceResponse_: {
             data?: components["schemas"]["DeviceResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3538,14 +5008,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[DltTemplateResponse] */
+        Envelope_DltTemplateResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[DltTemplateResponse] */
-        Envelope_DltTemplateResponse_: {
             data?: components["schemas"]["DltTemplateResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3553,14 +5023,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[EntitlementsResponse] */
+        Envelope_EntitlementsResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[EntitlementsResponse] */
-        Envelope_EntitlementsResponse_: {
             data?: components["schemas"]["EntitlementsResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3568,14 +5038,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[FacultyResponse] */
+        Envelope_FacultyResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[FacultyResponse] */
-        Envelope_FacultyResponse_: {
             data?: components["schemas"]["FacultyResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3583,14 +5053,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[FeatureMatrixResponse] */
+        Envelope_FeatureMatrixResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[FeatureMatrixResponse] */
-        Envelope_FeatureMatrixResponse_: {
             data?: components["schemas"]["FeatureMatrixResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3598,14 +5068,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[FeedbackResponse] */
+        Envelope_FeedbackResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[FeedbackResponse] */
-        Envelope_FeedbackResponse_: {
             data?: components["schemas"]["FeedbackResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3613,14 +5083,29 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[GradingScaleResponse] */
+        Envelope_GradingScaleResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["GradingScaleResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[HelpArticleResponse] */
         Envelope_HelpArticleResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["HelpArticleResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3628,14 +5113,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[HolidayBulkResult] */
+        Envelope_HolidayBulkResult_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[HolidayBulkResult] */
-        Envelope_HolidayBulkResult_: {
             data?: components["schemas"]["HolidayBulkResult"] | null;
             /** Message */
             message?: string | null;
@@ -3643,14 +5128,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[HolidayResponse] */
+        Envelope_HolidayResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[HolidayResponse] */
-        Envelope_HolidayResponse_: {
             data?: components["schemas"]["HolidayResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3658,14 +5143,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[ImpersonateResponse] */
+        Envelope_ImpersonateResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[ImpersonateResponse] */
-        Envelope_ImpersonateResponse_: {
             data?: components["schemas"]["ImpersonateResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3673,14 +5158,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[InstallResponse] */
+        Envelope_InstallResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[InstallResponse] */
-        Envelope_InstallResponse_: {
             data?: components["schemas"]["InstallResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3688,14 +5173,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[InstitutionFeatureFlagResponse] */
+        Envelope_InstitutionFeatureFlagResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[InstitutionFeatureFlagResponse] */
-        Envelope_InstitutionFeatureFlagResponse_: {
             data?: components["schemas"]["InstitutionFeatureFlagResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3703,14 +5188,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[InstitutionFeaturesResponse] */
+        Envelope_InstitutionFeaturesResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[InstitutionFeaturesResponse] */
-        Envelope_InstitutionFeaturesResponse_: {
             data?: components["schemas"]["InstitutionFeaturesResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3718,14 +5203,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[InstitutionProfileResponse] */
+        Envelope_InstitutionProfileResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[InstitutionProfileResponse] */
-        Envelope_InstitutionProfileResponse_: {
             data?: components["schemas"]["InstitutionProfileResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3733,14 +5218,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[JobResponse] */
+        Envelope_JobResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[JobResponse] */
-        Envelope_JobResponse_: {
             data?: components["schemas"]["JobResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3748,14 +5233,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[LoginResponse] */
+        Envelope_LoginResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[LoginResponse] */
-        Envelope_LoginResponse_: {
             data?: components["schemas"]["LoginResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3763,14 +5248,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[LogoUploadResponse] */
+        Envelope_LogoUploadResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[LogoUploadResponse] */
-        Envelope_LogoUploadResponse_: {
             data?: components["schemas"]["LogoUploadResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3778,14 +5263,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[MeResponse] */
+        Envelope_MeResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[MeResponse] */
-        Envelope_MeResponse_: {
             data?: components["schemas"]["MeResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3793,14 +5278,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[MessageLogResponse] */
+        Envelope_MessageLogResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[MessageLogResponse] */
-        Envelope_MessageLogResponse_: {
             data?: components["schemas"]["MessageLogResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3808,14 +5293,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[MessageResponse] */
+        Envelope_MessageResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[MessageResponse] */
-        Envelope_MessageResponse_: {
             data?: components["schemas"]["MessageResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3823,14 +5308,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[MfaConfirmResponse] */
+        Envelope_MfaConfirmResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[MfaConfirmResponse] */
-        Envelope_MfaConfirmResponse_: {
             data?: components["schemas"]["MfaConfirmResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3838,14 +5323,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[MfaSetupResponse] */
+        Envelope_MfaSetupResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[MfaSetupResponse] */
-        Envelope_MfaSetupResponse_: {
             data?: components["schemas"]["MfaSetupResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3853,14 +5338,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[MobileConfigResponse] */
+        Envelope_MobileConfigResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[MobileConfigResponse] */
-        Envelope_MobileConfigResponse_: {
             data?: components["schemas"]["MobileConfigResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3868,14 +5353,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[NoneType] */
+        Envelope_NoneType_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[NoneType] */
-        Envelope_NoneType_: {
             /** Data */
             data?: null;
             /** Message */
@@ -3884,14 +5369,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[NumberSequenceNext] */
+        Envelope_NumberSequenceNext_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[NumberSequenceNext] */
-        Envelope_NumberSequenceNext_: {
             data?: components["schemas"]["NumberSequenceNext"] | null;
             /** Message */
             message?: string | null;
@@ -3899,14 +5384,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[NumberSequencePreview] */
+        Envelope_NumberSequencePreview_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[NumberSequencePreview] */
-        Envelope_NumberSequencePreview_: {
             data?: components["schemas"]["NumberSequencePreview"] | null;
             /** Message */
             message?: string | null;
@@ -3914,14 +5399,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[NumberSequenceResponse] */
+        Envelope_NumberSequenceResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[NumberSequenceResponse] */
-        Envelope_NumberSequenceResponse_: {
             data?: components["schemas"]["NumberSequenceResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3929,14 +5414,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[OnboardingResponse] */
+        Envelope_OnboardingResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[OnboardingResponse] */
-        Envelope_OnboardingResponse_: {
             data?: components["schemas"]["OnboardingResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3944,14 +5429,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[PermissionCatalogue] */
+        Envelope_PermissionCatalogue_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[PermissionCatalogue] */
-        Envelope_PermissionCatalogue_: {
             data?: components["schemas"]["PermissionCatalogue"] | null;
             /** Message */
             message?: string | null;
@@ -3959,14 +5444,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[PlatformInstitutionResponse] */
+        Envelope_PlatformInstitutionResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[PlatformInstitutionResponse] */
-        Envelope_PlatformInstitutionResponse_: {
             data?: components["schemas"]["PlatformInstitutionResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3974,14 +5459,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[PreferenceResponse] */
+        Envelope_PreferenceResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[PreferenceResponse] */
-        Envelope_PreferenceResponse_: {
             data?: components["schemas"]["PreferenceResponse"] | null;
             /** Message */
             message?: string | null;
@@ -3989,14 +5474,44 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[ProgramRegulationResponse] */
+        Envelope_ProgramRegulationResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["ProgramRegulationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[ProgramResponse] */
+        Envelope_ProgramResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["ProgramResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[ProviderTestResponse] */
         Envelope_ProviderTestResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["ProviderTestResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4004,14 +5519,59 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[PublicCatalogCourse] */
+        Envelope_PublicCatalogCourse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["PublicCatalogCourse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[PublicCatalogProgram] */
+        Envelope_PublicCatalogProgram_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["PublicCatalogProgram"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[PublicCatalogResponse] */
+        Envelope_PublicCatalogResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["PublicCatalogResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[PublicConfig] */
         Envelope_PublicConfig_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["PublicConfig"] | null;
             /** Message */
             message?: string | null;
@@ -4019,14 +5579,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[PublicSettingsResponse] */
+        Envelope_PublicSettingsResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[PublicSettingsResponse] */
-        Envelope_PublicSettingsResponse_: {
             data?: components["schemas"]["PublicSettingsResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4034,14 +5594,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[ReadOnlyState] */
+        Envelope_ReadOnlyState_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[ReadOnlyState] */
-        Envelope_ReadOnlyState_: {
             data?: components["schemas"]["ReadOnlyState"] | null;
             /** Message */
             message?: string | null;
@@ -4049,14 +5609,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[RecoveryCodesResponse] */
+        Envelope_RecoveryCodesResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[RecoveryCodesResponse] */
-        Envelope_RecoveryCodesResponse_: {
             data?: components["schemas"]["RecoveryCodesResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4064,14 +5624,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[RefreshResponse] */
+        Envelope_RefreshResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[RefreshResponse] */
-        Envelope_RefreshResponse_: {
             data?: components["schemas"]["RefreshResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4079,14 +5639,59 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[RegulationApproveResponse] */
+        Envelope_RegulationApproveResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["RegulationApproveResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[RegulationDiffResponse] */
+        Envelope_RegulationDiffResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["RegulationDiffResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[RegulationResponse] */
+        Envelope_RegulationResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["RegulationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[RolePermissionMatrix] */
         Envelope_RolePermissionMatrix_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["RolePermissionMatrix"] | null;
             /** Message */
             message?: string | null;
@@ -4094,14 +5699,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[RoleResponse] */
+        Envelope_RoleResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[RoleResponse] */
-        Envelope_RoleResponse_: {
             data?: components["schemas"]["RoleResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4109,14 +5714,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[RolloverResponse] */
+        Envelope_RolloverResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[RolloverResponse] */
-        Envelope_RolloverResponse_: {
             data?: components["schemas"]["RolloverResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4124,14 +5729,29 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[RulesEffectiveResponse] */
+        Envelope_RulesEffectiveResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["RulesEffectiveResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[SearchResponse] */
         Envelope_SearchResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["SearchResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4139,14 +5759,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[SendMessageResponse] */
+        Envelope_SendMessageResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[SendMessageResponse] */
-        Envelope_SendMessageResponse_: {
             data?: components["schemas"]["SendMessageResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4154,14 +5774,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[SsoStartResponse] */
+        Envelope_SsoStartResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[SsoStartResponse] */
-        Envelope_SsoStartResponse_: {
             data?: components["schemas"]["SsoStartResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4169,14 +5789,44 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[StructureResponse] */
+        Envelope_StructureResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            data?: components["schemas"]["StructureResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[StructureValidationResponse] */
+        Envelope_StructureValidationResponse_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            data?: components["schemas"]["StructureValidationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[TemplatePreview] */
         Envelope_TemplatePreview_: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             data?: components["schemas"]["TemplatePreview"] | null;
             /** Message */
             message?: string | null;
@@ -4184,14 +5834,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[TemplateResponse] */
+        Envelope_TemplateResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[TemplateResponse] */
-        Envelope_TemplateResponse_: {
             data?: components["schemas"]["TemplateResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4199,14 +5849,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[Union[AcademicTermResponse, NoneType]] */
+        Envelope_Union_AcademicTermResponse__NoneType__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[Union[AcademicTermResponse, NoneType]] */
-        Envelope_Union_AcademicTermResponse__NoneType__: {
             data?: components["schemas"]["AcademicTermResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4214,14 +5864,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[UnreadCount] */
+        Envelope_UnreadCount_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[UnreadCount] */
-        Envelope_UnreadCount_: {
             data?: components["schemas"]["UnreadCount"] | null;
             /** Message */
             message?: string | null;
@@ -4229,14 +5879,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[UserCreatedResponse] */
+        Envelope_UserCreatedResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[UserCreatedResponse] */
-        Envelope_UserCreatedResponse_: {
             data?: components["schemas"]["UserCreatedResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4244,14 +5894,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[UserDetailResponse] */
+        Envelope_UserDetailResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[UserDetailResponse] */
-        Envelope_UserDetailResponse_: {
             data?: components["schemas"]["UserDetailResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4259,14 +5909,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[UserRoleResponse] */
+        Envelope_UserRoleResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[UserRoleResponse] */
-        Envelope_UserRoleResponse_: {
             data?: components["schemas"]["UserRoleResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4274,14 +5924,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[WhatsappTemplateResponse] */
+        Envelope_WhatsappTemplateResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[WhatsappTemplateResponse] */
-        Envelope_WhatsappTemplateResponse_: {
             data?: components["schemas"]["WhatsappTemplateResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4289,14 +5939,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[WorkflowDefinitionResponse] */
+        Envelope_WorkflowDefinitionResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[WorkflowDefinitionResponse] */
-        Envelope_WorkflowDefinitionResponse_: {
             data?: components["schemas"]["WorkflowDefinitionResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4304,14 +5954,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[WorkflowInstanceResponse] */
+        Envelope_WorkflowInstanceResponse_: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[WorkflowInstanceResponse] */
-        Envelope_WorkflowInstanceResponse_: {
             data?: components["schemas"]["WorkflowInstanceResponse"] | null;
             /** Message */
             message?: string | null;
@@ -4319,14 +5969,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[dict[str, Any]] */
+        Envelope_dict_str__Any__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[dict[str, Any]] */
-        Envelope_dict_str__Any__: {
             /** Data */
             data?: {
                 [key: string]: unknown;
@@ -4337,14 +5987,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[dict[str, int]] */
+        Envelope_dict_str__int__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[dict[str, int]] */
-        Envelope_dict_str__int__: {
             /** Data */
             data?: {
                 [key: string]: number;
@@ -4355,14 +6005,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[dict[str, str]] */
+        Envelope_dict_str__str__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[dict[str, str]] */
-        Envelope_dict_str__str__: {
             /** Data */
             data?: {
                 [key: string]: string;
@@ -4373,14 +6023,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[AcademicTermResponse]] */
+        Envelope_list_AcademicTermResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[AcademicTermResponse]] */
-        Envelope_list_AcademicTermResponse__: {
             /** Data */
             data?: components["schemas"]["AcademicTermResponse"][] | null;
             /** Message */
@@ -4389,14 +6039,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[AcademicYearResponse]] */
+        Envelope_list_AcademicYearResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[AcademicYearResponse]] */
-        Envelope_list_AcademicYearResponse__: {
             /** Data */
             data?: components["schemas"]["AcademicYearResponse"][] | null;
             /** Message */
@@ -4405,14 +6055,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[AnnouncementResponse]] */
+        Envelope_list_AnnouncementResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[AnnouncementResponse]] */
-        Envelope_list_AnnouncementResponse__: {
             /** Data */
             data?: components["schemas"]["AnnouncementResponse"][] | null;
             /** Message */
@@ -4421,14 +6071,62 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[AssessmentSchemeResponse]] */
+        Envelope_list_AssessmentSchemeResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            /** Data */
+            data?: components["schemas"]["AssessmentSchemeResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[BasketOut]] */
+        Envelope_list_BasketOut__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            /** Data */
+            data?: components["schemas"]["BasketOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[BatchResponse]] */
+        Envelope_list_BatchResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            /** Data */
+            data?: components["schemas"]["BatchResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[list[CollegeResponse]] */
         Envelope_list_CollegeResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             /** Data */
             data?: components["schemas"]["CollegeResponse"][] | null;
             /** Message */
@@ -4437,14 +6135,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[ConsentResponse]] */
+        Envelope_list_ConsentResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[ConsentResponse]] */
-        Envelope_list_ConsentResponse__: {
             /** Data */
             data?: components["schemas"]["ConsentResponse"][] | null;
             /** Message */
@@ -4453,14 +6151,30 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[CourseResponse]] */
+        Envelope_list_CourseResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            /** Data */
+            data?: components["schemas"]["CourseResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[list[DataSubjectRequestResponse]] */
         Envelope_list_DataSubjectRequestResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             /** Data */
             data?: components["schemas"]["DataSubjectRequestResponse"][] | null;
             /** Message */
@@ -4469,14 +6183,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[DelegationResponse]] */
+        Envelope_list_DelegationResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[DelegationResponse]] */
-        Envelope_list_DelegationResponse__: {
             /** Data */
             data?: components["schemas"]["DelegationResponse"][] | null;
             /** Message */
@@ -4485,14 +6199,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[DepartmentResponse]] */
+        Envelope_list_DepartmentResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[DepartmentResponse]] */
-        Envelope_list_DepartmentResponse__: {
             /** Data */
             data?: components["schemas"]["DepartmentResponse"][] | null;
             /** Message */
@@ -4501,14 +6215,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[DltTemplateResponse]] */
+        Envelope_list_DltTemplateResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[DltTemplateResponse]] */
-        Envelope_list_DltTemplateResponse__: {
             /** Data */
             data?: components["schemas"]["DltTemplateResponse"][] | null;
             /** Message */
@@ -4517,14 +6231,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[FacultyResponse]] */
+        Envelope_list_FacultyResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[FacultyResponse]] */
-        Envelope_list_FacultyResponse__: {
             /** Data */
             data?: components["schemas"]["FacultyResponse"][] | null;
             /** Message */
@@ -4533,14 +6247,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[FeatureDefResponse]] */
+        Envelope_list_FeatureDefResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[FeatureDefResponse]] */
-        Envelope_list_FeatureDefResponse__: {
             /** Data */
             data?: components["schemas"]["FeatureDefResponse"][] | null;
             /** Message */
@@ -4549,14 +6263,30 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[GradingScaleResponse]] */
+        Envelope_list_GradingScaleResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            /** Data */
+            data?: components["schemas"]["GradingScaleResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[list[HelpArticleSummary]] */
         Envelope_list_HelpArticleSummary__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             /** Data */
             data?: components["schemas"]["HelpArticleSummary"][] | null;
             /** Message */
@@ -4565,14 +6295,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[HolidayResponse]] */
+        Envelope_list_HolidayResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[HolidayResponse]] */
-        Envelope_list_HolidayResponse__: {
             /** Data */
             data?: components["schemas"]["HolidayResponse"][] | null;
             /** Message */
@@ -4581,14 +6311,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[InboxItem]] */
+        Envelope_list_InboxItem__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[InboxItem]] */
-        Envelope_list_InboxItem__: {
             /** Data */
             data?: components["schemas"]["InboxItem"][] | null;
             /** Message */
@@ -4597,14 +6327,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[JobResponse]] */
+        Envelope_list_JobResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[JobResponse]] */
-        Envelope_list_JobResponse__: {
             /** Data */
             data?: components["schemas"]["JobResponse"][] | null;
             /** Message */
@@ -4613,14 +6343,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[LoginHistoryResponse]] */
+        Envelope_list_LoginHistoryResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[LoginHistoryResponse]] */
-        Envelope_list_LoginHistoryResponse__: {
             /** Data */
             data?: components["schemas"]["LoginHistoryResponse"][] | null;
             /** Message */
@@ -4629,14 +6359,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[MessageLogResponse]] */
+        Envelope_list_MessageLogResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[MessageLogResponse]] */
-        Envelope_list_MessageLogResponse__: {
             /** Data */
             data?: components["schemas"]["MessageLogResponse"][] | null;
             /** Message */
@@ -4645,14 +6375,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[NotificationResponse]] */
+        Envelope_list_NotificationResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[NotificationResponse]] */
-        Envelope_list_NotificationResponse__: {
             /** Data */
             data?: components["schemas"]["NotificationResponse"][] | null;
             /** Message */
@@ -4661,14 +6391,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[NumberSequenceResponse]] */
+        Envelope_list_NumberSequenceResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[NumberSequenceResponse]] */
-        Envelope_list_NumberSequenceResponse__: {
             /** Data */
             data?: components["schemas"]["NumberSequenceResponse"][] | null;
             /** Message */
@@ -4677,14 +6407,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[PlatformInstitutionResponse]] */
+        Envelope_list_PlatformInstitutionResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[PlatformInstitutionResponse]] */
-        Envelope_list_PlatformInstitutionResponse__: {
             /** Data */
             data?: components["schemas"]["PlatformInstitutionResponse"][] | null;
             /** Message */
@@ -4693,14 +6423,62 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[ProgramRegulationResponse]] */
+        Envelope_list_ProgramRegulationResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            /** Data */
+            data?: components["schemas"]["ProgramRegulationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[ProgramResponse]] */
+        Envelope_list_ProgramResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            /** Data */
+            data?: components["schemas"]["ProgramResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+        };
+        /** Envelope[list[RegulationResponse]] */
+        Envelope_list_RegulationResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+            /** Data */
+            data?: components["schemas"]["RegulationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[list[RoleResponse]] */
         Envelope_list_RoleResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             /** Data */
             data?: components["schemas"]["RoleResponse"][] | null;
             /** Message */
@@ -4709,14 +6487,30 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[RulesHelpItem]] */
+        Envelope_list_RulesHelpItem__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
+            /** Data */
+            data?: components["schemas"]["RulesHelpItem"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
         };
         /** Envelope[list[SessionResponse]] */
         Envelope_list_SessionResponse__: {
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
             /** Data */
             data?: components["schemas"]["SessionResponse"][] | null;
             /** Message */
@@ -4725,14 +6519,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[SettingsCategoryResponse]] */
+        Envelope_list_SettingsCategoryResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[SettingsCategoryResponse]] */
-        Envelope_list_SettingsCategoryResponse__: {
             /** Data */
             data?: components["schemas"]["SettingsCategoryResponse"][] | null;
             /** Message */
@@ -4741,14 +6535,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[TemplateResponse]] */
+        Envelope_list_TemplateResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[TemplateResponse]] */
-        Envelope_list_TemplateResponse__: {
             /** Data */
             data?: components["schemas"]["TemplateResponse"][] | null;
             /** Message */
@@ -4757,14 +6551,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[UserResponse]] */
+        Envelope_list_UserResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[UserResponse]] */
-        Envelope_list_UserResponse__: {
             /** Data */
             data?: components["schemas"]["UserResponse"][] | null;
             /** Message */
@@ -4773,14 +6567,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[UserRoleResponse]] */
+        Envelope_list_UserRoleResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[UserRoleResponse]] */
-        Envelope_list_UserRoleResponse__: {
             /** Data */
             data?: components["schemas"]["UserRoleResponse"][] | null;
             /** Message */
@@ -4789,14 +6583,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[WhatsappTemplateResponse]] */
+        Envelope_list_WhatsappTemplateResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[WhatsappTemplateResponse]] */
-        Envelope_list_WhatsappTemplateResponse__: {
             /** Data */
             data?: components["schemas"]["WhatsappTemplateResponse"][] | null;
             /** Message */
@@ -4805,14 +6599,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[WorkflowDefinitionResponse]] */
+        Envelope_list_WorkflowDefinitionResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[WorkflowDefinitionResponse]] */
-        Envelope_list_WorkflowDefinitionResponse__: {
             /** Data */
             data?: components["schemas"]["WorkflowDefinitionResponse"][] | null;
             /** Message */
@@ -4821,14 +6615,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[WorkflowInstanceResponse]] */
+        Envelope_list_WorkflowInstanceResponse__: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[WorkflowInstanceResponse]] */
-        Envelope_list_WorkflowInstanceResponse__: {
             /** Data */
             data?: components["schemas"]["WorkflowInstanceResponse"][] | null;
             /** Message */
@@ -4837,14 +6631,14 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
+        };
+        /** Envelope[list[dict[str, Any]]] */
+        Envelope_list_dict_str__Any___: {
             /**
              * Success
              * @default true
              */
             success: boolean;
-        };
-        /** Envelope[list[dict[str, Any]]] */
-        Envelope_list_dict_str__Any___: {
             /** Data */
             data?: {
                 [key: string]: unknown;
@@ -4855,89 +6649,89 @@ export interface components {
             meta?: {
                 [key: string]: unknown;
             };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
         };
+        /**
+         * ExamAuthority
+         * @enum {string}
+         */
+        ExamAuthority: "university" | "autonomous_college";
         /** FacultyCreate */
         FacultyCreate: {
-            /** Code */
-            code: string;
             /**
              * College Id
              * Format: uuid
              */
             college_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
             /**
              * Dean User Id
              * @description staff user; grants the dean role @faculty
              */
             dean_user_id?: string | null;
-            /** Name */
-            name: string;
         };
         /** FacultyResponse */
         FacultyResponse: {
-            /** Code */
-            code: string;
-            /**
-             * College Id
-             * Format: uuid
-             */
-            college_id: string;
-            /** Dean Name */
-            dean_name?: string | null;
-            /** Dean Staff Id */
-            dean_staff_id?: string | null;
-            /** Dean User Id */
-            dean_user_id?: string | null;
-            /**
-             * Department Count
-             * @default 0
-             */
-            department_count: number;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Code */
+            code: string;
             /** Name */
             name: string;
+            /** Dean Staff Id */
+            dean_staff_id?: string | null;
+            /** Dean User Id */
+            dean_user_id?: string | null;
+            /** Dean Name */
+            dean_name?: string | null;
             /** Version */
             version: number;
+            /**
+             * Department Count
+             * @default 0
+             */
+            department_count: number;
         };
         /** FacultyUpdate */
         FacultyUpdate: {
-            /** Dean User Id */
-            dean_user_id?: string | null;
             /** Name */
             name?: string | null;
+            /** Dean User Id */
+            dean_user_id?: string | null;
             /** Version */
             version?: number | null;
         };
         /** FeatureDefResponse */
         FeatureDefResponse: {
-            /** Default Enabled */
-            default_enabled: boolean;
-            /** Depends On */
-            depends_on?: string[];
-            /** Description */
-            description?: string | null;
+            /** Key */
+            key: string;
             /** Group */
             group: string;
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /** Default Enabled */
+            default_enabled: boolean;
+            /** Min Plan Tier */
+            min_plan_tier: string;
+            /** Depends On */
+            depends_on?: string[];
             /**
              * Is Core
              * @default false
              */
             is_core: boolean;
-            /** Key */
-            key: string;
-            /** Min Plan Tier */
-            min_plan_tier: string;
-            /** Name */
-            name: string;
             /**
              * Registered
              * @description the code registry gates this key (module shipped)
@@ -4948,27 +6742,27 @@ export interface components {
         /** FeatureFlagChangeResponse */
         FeatureFlagChangeResponse: {
             /**
-             * Changed At
-             * Format: date-time
-             */
-            changed_at: string;
-            /** Changed By */
-            changed_by?: string | null;
-            /** Feature Key */
-            feature_key: string;
-            /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** New Value */
-            new_value?: {
-                [key: string]: unknown;
-            } | null;
+            /** Feature Key */
+            feature_key: string;
             /** Old Value */
             old_value?: {
                 [key: string]: unknown;
             } | null;
+            /** New Value */
+            new_value?: {
+                [key: string]: unknown;
+            } | null;
+            /** Changed By */
+            changed_by?: string | null;
+            /**
+             * Changed At
+             * Format: date-time
+             */
+            changed_at: string;
             /** Reason */
             reason?: string | null;
         };
@@ -4981,6 +6775,10 @@ export interface components {
         };
         /** FeatureToggleRequest */
         FeatureToggleRequest: {
+            /** Enabled */
+            enabled: boolean;
+            /** Reason */
+            reason?: string | null;
             /** Config */
             config?: {
                 [key: string]: unknown;
@@ -4991,67 +6789,157 @@ export interface components {
              * @default false
              */
             confirm_dependencies: boolean;
-            /** Enabled */
-            enabled: boolean;
-            /** Reason */
-            reason?: string | null;
         };
         /** FeedbackCreate */
         FeedbackCreate: {
+            /** Page */
+            page?: string | null;
             /**
              * Category
              * @default idea
              * @enum {string}
              */
             category: "bug" | "idea" | "question" | "praise";
+            /** Rating */
+            rating?: number | null;
+            /** Message */
+            message: string;
+            /** Screenshot Url */
+            screenshot_url?: string | null;
             /**
              * Client
              * @default web
              * @enum {string}
              */
             client: "web" | "mobile" | "pwa";
-            /** Message */
-            message: string;
-            /** Page */
-            page?: string | null;
-            /** Rating */
-            rating?: number | null;
-            /** Screenshot Url */
-            screenshot_url?: string | null;
         };
         /** FeedbackResponse */
         FeedbackResponse: {
-            /** Category */
-            category?: string | null;
-            /** Client */
-            client?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Message */
-            message?: string | null;
             /** Page */
             page?: string | null;
+            /** Category */
+            category?: string | null;
             /** Rating */
             rating?: number | null;
+            /** Message */
+            message?: string | null;
+            /** Client */
+            client?: string | null;
             /** Status */
             status: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /** ForgotPasswordRequest */
         ForgotPasswordRequest: {
-            /** Captcha Token */
-            captcha_token?: string | null;
             /** Identifier */
             identifier: string;
             /** Institution Slug */
             institution_slug?: string | null;
+            /** Captcha Token */
+            captcha_token?: string | null;
+        };
+        /** GradeRange */
+        GradeRange: {
+            /** Grade */
+            grade: string;
+            /** Min Pct */
+            min_pct: number;
+            /** Max Pct */
+            max_pct?: number | null;
+            /** Points */
+            points: number;
+            /** Is Fail */
+            is_fail?: boolean | null;
+            /** Description */
+            description?: string | null;
+        };
+        /** GradingScaleCreate */
+        GradingScaleCreate: {
+            /** Name */
+            name: string;
+            /** Regulation Id */
+            regulation_id?: string | null;
+            /** @default absolute */
+            scale_type: components["schemas"]["ScaleType"];
+            /** Ranges */
+            ranges: components["schemas"]["GradeRange"][];
+            /** Relative Config */
+            relative_config?: {
+                [key: string]: unknown;
+            } | null;
+            /** Special Grades */
+            special_grades?: components["schemas"]["SpecialGrade"][] | null;
+            /**
+             * Max Grade Point
+             * @default 10
+             */
+            max_grade_point: number | string;
+            /**
+             * Is Default
+             * @default false
+             */
+            is_default: boolean;
+        };
+        /** GradingScaleResponse */
+        GradingScaleResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Regulation Id */
+            regulation_id?: string | null;
+            /** Name */
+            name: string;
+            /** Scale Type */
+            scale_type: string;
+            /** Ranges */
+            ranges: {
+                [key: string]: unknown;
+            }[];
+            /** Relative Config */
+            relative_config?: {
+                [key: string]: unknown;
+            } | null;
+            /** Special Grades */
+            special_grades?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Max Grade Point */
+            max_grade_point: string;
+            /** Is Default */
+            is_default: boolean;
+            /** Version */
+            version: number;
+        };
+        /** GradingScaleUpdate */
+        GradingScaleUpdate: {
+            /** Name */
+            name?: string | null;
+            scale_type?: components["schemas"]["ScaleType"] | null;
+            /** Ranges */
+            ranges?: components["schemas"]["GradeRange"][] | null;
+            /** Relative Config */
+            relative_config?: {
+                [key: string]: unknown;
+            } | null;
+            /** Special Grades */
+            special_grades?: components["schemas"]["SpecialGrade"][] | null;
+            /** Max Grade Point */
+            max_grade_point?: number | string | null;
+            /** Is Default */
+            is_default?: boolean | null;
+            /** Version */
+            version?: number | null;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -5060,26 +6948,26 @@ export interface components {
         };
         /** HelpArticleResponse */
         HelpArticleResponse: {
-            /** Audience */
-            audience?: string[] | null;
-            /** Body */
-            body: string;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** Slug */
+            slug: string;
+            /** Title */
+            title: string;
+            /** Body */
+            body: string;
+            /** Module */
+            module?: string | null;
+            /** Audience */
+            audience?: string[] | null;
             /**
              * Is Platform
              * @default false
              */
             is_platform: boolean;
-            /** Module */
-            module?: string | null;
-            /** Slug */
-            slug: string;
-            /** Title */
-            title: string;
             /**
              * Updated At
              * Format: date-time
@@ -5093,17 +6981,17 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /** Slug */
+            slug: string;
+            /** Title */
+            title: string;
+            /** Module */
+            module?: string | null;
             /**
              * Is Platform
              * @default false
              */
             is_platform: boolean;
-            /** Module */
-            module?: string | null;
-            /** Slug */
-            slug: string;
-            /** Title */
-            title: string;
             /**
              * Updated At
              * Format: date-time
@@ -5130,72 +7018,72 @@ export interface components {
          * @description CSV ``name,date,end_date,type,applies_to`` (header optional) or pre-parsed ``rows``.
          */
         HolidayBulkImport: {
-            /** College Id */
-            college_id?: string | null;
             /** Csv */
             csv?: string | null;
             /** Rows */
             rows?: {
                 [key: string]: unknown;
             }[] | null;
+            /** College Id */
+            college_id?: string | null;
         };
         /**
          * HolidayBulkResult
          * @description Partial-success report of ``POST /holidays/bulk-import`` (``index`` = 0-based data row).
          */
         HolidayBulkResult: {
+            /** Succeeded */
+            succeeded: number;
             /** Created */
             created?: components["schemas"]["HolidayResponse"][];
             /** Failed */
             failed?: components["schemas"]["BulkFailure"][];
-            /** Succeeded */
-            succeeded: number;
         };
         /** HolidayCreate */
         HolidayCreate: {
+            /** Name */
+            name: string;
+            /**
+             * Holiday Date
+             * Format: date
+             */
+            holiday_date: string;
+            /** End Date */
+            end_date?: string | null;
+            /** @default public */
+            holiday_type: components["schemas"]["HolidayType"];
             /** @default all */
             applies_to: components["schemas"]["HolidayAppliesTo"];
             /** College Id */
             college_id?: string | null;
-            /** End Date */
-            end_date?: string | null;
-            /**
-             * Holiday Date
-             * Format: date
-             */
-            holiday_date: string;
-            /** @default public */
-            holiday_type: components["schemas"]["HolidayType"];
-            /** Name */
-            name: string;
         };
         /** HolidayResponse */
         HolidayResponse: {
-            /** Applies To */
-            applies_to: string;
-            /** College Id */
-            college_id?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** End Date */
-            end_date?: string | null;
-            /**
-             * Holiday Date
-             * Format: date
-             */
-            holiday_date: string;
-            /** Holiday Type */
-            holiday_type: string;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** College Id */
+            college_id?: string | null;
             /** Name */
             name: string;
+            /**
+             * Holiday Date
+             * Format: date
+             */
+            holiday_date: string;
+            /** End Date */
+            end_date?: string | null;
+            /** Holiday Type */
+            holiday_type: string;
+            /** Applies To */
+            applies_to: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
         };
         /**
          * HolidayType
@@ -5204,14 +7092,14 @@ export interface components {
         HolidayType: "public" | "institution" | "restricted" | "exam_break";
         /** HolidayUpdate */
         HolidayUpdate: {
-            applies_to?: components["schemas"]["HolidayAppliesTo"] | null;
-            /** End Date */
-            end_date?: string | null;
-            /** Holiday Date */
-            holiday_date?: string | null;
-            holiday_type?: components["schemas"]["HolidayType"] | null;
             /** Name */
             name?: string | null;
+            /** Holiday Date */
+            holiday_date?: string | null;
+            /** End Date */
+            end_date?: string | null;
+            holiday_type?: components["schemas"]["HolidayType"] | null;
+            applies_to?: components["schemas"]["HolidayAppliesTo"] | null;
         };
         /** ImpersonateRequest */
         ImpersonateRequest: {
@@ -5222,6 +7110,7 @@ export interface components {
         ImpersonateResponse: {
             /** Access Token */
             access_token: string;
+            user: components["schemas"]["MeUser"];
             /**
              * Impersonation Log Id
              * Format: uuid
@@ -5232,20 +7121,19 @@ export interface components {
              * @default false
              */
             read_only: boolean;
-            user: components["schemas"]["MeUser"];
         };
         /** InboxItem */
         InboxItem: {
-            /** Entity Summary */
-            entity_summary?: string | null;
             instance: components["schemas"]["WorkflowInstanceResponse"];
-            /** Route */
-            route?: string | null;
             /**
              * Step Id
              * Format: uuid
              */
             step_id: string;
+            /** Entity Summary */
+            entity_summary?: string | null;
+            /** Route */
+            route?: string | null;
             /**
              * Via
              * @default direct
@@ -5272,8 +7160,6 @@ export interface components {
         };
         /** InstallResponse */
         InstallResponse: {
-            /** Features */
-            features: number;
             /**
              * Installed At
              * Format: date-time
@@ -5281,10 +7167,12 @@ export interface components {
             installed_at: string;
             /** Permissions */
             permissions: number;
-            /** Plans */
-            plans: number;
             /** Role Templates */
             role_templates: number;
+            /** Features */
+            features: number;
+            /** Plans */
+            plans: number;
             /**
              * Super Admin Id
              * Format: uuid
@@ -5293,53 +7181,49 @@ export interface components {
         };
         /** InstitutionFeatureFlagResponse */
         InstitutionFeatureFlagResponse: {
-            /** Config */
-            config?: {
-                [key: string]: unknown;
-            } | null;
-            /** Depends On */
-            depends_on?: string[];
-            /** Description */
-            description?: string | null;
-            /** Effective */
-            effective: boolean;
+            /** Key */
+            key: string;
             /** Group */
             group: string;
-            /** Institution Enabled */
-            institution_enabled: boolean;
+            /** Name */
+            name: string;
+            /** Description */
+            description?: string | null;
+            /** Min Plan Tier */
+            min_plan_tier: string;
+            /** Depends On */
+            depends_on?: string[];
             /**
              * Is Core
              * @default false
              */
             is_core: boolean;
-            /** Key */
-            key: string;
-            /** Min Plan Tier */
-            min_plan_tier: string;
-            /** Name */
-            name: string;
+            /** Platform Enabled */
+            platform_enabled: boolean;
+            /** Institution Enabled */
+            institution_enabled: boolean;
+            /** Effective */
+            effective: boolean;
+            /**
+             * Source
+             * @description plan | override | default
+             */
+            source: string;
+            /** Config */
+            config?: {
+                [key: string]: unknown;
+            } | null;
             /**
              * Plan Allows
              * @description key at or below the plan tier
              * @default true
              */
             plan_allows: boolean;
-            /** Platform Enabled */
-            platform_enabled: boolean;
             /** Set At */
             set_at?: string | null;
-            /**
-             * Source
-             * @description plan | override | default
-             */
-            source: string;
         };
         /** InstitutionFeaturesResponse */
         InstitutionFeaturesResponse: {
-            /** Changes */
-            changes?: components["schemas"]["FeatureFlagChangeResponse"][];
-            /** Flags */
-            flags: components["schemas"]["InstitutionFeatureFlagResponse"][];
             /**
              * Institution Id
              * Format: uuid
@@ -5347,167 +7231,171 @@ export interface components {
             institution_id: string;
             /** Plan Code */
             plan_code?: string | null;
+            /** Flags */
+            flags: components["schemas"]["InstitutionFeatureFlagResponse"][];
+            /** Changes */
+            changes?: components["schemas"]["FeatureFlagChangeResponse"][];
         };
         /** InstitutionProfileResponse */
         InstitutionProfileResponse: {
-            /** Accreditations */
-            accreditations?: {
-                [key: string]: unknown;
-            }[] | null;
-            /** Address */
-            address?: {
-                [key: string]: unknown;
-            } | null;
-            /** Aicte Pid */
-            aicte_pid?: string | null;
-            /** Aishe Code */
-            aishe_code?: string | null;
-            /** Code */
-            code?: string | null;
-            /** Contact */
-            contact?: {
-                [key: string]: unknown;
-            } | null;
-            /** Currency */
-            currency: string;
-            /** Established Year */
-            established_year?: number | null;
-            /** Gstin */
-            gstin?: string | null;
-            /** Head Name */
-            head_name?: string | null;
-            /** Head Signature Url */
-            head_signature_url?: string | null;
-            /** Head Title */
-            head_title?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            institution_type: components["schemas"]["InstitutionType"];
-            /** Letterhead Url */
-            letterhead_url?: string | null;
-            /** Locale */
-            locale: string;
-            /** Logo Url */
-            logo_url?: string | null;
-            /** Mission */
-            mission?: string | null;
-            /** Naac Id */
-            naac_id?: string | null;
             /** Name */
             name: string;
-            /** Pack Version */
-            pack_version?: string | null;
-            /** Parent University Name */
-            parent_university_name?: string | null;
-            /** Recognitions */
-            recognitions?: {
-                [key: string]: unknown;
-            }[] | null;
-            /** Regulatory Pack */
-            regulatory_pack: string;
-            /** Seal Url */
-            seal_url?: string | null;
             /** Short Name */
             short_name?: string | null;
             /** Slug */
             slug: string;
+            /** Code */
+            code?: string | null;
+            institution_type: components["schemas"]["InstitutionType"];
+            /** Regulatory Pack */
+            regulatory_pack: string;
+            /** Pack Version */
+            pack_version?: string | null;
+            /** Timezone */
+            timezone: string;
+            /** Locale */
+            locale: string;
+            /** Currency */
+            currency: string;
+            /** Parent University Name */
+            parent_university_name?: string | null;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Naac Id */
+            naac_id?: string | null;
+            /** Ugc Status */
+            ugc_status?: string | null;
+            /** Gstin */
+            gstin?: string | null;
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /** Contact */
+            contact?: {
+                [key: string]: unknown;
+            } | null;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Website Url */
+            website_url?: string | null;
+            status: components["schemas"]["InstitutionStatus"];
+            /** Version */
+            version: number;
+            /** Established Year */
+            established_year?: number | null;
+            /** Vision */
+            vision?: string | null;
+            /** Mission */
+            mission?: string | null;
+            /** Accreditations */
+            accreditations?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Recognitions */
+            recognitions?: {
+                [key: string]: unknown;
+            }[] | null;
             /** Social Links */
             social_links?: {
                 [key: string]: unknown;
             } | null;
-            status: components["schemas"]["InstitutionStatus"];
-            /** Timezone */
-            timezone: string;
-            /** Ugc Status */
-            ugc_status?: string | null;
+            /** Head Title */
+            head_title?: string | null;
+            /** Head Name */
+            head_name?: string | null;
+            /** Head Signature Url */
+            head_signature_url?: string | null;
+            /** Seal Url */
+            seal_url?: string | null;
+            /** Letterhead Url */
+            letterhead_url?: string | null;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
-            /** Version */
-            version: number;
-            /** Vision */
-            vision?: string | null;
-            /** Website Url */
-            website_url?: string | null;
         };
         /**
          * InstitutionProfileUpdate
          * @description Partial update; ``version`` enables optimistic locking (409 STALE_VERSION).
          */
         InstitutionProfileUpdate: {
-            /** Accreditations */
-            accreditations?: {
-                [key: string]: unknown;
-            }[] | null;
+            /** Name */
+            name?: string | null;
+            /** Short Name */
+            short_name?: string | null;
+            /** Code */
+            code?: string | null;
+            /** Regulatory Pack */
+            regulatory_pack?: string | null;
+            /** Timezone */
+            timezone?: string | null;
+            /** Locale */
+            locale?: string | null;
+            /** Currency */
+            currency?: string | null;
+            /** Parent University Name */
+            parent_university_name?: string | null;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Naac Id */
+            naac_id?: string | null;
+            /** Ugc Status */
+            ugc_status?: string | null;
+            /** Gstin */
+            gstin?: string | null;
+            /** @description alternative grouping of the statutory ids */
+            statutory_ids?: components["schemas"]["StatutoryIds"] | null;
             /** Address */
             address?: {
                 [key: string]: unknown;
             } | null;
-            /** Aicte Pid */
-            aicte_pid?: string | null;
-            /** Aishe Code */
-            aishe_code?: string | null;
-            /** Code */
-            code?: string | null;
             /** Contact */
             contact?: {
                 [key: string]: unknown;
             } | null;
-            /** Currency */
-            currency?: string | null;
+            /** Website Url */
+            website_url?: string | null;
             /** Established Year */
             established_year?: number | null;
-            /** Gstin */
-            gstin?: string | null;
-            /** Head Name */
-            head_name?: string | null;
-            /** Head Signature Url */
-            head_signature_url?: string | null;
-            /** Head Title */
-            head_title?: string | null;
-            /** Letterhead Url */
-            letterhead_url?: string | null;
-            /** Locale */
-            locale?: string | null;
+            /** Vision */
+            vision?: string | null;
             /** Mission */
             mission?: string | null;
-            /** Naac Id */
-            naac_id?: string | null;
-            /** Name */
-            name?: string | null;
-            /** Parent University Name */
-            parent_university_name?: string | null;
+            /** Accreditations */
+            accreditations?: {
+                [key: string]: unknown;
+            }[] | null;
             /** Recognitions */
             recognitions?: {
                 [key: string]: unknown;
             }[] | null;
-            /** Regulatory Pack */
-            regulatory_pack?: string | null;
-            /** Seal Url */
-            seal_url?: string | null;
-            /** Short Name */
-            short_name?: string | null;
             /** Social Links */
             social_links?: {
                 [key: string]: unknown;
             } | null;
-            /** @description alternative grouping of the statutory ids */
-            statutory_ids?: components["schemas"]["StatutoryIds"] | null;
-            /** Timezone */
-            timezone?: string | null;
-            /** Ugc Status */
-            ugc_status?: string | null;
+            /** Head Title */
+            head_title?: string | null;
+            /** Head Name */
+            head_name?: string | null;
+            /** Head Signature Url */
+            head_signature_url?: string | null;
+            /** Seal Url */
+            seal_url?: string | null;
+            /** Letterhead Url */
+            letterhead_url?: string | null;
             /** Version */
             version?: number | null;
-            /** Vision */
-            vision?: string | null;
-            /** Website Url */
-            website_url?: string | null;
         };
         /**
          * InstitutionStatus
@@ -5516,25 +7404,25 @@ export interface components {
         InstitutionStatus: "pending" | "active" | "suspended" | "archived";
         /** InstitutionSummary */
         InstitutionSummary: {
-            /** Currency */
-            currency: string;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Locale */
-            locale: string;
-            /** Logo Url */
-            logo_url?: string | null;
             /** Name */
             name: string;
             /** Slug */
             slug: string;
-            /** Timezone */
-            timezone: string;
             /** Type */
             type: string;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Timezone */
+            timezone: string;
+            /** Locale */
+            locale: string;
+            /** Currency */
+            currency: string;
         };
         /** InstitutionToggleRequest */
         InstitutionToggleRequest: {
@@ -5551,6 +7439,32 @@ export interface components {
         /** JobResponse */
         JobResponse: {
             /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Job Type */
+            job_type: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
+            /** Progress Pct */
+            progress_pct: number;
+            /** Message */
+            message?: string | null;
+            /** Result Url */
+            result_url?: string | null;
+            /** Result */
+            result?: {
+                [key: string]: unknown;
+            } | null;
+            /** Error */
+            error?: string | null;
+            /** Requested By */
+            requested_by?: string | null;
+            /**
              * Cancel Requested
              * @default false
              */
@@ -5560,34 +7474,12 @@ export interface components {
              * Format: date-time
              */
             created_at: string;
-            /** Error */
-            error?: string | null;
-            /** Expires At */
-            expires_at?: string | null;
-            /** Finished At */
-            finished_at?: string | null;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Job Type */
-            job_type: string;
-            /** Message */
-            message?: string | null;
-            /** Progress Pct */
-            progress_pct: number;
-            /** Requested By */
-            requested_by?: string | null;
-            /** Result Url */
-            result_url?: string | null;
             /** Started At */
             started_at?: string | null;
-            /**
-             * Status
-             * @enum {string}
-             */
-            status: "queued" | "running" | "succeeded" | "failed" | "cancelled";
+            /** Finished At */
+            finished_at?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
         };
         /** LoginHistoryResponse */
         LoginHistoryResponse: {
@@ -5596,53 +7488,69 @@ export interface components {
              * Format: uuid
              */
             id: string;
+            /** Outcome */
+            outcome: string;
             /** Ip */
             ip?: string | null;
+            /** User Agent */
+            user_agent?: string | null;
             /**
              * Occurred At
              * Format: date-time
              */
             occurred_at: string;
-            /** Outcome */
-            outcome: string;
-            /** User Agent */
-            user_agent?: string | null;
         };
         /** LoginRequest */
         LoginRequest: {
-            /** Device Label */
-            device_label?: string | null;
             /**
              * Identifier
              * @description username | email | phone
              */
             identifier: string;
+            /** Password */
+            password: string;
+            /**
+             * Mfa Code
+             * @description TOTP or recovery code
+             */
+            mfa_code?: string | null;
             /**
              * Institution Slug
              * @description required when the identifier is ambiguous
              */
             institution_slug?: string | null;
             /**
-             * Mfa Code
-             * @description TOTP or recovery code
-             */
-            mfa_code?: string | null;
-            /** Password */
-            password: string;
-            /**
              * Platform
              * @default web
              * @enum {string}
              */
             platform: "web" | "pwa" | "android" | "ios" | "script";
+            /** Device Label */
+            device_label?: string | null;
         };
         /** LoginResponse */
         LoginResponse: {
-            /** Access Token */
-            access_token: string;
+            user: components["schemas"]["MeUser"];
+            institution?: components["schemas"]["InstitutionSummary"] | null;
+            /** Permissions */
+            permissions?: string[];
             /** Features */
             features?: string[];
-            institution?: components["schemas"]["InstitutionSummary"] | null;
+            /** Scopes */
+            scopes?: components["schemas"]["ScopeOut"][];
+            /** Visibility Defaults */
+            visibility_defaults?: {
+                [key: string]: components["schemas"]["VisibilityDefault"];
+            };
+            /** Session Id */
+            session_id?: string | null;
+            /** Access Token */
+            access_token: string;
+            /**
+             * Refresh Token
+             * @description mobile clients only; web receives the cookie
+             */
+            refresh_token?: string | null;
             /**
              * Mfa Required
              * @default false
@@ -5653,31 +7561,15 @@ export interface components {
              * @default false
              */
             mfa_setup_required: boolean;
-            /** Permissions */
-            permissions?: string[];
-            /**
-             * Refresh Token
-             * @description mobile clients only; web receives the cookie
-             */
-            refresh_token?: string | null;
-            /** Scopes */
-            scopes?: components["schemas"]["ScopeOut"][];
-            /** Session Id */
-            session_id?: string | null;
-            user: components["schemas"]["MeUser"];
-            /** Visibility Defaults */
-            visibility_defaults?: {
-                [key: string]: components["schemas"]["VisibilityDefault"];
-            };
         };
         /** LogoUploadResponse */
         LogoUploadResponse: {
-            /** Content Type */
-            content_type: string;
-            /** Key */
-            key: string;
             /** Logo Url */
             logo_url: string;
+            /** Key */
+            key: string;
+            /** Content Type */
+            content_type: string;
         };
         /** MatrixAction */
         MatrixAction: {
@@ -5688,8 +7580,6 @@ export interface components {
         };
         /** MatrixInstitution */
         MatrixInstitution: {
-            /** Effective */
-            effective?: string[];
             /**
              * Id
              * Format: uuid
@@ -5697,64 +7587,67 @@ export interface components {
             id: string;
             /** Name */
             name: string;
-            /** Plan Code */
-            plan_code?: string | null;
             /** Slug */
             slug: string;
+            /** Plan Code */
+            plan_code?: string | null;
+            /** Effective */
+            effective?: string[];
         };
         /** MatrixModule */
         MatrixModule: {
-            /** Actions */
-            actions: components["schemas"]["MatrixAction"][];
             /** Module */
             module: string;
+            /** Actions */
+            actions: components["schemas"]["MatrixAction"][];
         };
         /** MeResponse */
         MeResponse: {
-            /** Features */
-            features?: string[];
+            user: components["schemas"]["MeUser"];
             institution?: components["schemas"]["InstitutionSummary"] | null;
             /** Permissions */
             permissions?: string[];
+            /** Features */
+            features?: string[];
             /** Scopes */
             scopes?: components["schemas"]["ScopeOut"][];
-            /** Session Id */
-            session_id?: string | null;
-            user: components["schemas"]["MeUser"];
             /** Visibility Defaults */
             visibility_defaults?: {
                 [key: string]: components["schemas"]["VisibilityDefault"];
             };
+            /** Session Id */
+            session_id?: string | null;
         };
         /** MeUser */
         MeUser: {
-            /** Avatar Url */
-            avatar_url?: string | null;
-            /** Display Name */
-            display_name?: string | null;
-            /** Email */
-            email?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /**
-             * Impersonation Read Only
-             * @default false
-             */
-            impersonation_read_only: boolean;
-            /** Impersonator Id */
-            impersonator_id?: string | null;
             /** Institution Id */
             institution_id?: string | null;
+            /** Username */
+            username: string;
+            /** Email */
+            email?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Display Name */
+            display_name?: string | null;
+            /** Avatar Url */
+            avatar_url?: string | null;
+            /** User Type */
+            user_type: string;
             /**
              * Is Super Admin
              * @default false
              */
             is_super_admin: boolean;
-            /** Locale */
-            locale?: string | null;
+            /** Role Slugs */
+            role_slugs?: string[];
+            /** Scopes */
+            scopes?: components["schemas"]["ScopeOut"][];
             /**
              * Mfa Enabled
              * @default false
@@ -5765,63 +7658,62 @@ export interface components {
              * @default false
              */
             must_change_password: boolean;
-            /** Phone */
-            phone?: string | null;
-            /** Role Slugs */
-            role_slugs?: string[];
-            /** Scopes */
-            scopes?: components["schemas"]["ScopeOut"][];
+            /** Locale */
+            locale?: string | null;
             /** Timezone */
             timezone?: string | null;
-            /** User Type */
-            user_type: string;
-            /** Username */
-            username: string;
             /** Valid To */
             valid_to?: string | null;
+            /** Impersonator Id */
+            impersonator_id?: string | null;
+            /**
+             * Impersonation Read Only
+             * @default false
+             */
+            impersonation_read_only: boolean;
         };
         /** MessageLogResponse */
         MessageLogResponse: {
-            /** Body Preview */
-            body_preview?: string | null;
-            /** Channel */
-            channel: string;
-            /** Cost Paise */
-            cost_paise?: number | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Delivered At */
-            delivered_at?: string | null;
-            /** Error */
-            error?: string | null;
-            /** Event Id */
-            event_id?: string | null;
-            /** Event Type */
-            event_type?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** User Id */
+            user_id?: string | null;
+            /** Recipient */
+            recipient: string;
+            /** Channel */
+            channel: string;
+            /** Event Type */
+            event_type?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+            /** Subject */
+            subject?: string | null;
+            /** Body Preview */
+            body_preview?: string | null;
             /** Provider */
             provider?: string | null;
             /** Provider Message Id */
             provider_message_id?: string | null;
-            /** Recipient */
-            recipient: string;
-            /** Sent At */
-            sent_at?: string | null;
             /** Status */
             status: string;
-            /** Subject */
-            subject?: string | null;
-            /** Template Id */
-            template_id?: string | null;
-            /** User Id */
-            user_id?: string | null;
+            /** Error */
+            error?: string | null;
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /** Event Id */
+            event_id?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Sent At */
+            sent_at?: string | null;
+            /** Delivered At */
+            delivered_at?: string | null;
         };
         /** MessageResponse */
         MessageResponse: {
@@ -5839,113 +7731,115 @@ export interface components {
         };
         /** MfaConfirmResponse */
         MfaConfirmResponse: {
+            /** Recovery Codes */
+            recovery_codes: string[];
             /**
              * Access Token
              * @description full session when confirmed with the mfa_setup token
              */
             access_token?: string | null;
-            /** Recovery Codes */
-            recovery_codes: string[];
         };
         /** MfaDisableRequest */
         MfaDisableRequest: {
-            /** Code */
-            code: string;
             /** Password */
             password: string;
+            /** Code */
+            code: string;
         };
         /** MfaSetupResponse */
         MfaSetupResponse: {
+            /** Secret */
+            secret: string;
             /** Otpauth Url */
             otpauth_url: string;
             /** Qr Png Base64 */
             qr_png_base64: string;
-            /** Secret */
-            secret: string;
         };
         /** MobileConfigRequest */
         MobileConfigRequest: {
-            /** App Version */
-            app_version?: string | null;
-            /** Institution Slug */
-            institution_slug?: string | null;
             /**
              * Platform
              * @default android
              * @enum {string}
              */
             platform: "android" | "ios" | "web";
+            /** App Version */
+            app_version?: string | null;
+            /** Institution Slug */
+            institution_slug?: string | null;
         };
         /** MobileConfigResponse */
         MobileConfigResponse: {
-            /**
-             * Cache Ttl Seconds
-             * @default 300
-             */
-            cache_ttl_seconds: number;
-            /** Feature Hints */
-            feature_hints?: {
-                [key: string]: string;
-            };
-            /** Force Update */
-            force_update: boolean;
-            /** Force Update Below */
-            force_update_below: {
-                [key: string]: string;
-            };
-            /** Maintenance Banner */
-            maintenance_banner?: string | null;
             /** Min Versions */
             min_versions: {
                 [key: string]: string;
             };
+            /** Force Update Below */
+            force_update_below: {
+                [key: string]: string;
+            };
+            /** Force Update */
+            force_update: boolean;
+            /** Update Available */
+            update_available: boolean;
+            /** Store Urls */
+            store_urls: {
+                [key: string]: string;
+            };
+            /** Maintenance Banner */
+            maintenance_banner?: string | null;
             /**
              * Read Only
              * @default false
              */
             read_only: boolean;
-            /** Store Urls */
-            store_urls: {
+            /** Feature Hints */
+            feature_hints?: {
                 [key: string]: string;
             };
-            /** Update Available */
-            update_available: boolean;
+            /**
+             * Cache Ttl Seconds
+             * @default 300
+             */
+            cache_ttl_seconds: number;
         };
         /** NotificationResponse */
         NotificationResponse: {
-            /** Body */
-            body?: string | null;
-            /** Category */
-            category?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Event Type */
-            event_type?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Read */
-            is_read: boolean;
+            /** Title */
+            title: string;
+            /** Body */
+            body?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Event Type */
+            event_type?: string | null;
             /** Link */
             link?: {
                 [key: string]: unknown;
             } | null;
+            /** Is Read */
+            is_read: boolean;
             /** Read At */
             read_at?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
             /** Route */
             route?: string | null;
-            /** Title */
-            title: string;
         };
         /** NumberSequenceCreate */
         NumberSequenceCreate: {
-            /** College Id */
-            college_id?: string | null;
+            /** Scope Key */
+            scope_key: string;
+            /** Pattern */
+            pattern: string;
             /**
              * Next Value
              * @default 1
@@ -5956,151 +7850,149 @@ export interface components {
              * @default 4
              */
             padding: number;
-            /** Pattern */
-            pattern: string;
             /** @default never */
             reset_policy: components["schemas"]["ResetPolicy"];
-            /** Scope Key */
-            scope_key: string;
+            /** College Id */
+            college_id?: string | null;
         };
         /** NumberSequenceNext */
         NumberSequenceNext: {
-            /** Rendered */
-            rendered: string;
             /** Scope Key */
             scope_key: string;
             /** Value */
             value: number;
+            /** Rendered */
+            rendered: string;
         };
         /** NumberSequencePreview */
         NumberSequencePreview: {
-            /** Pattern */
-            pattern: string;
             /** Scope Key */
             scope_key: string;
+            /** Pattern */
+            pattern: string;
+            /** Values */
+            values: string[];
             /** Tokens */
             tokens: {
                 [key: string]: string;
             };
-            /** Values */
-            values: string[];
         };
         /** NumberSequencePreviewRequest */
         NumberSequencePreviewRequest: {
+            /** Prog Code */
+            prog_code?: string | null;
+            /** Term */
+            term?: string | null;
             /**
              * Count
              * @default 1
              */
             count: number;
-            /** Prog Code */
-            prog_code?: string | null;
-            /** Term */
-            term?: string | null;
         };
         /** NumberSequenceResponse */
         NumberSequenceResponse: {
-            /** College Id */
-            college_id?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Scope Key */
+            scope_key: string;
+            /** Pattern */
+            pattern: string;
             /** Next Value */
             next_value: number;
             /** Padding */
             padding: number;
-            /** Pattern */
-            pattern: string;
             /** Reset Policy */
             reset_policy: string;
-            /** Sample */
-            sample?: string | null;
-            /** Scope Key */
-            scope_key: string;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
+            /** Sample */
+            sample?: string | null;
         };
         /** NumberSequenceUpdate */
         NumberSequenceUpdate: {
+            /** Pattern */
+            pattern?: string | null;
             /** Next Value */
             next_value?: number | null;
             /** Padding */
             padding?: number | null;
-            /** Pattern */
-            pattern?: string | null;
             reset_policy?: components["schemas"]["ResetPolicy"] | null;
         };
         /** OnboardingAdmin */
         OnboardingAdmin: {
-            /** Display Name */
-            display_name: string;
+            /** Username */
+            username: string;
             /**
              * Email
              * Format: email
              */
             email: string;
+            /** Display Name */
+            display_name: string;
             /** Phone */
             phone?: string | null;
-            /** Username */
-            username: string;
         };
         /** OnboardingInstitution */
         OnboardingInstitution: {
-            /** Address */
-            address?: {
-                [key: string]: unknown;
-            } | null;
-            /** Code */
-            code?: string | null;
-            /** Contact */
-            contact?: {
-                [key: string]: unknown;
-            } | null;
-            /**
-             * Currency
-             * @default INR
-             */
-            currency: string;
-            institution_type: components["schemas"]["InstitutionType"];
-            /**
-             * Locale
-             * @default en-IN
-             */
-            locale: string;
             /** Name */
             name: string;
-            /** Parent University Name */
-            parent_university_name?: string | null;
             /** Short Name */
             short_name?: string | null;
             /** Slug */
             slug: string;
+            /** Code */
+            code?: string | null;
+            institution_type: components["schemas"]["InstitutionType"];
             /**
              * Timezone
              * @default Asia/Kolkata
              */
             timezone: string;
+            /**
+             * Locale
+             * @default en-IN
+             */
+            locale: string;
+            /**
+             * Currency
+             * @default INR
+             */
+            currency: string;
+            /** Parent University Name */
+            parent_university_name?: string | null;
             /** Website Url */
             website_url?: string | null;
+            /** Contact */
+            contact?: {
+                [key: string]: unknown;
+            } | null;
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
         };
         /** OnboardingRequest */
         OnboardingRequest: {
-            admin: components["schemas"]["OnboardingAdmin"];
             institution: components["schemas"]["OnboardingInstitution"];
-            /**
-             * Pack
-             * @default IN
-             */
-            pack: string;
+            admin: components["schemas"]["OnboardingAdmin"];
             /**
              * Plan Code
              * @default standard
              */
             plan_code: string;
+            /**
+             * Pack
+             * @default IN
+             */
+            pack: string;
             /**
              * Seed Demo
              * @default false
@@ -6109,11 +8001,19 @@ export interface components {
         };
         /** OnboardingResponse */
         OnboardingResponse: {
-            /**
-             * Admin Temp Password
-             * @description shown once; the admin must change it at first sign-in
-             */
-            admin_temp_password: string;
+            institution: components["schemas"]["InstitutionProfileResponse"];
+            /** Main College Id */
+            main_college_id?: string | null;
+            /** Roles Created */
+            roles_created: number;
+            /** Defaults */
+            defaults: {
+                [key: string]: unknown;
+            };
+            /** Plan Code */
+            plan_code: string;
+            /** Features Enabled */
+            features_enabled: number;
             /**
              * Admin User Id
              * Format: uuid
@@ -6121,135 +8021,136 @@ export interface components {
             admin_user_id: string;
             /** Admin Username */
             admin_username: string;
-            /** Defaults */
-            defaults: {
-                [key: string]: unknown;
-            };
+            /**
+             * Admin Temp Password
+             * @description shown once; the admin must change it at first sign-in
+             */
+            admin_temp_password: string;
             /** Demo Job Id */
             demo_job_id?: string | null;
-            /** Features Enabled */
-            features_enabled: number;
-            institution: components["schemas"]["InstitutionProfileResponse"];
-            /** Main College Id */
-            main_college_id?: string | null;
-            /** Plan Code */
-            plan_code: string;
-            /** Roles Created */
-            roles_created: number;
         };
         /** OtpSendRequest */
         OtpSendRequest: {
-            /** Captcha Token */
-            captcha_token?: string | null;
+            /** Phone */
+            phone?: string | null;
             /** Email */
             email?: string | null;
             /** Institution Slug */
             institution_slug?: string | null;
-            /** Phone */
-            phone?: string | null;
+            /** Captcha Token */
+            captcha_token?: string | null;
         };
         /** OtpVerifyRequest */
         OtpVerifyRequest: {
-            /** Code */
-            code: string;
-            /** Device Label */
-            device_label?: string | null;
-            /** Email */
-            email?: string | null;
-            /** Institution Slug */
-            institution_slug?: string | null;
             /** Phone */
             phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Code */
+            code: string;
+            /** Institution Slug */
+            institution_slug?: string | null;
             /**
              * Platform
              * @default web
              * @enum {string}
              */
             platform: "web" | "pwa" | "android" | "ios" | "script";
+            /** Device Label */
+            device_label?: string | null;
+        };
+        /** PassRules */
+        PassRules: {
+            /** Ese Min Pct */
+            ese_min_pct?: number | null;
+            /** Total Min Pct */
+            total_min_pct?: number | null;
+            /** Cia Min Pct */
+            cia_min_pct?: number | null;
         };
         /** PermissionCatalogue */
         PermissionCatalogue: {
             /** Modules */
             modules: string[];
-            /** Permissions */
-            permissions: components["schemas"]["PermissionResponse"][];
             /** Standard Actions */
             standard_actions: string[];
+            /** Permissions */
+            permissions: components["schemas"]["PermissionResponse"][];
         };
         /** PermissionResponse */
         PermissionResponse: {
-            /** Action */
-            action: string;
-            /** Description */
-            description?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
+            /** Module */
+            module: string;
+            /** Action */
+            action: string;
+            /** Description */
+            description?: string | null;
             /**
              * Is Platform
              * @default false
              */
             is_platform: boolean;
-            /** Module */
-            module: string;
         };
         /** PlatformInstitutionResponse */
         PlatformInstitutionResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Short Name */
+            short_name?: string | null;
+            /** Slug */
+            slug: string;
             /** Code */
             code?: string | null;
-            /**
-             * College Count
-             * @default 0
-             */
-            college_count: number;
+            /** Institution Type */
+            institution_type: string;
+            /** Regulatory Pack */
+            regulatory_pack: string;
+            /** Timezone */
+            timezone: string;
+            /** Status */
+            status: string;
+            /** Is Active */
+            is_active: boolean;
             /**
              * Created At
              * Format: date-time
              */
             created_at: string;
             /**
-             * Id
-             * Format: uuid
+             * College Count
+             * @default 0
              */
-            id: string;
-            /** Institution Type */
-            institution_type: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Name */
-            name: string;
-            /** Plan Code */
-            plan_code?: string | null;
-            /** Regulatory Pack */
-            regulatory_pack: string;
-            /** Short Name */
-            short_name?: string | null;
-            /** Slug */
-            slug: string;
-            /** Status */
-            status: string;
-            /** Subscription Status */
-            subscription_status?: string | null;
-            /** Timezone */
-            timezone: string;
+            college_count: number;
             /**
              * User Count
              * @default 0
              */
             user_count: number;
+            /** Plan Code */
+            plan_code?: string | null;
+            /** Subscription Status */
+            subscription_status?: string | null;
         };
         /** PlatformInstitutionUpdate */
         PlatformInstitutionUpdate: {
-            /** Code */
-            code?: string | null;
             /** Name */
             name?: string | null;
-            /** Regulatory Pack */
-            regulatory_pack?: string | null;
             /** Short Name */
             short_name?: string | null;
+            /** Code */
+            code?: string | null;
+            /** Regulatory Pack */
+            regulatory_pack?: string | null;
             /** Status */
             status?: ("pending" | "active" | "archived") | null;
             /** Version */
@@ -6261,6 +8162,7 @@ export interface components {
             category: string;
             /** Channels */
             channels: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
+            quiet_hours?: components["schemas"]["QuietHours"] | null;
             /**
              * Digest
              * @default none
@@ -6272,19 +8174,311 @@ export interface components {
              * @default false
              */
             mandatory: boolean;
-            quiet_hours?: components["schemas"]["QuietHours"] | null;
         };
         /** PreferenceResponse */
         PreferenceResponse: {
-            /** Available Channels */
-            available_channels: string[];
             /** Items */
             items: components["schemas"]["PreferenceItem"][];
+            /** Available Channels */
+            available_channels: string[];
         };
         /** PreferenceUpdate */
         PreferenceUpdate: {
             /** Items */
             items: components["schemas"]["PreferenceItem"][];
+        };
+        /**
+         * PrereqRelation
+         * @enum {string}
+         */
+        PrereqRelation: "prerequisite" | "corequisite" | "antirequisite";
+        /** PrerequisiteIn */
+        PrerequisiteIn: {
+            /**
+             * Related Course Id
+             * Format: uuid
+             */
+            related_course_id: string;
+            /** @default prerequisite */
+            relation: components["schemas"]["PrereqRelation"];
+            /** Min Grade */
+            min_grade?: string | null;
+            /**
+             * Is Hard
+             * @default true
+             */
+            is_hard: boolean;
+        };
+        /** PrerequisiteOut */
+        PrerequisiteOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Related Course Id
+             * Format: uuid
+             */
+            related_course_id: string;
+            /** Relation */
+            relation: string;
+            /** Min Grade */
+            min_grade?: string | null;
+            /** Is Hard */
+            is_hard: boolean;
+            /** Related Code */
+            related_code?: string | null;
+            /** Related Title */
+            related_title?: string | null;
+        };
+        /** PrerequisiteSet */
+        PrerequisiteSet: {
+            /** Items */
+            items: components["schemas"]["PrerequisiteIn"][];
+        };
+        /** ProgramCreate */
+        ProgramCreate: {
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Faculty Id */
+            faculty_id?: string | null;
+            /**
+             * Department Id
+             * Format: uuid
+             */
+            department_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Degree Name */
+            degree_name: string;
+            /** Specialization */
+            specialization?: string | null;
+            level: components["schemas"]["ProgramLevel"];
+            /** @default regular */
+            mode: components["schemas"]["ProgramMode"];
+            /** @default semester */
+            term_pattern: components["schemas"]["TermPattern"];
+            /** Duration Years */
+            duration_years: number | string;
+            /** Total Terms */
+            total_terms: number;
+            /** Max Duration Years */
+            max_duration_years?: number | string | null;
+            /** Sanctioned Intake */
+            sanctioned_intake?: number | null;
+            /** Lateral Intake */
+            lateral_intake?: number | null;
+            /** Approving Body */
+            approving_body?: string | null;
+            exam_authority?: components["schemas"]["ExamAuthority"] | null;
+            /**
+             * Is Nep Multidisciplinary
+             * @default false
+             */
+            is_nep_multidisciplinary: boolean;
+            /**
+             * Is Open Enrolment
+             * @default false
+             */
+            is_open_enrolment: boolean;
+            /** @default active */
+            status: components["schemas"]["ProgramStatus"];
+        };
+        /**
+         * ProgramLevel
+         * @enum {string}
+         */
+        ProgramLevel: "certificate" | "diploma" | "ug" | "pg" | "pg_diploma" | "integrated" | "mphil" | "phd";
+        /**
+         * ProgramMode
+         * @enum {string}
+         */
+        ProgramMode: "regular" | "part_time" | "distance" | "online";
+        /** ProgramRegulationCreate */
+        ProgramRegulationCreate: {
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Total Credits Required */
+            total_credits_required: number | string;
+            /** Rules Override */
+            rules_override?: {
+                [key: string]: unknown;
+            } | null;
+            /** @default draft */
+            status: components["schemas"]["ProgramRegulationStatus"];
+        };
+        /** ProgramRegulationResponse */
+        ProgramRegulationResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Rules Override */
+            rules_override?: {
+                [key: string]: unknown;
+            } | null;
+            /** Total Credits Required */
+            total_credits_required: string;
+            /** Status */
+            status: string;
+            /** Version */
+            version: number;
+            /** Program Code */
+            program_code?: string | null;
+            /** Program Name */
+            program_name?: string | null;
+            /** Regulation Code */
+            regulation_code?: string | null;
+            /** Regulation Status */
+            regulation_status?: string | null;
+            /** Total Terms */
+            total_terms?: number | null;
+        };
+        /**
+         * ProgramRegulationStatus
+         * @enum {string}
+         */
+        ProgramRegulationStatus: "draft" | "active" | "closed";
+        /** ProgramRegulationUpdate */
+        ProgramRegulationUpdate: {
+            /** Total Credits Required */
+            total_credits_required?: number | string | null;
+            /** Rules Override */
+            rules_override?: {
+                [key: string]: unknown;
+            } | null;
+            status?: components["schemas"]["ProgramRegulationStatus"] | null;
+            /** Version */
+            version?: number | null;
+        };
+        /** ProgramResponse */
+        ProgramResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Faculty Id */
+            faculty_id?: string | null;
+            /**
+             * Department Id
+             * Format: uuid
+             */
+            department_id: string;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Degree Name */
+            degree_name: string;
+            /** Specialization */
+            specialization?: string | null;
+            /** Level */
+            level: string;
+            /** Mode */
+            mode: string;
+            /** Term Pattern */
+            term_pattern: string;
+            /** Duration Years */
+            duration_years: string;
+            /** Total Terms */
+            total_terms: number;
+            /** Max Duration Years */
+            max_duration_years?: string | null;
+            /** Sanctioned Intake */
+            sanctioned_intake?: number | null;
+            /** Lateral Intake */
+            lateral_intake?: number | null;
+            /** Approving Body */
+            approving_body?: string | null;
+            /** Exam Authority */
+            exam_authority: string;
+            /** Is Nep Multidisciplinary */
+            is_nep_multidisciplinary: boolean;
+            /** Is Open Enrolment */
+            is_open_enrolment: boolean;
+            /** Status */
+            status: string;
+            /** Version */
+            version: number;
+            /** College Code */
+            college_code?: string | null;
+            /** Department Code */
+            department_code?: string | null;
+            /**
+             * Can Edit
+             * @default false
+             */
+            can_edit: boolean;
+        };
+        /**
+         * ProgramStatus
+         * @enum {string}
+         */
+        ProgramStatus: "draft" | "active" | "closed";
+        /** ProgramUpdate */
+        ProgramUpdate: {
+            /** Faculty Id */
+            faculty_id?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Degree Name */
+            degree_name?: string | null;
+            /** Specialization */
+            specialization?: string | null;
+            mode?: components["schemas"]["ProgramMode"] | null;
+            term_pattern?: components["schemas"]["TermPattern"] | null;
+            /** Duration Years */
+            duration_years?: number | string | null;
+            /** Total Terms */
+            total_terms?: number | null;
+            /** Max Duration Years */
+            max_duration_years?: number | string | null;
+            /** Sanctioned Intake */
+            sanctioned_intake?: number | null;
+            /** Lateral Intake */
+            lateral_intake?: number | null;
+            /** Approving Body */
+            approving_body?: string | null;
+            exam_authority?: components["schemas"]["ExamAuthority"] | null;
+            /** Is Nep Multidisciplinary */
+            is_nep_multidisciplinary?: boolean | null;
+            /** Is Open Enrolment */
+            is_open_enrolment?: boolean | null;
+            /** Status */
+            status?: ("draft" | "active") | null;
+            /** Version */
+            version?: number | null;
         };
         /** ProviderTestRequest */
         ProviderTestRequest: {
@@ -6293,76 +8487,150 @@ export interface components {
              * @enum {string}
              */
             channel: "sms" | "email" | "whatsapp" | "push";
-            /** Message */
-            message?: string | null;
             /** To */
             to: string;
+            /** Message */
+            message?: string | null;
         };
         /** ProviderTestResponse */
         ProviderTestResponse: {
             /** Channel */
             channel: string;
+            /** Provider */
+            provider: string;
+            /** Status */
+            status: string;
+            /** Reference */
+            reference?: string | null;
             /**
              * Message Log Id
              * Format: uuid
              */
             message_log_id: string;
-            /** Provider */
-            provider: string;
-            /** Reference */
-            reference?: string | null;
-            /** Status */
-            status: string;
+        };
+        /** PublicCatalogCourse */
+        PublicCatalogCourse: {
+            /** Code */
+            code: string;
+            /** Title */
+            title: string;
+            /** Course Type */
+            course_type: string;
+            /** Credits */
+            credits: string;
+            /** Lecture Hours */
+            lecture_hours: number;
+            /** Tutorial Hours */
+            tutorial_hours: number;
+            /** Practical Hours */
+            practical_hours: number;
+            /** Term Number */
+            term_number?: number | null;
+            /** Regulation */
+            regulation: string;
+            /** Department */
+            department?: string | null;
+            /** Syllabus */
+            syllabus?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Textbooks */
+            textbooks?: unknown[] | null;
+        };
+        /** PublicCatalogProgram */
+        PublicCatalogProgram: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Degree Name */
+            degree_name: string;
+            /** Specialization */
+            specialization?: string | null;
+            /** Level */
+            level: string;
+            /** Mode */
+            mode: string;
+            /** Duration Years */
+            duration_years: string;
+            /** Total Terms */
+            total_terms: number;
+            /** Sanctioned Intake */
+            sanctioned_intake?: number | null;
+            /** College */
+            college: string;
+            /** College Name */
+            college_name?: string | null;
+            /** Department */
+            department?: string | null;
+            /** Regulation */
+            regulation?: string | null;
+            /** Total Credits */
+            total_credits?: string | null;
+            /** Courses */
+            courses?: components["schemas"]["PublicCatalogCourse"][];
+        };
+        /** PublicCatalogResponse */
+        PublicCatalogResponse: {
+            /** Institution */
+            institution: string;
+            /** Programs */
+            programs: components["schemas"]["PublicCatalogProgram"][];
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
         };
         /** PublicConfig */
         PublicConfig: {
-            /** Api Version */
-            api_version: string;
-            /** Captcha */
-            captcha: {
-                [key: string]: unknown;
-            };
-            /** Colleges */
-            colleges?: components["schemas"]["CollegeSummary"][];
-            /** Default Pack */
-            default_pack: string;
             /** Environment */
             environment: string;
-            /** Features Public */
-            features_public?: string[];
-            institution?: components["schemas"]["InstitutionSummary"] | null;
-            /** Min App Versions */
-            min_app_versions: {
-                [key: string]: string;
-            };
+            /** Api Version */
+            api_version: string;
             /** Packs */
             packs: {
                 [key: string]: {
                     [key: string]: unknown;
                 };
             };
-            /** Table Styles */
-            table_styles: string[];
+            /** Default Pack */
+            default_pack: string;
             /** Themes */
             themes: string[];
+            /** Table Styles */
+            table_styles: string[];
+            /** Captcha */
+            captcha: {
+                [key: string]: unknown;
+            };
+            /** Min App Versions */
+            min_app_versions: {
+                [key: string]: string;
+            };
+            /** Features Public */
+            features_public?: string[];
+            institution?: components["schemas"]["InstitutionSummary"] | null;
+            /** Colleges */
+            colleges?: components["schemas"]["CollegeSummary"][];
         };
         /** PublicSettingsResponse */
         PublicSettingsResponse: {
             /** Institution Id */
             institution_id?: string | null;
+            /** Theme */
+            theme: string;
+            /** Table Style */
+            table_style: string;
+            /** Theme Tokens */
+            theme_tokens: {
+                [key: string]: string;
+            };
             /** Settings */
             settings: {
                 [key: string]: {
                     [key: string]: unknown;
                 };
-            };
-            /** Table Style */
-            table_style: string;
-            /** Theme */
-            theme: string;
-            /** Theme Tokens */
-            theme_tokens: {
-                [key: string]: string;
             };
         };
         /** QuietHours */
@@ -6374,8 +8642,16 @@ export interface components {
         };
         /** ReadOnlyModeRequest */
         ReadOnlyModeRequest: {
+            /**
+             * Scope
+             * @default institution
+             * @enum {string}
+             */
+            scope: "platform" | "institution";
             /** Enabled */
             enabled: boolean;
+            /** Reason */
+            reason?: string | null;
             /** Ends At */
             ends_at?: string | null;
             /**
@@ -6383,30 +8659,22 @@ export interface components {
              * @description Super admin only: target tenant (defaults to the caller's institution)
              */
             institution_id?: string | null;
-            /** Reason */
-            reason?: string | null;
-            /**
-             * Scope
-             * @default institution
-             * @enum {string}
-             */
-            scope: "platform" | "institution";
         };
         /** ReadOnlyState */
         ReadOnlyState: {
-            /** Ends At */
-            ends_at?: string | null;
+            /** Platform */
+            platform: boolean;
             /**
              * Institution
              * @default false
              */
             institution: boolean;
-            /** Institution Id */
-            institution_id?: string | null;
-            /** Platform */
-            platform: boolean;
             /** Reason */
             reason?: string | null;
+            /** Ends At */
+            ends_at?: string | null;
+            /** Institution Id */
+            institution_id?: string | null;
         };
         /** RecoveryCodesResponse */
         RecoveryCodesResponse: {
@@ -6431,12 +8699,170 @@ export interface components {
              */
             refresh_token?: string | null;
         };
+        /** RegulationApproveRequest */
+        RegulationApproveRequest: {
+            /** Resolution Id */
+            resolution_id?: string | null;
+        };
+        /** RegulationApproveResponse */
+        RegulationApproveResponse: {
+            regulation: components["schemas"]["RegulationResponse"];
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+            /**
+             * Pending Workflow
+             * @default false
+             */
+            pending_workflow: boolean;
+        };
+        /** RegulationCloneRequest */
+        RegulationCloneRequest: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Effective From Admission Year */
+            effective_from_admission_year: number;
+        };
+        /** RegulationCreate */
+        RegulationCreate: {
+            /** College Id */
+            college_id?: string | null;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Effective From Admission Year */
+            effective_from_admission_year: number;
+            /** Grading Scale Id */
+            grading_scale_id?: string | null;
+            /** Rules */
+            rules?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** RegulationDiffResponse */
+        RegulationDiffResponse: {
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Regulation Code */
+            regulation_code: string;
+            /** Predecessor Id */
+            predecessor_id?: string | null;
+            /** Predecessor Code */
+            predecessor_code?: string | null;
+            /** Added */
+            added?: components["schemas"]["CourseBrief"][];
+            /** Removed */
+            removed?: components["schemas"]["CourseBrief"][];
+            /** Changed */
+            changed?: components["schemas"]["CourseChange"][];
+            /** Rules Changed */
+            rules_changed?: {
+                [key: string]: {
+                    [key: string]: unknown;
+                };
+            };
+            /**
+             * Unchanged Count
+             * @default 0
+             */
+            unchanged_count: number;
+        };
+        /** RegulationResponse */
+        RegulationResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Effective From Admission Year */
+            effective_from_admission_year: number;
+            /** Grading Scale Id */
+            grading_scale_id?: string | null;
+            /** Rules */
+            rules: {
+                [key: string]: unknown;
+            };
+            /** Status */
+            status: string;
+            /** Approved By */
+            approved_by?: string | null;
+            /** Approved At */
+            approved_at?: string | null;
+            /** Approval Resolution Id */
+            approval_resolution_id?: string | null;
+            /** Locked At */
+            locked_at?: string | null;
+            /** Superseded By Id */
+            superseded_by_id?: string | null;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Course Count
+             * @default 0
+             */
+            course_count: number;
+            /**
+             * Program Count
+             * @default 0
+             */
+            program_count: number;
+            /** Predecessor Id */
+            predecessor_id?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+            /**
+             * Rules Locked
+             * @default false
+             */
+            rules_locked: boolean;
+            /**
+             * Structure Locked
+             * @default false
+             */
+            structure_locked: boolean;
+        };
+        /**
+         * RegulationStatus
+         * @enum {string}
+         */
+        RegulationStatus: "draft" | "approved" | "active" | "superseded";
+        /** RegulationUpdate */
+        RegulationUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Effective From Admission Year */
+            effective_from_admission_year?: number | null;
+            /** Grading Scale Id */
+            grading_scale_id?: string | null;
+            /** Rules */
+            rules?: {
+                [key: string]: unknown;
+            } | null;
+            /** Version */
+            version?: number | null;
+        };
         /** ResetPasswordRequest */
         ResetPasswordRequest: {
-            /** Password */
-            password: string;
             /** Token */
             token: string;
+            /** Password */
+            password: string;
         };
         /**
          * ResetPolicy
@@ -6452,35 +8878,35 @@ export interface components {
         };
         /** RoleCreate */
         RoleCreate: {
+            /** Name */
+            name: string;
+            /** Slug */
+            slug: string;
+            /** Description */
+            description?: string | null;
             /**
              * Default Scope Type
              * @default institution
              * @enum {string}
              */
             default_scope_type: "institution" | "college" | "faculty" | "department" | "program" | "offering" | "self" | "committee" | "hostel";
-            /** Description */
-            description?: string | null;
-            /** Name */
-            name: string;
+            /** Portal */
+            portal?: string | null;
             /**
              * Permissions
              * @description initial module:action grants
              */
             permissions?: string[];
-            /** Portal */
-            portal?: string | null;
-            /** Slug */
-            slug: string;
         };
         /**
          * RolePermissionMatrix
          * @description Rows = modules, columns = actions (docs/Roles_and_Permissions.md §2). ``PUT`` may send only the changed cells.
          */
         RolePermissionMatrix: {
-            /** Modules */
-            modules: components["schemas"]["MatrixModule"][];
             /** Role Id */
             role_id?: string | null;
+            /** Modules */
+            modules: components["schemas"]["MatrixModule"][];
         };
         /** RolePermissionMatrixUpdate */
         RolePermissionMatrixUpdate: {
@@ -6491,17 +8917,6 @@ export interface components {
         };
         /** RoleResponse */
         RoleResponse: {
-            /** Assignment Count */
-            assignment_count?: number | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Default Scope Type */
-            default_scope_type: string;
-            /** Description */
-            description?: string | null;
             /**
              * Id
              * Format: uuid
@@ -6509,38 +8924,49 @@ export interface components {
             id: string;
             /** Institution Id */
             institution_id?: string | null;
-            /** Is Active */
-            is_active: boolean;
-            /** Is System */
-            is_system: boolean;
             /** Name */
             name: string;
-            /** Permission Count */
-            permission_count?: number | null;
-            /** Portal */
-            portal?: string | null;
             /** Slug */
             slug: string;
+            /** Description */
+            description?: string | null;
+            /** Is System */
+            is_system: boolean;
+            /** Default Scope Type */
+            default_scope_type: string;
+            /** Portal */
+            portal?: string | null;
+            /** Is Active */
+            is_active: boolean;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
-            /** Version */
-            version: number;
+            /** Permission Count */
+            permission_count?: number | null;
+            /** Assignment Count */
+            assignment_count?: number | null;
         };
         /** RoleUpdate */
         RoleUpdate: {
-            /** Default Scope Type */
-            default_scope_type?: ("institution" | "college" | "faculty" | "department" | "program" | "offering" | "self" | "committee" | "hostel") | null;
-            /** Description */
-            description?: string | null;
-            /** Is Active */
-            is_active?: boolean | null;
             /** Name */
             name?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Default Scope Type */
+            default_scope_type?: ("institution" | "college" | "faculty" | "department" | "program" | "offering" | "self" | "committee" | "hostel") | null;
             /** Portal */
             portal?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
             /**
              * Version
              * @description optimistic lock (If-Match semantics)
@@ -6549,70 +8975,58 @@ export interface components {
         };
         /** RolloverRequest */
         RolloverRequest: {
+            /** New Year Name */
+            new_year_name: string;
             /**
-             * College Id
-             * @description scope of the years (NULL = institution-wide)
+             * Start Date
+             * Format: date
              */
-            college_id?: string | null;
+            start_date: string;
             /**
              * End Date
              * Format: date
              */
             end_date: string;
-            /**
-             * Lock Previous
-             * @default false
-             */
-            lock_previous: boolean;
-            /** New Year Name */
-            new_year_name: string;
+            /** Terms */
+            terms: components["schemas"]["RolloverTerm"][];
             /**
              * Promote Batches
              * @default false
              */
             promote_batches: boolean;
             /**
-             * Start Date
-             * Format: date
+             * College Id
+             * @description scope of the years (NULL = institution-wide)
              */
-            start_date: string;
-            /** Terms */
-            terms: components["schemas"]["RolloverTerm"][];
+            college_id?: string | null;
+            /**
+             * Lock Previous
+             * @default false
+             */
+            lock_previous: boolean;
         };
         /** RolloverResponse */
         RolloverResponse: {
+            /** Previous Year Id */
+            previous_year_id?: string | null;
+            year: components["schemas"]["AcademicYearResponse"];
             /** Current Term Id */
             current_term_id?: string | null;
+            /** Promoted */
+            promoted?: {
+                [key: string]: number;
+            };
             /**
              * Event Id
              * Format: uuid
              */
             event_id: string;
-            /** Previous Year Id */
-            previous_year_id?: string | null;
-            /** Promoted */
-            promoted?: {
-                [key: string]: number;
-            };
-            year: components["schemas"]["AcademicYearResponse"];
         };
         /** RolloverTerm */
         RolloverTerm: {
-            /** Add Drop End */
-            add_drop_end?: string | null;
-            /**
-             * End Date
-             * Format: date
-             */
-            end_date: string;
-            /** Last Instruction Date */
-            last_instruction_date?: string | null;
             /** Name */
             name: string;
-            /** Registration End */
-            registration_end?: string | null;
-            /** Registration Start */
-            registration_start?: string | null;
+            term_type: components["schemas"]["TermType"];
             /** Sequence */
             sequence: number;
             /**
@@ -6620,60 +9034,107 @@ export interface components {
              * Format: date
              */
             start_date: string;
-            term_type: components["schemas"]["TermType"];
+            /**
+             * End Date
+             * Format: date
+             */
+            end_date: string;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Add Drop End */
+            add_drop_end?: string | null;
+            /** Last Instruction Date */
+            last_instruction_date?: string | null;
         };
+        /** RulesEffectiveResponse */
+        RulesEffectiveResponse: {
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Program Id */
+            program_id?: string | null;
+            /** Program Regulation Id */
+            program_regulation_id?: string | null;
+            /** Rules */
+            rules: {
+                [key: string]: unknown;
+            };
+            /** Overridden Keys */
+            overridden_keys?: string[];
+        };
+        /** RulesHelpItem */
+        RulesHelpItem: {
+            /** Key */
+            key: string;
+            /** Default */
+            default?: unknown;
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+        };
+        /**
+         * ScaleType
+         * @enum {string}
+         */
+        ScaleType: "absolute" | "relative";
         /** ScopeOut */
         ScopeOut: {
-            /** Label */
-            label?: string | null;
-            /** Scope Id */
-            scope_id?: string | null;
             /** Scope Type */
             scope_type: string;
+            /** Scope Id */
+            scope_id?: string | null;
+            /** Label */
+            label?: string | null;
         };
         /** SearchResponse */
         SearchResponse: {
-            /** Entity Types */
-            entity_types: string[];
             /** Q */
             q: string;
             /** Results */
             results: components["schemas"]["SearchResult"][];
+            /** Entity Types */
+            entity_types: string[];
         };
         /** SearchResult */
         SearchResult: {
-            /** College Id */
-            college_id?: string | null;
-            /**
-             * Entity Id
-             * Format: uuid
-             */
-            entity_id: string;
             /**
              * Entity Type
              * @enum {string}
              */
             entity_type: "student" | "staff" | "course" | "applicant";
-            /** Route */
-            route: string;
-            /** Subtitle */
-            subtitle?: string | null;
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
             /** Title */
             title: string;
+            /** Subtitle */
+            subtitle?: string | null;
+            /** Route */
+            route: string;
+            /** College Id */
+            college_id?: string | null;
         };
         /** SendMessageRequest */
         SendMessageRequest: {
-            audience: components["schemas"]["Audience"];
-            /** Channels */
-            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[] | null;
-            /** Context */
-            context?: {
-                [key: string]: unknown;
-            };
             /** Event Type */
             event_type?: string | null;
             /** Template Id */
             template_id?: string | null;
+            audience: components["schemas"]["Audience"];
+            /** Context */
+            context?: {
+                [key: string]: unknown;
+            };
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[] | null;
         };
         /** SendMessageResponse */
         SendMessageResponse: {
@@ -6690,83 +9151,83 @@ export interface components {
         /** SessionResponse */
         SessionResponse: {
             /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Device Label */
+            device_label?: string | null;
+            /** Platform */
+            platform?: string | null;
+            /** Ip Masked */
+            ip_masked?: string | null;
+            /** User Agent */
+            user_agent?: string | null;
+            /**
              * Created At
              * Format: date-time
              */
             created_at: string;
             /**
-             * Current
-             * @default false
+             * Last Seen At
+             * Format: date-time
              */
-            current: boolean;
-            /** Device Label */
-            device_label?: string | null;
+            last_seen_at: string;
             /**
              * Expires At
              * Format: date-time
              */
             expires_at: string;
             /**
-             * Id
-             * Format: uuid
+             * Current
+             * @default false
              */
-            id: string;
-            /** Ip Masked */
-            ip_masked?: string | null;
-            /**
-             * Last Seen At
-             * Format: date-time
-             */
-            last_seen_at: string;
-            /** Platform */
-            platform?: string | null;
-            /** User Agent */
-            user_agent?: string | null;
+            current: boolean;
         };
         /** SettingItem */
         SettingItem: {
             /** Category */
             category: string;
+            /** Key */
+            key: string;
+            /** Value */
+            value?: unknown;
             /**
              * College Id
              * @description college-level override (NULL = institution)
              */
             college_id?: string | null;
-            /** Key */
-            key: string;
-            /** Value */
-            value?: unknown;
         };
         /** SettingResponse */
         SettingResponse: {
             /** Category */
             category: string;
-            /** Choices */
-            choices?: string[];
-            /** College Id */
-            college_id?: string | null;
-            /** Default */
-            default?: unknown;
-            /** Feature */
-            feature?: string | null;
-            /**
-             * Is Default
-             * @default true
-             */
-            is_default: boolean;
+            /** Key */
+            key: string;
+            /** Value */
+            value?: unknown;
+            /** Value Type */
+            value_type: string;
             /**
              * Is Public
              * @default false
              */
             is_public: boolean;
-            /** Key */
-            key: string;
+            /** Default */
+            default?: unknown;
+            /**
+             * Is Default
+             * @default true
+             */
+            is_default: boolean;
+            /** Choices */
+            choices?: string[];
             /** Label */
             label?: string | null;
-            /** Value */
-            value?: unknown;
-            /** Value Type */
-            value_type: string;
+            /** Feature */
+            feature?: string | null;
+            /** College Id */
+            college_id?: string | null;
         };
         /** SettingsBulkUpdate */
         SettingsBulkUpdate: {
@@ -6780,48 +9241,44 @@ export interface components {
             /** Items */
             items: components["schemas"]["SettingResponse"][];
         };
+        /** SpecialGrade */
+        SpecialGrade: {
+            /** Grade */
+            grade: string;
+            /** Meaning */
+            meaning: string;
+            /**
+             * Counts As Attempt
+             * @default true
+             */
+            counts_as_attempt: boolean;
+            /** Points */
+            points?: number | null;
+        };
         /** SsoStartResponse */
         SsoStartResponse: {
-            /** Authorize Url */
-            authorize_url: string;
             /** Provider */
             provider: string;
+            /** Authorize Url */
+            authorize_url: string;
             /** State */
             state: string;
         };
         /** StatutoryIds */
         StatutoryIds: {
-            /** Aicte Pid */
-            aicte_pid?: string | null;
             /** Aishe Code */
             aishe_code?: string | null;
-            /** Gstin */
-            gstin?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
             /** Naac Id */
             naac_id?: string | null;
             /** Ugc Status */
             ugc_status?: string | null;
+            /** Gstin */
+            gstin?: string | null;
         };
         /** StepResponse */
         StepResponse: {
-            /** Acted At */
-            acted_at?: string | null;
-            /** Acted By */
-            acted_by?: string | null;
-            /** Acted By Name */
-            acted_by_name?: string | null;
-            /** Approver Name */
-            approver_name?: string | null;
-            /** Approver Role Slug */
-            approver_role_slug?: string | null;
-            /** Approver User Id */
-            approver_user_id?: string | null;
-            /** Comment */
-            comment?: string | null;
-            /** Delegated From */
-            delegated_from?: string | null;
-            /** Escalated To */
-            escalated_to?: string | null;
             /**
              * Id
              * Format: uuid
@@ -6829,25 +9286,176 @@ export interface components {
             id: string;
             /** Order */
             order: number;
-            /** Sla Due At */
-            sla_due_at?: string | null;
+            /** Approver User Id */
+            approver_user_id?: string | null;
+            /** Approver Name */
+            approver_name?: string | null;
+            /** Approver Role Slug */
+            approver_role_slug?: string | null;
             /** Status */
             status: string;
+            /** Acted By */
+            acted_by?: string | null;
+            /** Acted By Name */
+            acted_by_name?: string | null;
+            /** Delegated From */
+            delegated_from?: string | null;
+            /** Acted At */
+            acted_at?: string | null;
+            /** Comment */
+            comment?: string | null;
+            /** Sla Due At */
+            sla_due_at?: string | null;
+            /** Escalated To */
+            escalated_to?: string | null;
         };
         /** StepSpec */
         StepSpec: {
+            /** Order */
+            order: number;
             approver: components["schemas"]["ApproverSpec"];
-            escalate_to?: components["schemas"]["ApproverSpec"] | null;
             /**
              * Mode
              * @default sequential
              * @enum {string}
              */
             mode: "sequential" | "parallel";
-            /** Order */
-            order: number;
             /** Sla Hours */
             sla_hours?: number | null;
+            escalate_to?: components["schemas"]["ApproverSpec"] | null;
+        };
+        /** StructureIssue */
+        StructureIssue: {
+            /** Code */
+            code: string;
+            /**
+             * Severity
+             * @enum {string}
+             */
+            severity: "error" | "warning";
+            /** Message */
+            message: string;
+            /** Term Number */
+            term_number?: number | null;
+            /** Course Id */
+            course_id?: string | null;
+        };
+        /** StructureReplaceRequest */
+        StructureReplaceRequest: {
+            /** Terms */
+            terms: components["schemas"]["StructureTermIn"][];
+            /** Courses */
+            courses?: components["schemas"]["CurriculumCourseIn"][];
+            /** Baskets */
+            baskets?: components["schemas"]["BasketIn"][] | null;
+            /** Version */
+            version?: number | null;
+        };
+        /** StructureResponse */
+        StructureResponse: {
+            /**
+             * Program Regulation Id
+             * Format: uuid
+             */
+            program_regulation_id: string;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /**
+             * Regulation Id
+             * Format: uuid
+             */
+            regulation_id: string;
+            /** Regulation Status */
+            regulation_status: string;
+            /** Total Terms */
+            total_terms: number;
+            /** Term Pattern */
+            term_pattern: string;
+            /** Total Credits Required */
+            total_credits_required: string;
+            /** Version */
+            version: number;
+            /** Locked */
+            locked: boolean;
+            /** Terms */
+            terms: components["schemas"]["StructureTermOut"][];
+            /** Courses */
+            courses: components["schemas"]["CurriculumCourseOut"][];
+            /** Baskets */
+            baskets: components["schemas"]["BasketOut"][];
+            /** Exit Points */
+            exit_points?: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** StructureTermIn */
+        StructureTermIn: {
+            /** Term Number */
+            term_number: number;
+            /** Name */
+            name?: string | null;
+            /** Min Credits */
+            min_credits: number | string;
+            /** Normal Credits */
+            normal_credits: number | string;
+            /** Max Credits */
+            max_credits: number | string;
+            /**
+             * Is Exit Point
+             * @default false
+             */
+            is_exit_point: boolean;
+            /** Exit Award */
+            exit_award?: string | null;
+        };
+        /** StructureTermOut */
+        StructureTermOut: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Term Number */
+            term_number: number;
+            /** Name */
+            name: string;
+            /** Min Credits */
+            min_credits: string;
+            /** Normal Credits */
+            normal_credits: string;
+            /** Max Credits */
+            max_credits: string;
+            /** Is Exit Point */
+            is_exit_point: boolean;
+            /** Exit Award */
+            exit_award?: string | null;
+        };
+        /** StructureValidationResponse */
+        StructureValidationResponse: {
+            /**
+             * Program Regulation Id
+             * Format: uuid
+             */
+            program_regulation_id: string;
+            /** Credit Totals By Term */
+            credit_totals_by_term: {
+                [key: string]: string;
+            };
+            /** Mandatory Credits */
+            mandatory_credits: string;
+            /** Basket Credits */
+            basket_credits: string;
+            /** Total */
+            total: string;
+            /** Required */
+            required: string;
+            /** Issues */
+            issues: components["schemas"]["StructureIssue"][];
+            /** Valid */
+            valid: boolean;
         };
         /** StudentStubCreate */
         StudentStubCreate: {
@@ -6861,43 +9469,54 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** SyllabusUnit */
+        SyllabusUnit: {
+            /** Unit */
+            unit: number;
+            /** Title */
+            title: string;
+            /** Topics */
+            topics?: string[];
+            /** Hours */
+            hours?: number | null;
+        };
         /** TemplateCreate */
         TemplateCreate: {
-            /**
-             * Activate
-             * @default true
-             */
-            activate: boolean;
-            /** Body Template */
-            body_template: string;
-            /** Channels */
-            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
-            /** Dlt Template Id */
-            dlt_template_id?: string | null;
             /** Event Trigger */
             event_trigger: string;
+            /** Name */
+            name: string;
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
+            /** Subject Template */
+            subject_template?: string | null;
+            /** Body Template */
+            body_template: string;
+            /** Variables */
+            variables?: string[];
             /**
              * Language
              * @default en
              */
             language: string;
-            /** Name */
-            name: string;
-            /** Subject Template */
-            subject_template?: string | null;
-            /** Variables */
-            variables?: string[];
+            /** Dlt Template Id */
+            dlt_template_id?: string | null;
             /** Whatsapp Template Name */
             whatsapp_template_name?: string | null;
+            /**
+             * Activate
+             * @default true
+             */
+            activate: boolean;
         };
         /** TemplatePreview */
         TemplatePreview: {
+            /** Subject */
+            subject?: string | null;
             /** Body */
             body: string;
             /** Missing Variables */
             missing_variables?: string[];
-            /** Subject */
-            subject?: string | null;
         };
         /** TemplatePreviewRequest */
         TemplatePreviewRequest: {
@@ -6908,16 +9527,6 @@ export interface components {
         };
         /** TemplateResponse */
         TemplateResponse: {
-            /** Body Template */
-            body_template: string;
-            /** Category */
-            category?: string | null;
-            /** Channels */
-            channels: string[];
-            /** Dlt Template Id */
-            dlt_template_id?: string | null;
-            /** Event Trigger */
-            event_trigger: string;
             /**
              * Id
              * Format: uuid
@@ -6925,67 +9534,82 @@ export interface components {
             id: string;
             /** Institution Id */
             institution_id?: string | null;
-            /** Is Active */
-            is_active: boolean;
-            /**
-             * Is Platform
-             * @default false
-             */
-            is_platform: boolean;
-            /** Language */
-            language: string;
+            /** Event Trigger */
+            event_trigger: string;
             /** Name */
             name: string;
+            /** Channels */
+            channels: string[];
             /** Subject Template */
             subject_template?: string | null;
+            /** Body Template */
+            body_template: string;
+            /** Variables */
+            variables?: string[] | null;
+            /** Language */
+            language: string;
+            /** Version */
+            version: number;
+            /** Is Active */
+            is_active: boolean;
+            /** Dlt Template Id */
+            dlt_template_id?: string | null;
+            /** Whatsapp Template Name */
+            whatsapp_template_name?: string | null;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
-            /** Variables */
-            variables?: string[] | null;
-            /** Version */
-            version: number;
-            /** Whatsapp Template Name */
-            whatsapp_template_name?: string | null;
+            /**
+             * Is Platform
+             * @default false
+             */
+            is_platform: boolean;
+            /** Category */
+            category?: string | null;
         };
         /**
          * TemplateUpdate
          * @description Editing creates a new version (the previous one stays for audit); ``activate`` switches the resolver to it.
          */
         TemplateUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[] | null;
+            /** Subject Template */
+            subject_template?: string | null;
+            /** Body Template */
+            body_template?: string | null;
+            /** Variables */
+            variables?: string[] | null;
+            /** Dlt Template Id */
+            dlt_template_id?: string | null;
+            /** Whatsapp Template Name */
+            whatsapp_template_name?: string | null;
             /**
              * Activate
              * @default true
              */
             activate: boolean;
-            /** Body Template */
-            body_template?: string | null;
-            /** Channels */
-            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[] | null;
-            /** Dlt Template Id */
-            dlt_template_id?: string | null;
-            /** Name */
-            name?: string | null;
-            /** Subject Template */
-            subject_template?: string | null;
-            /** Variables */
-            variables?: string[] | null;
-            /** Whatsapp Template Name */
-            whatsapp_template_name?: string | null;
         };
         /** TermCloseCheck */
         TermCloseCheck: {
-            /** Detail */
-            detail?: string | null;
             /** Key */
             key: string;
             /** Label */
             label: string;
             /** Passed */
             passed: boolean;
+            /** Detail */
+            detail?: string | null;
         };
+        /**
+         * TermPattern
+         * @enum {string}
+         */
+        TermPattern: "semester" | "year" | "trimester";
         /**
          * TermStatus
          * @enum {string}
@@ -7009,54 +9633,43 @@ export interface components {
         };
         /** UserCreate */
         UserCreate: {
-            /** Display Name */
-            display_name?: string | null;
+            /** Username */
+            username: string;
             /** Email */
             email?: string | null;
-            /** Locale */
-            locale?: string | null;
-            /**
-             * Must Change Password
-             * @default true
-             */
-            must_change_password: boolean;
-            /**
-             * Password
-             * @description omit to generate a temporary password
-             */
-            password?: string | null;
             /** Phone */
             phone?: string | null;
-            /** Roles */
-            roles?: components["schemas"]["UserRoleAssign"][];
-            /** Timezone */
-            timezone?: string | null;
+            /** Display Name */
+            display_name?: string | null;
             /**
              * User Type
              * @default staff
              * @enum {string}
              */
             user_type: "staff" | "student" | "guardian" | "alumni" | "applicant" | "recruiter" | "external" | "platform";
-            /** Username */
-            username: string;
+            /**
+             * Password
+             * @description omit to generate a temporary password
+             */
+            password?: string | null;
+            /**
+             * Must Change Password
+             * @default true
+             */
+            must_change_password: boolean;
+            /** Locale */
+            locale?: string | null;
+            /** Timezone */
+            timezone?: string | null;
             /** Valid From */
             valid_from?: string | null;
             /** Valid To */
             valid_to?: string | null;
+            /** Roles */
+            roles?: components["schemas"]["UserRoleAssign"][];
         };
         /** UserCreatedResponse */
         UserCreatedResponse: {
-            /** Avatar Url */
-            avatar_url?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Display Name */
-            display_name?: string | null;
-            /** Email */
-            email?: string | null;
             /**
              * Id
              * Format: uuid
@@ -7064,32 +9677,58 @@ export interface components {
             id: string;
             /** Institution Id */
             institution_id?: string | null;
-            /** Is Active */
-            is_active: boolean;
+            /** Username */
+            username: string;
+            /** Email */
+            email?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Display Name */
+            display_name?: string | null;
+            /** Avatar Url */
+            avatar_url?: string | null;
+            /** User Type */
+            user_type: string;
             /**
              * Is Super Admin
              * @default false
              */
             is_super_admin: boolean;
+            /** Is Active */
+            is_active: boolean;
             /**
              * Is Verified
              * @default false
              */
             is_verified: boolean;
-            /** Last Login At */
-            last_login_at?: string | null;
-            /**
-             * Mfa Enabled
-             * @default false
-             */
-            mfa_enabled: boolean;
             /**
              * Must Change Password
              * @default false
              */
             must_change_password: boolean;
-            /** Phone */
-            phone?: string | null;
+            /**
+             * Mfa Enabled
+             * @default false
+             */
+            mfa_enabled: boolean;
+            /** Last Login At */
+            last_login_at?: string | null;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
             /** Role Slugs */
             role_slugs?: string[];
             /** Roles */
@@ -7099,35 +9738,9 @@ export interface components {
              * @description only when generated for the caller to hand over
              */
             temporary_password?: string | null;
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-            /** User Type */
-            user_type: string;
-            /** Username */
-            username: string;
-            /** Valid From */
-            valid_from?: string | null;
-            /** Valid To */
-            valid_to?: string | null;
-            /** Version */
-            version: number;
         };
         /** UserDetailResponse */
         UserDetailResponse: {
-            /** Avatar Url */
-            avatar_url?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Display Name */
-            display_name?: string | null;
-            /** Email */
-            email?: string | null;
             /**
              * Id
              * Format: uuid
@@ -7135,65 +9748,65 @@ export interface components {
             id: string;
             /** Institution Id */
             institution_id?: string | null;
-            /** Is Active */
-            is_active: boolean;
+            /** Username */
+            username: string;
+            /** Email */
+            email?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Display Name */
+            display_name?: string | null;
+            /** Avatar Url */
+            avatar_url?: string | null;
+            /** User Type */
+            user_type: string;
             /**
              * Is Super Admin
              * @default false
              */
             is_super_admin: boolean;
+            /** Is Active */
+            is_active: boolean;
             /**
              * Is Verified
              * @default false
              */
             is_verified: boolean;
-            /** Last Login At */
-            last_login_at?: string | null;
-            /**
-             * Mfa Enabled
-             * @default false
-             */
-            mfa_enabled: boolean;
             /**
              * Must Change Password
              * @default false
              */
             must_change_password: boolean;
-            /** Phone */
-            phone?: string | null;
+            /**
+             * Mfa Enabled
+             * @default false
+             */
+            mfa_enabled: boolean;
+            /** Last Login At */
+            last_login_at?: string | null;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+            /** Version */
+            version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
             /** Role Slugs */
             role_slugs?: string[];
             /** Roles */
             roles?: components["schemas"]["UserRoleResponse"][];
-            /**
-             * Updated At
-             * Format: date-time
-             */
-            updated_at: string;
-            /** User Type */
-            user_type: string;
-            /** Username */
-            username: string;
-            /** Valid From */
-            valid_from?: string | null;
-            /** Valid To */
-            valid_to?: string | null;
-            /** Version */
-            version: number;
         };
         /** UserResponse */
         UserResponse: {
-            /** Avatar Url */
-            avatar_url?: string | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Display Name */
-            display_name?: string | null;
-            /** Email */
-            email?: string | null;
             /**
              * Id
              * Format: uuid
@@ -7201,49 +9814,60 @@ export interface components {
             id: string;
             /** Institution Id */
             institution_id?: string | null;
-            /** Is Active */
-            is_active: boolean;
+            /** Username */
+            username: string;
+            /** Email */
+            email?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Display Name */
+            display_name?: string | null;
+            /** Avatar Url */
+            avatar_url?: string | null;
+            /** User Type */
+            user_type: string;
             /**
              * Is Super Admin
              * @default false
              */
             is_super_admin: boolean;
+            /** Is Active */
+            is_active: boolean;
             /**
              * Is Verified
              * @default false
              */
             is_verified: boolean;
-            /** Last Login At */
-            last_login_at?: string | null;
-            /**
-             * Mfa Enabled
-             * @default false
-             */
-            mfa_enabled: boolean;
             /**
              * Must Change Password
              * @default false
              */
             must_change_password: boolean;
-            /** Phone */
-            phone?: string | null;
-            /** Role Slugs */
-            role_slugs?: string[];
             /**
-             * Updated At
-             * Format: date-time
+             * Mfa Enabled
+             * @default false
              */
-            updated_at: string;
-            /** User Type */
-            user_type: string;
-            /** Username */
-            username: string;
+            mfa_enabled: boolean;
+            /** Last Login At */
+            last_login_at?: string | null;
             /** Valid From */
             valid_from?: string | null;
             /** Valid To */
             valid_to?: string | null;
             /** Version */
             version: number;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Role Slugs */
+            role_slugs?: string[];
         };
         /** UserRoleAssign */
         UserRoleAssign: {
@@ -7252,13 +9876,13 @@ export interface components {
              * Format: uuid
              */
             role_id: string;
-            /** Scope Id */
-            scope_id?: string | null;
             /**
              * Scope Type
              * @description defaults to the role's default scope
              */
             scope_type?: ("institution" | "college" | "faculty" | "department" | "program" | "offering" | "self" | "committee" | "hostel") | null;
+            /** Scope Id */
+            scope_id?: string | null;
             /** Valid From */
             valid_from?: string | null;
             /** Valid To */
@@ -7266,11 +9890,6 @@ export interface components {
         };
         /** UserRoleResponse */
         UserRoleResponse: {
-            /**
-             * Assigned At
-             * Format: date-time
-             */
-            assigned_at: string;
             /**
              * Id
              * Format: uuid
@@ -7281,37 +9900,42 @@ export interface components {
              * Format: uuid
              */
             role_id: string;
-            /** Role Name */
-            role_name: string;
             /** Role Slug */
             role_slug: string;
+            /** Role Name */
+            role_name: string;
+            /** Scope Type */
+            scope_type: string;
             /** Scope Id */
             scope_id?: string | null;
             /** Scope Label */
             scope_label?: string | null;
-            /** Scope Type */
-            scope_type: string;
             /** Valid From */
             valid_from?: string | null;
             /** Valid To */
             valid_to?: string | null;
+            /**
+             * Assigned At
+             * Format: date-time
+             */
+            assigned_at: string;
         };
         /** UserUpdate */
         UserUpdate: {
-            /** Avatar Url */
-            avatar_url?: string | null;
-            /** Display Name */
-            display_name?: string | null;
             /** Email */
             email?: string | null;
-            /** Locale */
-            locale?: string | null;
             /** Phone */
             phone?: string | null;
-            /** Timezone */
-            timezone?: string | null;
+            /** Display Name */
+            display_name?: string | null;
+            /** Avatar Url */
+            avatar_url?: string | null;
             /** User Type */
             user_type?: ("staff" | "student" | "guardian" | "alumni" | "applicant" | "recruiter" | "external" | "platform") | null;
+            /** Locale */
+            locale?: string | null;
+            /** Timezone */
+            timezone?: string | null;
             /** Valid From */
             valid_from?: string | null;
             /** Valid To */
@@ -7321,77 +9945,77 @@ export interface components {
         };
         /** ValidationError */
         ValidationError: {
-            /** Context */
-            ctx?: Record<string, never>;
-            /** Input */
-            input?: unknown;
             /** Location */
             loc: (string | number)[];
             /** Message */
             msg: string;
             /** Error Type */
             type: string;
+            /** Input */
+            input?: unknown;
+            /** Context */
+            ctx?: Record<string, never>;
         };
         /** VisibilityDefault */
         VisibilityDefault: {
-            /**
-             * Default
-             * @default self
-             */
-            default: string;
-            /** Scopes */
-            scopes?: string[];
             /**
              * Self
              * @default true
              */
             self: boolean;
+            /** Scopes */
+            scopes?: string[];
+            /**
+             * Default
+             * @default self
+             */
+            default: string;
         };
         /** WhatsappTemplateCreate */
         WhatsappTemplateCreate: {
-            /** Body */
-            body: string;
+            /** Name */
+            name: string;
+            /**
+             * Language
+             * @default en
+             */
+            language: string;
             /**
              * Category
              * @default utility
              * @enum {string}
              */
             category: "utility" | "marketing" | "authentication";
+            /** Body */
+            body: string;
             /** Components */
             components?: {
                 [key: string]: unknown;
             } | unknown[] | null;
-            /**
-             * Language
-             * @default en
-             */
-            language: string;
-            /** Name */
-            name: string;
         };
         /** WhatsappTemplateResponse */
         WhatsappTemplateResponse: {
-            /** Body */
-            body: string;
-            /** Category */
-            category: string;
-            /** Components */
-            components?: {
-                [key: string]: unknown;
-            } | unknown[] | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Language */
-            language: string;
-            /** Meta Template Id */
-            meta_template_id?: string | null;
             /** Name */
             name: string;
+            /** Language */
+            language: string;
+            /** Category */
+            category: string;
+            /** Body */
+            body: string;
+            /** Components */
+            components?: {
+                [key: string]: unknown;
+            } | unknown[] | null;
             /** Status */
             status: string;
+            /** Meta Template Id */
+            meta_template_id?: string | null;
             /**
              * Updated At
              * Format: date-time
@@ -7400,13 +10024,13 @@ export interface components {
         };
         /** WorkflowActRequest */
         WorkflowActRequest: {
-            /** Comment */
-            comment?: string | null;
             /**
              * Decision
              * @enum {string}
              */
             decision: "approve" | "reject" | "delegate";
+            /** Comment */
+            comment?: string | null;
             /** Delegate To */
             delegate_to?: string | null;
         };
@@ -7417,45 +10041,45 @@ export interface components {
         };
         /** WorkflowDefinitionCreate */
         WorkflowDefinitionCreate: {
-            /** Description */
-            description?: string | null;
-            /** Key */
-            key: string;
             /** Module */
             module: string;
+            /** Key */
+            key: string;
             /** Name */
             name: string;
+            /** Description */
+            description?: string | null;
             /** Steps */
             steps: components["schemas"]["StepSpec"][];
         };
         /** WorkflowDefinitionResponse */
         WorkflowDefinitionResponse: {
-            /** Description */
-            description?: string | null;
             /**
              * Id
              * Format: uuid
              */
             id: string;
-            /** Is Active */
-            is_active: boolean;
-            /** Key */
-            key: string;
             /** Module */
             module: string;
+            /** Key */
+            key: string;
             /** Name */
             name: string;
+            /** Description */
+            description?: string | null;
             /** Steps */
             steps: {
                 [key: string]: unknown;
             }[];
+            /** Version */
+            version: number;
+            /** Is Active */
+            is_active: boolean;
             /**
              * Updated At
              * Format: date-time
              */
             updated_at: string;
-            /** Version */
-            version: number;
             /** Versions */
             versions?: number[];
         };
@@ -7464,17 +10088,65 @@ export interface components {
          * @description Saving creates a new version; running instances keep the version they started with.
          */
         WorkflowDefinitionUpdate: {
-            /** Description */
-            description?: string | null;
-            /** Is Active */
-            is_active?: boolean | null;
             /** Name */
             name?: string | null;
+            /** Description */
+            description?: string | null;
             /** Steps */
             steps?: components["schemas"]["StepSpec"][] | null;
+            /** Is Active */
+            is_active?: boolean | null;
         };
         /** WorkflowInstanceResponse */
         WorkflowInstanceResponse: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Definition Id
+             * Format: uuid
+             */
+            definition_id: string;
+            /** Key */
+            key: string;
+            /** Module */
+            module: string;
+            /** Version */
+            version: number;
+            /** Entity Type */
+            entity_type: string;
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
+            /** Title */
+            title?: string | null;
+            /** Status */
+            status: string;
+            /** Current Step */
+            current_step: number;
+            /** Total Steps */
+            total_steps: number;
+            /** Started By */
+            started_by?: string | null;
+            /** Started By Name */
+            started_by_name?: string | null;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Closed At */
+            closed_at?: string | null;
+            /** Context */
+            context?: {
+                [key: string]: unknown;
+            } | null;
+            /** Steps */
+            steps?: components["schemas"]["StepResponse"][];
             /**
              * Can Act
              * @default false
@@ -7485,54 +10157,6 @@ export interface components {
              * @default false
              */
             can_cancel: boolean;
-            /** Closed At */
-            closed_at?: string | null;
-            /** Context */
-            context?: {
-                [key: string]: unknown;
-            } | null;
-            /** Current Step */
-            current_step: number;
-            /**
-             * Definition Id
-             * Format: uuid
-             */
-            definition_id: string;
-            /**
-             * Entity Id
-             * Format: uuid
-             */
-            entity_id: string;
-            /** Entity Type */
-            entity_type: string;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Key */
-            key: string;
-            /** Module */
-            module: string;
-            /**
-             * Started At
-             * Format: date-time
-             */
-            started_at: string;
-            /** Started By */
-            started_by?: string | null;
-            /** Started By Name */
-            started_by_name?: string | null;
-            /** Status */
-            status: string;
-            /** Steps */
-            steps?: components["schemas"]["StepResponse"][];
-            /** Title */
-            title?: string | null;
-            /** Total Steps */
-            total_steps: number;
-            /** Version */
-            version: number;
         };
     };
     responses: never;
@@ -7543,49 +10167,18 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    dev_sleep_job_api_v1__dev_jobs_sleep_post: {
+    login_api_v1_auth_login_post: {
         parameters: {
-            query?: {
-                seconds?: number;
-                /** @description run the job body in-process (no worker) — dev only */
-                inline?: boolean;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            202: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_JobResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
             };
         };
-    };
-    next_sequence_value_api_v1__dev_number_sequences__id__next_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -7593,7 +10186,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_NumberSequenceNext_"];
+                    "application/json": components["schemas"]["Envelope_LoginResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -7607,18 +10200,16 @@ export interface operations {
             };
         };
     };
-    set_plan_limits_api_v1__dev_plans__code__put: {
+    send_otp_api_v1_auth_send_otp_post: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                code: string;
-            };
+            path?: never;
             cookie?: never;
         };
-        requestBody?: {
+        requestBody: {
             content: {
-                "application/json": components["schemas"]["Body_set_plan_limits_api_v1__dev_plans__code__put"];
+                "application/json": components["schemas"]["OtpSendRequest"];
             };
         };
         responses: {
@@ -7642,18 +10233,49 @@ export interface operations {
             };
         };
     };
-    set_user_validity_api_v1__dev_users__id__validity_put: {
+    verify_otp_api_v1_auth_verify_otp_post: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                id: string;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OtpVerifyRequest"];
             };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LoginResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refresh_api_v1_auth_refresh_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["Body_set_user_validity_api_v1__dev_users__id__validity_put"];
+                "application/json": components["schemas"]["RefreshRequest"] | null;
             };
         };
         responses: {
@@ -7663,885 +10285,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    dev_workflow_escalate_api_v1__dev_workflow_escalate_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
-                };
-            };
-        };
-    };
-    dev_workflow_marker_api_v1__dev_workflow_markers__instance_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                instance_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    dev_workflow_start_api_v1__dev_workflow_start_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DevWorkflowStart"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_terms_api_v1_academic_terms_get: {
-        parameters: {
-            query?: {
-                academic_year_id?: string | null;
-                college_id?: string | null;
-                status?: string | null;
-                current?: boolean;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_AcademicTermResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_term_api_v1_academic_terms_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AcademicTermCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    current_term_api_v1_academic_terms_current_get: {
-        parameters: {
-            query?: {
-                college_id?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_Union_AcademicTermResponse__NoneType__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_term_api_v1_academic_terms__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_term_api_v1_academic_terms__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AcademicTermUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    set_current_term_api_v1_academic_terms__id__set_current_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    change_term_status_api_v1_academic_terms__id__status_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TermStatusChange"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_years_api_v1_academic_years_get: {
-        parameters: {
-            query?: {
-                /** @description the college's years + institution-wide years */
-                college_id?: string | null;
-                current?: boolean;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_AcademicYearResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_year_api_v1_academic_years_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AcademicYearCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    rollover_api_v1_academic_years_rollover_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RolloverRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_RolloverResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_year_api_v1_academic_years__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_year_api_v1_academic_years__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AcademicYearUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    lock_year_api_v1_academic_years__id__lock_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    set_current_year_api_v1_academic_years__id__set_current_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    unlock_year_api_v1_academic_years__id__unlock_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_announcements_api_v1_announcements_get: {
-        parameters: {
-            query?: {
-                scope?: string | null;
-                q?: string | null;
-                status?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_AnnouncementResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_announcement_api_v1_announcements_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AnnouncementCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_announcement_api_v1_announcements__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_announcement_api_v1_announcements__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["AnnouncementUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_announcement_api_v1_announcements__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    acknowledge_api_v1_announcements__id__acknowledge_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["AcknowledgeRequest"] | null;
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    publish_announcement_api_v1_announcements__id__publish_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["AnnouncementPublish"] | null;
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    announcement_stats_api_v1_announcements__id__stats_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_AckStats_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    change_password_api_v1_auth_change_password_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ChangePasswordRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_MessageResponse_"];
+                    "application/json": components["schemas"]["Envelope_RefreshResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -8588,14 +10332,18 @@ export interface operations {
             };
         };
     };
-    impersonation_stop_api_v1_auth_impersonation_stop_post: {
+    reset_password_api_v1_auth_reset_password_post: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordRequest"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {
@@ -8606,20 +10354,65 @@ export interface operations {
                     "application/json": components["schemas"]["Envelope_MessageResponse_"];
                 };
             };
-        };
-    };
-    login_api_v1_auth_login_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["LoginRequest"];
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
             };
         };
+    };
+    sso_start_api_v1_auth_sso__provider__start_get: {
+        parameters: {
+            query?: {
+                institution_slug?: string | null;
+                /** @description mock provider: the email to sign in as */
+                login_hint?: string | null;
+            };
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SsoStartResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sso_callback_api_v1_auth_sso__provider__callback_get: {
+        parameters: {
+            query: {
+                code: string;
+                state: string;
+            };
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -8641,7 +10434,7 @@ export interface operations {
             };
         };
     };
-    login_history_api_v1_auth_login_history_get: {
+    me_api_v1_auth_me_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -8656,7 +10449,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_LoginHistoryResponse__"];
+                    "application/json": components["schemas"]["Envelope_MeResponse_"];
                 };
             };
         };
@@ -8692,7 +10485,40 @@ export interface operations {
             };
         };
     };
-    me_api_v1_auth_me_get: {
+    change_password_api_v1_auth_change_password_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessageResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mfa_setup_api_v1_auth_mfa_setup_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -8707,7 +10533,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_MeResponse_"];
+                    "application/json": components["schemas"]["Envelope_MfaSetupResponse_"];
                 };
             };
         };
@@ -8798,125 +10624,6 @@ export interface operations {
             };
         };
     };
-    mfa_setup_api_v1_auth_mfa_setup_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_MfaSetupResponse_"];
-                };
-            };
-        };
-    };
-    refresh_api_v1_auth_refresh_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["RefreshRequest"] | null;
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_RefreshResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    reset_password_api_v1_auth_reset_password_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ResetPasswordRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_MessageResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    send_otp_api_v1_auth_send_otp_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["OtpSendRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     sessions_api_v1_auth_sessions_get: {
         parameters: {
             query?: never;
@@ -8988,277 +10695,7 @@ export interface operations {
             };
         };
     };
-    sso_callback_api_v1_auth_sso__provider__callback_get: {
-        parameters: {
-            query: {
-                code: string;
-                state: string;
-            };
-            header?: never;
-            path: {
-                provider: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_LoginResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    sso_start_api_v1_auth_sso__provider__start_get: {
-        parameters: {
-            query?: {
-                institution_slug?: string | null;
-                /** @description mock provider: the email to sign in as */
-                login_hint?: string | null;
-            };
-            header?: never;
-            path: {
-                provider: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_SsoStartResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    verify_otp_api_v1_auth_verify_otp_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["OtpVerifyRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_LoginResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_colleges_api_v1_colleges_get: {
-        parameters: {
-            query?: {
-                scope?: string | null;
-                q?: string | null;
-                college_type?: string | null;
-                is_exam_centre?: boolean | null;
-                include_inactive?: boolean;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_CollegeResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_college_api_v1_colleges_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CollegeCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_CollegeResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_college_api_v1_colleges__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_CollegeResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_college_api_v1_colleges__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CollegeUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_CollegeResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_college_api_v1_colleges__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_dlt_api_v1_communication_dlt_templates_get: {
+    login_history_api_v1_auth_login_history_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -9273,375 +10710,12 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_DltTemplateResponse__"];
+                    "application/json": components["schemas"]["Envelope_list_LoginHistoryResponse__"];
                 };
             };
         };
     };
-    create_dlt_api_v1_communication_dlt_templates_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DltTemplateCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DltTemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    logs_api_v1_communication_logs_get: {
-        parameters: {
-            query?: {
-                channel?: string | null;
-                status?: string | null;
-                recipient?: string | null;
-                event_type?: string | null;
-                since?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_MessageLogResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    log_detail_api_v1_communication_logs__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_MessageLogResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    send_api_v1_communication_send_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SendMessageRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            202: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_SendMessageResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_templates_api_v1_communication_templates_get: {
-        parameters: {
-            query?: {
-                event_trigger?: string | null;
-                include_inactive?: boolean;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_TemplateResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_template_api_v1_communication_templates_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TemplateCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_template_api_v1_communication_templates__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_template_api_v1_communication_templates__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TemplateUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    activate_template_api_v1_communication_templates__id__activate_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    preview_template_api_v1_communication_templates__id__preview_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TemplatePreviewRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_TemplatePreview_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    template_versions_api_v1_communication_templates__id__versions_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_TemplateResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_wa_api_v1_communication_whatsapp_templates_get: {
+    impersonation_stop_api_v1_auth_impersonation_stop_post: {
         parameters: {
             query?: never;
             header?: never;
@@ -9656,1703 +10730,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_WhatsappTemplateResponse__"];
-                };
-            };
-        };
-    };
-    create_wa_api_v1_communication_whatsapp_templates_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["WhatsappTemplateCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_WhatsappTemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    sync_wa_api_v1_communication_whatsapp_templates__id__sync_status_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_WhatsappTemplateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    record_consent_api_v1_consents_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ConsentRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_ConsentResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    my_consents_api_v1_consents_me_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_ConsentResponse__"];
-                };
-            };
-        };
-    };
-    all_dsrs_api_v1_data_subject_requests_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_DataSubjectRequestResponse__"];
-                };
-            };
-        };
-    };
-    create_dsr_api_v1_data_subject_requests_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DataSubjectRequestCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DataSubjectRequestResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    my_dsrs_api_v1_data_subject_requests_me_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_DataSubjectRequestResponse__"];
-                };
-            };
-        };
-    };
-    list_departments_api_v1_departments_get: {
-        parameters: {
-            query?: {
-                scope?: string | null;
-                college_id?: string | null;
-                faculty_id?: string | null;
-                department_type?: string | null;
-                q?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_DepartmentResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_department_api_v1_departments_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DepartmentCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_department_api_v1_departments__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_department_api_v1_departments__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DepartmentUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_department_api_v1_departments__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    assign_hod_api_v1_departments__id__hod_put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["HodAssign"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    register_device_api_v1_devices_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DeviceRegister"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DeviceResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    unregister_device_api_v1_devices_delete: {
-        parameters: {
-            query: {
-                provider: string;
-                token: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    entitlements_api_v1_entitlements_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_EntitlementsResponse_"];
-                };
-            };
-        };
-    };
-    list_faculties_api_v1_faculties_get: {
-        parameters: {
-            query?: {
-                scope?: string | null;
-                college_id?: string | null;
-                q?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_FacultyResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_faculty_api_v1_faculties_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FacultyCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_FacultyResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_faculty_api_v1_faculties__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FacultyUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_FacultyResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_faculty_api_v1_faculties__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_features_api_v1_features_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_FeatureDefResponse__"];
-                };
-            };
-        };
-    };
-    institution_toggle_api_v1_features__key__institution_toggle_put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                key: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["InstitutionToggleRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_InstitutionFeatureFlagResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_feedback_api_v1_feedback_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FeedbackCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_FeedbackResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_articles_api_v1_help_articles_get: {
-        parameters: {
-            query?: {
-                module?: string | null;
-                q?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_HelpArticleSummary__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_article_api_v1_help_articles__slug__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                slug: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_HelpArticleResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_holidays_api_v1_holidays_get: {
-        parameters: {
-            query?: {
-                college_id?: string | null;
-                from?: string | null;
-                to?: string | null;
-                holiday_type?: string | null;
-                applies_to?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_HolidayResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_holiday_api_v1_holidays_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["HolidayCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_HolidayResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    bulk_import_holidays_api_v1_holidays_bulk_import_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["HolidayBulkImport"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_HolidayBulkResult_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    export_holidays_ics_api_v1_holidays_export_ics_get: {
-        parameters: {
-            query?: {
-                college_id?: string | null;
-                from?: string | null;
-                to?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/calendar": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_holiday_api_v1_holidays__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["HolidayUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_HolidayResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_holiday_api_v1_holidays__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_hostels_api_v1_hostels_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
-                };
-            };
-        };
-    };
-    install_api_v1_install_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["InstallRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_InstallResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_profile_api_v1_institution_profile_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_InstitutionProfileResponse_"];
-                };
-            };
-        };
-    };
-    update_profile_api_v1_institution_profile_put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["InstitutionProfileUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_InstitutionProfileResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    upload_logo_api_v1_institution_profile_logo_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": components["schemas"]["Body_upload_logo_api_v1_institution_profile_logo_post"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_LogoUploadResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    institution_features_api_v1_institutions__id__features_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_InstitutionFeaturesResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    apply_plan_defaults_api_v1_institutions__id__features_apply_plan_defaults_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_ApplyPlanDefaultsResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    set_platform_flag_api_v1_institutions__id__features__key__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-                key: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["FeatureToggleRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_InstitutionFeatureFlagResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_jobs_api_v1_jobs_get: {
-        parameters: {
-            query?: {
-                scope?: string | null;
-                status?: string | null;
-                job_type?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_JobResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_job_api_v1_jobs__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_JobResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    cancel_job_api_v1_jobs__id__cancel_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_JobResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    mobile_config_get_api_v1_mobile_config_get: {
-        parameters: {
-            query?: {
-                platform?: string;
-                app_version?: string | null;
-                institution_slug?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    mobile_config_post_api_v1_mobile_config_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["MobileConfigRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    my_preferences_api_v1_notification_preferences_me_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PreferenceResponse_"];
-                };
-            };
-        };
-    };
-    update_preferences_api_v1_notification_preferences_me_put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PreferenceUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PreferenceResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    unsubscribe_link_api_v1_notification_preferences_unsubscribe_get: {
-        parameters: {
-            query: {
-                token: string;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_dict_str__str__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    my_notifications_api_v1_notifications_get: {
-        parameters: {
-            query?: {
-                unread?: boolean;
-                category?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_NotificationResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    read_all_api_v1_notifications_read_all_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
-                };
-            };
-        };
-    };
-    unread_count_api_v1_notifications_unread_count_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
-                };
-            };
-        };
-    };
-    read_one_api_v1_notifications__id__read_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_sequences_api_v1_number_sequences_get: {
-        parameters: {
-            query?: {
-                college_id?: string | null;
-                q?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_NumberSequenceResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_sequence_api_v1_number_sequences_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["NumberSequenceCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NumberSequenceResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_sequence_api_v1_number_sequences__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["NumberSequenceUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NumberSequenceResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    preview_sequence_api_v1_number_sequences__id__preview_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["NumberSequencePreviewRequest"] | null;
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NumberSequencePreview_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
+                    "application/json": components["schemas"]["Envelope_MessageResponse_"];
                 };
             };
         };
@@ -11373,311 +10751,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_PermissionCatalogue_"];
-                };
-            };
-        };
-    };
-    feature_matrix_api_v1_platform_features_matrix_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_FeatureMatrixResponse_"];
-                };
-            };
-        };
-    };
-    list_institutions_api_v1_platform_institutions_get: {
-        parameters: {
-            query?: {
-                q?: string | null;
-                status?: string | null;
-                page?: number;
-                page_size?: number;
-                sort?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_PlatformInstitutionResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    onboard_api_v1_platform_institutions_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["OnboardingRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_OnboardingResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_institution_api_v1_platform_institutions__id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_institution_api_v1_platform_institutions__id__put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["PlatformInstitutionUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    activate_api_v1_platform_institutions__id__activate_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    suspend_api_v1_platform_institutions__id__suspend_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: {
-            content: {
-                "application/json": components["schemas"]["SuspendRequest"] | null;
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    read_only_state_api_v1_platform_read_only_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_ReadOnlyState_"];
-                };
-            };
-        };
-    };
-    set_read_only_api_v1_platform_read_only_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ReadOnlyModeRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_ReadOnlyState_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    public_config_api_v1_public_config_get: {
-        parameters: {
-            query?: {
-                /** @description institution slug (optional) */
-                institution?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PublicConfig_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -11947,203 +11020,6 @@ export interface operations {
             };
         };
     };
-    search_api_v1_search_get: {
-        parameters: {
-            query: {
-                q: string;
-                /** @description comma-separated entity types: student,staff,course,applicant */
-                types?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_SearchResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_settings_api_v1_settings_get: {
-        parameters: {
-            query?: {
-                category?: string | null;
-                /** @description merge this college's overrides */
-                college_id?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_SettingsCategoryResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_settings_api_v1_settings_put: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SettingsBulkUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_SettingsCategoryResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    public_settings_api_v1_settings_public_get: {
-        parameters: {
-            query?: {
-                /** @description institution slug */
-                institution?: string | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_PublicSettingsResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    test_provider_api_v1_settings_test_provider_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ProviderTestRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            202: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_ProviderTestResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_student_api_v1_students_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["StudentStubCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     list_users_api_v1_users_get: {
         parameters: {
             query?: {
@@ -12346,41 +11222,6 @@ export interface operations {
             };
         };
     };
-    impersonate_api_v1_users__id__impersonate_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ImpersonateRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_ImpersonateResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     reactivate_user_api_v1_users__id__reactivate_post: {
         parameters: {
             query?: never;
@@ -12541,6 +11382,3024 @@ export interface operations {
             };
         };
     };
+    impersonate_api_v1_users__id__impersonate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ImpersonateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ImpersonateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_features_api_v1_features_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeatureDefResponse__"];
+                };
+            };
+        };
+    };
+    institution_features_api_v1_institutions__id__features_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InstitutionFeaturesResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_platform_flag_api_v1_institutions__id__features__key__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeatureToggleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InstitutionFeatureFlagResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_plan_defaults_api_v1_institutions__id__features_apply_plan_defaults_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplyPlanDefaultsResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    institution_toggle_api_v1_features__key__institution_toggle_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InstitutionToggleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InstitutionFeatureFlagResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    feature_matrix_api_v1_platform_features_matrix_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeatureMatrixResponse_"];
+                };
+            };
+        };
+    };
+    record_consent_api_v1_consents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsentRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ConsentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_consents_api_v1_consents_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ConsentResponse__"];
+                };
+            };
+        };
+    };
+    all_dsrs_api_v1_data_subject_requests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DataSubjectRequestResponse__"];
+                };
+            };
+        };
+    };
+    create_dsr_api_v1_data_subject_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DataSubjectRequestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DataSubjectRequestResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_dsrs_api_v1_data_subject_requests_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DataSubjectRequestResponse__"];
+                };
+            };
+        };
+    };
+    entitlements_api_v1_entitlements_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EntitlementsResponse_"];
+                };
+            };
+        };
+    };
+    install_api_v1_install_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InstallRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InstallResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_config_api_v1_public_config_get: {
+        parameters: {
+            query?: {
+                /** @description institution slug (optional) */
+                institution?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicConfig_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_only_state_api_v1_platform_read_only_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadOnlyState_"];
+                };
+            };
+        };
+    };
+    set_read_only_api_v1_platform_read_only_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReadOnlyModeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadOnlyState_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mobile_config_get_api_v1_mobile_config_get: {
+        parameters: {
+            query?: {
+                platform?: string;
+                app_version?: string | null;
+                institution_slug?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mobile_config_post_api_v1_mobile_config_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MobileConfigRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_profile_api_v1_institution_profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InstitutionProfileResponse_"];
+                };
+            };
+        };
+    };
+    update_profile_api_v1_institution_profile_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InstitutionProfileUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InstitutionProfileResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_logo_api_v1_institution_profile_logo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_logo_api_v1_institution_profile_logo_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LogoUploadResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_colleges_api_v1_colleges_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                q?: string | null;
+                college_type?: string | null;
+                is_exam_centre?: boolean | null;
+                include_inactive?: boolean;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CollegeResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_college_api_v1_colleges_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CollegeCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_college_api_v1_colleges__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_college_api_v1_colleges__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CollegeUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_college_api_v1_colleges__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_faculties_api_v1_faculties_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                college_id?: string | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FacultyResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_faculty_api_v1_faculties_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FacultyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FacultyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_faculty_api_v1_faculties__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FacultyUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FacultyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_faculty_api_v1_faculties__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_departments_api_v1_departments_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                college_id?: string | null;
+                faculty_id?: string | null;
+                department_type?: string | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DepartmentResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_department_api_v1_departments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DepartmentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_department_api_v1_departments__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_department_api_v1_departments__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DepartmentUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_department_api_v1_departments__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_hod_api_v1_departments__id__hod_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HodAssign"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_holidays_api_v1_holidays_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                from?: string | null;
+                to?: string | null;
+                holiday_type?: string | null;
+                applies_to?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HolidayResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_holiday_api_v1_holidays_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HolidayCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HolidayResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_import_holidays_api_v1_holidays_bulk_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HolidayBulkImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HolidayBulkResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_holidays_ics_api_v1_holidays_export_ics_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/calendar": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_holiday_api_v1_holidays__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HolidayUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HolidayResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_holiday_api_v1_holidays__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sequences_api_v1_number_sequences_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_NumberSequenceResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_sequence_api_v1_number_sequences_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NumberSequenceCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NumberSequenceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_sequence_api_v1_number_sequences__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NumberSequenceUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NumberSequenceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_sequence_api_v1_number_sequences__id__preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["NumberSequencePreviewRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NumberSequencePreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_years_api_v1_academic_years_get: {
+        parameters: {
+            query?: {
+                /** @description the college's years + institution-wide years */
+                college_id?: string | null;
+                current?: boolean;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AcademicYearResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_year_api_v1_academic_years_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademicYearCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rollover_api_v1_academic_years_rollover_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RolloverRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RolloverResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_year_api_v1_academic_years__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_year_api_v1_academic_years__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademicYearUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_current_year_api_v1_academic_years__id__set_current_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lock_year_api_v1_academic_years__id__lock_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unlock_year_api_v1_academic_years__id__unlock_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_terms_api_v1_academic_terms_get: {
+        parameters: {
+            query?: {
+                academic_year_id?: string | null;
+                college_id?: string | null;
+                status?: string | null;
+                current?: boolean;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AcademicTermResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_term_api_v1_academic_terms_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademicTermCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    current_term_api_v1_academic_terms_current_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Union_AcademicTermResponse__NoneType__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_term_api_v1_academic_terms__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_term_api_v1_academic_terms__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcademicTermUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_term_status_api_v1_academic_terms__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TermStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_current_term_api_v1_academic_terms__id__set_current_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcademicTermResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_settings_api_v1_settings_get: {
+        parameters: {
+            query?: {
+                category?: string | null;
+                /** @description merge this college's overrides */
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SettingsCategoryResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_settings_api_v1_settings_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SettingsBulkUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SettingsCategoryResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_settings_api_v1_settings_public_get: {
+        parameters: {
+            query?: {
+                /** @description institution slug */
+                institution?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicSettingsResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_provider_api_v1_settings_test_provider_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProviderTestRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProviderTestResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_institutions_api_v1_platform_institutions_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlatformInstitutionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    onboard_api_v1_platform_institutions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnboardingRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OnboardingResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_institution_api_v1_platform_institutions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_institution_api_v1_platform_institutions__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlatformInstitutionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    suspend_api_v1_platform_institutions__id__suspend_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SuspendRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_api_v1_platform_institutions__id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlatformInstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_templates_api_v1_communication_templates_get: {
+        parameters: {
+            query?: {
+                event_trigger?: string | null;
+                include_inactive?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TemplateResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_template_api_v1_communication_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_template_api_v1_communication_templates__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_template_api_v1_communication_templates__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    template_versions_api_v1_communication_templates__id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TemplateResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_template_api_v1_communication_templates__id__preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplatePreviewRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplatePreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_template_api_v1_communication_templates__id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_dlt_api_v1_communication_dlt_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DltTemplateResponse__"];
+                };
+            };
+        };
+    };
+    create_dlt_api_v1_communication_dlt_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DltTemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DltTemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_wa_api_v1_communication_whatsapp_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_WhatsappTemplateResponse__"];
+                };
+            };
+        };
+    };
+    create_wa_api_v1_communication_whatsapp_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WhatsappTemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WhatsappTemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_wa_api_v1_communication_whatsapp_templates__id__sync_status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WhatsappTemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_api_v1_communication_send_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendMessageRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SendMessageResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logs_api_v1_communication_logs_get: {
+        parameters: {
+            query?: {
+                channel?: string | null;
+                status?: string | null;
+                recipient?: string | null;
+                event_type?: string | null;
+                since?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessageLogResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    log_detail_api_v1_communication_logs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessageLogResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_notifications_api_v1_notifications_get: {
+        parameters: {
+            query?: {
+                unread?: boolean;
+                category?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_NotificationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unread_count_api_v1_notifications_unread_count_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
+                };
+            };
+        };
+    };
+    read_all_api_v1_notifications_read_all_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
+                };
+            };
+        };
+    };
+    read_one_api_v1_notifications__id__read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_preferences_api_v1_notification_preferences_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PreferenceResponse_"];
+                };
+            };
+        };
+    };
+    update_preferences_api_v1_notification_preferences_me_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreferenceUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PreferenceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unsubscribe_link_api_v1_notification_preferences_unsubscribe_get: {
+        parameters: {
+            query: {
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__str__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_device_api_v1_devices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeviceRegister"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DeviceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unregister_device_api_v1_devices_delete: {
+        parameters: {
+            query: {
+                provider: string;
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     provider_webhook_api_v1_webhooks__provider___channel__post: {
         parameters: {
             query?: never;
@@ -12560,6 +14419,273 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_dict_str__str__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_announcements_api_v1_announcements_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                q?: string | null;
+                status?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AnnouncementResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_announcement_api_v1_announcements_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_announcement_api_v1_announcements__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_announcement_api_v1_announcements__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_announcement_api_v1_announcements__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_announcement_api_v1_announcements__id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementPublish"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    announcement_stats_api_v1_announcements__id__stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AckStats_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    acknowledge_api_v1_announcements__id__acknowledge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AcknowledgeRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -12769,101 +14895,6 @@ export interface operations {
             };
         };
     };
-    delegations_api_v1_workflow_delegations_get: {
-        parameters: {
-            query?: {
-                all?: boolean;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_list_DelegationResponse__"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_delegation_api_v1_workflow_delegations_post: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DelegationCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_DelegationResponse_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_delegation_api_v1_workflow_delegations__id__delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Envelope_NoneType_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
     inbox_api_v1_workflow_inbox_get: {
         parameters: {
             query?: never;
@@ -13009,6 +15040,2352 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delegations_api_v1_workflow_delegations_get: {
+        parameters: {
+            query?: {
+                all?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DelegationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_delegation_api_v1_workflow_delegations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DelegationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DelegationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_delegation_api_v1_workflow_delegations__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_programs_api_v1_programs_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                college_id?: string | null;
+                department_id?: string | null;
+                level?: components["schemas"]["ProgramLevel"] | null;
+                status?: components["schemas"]["ProgramStatus"] | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ProgramResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_program_api_v1_programs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_program_api_v1_programs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_program_api_v1_programs__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_program_api_v1_programs__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_program_api_v1_programs__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_batches_api_v1_batches_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                program_id?: string | null;
+                admission_year?: number | null;
+                status?: components["schemas"]["BatchStatus"] | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BatchResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_batch_api_v1_batches_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BatchCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BatchResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_batch_api_v1_batches__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BatchResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_batch_api_v1_batches__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BatchUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BatchResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_sections_api_v1_batches__id__sections_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BatchSectionsReplace"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BatchResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_advisor_api_v1_batches__id__sections__sid__advisor_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdvisorAssign"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BatchResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_regulations_api_v1_regulations_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                status?: components["schemas"]["RegulationStatus"] | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RegulationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_regulation_api_v1_regulations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegulationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rules_schema_api_v1_regulations_rules_schema_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RulesHelpItem__"];
+                };
+            };
+        };
+    };
+    get_regulation_api_v1_regulations__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_regulation_api_v1_regulations__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegulationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_regulation_api_v1_regulations__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RegulationApproveRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationApproveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_regulation_api_v1_regulations__id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    clone_regulation_api_v1_regulations__id__clone_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegulationCloneRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    regulation_diff_api_v1_regulations__id__diff_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RegulationDiffResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rules_effective_api_v1_regulations__id__rules_effective_get: {
+        parameters: {
+            query?: {
+                program_id?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RulesEffectiveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_courses_api_v1_courses_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                regulation_id?: string | null;
+                department_id?: string | null;
+                course_type?: components["schemas"]["CourseType"] | null;
+                status?: components["schemas"]["CourseStatus"] | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CourseResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_course_api_v1_courses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_courses_api_v1_courses_export_get: {
+        parameters: {
+            query?: {
+                regulation_id?: string | null;
+                department_id?: string | null;
+                course_type?: components["schemas"]["CourseType"] | null;
+                status?: components["schemas"]["CourseStatus"] | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_import_courses_api_v1_courses_bulk_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseBulkImportRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_course_api_v1_courses__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_course_api_v1_courses__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_course_api_v1_courses__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_course_status_api_v1_courses__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_prerequisites_api_v1_courses__id__prerequisites_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrerequisiteSet"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_scales_api_v1_grading_scales_get: {
+        parameters: {
+            query?: {
+                regulation_id?: string | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GradingScaleResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_scale_api_v1_grading_scales_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GradingScaleCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GradingScaleResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_scale_api_v1_grading_scales__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GradingScaleUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GradingScaleResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_schemes_api_v1_assessment_schemes_get: {
+        parameters: {
+            query?: {
+                regulation_id?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AssessmentSchemeResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_scheme_api_v1_assessment_schemes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentSchemeCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AssessmentSchemeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_scheme_api_v1_assessment_schemes__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentSchemeUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AssessmentSchemeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_components_api_v1_assessment_schemes__id__components_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssessmentComponentsReplace"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AssessmentSchemeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_program_regulations_api_v1_program_regulations_get: {
+        parameters: {
+            query?: {
+                program_id?: string | null;
+                regulation_id?: string | null;
+                status?: components["schemas"]["ProgramRegulationStatus"] | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ProgramRegulationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_program_regulation_api_v1_program_regulations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramRegulationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramRegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_program_regulation_api_v1_program_regulations__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramRegulationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramRegulationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_structure_api_v1_program_regulations__id__structure_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_structure_api_v1_program_regulations__id__structure_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StructureReplaceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    validate_structure_api_v1_program_regulations__id__structure_validate_post: {
+        parameters: {
+            query?: {
+                /** @description report the credit mismatch as an error */
+                for_approval?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StructureValidationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_baskets_api_v1_elective_baskets_get: {
+        parameters: {
+            query?: {
+                program_regulation_id?: string | null;
+                basket_type?: components["schemas"]["BasketType"] | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BasketOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_basket_api_v1_elective_baskets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BasketCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BasketOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_basket_api_v1_elective_baskets__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BasketUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BasketOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_basket_api_v1_elective_baskets__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_basket_courses_api_v1_elective_baskets__id__courses_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BasketCoursesReplace"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BasketOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_catalog_api_v1_public_catalog_get: {
+        parameters: {
+            query?: {
+                program?: string | null;
+                level?: string | null;
+                college?: string | null;
+                /** @description institution slug */
+                institution?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicCatalogResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_program_api_v1_public_catalog_programs__code__get: {
+        parameters: {
+            query?: {
+                college?: string | null;
+                /** @description institution slug */
+                institution?: string | null;
+            };
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicCatalogProgram_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_course_api_v1_public_catalog_courses__regulation___code__get: {
+        parameters: {
+            query?: {
+                /** @description institution slug */
+                institution?: string | null;
+            };
+            header?: never;
+            path: {
+                regulation: string;
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicCatalogCourse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_jobs_api_v1_jobs_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                status?: string | null;
+                job_type?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_JobResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_job_api_v1_jobs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_job_api_v1_jobs__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_api_v1_search_get: {
+        parameters: {
+            query: {
+                q: string;
+                /** @description comma-separated entity types: student,staff,course,applicant */
+                types?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SearchResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_articles_api_v1_help_articles_get: {
+        parameters: {
+            query?: {
+                module?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HelpArticleSummary__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_article_api_v1_help_articles__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HelpArticleResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_feedback_api_v1_feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeedbackCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeedbackResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_sleep_job_api_v1__dev_jobs_sleep_post: {
+        parameters: {
+            query?: {
+                seconds?: number;
+                /** @description run the job body in-process (no worker) — dev only */
+                inline?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_user_validity_api_v1__dev_users__id__validity_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["Body_set_user_validity_api_v1__dev_users__id__validity_put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_plan_limits_api_v1__dev_plans__code__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["Body_set_plan_limits_api_v1__dev_plans__code__put"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    next_sequence_value_api_v1__dev_number_sequences__id__next_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NumberSequenceNext_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_workflow_start_api_v1__dev_workflow_start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DevWorkflowStart"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_workflow_marker_api_v1__dev_workflow_markers__instance_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                instance_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_workflow_escalate_api_v1__dev_workflow_escalate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
+                };
+            };
+        };
+    };
+    list_hostels_api_v1_hostels_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+        };
+    };
+    create_student_api_v1_students_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudentStubCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
                 };
             };
             /** @description Validation Error */

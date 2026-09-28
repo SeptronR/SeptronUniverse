@@ -29,6 +29,7 @@ class JobResponse(ORMModel):
     progress_pct: int
     message: str | None = None
     result_url: str | None = None
+    result: dict[str, Any] | None = None  # the job's report (Phase 05: bulk-import succeeded/failed rows)
     error: str | None = None
     requested_by: uuid.UUID | None = None
     cancel_requested: bool = False

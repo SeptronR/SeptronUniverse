@@ -110,6 +110,23 @@ PHASES: dict[str, list[str]] = {
         "workflow_delegations",
         "device_tokens",
     ],
+    # Phase 05 — programmes, regulations & curriculum (section 7; no new tables)
+    "05": [
+        "grading_scales",
+        "programs",
+        "regulations",
+        "program_regulations",
+        "program_structure_terms",
+        "assessment_schemes",
+        "assessment_components",
+        "courses",
+        "course_prerequisites",
+        "elective_baskets",
+        "elective_basket_courses",
+        "curriculum_courses",
+        "batches",
+        "batch_sections",
+    ],
 }
 
 VIEWS: set[str] = set()

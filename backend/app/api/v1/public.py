@@ -27,6 +27,10 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 04 — signed one-click unsubscribe and provider callbacks (HMAC signature verified in the service)
     "GET /api/v1/notification-preferences/unsubscribe",
     "POST /api/v1/webhooks/{provider}/{channel}",
+    # Phase 05 — public course catalogue (tenant from ?institution=<slug> / host; {academics.public_catalog})
+    "GET /api/v1/public/catalog",
+    "GET /api/v1/public/catalog/programs/{code}",
+    "GET /api/v1/public/catalog/courses/{regulation}/{code}",
 }
 
 

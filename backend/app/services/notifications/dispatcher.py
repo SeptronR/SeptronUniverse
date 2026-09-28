@@ -118,7 +118,9 @@ class Dispatcher:
                     continue
                 if channel == "in_app":
                     if r.user_id is not None:
-                        await self._in_app(inst, r, event_type, category, subject, body, ctx, tmpl)
+                        await self._in_app(
+                            inst, r, event_type, category, subject, body, ctx, tmpl, event.get("event_id")
+                        )
                         counts["in_app"] += 1
                     continue
                 deferred = (
@@ -193,6 +195,7 @@ class Dispatcher:
         body: str,
         ctx: dict[str, Any],
         tmpl: NotificationTemplate | None,
+        event_id: Any = None,
     ) -> None:
         from app.core.ws import publish
 
@@ -222,6 +225,7 @@ class Dispatcher:
             provider="in_app",
             status="sent",
             sent_at=datetime.now(UTC),
+            event_id=event_id,  # the in-app row belongs to the same notification.requested event as the others
         )
         await publish(
             f"notifications:{r.user_id}",

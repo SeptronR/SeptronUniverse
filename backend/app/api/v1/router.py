@@ -10,6 +10,10 @@ dependency), ``jobs`` {core.background_jobs}, ``search`` {search.global}, ``help
 Phase 02: ``auth`` {core.auth}, ``rbac`` (roles/users) {core.rbac}, ``features`` {core.rbac}, ``privacy``
 (consents, DSRs, entitlements, install) {core.settings}; the development-only ``module_stubs`` (``/hostels``,
 ``/students``) carry their own feature keys and disappear with Phases 07/20.
+Phase 05: ``programs`` (+ batches) {academics.programs}, ``regulations`` / ``courses`` / ``grading``
+{academics.regulations}, ``curriculum`` (programme-regulations, structure; baskets add
+{academics.elective_baskets}) {academics.curriculum}, ``catalog`` (public, {academics.public_catalog} checked by
+its tenant dependency).
 """
 
 from fastapi import APIRouter
@@ -19,9 +23,13 @@ from app.api.v1.endpoints import (
     academic_sessions,
     announcements,
     auth,
+    catalog,
     communication,
+    courses,
+    curriculum,
     features,
     feedback,
+    grading,
     help,
     institution,
     jobs,
@@ -29,7 +37,9 @@ from app.api.v1.endpoints import (
     platform,
     platform_institutions,
     privacy,
+    programs,
     rbac,
+    regulations,
     search,
     workflow,
 )
@@ -52,6 +62,12 @@ api_router.include_router(communication.router, dependencies=[feature_required("
 api_router.include_router(notifications.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(announcements.router, dependencies=[feature_required("comms.announcements")])
 api_router.include_router(workflow.router, dependencies=[feature_required("workflow.engine")])
+api_router.include_router(programs.router, dependencies=[feature_required("academics.programs")])
+api_router.include_router(regulations.router, dependencies=[feature_required("academics.regulations")])
+api_router.include_router(courses.router, dependencies=[feature_required("academics.regulations")])
+api_router.include_router(grading.router, dependencies=[feature_required("academics.regulations")])
+api_router.include_router(curriculum.router, dependencies=[feature_required("academics.curriculum")])
+api_router.include_router(catalog.router)  # public; the tenant dependency checks {academics.public_catalog}
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])

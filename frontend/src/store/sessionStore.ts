@@ -47,15 +47,19 @@ const initial = {
 
 export const useSessionStore = create<SessionState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...initial,
-      // switching institution/college invalidates every cached list (tenant/college scoped data)
+      // switching institution/college invalidates every cached list (tenant/college scoped data). Re-applying the
+      // same tenant (session restore after a reload) must not: the page is already rendering and clearing the cache
+      // would orphan its in-flight queries (they stay "pending" until something re-renders the component).
       setInstitution: (id, name = null) => {
-        queryClient.clear();
-        set({ institutionId: id, institutionName: name, collegeId: null, collegeName: null });
+        if (get().institutionId !== id) {
+          queryClient.clear();
+          set({ institutionId: id, institutionName: name, collegeId: null, collegeName: null });
+        } else set({ institutionName: name });
       },
       setCollege: (id, name = null) => {
-        queryClient.clear();
+        if (get().collegeId !== id) queryClient.clear();
         set({ collegeId: id, collegeName: name });
       },
       setYear: (id) => set({ academicYearId: id, termId: null }),
