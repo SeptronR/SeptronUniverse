@@ -71,12 +71,16 @@ final routerProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: '/app/:module/:screen',
             builder: (context, state) => ScreenRegistry.build(
-                context, state.matchedLocation, {...state.pathParameters, ...state.uri.queryParameters}),
+                context,
+                state.matchedLocation,
+                {...state.pathParameters, ...state.uri.queryParameters}),
           ),
           GoRoute(
             path: '/app/:module',
             builder: (context, state) => ScreenRegistry.build(
-                context, state.matchedLocation, {...state.pathParameters, ...state.uri.queryParameters}),
+                context,
+                state.matchedLocation,
+                {...state.pathParameters, ...state.uri.queryParameters}),
           ),
         ],
       ),

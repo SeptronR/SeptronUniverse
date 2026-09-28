@@ -171,7 +171,7 @@ export default function RegulationWorkspacePage() {
       )}
       {issues.length > 0 && (
         <div className="rounded-md border border-status-rejected/40 p-3 text-sm" role="alert">
-          <p className="font-medium">Resolve these before approval:</p>
+          <p className="font-medium">Resolve these before approval / activation:</p>
           <ul className="ml-5 list-disc">
             {issues.map((i, n) => (
               <li key={n}>

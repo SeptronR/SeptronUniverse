@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../features/academic_structure/academic_structure_screens.dart';
 import '../../features/announcements/announcements_screens.dart';
 import '../../features/approvals/approvals_screen.dart';
 import '../../features/auth/profile_screens.dart';
@@ -97,6 +98,21 @@ class ScreenRegistry {
       feature: 'comms.announcements',
       permission: 'communication:view',
       builder: (_, params) => AnnouncementsScreen(openId: params['id']),
+    ),
+    // Phase 05 — read-only academic structure (courses + syllabus; a programme-regulation's curriculum by term)
+    AppRoutes.academicCourses: ScreenEntry(
+      route: AppRoutes.academicCourses,
+      titleKey: 'courses',
+      feature: 'academics.regulations',
+      permission: 'courses:view',
+      builder: (_, params) => CoursesScreen(openId: params['id']),
+    ),
+    AppRoutes.academicCurriculum: ScreenEntry(
+      route: AppRoutes.academicCurriculum,
+      titleKey: 'curriculum',
+      feature: 'academics.curriculum',
+      builder: (_, params) =>
+          CurriculumScreen(programRegulationId: params['pr']),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(
