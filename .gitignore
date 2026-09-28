@@ -113,3 +113,6 @@ tmp/
 scratch/
 seed_errors_*.csv
 test_output*.txt
+
+# Redis snapshots
+dump.rdb
