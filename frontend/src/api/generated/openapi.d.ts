@@ -72,6 +72,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/_dev/workflow/escalate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run the escalation Beat body now (dev fixture) */
+        post: operations["dev_workflow_escalate_api_v1__dev_workflow_escalate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/workflow/markers/{instance_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hook marker written by the dev approved/rejected hooks */
+        get: operations["dev_workflow_marker_api_v1__dev_workflow_markers__instance_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/workflow/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start a workflow for a synthetic entity (dev fixture) */
+        post: operations["dev_workflow_start_api_v1__dev_workflow_start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/academic-terms": {
         parameters: {
             query?: never;
@@ -257,6 +308,94 @@ export interface paths {
         put?: never;
         /** Unlock the year */
         post: operations["unlock_year_api_v1_academic_years__id__unlock_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Announcements (audience-filtered; managers see drafts) */
+        get: operations["list_announcements_api_v1_announcements_get"];
+        put?: never;
+        /** Draft an announcement */
+        post: operations["create_announcement_api_v1_announcements_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Announcement (records the read) */
+        get: operations["get_announcement_api_v1_announcements__id__get"];
+        /** Edit a draft */
+        put: operations["update_announcement_api_v1_announcements__id__put"];
+        post?: never;
+        /** Delete an announcement */
+        delete: operations["delete_announcement_api_v1_announcements__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}/acknowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark read / acknowledge */
+        post: operations["acknowledge_api_v1_announcements__id__acknowledge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish (notifies the audience) */
+        post: operations["publish_announcement_api_v1_announcements__id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/announcements/{id}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read / acknowledgement statistics */
+        get: operations["announcement_stats_api_v1_announcements__id__stats_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -624,6 +763,197 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/communication/dlt-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** DLT template registry */
+        get: operations["list_dlt_api_v1_communication_dlt_templates_get"];
+        put?: never;
+        /** Register a DLT template */
+        post: operations["create_dlt_api_v1_communication_dlt_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Message logs (recipients masked without view_pii) */
+        get: operations["logs_api_v1_communication_logs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/logs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Message log detail */
+        get: operations["log_detail_api_v1_communication_logs__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/send": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ad-hoc send of an event to an audience */
+        post: operations["send_api_v1_communication_send_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notification templates (institution + platform defaults) */
+        get: operations["list_templates_api_v1_communication_templates_get"];
+        put?: never;
+        /** Create an institution template (new version) */
+        post: operations["create_template_api_v1_communication_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Template detail */
+        get: operations["get_template_api_v1_communication_templates__id__get"];
+        /** Edit a template (writes a new version) */
+        put: operations["update_template_api_v1_communication_templates__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Make this version the active one */
+        post: operations["activate_template_api_v1_communication_templates__id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Render with a sample context */
+        post: operations["preview_template_api_v1_communication_templates__id__preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/templates/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Versions of a template */
+        get: operations["template_versions_api_v1_communication_templates__id__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/whatsapp-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** WhatsApp template registry */
+        get: operations["list_wa_api_v1_communication_whatsapp_templates_get"];
+        put?: never;
+        /** Submit a WhatsApp template */
+        post: operations["create_wa_api_v1_communication_whatsapp_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/communication/whatsapp-templates/{id}/sync-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refresh the approval status from the provider */
+        post: operations["sync_wa_api_v1_communication_whatsapp_templates__id__sync_status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/consents": {
         parameters: {
             query?: never;
@@ -742,6 +1072,24 @@ export interface paths {
         put: operations["assign_hod_api_v1_departments__id__hod_put"];
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register a push token */
+        post: operations["register_device_api_v1_devices_post"];
+        /** Unregister a push token */
+        delete: operations["unregister_device_api_v1_devices_delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1138,6 +1486,109 @@ export interface paths {
         put?: never;
         /** Mobile remote config (POST variant used by the app bootstrap) */
         post: operations["mobile_config_post_api_v1_mobile_config_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notification-preferences/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My notification preferences */
+        get: operations["my_preferences_api_v1_notification_preferences_me_get"];
+        /** Update my notification preferences */
+        put: operations["update_preferences_api_v1_notification_preferences_me_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notification-preferences/unsubscribe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One-click unsubscribe (signed link) */
+        get: operations["unsubscribe_link_api_v1_notification_preferences_unsubscribe_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My notifications */
+        get: operations["my_notifications_api_v1_notifications_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/read-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark every notification read */
+        post: operations["read_all_api_v1_notifications_read_all_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/unread-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Unread notifications */
+        get: operations["unread_count_api_v1_notifications_unread_count_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/notifications/{id}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark a notification read */
+        post: operations["read_one_api_v1_notifications__id__read_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1649,6 +2100,197 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/webhooks/{provider}/{channel}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Provider delivery / bounce / read callback (signed) */
+        post: operations["provider_webhook_api_v1_webhooks__provider___channel__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/definitions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow definitions (latest version per key) */
+        get: operations["definitions_api_v1_workflow_definitions_get"];
+        put?: never;
+        /** Create a workflow definition */
+        post: operations["create_definition_api_v1_workflow_definitions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/definitions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow definition */
+        get: operations["definition_api_v1_workflow_definitions__id__get"];
+        /** Edit (creates a new version) */
+        put: operations["update_definition_api_v1_workflow_definitions__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/definitions/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Every version of the definition's key */
+        get: operations["definition_versions_api_v1_workflow_definitions__id__versions_get"];
+        put?: never;
+        /** Save a new version */
+        post: operations["new_version_api_v1_workflow_definitions__id__versions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/delegations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My delegations (given and received) */
+        get: operations["delegations_api_v1_workflow_delegations_get"];
+        put?: never;
+        /** Delegate my approvals */
+        post: operations["create_delegation_api_v1_workflow_delegations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/delegations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Revoke a delegation */
+        delete: operations["delete_delegation_api_v1_workflow_delegations__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/inbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My pending approvals */
+        get: operations["inbox_api_v1_workflow_inbox_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow instances I can see */
+        get: operations["instances_api_v1_workflow_instances_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Workflow instance with its step timeline */
+        get: operations["instance_api_v1_workflow_instances__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances/{id}/act": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject / delegate the current step */
+        post: operations["act_api_v1_workflow_instances__id__act_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/workflow/instances/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Requester cancels while pending */
+        post: operations["cancel_api_v1_workflow_instances__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1855,6 +2497,23 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** AckStats */
+        AckStats: {
+            /** Acknowledged */
+            acknowledged: number;
+            /** Read */
+            read: number;
+            /** Total */
+            total: number;
+        };
+        /** AcknowledgeRequest */
+        AcknowledgeRequest: {
+            /**
+             * Acknowledge
+             * @default true
+             */
+            acknowledge: boolean;
+        };
         /** AdminResetPasswordResponse */
         AdminResetPasswordResponse: {
             /**
@@ -1870,6 +2529,121 @@ export interface components {
              */
             user_id: string;
         };
+        /** AnnouncementCreate */
+        AnnouncementCreate: {
+            /** Attachments */
+            attachments?: {
+                [key: string]: unknown;
+            }[] | null;
+            audience_rules?: components["schemas"]["AudienceRules"];
+            /** Body */
+            body: string;
+            /** Category */
+            category?: string | null;
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
+            /** College Id */
+            college_id?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
+            /**
+             * Is Pinned
+             * @default false
+             */
+            is_pinned: boolean;
+            /** Publish At */
+            publish_at?: string | null;
+            /**
+             * Requires Ack
+             * @default false
+             */
+            requires_ack: boolean;
+            /** Title */
+            title: string;
+        };
+        /** AnnouncementPublish */
+        AnnouncementPublish: {
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
+        };
+        /** AnnouncementResponse */
+        AnnouncementResponse: {
+            ack_stats?: components["schemas"]["AckStats"] | null;
+            /** Attachments */
+            attachments?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Audience Rules */
+            audience_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /** Body */
+            body: string;
+            /** Category */
+            category?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Created By */
+            created_by?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Is Pinned */
+            is_pinned: boolean;
+            /** My Acknowledged At */
+            my_acknowledged_at?: string | null;
+            /** My Read At */
+            my_read_at?: string | null;
+            /** Publish At */
+            publish_at?: string | null;
+            /** Requires Ack */
+            requires_ack: boolean;
+            /**
+             * Status
+             * @default draft
+             */
+            status: string;
+            /** Title */
+            title: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** AnnouncementUpdate */
+        AnnouncementUpdate: {
+            /** Attachments */
+            attachments?: {
+                [key: string]: unknown;
+            }[] | null;
+            audience_rules?: components["schemas"]["AudienceRules"] | null;
+            /** Body */
+            body?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Expires At */
+            expires_at?: string | null;
+            /** Is Pinned */
+            is_pinned?: boolean | null;
+            /** Publish At */
+            publish_at?: string | null;
+            /** Requires Ack */
+            requires_ack?: boolean | null;
+            /** Title */
+            title?: string | null;
+        };
         /** ApplyPlanDefaultsResponse */
         ApplyPlanDefaultsResponse: {
             /** Applied */
@@ -1883,6 +2657,55 @@ export interface components {
             institution_id: string;
             /** Plan Code */
             plan_code?: string | null;
+        };
+        /** ApproverSpec */
+        ApproverSpec: {
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "role" | "scope_rule" | "user";
+            /** Value */
+            value: string;
+        };
+        /** Audience */
+        Audience: {
+            /** Batch Id */
+            batch_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Direct Contacts */
+            direct_contacts?: {
+                [key: string]: string;
+            }[];
+            /**
+             * Include Guardians
+             * @default false
+             */
+            include_guardians: boolean;
+            /** Program Id */
+            program_id?: string | null;
+            /** Roles */
+            roles?: string[];
+            /** User Ids */
+            user_ids?: string[];
+        };
+        /** AudienceRules */
+        AudienceRules: {
+            /** Batch Ids */
+            batch_ids?: string[];
+            /** College Ids */
+            college_ids?: string[];
+            /** Department Ids */
+            department_ids?: string[];
+            /** Program Ids */
+            program_ids?: string[];
+            /** Roles */
+            roles?: string[];
+            /** User Ids */
+            user_ids?: string[];
         };
         /** Body_set_plan_limits_api_v1__dev_plans__code__put */
         Body_set_plan_limits_api_v1__dev_plans__code__put: {
@@ -2208,6 +3031,70 @@ export interface components {
             /** User Id */
             user_id?: string | null;
         };
+        /** DelegationCreate */
+        DelegationCreate: {
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /**
+             * Module
+             * @description NULL = every module
+             */
+            module?: string | null;
+            /**
+             * To On
+             * Format: date
+             */
+            to_on: string;
+            /**
+             * To User Id
+             * Format: uuid
+             */
+            to_user_id: string;
+        };
+        /** DelegationResponse */
+        DelegationResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /**
+             * From User Id
+             * Format: uuid
+             */
+            from_user_id: string;
+            /** From User Name */
+            from_user_name?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Module */
+            module?: string | null;
+            /**
+             * To On
+             * Format: date
+             */
+            to_on: string;
+            /**
+             * To User Id
+             * Format: uuid
+             */
+            to_user_id: string;
+            /** To User Name */
+            to_user_name?: string | null;
+        };
         /** DepartmentCreate */
         DepartmentCreate: {
             /** Code */
@@ -2285,6 +3172,110 @@ export interface components {
             name?: string | null;
             /** Version */
             version?: number | null;
+        };
+        /** DevWorkflowStart */
+        DevWorkflowStart: {
+            /** Context */
+            context?: {
+                [key: string]: unknown;
+            };
+            /** Entity Id */
+            entity_id?: string | null;
+            /** Key */
+            key: string;
+            /**
+             * Requester
+             * @description started_by (defaults to the caller)
+             */
+            requester?: string | null;
+            /** Title */
+            title?: string | null;
+        };
+        /** DeviceRegister */
+        DeviceRegister: {
+            /**
+             * Platform
+             * @enum {string}
+             */
+            platform: "android" | "ios" | "web";
+            /**
+             * Provider
+             * @enum {string}
+             */
+            provider: "fcm" | "webpush" | "expo";
+            /** Token */
+            token: string;
+            /** Topics */
+            topics?: string[];
+        };
+        /** DeviceResponse */
+        DeviceResponse: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Platform */
+            platform: string;
+            /** Provider */
+            provider: string;
+            /** Topics */
+            topics?: string[] | null;
+        };
+        /** DltTemplateCreate */
+        DltTemplateCreate: {
+            /**
+             * Category
+             * @default transactional
+             * @enum {string}
+             */
+            category: "transactional" | "service_implicit" | "service_explicit" | "promotional";
+            /** Entity Id */
+            entity_id?: string | null;
+            /** Sender Id */
+            sender_id: string;
+            /**
+             * Status
+             * @default approved
+             * @enum {string}
+             */
+            status: "approved" | "pending" | "rejected";
+            /** Template Id */
+            template_id: string;
+            /** Template Text */
+            template_text: string;
+        };
+        /** DltTemplateResponse */
+        DltTemplateResponse: {
+            /** Category */
+            category: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Entity Id */
+            entity_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Sender Id */
+            sender_id: string;
+            /** Status */
+            status: string;
+            /** Template Id */
+            template_id: string;
+            /** Template Text */
+            template_text: string;
         };
         /** EntitlementLimits */
         EntitlementLimits: {
@@ -2388,9 +3379,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AckStats] */
+        Envelope_AckStats_: {
+            data?: components["schemas"]["AckStats"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AdminResetPasswordResponse] */
         Envelope_AdminResetPasswordResponse_: {
             data?: components["schemas"]["AdminResetPasswordResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AnnouncementResponse] */
+        Envelope_AnnouncementResponse_: {
+            data?: components["schemas"]["AnnouncementResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -2478,9 +3499,54 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DelegationResponse] */
+        Envelope_DelegationResponse_: {
+            data?: components["schemas"]["DelegationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DepartmentResponse] */
         Envelope_DepartmentResponse_: {
             data?: components["schemas"]["DepartmentResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DeviceResponse] */
+        Envelope_DeviceResponse_: {
+            data?: components["schemas"]["DeviceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DltTemplateResponse] */
+        Envelope_DltTemplateResponse_: {
+            data?: components["schemas"]["DltTemplateResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -2733,6 +3799,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[MessageLogResponse] */
+        Envelope_MessageLogResponse_: {
+            data?: components["schemas"]["MessageLogResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[MessageResponse] */
         Envelope_MessageResponse_: {
             data?: components["schemas"]["MessageResponse"] | null;
@@ -2899,6 +3980,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PreferenceResponse] */
+        Envelope_PreferenceResponse_: {
+            data?: components["schemas"]["PreferenceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ProviderTestResponse] */
         Envelope_ProviderTestResponse_: {
             data?: components["schemas"]["ProviderTestResponse"] | null;
@@ -3049,6 +4145,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[SendMessageResponse] */
+        Envelope_SendMessageResponse_: {
+            data?: components["schemas"]["SendMessageResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[SsoStartResponse] */
         Envelope_SsoStartResponse_: {
             data?: components["schemas"]["SsoStartResponse"] | null;
@@ -3064,9 +4175,54 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[TemplatePreview] */
+        Envelope_TemplatePreview_: {
+            data?: components["schemas"]["TemplatePreview"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TemplateResponse] */
+        Envelope_TemplateResponse_: {
+            data?: components["schemas"]["TemplateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[Union[AcademicTermResponse, NoneType]] */
         Envelope_Union_AcademicTermResponse__NoneType__: {
             data?: components["schemas"]["AcademicTermResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[UnreadCount] */
+        Envelope_UnreadCount_: {
+            data?: components["schemas"]["UnreadCount"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -3124,11 +4280,92 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[WhatsappTemplateResponse] */
+        Envelope_WhatsappTemplateResponse_: {
+            data?: components["schemas"]["WhatsappTemplateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[WorkflowDefinitionResponse] */
+        Envelope_WorkflowDefinitionResponse_: {
+            data?: components["schemas"]["WorkflowDefinitionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[WorkflowInstanceResponse] */
+        Envelope_WorkflowInstanceResponse_: {
+            data?: components["schemas"]["WorkflowInstanceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[dict[str, Any]] */
         Envelope_dict_str__Any__: {
             /** Data */
             data?: {
                 [key: string]: unknown;
+            } | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[dict[str, int]] */
+        Envelope_dict_str__int__: {
+            /** Data */
+            data?: {
+                [key: string]: number;
+            } | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[dict[str, str]] */
+        Envelope_dict_str__str__: {
+            /** Data */
+            data?: {
+                [key: string]: string;
             } | null;
             /** Message */
             message?: string | null;
@@ -3162,6 +4399,22 @@ export interface components {
         Envelope_list_AcademicYearResponse__: {
             /** Data */
             data?: components["schemas"]["AcademicYearResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[AnnouncementResponse]] */
+        Envelope_list_AnnouncementResponse__: {
+            /** Data */
+            data?: components["schemas"]["AnnouncementResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -3222,10 +4475,42 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[DelegationResponse]] */
+        Envelope_list_DelegationResponse__: {
+            /** Data */
+            data?: components["schemas"]["DelegationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[DepartmentResponse]] */
         Envelope_list_DepartmentResponse__: {
             /** Data */
             data?: components["schemas"]["DepartmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DltTemplateResponse]] */
+        Envelope_list_DltTemplateResponse__: {
+            /** Data */
+            data?: components["schemas"]["DltTemplateResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -3302,6 +4587,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[InboxItem]] */
+        Envelope_list_InboxItem__: {
+            /** Data */
+            data?: components["schemas"]["InboxItem"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[JobResponse]] */
         Envelope_list_JobResponse__: {
             /** Data */
@@ -3322,6 +4623,38 @@ export interface components {
         Envelope_list_LoginHistoryResponse__: {
             /** Data */
             data?: components["schemas"]["LoginHistoryResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MessageLogResponse]] */
+        Envelope_list_MessageLogResponse__: {
+            /** Data */
+            data?: components["schemas"]["MessageLogResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[NotificationResponse]] */
+        Envelope_list_NotificationResponse__: {
+            /** Data */
+            data?: components["schemas"]["NotificationResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -3414,6 +4747,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[TemplateResponse]] */
+        Envelope_list_TemplateResponse__: {
+            /** Data */
+            data?: components["schemas"]["TemplateResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[UserResponse]] */
         Envelope_list_UserResponse__: {
             /** Data */
@@ -3434,6 +4783,54 @@ export interface components {
         Envelope_list_UserRoleResponse__: {
             /** Data */
             data?: components["schemas"]["UserRoleResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[WhatsappTemplateResponse]] */
+        Envelope_list_WhatsappTemplateResponse__: {
+            /** Data */
+            data?: components["schemas"]["WhatsappTemplateResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[WorkflowDefinitionResponse]] */
+        Envelope_list_WorkflowDefinitionResponse__: {
+            /** Data */
+            data?: components["schemas"]["WorkflowDefinitionResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[WorkflowInstanceResponse]] */
+        Envelope_list_WorkflowInstanceResponse__: {
+            /** Data */
+            data?: components["schemas"]["WorkflowInstanceResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -3836,6 +5233,25 @@ export interface components {
              */
             read_only: boolean;
             user: components["schemas"]["MeUser"];
+        };
+        /** InboxItem */
+        InboxItem: {
+            /** Entity Summary */
+            entity_summary?: string | null;
+            instance: components["schemas"]["WorkflowInstanceResponse"];
+            /** Route */
+            route?: string | null;
+            /**
+             * Step Id
+             * Format: uuid
+             */
+            step_id: string;
+            /**
+             * Via
+             * @default direct
+             * @enum {string}
+             */
+            via: "direct" | "role" | "delegation" | "escalation";
         };
         /** InstallRequest */
         InstallRequest: {
@@ -4364,6 +5780,49 @@ export interface components {
             /** Valid To */
             valid_to?: string | null;
         };
+        /** MessageLogResponse */
+        MessageLogResponse: {
+            /** Body Preview */
+            body_preview?: string | null;
+            /** Channel */
+            channel: string;
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Delivered At */
+            delivered_at?: string | null;
+            /** Error */
+            error?: string | null;
+            /** Event Id */
+            event_id?: string | null;
+            /** Event Type */
+            event_type?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Provider */
+            provider?: string | null;
+            /** Provider Message Id */
+            provider_message_id?: string | null;
+            /** Recipient */
+            recipient: string;
+            /** Sent At */
+            sent_at?: string | null;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+            /** User Id */
+            user_id?: string | null;
+        };
         /** MessageResponse */
         MessageResponse: {
             /** Detail */
@@ -4451,6 +5910,37 @@ export interface components {
             };
             /** Update Available */
             update_available: boolean;
+        };
+        /** NotificationResponse */
+        NotificationResponse: {
+            /** Body */
+            body?: string | null;
+            /** Category */
+            category?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Event Type */
+            event_type?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Read */
+            is_read: boolean;
+            /** Link */
+            link?: {
+                [key: string]: unknown;
+            } | null;
+            /** Read At */
+            read_at?: string | null;
+            /** Route */
+            route?: string | null;
+            /** Title */
+            title: string;
         };
         /** NumberSequenceCreate */
         NumberSequenceCreate: {
@@ -4765,6 +6255,37 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** PreferenceItem */
+        PreferenceItem: {
+            /** Category */
+            category: string;
+            /** Channels */
+            channels: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
+            /**
+             * Digest
+             * @default none
+             * @enum {string}
+             */
+            digest: "none" | "daily" | "weekly";
+            /**
+             * Mandatory
+             * @default false
+             */
+            mandatory: boolean;
+            quiet_hours?: components["schemas"]["QuietHours"] | null;
+        };
+        /** PreferenceResponse */
+        PreferenceResponse: {
+            /** Available Channels */
+            available_channels: string[];
+            /** Items */
+            items: components["schemas"]["PreferenceItem"][];
+        };
+        /** PreferenceUpdate */
+        PreferenceUpdate: {
+            /** Items */
+            items: components["schemas"]["PreferenceItem"][];
+        };
         /** ProviderTestRequest */
         ProviderTestRequest: {
             /**
@@ -4843,6 +6364,13 @@ export interface components {
             theme_tokens: {
                 [key: string]: string;
             };
+        };
+        /** QuietHours */
+        QuietHours: {
+            /** From */
+            from: string;
+            /** To */
+            to: string;
         };
         /** ReadOnlyModeRequest */
         ReadOnlyModeRequest: {
@@ -5133,6 +6661,32 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** SendMessageRequest */
+        SendMessageRequest: {
+            audience: components["schemas"]["Audience"];
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[] | null;
+            /** Context */
+            context?: {
+                [key: string]: unknown;
+            };
+            /** Event Type */
+            event_type?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+        };
+        /** SendMessageResponse */
+        SendMessageResponse: {
+            /** Event Id */
+            event_id: string | null;
+            /** Event Type */
+            event_type: string;
+            /**
+             * Queued
+             * @default true
+             */
+            queued: boolean;
+        };
         /** SessionResponse */
         SessionResponse: {
             /**
@@ -5248,6 +6802,53 @@ export interface components {
             /** Ugc Status */
             ugc_status?: string | null;
         };
+        /** StepResponse */
+        StepResponse: {
+            /** Acted At */
+            acted_at?: string | null;
+            /** Acted By */
+            acted_by?: string | null;
+            /** Acted By Name */
+            acted_by_name?: string | null;
+            /** Approver Name */
+            approver_name?: string | null;
+            /** Approver Role Slug */
+            approver_role_slug?: string | null;
+            /** Approver User Id */
+            approver_user_id?: string | null;
+            /** Comment */
+            comment?: string | null;
+            /** Delegated From */
+            delegated_from?: string | null;
+            /** Escalated To */
+            escalated_to?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Order */
+            order: number;
+            /** Sla Due At */
+            sla_due_at?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** StepSpec */
+        StepSpec: {
+            approver: components["schemas"]["ApproverSpec"];
+            escalate_to?: components["schemas"]["ApproverSpec"] | null;
+            /**
+             * Mode
+             * @default sequential
+             * @enum {string}
+             */
+            mode: "sequential" | "parallel";
+            /** Order */
+            order: number;
+            /** Sla Hours */
+            sla_hours?: number | null;
+        };
         /** StudentStubCreate */
         StudentStubCreate: {
             /** First Name */
@@ -5259,6 +6860,120 @@ export interface components {
         SuspendRequest: {
             /** Reason */
             reason?: string | null;
+        };
+        /** TemplateCreate */
+        TemplateCreate: {
+            /**
+             * Activate
+             * @default true
+             */
+            activate: boolean;
+            /** Body Template */
+            body_template: string;
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[];
+            /** Dlt Template Id */
+            dlt_template_id?: string | null;
+            /** Event Trigger */
+            event_trigger: string;
+            /**
+             * Language
+             * @default en
+             */
+            language: string;
+            /** Name */
+            name: string;
+            /** Subject Template */
+            subject_template?: string | null;
+            /** Variables */
+            variables?: string[];
+            /** Whatsapp Template Name */
+            whatsapp_template_name?: string | null;
+        };
+        /** TemplatePreview */
+        TemplatePreview: {
+            /** Body */
+            body: string;
+            /** Missing Variables */
+            missing_variables?: string[];
+            /** Subject */
+            subject?: string | null;
+        };
+        /** TemplatePreviewRequest */
+        TemplatePreviewRequest: {
+            /** Context */
+            context?: {
+                [key: string]: unknown;
+            };
+        };
+        /** TemplateResponse */
+        TemplateResponse: {
+            /** Body Template */
+            body_template: string;
+            /** Category */
+            category?: string | null;
+            /** Channels */
+            channels: string[];
+            /** Dlt Template Id */
+            dlt_template_id?: string | null;
+            /** Event Trigger */
+            event_trigger: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Institution Id */
+            institution_id?: string | null;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Is Platform
+             * @default false
+             */
+            is_platform: boolean;
+            /** Language */
+            language: string;
+            /** Name */
+            name: string;
+            /** Subject Template */
+            subject_template?: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Variables */
+            variables?: string[] | null;
+            /** Version */
+            version: number;
+            /** Whatsapp Template Name */
+            whatsapp_template_name?: string | null;
+        };
+        /**
+         * TemplateUpdate
+         * @description Editing creates a new version (the previous one stays for audit); ``activate`` switches the resolver to it.
+         */
+        TemplateUpdate: {
+            /**
+             * Activate
+             * @default true
+             */
+            activate: boolean;
+            /** Body Template */
+            body_template?: string | null;
+            /** Channels */
+            channels?: ("in_app" | "sms" | "whatsapp" | "email" | "push")[] | null;
+            /** Dlt Template Id */
+            dlt_template_id?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Subject Template */
+            subject_template?: string | null;
+            /** Variables */
+            variables?: string[] | null;
+            /** Whatsapp Template Name */
+            whatsapp_template_name?: string | null;
         };
         /** TermCloseCheck */
         TermCloseCheck: {
@@ -5287,6 +7002,11 @@ export interface components {
          * @enum {string}
          */
         TermType: "odd" | "even" | "summer" | "trimester" | "annual";
+        /** UnreadCount */
+        UnreadCount: {
+            /** Unread */
+            unread: number;
+        };
         /** UserCreate */
         UserCreate: {
             /** Display Name */
@@ -5627,6 +7347,193 @@ export interface components {
              */
             self: boolean;
         };
+        /** WhatsappTemplateCreate */
+        WhatsappTemplateCreate: {
+            /** Body */
+            body: string;
+            /**
+             * Category
+             * @default utility
+             * @enum {string}
+             */
+            category: "utility" | "marketing" | "authentication";
+            /** Components */
+            components?: {
+                [key: string]: unknown;
+            } | unknown[] | null;
+            /**
+             * Language
+             * @default en
+             */
+            language: string;
+            /** Name */
+            name: string;
+        };
+        /** WhatsappTemplateResponse */
+        WhatsappTemplateResponse: {
+            /** Body */
+            body: string;
+            /** Category */
+            category: string;
+            /** Components */
+            components?: {
+                [key: string]: unknown;
+            } | unknown[] | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Language */
+            language: string;
+            /** Meta Template Id */
+            meta_template_id?: string | null;
+            /** Name */
+            name: string;
+            /** Status */
+            status: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** WorkflowActRequest */
+        WorkflowActRequest: {
+            /** Comment */
+            comment?: string | null;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "approve" | "reject" | "delegate";
+            /** Delegate To */
+            delegate_to?: string | null;
+        };
+        /** WorkflowCancelRequest */
+        WorkflowCancelRequest: {
+            /** Reason */
+            reason?: string | null;
+        };
+        /** WorkflowDefinitionCreate */
+        WorkflowDefinitionCreate: {
+            /** Description */
+            description?: string | null;
+            /** Key */
+            key: string;
+            /** Module */
+            module: string;
+            /** Name */
+            name: string;
+            /** Steps */
+            steps: components["schemas"]["StepSpec"][];
+        };
+        /** WorkflowDefinitionResponse */
+        WorkflowDefinitionResponse: {
+            /** Description */
+            description?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Key */
+            key: string;
+            /** Module */
+            module: string;
+            /** Name */
+            name: string;
+            /** Steps */
+            steps: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Version */
+            version: number;
+            /** Versions */
+            versions?: number[];
+        };
+        /**
+         * WorkflowDefinitionUpdate
+         * @description Saving creates a new version; running instances keep the version they started with.
+         */
+        WorkflowDefinitionUpdate: {
+            /** Description */
+            description?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Name */
+            name?: string | null;
+            /** Steps */
+            steps?: components["schemas"]["StepSpec"][] | null;
+        };
+        /** WorkflowInstanceResponse */
+        WorkflowInstanceResponse: {
+            /**
+             * Can Act
+             * @default false
+             */
+            can_act: boolean;
+            /**
+             * Can Cancel
+             * @default false
+             */
+            can_cancel: boolean;
+            /** Closed At */
+            closed_at?: string | null;
+            /** Context */
+            context?: {
+                [key: string]: unknown;
+            } | null;
+            /** Current Step */
+            current_step: number;
+            /**
+             * Definition Id
+             * Format: uuid
+             */
+            definition_id: string;
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
+            /** Entity Type */
+            entity_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Key */
+            key: string;
+            /** Module */
+            module: string;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Started By */
+            started_by?: string | null;
+            /** Started By Name */
+            started_by_name?: string | null;
+            /** Status */
+            status: string;
+            /** Steps */
+            steps?: components["schemas"]["StepResponse"][];
+            /** Title */
+            title?: string | null;
+            /** Total Steps */
+            total_steps: number;
+            /** Version */
+            version: number;
+        };
     };
     responses: never;
     parameters: never;
@@ -5757,6 +7664,90 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_workflow_escalate_api_v1__dev_workflow_escalate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
+                };
+            };
+        };
+    };
+    dev_workflow_marker_api_v1__dev_workflow_markers__instance_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                instance_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_workflow_start_api_v1__dev_workflow_start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DevWorkflowStart"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -6251,6 +8242,273 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_announcements_api_v1_announcements_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                q?: string | null;
+                status?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AnnouncementResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_announcement_api_v1_announcements_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_announcement_api_v1_announcements__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_announcement_api_v1_announcements__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_announcement_api_v1_announcements__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    acknowledge_api_v1_announcements__id__acknowledge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AcknowledgeRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_announcement_api_v1_announcements__id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AnnouncementPublish"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AnnouncementResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    announcement_stats_api_v1_announcements__id__stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AckStats_"];
                 };
             };
             /** @description Validation Error */
@@ -7000,6 +9258,473 @@ export interface operations {
             };
         };
     };
+    list_dlt_api_v1_communication_dlt_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DltTemplateResponse__"];
+                };
+            };
+        };
+    };
+    create_dlt_api_v1_communication_dlt_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DltTemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DltTemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    logs_api_v1_communication_logs_get: {
+        parameters: {
+            query?: {
+                channel?: string | null;
+                status?: string | null;
+                recipient?: string | null;
+                event_type?: string | null;
+                since?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessageLogResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    log_detail_api_v1_communication_logs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessageLogResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_api_v1_communication_send_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendMessageRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SendMessageResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_templates_api_v1_communication_templates_get: {
+        parameters: {
+            query?: {
+                event_trigger?: string | null;
+                include_inactive?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TemplateResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_template_api_v1_communication_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_template_api_v1_communication_templates__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_template_api_v1_communication_templates__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplateUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    activate_template_api_v1_communication_templates__id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_template_api_v1_communication_templates__id__preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TemplatePreviewRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TemplatePreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    template_versions_api_v1_communication_templates__id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TemplateResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_wa_api_v1_communication_whatsapp_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_WhatsappTemplateResponse__"];
+                };
+            };
+        };
+    };
+    create_wa_api_v1_communication_whatsapp_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WhatsappTemplateCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WhatsappTemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sync_wa_api_v1_communication_whatsapp_templates__id__sync_status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WhatsappTemplateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     record_consent_api_v1_consents_post: {
         parameters: {
             query?: never;
@@ -7316,6 +10041,71 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_DepartmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_device_api_v1_devices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeviceRegister"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DeviceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unregister_device_api_v1_devices_delete: {
+        parameters: {
+            query: {
+                provider: string;
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
                 };
             };
             /** @description Validation Error */
@@ -8226,6 +11016,196 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_preferences_api_v1_notification_preferences_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PreferenceResponse_"];
+                };
+            };
+        };
+    };
+    update_preferences_api_v1_notification_preferences_me_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreferenceUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PreferenceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    unsubscribe_link_api_v1_notification_preferences_unsubscribe_get: {
+        parameters: {
+            query: {
+                token: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__str__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_notifications_api_v1_notifications_get: {
+        parameters: {
+            query?: {
+                unread?: boolean;
+                category?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_NotificationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_all_api_v1_notifications_read_all_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
+                };
+            };
+        };
+    };
+    unread_count_api_v1_notifications_unread_count_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
+                };
+            };
+        };
+    };
+    read_one_api_v1_notifications__id__read_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UnreadCount_"];
                 };
             };
             /** @description Validation Error */
@@ -9548,6 +12528,487 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    provider_webhook_api_v1_webhooks__provider___channel__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                provider: string;
+                channel: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__str__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    definitions_api_v1_workflow_definitions_get: {
+        parameters: {
+            query?: {
+                module?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_WorkflowDefinitionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_definition_api_v1_workflow_definitions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDefinitionCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowDefinitionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    definition_api_v1_workflow_definitions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowDefinitionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_definition_api_v1_workflow_definitions__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDefinitionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowDefinitionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    definition_versions_api_v1_workflow_definitions__id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_WorkflowDefinitionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    new_version_api_v1_workflow_definitions__id__versions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDefinitionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowDefinitionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delegations_api_v1_workflow_delegations_get: {
+        parameters: {
+            query?: {
+                all?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DelegationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_delegation_api_v1_workflow_delegations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DelegationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DelegationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_delegation_api_v1_workflow_delegations__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inbox_api_v1_workflow_inbox_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InboxItem__"];
+                };
+            };
+        };
+    };
+    instances_api_v1_workflow_instances_get: {
+        parameters: {
+            query?: {
+                entity_type?: string | null;
+                entity_id?: string | null;
+                status?: string | null;
+                mine?: boolean;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_WorkflowInstanceResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    instance_api_v1_workflow_instances__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    act_api_v1_workflow_instances__id__act_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowActRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_api_v1_workflow_instances__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["WorkflowCancelRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WorkflowInstanceResponse_"];
                 };
             };
             /** @description Validation Error */

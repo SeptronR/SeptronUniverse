@@ -203,6 +203,9 @@ def seed_registries(conn: Connection) -> dict[str, Any]:
     from app.services.institution_defaults import seed_phase03_platform
 
     phase03 = seed_phase03_platform(conn)  # settings template, theme tokens, number-sequence patterns (Phase 03)
+    from app.services.institution_defaults import seed_phase04_platform
+
+    phase04 = seed_phase04_platform(conn)  # platform notification templates + workflow templates (Phase 04)
     return {
         "permissions": perms,
         "role_templates_created": roles_created,
@@ -212,6 +215,7 @@ def seed_registries(conn: Connection) -> dict[str, Any]:
         "plan_tiers_updated": tiers,
         "packs": packs,
         "settings_template_keys": phase03["settings_keys"],
+        "notification_templates_created": phase04["notification_templates"],
     }
 
 

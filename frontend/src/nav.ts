@@ -1,5 +1,10 @@
 import {
   Activity,
+  BellRing,
+  CheckSquare,
+  GitBranch,
+  Megaphone,
+  MessagesSquare,
   Building,
   Building2,
   CalendarDays,
@@ -29,6 +34,8 @@ export type NavItem = {
   altActions?: string[];
   feature?: string;
   roles?: string[];
+  /** live counter shown next to the label (Phase 04: `approvals` = pending approvals inbox) */
+  badge?: 'approvals';
 };
 
 export type NavGroup = { title: string; items: NavItem[] };
@@ -41,6 +48,9 @@ export const NAV_GROUPS: NavGroup[] = [
       // Phase 01 — platform services
       { label: 'Background jobs', to: '/jobs', icon: Activity, module: 'jobs', feature: 'core.background_jobs' },
       { label: 'Help centre', to: '/help', icon: LifeBuoy, module: 'dashboard', feature: 'platform.help_center' },
+      // Phase 04 — approvals inbox (every signed-in user; the badge counts pending steps)
+      { label: 'Approvals', to: '/approvals', icon: CheckSquare, module: 'dashboard', feature: 'workflow.engine', badge: 'approvals' },
+      { label: 'Notifications', to: '/notifications', icon: BellRing, module: 'dashboard', feature: 'core.notifications_inapp' },
     ],
   },
   { title: 'ACADEMICS', items: [] },
@@ -52,7 +62,22 @@ export const NAV_GROUPS: NavGroup[] = [
   { title: 'FINANCE', items: [] },
   { title: 'ENGAGEMENT', items: [] },
   { title: 'QUALITY & GOVERNANCE', items: [] },
-  { title: 'COMMUNICATION', items: [] },
+  {
+    title: 'COMMUNICATION',
+    items: [
+      // Phase 04 — communication core
+      {
+        label: 'Communications',
+        to: '/admin/communications',
+        icon: MessagesSquare,
+        module: 'communication',
+        action: 'view_all',
+        altActions: ['template_manage', 'send', 'create'],
+        feature: 'core.notifications_inapp',
+      },
+      { label: 'Announcements', to: '/announcements', icon: Megaphone, module: 'communication', feature: 'comms.announcements' },
+    ],
+  },
   {
     title: 'ADMIN',
     items: [
@@ -78,6 +103,7 @@ export const NAV_GROUPS: NavGroup[] = [
         action: 'manage',
         feature: 'institution.number_sequences_custom',
       },
+      { label: 'Workflows', to: '/admin/workflows', icon: GitBranch, module: 'settings', action: 'manage', feature: 'workflow.engine' },
       // super admin only (features:manage is platform-only): tenants + onboarding wizard
       {
         label: 'Tenants',

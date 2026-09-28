@@ -12,6 +12,11 @@ outside ``APP_ENV=development``.
 
 Phase 03 adds ``POST /_dev/number-sequences/{id}/next`` (step 9 — consume a value the way a business module will;
 ``settings:manage`` + ``institution.number_sequences_custom``).
+
+Phase 04 adds ``POST /_dev/workflow/start`` (step 8 — start any workflow key for a synthetic entity; ``requester``
+overrides ``started_by``) and ``GET /_dev/workflow/markers/{instance_id}`` (the development hook registered below
+writes a Redis marker when any workflow is approved/rejected — proof that hooks run), plus
+``POST /_dev/workflow/escalate`` (step 10 — runs the Beat body in-process).
 """
 
 import asyncio
@@ -26,12 +31,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.authz.dependencies import Principal, permission_required, super_admin_required
 from app.core.errors import APIError, ErrorCode
 from app.core.features import feature_required
-from app.db.session import get_db, get_platform_db
+from app.core.workflow import engine as workflow_engine
+from app.db.session import get_db, get_platform_db, redis_client
 from app.models.platform import User
 from app.models.saas import SubscriptionPlan
 from app.schemas.common import Envelope
 from app.schemas.institution import NumberSequenceNext
 from app.schemas.platform import JobResponse
+from app.schemas.workflow import DevWorkflowStart, WorkflowInstanceResponse
 from app.services.job_service import JobService
 from app.services.sequence_service import SequenceService
 from app.utils.response import ok
@@ -117,3 +124,68 @@ async def next_sequence_value(
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
     return ok(await SequenceService(db, principal, request).next_by_id(id))
+
+
+# ---- Phase 04 workflow fixtures --------------------------------------------------------------------------------------
+@workflow_engine.on("*", "approved")
+async def _dev_marker_approved(db: AsyncSession, instance: Any, actor: Any) -> None:
+    await redis_client.set(f"dev:workflow:{instance.id}", "approved", ex=3600)
+
+
+@workflow_engine.on("*", "rejected")
+async def _dev_marker_rejected(db: AsyncSession, instance: Any, actor: Any) -> None:
+    await redis_client.set(f"dev:workflow:{instance.id}", "rejected", ex=3600)
+
+
+@router.post(
+    "/workflow/start",
+    status_code=201,
+    summary="Start a workflow for a synthetic entity (dev fixture)",
+    dependencies=[feature_required("workflow.engine")],
+    response_model=Envelope[WorkflowInstanceResponse],
+)
+async def dev_workflow_start(
+    body: DevWorkflowStart,
+    request: Request,
+    principal: Principal = Depends(permission_required("settings", "manage")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.institution.context import tenant_id
+    from app.services.workflow_service import WorkflowService
+
+    inst = tenant_id(principal, request)
+    instance = await workflow_engine.start(
+        db,
+        institution_id=inst,
+        key=body.key,
+        entity_type="dev_entity",
+        entity_id=body.entity_id or uuid.uuid4(),
+        started_by=body.requester or principal.id,
+        context=body.context,
+        title=body.title or f"Dev {body.key}",
+    )
+    return ok(await WorkflowService(db, principal, request).instance(instance.id))
+
+
+@router.get(
+    "/workflow/markers/{instance_id}",
+    summary="Hook marker written by the dev approved/rejected hooks",
+    dependencies=[feature_required("workflow.engine")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_workflow_marker(
+    instance_id: uuid.UUID, principal: Principal = Depends(permission_required("settings", "manage"))
+) -> dict[str, Any]:
+    return ok({"instance_id": str(instance_id), "marker": await redis_client.get(f"dev:workflow:{instance_id}")})
+
+
+@router.post(
+    "/workflow/escalate",
+    summary="Run the escalation Beat body now (dev fixture)",
+    dependencies=[feature_required("workflow.engine")],
+    response_model=Envelope[dict[str, int]],
+)
+async def dev_workflow_escalate(
+    principal: Principal = Depends(super_admin_required()), db: AsyncSession = Depends(get_platform_db)
+) -> dict[str, Any]:
+    return ok({"escalated": await workflow_engine.escalate_due(db)})

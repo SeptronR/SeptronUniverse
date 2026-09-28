@@ -42,6 +42,14 @@ const SettingsPage = lazy(() => import('@/features/institution/pages/SettingsPag
 const NumberSequencesPage = lazy(() => import('@/features/institution/pages/NumberSequencesPage'));
 const PlatformInstitutionsPage = lazy(() => import('@/features/institution/pages/PlatformInstitutionsPage'));
 const PlatformInstitutionDetailPage = lazy(() => import('@/features/institution/pages/PlatformInstitutionDetailPage'));
+// Phase 04 — communication core & approvals
+const CommunicationsPage = lazy(() => import('@/features/communication/pages/CommunicationsPage'));
+const AnnouncementsPage = lazy(() => import('@/features/communication/pages/AnnouncementsPage'));
+const NotificationsPage = lazy(() => import('@/features/communication/pages/NotificationsPage'));
+const NotificationPreferencesPage = lazy(() => import('@/features/communication/pages/NotificationPreferencesPage'));
+const ApprovalsPage = lazy(() => import('@/features/workflow/pages/ApprovalsPage'));
+const ApprovalInstancePage = lazy(() => import('@/features/workflow/pages/ApprovalInstancePage'));
+const WorkflowsAdminPage = lazy(() => import('@/features/workflow/pages/WorkflowsAdminPage'));
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -142,6 +150,50 @@ export const router = createBrowserRouter([
               </FeatureRoute>,
             ),
           })),
+          // Phase 04 — communication core & approvals (self-service pages need no module permission)
+          { path: '/notifications', element: page(<NotificationsPage />) },
+          {
+            path: '/profile/notifications',
+            element: page(
+              <FeatureRoute feature="comms.preferences">
+                <NotificationPreferencesPage />
+              </FeatureRoute>,
+            ),
+          },
+          ...['/announcements', '/announcements/:id'].map((path) => ({
+            path,
+            element: page(
+              <FeatureRoute feature="comms.announcements">
+                <PermissionRoute module="communication">
+                  <AnnouncementsPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          })),
+          ...['/approvals', '/approvals/instances/:id'].map((path, i) => ({
+            path,
+            element: page(<FeatureRoute feature="workflow.engine">{i === 0 ? <ApprovalsPage /> : <ApprovalInstancePage />}</FeatureRoute>),
+          })),
+          {
+            path: '/admin/communications',
+            element: page(
+              <FeatureRoute feature="core.notifications_inapp">
+                <PermissionRoute module="communication" action="view_all" anyOf={[['communication', 'template_manage'], ['communication', 'send'], ['communication', 'create']]}>
+                  <CommunicationsPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
+          {
+            path: '/admin/workflows',
+            element: page(
+              <FeatureRoute feature="workflow.engine">
+                <PermissionRoute module="settings" action="manage">
+                  <WorkflowsAdminPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
           {
             path: '/jobs',
             element: page(

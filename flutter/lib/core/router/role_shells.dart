@@ -89,6 +89,14 @@ List<ShellTab> tabsForRole(String role) {
 
 /// More-grid modules registered by the phases (`moreMenuModules.add(...)` in NN.10).
 final List<MoreMenuModule> moreMenuModules = [
+  // Phase 04 — announcements (every role with communication:view)
+  const MoreMenuModule(
+      titleKey: 'announcements',
+      icon: Icons.campaign_outlined,
+      route: AppRoutes.announcements,
+      color: Colors.indigo,
+      permission: 'communication:view',
+      feature: 'comms.announcements'),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings', icon: Icons.settings_outlined, route: AppRoutes.settings, color: Colors.blueGrey),

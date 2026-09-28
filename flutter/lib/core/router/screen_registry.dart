@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../features/announcements/announcements_screens.dart';
+import '../../features/approvals/approvals_screen.dart';
 import '../../features/auth/profile_screens.dart';
+import '../../features/notifications/notifications_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
@@ -50,12 +53,13 @@ class ScreenRegistry {
     AppRoutes.approvals: ScreenEntry(
       route: AppRoutes.approvals,
       titleKey: 'approvals',
-      builder: (_, __) => const PlaceholderScreen(title: 'Approvals'),
+      feature: 'workflow.engine',
+      builder: (_, __) => const ApprovalsScreen(),
     ),
     AppRoutes.notifications: ScreenEntry(
       route: AppRoutes.notifications,
       titleKey: 'notifications',
-      builder: (_, __) => const PlaceholderScreen(title: 'Notifications'),
+      builder: (_, __) => const NotificationsScreen(),
     ),
     // Phase 02 — profile, password, MFA and sessions (auth screens are reachable by every signed-in user)
     AppRoutes.profile: ScreenEntry(
@@ -79,6 +83,20 @@ class ScreenRegistry {
       titleKey: 'sessions',
       feature: 'security.session_management',
       builder: (_, __) => const SessionsScreen(),
+    ),
+    // Phase 04 — notification preferences, announcements (approvals + notifications tabs replaced above)
+    AppRoutes.notificationPreferences: ScreenEntry(
+      route: AppRoutes.notificationPreferences,
+      titleKey: 'notificationPreferences',
+      feature: 'comms.preferences',
+      builder: (_, __) => const NotificationPreferencesScreen(),
+    ),
+    AppRoutes.announcements: ScreenEntry(
+      route: AppRoutes.announcements,
+      titleKey: 'announcements',
+      feature: 'comms.announcements',
+      permission: 'communication:view',
+      builder: (_, params) => AnnouncementsScreen(openId: params['id']),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

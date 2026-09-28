@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { Laptop, LogOut, ShieldCheck, ShieldOff } from 'lucide-react';
 import { getApiError } from '@/api/axios';
 import { PageHeader } from '@/components/shared/PageHeader';
@@ -111,6 +111,9 @@ export default function ProfilePage() {
         description={user?.display_name ?? user?.username}
         actions={
           <div className="flex items-center gap-2">
+            <Link to="/profile/notifications" className="text-sm text-primary hover:underline">
+              Notification preferences
+            </Link>
             {user?.role_slugs.map((r) => (
               <Badge key={r} variant="secondary">
                 {titleCase(r)}
