@@ -50,6 +50,17 @@ const NotificationPreferencesPage = lazy(() => import('@/features/communication/
 const ApprovalsPage = lazy(() => import('@/features/workflow/pages/ApprovalsPage'));
 const ApprovalInstancePage = lazy(() => import('@/features/workflow/pages/ApprovalInstancePage'));
 const WorkflowsAdminPage = lazy(() => import('@/features/workflow/pages/WorkflowsAdminPage'));
+// Phase 05 — programmes, regulations & curriculum
+const ProgramsPage = lazy(() => import('@/features/academics/pages/ProgramsPage'));
+const RegulationsPage = lazy(() => import('@/features/academics/pages/RegulationsPage'));
+const RegulationWorkspacePage = lazy(() => import('@/features/academics/pages/RegulationWorkspacePage'));
+const CoursesPage = lazy(() => import('@/features/academics/pages/CoursesPage'));
+const GradingPage = lazy(() => import('@/features/academics/pages/GradingPage'));
+const BatchesPage = lazy(() => import('@/features/academics/pages/BatchesPage'));
+const CatalogPage = lazy(() => import('@/features/academics/pages/CatalogPage'));
+const CatalogProgramPage = lazy(() =>
+  import('@/features/academics/pages/CatalogPage').then((m) => ({ default: m.CatalogProgramPage })),
+);
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -69,6 +80,9 @@ export const router = createBrowserRouter([
   { path: '/mfa-setup', element: page(<MfaEnrolmentPage />) },
   { path: '/access-denied', element: page(<AccessDeniedPage />) },
   { path: '/feature-disabled', element: page(<FeatureDisabledPage />) },
+  // Phase 05 — public course catalogue (no sign-in; the API checks academics.public_catalog for the tenant)
+  { path: '/catalog', element: page(<CatalogPage />) },
+  { path: '/catalog/:program', element: page(<CatalogProgramPage />) },
   {
     element: <PrivateRoute />,
     children: [
@@ -145,6 +159,26 @@ export const router = createBrowserRouter([
             element: page(
               <FeatureRoute feature={feature}>
                 <PermissionRoute module={module} action={action}>
+                  {node}
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          })),
+          // Phase 05 — programmes, regulations & curriculum (institution-wide readable by staff)
+          ...(
+            [
+              ['/admin/academics/programs', 'academics.programs', 'programs', <ProgramsPage key="p" />],
+              ['/admin/academics/regulations', 'academics.regulations', 'regulations', <RegulationsPage key="r" />],
+              ['/admin/academics/regulations/:id', 'academics.regulations', 'regulations', <RegulationWorkspacePage key="w" />],
+              ['/admin/academics/courses', 'academics.regulations', 'courses', <CoursesPage key="c" />],
+              ['/admin/academics/grading', 'academics.regulations', 'regulations', <GradingPage key="g" />],
+              ['/admin/academics/batches', 'academics.programs', 'batches', <BatchesPage key="b" />],
+            ] as const
+          ).map(([path, feature, module, node]) => ({
+            path,
+            element: page(
+              <FeatureRoute feature={feature}>
+                <PermissionRoute module={module} action="view">
                   {node}
                 </PermissionRoute>
               </FeatureRoute>,

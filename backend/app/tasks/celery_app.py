@@ -6,6 +6,7 @@ and checks ``features.is_enabled(institution_id, key)`` before acting. Tasks are
 
 from celery import Celery
 
+import app.features  # noqa: F401  (registers every feature key — ``is_enabled()`` in tasks needs the full registry)
 from app.core.config import settings
 
 celery = Celery(
@@ -18,6 +19,7 @@ celery = Celery(
         "app.tasks.platform",
         "app.tasks.auth",
         "app.tasks.institution",
+        "app.tasks.academics",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",

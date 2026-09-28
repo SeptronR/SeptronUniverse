@@ -16,6 +16,8 @@ class AppRoutes {
   static const settings = '/app/settings';
   static const announcements = '/app/announcements';
   static const notificationPreferences = '/app/notifications/preferences';
+  static const academicCourses = '/app/academics/courses';
+  static const academicCurriculum = '/app/academics/curriculum';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

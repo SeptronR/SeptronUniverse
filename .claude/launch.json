@@ -63,6 +63,15 @@
       ]
     },
     {
+      "name": "fakeredis-server",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": [
+        "/c",
+        "cd /d backend && set \"PYTHONUTF8=1\" && .venv\\Scripts\\python.exe scripts\\dev_fakeredis_server.py --port 6380"
+      ],
+      "port": 6380
+    },
+    {
       "name": "flower",
       "runtimeExecutable": "cmd",
       "runtimeArgs": [

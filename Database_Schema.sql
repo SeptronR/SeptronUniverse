@@ -3758,12 +3758,14 @@ BEGIN
   FOR t IN SELECT unnest(ARRAY['institutions','colleges','faculties','departments','users','roles','academic_years','academic_terms','programs','regulations','program_regulations',
                                'courses','elective_baskets','batches','students','student_program_enrollments','staff','fee_structures','fee_invoices','course_offerings',
                                'course_registrations','exam_sessions','exam_registrations','offering_assessments','grading_scales','assessment_schemes','rooms','books','hostels',
-                               'vehicles','items','assets','companies','admission_cycles','applicants','document_templates','workflow_definitions'])
+                               'vehicles','items','assets','companies','admission_cycles','applicants','document_templates'])
   LOOP
     EXECUTE format('DROP TRIGGER IF EXISTS bump_version ON %I', t);
     EXECUTE format('CREATE TRIGGER bump_version BEFORE UPDATE ON %I FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION trigger_bump_version()', t);
   END LOOP;
 END $$;
+-- workflow_definitions is NOT in the list: its version column is the definition version (immutable rows, UNIQUE (institution_id, key, version));
+-- deactivating an old version must not renumber it (revision 0005 drops the trigger on databases created before).
 
 -- Result immutability: published rows may only flip is_current / status -> superseded
 CREATE OR REPLACE FUNCTION trigger_results_immutable() RETURNS TRIGGER AS $$

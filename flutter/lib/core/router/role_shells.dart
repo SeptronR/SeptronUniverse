@@ -97,9 +97,27 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.indigo,
       permission: 'communication:view',
       feature: 'comms.announcements'),
+  // Phase 05 — courses (staff) and my curriculum (students; populated from Phase 07)
+  const MoreMenuModule(
+      titleKey: 'courses',
+      icon: Icons.menu_book_outlined,
+      route: AppRoutes.academicCourses,
+      color: Colors.teal,
+      permission: 'courses:view',
+      feature: 'academics.regulations'),
+  const MoreMenuModule(
+      titleKey: 'curriculum',
+      icon: Icons.account_tree_outlined,
+      route: AppRoutes.academicCurriculum,
+      color: Colors.deepPurple,
+      feature: 'academics.curriculum',
+      roles: ['student']),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
-      titleKey: 'settings', icon: Icons.settings_outlined, route: AppRoutes.settings, color: Colors.blueGrey),
+      titleKey: 'settings',
+      icon: Icons.settings_outlined,
+      route: AppRoutes.settings,
+      color: Colors.blueGrey),
 ];
 
 List<MoreMenuModule> moreMenuFor(AuthState auth) =>

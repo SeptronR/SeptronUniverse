@@ -414,6 +414,9 @@ SCOPE_TABLES: dict[str, str] = {
     "committee": "committees",
     "hostel": "hostels",
 }
+# additional tables a scope id may name (Phase 05: ``class_advisor`` @offering is assigned to a batch *section* until
+# Phase 09 course offerings exist; both share the ``offering`` scope type)
+SCOPE_ALT_TABLES: dict[str, tuple[str, ...]] = {"offering": ("batch_sections",)}
 # roles that may additionally be college-scoped although their template default is ``institution``
 COLLEGE_SCOPABLE_ROLES: frozenset[str] = frozenset(
     {
@@ -458,6 +461,13 @@ def MODULE_ALL(module: str, exclude: tuple[str, ...] = ()) -> set[str]:
 # Phase 03: ``institutions:view`` is granted to every role — institution, colleges, faculties, departments, academic
 # years/terms and holidays are institution-wide readable by any authenticated member (Prompts/03 "Visibility rules")
 COMMON: set[str] = P("dashboard", "view") | P("jobs", "view", "cancel") | P("institutions", "view")
+ACADEMIC_READ: set[str] = (
+    P("programs", "view")
+    | P("regulations", "view")
+    | P("curriculum", "view")
+    | P("courses", "view")
+    | P("batches", "view")
+)
 # staff self-service — always present where it makes sense (docs/Authorization_and_Visibility.md §4)
 STAFF_SELF: set[str] = (
     COMMON
@@ -476,6 +486,8 @@ STAFF_SELF: set[str] = (
     | P("timetable", "view")
     | P("no_dues", "request")
     | P("settings", "view")
+    # Phase 05: programmes, regulations, curricula, courses and batches are institution-wide readable by all staff
+    | ACADEMIC_READ
 )
 
 FACULTY: set[str] = (
@@ -551,6 +563,19 @@ STUDENT: set[str] = (
     | P("sports", "view")
 )
 
+# Phase 05 (Prompts/05 "Visibility rules"): edits are narrowed to the holder's units by the services
+REGISTRAR_ACADEMICS: set[str] = (
+    P("programs", "manage")
+    | MODULE_ALL("regulations", exclude=("approve", "view_pii"))
+    | P("curriculum", "manage")
+    | P("courses", "manage")
+    | P("batches", "manage")
+)
+HOD_ACADEMICS: set[str] = (
+    P("courses", "create", "update", "export") | P("curriculum", "manage") | P("batches", "manage")
+)
+DEAN_ACADEMICS: set[str] = P("courses", "approve")  # dean @faculty approves the drafted courses of its departments
+
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
     "support_agent": ALL("view", "view_all") | P("users", "impersonate") | COMMON,
@@ -585,7 +610,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("faculties", "view_all")
     | P("programs", "view_all")
     | P("batches", "view_all")
-    | P("attendance", "view_all"),
+    | P("attendance", "view_all")
+    # Phase 05: the registrar owns the academic backbone (programmes, regulations short of approval, curricula)
+    | REGISTRAR_ACADEMICS,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -631,6 +658,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "dean": ALL("view", "view_all")
     | P("leaves", "approve")
     | P("regulations", "approve")
+    | DEAN_ACADEMICS
     | P("offerings", "allocate_faculty")
     | P("events", "approve")
     | STAFF_SELF,
@@ -655,7 +683,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("lms", "view_all")
     | P("results", "view_all")
     | P("research", "view_all")
-    | P("departments", "view"),
+    | P("departments", "view")
+    # Phase 05: HOD @department drafts the courses, structures and batches of its own department
+    | HOD_ACADEMICS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view"),
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view")),
@@ -866,7 +896,10 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
-BACKFILL_GRANTS: dict[str, frozenset[str]] = {"0003": frozenset({"institutions:view"})}
+BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0003": frozenset({"institutions:view"}),
+    "0005": frozenset(ACADEMIC_READ | REGISTRAR_ACADEMICS | HOD_ACADEMICS | DEAN_ACADEMICS),
+}
 
 
 def template_permissions(slug: str) -> set[str]:

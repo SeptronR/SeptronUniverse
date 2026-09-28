@@ -1,5 +1,10 @@
 import {
   Activity,
+  BookOpen,
+  GraduationCap,
+  Percent,
+  ScrollText,
+  UsersRound,
   BellRing,
   CheckSquare,
   GitBranch,
@@ -53,7 +58,23 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Notifications', to: '/notifications', icon: BellRing, module: 'dashboard', feature: 'core.notifications_inapp' },
     ],
   },
-  { title: 'ACADEMICS', items: [] },
+  {
+    title: 'ACADEMICS',
+    items: [
+      // Phase 05 — programmes, regulations & curriculum
+      { label: 'Programmes', to: '/admin/academics/programs', icon: GraduationCap, module: 'programs', feature: 'academics.programs' },
+      { label: 'Regulations', to: '/admin/academics/regulations', icon: ScrollText, module: 'regulations', feature: 'academics.regulations' },
+      { label: 'Courses', to: '/admin/academics/courses', icon: BookOpen, module: 'courses', feature: 'academics.regulations' },
+      {
+        label: 'Grading & Schemes',
+        to: '/admin/academics/grading',
+        icon: Percent,
+        module: 'regulations',
+        feature: 'academics.regulations',
+      },
+      { label: 'Batches', to: '/admin/academics/batches', icon: UsersRound, module: 'batches', feature: 'academics.programs' },
+    ],
+  },
   { title: 'EXAMINATIONS', items: [] },
   { title: 'ADMISSIONS', items: [] },
   { title: 'STUDENTS', items: [] },
