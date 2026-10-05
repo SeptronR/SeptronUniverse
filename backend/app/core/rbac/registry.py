@@ -475,6 +475,8 @@ STAFF_SELF: set[str] = (
     | P("payroll", "self")
     | P("attendance", "staff_self")
     | P("hr", "view")
+    # Phase 06: staff request encashment of their own encashable leave (gated by {hr.leave_encashment})
+    | P("leaves", "encash")
     | P("calendar", "view")
     | P("communication", "view")
     | P("events", "view")
@@ -575,6 +577,9 @@ HOD_ACADEMICS: set[str] = (
     P("courses", "create", "update", "export") | P("curriculum", "manage") | P("batches", "manage")
 )
 DEAN_ACADEMICS: set[str] = P("courses", "approve")  # dean @faculty approves the drafted courses of its departments
+# Phase 06: dean @faculty approves the course-allocation proposals and reads the workload of its departments
+DEAN_HR: set[str] = P("faculty", "workload_manage")
+AUDITOR_HR: set[str] = P("attendance", "staff_view_all")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -659,6 +664,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("leaves", "approve")
     | P("regulations", "approve")
     | DEAN_ACADEMICS
+    | DEAN_HR
     | P("offerings", "allocate_faculty")
     | P("events", "approve")
     | STAFF_SELF,
@@ -688,7 +694,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_ACADEMICS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view"),
     "faculty": FACULTY,
-    "guest_faculty": (FACULTY - P("leaves", "self", "create", "view")),
+    "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
     "invigilator": COMMON
     | P("exams", "conduct", "malpractice", "invigilation", "view")
@@ -846,7 +852,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("marks", "view_all")
     | P("results", "view_all")
     | P("students", "view_all"),
-    "auditor": ALL("view", "view_all") | P("reports", "run") | COMMON,
+    # Phase 06: staff attendance is a bespoke action (``staff_view_all``) outside ALL(view, view_all) — the auditor
+    # reads every HR register (Prompts/06 visibility table)
+    "auditor": ALL("view", "view_all") | P("reports", "run") | AUDITOR_HR | COMMON,
     "recruiter": COMMON | P("placement", "recruiter", "view"),
     "learner": COMMON
     | P("students", "self")
@@ -899,6 +907,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0003": frozenset({"institutions:view"}),
     "0005": frozenset(ACADEMIC_READ | REGISTRAR_ACADEMICS | HOD_ACADEMICS | DEAN_ACADEMICS),
+    "0006": frozenset(P("leaves", "encash") | DEAN_HR | AUDITOR_HR),
 }
 
 

@@ -142,4 +142,30 @@ WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
     },
 )
 
-assert len(WORKFLOW_TEMPLATES) == 18, "Prompts/04 ships 18 workflow templates"
+# Phase 06 (Prompts/06 §06.7 "Workflows used"): ``leave.approval`` and ``hr.appraisal`` ship with Phase 04; these five
+# complete the HR set. ``hr.course_allocation`` is the dean's approval of a department's course-allocation proposal.
+HR_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "attendance.regularise",
+        "module": "attendance",
+        "name": "Staff attendance regularisation",
+        "steps": _chain("hod", sla=48, escalate="hr_officer"),
+    },
+    {"key": "hr.loan", "module": "payroll", "name": "Loan / advance", "steps": _chain("hr_officer", "accountant")},
+    {"key": "hr.cas", "module": "hr", "name": "CAS promotion", "steps": _chain("hr_officer", sla=168)},
+    {
+        "key": "hr.leave_encashment",
+        "module": "leaves",
+        "name": "Leave encashment",
+        "steps": _chain("hr_officer", "accountant"),
+    },
+    {
+        "key": "hr.course_allocation",
+        "module": "faculty",
+        "name": "Course allocation proposal",
+        "steps": _chain("dean", sla=72, escalate=None),
+    },
+)
+WORKFLOW_TEMPLATES = WORKFLOW_TEMPLATES + HR_WORKFLOW_TEMPLATES
+
+assert len(WORKFLOW_TEMPLATES) == 23, "Prompts/04 ships 18 workflow templates, Prompts/06 adds 5"

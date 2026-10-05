@@ -8,7 +8,9 @@ and entitlement jobs (``app/tasks/auth.py``): ``auth.cleanup_sessions`` (hourly)
 (daily 01:00), ``subscriptions.reminders`` (daily 06:00) and ``usage.meter`` (monthly, 1st 02:30). Phase 03 adds
 ``sequences.reset`` (daily 00:05) and ``terms.auto_status`` (daily 00:15) — ``app/tasks/institution.py``; Phase 04
 ``workflow.escalate`` (15 min), ``notifications.retry_failed`` (10 min) and ``notifications.digest`` (daily 08:00,
-weekly Mondays 08:05) — ``app/tasks/notifications.py``.
+weekly Mondays 08:05) — ``app/tasks/notifications.py``; Phase 06 ``hr.leave_accrual`` (1st 01:00), ``hr.leave_carry_forward``
+(1st 01:30, acts on the leave-year start month), ``hr.document_expiry`` (Mondays 07:00), ``attendance.auto_mark_holidays``
+(daily 00:10) and ``payroll.reminder`` (daily 06:30, acts on the ``payroll.reminder_day``) — ``app/tasks/hr.py``.
 """
 
 from typing import Any
@@ -54,5 +56,12 @@ register_beat(
 register_beat(
     "notifications.digest_weekly", "beat.notifications.digest", crontab(hour=8, minute=5), kwargs={"period": "weekly"}
 )
+
+# ---- Phase 06 HR (app/tasks/hr.py) --------------------------------------------------------------------------------------
+register_beat("hr.leave_accrual", "beat.hr.leave_accrual", crontab(day_of_month="1", hour=1, minute=0))
+register_beat("hr.leave_carry_forward", "beat.hr.leave_carry_forward", crontab(day_of_month="1", hour=1, minute=30))
+register_beat("hr.document_expiry", "beat.hr.document_expiry", crontab(day_of_week="1", hour=7, minute=0))
+register_beat("attendance.auto_mark_holidays", "beat.attendance.auto_mark_holidays", crontab(hour=0, minute=10))
+register_beat("payroll.reminder", "beat.payroll.reminder", crontab(hour=6, minute=30))
 
 celery.conf.beat_schedule = BEAT_SCHEDULE

@@ -843,7 +843,7 @@ CREATE TABLE staff_attendance (
 CREATE TABLE payroll_components (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   institution_id UUID NOT NULL REFERENCES institutions(id) ON DELETE CASCADE,
-  code VARCHAR(20) NOT NULL, name VARCHAR(80) NOT NULL, component_type VARCHAR(20) NOT NULL, -- earning | deduction | employer_contribution | reimbursement
+  code VARCHAR(20) NOT NULL, name VARCHAR(80) NOT NULL, component_type VARCHAR(30) NOT NULL, -- earning | deduction | employer_contribution | reimbursement
   calc_type VARCHAR(20) NOT NULL DEFAULT 'fixed', -- fixed | pct_of_basic | formula | statutory
   formula JSONB, is_statutory BOOLEAN NOT NULL DEFAULT FALSE, statutory_kind VARCHAR(20), -- pf | esi | pt | tds | lwf
   is_taxable BOOLEAN NOT NULL DEFAULT TRUE, sequence SMALLINT NOT NULL DEFAULT 1, is_active BOOLEAN NOT NULL DEFAULT TRUE,
@@ -873,7 +873,7 @@ CREATE TABLE staff_payroll_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   institution_id UUID NOT NULL REFERENCES institutions(id) ON DELETE CASCADE,
   payroll_id UUID NOT NULL REFERENCES staff_payrolls(id) ON DELETE CASCADE,
-  component_id UUID REFERENCES payroll_components(id), label VARCHAR(80) NOT NULL, component_type VARCHAR(20) NOT NULL, amount_paise INTEGER NOT NULL,
+  component_id UUID REFERENCES payroll_components(id), label VARCHAR(80) NOT NULL, component_type VARCHAR(30) NOT NULL, amount_paise INTEGER NOT NULL,
   source_type VARCHAR(40), source_id UUID -- exam remuneration | guest lecture | loan EMI | fellowship
 );
 

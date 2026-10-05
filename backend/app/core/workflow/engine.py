@@ -312,6 +312,16 @@ class WorkflowEngine:
         return None
 
     # ---- rule 2 -----------------------------------------------------------------------------------------------
+    async def _local_today(self, db: AsyncSession, institution_id: uuid.UUID) -> date:
+        """Delegation ``from_on`` / ``to_on`` are institution-local calendar dates (found by the Phase 06 regression
+        run between 18:30 and 24:00 UTC, when the UTC date still trails IST)."""
+        from types import SimpleNamespace
+
+        from app.core.tenancy import today_for
+
+        tz = (await db.execute(text("SELECT timezone FROM institutions WHERE id = :i"), {"i": institution_id})).scalar()
+        return today_for(SimpleNamespace(timezone=tz))
+
     async def delegators_of(
         self,
         db: AsyncSession,
@@ -321,7 +331,7 @@ class WorkflowEngine:
         on: date | None = None,
     ) -> list[tuple[uuid.UUID, str | None]]:
         """(from_user_id, module) of the delegations active today that hand approvals to ``user_id``."""
-        today = on or datetime.now(UTC).date()
+        today = on or await self._local_today(db, institution_id)
         q = select(WorkflowDelegation.from_user_id, WorkflowDelegation.module).where(
             and_(
                 WorkflowDelegation.institution_id == institution_id,
@@ -338,7 +348,7 @@ class WorkflowEngine:
     async def _delegate_of(
         self, db: AsyncSession, institution_id: uuid.UUID, approver: uuid.UUID, module: str
     ) -> uuid.UUID | None:
-        today = datetime.now(UTC).date()
+        today = await self._local_today(db, institution_id)
         return (
             await db.execute(
                 select(WorkflowDelegation.to_user_id)

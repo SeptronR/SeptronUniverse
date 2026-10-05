@@ -1,5 +1,14 @@
 import {
   Activity,
+  Banknote,
+  Briefcase,
+  CalendarCheck,
+  ClipboardCheck,
+  Clock,
+  Gauge,
+  HandCoins,
+  Contact,
+  UserRound,
   BookOpen,
   GraduationCap,
   Percent,
@@ -56,6 +65,8 @@ export const NAV_GROUPS: NavGroup[] = [
       // Phase 04 — approvals inbox (every signed-in user; the badge counts pending steps)
       { label: 'Approvals', to: '/approvals', icon: CheckSquare, module: 'dashboard', feature: 'workflow.engine', badge: 'approvals' },
       { label: 'Notifications', to: '/notifications', icon: BellRing, module: 'dashboard', feature: 'core.notifications_inapp' },
+      // Phase 06 — my space (own profile, leaves, attendance, payslips)
+      { label: 'My Space', to: '/me', icon: UserRound, module: 'hr', feature: 'hr.staff' },
     ],
   },
   {
@@ -78,7 +89,28 @@ export const NAV_GROUPS: NavGroup[] = [
   { title: 'EXAMINATIONS', items: [] },
   { title: 'ADMISSIONS', items: [] },
   { title: 'STUDENTS', items: [] },
-  { title: 'PEOPLE', items: [] },
+  {
+    title: 'PEOPLE',
+    items: [
+      // Phase 06 — staff, leaves, attendance, payroll, recruitment, appraisal & CAS, workload
+      { label: 'Staff', to: '/admin/hr/staff', icon: Contact, module: 'hr', action: 'view_all', feature: 'hr.staff' },
+      { label: 'Leaves', to: '/admin/hr/leaves', icon: CalendarCheck, module: 'leaves', altActions: ['view_all'], feature: 'hr.leaves' },
+      {
+        label: 'Staff Attendance',
+        to: '/admin/hr/attendance',
+        icon: Clock,
+        module: 'attendance',
+        action: 'staff_view_all',
+        altActions: ['staff_self'],
+        feature: 'attendance.staff',
+      },
+      { label: 'Payroll', to: '/admin/hr/payroll', icon: Banknote, module: 'payroll', action: 'view_all', altActions: ['view', 'generate'], feature: 'hr.payroll' },
+      { label: 'Loans', to: '/admin/hr/loans', icon: HandCoins, module: 'payroll', action: 'self', altActions: ['view_all'], feature: 'hr.loans_advances' },
+      { label: 'Recruitment', to: '/admin/hr/recruitment', icon: Briefcase, module: 'hr', action: 'recruitment', feature: 'hr.recruitment' },
+      { label: 'Appraisals & CAS', to: '/admin/hr/appraisals', icon: ClipboardCheck, module: 'hr', feature: 'hr.appraisal_pbas' },
+      { label: 'Workload', to: '/admin/hr/workload', icon: Gauge, module: 'faculty', action: 'workload_manage', altActions: ['view_all'], feature: 'hr.workload' },
+    ],
+  },
   { title: 'CAMPUS', items: [] },
   { title: 'FINANCE', items: [] },
   { title: 'ENGAGEMENT', items: [] },

@@ -61,6 +61,18 @@ const CatalogPage = lazy(() => import('@/features/academics/pages/CatalogPage'))
 const CatalogProgramPage = lazy(() =>
   import('@/features/academics/pages/CatalogPage').then((m) => ({ default: m.CatalogProgramPage })),
 );
+// Phase 06 — staff, faculty, HR, recruitment & CAS
+const StaffPage = lazy(() => import('@/features/hr/pages/StaffPage'));
+const StaffDetailPage = lazy(() => import('@/features/hr/pages/StaffDetailPage'));
+const MySpacePage = lazy(() => import('@/features/hr/pages/MySpacePage'));
+const LeavesPage = lazy(() => import('@/features/hr/pages/LeavesPage'));
+const StaffAttendancePage = lazy(() => import('@/features/hr/pages/AttendancePage'));
+const PayrollPage = lazy(() => import('@/features/hr/pages/PayrollPage'));
+const LoansPage = lazy(() => import('@/features/hr/pages/LoansPage'));
+const RecruitmentPage = lazy(() => import('@/features/hr/pages/RecruitmentPage'));
+const AppraisalsPage = lazy(() => import('@/features/hr/pages/AppraisalsPage'));
+const WorkloadPage = lazy(() => import('@/features/hr/pages/WorkloadPage'));
+const CareersPage = lazy(() => import('@/features/hr/pages/CareersPage'));
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -83,6 +95,8 @@ export const router = createBrowserRouter([
   // Phase 05 — public course catalogue (no sign-in; the API checks academics.public_catalog for the tenant)
   { path: '/catalog', element: page(<CatalogPage />) },
   { path: '/catalog/:program', element: page(<CatalogProgramPage />) },
+  // Phase 06 — public careers page (no sign-in; the API checks hr.recruitment for the tenant)
+  { path: '/careers', element: page(<CareersPage />) },
   {
     element: <PrivateRoute />,
     children: [
@@ -184,6 +198,48 @@ export const router = createBrowserRouter([
               </FeatureRoute>,
             ),
           })),
+          // Phase 06 — HR (own-record pages need only the staff self-service grants)
+          { path: '/me', element: page(<FeatureRoute feature="hr.staff"><MySpacePage /></FeatureRoute>) },
+          ...(
+            [
+              ['/admin/hr/staff', 'hr.staff', 'hr', 'view_all', <StaffPage key="s" />],
+              ['/admin/hr/staff/:id', 'hr.staff', 'hr', 'view', <StaffDetailPage key="sd" />],
+              ['/admin/hr/leaves', 'hr.leaves', 'leaves', 'view', <LeavesPage key="l" />],
+              ['/admin/hr/attendance', 'attendance.staff', 'attendance', 'staff_self', <StaffAttendancePage key="a" />],
+              ['/admin/hr/loans', 'hr.loans_advances', 'payroll', 'self', <LoansPage key="lo" />],
+              ['/admin/hr/recruitment', 'hr.recruitment', 'hr', 'recruitment', <RecruitmentPage key="r" />],
+              ['/admin/hr/appraisals', 'hr.appraisal_pbas', 'hr', 'view', <AppraisalsPage key="ap" />],
+            ] as const
+          ).map(([path, feature, module, action, node]) => ({
+            path,
+            element: page(
+              <FeatureRoute feature={feature}>
+                <PermissionRoute module={module} action={action}>
+                  {node}
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          })),
+          {
+            path: '/admin/hr/payroll',
+            element: page(
+              <FeatureRoute feature="hr.payroll">
+                <PermissionRoute module="payroll" action="view" anyOf={[['payroll', 'view_all'], ['payroll', 'generate']]}>
+                  <PayrollPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
+          {
+            path: '/admin/hr/workload',
+            element: page(
+              <FeatureRoute feature="hr.workload">
+                <PermissionRoute module="faculty" action="view" anyOf={[['faculty', 'workload_manage'], ['faculty', 'view_all']]}>
+                  <WorkloadPage />
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          },
           // Phase 04 — communication core & approvals (self-service pages need no module permission)
           { path: '/notifications', element: page(<NotificationsPage />) },
           {

@@ -94,6 +94,22 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     # privacy
     SettingDef("privacy", "retention_days_logs", "int", 365, min=30, max=3650),
     SettingDef("privacy", "consent_texts_version", "str", "1.0"),
+    # hr (Phase 06) — norms default to the pack (seed copies them), week-offs are Python weekdays (6 = Sunday)
+    SettingDef("hr", "workload_norms", "json", None, label="Workload norms (hours/week by cadre)"),
+    SettingDef("hr", "week_offs", "json", [6], label="Weekly offs (0=Mon … 6=Sun)"),
+    SettingDef(
+        "hr", "document_expiry_days", "int", 30, label="Remind before a document expires (days)", min=1, max=365
+    ),
+    SettingDef("hr", "leave_carry_forward_month", "int", 1, label="Leave year starts in month", min=1, max=12),
+    # payroll (Phase 06) — statutory thresholds/slabs from the pack; these keys override them per institution
+    SettingDef("payroll", "pt_state", "str", None, label="Professional tax state (pack slab key)"),
+    SettingDef("payroll", "tds_regime", "enum", "new", False, ("new", "old"), "Default TDS regime"),
+    SettingDef("payroll", "pf_wage_ceiling_applies", "bool", True, label="Cap PF wages at the statutory ceiling"),
+    SettingDef("payroll", "statutory_overrides", "json", {}, label="Statutory parameter overrides (pf/esi/pt/tds/lwf)"),
+    SettingDef("payroll", "reminder_day", "int", 25, label="Payroll reminder day of month", min=1, max=28),
+    # attendance (Phase 06) — self check-in geo-fence {lat, lng, radius_m} (a college row overrides it)
+    SettingDef("attendance", "geo_fence", "json", None, label="Self check-in geo-fence {lat, lng, radius_m}"),
+    SettingDef("attendance", "staff_self_checkin", "bool", True, label="Staff may check in from the app / web"),
 )
 
 CATEGORIES: tuple[str, ...] = tuple(dict.fromkeys(d.category for d in SETTINGS_TEMPLATE))

@@ -4,6 +4,7 @@ import '../../features/academic_structure/academic_structure_screens.dart';
 import '../../features/announcements/announcements_screens.dart';
 import '../../features/approvals/approvals_screen.dart';
 import '../../features/auth/profile_screens.dart';
+import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../shared/widgets/placeholder_screen.dart';
@@ -113,6 +114,35 @@ class ScreenRegistry {
       feature: 'academics.curriculum',
       builder: (_, params) =>
           CurriculumScreen(programRegulationId: params['pr']),
+    ),
+    // Phase 06 — leaves, my attendance, payslips (staff self-service) and the HR tab (All | Mine segments)
+    AppRoutes.hrLeaves: ScreenEntry(
+      route: AppRoutes.hrLeaves,
+      titleKey: 'leaves',
+      feature: 'hr.leaves',
+      permission: 'leaves:self',
+      builder: (_, __) => const LeavesScreen(),
+    ),
+    AppRoutes.hrAttendance: ScreenEntry(
+      route: AppRoutes.hrAttendance,
+      titleKey: 'myAttendance',
+      feature: 'attendance.staff',
+      permission: 'attendance:staff_self',
+      builder: (_, __) => const MyAttendanceScreen(),
+    ),
+    AppRoutes.hrPayslips: ScreenEntry(
+      route: AppRoutes.hrPayslips,
+      titleKey: 'payslips',
+      feature: 'hr.payroll',
+      permission: 'payroll:self',
+      builder: (_, __) => const PayslipsScreen(),
+    ),
+    AppRoutes.hrTab: ScreenEntry(
+      route: AppRoutes.hrTab,
+      titleKey: 'hr',
+      feature: 'hr.staff',
+      permission: 'hr:view_all',
+      builder: (_, __) => const HrTabScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

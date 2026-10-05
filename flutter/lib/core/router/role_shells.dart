@@ -112,6 +112,35 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.deepPurple,
       feature: 'academics.curriculum',
       roles: ['student']),
+  // Phase 06 — HR self-service (every staff role) and the HR module (accountant / HR officer / HOD / dean)
+  const MoreMenuModule(
+      titleKey: 'leaves',
+      icon: Icons.event_busy_outlined,
+      route: AppRoutes.hrLeaves,
+      color: Colors.orange,
+      permission: 'leaves:self',
+      feature: 'hr.leaves'),
+  const MoreMenuModule(
+      titleKey: 'myAttendance',
+      icon: Icons.fingerprint,
+      route: AppRoutes.hrAttendance,
+      color: Colors.green,
+      permission: 'attendance:staff_self',
+      feature: 'attendance.staff'),
+  const MoreMenuModule(
+      titleKey: 'payslips',
+      icon: Icons.receipt_long_outlined,
+      route: AppRoutes.hrPayslips,
+      color: Colors.brown,
+      permission: 'payroll:self',
+      feature: 'hr.payroll'),
+  const MoreMenuModule(
+      titleKey: 'hr',
+      icon: Icons.badge_outlined,
+      route: AppRoutes.hrTab,
+      color: Colors.cyan,
+      permission: 'hr:view_all',
+      feature: 'hr.staff'),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',
