@@ -222,12 +222,16 @@ async def seed_base(ctx: SeedContext) -> None:
             ctx.credentials.append((role_slug, username, password))
         scope_type, scope_id = _scope(scope, colleges, faculties, departments)
         exists = (
-            await ctx.db.execute(
-                select(UserRole).where(
-                    UserRole.user_id == user.id, UserRole.role_id == role.id, UserRole.scope_type == scope_type
+            (
+                await ctx.db.execute(
+                    select(UserRole).where(
+                        UserRole.user_id == user.id, UserRole.role_id == role.id, UserRole.scope_type == scope_type
+                    )
                 )
             )
-        ).scalar_one_or_none()
+            .scalars()
+            .first()
+        )  # verification runs may leave extra scoped assignments of the same role
         if exists is None:
             ctx.db.add(
                 UserRole(

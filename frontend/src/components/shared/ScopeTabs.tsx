@@ -7,6 +7,8 @@ interface ScopeTabsProps {
   value: string | undefined;
   onChange: (scope: ScopeName) => void;
   className?: string;
+  /** per-scope label overrides — Phase 06 HR lists show `department` as "Team" (HOD / dean) */
+  labels?: Partial<Record<ScopeName, string>>;
 }
 
 const ORDER: ScopeName[] = ['self', 'own', 'department', 'faculty', 'college', 'all'];
@@ -15,7 +17,7 @@ const ORDER: ScopeName[] = ['self', 'own', 'department', 'faculty', 'college', '
  * Segmented **Mine | Department | College | All** driven by `meta.visibility` (docs/Authorization_and_Visibility.md §4).
  * Hidden when the caller only sees one scope; the chosen scope is written to `?scope=` by the caller (query key).
  */
-export function ScopeTabs({ visibility, value, onChange, className }: ScopeTabsProps) {
+export function ScopeTabs({ visibility, value, onChange, className, labels }: ScopeTabsProps) {
   const { t } = useTranslation();
   if (!visibility) return null;
   const tabs: ScopeName[] = [];
@@ -37,7 +39,7 @@ export function ScopeTabs({ visibility, value, onChange, className }: ScopeTabsP
             active === s ? 'bg-card text-foreground shadow-xs' : 'text-muted-foreground hover:text-foreground',
           )}
         >
-          {t(`scope.${s}`)}
+          {labels?.[s] ?? t(`scope.${s}`)}
         </button>
       ))}
     </div>

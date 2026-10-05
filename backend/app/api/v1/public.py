@@ -31,6 +31,10 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/public/catalog",
     "GET /api/v1/public/catalog/programs/{code}",
     "GET /api/v1/public/catalog/courses/{regulation}/{code}",
+    # Phase 06 — biometric device punches (device token) and the public careers page ({hr.recruitment})
+    "POST /api/v1/attendance-devices/{id}/punches",
+    "GET /api/v1/public/careers",
+    "POST /api/v1/public/careers/{posting_id}/apply",
 }
 
 

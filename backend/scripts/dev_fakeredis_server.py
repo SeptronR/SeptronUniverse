@@ -16,6 +16,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import contextlib
+
 import _bootstrap  # noqa: E402,F401
 
 
@@ -34,10 +36,8 @@ def main() -> int:
 
     server = TcpFakeServer((args.host, args.port), server_type="redis")
     print(f"fakeredis TCP server on {args.host}:{args.port} (in-memory, development only)", flush=True)
-    try:
+    with contextlib.suppress(KeyboardInterrupt):
         server.serve_forever()
-    except KeyboardInterrupt:
-        pass
     return 0
 
 

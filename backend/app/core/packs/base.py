@@ -9,6 +9,8 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
+from app.core.packs.hr_rules import HrRules
+
 
 @dataclass(frozen=True)
 class Category:
@@ -126,6 +128,7 @@ class RegulatoryPack:
     privacy: PrivacyRules = field(default_factory=PrivacyRules)
     tax: TaxRules = field(default_factory=TaxRules)
     phd_rules: PhdRules = field(default_factory=PhdRules)
+    hr: HrRules = field(default_factory=HrRules)  # Phase 06
     validators: dict[str, Callable[[str], bool]] = field(default_factory=dict)
     locales: list[str] = field(default_factory=lambda: ["en"])
 

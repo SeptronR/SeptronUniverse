@@ -14,6 +14,10 @@ Phase 05: ``programs`` (+ batches) {academics.programs}, ``regulations`` / ``cou
 {academics.regulations}, ``curriculum`` (programme-regulations, structure; baskets add
 {academics.elective_baskets}) {academics.curriculum}, ``catalog`` (public, {academics.public_catalog} checked by
 its tenant dependency).
+Phase 06: ``staff`` (designations, staff, records) {hr.staff}, ``leaves`` {hr.leaves}, ``staff_attendance``
+{attendance.staff} (+ the token-authenticated device punch route), ``payroll`` (+ salary structures, registers, loans)
+{hr.payroll}, ``recruitment`` {hr.recruitment} (+ public careers), ``appraisals`` {hr.staff} with per-route
+{hr.appraisal_pbas} / {hr.cas_promotions}, ``workload`` {hr.workload}.
 """
 
 from fastapi import APIRouter
@@ -22,6 +26,7 @@ import app.features  # noqa: F401  (registers every feature key before routers c
 from app.api.v1.endpoints import (
     academic_sessions,
     announcements,
+    appraisals,
     auth,
     catalog,
     communication,
@@ -33,15 +38,21 @@ from app.api.v1.endpoints import (
     help,
     institution,
     jobs,
+    leaves,
     notifications,
+    payroll,
     platform,
     platform_institutions,
     privacy,
     programs,
     rbac,
+    recruitment,
     regulations,
     search,
+    staff,
+    staff_attendance,
     workflow,
+    workload,
 )
 from app.api.v1.endpoints import settings as settings_routes
 from app.core.config import settings
@@ -68,6 +79,15 @@ api_router.include_router(courses.router, dependencies=[feature_required("academ
 api_router.include_router(grading.router, dependencies=[feature_required("academics.regulations")])
 api_router.include_router(curriculum.router, dependencies=[feature_required("academics.curriculum")])
 api_router.include_router(catalog.router)  # public; the tenant dependency checks {academics.public_catalog}
+api_router.include_router(staff.router, dependencies=[feature_required("hr.staff")])
+api_router.include_router(leaves.router, dependencies=[feature_required("hr.leaves")])
+api_router.include_router(staff_attendance.router, dependencies=[feature_required("attendance.staff")])
+api_router.include_router(staff_attendance.public_router)  # device token; checks {attendance.biometric} itself
+api_router.include_router(payroll.router, dependencies=[feature_required("hr.payroll")])
+api_router.include_router(recruitment.router, dependencies=[feature_required("hr.recruitment")])
+api_router.include_router(recruitment.public_router)  # public careers; the tenant dependency checks {hr.recruitment}
+api_router.include_router(appraisals.router, dependencies=[feature_required("hr.staff")])
+api_router.include_router(workload.router, dependencies=[feature_required("hr.workload")])
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])

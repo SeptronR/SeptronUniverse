@@ -162,9 +162,11 @@ def seed_institution_defaults(
             )
             sequences += 1
     workflows = seed_workflow_definitions(conn, iid)  # Phase 04
+    hr = seed_hr_defaults(conn, iid, pack.code)  # Phase 06
     return {
         "pack": pack.code,
         "workflow_definitions": workflows,
+        "hr": hr,
         "settings": created_settings,
         "grading_scales": scales,
         "number_sequences": sequences,
@@ -182,6 +184,12 @@ def _pack_default(category: str, key: str, default: Any, pack: Any) -> Any:
         return pack.default_regulation_rules.get("attendance_min_pct", default)
     if category == "fees" and key == "gst_enabled":
         return pack.tax.tax_name == "GST"
+    if category == "hr" and key == "workload_norms":
+        return dict(pack.hr.workload_norms) or default
+    if category == "hr" and key == "week_offs":
+        return list(pack.hr.week_offs)
+    if category == "payroll" and key == "pt_state":
+        return (pack.hr.statutory.get("pt") or {}).get("default_state", default)
     return default
 
 
@@ -255,3 +263,71 @@ def seed_workflow_definitions(conn: Connection, institution_id: uuid.UUID | str)
         )
         created += 1
     return created
+
+
+# ---- Phase 06: HR templates (designations, leave types, payroll components) ---------------------------------------
+def seed_hr_defaults(conn: Connection, institution_id: uuid.UUID | str, pack_code: str | None) -> dict[str, int]:
+    """Copy the pack's designation, leave-type and payroll-component templates into one institution — Prompts/06
+    §06.2 (idempotent: ``ON CONFLICT`` on each table's natural key; rows an institution edited are left alone)."""
+    pack = get_pack(pack_code)
+    iid = str(institution_id)
+    out = {"designations": 0, "leave_types": 0, "payroll_components": 0}
+    for d in pack.hr.designations:
+        res = conn.execute(
+            text(
+                "INSERT INTO designations (institution_id, name, code, cadre, category, level) "
+                "VALUES (:i, :n, :c, :cadre, :cat, :lvl) ON CONFLICT (institution_id, name) DO NOTHING"
+            ),
+            {
+                "i": iid,
+                "n": d["name"],
+                "c": d.get("code"),
+                "cadre": d.get("cadre"),
+                "cat": d["category"],
+                "lvl": d.get("level"),
+            },
+        )
+        out["designations"] += res.rowcount or 0
+    for t in pack.hr.leave_types:
+        res = conn.execute(
+            text(
+                "INSERT INTO leave_types (institution_id, code, name, annual_quota, accrual, carry_forward_max, is_paid, "
+                "is_encashable, requires_document, applies_to) VALUES (:i, :code, :name, :q, :acc, :cf, :paid, :enc, :doc, "
+                "CAST(:ap AS jsonb)) ON CONFLICT (institution_id, code) DO NOTHING"
+            ),
+            {
+                "i": iid,
+                "code": t["code"],
+                "name": t["name"],
+                "q": t.get("annual_quota"),
+                "acc": t.get("accrual", "yearly"),
+                "cf": t.get("carry_forward_max"),
+                "paid": t.get("is_paid", True),
+                "enc": t.get("is_encashable", False),
+                "doc": t.get("requires_document", False),
+                "ap": json.dumps(t["applies_to"]) if t.get("applies_to") else None,
+            },
+        )
+        out["leave_types"] += res.rowcount or 0
+    for c in pack.hr.payroll_components:
+        res = conn.execute(
+            text(
+                "INSERT INTO payroll_components (institution_id, code, name, component_type, calc_type, formula, "
+                "is_statutory, statutory_kind, is_taxable, sequence) VALUES (:i, :code, :name, :ct, :calc, "
+                "CAST(:f AS jsonb), :st, :kind, :tax, :seq) ON CONFLICT (institution_id, code) DO NOTHING"
+            ),
+            {
+                "i": iid,
+                "code": c["code"],
+                "name": c["name"],
+                "ct": c["component_type"],
+                "calc": c.get("calc_type", "fixed"),
+                "f": json.dumps(c["formula"]) if c.get("formula") is not None else None,
+                "st": c.get("calc_type") == "statutory",
+                "kind": c.get("statutory_kind"),
+                "tax": c.get("is_taxable", True),
+                "seq": c.get("sequence", 1),
+            },
+        )
+        out["payroll_components"] += res.rowcount or 0
+    return out

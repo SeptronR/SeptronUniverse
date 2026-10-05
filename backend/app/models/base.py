@@ -8,9 +8,10 @@ import uuid
 from datetime import datetime
 from typing import Any, ClassVar
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, func
+from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, LargeBinary, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import Mapped, declared_attr, mapped_column
+from sqlalchemy.types import TypeDecorator
 
 
 class UUIDPrimaryKeyMixin:
@@ -56,6 +57,32 @@ class CollegeScopedMixin:
 
 class CreatedByMixin:
     created_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+
+
+class EncryptedBytes(TypeDecorator[str]):
+    """A ``BYTEA`` column holding AES-GCM ciphertext of a string (``core.security.encrypt_secret``) — Prompts/06 §06.3
+    ``pan_encrypted``, ``aadhaar_encrypted``, ``bank_details_encrypted``. Python sees the plain string; the database
+    only ever stores ciphertext. Masking for readers without ``hr:view_pii`` happens in the schema layer."""
+
+    impl = LargeBinary
+    cache_ok = True
+
+    def process_bind_param(self, value: str | None, dialect: Any) -> bytes | None:
+        if value is None or value == "":
+            return None
+        from app.core.security import encrypt_secret
+
+        return encrypt_secret(str(value))
+
+    def process_result_value(self, value: bytes | None, dialect: Any) -> str | None:
+        if value is None:
+            return None
+        from app.core.security import decrypt_secret
+
+        try:
+            return decrypt_secret(bytes(value))
+        except Exception:  # noqa: BLE001 - a key rotation must not break reads; the value shows as unreadable
+            return None
 
 
 # Standard base for editable tenant masters

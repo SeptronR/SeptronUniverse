@@ -8,7 +8,7 @@
 #   python scripts/seed_platform.py
 #   python scripts/seed_demo_institution.py --type university --only institution      (runs base first)
 #
-# Roles: superadmin, inst.admin, registrar, college.admin.b, student.1 (+ faculty.1 as the HOD).
+# Roles: superadmin, inst.admin, registrar, college.admin.b, student.1 (+ a per-run staff-type user as the HOD).
 # Every run creates its own verification college (code V#####) and works inside it, so the script is re-runnable:
 # the demo tenant already has colleges A/B/C and the ECE department, and the Phase 03 unique keys include soft-deleted
 # rows — the prompt's "code C" / "ECE under college A" become a fresh college code / ECE under the fresh college.
@@ -18,7 +18,7 @@
 #     changing the timezone while a term is in progress -> 409
 #  3. colleges: POST (new code) -> 201; duplicate code -> 409 CONFLICT; college.admin.b PUT college A -> 404, B -> 200;
 #     meta.visibility (college tab default for the college admin)
-#  4. departments: ECE under the new college; PUT /departments/{ECE}/hod {staff_id: faculty.1} -> 200 and
+#  4. departments: ECE under the new college; PUT /departments/{ECE}/hod {staff_id: a per-run staff user} -> 200 (faculty.1, staff of college A, -> 422) and
 #     GET /users/{faculty.1}/roles shows hod @department ECE
 #  5. years/terms (registrar): 2026-27 + Odd/Even; a second set-current flips the previous year; overlapping term
 #     dates -> 422; planned -> in_progress -> 409; planned -> registration -> 200
@@ -105,13 +105,18 @@ try {
   Write-Host "== 4. departments + HOD"
   $ece = Call $admin POST "/departments" @{ college_id = $collegeV; code = 'ECE'; name = 'Electronics & Communication'; department_type = 'academic' } 201
   $eceId = $ece.data.id
+  # Phase 06: faculty.1 now has a staff row in college A, so it cannot head a department of the verification college
+  # (422) — the HOD here is a per-run staff-type user without a staff row (the user-based assignment path)
   $users = Call $admin GET "/users?page_size=200&q=faculty.1"
-  $facultyId = ($users.data | Where-Object { $_.username -eq 'faculty.1' }).id
+  $f1Id = ($users.data | Where-Object { $_.username -eq 'faculty.1' }).id
+  $other = Call $admin PUT "/departments/$eceId/hod" @{ staff_id = $f1Id } 422
+  Assert ($other.error.message -like '*another college*') "faculty.1 (staff of college A) as HOD of the verification college -> 422"
+  $facultyId = (Call $admin POST "/users" @{ username = "hodv$run"; display_name = "Verify HOD $run"; user_type = 'staff' } 201).data.id
   $hod = Call $admin PUT "/departments/$eceId/hod" @{ staff_id = $facultyId }
-  Assert ($hod.data.hod_user_id -eq $facultyId) "PUT /departments/{ECE}/hod -> 200 (hod_user_id = faculty.1)"
+  Assert ($hod.data.hod_user_id -eq $facultyId) "PUT /departments/{ECE}/hod -> 200 (hod_user_id = staff user hodv$run)"
   $roles = Call $admin GET "/users/$facultyId/roles"
   $hodRole = $roles.data | Where-Object { $_.role_slug -eq 'hod' -and $_.scope_type -eq 'department' -and $_.scope_id -eq $eceId }
-  Assert ($hodRole) "GET /users/{faculty.1}/roles -> hod@department:ECE ($($hodRole.scope_label))"
+  Assert ($hodRole) "GET /users/{hodv}/roles -> hod@department:ECE ($($hodRole.scope_label))"
   Call $admin PUT "/departments/$eceId/hod" @{ staff_id = $me.data.user.id } 200 | Out-Null  # inst.admin is staff too
   $roles = Call $admin GET "/users/$facultyId/roles"
   Assert (-not ($roles.data | Where-Object { $_.role_slug -eq 'hod' -and $_.scope_id -eq $eceId })) "re-assigning the HOD revokes the previous holder"

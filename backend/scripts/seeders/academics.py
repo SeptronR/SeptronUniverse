@@ -107,16 +107,50 @@ SCHEMES: list[dict[str, Any]] = [
         "pass_rules": {"ese_min_pct": 45, "total_min_pct": 50},
         "is_default": True,
         "components": [
-            {"code": "CAT1", "name": "Continuous Assessment Test 1", "category": "cia", "max_marks": 50,
-             "scaled_to": 15, "best_of": {"take": 2, "of": 3, "group": "CAT"}, "sequence": 1},
-            {"code": "CAT2", "name": "Continuous Assessment Test 2", "category": "cia", "max_marks": 50,
-             "scaled_to": 15, "best_of": {"take": 2, "of": 3, "group": "CAT"}, "sequence": 2},
-            {"code": "CAT3", "name": "Continuous Assessment Test 3", "category": "cia", "max_marks": 50,
-             "scaled_to": 15, "best_of": {"take": 2, "of": 3, "group": "CAT"}, "sequence": 3},
-            {"code": "ASSIGN", "name": "Assignments", "category": "cia", "max_marks": 10, "scaled_to": 10,
-             "sequence": 4},
-            {"code": "ESE", "name": "End-semester examination", "category": "ese_theory", "max_marks": 100,
-             "scaled_to": 60, "sequence": 5, "co_mappable": True},
+            {
+                "code": "CAT1",
+                "name": "Continuous Assessment Test 1",
+                "category": "cia",
+                "max_marks": 50,
+                "scaled_to": 15,
+                "best_of": {"take": 2, "of": 3, "group": "CAT"},
+                "sequence": 1,
+            },
+            {
+                "code": "CAT2",
+                "name": "Continuous Assessment Test 2",
+                "category": "cia",
+                "max_marks": 50,
+                "scaled_to": 15,
+                "best_of": {"take": 2, "of": 3, "group": "CAT"},
+                "sequence": 2,
+            },
+            {
+                "code": "CAT3",
+                "name": "Continuous Assessment Test 3",
+                "category": "cia",
+                "max_marks": 50,
+                "scaled_to": 15,
+                "best_of": {"take": 2, "of": 3, "group": "CAT"},
+                "sequence": 3,
+            },
+            {
+                "code": "ASSIGN",
+                "name": "Assignments",
+                "category": "cia",
+                "max_marks": 10,
+                "scaled_to": 10,
+                "sequence": 4,
+            },
+            {
+                "code": "ESE",
+                "name": "End-semester examination",
+                "category": "ese_theory",
+                "max_marks": 100,
+                "scaled_to": 60,
+                "sequence": 5,
+                "co_mappable": True,
+            },
         ],
     },
     {
@@ -129,12 +163,30 @@ SCHEMES: list[dict[str, Any]] = [
         "ese_max": 50,
         "pass_rules": {"ese_min_pct": 50, "total_min_pct": 50},
         "components": [
-            {"code": "RECORD", "name": "Lab record & observation", "category": "cia", "max_marks": 50,
-             "scaled_to": 25, "sequence": 1},
-            {"code": "LABTEST", "name": "Internal lab test", "category": "cia", "max_marks": 50, "scaled_to": 25,
-             "sequence": 2},
-            {"code": "ESEP", "name": "End-semester practical", "category": "ese_practical", "max_marks": 100,
-             "scaled_to": 50, "sequence": 3},
+            {
+                "code": "RECORD",
+                "name": "Lab record & observation",
+                "category": "cia",
+                "max_marks": 50,
+                "scaled_to": 25,
+                "sequence": 1,
+            },
+            {
+                "code": "LABTEST",
+                "name": "Internal lab test",
+                "category": "cia",
+                "max_marks": 50,
+                "scaled_to": 25,
+                "sequence": 2,
+            },
+            {
+                "code": "ESEP",
+                "name": "End-semester practical",
+                "category": "ese_practical",
+                "max_marks": 100,
+                "scaled_to": 50,
+                "sequence": 3,
+            },
         ],
     },
     {
@@ -147,12 +199,30 @@ SCHEMES: list[dict[str, Any]] = [
         "ese_max": 50,
         "pass_rules": {"total_min_pct": 50},
         "components": [
-            {"code": "REVIEW1", "name": "Review 1", "category": "cia", "max_marks": 100, "scaled_to": 20,
-             "sequence": 1},
-            {"code": "REVIEW2", "name": "Review 2", "category": "cia", "max_marks": 100, "scaled_to": 30,
-             "sequence": 2},
-            {"code": "VIVA", "name": "Final viva voce", "category": "viva", "max_marks": 100, "scaled_to": 50,
-             "sequence": 3},
+            {
+                "code": "REVIEW1",
+                "name": "Review 1",
+                "category": "cia",
+                "max_marks": 100,
+                "scaled_to": 20,
+                "sequence": 1,
+            },
+            {
+                "code": "REVIEW2",
+                "name": "Review 2",
+                "category": "cia",
+                "max_marks": 100,
+                "scaled_to": 30,
+                "sequence": 2,
+            },
+            {
+                "code": "VIVA",
+                "name": "Final viva voce",
+                "category": "viva",
+                "max_marks": 100,
+                "scaled_to": 50,
+                "sequence": 3,
+            },
         ],
     },
 ]
@@ -172,8 +242,7 @@ async def seed_academics(ctx: SeedContext) -> None:
     principal = await load_principal(ctx.db, admin.id)
 
     colleges = {
-        c.code: c
-        for c in (await ctx.db.execute(select(College).where(College.institution_id == inst.id))).scalars()
+        c.code: c for c in (await ctx.db.execute(select(College).where(College.institution_id == inst.id))).scalars()
     }
     depts = {
         d.code: d
@@ -223,42 +292,40 @@ async def _programs(
 
     service = ProgramService(ctx.db, principal)
     specs = [
-        dict(
-            code="BTECH-CSE",
-            name="B.Tech Computer Science & Engineering",
-            degree_name="B.Tech",
-            specialization="Computer Science & Engineering",
-            level="ug",
-            duration_years=Decimal("4"),
-            total_terms=8,
-            max_duration_years=Decimal("7"),
-            sanctioned_intake=120,
-            lateral_intake=12,
-            approving_body="AICTE",
-            college="A",
-            dept="CSE",
-        ),
-        dict(
-            code="MBA",
-            name="Master of Business Administration",
-            degree_name="MBA",
-            level="pg",
-            duration_years=Decimal("2"),
-            total_terms=4,
-            max_duration_years=Decimal("4"),
-            sanctioned_intake=60,
-            approving_body="AICTE",
-            college="B" if "B" in colleges else "A",
-            dept="MBA" if "MBA" in depts else "CSE",
-        ),
+        {
+            "code": "BTECH-CSE",
+            "name": "B.Tech Computer Science & Engineering",
+            "degree_name": "B.Tech",
+            "specialization": "Computer Science & Engineering",
+            "level": "ug",
+            "duration_years": Decimal("4"),
+            "total_terms": 8,
+            "max_duration_years": Decimal("7"),
+            "sanctioned_intake": 120,
+            "lateral_intake": 12,
+            "approving_body": "AICTE",
+            "college": "A",
+            "dept": "CSE",
+        },
+        {
+            "code": "MBA",
+            "name": "Master of Business Administration",
+            "degree_name": "MBA",
+            "level": "pg",
+            "duration_years": Decimal("2"),
+            "total_terms": 4,
+            "max_duration_years": Decimal("4"),
+            "sanctioned_intake": 60,
+            "approving_body": "AICTE",
+            "college": "B" if "B" in colleges else "A",
+            "dept": "MBA" if "MBA" in depts else "CSE",
+        },
     ]
     out: dict[str, Program] = {}
     for spec in specs:
         college, dept = colleges[spec.pop("college")], depts[spec.pop("dept")]
         existing = (
-            await ctx.db.execute(
-                select(Program).where(Program.college_id == college.id, Program.code == spec["code"])
-            )
+            await ctx.db.execute(select(Program).where(Program.college_id == college.id, Program.code == spec["code"]))
         ).scalar_one_or_none()
         if existing is None:
             created = await service.create(ProgramCreate(college_id=college.id, department_id=dept.id, **spec))
@@ -402,8 +469,7 @@ async def _regulations(
     )
     ctx.count("regulations")
     clone_courses = {
-        c.code: c
-        for c in (await ctx.db.execute(select(Course).where(Course.regulation_id == r2024.id))).scalars()
+        c.code: c for c in (await ctx.db.execute(select(Course).where(Course.regulation_id == r2024.id))).scalars()
     }
     await courses_svc.update(clone_courses["CS308"].id, CourseUpdate(title="Machine Learning and Deep Learning"))
     await courses_svc.update(clone_courses["CS307"].id, CourseUpdate(title="Full-Stack Web Development"))
@@ -455,9 +521,7 @@ async def _academic_council(ctx: SeedContext, institution_id: uuid.UUID) -> None
     """Committee row (Phase 27/33 own ``committees``; the demo needs one for the ``committee_secretary`` scope)."""
     row = (
         await ctx.db.execute(
-            text(
-                "SELECT id FROM committees WHERE institution_id = :i AND committee_type = 'academic_council' LIMIT 1"
-            ),
+            text("SELECT id FROM committees WHERE institution_id = :i AND committee_type = 'academic_council' LIMIT 1"),
             {"i": institution_id},
         )
     ).first()
@@ -482,9 +546,7 @@ async def _academic_council(ctx: SeedContext, institution_id: uuid.UUID) -> None
     if role is None:
         return
     user = (
-        await ctx.db.execute(
-            select(User).where(User.institution_id == institution_id, User.username == "ac.secretary")
-        )
+        await ctx.db.execute(select(User).where(User.institution_id == institution_id, User.username == "ac.secretary"))
     ).scalar_one_or_none()
     if user is None:
         password = f"Demo@{secrets.randbelow(10**6):06d}"

@@ -18,6 +18,11 @@ class AppRoutes {
   static const notificationPreferences = '/app/notifications/preferences';
   static const academicCourses = '/app/academics/courses';
   static const academicCurriculum = '/app/academics/curriculum';
+  // Phase 06 — HR self-service + the HR tab
+  static const hrLeaves = '/app/hr/leaves';
+  static const hrAttendance = '/app/hr/attendance';
+  static const hrPayslips = '/app/hr/payslips';
+  static const hrTab = '/app/hr';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

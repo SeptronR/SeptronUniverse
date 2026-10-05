@@ -20,6 +20,7 @@ from app.core.packs.base import (
     RegulatoryPack,
     TaxRules,
 )
+from app.core.packs.hr_rules import IN_HR_RULES
 from app.core.packs.registry import register_pack
 
 IN_LOCALES = ["en", "hi", "bn", "mr", "te", "ta", "gu", "kn", "or", "ml", "as"]
@@ -175,4 +176,5 @@ def build_in_pack() -> RegulatoryPack:
             "aishe": validate_aishe,
         },
         locales=IN_LOCALES,
+        hr=IN_HR_RULES,
     )
