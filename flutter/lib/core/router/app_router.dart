@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/login_screen.dart';
+import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import '../../shared/widgets/role_shell_scaffold.dart';
 import '../auth/auth_events.dart';
@@ -58,8 +59,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: AppRoutes.login, builder: (_, __) => const LoginScreen()),
       GoRoute(
           path: AppRoutes.verify,
+          // Phase 07 — ID card / document QR (public endpoint)
           builder: (_, s) =>
-              PlaceholderScreen(title: 'Verify ${s.pathParameters['token']}')),
+              VerifyScreen(token: s.pathParameters['token'] ?? '')),
       GoRoute(
           path: AppRoutes.apply,
           builder: (_, s) =>
@@ -97,9 +99,8 @@ bool _allowed(ScreenEntry entry, AuthState auth) {
     return false;
   }
   if (entry.feature != null && !auth.hasFeature(entry.feature!)) return false;
-  if (entry.permission != null) {
-    final parts = entry.permission!.split(':');
-    if (!auth.can(parts[0], parts.length > 1 ? parts[1] : 'view')) return false;
+  if (entry.permission != null && !auth.canSpec(entry.permission!)) {
+    return false;
   }
   return true;
 }

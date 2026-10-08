@@ -182,11 +182,13 @@ class FileService:
         filename: str | None = None,
     ) -> SavedFile:
         """Rules 1–5. Returns the stored key, a signed URL and the sniffed content type."""
-        if isinstance(upload, UploadFile):
+        if isinstance(upload, bytes | bytearray):
+            data = bytes(upload)
+        else:
+            # FastAPI hands endpoints Starlette's UploadFile (fastapi.UploadFile only subclasses it for the schema),
+            # so an isinstance check against fastapi.UploadFile misses real uploads
             filename = filename or upload.filename
             data = await upload.read()
-        else:
-            data = bytes(upload)
         limit_mb = max_mb or settings.MAX_UPLOAD_MB
         if not data:
             raise APIError(422, ErrorCode.VALIDATION, "Empty file", {"field": "file"})

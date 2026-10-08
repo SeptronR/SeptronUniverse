@@ -134,6 +134,9 @@ class CourseService(AcademicServiceBase):
         return await self._responses(list(rows), with_prereqs=True), pagination, academic_visibility(self.principal)
 
     async def get(self, course_id: uuid.UUID) -> CourseResponse:
+        from app.services.academics.enrolled import ensure_course_in_enrolled_curriculum
+
+        await ensure_course_in_enrolled_curriculum(self.db, self.principal, course_id)  # students / parents (Phase 07)
         c = await self.repo.get_course(course_id)
         return (await self._responses([c], with_prereqs=True))[0]
 

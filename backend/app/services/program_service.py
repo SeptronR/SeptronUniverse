@@ -266,9 +266,12 @@ class ProgramService(AcademicServiceBase):
         regulation_id: uuid.UUID | None,
         status: str | None,
     ) -> tuple[list[ProgramRegulationResponse], PaginationMeta]:
-        rows, pagination = await self.bindings.paginate(
-            self.bindings.filtered(program_id=program_id, regulation_id=regulation_id, status=status), params
-        )
+        from app.services.academics.enrolled import enrolled_pr_ids, reads_curriculum
+
+        stmt = self.bindings.filtered(program_id=program_id, regulation_id=regulation_id, status=status)
+        if not reads_curriculum(self.principal):  # students / parents: their (wards') enrolment only (Phase 07)
+            stmt = stmt.where(ProgramRegulation.id.in_(await enrolled_pr_ids(self.db, self.principal)))
+        rows, pagination = await self.bindings.paginate(stmt, params)
         return await self.binding_responses(list(rows)), pagination
 
     async def binding_responses(self, rows: list[ProgramRegulation]) -> list[ProgramRegulationResponse]:

@@ -574,9 +574,19 @@ async def run() -> int:  # noqa: C901 - one linear walk through §02.11
         check(ent["limits"]["students"] == 200000, "limits come from the plan")
         r = await client.put("/api/v1/_dev/plans/university", json={"student_limit": 1}, headers=bearer(sa))
         check(r.status_code == 200, "dev route lowered the plan's student limit")
-        r = await client.post(
-            "/api/v1/students", json={"first_name": "Seat", "last_name": "Limit"}, headers=bearer(admin)
-        )
+        # a valid Phase 07 StudentCreate body (2025 BTECH-CSE, no login) — 07's fixture reset soft-deletes 'Verify%'
+        r = await client.get("/api/v1/programs?page_size=100", headers=bearer(admin))
+        cse = next(p for p in r.json()["data"] if p["code"] == "BTECH-CSE")
+        seat_body = {
+            "first_name": "Seat",
+            "last_name": "VerifySeat",
+            "dob": "2007-05-01",
+            "gender": "M",
+            "program_id": cse["id"],
+            "admission_year": 2025,
+            "create_user": False,
+        }
+        r = await client.post("/api/v1/students", json=seat_body, headers=bearer(admin))
         err = r.json()["error"]
         check(
             r.status_code == 403 and err["code"] == "RULE_VIOLATION" and err["details"]["code"] == "SEAT_LIMIT",
@@ -585,7 +595,7 @@ async def run() -> int:  # noqa: C901 - one linear walk through §02.11
         r = await client.put(
             "/api/v1/_dev/plans/university", json={"student_limit": 200000, "staff_limit": 20000}, headers=bearer(sa)
         )
-        r = await client.post("/api/v1/students", json={"first_name": "Seat", "last_name": "Ok"}, headers=bearer(admin))
+        r = await client.post("/api/v1/students", json=seat_body, headers=bearer(admin))
         check(r.status_code == 201, "with the limit restored the create passes")
 
         print("15. sessions")

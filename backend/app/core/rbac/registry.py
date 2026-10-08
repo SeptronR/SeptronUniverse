@@ -513,10 +513,16 @@ FACULTY: set[str] = (
     | P("results", "view")
 )
 
+# Phase 07 (Prompts/07 "Visibility rules"): registrar / institution_admin read student PII; HOD verifies the credit
+# transfers of its department (step 1 of ``students.credit_transfer``) and lists them
+STUDENTS_ADMIN_PII: set[str] = P("students", "view_pii")
+HOD_STUDENTS: set[str] = P("credit_transfers", "verify", "view_all")
+
 _INSTITUTION_ADMIN: set[str] = (
     ALL("manage", exclude=("features", "exams"))
     | P("features", "view", "institution_toggle")
     | MODULE_ALL("exams", exclude=("decode",))
+    | STUDENTS_ADMIN_PII
     | COMMON
     | STAFF_SELF
 )
@@ -691,7 +697,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("research", "view_all")
     | P("departments", "view")
     # Phase 05: HOD @department drafts the courses, structures and batches of its own department
-    | HOD_ACADEMICS,
+    | HOD_ACADEMICS | HOD_STUDENTS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view"),
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -908,6 +914,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0003": frozenset({"institutions:view"}),
     "0005": frozenset(ACADEMIC_READ | REGISTRAR_ACADEMICS | HOD_ACADEMICS | DEAN_ACADEMICS),
     "0006": frozenset(P("leaves", "encash") | DEAN_HR | AUDITOR_HR),
+    "0007": frozenset(STUDENTS_ADMIN_PII | HOD_STUDENTS),
 }
 
 

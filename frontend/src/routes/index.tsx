@@ -73,6 +73,33 @@ const RecruitmentPage = lazy(() => import('@/features/hr/pages/RecruitmentPage')
 const AppraisalsPage = lazy(() => import('@/features/hr/pages/AppraisalsPage'));
 const WorkloadPage = lazy(() => import('@/features/hr/pages/WorkloadPage'));
 const CareersPage = lazy(() => import('@/features/hr/pages/CareersPage'));
+// Phase 07 — students, enrolment, holds, standing
+const StudentsPage = lazy(() => import('@/features/students/pages/StudentsPage'));
+const NewStudentPage = lazy(() => import('@/features/students/pages/NewStudentPage'));
+const StudentDetailPage = lazy(() => import('@/features/students/pages/StudentDetailPage'));
+const PromotionPage = lazy(() => import('@/features/students/pages/PromotionPage'));
+const HoldsPage = lazy(() => import('@/features/students/pages/HoldsPage'));
+const TransfersPage = lazy(() => import('@/features/students/pages/TransfersPage'));
+const CreditTransfersPage = lazy(() => import('@/features/students/pages/CreditTransfersPage'));
+const StudentHomePage = lazy(() => import('@/features/students/pages/StudentPortal'));
+type PortalPage =
+  | 'StudentUndertakingsPage'
+  | 'StudentProfilePage'
+  | 'StudentIdCardPage'
+  | 'StudentCurriculumPage'
+  | 'StudentCreditTransfersPage';
+const studentPortal = (name: PortalPage) =>
+  lazy(() => import('@/features/students/pages/StudentPortal').then((m) => ({ default: m[name] })));
+const StudentUndertakingsPage = studentPortal('StudentUndertakingsPage');
+const StudentProfilePage = studentPortal('StudentProfilePage');
+const StudentIdCardPage = studentPortal('StudentIdCardPage');
+const StudentCurriculumPage = studentPortal('StudentCurriculumPage');
+const StudentCreditTransfersPage = studentPortal('StudentCreditTransfersPage');
+const UndertakingGate = lazy(() =>
+  import('@/features/students/pages/StudentPortal').then((m) => ({ default: m.UndertakingGate })),
+);
+const ParentHomePage = lazy(() => import('@/features/students/pages/ParentPortal'));
+const VerifyPage = lazy(() => import('@/features/students/pages/VerifyPage'));
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -97,6 +124,8 @@ export const router = createBrowserRouter([
   { path: '/catalog/:program', element: page(<CatalogProgramPage />) },
   // Phase 06 — public careers page (no sign-in; the API checks hr.recruitment for the tenant)
   { path: '/careers', element: page(<CareersPage />) },
+  // Phase 07 — public ID card / document verification (QR target)
+  { path: '/verify/:token', element: page(<VerifyPage />) },
   {
     element: <PrivateRoute />,
     children: [
@@ -240,6 +269,27 @@ export const router = createBrowserRouter([
               </FeatureRoute>,
             ),
           },
+          // Phase 07 — students (advisors / HODs read their own slice; ScopeTabs only with view_all)
+          ...(
+            [
+              ['/admin/students', 'students.core', 'students', 'view', [['students', 'view_all']], <StudentsPage key="s" />],
+              ['/admin/students/new', 'students.core', 'students', 'create', [], <NewStudentPage key="n" />],
+              ['/admin/students/promotion', 'students.core', 'batches', 'promote', [], <PromotionPage key="p" />],
+              ['/admin/students/holds', 'students.holds', 'students', 'holds', [['students', 'view_all'], ['library', 'manage'], ['hostel', 'manage']], <HoldsPage key="h" />],
+              ['/admin/students/transfers', 'students.transfers_migration', 'students', 'transfer', [['students', 'view_all']], <TransfersPage key="t" />],
+              ['/admin/students/credit-transfers', 'academics.credit_transfer_mooc', 'credit_transfers', 'verify', [['credit_transfers', 'approve'], ['credit_transfers', 'view_all']], <CreditTransfersPage key="c" />],
+              ['/admin/students/:id', 'students.core', 'students', 'view', [['students', 'view_all']], <StudentDetailPage key="d" />],
+            ] as [string, string, string, string, [string, string][], React.ReactNode][]
+          ).map(([path, feature, module, action, anyOf, node]) => ({
+            path,
+            element: page(
+              <FeatureRoute feature={feature}>
+                <PermissionRoute module={module} action={action} anyOf={anyOf}>
+                  {node}
+                </PermissionRoute>
+              </FeatureRoute>,
+            ),
+          })),
           // Phase 04 — communication core & approvals (self-service pages need no module permission)
           { path: '/notifications', element: page(<NotificationsPage />) },
           {
@@ -335,12 +385,24 @@ export const router = createBrowserRouter([
       {
         path: '/student',
         element: <PortalRoute roles={['student', 'learner']} title="Student" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        // Phase 07 — dashboard + self-service; pending undertakings gate every page but the dashboard / undertakings
+        children: [
+          { index: true, element: page(<FeatureRoute feature="portals.student"><StudentHomePage /></FeatureRoute>) },
+          { path: 'undertakings', element: page(<StudentUndertakingsPage />) },
+          ...(
+            [
+              ['profile', <StudentProfilePage key="p" />],
+              ['id-card', <StudentIdCardPage key="i" />],
+              ['curriculum', <StudentCurriculumPage key="c" />],
+              ['credit-transfers', <StudentCreditTransfersPage key="t" />],
+            ] as const
+          ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
+        ],
       },
       {
         path: '/parent',
         element: <PortalRoute roles={['parent']} title="Parent" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        children: [{ index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) }],
       },
       {
         path: '/faculty',

@@ -17,6 +17,11 @@ Phase 04 adds ``POST /_dev/workflow/start`` (step 8 — start any workflow key f
 overrides ``started_by``) and ``GET /_dev/workflow/markers/{instance_id}`` (the development hook registered below
 writes a Redis marker when any workflow is approved/rejected — proof that hooks run), plus
 ``POST /_dev/workflow/escalate`` (step 10 — runs the Beat body in-process).
+
+Phase 07 adds ``POST /_dev/gates/{gate}-check`` (steps 4 / 6 — runs the registration / hostel / exam … gate the way
+Phases 09/14/20 will: ``hold_service.assert_clear`` then the undertakings gate; ``student_id`` defaults to the caller's
+own record) and ``POST /_dev/students/{id}/term-results`` (step 9 — writes SGPA / CGPA history on term records and
+runs ``recompute_standing`` until Phase 15 publishes results).
 """
 
 import asyncio
@@ -28,7 +33,12 @@ from fastapi import APIRouter, Body, Depends, Query, Request
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.authz.dependencies import Principal, permission_required, super_admin_required
+from app.core.authz.dependencies import (
+    Principal,
+    any_permission_required,
+    permission_required,
+    super_admin_required,
+)
 from app.core.errors import APIError, ErrorCode
 from app.core.features import feature_required
 from app.core.workflow import engine as workflow_engine
@@ -38,6 +48,7 @@ from app.models.saas import SubscriptionPlan
 from app.schemas.common import Envelope
 from app.schemas.institution import NumberSequenceNext
 from app.schemas.platform import JobResponse
+from app.schemas.students import DevTermResults
 from app.schemas.workflow import DevWorkflowStart, WorkflowInstanceResponse
 from app.services.job_service import JobService
 from app.services.sequence_service import SequenceService
@@ -189,3 +200,53 @@ async def dev_workflow_escalate(
     principal: Principal = Depends(super_admin_required()), db: AsyncSession = Depends(get_platform_db)
 ) -> dict[str, Any]:
     return ok({"escalated": await workflow_engine.escalate_due(db)})
+
+
+# ---- Phase 07 --------------------------------------------------------------------------------------------------------
+@router.post(
+    "/gates/{gate}-check",
+    summary="Run a student gate (holds + undertakings) the way later phases will (dev fixture)",
+    dependencies=[feature_required("students.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_gate_check(
+    gate: str,
+    request: Request,
+    student_id: uuid.UUID | None = Query(default=None),
+    principal: Principal = Depends(
+        any_permission_required(("students", "view"), ("students", "view_all"), ("students", "self"))
+    ),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.enums.students import Gate
+    from app.services.hold_service import HoldService
+    from app.services.student_records_service import StudentRecordsService
+
+    if gate not in {g.value for g in Gate}:
+        raise APIError(422, ErrorCode.VALIDATION, f"Unknown gate {gate!r}", {"allowed": [g.value for g in Gate]})
+    records = StudentRecordsService(db, principal, request)
+    student = await records.students.get_visible(student_id) if student_id else await records._me()  # noqa: SLF001
+    enrolment = await records.enrollments.current(student.id)
+    if enrolment is not None:
+        await HoldService(db, principal, request).assert_clear(enrolment.id, gate)
+    await records.assert_undertakings(student, gate)
+    return ok({"gate": gate, "student_id": str(student.id), "clear": True}, message="Gate clear")
+
+
+@router.post(
+    "/students/{id}/term-results",
+    summary="Write SGPA / CGPA history and recompute the standing (dev fixture until Phase 15)",
+    dependencies=[feature_required("students.academic_standing")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_term_results(
+    id: uuid.UUID,
+    body: DevTermResults,
+    request: Request,
+    principal: Principal = Depends(permission_required("students", "standing")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.enrollment_service import EnrollmentService
+
+    out = await EnrollmentService(db, principal, request).set_term_results(id, body.terms, body.credits_earned)
+    return ok(out.model_dump(mode="json"), message="Standing recomputed")

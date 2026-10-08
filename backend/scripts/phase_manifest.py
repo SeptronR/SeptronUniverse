@@ -153,6 +153,18 @@ PHASES: dict[str, list[str]] = {
         "faculty_workloads",
         "course_allocation_proposals",
     ],
+    # Phase 07 — students, enrolment, holds & standing (section 8; no new tables)
+    "07": [
+        "students",
+        "student_guardians",
+        "student_documents",
+        "student_undertakings",
+        "student_program_enrollments",
+        "student_term_records",
+        "student_holds",
+        "student_transfers",
+        "credit_transfers",
+    ],
 }
 
 VIEWS: set[str] = set()

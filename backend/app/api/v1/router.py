@@ -8,8 +8,8 @@ Phase 01: ``platform`` (public config / read-only / mobile config — public rou
 dependency), ``jobs`` {core.background_jobs}, ``search`` {search.global}, ``help`` {platform.help_center},
 ``feedback`` {platform.in_app_feedback}; ``dev`` only when ``APP_ENV=development``.
 Phase 02: ``auth`` {core.auth}, ``rbac`` (roles/users) {core.rbac}, ``features`` {core.rbac}, ``privacy``
-(consents, DSRs, entitlements, install) {core.settings}; the development-only ``module_stubs`` (``/hostels``,
-``/students``) carry their own feature keys and disappear with Phases 07/20.
+(consents, DSRs, entitlements, install) {core.settings}; the development-only ``module_stubs`` (``/hostels``) carries
+its own feature key and disappears with Phase 20 (Phase 07 replaced the ``/students`` stub).
 Phase 05: ``programs`` (+ batches) {academics.programs}, ``regulations`` / ``courses`` / ``grading``
 {academics.regulations}, ``curriculum`` (programme-regulations, structure; baskets add
 {academics.elective_baskets}) {academics.curriculum}, ``catalog`` (public, {academics.public_catalog} checked by
@@ -18,6 +18,10 @@ Phase 06: ``staff`` (designations, staff, records) {hr.staff}, ``leaves`` {hr.le
 {attendance.staff} (+ the token-authenticated device punch route), ``payroll`` (+ salary structures, registers, loans)
 {hr.payroll}, ``recruitment`` {hr.recruitment} (+ public careers), ``appraisals`` {hr.staff} with per-route
 {hr.appraisal_pbas} / {hr.cas_promotions}, ``workload`` {hr.workload}.
+Phase 07: ``students`` (master, self service, guardians, documents, undertakings, ID cards, import/export) and
+``enrollments`` (enrolments, promotion, exit/re-entry, holds, standing, transfers) {students.core} with per-route
+sub-features, ``credit_transfers`` {academics.credit_transfer_mooc}, ``verify`` (public ID-card verification). The
+``POST /students`` development stub was removed (``module_stubs`` keeps ``/hostels`` until Phase 20).
 """
 
 from fastapi import APIRouter
@@ -31,7 +35,9 @@ from app.api.v1.endpoints import (
     catalog,
     communication,
     courses,
+    credit_transfers,
     curriculum,
+    enrollments,
     features,
     feedback,
     grading,
@@ -51,6 +57,8 @@ from app.api.v1.endpoints import (
     search,
     staff,
     staff_attendance,
+    students,
+    verify,
     workflow,
     workload,
 )
@@ -88,6 +96,10 @@ api_router.include_router(recruitment.router, dependencies=[feature_required("hr
 api_router.include_router(recruitment.public_router)  # public careers; the tenant dependency checks {hr.recruitment}
 api_router.include_router(appraisals.router, dependencies=[feature_required("hr.staff")])
 api_router.include_router(workload.router, dependencies=[feature_required("hr.workload")])
+api_router.include_router(students.router, dependencies=[feature_required("students.core")])
+api_router.include_router(enrollments.router, dependencies=[feature_required("students.core")])
+api_router.include_router(credit_transfers.router, dependencies=[feature_required("academics.credit_transfer_mooc")])
+api_router.include_router(verify.router)  # public ID-card verification (token-signed)
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])

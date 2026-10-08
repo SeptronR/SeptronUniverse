@@ -41,6 +41,7 @@ dependencies:
   connectivity_plus: ^6.0.5
   uuid: ^4.4.2
   geolocator: ^13.0.1  # Phase 06 — geo-fenced staff self check-in (attendance.geo_app)
+  image_picker: ^1.1.2  # Phase 07 — student photo + credit-transfer certificate capture
 
 dev_dependencies:
   flutter_test:
