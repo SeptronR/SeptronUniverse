@@ -23,6 +23,13 @@ class AppRoutes {
   static const hrAttendance = '/app/hr/attendance';
   static const hrPayslips = '/app/hr/payslips';
   static const hrTab = '/app/hr';
+  // Phase 07 — student self-service, students search + 360°
+  static const studentProfile = '/app/student/profile';
+  static const studentUndertakings = '/app/student/undertakings';
+  static const studentIdCard = '/app/student/id-card';
+  static const studentCreditTransfers = '/app/student/credit-transfers';
+  static const studentsSearch = '/app/students';
+  static const studentDetail = '/app/students/detail';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

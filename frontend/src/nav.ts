@@ -1,5 +1,9 @@
 import {
   Activity,
+  ArrowRightLeft,
+  Ban,
+  Repeat,
+  TrendingUp,
   Banknote,
   Briefcase,
   CalendarCheck,
@@ -88,7 +92,40 @@ export const NAV_GROUPS: NavGroup[] = [
   },
   { title: 'EXAMINATIONS', items: [] },
   { title: 'ADMISSIONS', items: [] },
-  { title: 'STUDENTS', items: [] },
+  {
+    title: 'STUDENTS',
+    items: [
+      // Phase 07 — students, enrolment, holds, standing
+      { label: 'Students', to: '/admin/students', icon: GraduationCap, module: 'students', altActions: ['view_all'], feature: 'students.core' },
+      { label: 'Promotion', to: '/admin/students/promotion', icon: TrendingUp, module: 'batches', action: 'promote', feature: 'students.core' },
+      {
+        label: 'Holds',
+        to: '/admin/students/holds',
+        icon: Ban,
+        module: 'students',
+        action: 'holds',
+        altActions: ['view_all'],
+        feature: 'students.holds',
+      },
+      {
+        label: 'Transfers',
+        to: '/admin/students/transfers',
+        icon: ArrowRightLeft,
+        module: 'students',
+        action: 'transfer',
+        feature: 'students.transfers_migration',
+      },
+      {
+        label: 'Credit transfers',
+        to: '/admin/students/credit-transfers',
+        icon: Repeat,
+        module: 'credit_transfers',
+        action: 'verify',
+        altActions: ['approve'],
+        feature: 'academics.credit_transfer_mooc',
+      },
+    ],
+  },
   {
     title: 'PEOPLE',
     items: [

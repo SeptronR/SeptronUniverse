@@ -61,6 +61,13 @@ class AuthState {
       permissions.contains('$module:$action') ||
       permissions.contains('$module:manage');
 
+  /// A screen / menu permission spec: `module:action`, or alternatives joined by `|`
+  /// (Phase 07: `students:view|students:view_all` — advisors hold view, the office view_all).
+  bool canSpec(String spec) => spec.split('|').any((p) {
+        final parts = p.split(':');
+        return can(parts[0], parts.length > 1 ? parts[1] : 'view');
+      });
+
   /// Core keys are never gated; others come from the effective set.
   bool hasFeature(String key) =>
       key.startsWith('core.') || features.contains(key);

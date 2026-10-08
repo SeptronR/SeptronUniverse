@@ -47,12 +47,7 @@ class MoreMenuModule {
       return false;
     }
     if (feature != null && !auth.hasFeature(feature!)) return false;
-    if (permission != null) {
-      final parts = permission!.split(':');
-      if (!auth.can(parts[0], parts.length > 1 ? parts[1] : 'view')) {
-        return false;
-      }
-    }
+    if (permission != null && !auth.canSpec(permission!)) return false;
     return true;
   }
 }
@@ -141,6 +136,46 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.cyan,
       permission: 'hr:view_all',
       feature: 'hr.staff'),
+  // Phase 07 — student self-service and the staff students search (advisees / department / all per visibility)
+  const MoreMenuModule(
+      titleKey: 'profile',
+      icon: Icons.person_outline,
+      route: AppRoutes.studentProfile,
+      color: Colors.blue,
+      permission: 'students:self',
+      feature: 'students.self_service_profile',
+      roles: ['student']),
+  const MoreMenuModule(
+      titleKey: 'idCard',
+      icon: Icons.badge,
+      route: AppRoutes.studentIdCard,
+      color: Colors.indigo,
+      permission: 'students:self',
+      feature: 'students.id_cards',
+      roles: ['student']),
+  const MoreMenuModule(
+      titleKey: 'undertakings',
+      icon: Icons.assignment_turned_in_outlined,
+      route: AppRoutes.studentUndertakings,
+      color: Colors.amber,
+      permission: 'students:self',
+      feature: 'students.undertakings',
+      roles: ['student']),
+  const MoreMenuModule(
+      titleKey: 'creditTransfers',
+      icon: Icons.swap_horiz,
+      route: AppRoutes.studentCreditTransfers,
+      color: Colors.pink,
+      permission: 'credit_transfers:create',
+      feature: 'academics.credit_transfer_mooc',
+      roles: ['student']),
+  const MoreMenuModule(
+      titleKey: 'students',
+      icon: Icons.school_outlined,
+      route: AppRoutes.studentsSearch,
+      color: Colors.lightBlue,
+      permission: 'students:view|students:view_all',
+      feature: 'students.core'),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',

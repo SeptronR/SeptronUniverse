@@ -33,6 +33,10 @@ from app.utils.response import ok
 router = APIRouter(tags=["academics"])
 
 CURRICULUM_READ = any_permission_required(("curriculum", "view"), ("curriculum", "view_all"))
+# Phase 07: students / parents read the programme-regulation of their (wards') enrolment — narrowed in the services
+CURRICULUM_OR_ENROLLED = any_permission_required(
+    ("curriculum", "view"), ("curriculum", "view_all"), ("students", "self"), ("students", "view")
+)
 BASKETS = [feature_required("academics.elective_baskets")]
 
 
@@ -48,7 +52,7 @@ async def list_program_regulations(
     program_id: uuid.UUID | None = None,
     regulation_id: uuid.UUID | None = None,
     status: ProgramRegulationStatus | None = None,
-    principal: Principal = Depends(CURRICULUM_READ),
+    principal: Principal = Depends(CURRICULUM_OR_ENROLLED),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
     rows, pagination = await ProgramService(db, principal, request).list_bindings(
@@ -96,7 +100,7 @@ async def update_program_regulation(
 async def get_structure(
     id: uuid.UUID,
     request: Request,
-    principal: Principal = Depends(CURRICULUM_READ),
+    principal: Principal = Depends(CURRICULUM_OR_ENROLLED),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
     return ok(await CurriculumService(db, principal, request).get_structure(id))

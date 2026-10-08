@@ -7,8 +7,8 @@ Business rules
    ``staff`` needs ``hr:view`` or ``faculty:view``, ``course`` needs ``courses:view``, ``applicant`` needs
    ``admissions:view``; unknown or unpermitted types are dropped silently (never 403 for a search).
 3. Principals whose scopes are college-bound only (no institution scope, no ``view_all``) are narrowed to their
-   colleges (institution-wide rows stay visible). Ownership visibility (mentor → wards, advisor → section) is applied
-   by the owning modules when they ship; Phase 01 is the institution/college baseline.
+   colleges (institution-wide rows stay visible). Phase 07: ``student`` hits apply the students visibility
+   (self / wards / advisees / unit scopes — ``repositories/student_scope.py``) inside the query.
 4. The materialized view is refreshed by the outbox consumer ``search.reindex`` (``tasks/platform.py``) — throttled
    to at most one ``REFRESH … CONCURRENTLY`` per minute; Phase 07+ emit ``student.created`` etc.
 """
@@ -58,8 +58,18 @@ class SearchService:
         q = (q or "").strip()
         if len(q) < 2 or not types:
             return [], types
+        student_ids = None
+        if "student" in types and not self.principal.is_super_admin:
+            from app.repositories.student_scope import visible_student_ids
+
+            student_ids = visible_student_ids(self.principal)
         rows = await self.repo.search(
-            self.principal.institution_id, q, types, college_ids=self._college_filter(), limit=MAX_RESULTS
+            self.principal.institution_id,
+            q,
+            types,
+            college_ids=self._college_filter(),
+            limit=MAX_RESULTS,
+            student_ids=student_ids,
         )
         return [self._to_result(r) for r in rows], types
 

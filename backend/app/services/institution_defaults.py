@@ -331,3 +331,79 @@ def seed_hr_defaults(conn: Connection, institution_id: uuid.UUID | str, pack_cod
         )
         out["payroll_components"] += res.rowcount or 0
     return out
+
+
+# ---- Phase 07: undertaking + ID-card document templates (platform rows) -----------------------------------------------
+ID_CARD_HTML = (
+    '<div class="card"><header><strong>{{ institution }}</strong><br><small>{{ college }}</small></header>'
+    '<img class="photo" src="{{ photo_url }}" alt=""><h2>{{ name }}</h2>'
+    "<dl><dt>Reg. no</dt><dd>{{ registration_number }}</dd><dt>Programme</dt><dd>{{ program }}</dd>"
+    "<dt>Batch</dt><dd>{{ batch }}</dd><dt>Blood group</dt><dd>{{ blood_group }}</dd>"
+    "<dt>Valid until</dt><dd>{{ valid_until }}</dd></dl>"
+    '<img class="qr" src="{{ qr_data_url }}" alt="QR"></div>'
+)
+ID_CARD_VARIABLES = [
+    "institution",
+    "college",
+    "name",
+    "registration_number",
+    "program",
+    "batch",
+    "blood_group",
+    "valid_until",
+    "photo_url",
+    "qr_data_url",
+]
+UNDERTAKING_VARIABLES = ["student_name", "registration_number", "institution_name", "program_name", "academic_year"]
+
+
+def seed_student_templates(conn: Connection) -> int:
+    """Platform ``document_templates`` (``institution_id`` NULL) — one ``undertaking`` row per pack undertaking and an
+    ``id_card`` row (Prompts/07 §07.2). ``layout`` carries ``{undertaking_type, pack, text_version}`` so the service
+    picks the institution's pack; existing rows are left untouched (Phase 26 owns template editing)."""
+    created = 0
+    for pack_code in ("IN", "GENERIC"):
+        pack = get_pack(pack_code)
+        for kind, spec in pack.students.undertakings.items():
+            exists = conn.execute(
+                text(
+                    "SELECT 1 FROM document_templates WHERE institution_id IS NULL AND template_type = 'undertaking' "
+                    "AND layout->>'undertaking_type' = :k AND layout->>'pack' = :p"
+                ),
+                {"k": kind, "p": pack.code},
+            ).first()
+            if exists is not None:
+                continue
+            conn.execute(
+                text(
+                    "INSERT INTO document_templates (institution_id, template_type, name, layout, html_template, "
+                    "variables, is_default, version, is_active) VALUES (NULL, 'undertaking', :n, CAST(:l AS jsonb), :b, "
+                    "CAST(:v AS jsonb), TRUE, 1, TRUE)"
+                ),
+                {
+                    "n": spec["name"][:120],
+                    "l": json.dumps({"undertaking_type": kind, "pack": pack.code, "text_version": spec["version"]}),
+                    "b": spec["body"],
+                    "v": json.dumps(UNDERTAKING_VARIABLES),
+                },
+            )
+            created += 1
+    exists = conn.execute(
+        text("SELECT 1 FROM document_templates WHERE institution_id IS NULL AND template_type = 'id_card'")
+    ).first()
+    if exists is None:
+        conn.execute(
+            text(
+                "INSERT INTO document_templates (institution_id, template_type, name, layout, html_template, css, "
+                "page_size, variables, is_default, version, is_active) VALUES (NULL, 'id_card', "
+                "'Student ID card (CR80)', CAST(:l AS jsonb), :h, :c, 'ID_CR80', CAST(:v AS jsonb), TRUE, 1, TRUE)"
+            ),
+            {
+                "l": json.dumps({"variant": "student", "size": "CR80"}),
+                "h": ID_CARD_HTML,
+                "c": "@page{size:85.6mm 54mm;margin:0}.card{font:7pt sans-serif}.qr{width:22mm;float:right}",
+                "v": json.dumps(ID_CARD_VARIABLES),
+            },
+        )
+        created += 1
+    return created

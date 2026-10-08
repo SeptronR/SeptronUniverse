@@ -29,6 +29,10 @@ from app.utils.response import ok
 router = APIRouter(tags=["academics"])
 
 COURSE_READ = any_permission_required(("courses", "view"), ("courses", "view_all"))
+# Phase 07: students / parents open the courses of their (wards') curriculum — narrowed in the service
+COURSE_OR_ENROLLED = any_permission_required(
+    ("courses", "view"), ("courses", "view_all"), ("students", "self"), ("students", "view")
+)
 XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
 
@@ -110,7 +114,7 @@ async def create_course(
 async def get_course(
     id: uuid.UUID,
     request: Request,
-    principal: Principal = Depends(COURSE_READ),
+    principal: Principal = Depends(COURSE_OR_ENROLLED),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
     return ok(await CourseService(db, principal, request).get(id))

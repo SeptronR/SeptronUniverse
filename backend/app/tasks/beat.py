@@ -10,7 +10,9 @@ and entitlement jobs (``app/tasks/auth.py``): ``auth.cleanup_sessions`` (hourly)
 ``workflow.escalate`` (15 min), ``notifications.retry_failed`` (10 min) and ``notifications.digest`` (daily 08:00,
 weekly Mondays 08:05) — ``app/tasks/notifications.py``; Phase 06 ``hr.leave_accrual`` (1st 01:00), ``hr.leave_carry_forward``
 (1st 01:30, acts on the leave-year start month), ``hr.document_expiry`` (Mondays 07:00), ``attendance.auto_mark_holidays``
-(daily 00:10) and ``payroll.reminder`` (daily 06:30, acts on the ``payroll.reminder_day``) — ``app/tasks/hr.py``.
+(daily 00:10) and ``payroll.reminder`` (daily 06:30, acts on the ``payroll.reminder_day``) — ``app/tasks/hr.py``;
+Phase 07 ``students.document_expiry`` (Mondays 07:10) and ``students.undertaking_reminders`` (daily 07:20, acts on the
+academic year's first day and weekly for four weeks) — ``app/tasks/students.py``.
 """
 
 from typing import Any
@@ -63,5 +65,9 @@ register_beat("hr.leave_carry_forward", "beat.hr.leave_carry_forward", crontab(d
 register_beat("hr.document_expiry", "beat.hr.document_expiry", crontab(day_of_week="1", hour=7, minute=0))
 register_beat("attendance.auto_mark_holidays", "beat.attendance.auto_mark_holidays", crontab(hour=0, minute=10))
 register_beat("payroll.reminder", "beat.payroll.reminder", crontab(hour=6, minute=30))
+
+# ---- Phase 07 students (app/tasks/students.py) -------------------------------------------------------------------------
+register_beat("students.document_expiry", "beat.students.document_expiry", crontab(day_of_week="1", hour=7, minute=10))
+register_beat("students.undertaking_reminders", "beat.students.undertaking_reminders", crontab(hour=7, minute=20))
 
 celery.conf.beat_schedule = BEAT_SCHEDULE

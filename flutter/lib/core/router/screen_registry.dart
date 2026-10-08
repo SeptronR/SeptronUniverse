@@ -7,6 +7,7 @@ import '../../features/auth/profile_screens.dart';
 import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/settings/settings_screen.dart';
+import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
 
@@ -45,7 +46,8 @@ class ScreenRegistry {
     AppRoutes.home: ScreenEntry(
       route: AppRoutes.home,
       titleKey: 'home',
-      builder: (_, __) => const PlaceholderScreen(title: 'Home'),
+      // Phase 07 — student / parent dashboards (other roles keep the placeholder)
+      builder: (_, __) => const HomeScreen(),
     ),
     AppRoutes.more: ScreenEntry(
       route: AppRoutes.more,
@@ -112,8 +114,10 @@ class ScreenRegistry {
       route: AppRoutes.academicCurriculum,
       titleKey: 'curriculum',
       feature: 'academics.curriculum',
-      builder: (_, params) =>
-          CurriculumScreen(programRegulationId: params['pr']),
+      // Phase 07 — students open their own curriculum through the enrolment (no `pr` param)
+      builder: (_, params) => params['pr'] == null
+          ? const StudentCurriculumScreen()
+          : CurriculumScreen(programRegulationId: params['pr']),
     ),
     // Phase 06 — leaves, my attendance, payslips (staff self-service) and the HR tab (All | Mine segments)
     AppRoutes.hrLeaves: ScreenEntry(
@@ -143,6 +147,49 @@ class ScreenRegistry {
       feature: 'hr.staff',
       permission: 'hr:view_all',
       builder: (_, __) => const HrTabScreen(),
+    ),
+    // Phase 07 — student self-service; students search → 360° for staff (scope / PII decided by the API)
+    AppRoutes.studentProfile: ScreenEntry(
+      route: AppRoutes.studentProfile,
+      titleKey: 'profile',
+      feature: 'students.self_service_profile',
+      permission: 'students:self',
+      builder: (_, __) => const StudentProfileScreen(),
+    ),
+    AppRoutes.studentUndertakings: ScreenEntry(
+      route: AppRoutes.studentUndertakings,
+      titleKey: 'undertakings',
+      feature: 'students.undertakings',
+      permission: 'students:self',
+      builder: (_, __) => const StudentUndertakingsScreen(),
+    ),
+    AppRoutes.studentIdCard: ScreenEntry(
+      route: AppRoutes.studentIdCard,
+      titleKey: 'idCard',
+      feature: 'students.id_cards',
+      permission: 'students:self',
+      builder: (_, __) => const StudentIdCardScreen(),
+    ),
+    AppRoutes.studentCreditTransfers: ScreenEntry(
+      route: AppRoutes.studentCreditTransfers,
+      titleKey: 'creditTransfers',
+      feature: 'academics.credit_transfer_mooc',
+      permission: 'credit_transfers:create',
+      builder: (_, __) => const StudentCreditTransfersScreen(),
+    ),
+    AppRoutes.studentsSearch: ScreenEntry(
+      route: AppRoutes.studentsSearch,
+      titleKey: 'students',
+      feature: 'students.core',
+      permission: 'students:view|students:view_all',
+      builder: (_, __) => const StudentsSearchScreen(),
+    ),
+    AppRoutes.studentDetail: ScreenEntry(
+      route: AppRoutes.studentDetail,
+      titleKey: 'student',
+      feature: 'students.core',
+      permission: 'students:view|students:view_all',
+      builder: (_, params) => StudentDetailScreen(id: params['id'] ?? ''),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

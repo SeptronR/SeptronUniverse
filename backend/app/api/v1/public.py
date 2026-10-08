@@ -35,6 +35,8 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/attendance-devices/{id}/punches",
     "GET /api/v1/public/careers",
     "POST /api/v1/public/careers/{posting_id}/apply",
+    # Phase 07 — public verification of the ID-card QR (HMAC-signed token; Phase 26 unifies document verification)
+    "GET /api/v1/verify/{token}",
 }
 
 

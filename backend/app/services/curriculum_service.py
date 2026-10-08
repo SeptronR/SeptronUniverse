@@ -87,6 +87,9 @@ class CurriculumService(AcademicServiceBase):
 
     # ---- reads -----------------------------------------------------------------------------------------------------
     async def get_structure(self, pr_id: uuid.UUID) -> StructureResponse:
+        from app.services.academics.enrolled import ensure_enrolled_program_regulation
+
+        await ensure_enrolled_program_regulation(self.db, self.principal, pr_id)  # students / parents (Phase 07)
         b, program, reg = await self._context(pr_id)
         return await self._structure(b, program, reg, await self.repo.load(b.id))
 

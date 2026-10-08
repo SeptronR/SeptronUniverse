@@ -9,6 +9,10 @@ institution. Membership sources, until each owning module exists (the tables are
   ``student_program_enrollments.department_id`` (Phase 07);
 * ``program_ids`` / ``batch_ids`` — ``student_program_enrollments`` (Phases 05/07);
 * ``include_guardians`` — ``student_guardians.user_id`` of the matched students when ``students.guardian_portal_consent``.
+
+Phase 07: student membership counts only non-deleted students in a seated status (an exited / transferred student is
+no longer in a college's or batch's audience) and open enrolments (active / break / detained) for department,
+programme and batch rules.
 """
 
 import uuid
@@ -17,6 +21,9 @@ from typing import Any
 
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
+
+SEATED = "('provisional','admitted','active','on_break','detained')"
+OPEN = "('active','break','detained')"
 
 
 def _ids(values: Iterable[Any] | None) -> list[str]:
@@ -63,7 +70,8 @@ class AudienceRepository:
                 " OR (ur.scope_type = 'department' AND ur.scope_id IN (SELECT id FROM departments WHERE college_id = ANY(CAST(:c AS uuid[]))))"
                 " OR (ur.scope_type = 'faculty' AND ur.scope_id IN (SELECT id FROM faculties WHERE college_id = ANY(CAST(:c AS uuid[])))))"
                 " UNION SELECT user_id FROM staff WHERE institution_id = :i AND college_id = ANY(CAST(:c AS uuid[])) AND deleted_at IS NULL"
-                " UNION SELECT user_id FROM students WHERE institution_id = :i AND college_id = ANY(CAST(:c AS uuid[])) AND deleted_at IS NULL",
+                " UNION SELECT user_id FROM students WHERE institution_id = :i AND college_id = ANY(CAST(:c AS uuid[])) AND deleted_at IS NULL"
+                f" AND status IN {SEATED}",
                 {"i": i, "c": colleges},
             )
         depts = _ids(rules.get("department_ids") or ([rules["department_id"]] if rules.get("department_id") else []))
@@ -73,7 +81,8 @@ class AudienceRepository:
                 "AND scope_id = ANY(CAST(:d AS uuid[]))"
                 " UNION SELECT user_id FROM staff WHERE institution_id = :i AND department_id = ANY(CAST(:d AS uuid[])) AND deleted_at IS NULL"
                 " UNION SELECT s.user_id FROM student_program_enrollments e JOIN students s ON s.id = e.student_id "
-                "WHERE e.institution_id = :i AND e.department_id = ANY(CAST(:d AS uuid[]))",
+                "WHERE e.institution_id = :i AND e.department_id = ANY(CAST(:d AS uuid[])) AND e.deleted_at IS NULL "
+                f"AND s.deleted_at IS NULL AND e.status IN {OPEN}",
                 {"i": i, "d": depts},
             )
         for key, column in (("program_ids", "program_id"), ("batch_ids", "batch_id")):
@@ -82,7 +91,8 @@ class AudienceRepository:
             if ids:
                 users |= await self._users(
                     f"SELECT s.user_id FROM student_program_enrollments e JOIN students s ON s.id = e.student_id "  # noqa: S608 - column is a literal
-                    f"WHERE e.institution_id = :i AND e.{column} = ANY(CAST(:x AS uuid[]))",
+                    f"WHERE e.institution_id = :i AND e.{column} = ANY(CAST(:x AS uuid[])) AND e.deleted_at IS NULL "
+                    f"AND s.deleted_at IS NULL AND e.status IN {OPEN}",
                     {"i": i, "x": ids},
                 )
         if rules.get("include_guardians") and users:

@@ -214,10 +214,13 @@ try {
   $ent = Call $adminToken GET "/entitlements"
   Assert ($ent.data.plan -eq 'university' -and $ent.data.status -eq 'active') "entitlements -> plan/status"
   Call $saToken PUT "/_dev/plans/university" @{ student_limit = 1 } | Out-Null
-  $seat = Call $adminToken POST "/students" @{ first_name = 'Seat'; last_name = 'Limit' } 403
+  # a valid Phase 07 StudentCreate body (2025 BTECH-CSE, no login) — 07's fixture reset soft-deletes 'Verify%' rows
+  $cse = (Call $adminToken GET "/programs?page_size=100").data | Where-Object { $_.code -eq 'BTECH-CSE' } | Select-Object -First 1
+  $seatBody = @{ first_name = 'Seat'; last_name = 'VerifySeat'; dob = '2007-05-01'; gender = 'M'; program_id = $cse.id; admission_year = 2025; create_user = $false }
+  $seat = Call $adminToken POST "/students" $seatBody 403
   Assert ($seat.error.details.code -eq 'SEAT_LIMIT') "POST /students -> 403 RULE_VIOLATION / SEAT_LIMIT"
   Call $saToken PUT "/_dev/plans/university" @{ student_limit = 200000; staff_limit = 20000 } | Out-Null
-  Call $adminToken POST "/students" @{ first_name = 'Seat'; last_name = 'Ok' } 201 | Out-Null
+  Call $adminToken POST "/students" $seatBody 201 | Out-Null
 
   Write-Host "== 15. sessions"
   $second = LoginFull 'student.1' (Get-DemoPassword 'student') @{ platform = 'android'; device_label = 'Pixel 8' }

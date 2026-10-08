@@ -71,13 +71,15 @@ async def log_audit(
 
 async def audit_fallback(request: Request, status: int) -> None:
     """Middleware fallback for mutations that skipped ``log_audit``: records the route in its own short transaction."""
-    from app.db.session import SessionLocal
+    from app.db.session import SessionLocal, bind_tenant
 
     module = request.url.path.split("/")[3] if request.url.path.startswith("/api/v1/") else "http"
     institution_id = getattr(request.state, "institution_id", None)
     user_id = getattr(request.state, "user_id", None)
     try:
         async with SessionLocal() as db:
+            if institution_id:
+                bind_tenant(db, institution_id)  # audit_logs is RLS-scoped: pin the tenant like get_db does
             db.add(
                 AuditLog(
                     institution_id=uuid.UUID(str(institution_id)) if institution_id else None,

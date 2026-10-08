@@ -22,6 +22,7 @@ from app.core.packs.base import (
 )
 from app.core.packs.hr_rules import IN_HR_RULES
 from app.core.packs.registry import register_pack
+from app.core.packs.student_rules import IN_STUDENT_RULES
 
 IN_LOCALES = ["en", "hi", "bn", "mr", "te", "ta", "gu", "kn", "or", "ml", "as"]
 
@@ -177,4 +178,5 @@ def build_in_pack() -> RegulatoryPack:
         },
         locales=IN_LOCALES,
         hr=IN_HR_RULES,
+        students=IN_STUDENT_RULES,
     )

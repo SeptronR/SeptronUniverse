@@ -25,9 +25,7 @@ class RoleShellScaffold extends ConsumerWidget {
     final tabs = tabsForRole(auth.primaryRole)
         .where((t) => t.feature == null || auth.hasFeature(t.feature!))
         .where((t) {
-      if (t.permission == null) return true;
-      final parts = t.permission!.split(':');
-      return auth.can(parts[0], parts.length > 1 ? parts[1] : 'view');
+      return t.permission == null || auth.canSpec(t.permission!);
     }).toList();
     final index = tabs
         .indexWhere((t) => location.startsWith(t.route))
@@ -48,7 +46,8 @@ class RoleShellScaffold extends ConsumerWidget {
               bottom: false,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(12, 4, 12, 0),
-                child: Align(alignment: Alignment.centerLeft, child: CurrentTermChip()),
+                child: Align(
+                    alignment: Alignment.centerLeft, child: CurrentTermChip()),
               ),
             ),
           Expanded(child: child),

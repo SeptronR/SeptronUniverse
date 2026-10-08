@@ -166,6 +166,22 @@ HR_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("dean", sla=72, escalate=None),
     },
 )
-WORKFLOW_TEMPLATES = WORKFLOW_TEMPLATES + HR_WORKFLOW_TEMPLATES
+# Phase 07 (Prompts/07 §07.7 "Workflows"): transfers / migration (registrar → principal) and credit transfers
+# (department verification by the HOD of the student's department → registrar approval).
+STUDENT_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "students.transfer",
+        "module": "students",
+        "name": "Student transfer / migration",
+        "steps": _chain("registrar", "vice_chancellor", sla=72),
+    },
+    {
+        "key": "students.credit_transfer",
+        "module": "credit_transfers",
+        "name": "Credit transfer (MOOC / ABC / prior learning)",
+        "steps": _chain("hod", "registrar", sla=120, escalate="registrar"),
+    },
+)
+WORKFLOW_TEMPLATES = WORKFLOW_TEMPLATES + HR_WORKFLOW_TEMPLATES + STUDENT_WORKFLOW_TEMPLATES
 
-assert len(WORKFLOW_TEMPLATES) == 23, "Prompts/04 ships 18 workflow templates, Prompts/06 adds 5"
+assert len(WORKFLOW_TEMPLATES) == 25, "Prompts/04 ships 18 workflow templates, Prompts/06 adds 5, Prompts/07 adds 2"

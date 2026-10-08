@@ -3,6 +3,7 @@
 from app.core.packs.base import AssessmentScheme, Category, GradingScale, IdFormat, Quota, RegulatoryPack
 from app.core.packs.hr_rules import GENERIC_HR_RULES
 from app.core.packs.registry import register_pack
+from app.core.packs.student_rules import GENERIC_STUDENT_RULES
 
 
 @register_pack("GENERIC")
@@ -29,4 +30,5 @@ def build_generic_pack() -> RegulatoryPack:
         default_assessment_schemes=[AssessmentScheme("CW50_EX50", "Coursework 50 / Exam 50", 50, 50)],
         default_regulation_rules={"attendance_min_pct": 75, "pass_min_pct_aggregate": 40},
         hr=GENERIC_HR_RULES,
+        students=GENERIC_STUDENT_RULES,
     )

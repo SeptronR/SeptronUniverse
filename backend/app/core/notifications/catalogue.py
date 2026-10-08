@@ -372,6 +372,135 @@ EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 07 — students, guardians, holds, promotion, standing, transfers and credit transfers. Hold / standing /
+# promotion messages go to the student and (with ``include_guardians``) the consented guardians.
+STUDENT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "student.welcome",
+        "security",
+        "Student account created",
+        "Welcome to {{ institution_name }}",
+        "Welcome {{ name }}! Your registration number is {{ registration_number }} and your SeptronUniverse username "
+        "is {{ username }}. The office hands over your temporary password — you will be asked to change it at the "
+        "first sign-in.",
+        ("name", "institution_name", "registration_number", "username"),
+        ("email", "in_app"),
+    ),
+    EventDef(
+        "guardian.welcome",
+        "security",
+        "Parent portal account",
+        "Parent portal for {{ student_name }}",
+        "Dear {{ name }}, a parent-portal account ({{ username }}) lets you follow {{ student_name }} at "
+        "{{ institution_name }}. The office hands over your temporary password.",
+        ("name", "student_name", "username", "institution_name"),
+        ("email", "sms"),
+    ),
+    EventDef(
+        "hold.placed",
+        "academics",
+        "Hold placed",
+        "{{ hold_label }} hold on your record",
+        "A {{ hold_label }} hold was placed on the record of {{ student_name }}: {{ reason }}. Contact {{ contact }} "
+        "to resolve it.",
+        ("hold_label", "student_name", "reason", "contact"),
+        ("in_app", "push", "email"),
+        hi_body="{{ student_name }} के रिकॉर्ड पर {{ hold_label }} रोक लगाई गई है: {{ reason }}।",
+        link="/student",
+    ),
+    EventDef(
+        "hold.released",
+        "academics",
+        "Hold released",
+        "{{ hold_label }} hold released",
+        "The {{ hold_label }} hold on the record of {{ student_name }} was released. {{ reason }}",
+        ("hold_label", "student_name", "reason"),
+        ("in_app", "push"),
+        link="/student",
+    ),
+    EventDef(
+        "student.promoted",
+        "academics",
+        "Promoted to the next term",
+        "Promoted to term {{ term_number }}",
+        "{{ student_name }} has been promoted to term {{ term_number }} ({{ term_name }}).",
+        ("student_name", "term_number", "term_name"),
+        ("in_app",),
+        link="/student",
+    ),
+    EventDef(
+        "student.detained",
+        "academics",
+        "Detained",
+        "Detained in term {{ term_number }}",
+        "{{ student_name }} is detained in term {{ term_number }}: {{ backlogs }} backlog(s) exceed the limit of "
+        "{{ max_backlogs }}. Please meet the class advisor.",
+        ("student_name", "term_number", "backlogs", "max_backlogs"),
+        ("in_app", "push", "email"),
+        link="/student",
+    ),
+    EventDef(
+        "standing.changed",
+        "academics",
+        "Academic standing changed",
+        "Academic standing: {{ standing }}",
+        "The academic standing of {{ student_name }} is now {{ standing }} (CGPA {{ cgpa }}).",
+        ("student_name", "standing", "cgpa"),
+        ("in_app", "email"),
+        link="/student",
+    ),
+    EventDef(
+        "student.exited",
+        "academics",
+        "Programme exit recorded",
+        "Exit with {{ award }}",
+        "{{ student_name }} exited {{ program }} after term {{ term_number }} with the {{ award }} award.",
+        ("student_name", "program", "term_number", "award"),
+        ("in_app", "email"),
+    ),
+    EventDef(
+        "transfer.decided",
+        "academics",
+        "Transfer request decided",
+        "Transfer request {{ decision }}",
+        "The {{ transfer_type }} request of {{ student_name }} was {{ decision }}.",
+        ("transfer_type", "student_name", "decision"),
+        ("in_app", "email"),
+        link="/student",
+    ),
+    EventDef(
+        "credit_transfer.decided",
+        "academics",
+        "Credit transfer decided",
+        "Credit transfer {{ decision }}: {{ title }}",
+        "Your credit transfer {{ title }} ({{ credits }} credits) was {{ decision }}. {{ comment }}",
+        ("title", "credits", "decision", "comment"),
+        ("in_app", "push", "email"),
+        link="/student/credit-transfers",
+    ),
+    EventDef(
+        "undertaking.reminder",
+        "academics",
+        "Undertakings pending",
+        "Undertakings to accept for {{ academic_year }}",
+        "Please e-accept the following before registration: {{ pending }}.",
+        ("academic_year", "pending"),
+        ("in_app", "push", "email"),
+        link="/student/undertakings",
+    ),
+    EventDef(
+        "student.document_expiring",
+        "academics",
+        "Student document expiring",
+        "{{ doc_type }} expires on {{ expires_on }}",
+        "The {{ doc_type }} of {{ student_name }} ({{ registration_number }}) expires on {{ expires_on }}. Please "
+        "upload a renewed copy.",
+        ("doc_type", "student_name", "registration_number", "expires_on"),
+        ("in_app", "email"),
+    ),
+)
+EVENTS = EVENTS + STUDENT_EVENTS
+
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 
 

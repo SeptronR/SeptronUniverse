@@ -17,6 +17,7 @@ from datetime import UTC, datetime
 from typing import Any
 
 from sqlalchemy import or_, select, text, update
+from sqlalchemy.dialects import postgresql
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.platform import BackgroundJob, College, FeedbackEntry, HelpArticle, Institution, ReadOnlyMode
@@ -25,7 +26,7 @@ from app.utils.pagination import PageParams
 from app.utils.response import PaginationMeta
 
 SEARCH_ROUTES = {
-    "student": "/students/{id}",
+    "student": "/admin/students/{id}",
     "staff": "/staff/{id}",
     "course": "/courses/{id}",
     "applicant": "/admissions/applicants/{id}",
@@ -81,7 +82,10 @@ class SearchRepository:
         entity_types: Sequence[str],
         college_ids: Sequence[uuid.UUID] | None = None,
         limit: int = 20,
+        student_ids: Any = None,
     ) -> list[dict[str, Any]]:
+        """``student_ids``: optional ``SELECT students.id`` (Phase 07 visibility) — student rows outside it are dropped
+        inside the query, so the limit applies to visible rows only."""
         if not entity_types or not q.strip():
             return []
         sql = (
@@ -98,6 +102,9 @@ class SearchRepository:
             # college-scoped principals: rows of their colleges plus institution-wide rows (college_id IS NULL)
             sql += " AND (college_id IS NULL OR college_id = ANY(:colleges))"
             params["colleges"] = list(college_ids)
+        if student_ids is not None and "student" in entity_types:
+            compiled = student_ids.compile(dialect=postgresql.dialect(), compile_kwargs={"literal_binds": True})
+            sql += f" AND (entity_type <> 'student' OR entity_id IN ({compiled}))"  # noqa: S608 - SQLAlchemy-compiled
         sql += " ORDER BY rank DESC, title LIMIT :limit"
         rows = (await self.db.execute(text(sql), params)).mappings().all()
         return [dict(r) for r in rows]

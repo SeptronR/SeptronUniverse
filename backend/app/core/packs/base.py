@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from typing import Any
 
 from app.core.packs.hr_rules import HrRules
+from app.core.packs.student_rules import StudentRules
 
 
 @dataclass(frozen=True)
@@ -129,6 +130,7 @@ class RegulatoryPack:
     tax: TaxRules = field(default_factory=TaxRules)
     phd_rules: PhdRules = field(default_factory=PhdRules)
     hr: HrRules = field(default_factory=HrRules)  # Phase 06
+    students: StudentRules = field(default_factory=StudentRules)  # Phase 07
     validators: dict[str, Callable[[str], bool]] = field(default_factory=dict)
     locales: list[str] = field(default_factory=lambda: ["en"])
 

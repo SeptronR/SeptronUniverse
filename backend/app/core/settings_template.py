@@ -110,6 +110,27 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     # attendance (Phase 06) — self check-in geo-fence {lat, lng, radius_m} (a college row overrides it)
     SettingDef("attendance", "geo_fence", "json", None, label="Self check-in geo-fence {lat, lng, radius_m}"),
     SettingDef("attendance", "staff_self_checkin", "bool", True, label="Staff may check in from the app / web"),
+    # students (Phase 07) — gates read ``undertakings_required`` (empty list = the pack default); an adult student
+    # (``adult_age``) controls the guardian-portal consent; ID-card QR tokens live until the expected graduation year
+    SettingDef(
+        "students",
+        "undertakings_required",
+        "list",
+        None,
+        label="Undertakings required each academic year (registration / hostel gates; empty = pack default)",
+    ),
+    SettingDef("students", "adult_age", "int", 18, label="Age from which a student controls guardian consent", min=16),
+    SettingDef(
+        "students", "document_expiry_days", "int", 30, label="Remind before a student document expires (days)", min=1
+    ),
+    SettingDef("students", "id_card_validity_years", "int", 5, label="ID-card QR validity (years)", min=1, max=10),
+    SettingDef(
+        "students",
+        "self_service_fields",
+        "list",
+        ["phone", "email", "current_address", "photo", "emergency_contact"],
+        label="Fields a student may edit on the own profile",
+    ),
 )
 
 CATEGORIES: tuple[str, ...] = tuple(dict.fromkeys(d.category for d in SETTINGS_TEMPLATE))

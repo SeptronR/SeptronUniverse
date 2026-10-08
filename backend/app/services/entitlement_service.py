@@ -7,9 +7,10 @@ Business rules
    ``403 RULE_VIOLATION`` (``code: SUBSCRIPTION_GRACE`` — the "402-style" answer of the prompt) but allows reads;
    ``expired`` / ``cancelled`` refuse everything with ``403 RULE_VIOLATION`` (``code: SUBSCRIPTION_EXPIRED``).
    ``subscription_required()`` wraps it as a route dependency for later phases.
-3. ``enforce_seat_limit(kind)`` — before creating a student/staff account: active users of that kind (``users.user_type``
-   student|learner → students, staff → staff; Phase 07/06 refine the count to the student/staff masters) + 1 must not
-   exceed the plan limit → ``403 RULE_VIOLATION`` (``code: SEAT_LIMIT``, details ``{kind, limit, current}``).
+3. ``enforce_seat_limit(kind)`` — before creating a student/staff account: the seats in use + ``adding`` must not
+   exceed the plan limit → ``403 RULE_VIOLATION`` (``code: SEAT_LIMIT``, details ``{kind, limit, current}``). Students
+   count the student master (Phase 07: non-deleted students in a seated status — provisional, admitted, active, on
+   break, detained); staff still count active ``users.user_type = staff`` accounts.
 4. ``entitlements`` — plan, status, limits and current usage (latest ``usage_meters`` row or a live count).
 5. ``meter(institution_id, month)`` — Beat ``usage.meter`` (monthly) upserts ``usage_meters``; ``reminders`` — Beat
    ``subscriptions.reminders`` (daily) emits ``subscription.expiring`` 30/7/1 days before ``ends_on``.
@@ -87,7 +88,7 @@ class EntitlementService:
         limit = None if plan is None else (plan.student_limit if kind == "student" else plan.staff_limit)
         if limit is None:
             return
-        current = await UserRepository(self.db).count_active(inst, SEAT_TYPES.get(kind, (kind,)))
+        current = await self.seats_in_use(inst, kind)
         if current + adding > limit:
             raise APIError(
                 403,
@@ -96,6 +97,13 @@ class EntitlementService:
                 {"code": "SEAT_LIMIT", "kind": kind, "limit": limit, "current": current},
             )
 
+    async def seats_in_use(self, institution_id: uuid.UUID, kind: str) -> int:
+        if kind == "student":
+            from app.repositories.student_repository import StudentRepository
+
+            return await StudentRepository(self.db, None, institution_id).count_seated(institution_id)
+        return await UserRepository(self.db).count_active(institution_id, SEAT_TYPES.get(kind, (kind,)))
+
     # ---- rule 4 -----------------------------------------------------------------------------------------------
     async def entitlements(self, institution_id: uuid.UUID | None = None) -> EntitlementsResponse:
         inst = self._institution(institution_id)
@@ -103,7 +111,7 @@ class EntitlementService:
         meter = await self.repo.latest_meter(inst)
         users = UserRepository(self.db)
         usage = EntitlementUsage(
-            students=meter.active_students if meter else await users.count_active(inst, SEAT_TYPES["student"]),
+            students=meter.active_students if meter else await self.seats_in_use(inst, "student"),
             staff=meter.active_staff if meter else await users.count_active(inst, SEAT_TYPES["staff"]),
             storage_bytes=meter.storage_bytes if meter else 0,
             sms_sent=meter.sms_sent if meter else 0,
@@ -128,7 +136,7 @@ class EntitlementService:
     async def meter(self, institution_id: uuid.UUID, period_month: date) -> dict[str, Any]:
         users = UserRepository(self.db)
         values = {
-            "active_students": await users.count_active(institution_id, SEAT_TYPES["student"]),
+            "active_students": await self.seats_in_use(institution_id, "student"),
             "active_staff": await users.count_active(institution_id, SEAT_TYPES["staff"]),
         }
         await self.repo.upsert_meter(institution_id, period_month, **values)
