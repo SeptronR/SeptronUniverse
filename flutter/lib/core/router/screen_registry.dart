@@ -7,6 +7,7 @@ import '../../features/auth/profile_screens.dart';
 import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/settings/settings_screen.dart';
+import '../../features/admissions/admissions_screens.dart';
 import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
@@ -190,6 +191,28 @@ class ScreenRegistry {
       feature: 'students.core',
       permission: 'students:view|students:view_all',
       builder: (_, params) => StudentDetailScreen(id: params['id'] ?? ''),
+    ),
+    // Phase 08 — admissions office (applicant flows stay on the web portal /apply/:cycle)
+    AppRoutes.applicantsSearch: ScreenEntry(
+      route: AppRoutes.applicantsSearch,
+      titleKey: 'applicants',
+      feature: 'admissions.cycles',
+      permission: 'admissions:view_all',
+      builder: (_, __) => const ApplicantsSearchScreen(),
+    ),
+    AppRoutes.applicantDetail: ScreenEntry(
+      route: AppRoutes.applicantDetail,
+      titleKey: 'applicant',
+      feature: 'admissions.cycles',
+      permission: 'admissions:view_all',
+      builder: (_, params) => ApplicantDetailScreen(id: params['id'] ?? ''),
+    ),
+    AppRoutes.enquiries: ScreenEntry(
+      route: AppRoutes.enquiries,
+      titleKey: 'enquiries',
+      feature: 'admissions.enquiry_crm',
+      permission: 'admissions:create|admissions:manage',
+      builder: (_, __) => const EnquiriesScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

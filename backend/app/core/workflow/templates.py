@@ -182,6 +182,17 @@ STUDENT_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("hod", "registrar", sla=120, escalate="registrar"),
     },
 )
-WORKFLOW_TEMPLATES = WORKFLOW_TEMPLATES + HR_WORKFLOW_TEMPLATES + STUDENT_WORKFLOW_TEMPLATES
+# Phase 08: an applicant's withdrawal refund (admissions office → accounts; Phase 12 pays it out)
+ADMISSION_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "admissions.refund",
+        "module": "admissions",
+        "name": "Admission withdrawal refund",
+        "steps": _chain("admissions_officer", "accountant", sla=72, escalate="registrar"),
+    },
+)
+WORKFLOW_TEMPLATES = (
+    WORKFLOW_TEMPLATES + HR_WORKFLOW_TEMPLATES + STUDENT_WORKFLOW_TEMPLATES + ADMISSION_WORKFLOW_TEMPLATES
+)
 
-assert len(WORKFLOW_TEMPLATES) == 25, "Prompts/04 ships 18 workflow templates, Prompts/06 adds 5, Prompts/07 adds 2"
+assert len(WORKFLOW_TEMPLATES) == 26, "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1"

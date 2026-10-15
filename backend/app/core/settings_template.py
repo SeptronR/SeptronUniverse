@@ -131,6 +131,25 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
         ["phone", "email", "current_address", "photo", "emergency_contact"],
         label="Fields a student may edit on the own profile",
     ),
+    # admissions (Phase 08) — a cycle's form_config overrides max_preferences / strict_eligibility / refund_policy /
+    # admission_fee_paise; applicant accounts expire applicant_validity_days after the cycle closes (and on archive)
+    SettingDef("admissions", "max_preferences", "int", 5, label="Programme preferences per application", min=1, max=20),
+    SettingDef("admissions", "strict_eligibility", "bool", False, label="Refuse submission for ineligible preferences"),
+    SettingDef("admissions", "public_merit_lists", "bool", True, label="Publish merit lists publicly (masked)"),
+    SettingDef(
+        "admissions", "admission_fee_paise", "int", 2500000, label="Admission fee on seat acceptance (paise)", min=0
+    ),
+    SettingDef(
+        "admissions",
+        "refund_policy",
+        "json",
+        {"processing_fee_paise": 50000, "after_acceptance_pct": 50},
+        label="Withdrawal refund {processing_fee_paise, after_acceptance_pct}",
+    ),
+    SettingDef(
+        "admissions", "applicant_validity_days", "int", 365, label="Applicant account validity after close", min=30
+    ),
+    SettingDef("admissions", "lateral_entry_term", "int", 3, label="Entry term of lateral admits", min=2, max=10),
 )
 
 CATEGORIES: tuple[str, ...] = tuple(dict.fromkeys(d.category for d in SETTINGS_TEMPLATE))

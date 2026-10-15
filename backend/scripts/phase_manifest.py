@@ -165,6 +165,21 @@ PHASES: dict[str, list[str]] = {
         "student_transfers",
         "credit_transfers",
     ],
+    # Phase 08 — admissions (section 10; no new tables)
+    "08": [
+        "admission_cycles",
+        "admission_cycle_programs",
+        "seat_matrix",
+        "applicants",
+        "applicant_preferences",
+        "applicant_document_verifications",
+        "merit_lists",
+        "merit_list_entries",
+        "counselling_rounds",
+        "seat_allotments",
+        "admission_offers",
+        "enquiries",
+    ],
 }
 
 VIEWS: set[str] = set()

@@ -28,7 +28,14 @@ BEAT_SCHEDULE: dict[str, dict[str, Any]] = {
 
 def register_beat(name: str, task: str, schedule: Any, queue: str = "scheduled", **kwargs: Any) -> None:
     BEAT_SCHEDULE[name] = {"task": task, "schedule": schedule, "options": {"queue": queue}, **kwargs}
-    celery.conf.beat_schedule = BEAT_SCHEDULE
+    # ---- Phase 08 admissions (app/tasks/admissions.py) -----------------------------------------------------------------------
+
+
+register_beat("admissions.lapse_allotments", "beat.admissions.lapse_allotments", crontab(minute=7))
+register_beat("admissions.close_cycles", "beat.admissions.close_cycles", crontab(hour=0, minute=20))
+register_beat("enquiries.follow_up_reminders", "beat.enquiries.follow_up_reminders", crontab(hour=9, minute=0))
+
+celery.conf.beat_schedule = BEAT_SCHEDULE
 
 
 # ---- Phase 01 platform jobs ------------------------------------------------------------------------------------------
@@ -69,5 +76,10 @@ register_beat("payroll.reminder", "beat.payroll.reminder", crontab(hour=6, minut
 # ---- Phase 07 students (app/tasks/students.py) -------------------------------------------------------------------------
 register_beat("students.document_expiry", "beat.students.document_expiry", crontab(day_of_week="1", hour=7, minute=10))
 register_beat("students.undertaking_reminders", "beat.students.undertaking_reminders", crontab(hour=7, minute=20))
+
+# ---- Phase 08 admissions (app/tasks/admissions.py) -----------------------------------------------------------------------
+register_beat("admissions.lapse_allotments", "beat.admissions.lapse_allotments", crontab(minute=7))
+register_beat("admissions.close_cycles", "beat.admissions.close_cycles", crontab(hour=0, minute=20))
+register_beat("enquiries.follow_up_reminders", "beat.enquiries.follow_up_reminders", crontab(hour=9, minute=0))
 
 celery.conf.beat_schedule = BEAT_SCHEDULE

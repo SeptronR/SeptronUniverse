@@ -30,6 +30,10 @@ class AppRoutes {
   static const studentCreditTransfers = '/app/student/credit-transfers';
   static const studentsSearch = '/app/students';
   static const studentDetail = '/app/students/detail';
+  // Phase 08 — admissions office: applicants search + detail (document verify), enquiries
+  static const applicantsSearch = '/app/admissions/applicants';
+  static const applicantDetail = '/app/admissions/applicants/detail';
+  static const enquiries = '/app/admissions/enquiries';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

@@ -468,6 +468,7 @@ ACADEMIC_READ: set[str] = (
     | P("courses", "view")
     | P("batches", "view")
 )
+ADMISSIONS_STAFF_READ: set[str] = P("admissions", "view")  # Phase 08 — see HOD_ADMISSIONS below
 # staff self-service — always present where it makes sense (docs/Authorization_and_Visibility.md §4)
 STAFF_SELF: set[str] = (
     COMMON
@@ -490,6 +491,8 @@ STAFF_SELF: set[str] = (
     | P("settings", "view")
     # Phase 05: programmes, regulations, curricula, courses and batches are institution-wide readable by all staff
     | ACADEMIC_READ
+    # Phase 08: admission cycles, seat matrix and merit lists are readable by all staff
+    | ADMISSIONS_STAFF_READ
 )
 
 FACULTY: set[str] = (
@@ -517,12 +520,18 @@ FACULTY: set[str] = (
 # transfers of its department (step 1 of ``students.credit_transfer``) and lists them
 STUDENTS_ADMIN_PII: set[str] = P("students", "view_pii")
 HOD_STUDENTS: set[str] = P("credit_transfers", "verify", "view_all")
+# Phase 08 (Prompts/08 "Visibility rules"): cycles / seat matrix / merit lists are readable by all staff; the HOD reads
+# the applicants with a preference for its department's programmes; admissions office, registrar and institution
+# admin read applicant PII
+HOD_ADMISSIONS: set[str] = P("admissions", "view_all")
+ADMISSIONS_PII: set[str] = P("admissions", "view_pii")
 
 _INSTITUTION_ADMIN: set[str] = (
     ALL("manage", exclude=("features", "exams"))
     | P("features", "view", "institution_toggle")
     | MODULE_ALL("exams", exclude=("decode",))
     | STUDENTS_ADMIN_PII
+    | ADMISSIONS_PII
     | COMMON
     | STAFF_SELF
 )
@@ -602,6 +611,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "registrar": STAFF_SELF
     | P("students", "manage", "view_pii")
     | P("admissions", "manage")
+    | ADMISSIONS_PII
     | P("credit_transfers", "approve", "view_all", "verify")
     | P("certificates", "manage", "issue")
     | P("templates", "render", "view")
@@ -697,7 +707,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("research", "view_all")
     | P("departments", "view")
     # Phase 05: HOD @department drafts the courses, structures and batches of its own department
-    | HOD_ACADEMICS | HOD_STUDENTS,
+    | HOD_ACADEMICS
+    | HOD_STUDENTS
+    | HOD_ADMISSIONS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view"),
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -742,6 +754,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("programs", "view_all"),
     "admissions_officer": STAFF_SELF
     | P("admissions", "manage")
+    | ADMISSIONS_PII
     | P("students", "view_all", "create")
     | P("fees", "view_all")
     | P("programs", "view_all")
@@ -915,6 +928,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0005": frozenset(ACADEMIC_READ | REGISTRAR_ACADEMICS | HOD_ACADEMICS | DEAN_ACADEMICS),
     "0006": frozenset(P("leaves", "encash") | DEAN_HR | AUDITOR_HR),
     "0007": frozenset(STUDENTS_ADMIN_PII | HOD_STUDENTS),
+    "0008": frozenset(ADMISSIONS_STAFF_READ | HOD_ADMISSIONS | ADMISSIONS_PII),
 }
 
 

@@ -499,7 +499,31 @@ STUDENT_EVENTS: tuple[EventDef, ...] = (
         ("in_app", "email"),
     ),
 )
-EVENTS = EVENTS + STUDENT_EVENTS
+# Phase 08 — admissions: every applicant transition uses ``admissions.status_changed`` (Phase 04); the CRM adds the
+# counsellor assignment and the daily follow-up reminder.
+ADMISSION_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "admissions.enquiry_assigned",
+        "admissions",
+        "Enquiry assigned",
+        "New enquiry: {{ name }}",
+        "The enquiry from {{ name }} was assigned to you.",
+        ("name", "enquiry_id"),
+        ("in_app", "push"),
+        link="/admin/admissions/enquiries?enquiry={{ enquiry_id }}",
+    ),
+    EventDef(
+        "admissions.enquiry_follow_up",
+        "admissions",
+        "Enquiry follow-up due",
+        "Follow up with {{ name }}",
+        "A follow-up with {{ name }} is due ({{ due }}).",
+        ("name", "enquiry_id", "due"),
+        ("in_app", "push"),
+        link="/admin/admissions/enquiries?enquiry={{ enquiry_id }}",
+    ),
+)
+EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 

@@ -29,6 +29,7 @@ from fastapi import APIRouter
 import app.features  # noqa: F401  (registers every feature key before routers cite them)
 from app.api.v1.endpoints import (
     academic_sessions,
+    admissions,
     announcements,
     appraisals,
     auth,
@@ -100,6 +101,8 @@ api_router.include_router(students.router, dependencies=[feature_required("stude
 api_router.include_router(enrollments.router, dependencies=[feature_required("students.core")])
 api_router.include_router(credit_transfers.router, dependencies=[feature_required("academics.credit_transfer_mooc")])
 api_router.include_router(verify.router)  # public ID-card verification (token-signed)
+api_router.include_router(admissions.router, dependencies=[feature_required("admissions.cycles")])
+api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])
