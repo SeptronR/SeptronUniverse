@@ -91,7 +91,17 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   { title: 'EXAMINATIONS', items: [] },
-  { title: 'ADMISSIONS', items: [] },
+  {
+    title: 'ADMISSIONS',
+    items: [
+      // Phase 08 — cycles, applicants, verification, merit & counselling (cycle workspace tabs), enquiries
+      { label: 'Cycles', to: '/admin/admissions/cycles', icon: CalendarRange, module: 'admissions', feature: 'admissions.cycles' },
+      { label: 'Applicants', to: '/admin/admissions/applicants', icon: UserRound, module: 'admissions', action: 'view_all', feature: 'admissions.cycles' },
+      { label: 'Verification', to: '/admin/admissions/verification', icon: ClipboardCheck, module: 'admissions', action: 'verify', feature: 'admissions.document_verification' },
+      { label: 'Merit & Counselling', to: '/admin/admissions/cycles?focus=counselling', icon: ScrollText, module: 'admissions', action: 'merit', altActions: ['allot'], feature: 'admissions.merit_lists' },
+      { label: 'Enquiries', to: '/admin/admissions/enquiries', icon: MessagesSquare, module: 'admissions', feature: 'admissions.enquiry_crm' },
+    ],
+  },
   {
     title: 'STUDENTS',
     items: [

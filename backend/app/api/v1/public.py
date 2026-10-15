@@ -37,6 +37,13 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/public/careers/{posting_id}/apply",
     # Phase 07 — public verification of the ID-card QR (HMAC-signed token; Phase 26 unifies document verification)
     "GET /api/v1/verify/{token}",
+    # Phase 08 — public admissions (tenant from ?institution=<slug> / host; each route checks its admissions feature):
+    # cycle listing / details, application start with OTP (captcha + rate limit), masked merit list, website enquiry
+    "GET /api/v1/public/admissions/cycles",
+    "GET /api/v1/public/admissions/cycles/{slug}",
+    "POST /api/v1/public/admissions/{slug}/start",
+    "GET /api/v1/public/admissions/{slug}/merit-lists/{id}",
+    "POST /api/v1/public/enquiries",
 }
 
 

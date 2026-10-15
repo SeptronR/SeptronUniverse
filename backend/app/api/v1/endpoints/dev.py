@@ -22,6 +22,9 @@ Phase 07 adds ``POST /_dev/gates/{gate}-check`` (steps 4 / 6 — runs the regist
 Phases 09/14/20 will: ``hold_service.assert_clear`` then the undertakings gate; ``student_id`` defaults to the caller's
 own record) and ``POST /_dev/students/{id}/term-results`` (step 9 — writes SGPA / CGPA history on term records and
 runs ``recompute_standing`` until Phase 15 publishes results).
+
+Phase 08 adds ``POST /_dev/fees/pay/{ref}`` (steps 3 / 8 — the payment event of an application / admission fee until
+Phase 12 invoices exist) and ``POST /_dev/admissions/lapse-allotments`` (step 8 — runs the Beat body in-process).
 """
 
 import asyncio
@@ -250,3 +253,40 @@ async def dev_term_results(
 
     out = await EnrollmentService(db, principal, request).set_term_results(id, body.terms, body.credits_earned)
     return ok(out.model_dump(mode="json"), message="Standing recomputed")
+
+
+# ---- Phase 08 admissions fixtures -------------------------------------------------------------------------------------
+@router.post(
+    "/fees/pay/{ref}",
+    summary="Simulate the payment event of an application / admission fee (dev fixture until Phase 12 invoices)",
+    dependencies=[feature_required("admissions.cycles")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_fee_paid(
+    ref: str,
+    request: Request,
+    principal: Principal = Depends(permission_required("admissions", "manage")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.admissions.application_service import ApplicationService
+
+    svc = ApplicationService(db, principal, request)
+    applicant, purpose = await svc.find_payment(ref)
+    await svc.mark_paid(applicant, purpose)
+    return ok({"ref": ref, "purpose": purpose, "applicant_status": applicant.status}, message="Payment recorded")
+
+
+@router.post(
+    "/admissions/lapse-allotments",
+    summary="Run the Beat body admissions.lapse_allotments in-process",
+    dependencies=[feature_required("admissions.counselling_allotment")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_lapse_allotments(
+    request: Request,
+    principal: Principal = Depends(permission_required("admissions", "allot")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.admissions.counselling_service import CounsellingService
+
+    return ok({"lapsed": await CounsellingService(db, principal, request).lapse_due()}, message="Lapse run")

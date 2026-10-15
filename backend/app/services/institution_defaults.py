@@ -407,3 +407,56 @@ def seed_student_templates(conn: Connection) -> int:
         )
         created += 1
     return created
+
+
+ADMISSION_FORM_TEMPLATE: dict[str, Any] = {
+    "steps": ["account", "personal", "qualifications", "preferences", "documents", "review", "pay"],
+    "fields": {
+        "personal": [
+            "first_name",
+            "last_name",
+            "dob",
+            "gender",
+            "category",
+            "is_pwd",
+            "quota_claimed",
+            "domicile_state",
+        ],
+        "contact": ["phone", "email", "address", "guardian_name", "guardian_relation", "guardian_phone"],
+        "qualifications": ["qualifying_exams", "entrance"],
+    },
+    "max_preferences": 5,
+    "strict_eligibility": False,
+    "refund_policy": {"processing_fee_paise": 50000, "after_acceptance_pct": 50},
+    "required_documents": {
+        "ug": [
+            {"doc_type": "photo", "label": "Photograph", "required": True},
+            {"doc_type": "marksheet_12", "label": "Class XII marksheet", "required": True},
+            {"doc_type": "marksheet_10", "label": "Class X marksheet", "required": True},
+            {"doc_type": "category_certificate", "label": "Category certificate", "required": False},
+            {
+                "doc_type": "diploma_certificate",
+                "label": "Diploma certificate",
+                "required": True,
+                "entry_types": ["lateral"],
+            },
+        ],
+        "pg": [
+            {"doc_type": "photo", "label": "Photograph", "required": True},
+            {"doc_type": "degree_certificate", "label": "Degree certificate", "required": True},
+            {"doc_type": "marksheet_ug", "label": "UG marksheets", "required": True},
+            {"doc_type": "entrance_scorecard", "label": "Entrance score card", "required": False},
+        ],
+        "phd": [
+            {"doc_type": "photo", "label": "Photograph", "required": True},
+            {"doc_type": "degree_certificate", "label": "PG degree certificate", "required": True},
+            {"doc_type": "research_proposal", "label": "Research proposal", "required": True},
+        ],
+    },
+}
+
+
+def seed_admission_form_template(conn: Connection) -> None:
+    """``platform_settings['admission_form_template']`` — the default ``form_config`` / required documents by level
+    a new admission cycle starts from (Prompts/08 §08.2)."""
+    _put_platform_setting(conn, "admission_form_template", ADMISSION_FORM_TEMPLATE)

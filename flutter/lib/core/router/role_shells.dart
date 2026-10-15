@@ -176,6 +176,21 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.lightBlue,
       permission: 'students:view|students:view_all',
       feature: 'students.core'),
+  // Phase 08 — admissions office: applicants (document verify) and enquiries
+  const MoreMenuModule(
+      titleKey: 'applicants',
+      icon: Icons.how_to_reg_outlined,
+      route: AppRoutes.applicantsSearch,
+      color: Colors.deepPurple,
+      permission: 'admissions:view_all',
+      feature: 'admissions.cycles'),
+  const MoreMenuModule(
+      titleKey: 'enquiries',
+      icon: Icons.support_agent,
+      route: AppRoutes.enquiries,
+      color: Colors.orange,
+      permission: 'admissions:create|admissions:manage',
+      feature: 'admissions.enquiry_crm'),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',

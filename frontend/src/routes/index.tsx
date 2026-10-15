@@ -100,6 +100,21 @@ const UndertakingGate = lazy(() =>
 );
 const ParentHomePage = lazy(() => import('@/features/students/pages/ParentPortal'));
 const VerifyPage = lazy(() => import('@/features/students/pages/VerifyPage'));
+// Phase 08 — admissions
+const CyclesPage = lazy(() => import('@/features/admissions/pages/CyclesPage'));
+const CycleWorkspacePage = lazy(() => import('@/features/admissions/pages/CycleWorkspacePage'));
+const ApplicantsPage = lazy(() => import('@/features/admissions/pages/ApplicantsPage'));
+const AdmissionsVerificationPage = lazy(() =>
+  import('@/features/admissions/pages/ApplicantsPage').then((m) => ({ default: m.VerificationPage })),
+);
+const ApplicantDetailPage = lazy(() => import('@/features/admissions/pages/ApplicantDetailPage'));
+const EnquiriesPage = lazy(() => import('@/features/admissions/pages/EnquiriesPage'));
+const PublicAdmissionsPage = lazy(() => import('@/features/admissions/pages/PublicAdmissionsPage'));
+const PublicMeritPage = lazy(() =>
+  import('@/features/admissions/pages/PublicAdmissionsPage').then((m) => ({ default: m.PublicMeritPage })),
+);
+const ApplyPage = lazy(() => import('@/features/admissions/pages/ApplyPage'));
+const ApplicantStatusPage = lazy(() => import('@/features/admissions/pages/ApplicantStatusPage'));
 // Phase 01 — platform services
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
@@ -126,6 +141,11 @@ export const router = createBrowserRouter([
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
   { path: '/verify/:token', element: page(<VerifyPage />) },
+  // Phase 08 — public admissions: cycles, masked merit lists and the application wizard (account step needs no
+  // sign-in; the API checks the admissions features for the tenant)
+  { path: '/admissions', element: page(<PublicAdmissionsPage />) },
+  { path: '/admissions/:slug/merit/:id', element: page(<PublicMeritPage />) },
+  { path: '/apply/:cycle', element: page(<ApplyPage />) },
   {
     element: <PrivateRoute />,
     children: [
@@ -279,6 +299,13 @@ export const router = createBrowserRouter([
               ['/admin/students/transfers', 'students.transfers_migration', 'students', 'transfer', [['students', 'view_all']], <TransfersPage key="t" />],
               ['/admin/students/credit-transfers', 'academics.credit_transfer_mooc', 'credit_transfers', 'verify', [['credit_transfers', 'approve'], ['credit_transfers', 'view_all']], <CreditTransfersPage key="c" />],
               ['/admin/students/:id', 'students.core', 'students', 'view', [['students', 'view_all']], <StudentDetailPage key="d" />],
+              // Phase 08 — admissions (cycles readable by all staff; applicants need view_all — HOD / college slices)
+              ['/admin/admissions/cycles', 'admissions.cycles', 'admissions', 'view', [], <CyclesPage key="ac" />],
+              ['/admin/admissions/cycles/:id', 'admissions.cycles', 'admissions', 'view', [], <CycleWorkspacePage key="aw" />],
+              ['/admin/admissions/applicants', 'admissions.cycles', 'admissions', 'view_all', [], <ApplicantsPage key="aa" />],
+              ['/admin/admissions/applicants/:id', 'admissions.cycles', 'admissions', 'view_all', [], <ApplicantDetailPage key="ad" />],
+              ['/admin/admissions/verification', 'admissions.document_verification', 'admissions', 'verify', [], <AdmissionsVerificationPage key="av" />],
+              ['/admin/admissions/enquiries', 'admissions.enquiry_crm', 'admissions', 'view', [], <EnquiriesPage key="ae" />],
             ] as [string, string, string, string, [string, string][], React.ReactNode][]
           ).map(([path, feature, module, action, anyOf, node]) => ({
             path,
@@ -445,7 +472,11 @@ export const router = createBrowserRouter([
       {
         path: '/apply',
         element: <PortalRoute roles={['applicant']} title="Admissions" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        // Phase 08 — applicant portal: status, timeline, allotment decisions, payments (mobile deep link /apply/:cycle)
+        children: [
+          { index: true, element: page(<ApplicantStatusPage />) },
+          { path: ':cycle/status', element: page(<ApplicantStatusPage />) },
+        ],
       },
     ],
   },

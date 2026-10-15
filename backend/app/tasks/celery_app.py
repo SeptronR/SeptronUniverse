@@ -22,6 +22,7 @@ celery = Celery(
         "app.tasks.academics",
         "app.tasks.hr",
         "app.tasks.students",
+        "app.tasks.admissions",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",
