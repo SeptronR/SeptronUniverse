@@ -99,6 +99,14 @@ try {
   foreach ($flag in $flags) { SetFlag $flag $false }
   $asst = (Sql "SELECT id FROM designations WHERE institution_id = '$instId' AND code = 'ASST'")[0].id
   SqlWrite ("DELETE FROM staff_attendance WHERE staff_id IN ('$s1','$s2') AND (attendance_date >= '2026-10-01' OR status = 'on_leave'); " +
+    # close the approval instances of the leaves deleted below first, or they linger in the hod / hr inboxes as orphans
+    "UPDATE workflow_steps SET status = 'skipped' WHERE status IN ('pending','escalated') AND instance_id IN (SELECT id FROM workflow_instances " +
+    "WHERE (entity_type = 'staff_leave' AND entity_id IN (SELECT id FROM staff_leaves WHERE staff_id IN ('$s1','$s2'))) " +
+    "OR (entity_type = 'leave_encashment' AND status IN ('pending','escalated') AND started_by IN (SELECT user_id FROM staff WHERE id IN ('$s1','$s2')))); " +
+    "UPDATE workflow_instances SET status = 'cancelled', closed_at = now() WHERE entity_type = 'leave_encashment' AND status IN ('pending','escalated') " +
+    "AND started_by IN (SELECT user_id FROM staff WHERE id IN ('$s1','$s2')); " +
+    "UPDATE workflow_instances SET status = 'cancelled', closed_at = now() WHERE entity_type = 'staff_leave' AND status IN ('pending','escalated') " +
+    "AND entity_id IN (SELECT id FROM staff_leaves WHERE staff_id IN ('$s1','$s2')); " +
     "DELETE FROM staff_leaves WHERE staff_id IN ('$s1','$s2'); DELETE FROM staff_leave_balances WHERE staff_id IN ('$s1','$s2'); " +
     "DELETE FROM staff_payrolls WHERE year = 2026 AND month IN (10, 11) AND institution_id = '$instId'; " +
     "DELETE FROM staff_salary_structures WHERE staff_id = '$s1' AND effective_from >= '2026-10-01'; " +
@@ -195,6 +203,8 @@ try {
   SetFlag 'hr.leave_encashment' $true
   $enc = WaitFor "encashment on" { $x = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/leaves/encash" -Headers @{ Authorization = "Bearer $f1" } -ContentType 'application/json' -Body (@{ leave_type_id = $el; days = 1 } | ConvertTo-Json) -SkipHttpErrorCheck; if ($x.StatusCode -eq 201) { ($x.Content | ConvertFrom-Json).data } } 90
   Assert ($enc.workflow_instance_id -and $enc.amount_paise -gt 0) "encashment → workflow hr.leave_encashment ($($enc.amount_paise) paise)"
+  # the requester withdraws it again so verification runs don't pile escalated encashments into the hr inbox
+  Call $f1 POST "/workflow/instances/$($enc.workflow_instance_id)/cancel" @{ reason = 'verify 06 cleanup' } | Out-Null
 
   Write-Host "== 8. staff attendance"
   SetFlag 'attendance.geo_app' $true
@@ -341,10 +351,11 @@ try {
   foreach ($p in '/staff', '/leaves?scope=all', '/payroll', '/staff-attendance?scope=all') { Call $auditor GET $p | Out-Null }
   Call $auditor POST "/leaves" @{ leave_type_id = $cl; from_date = $from; to_date = $from; reason = 'audit' } 403 | Out-Null
 
-  Call $admin DELETE "/holidays/$($hol.id)" | Out-Null
   Summary "06_hr"
 }
 finally {
+  # the per-run holiday is removed even when a step fails (it would otherwise shift later leave tests)
+  if ($hol) { try { Call $admin DELETE "/holidays/$($hol.id)" | Out-Null } catch { Write-Host "holiday not removed: $_" } }
   if ($sa) { foreach ($flag in $flags) { try { SetFlag $flag $false } catch { Write-Host "flag $flag not restored: $_" } } }
   Pop-Location
 }

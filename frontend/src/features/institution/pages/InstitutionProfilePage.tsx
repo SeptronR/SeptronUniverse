@@ -112,11 +112,11 @@ export default function InstitutionProfilePage() {
               <div className="sm:col-span-2 grid gap-3 sm:grid-cols-2">
                 <label className="space-y-1.5 text-sm font-medium">
                   Vision
-                  <Textarea rows={2} {...form.register('vision')} />
+                  <Textarea rows={2} aria-label="Vision" {...form.register('vision')} />
                 </label>
                 <label className="space-y-1.5 text-sm font-medium">
                   Mission
-                  <Textarea rows={2} {...form.register('mission')} />
+                  <Textarea rows={2} aria-label="Mission" {...form.register('mission')} />
                 </label>
               </div>
             </fieldset>

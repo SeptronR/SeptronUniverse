@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as Popover from '@radix-ui/react-popover';
 import { Bell } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,11 +14,17 @@ import { formatRelative } from '@/utils/formatters';
  * (polled every 60 s as the fallback), new items arrive live on `notifications:{user}`; clicking marks the item read
  * server-side and follows its deep link. Control frames on the channel (`{type: "approvals.changed"}`) are ignored here.
  */
+/** Bodies may be rich text (announcements are TipTap HTML): show them as plain text. */
+const plain = (html: string) => new DOMParser().parseFromString(html, 'text/html').body.textContent?.replace(/\s+/g, ' ').trim() ?? '';
+
 export function NotificationCenter() {
   const { unread, items, push, markRead, setItems, setUnread } = useNotificationStore();
   const navigate = useNavigate();
   const recent = useMyNotifications({ page_size: 15 });
+  const refetchRecent = recent.refetch;
   const count = useUnreadCount();
+  const [open, setOpen] = useState(false);
+  const lastUnread = useRef<number | null>(null);
 
   useEffect(() => {
     if (recent.data) {
@@ -36,8 +42,13 @@ export function NotificationCenter() {
     }
   }, [recent.data, setItems]);
   useEffect(() => {
-    if (count.data) setUnread(count.data.data.unread);
-  }, [count.data, setUnread]);
+    if (!count.data) return;
+    const n = count.data.data.unread;
+    setUnread(n);
+    // the poll found new items the socket did not deliver (socket down / reconnecting) — refresh the list too
+    if (lastUnread.current !== null && n > lastUnread.current) void refetchRecent();
+    lastUnread.current = n;
+  }, [count.data, setUnread, refetchRecent]);
   useEffect(
     () =>
       wsClient.subscribe('notifications', (data) => {
@@ -48,7 +59,13 @@ export function NotificationCenter() {
   );
 
   return (
-    <Popover.Root>
+    <Popover.Root
+      open={open}
+      onOpenChange={(o) => {
+        setOpen(o);
+        if (o) void refetchRecent();
+      }}
+    >
       <Popover.Trigger asChild>
         <Button variant="ghost" size="icon" aria-label={`Notifications${unread ? `, ${unread} unread` : ''}`} className="relative">
           <Bell className="h-5 w-5" />
@@ -89,6 +106,7 @@ export function NotificationCenter() {
                     onClick={() => {
                       if (!n.read_at) void commsApi.markRead(n.id).catch(() => undefined);
                       markRead(n.id);
+                      setOpen(false);
                       if (n.route) navigate(n.route);
                     }}
                   >
@@ -96,13 +114,13 @@ export function NotificationCenter() {
                       <span className={n.read_at ? 'text-muted-foreground' : 'font-medium'}>{n.title}</span>
                       <span className="shrink-0 text-xs text-muted-foreground">{formatRelative(n.created_at)}</span>
                     </div>
-                    {n.body && <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">{n.body}</p>}
+                    {n.body && <p className="mt-0.5 line-clamp-2 text-xs text-muted-foreground">{plain(n.body)}</p>}
                   </button>
                 </li>
               ))}
             </ul>
           )}
-          <Link to="/notifications" className="mt-2 block text-center text-xs text-primary hover:underline">
+          <Link to="/notifications" onClick={() => setOpen(false)} className="mt-2 block text-center text-xs text-primary hover:underline">
             View all
           </Link>
         </Popover.Content>

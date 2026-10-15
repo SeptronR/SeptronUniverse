@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Send } from 'lucide-react';
-import { getApiError } from '@/api/axios';
+import { getApiError, getApiErrorDetails } from '@/api/axios';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { toast } from '@/components/ui/Toaster';
 import { useFeature } from '@/hooks/useFeature';
 import { usePermission } from '@/hooks/usePermission';
+import { BRAND_RAMPS, type ThemeName } from '@/styles/themes';
 import { titleCase } from '@/utils/formatters';
 import { institutionApi } from '../api';
 import { useInstMutation, useSettings } from '../hooks';
@@ -19,29 +20,31 @@ import type { SettingItem } from '../types';
 type Draft = Record<string, unknown>;
 const k = (s: SettingItem) => `${s.category}.${s.key}`;
 
-function SettingInput({ item, value, onChange, disabled }: { item: SettingItem; value: unknown; onChange: (v: unknown) => void; disabled: boolean }) {
+function SettingInput({ item, value, onChange, disabled, invalid }: { item: SettingItem; value: unknown; onChange: (v: unknown) => void; disabled: boolean; invalid?: boolean }) {
+  const a11y = { id: `setting-${k(item)}`, 'aria-invalid': invalid || undefined, 'aria-describedby': invalid ? `setting-${k(item)}-error` : undefined };
   switch (item.value_type) {
     case 'bool':
-      return <Switch checked={value === true} disabled={disabled} onCheckedChange={onChange} aria-label={item.key} />;
+      return <Switch {...a11y} checked={value === true} disabled={disabled} onCheckedChange={onChange} />;
     case 'int':
-      return <Input type="number" className="w-40" disabled={disabled} value={value == null ? '' : String(value)} onChange={(e) => onChange(e.target.value === '' ? null : Number(e.target.value))} />;
+      return <Input {...a11y} type="number" className="w-40" disabled={disabled} value={value == null ? '' : String(value)} onChange={(e) => onChange(e.target.value === '' ? null : Number(e.target.value))} />;
     case 'enum':
-      return <Select className="w-56" disabled={disabled} value={String(value ?? '')} options={item.choices.map((c) => ({ value: c, label: c }))} onChange={(e) => onChange(e.target.value)} />;
+      return <Select {...a11y} className="w-56" disabled={disabled} value={String(value ?? '')} options={item.choices.map((c) => ({ value: c, label: c }))} onChange={(e) => onChange(e.target.value)} />;
     case 'list':
-      return <Input disabled={disabled} placeholder="comma separated" value={Array.isArray(value) ? value.join(', ') : ''} onChange={(e) => onChange(e.target.value ? e.target.value.split(',').map((s) => s.trim()).filter(Boolean) : null)} />;
+      return <Input {...a11y} disabled={disabled} placeholder="comma separated" value={Array.isArray(value) ? value.join(', ') : ''} onChange={(e) => onChange(e.target.value ? e.target.value.split(',').map((s) => s.trim()).filter(Boolean) : null)} />;
     case 'json':
-      return <JsonInput value={value} onChange={onChange} disabled={disabled} />;
+      return <JsonInput {...a11y} value={value} onChange={onChange} disabled={disabled} />;
     default:
-      return <Input disabled={disabled} value={value == null ? '' : String(value)} onChange={(e) => onChange(e.target.value || null)} />;
+      return <Input {...a11y} disabled={disabled} value={value == null ? '' : String(value)} onChange={(e) => onChange(e.target.value || null)} />;
   }
 }
 
-function JsonInput({ value, onChange, disabled }: { value: unknown; onChange: (v: unknown) => void; disabled: boolean }) {
+function JsonInput({ value, onChange, disabled, ...rest }: { value: unknown; onChange: (v: unknown) => void; disabled: boolean; id?: string }) {
   const [text, setText] = useState(() => (value == null ? '' : JSON.stringify(value, null, 2)));
   const [error, setError] = useState<string | null>(null);
   return (
     <div>
       <Textarea
+        {...rest}
         rows={3}
         className="font-mono text-xs"
         disabled={disabled}
@@ -61,28 +64,31 @@ function JsonInput({ value, onChange, disabled }: { value: unknown; onChange: (v
   );
 }
 
-/** Theme / table-style live preview: applies the picked values to <html> without saving. */
+/** Theme / table-style live preview, scoped to this box (the app theme stays the viewer's own until saved):
+ * re-declares the brand ramp and the tokens derived from it, and sets data-table-style for the sample table. */
 function ThemePreview({ theme, tableStyle }: { theme: unknown; tableStyle: unknown }) {
-  useEffect(() => {
-    const root = document.documentElement;
-    const prev = { theme: root.dataset.theme, table: root.dataset.tableStyle };
-    if (theme) root.dataset.theme = String(theme);
-    if (tableStyle) root.dataset.tableStyle = String(tableStyle);
-    return () => {
-      if (prev.theme) root.dataset.theme = prev.theme;
-      if (prev.table) root.dataset.tableStyle = prev.table;
-    };
-  }, [theme, tableStyle]);
+  const ramp = BRAND_RAMPS[(String(theme) as ThemeName)]?.ramp ?? BRAND_RAMPS.indigo.ramp;
+  const dark = document.documentElement.classList.contains('dark');
+  const vars = {
+    ...Object.fromEntries(Object.entries(ramp).map(([step, rgb]) => [`--brand-${step}`, rgb])),
+    '--primary': dark ? 'var(--brand-500)' : 'var(--brand-600)',
+    '--accent': dark ? '30 41 59' : 'var(--brand-50)',
+    '--accent-foreground': dark ? 'var(--brand-200)' : 'var(--brand-900)',
+    '--ring': dark ? 'var(--brand-400)' : 'var(--brand-500)',
+  } as CSSProperties;
   return (
-    <div className="rounded-md border p-3">
+    <div className="rounded-md border p-3" style={vars} data-table-style={String(tableStyle ?? 'default')} data-testid="theme-preview">
       <p className="mb-2 text-xs text-muted-foreground">Live preview</p>
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-3">
         <Button size="sm">Primary</Button>
         <Badge>Badge</Badge>
-        <table className="text-xs">
+        <span className="rounded bg-accent px-2 py-0.5 text-xs text-accent-foreground">Accent</span>
+        <table className="data-table w-auto text-xs">
+          <thead><tr><th>Name</th><th>Value</th></tr></thead>
           <tbody>
-            <tr><td className="border px-2">Row 1</td><td className="border px-2">A</td></tr>
-            <tr><td className="border px-2">Row 2</td><td className="border px-2">B</td></tr>
+            <tr><td>Row 1</td><td>A</td></tr>
+            <tr><td>Row 2</td><td>B</td></tr>
+            <tr><td>Row 3</td><td>C</td></tr>
           </tbody>
         </table>
       </div>
@@ -99,6 +105,7 @@ export default function SettingsPage() {
   const test = useInstMutation(({ channel, to }: { channel: string; to: string }) => institutionApi.testProvider(channel, to), []);
   const [draft, setDraft] = useState<Draft>({});
   const [to, setTo] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const manage = can('settings', 'manage');
 
   if (settings.isLoading) return <PageSkeleton />;
@@ -113,8 +120,12 @@ export default function SettingsPage() {
         return { category, key: rest.join('.'), value };
       }),
       {
-        onSuccess: () => { toast.success('Settings saved'); setDraft({}); },
-        onError: (e) => toast.error(getApiError(e)),
+        onSuccess: () => { toast.success('Settings saved'); setDraft({}); setFieldErrors({}); },
+        onError: (e) => {
+          const errs = (getApiErrorDetails(e).errors ?? []) as { field: string; reason: string }[];
+          setFieldErrors(Object.fromEntries(errs.map((x) => [x.field, x.reason])));
+          toast.error(errs.length ? `${getApiError(e)}: ${errs.map((x) => `${x.field} ${x.reason}`).join('; ')}` : getApiError(e));
+        },
       },
     );
 
@@ -129,7 +140,7 @@ export default function SettingsPage() {
         <TabsList className="flex-wrap h-auto">
           {cats.map((c) => (
             <TabsTrigger key={c.category} value={c.category}>
-              {titleCase(c.category)}
+              {titleCase(c.category)}{c.items.some((s) => fieldErrors[k(s)]) && <span className="ml-1 text-destructive" aria-label="has errors">•</span>}
             </TabsTrigger>
           ))}
         </TabsList>
@@ -142,24 +153,36 @@ export default function SettingsPage() {
                 return (
                   <div key={k(s)} className="grid gap-2 p-3 sm:grid-cols-[1fr_minmax(0,22rem)] sm:items-center">
                     <div>
-                      <p className="flex items-center gap-2 text-sm font-medium">
-                        {s.label ?? titleCase(s.key)}
+                      <label htmlFor={`setting-${k(s)}`} className="flex items-center gap-2 text-sm font-medium">
+                        {s.label || titleCase(s.key)}
                         {s.is_public && <Badge variant="info">public</Badge>}
                         {!s.is_default && <Badge variant="outline">customised</Badge>}
-                      </p>
+                      </label>
                       <p className="text-xs text-muted-foreground">
                         {k(s)} · {s.value_type}
                         {s.default != null ? ` · default ${JSON.stringify(s.default)}` : ''}
                       </p>
                     </div>
-                    <SettingInput item={s} value={valueOf(s)} disabled={locked} onChange={(v) => setDraft({ ...draft, [k(s)]: v })} />
+                    <div>
+                      <SettingInput
+                        item={s}
+                        value={valueOf(s)}
+                        disabled={locked}
+                        invalid={!!fieldErrors[k(s)]}
+                        onChange={(v) => {
+                          setDraft({ ...draft, [k(s)]: v });
+                          if (fieldErrors[k(s)]) setFieldErrors(({ [k(s)]: _, ...rest }) => rest);
+                        }}
+                      />
+                      {fieldErrors[k(s)] && <p id={`setting-${k(s)}-error`} role="alert" className="mt-1 text-xs text-destructive">{fieldErrors[k(s)]}</p>}
+                    </div>
                   </div>
                 );
               })}
             </div>
             {c.category === 'communication' && manage && (
               <div className="flex flex-wrap items-center gap-2 rounded-md border p-3">
-                <Input className="w-64" placeholder="+91… or email" value={to} onChange={(e) => setTo(e.target.value)} />
+                <Input className="w-64" aria-label="Test recipient (phone or email)" placeholder="+91… or email" value={to} onChange={(e) => setTo(e.target.value)} />
                 {['sms', 'email', 'whatsapp', 'push'].map((ch) => (
                   <Button
                     key={ch}

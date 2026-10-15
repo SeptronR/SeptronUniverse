@@ -54,20 +54,20 @@ export default function NotificationPreferencesPage() {
                     <Checkbox
                       disabled={it.mandatory}
                       checked={it.channels.includes(c)}
-                      aria-label={`${it.category} ${c}`}
+                      aria-label={`${titleCase(it.category)} ${c}`}
                       onCheckedChange={(on) => set(i, { channels: on ? [...it.channels, c] : it.channels.filter((x) => x !== c) })}
                     />
                   </td>
                 ))}
                 <td className="p-2">
                   <div className="flex items-center gap-1">
-                    <Input type="time" className="w-28" disabled={it.mandatory} value={it.quiet_hours?.from ?? ''} onChange={(e) => set(i, { quiet_hours: e.target.value ? { from: e.target.value, to: it.quiet_hours?.to ?? '08:00' } : null })} />
+                    <Input type="time" className="w-28" aria-label={`${titleCase(it.category)} quiet hours from`} disabled={it.mandatory} value={it.quiet_hours?.from ?? ''} onChange={(e) => set(i, { quiet_hours: e.target.value ? { from: e.target.value, to: it.quiet_hours?.to ?? '08:00' } : null })} />
                     –
-                    <Input type="time" className="w-28" disabled={it.mandatory || !it.quiet_hours} value={it.quiet_hours?.to ?? ''} onChange={(e) => it.quiet_hours && set(i, { quiet_hours: { from: it.quiet_hours.from, to: e.target.value } })} />
+                    <Input type="time" className="w-28" aria-label={`${titleCase(it.category)} quiet hours to`} disabled={it.mandatory || !it.quiet_hours} value={it.quiet_hours?.to ?? ''} onChange={(e) => it.quiet_hours && set(i, { quiet_hours: { from: it.quiet_hours.from, to: e.target.value } })} />
                   </div>
                 </td>
                 <td className="p-2">
-                  <Select className="w-28" disabled={it.mandatory} value={it.digest} options={['none', 'daily', 'weekly'].map((d) => ({ value: d, label: d }))} onChange={(e) => set(i, { digest: e.target.value as PreferenceItem['digest'] })} />
+                  <Select className="w-28" aria-label={`${titleCase(it.category)} digest`} disabled={it.mandatory} value={it.digest} options={['none', 'daily', 'weekly'].map((d) => ({ value: d, label: d }))} onChange={(e) => set(i, { digest: e.target.value as PreferenceItem['digest'] })} />
                 </td>
               </tr>
             ))}

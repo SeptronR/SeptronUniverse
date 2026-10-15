@@ -14,6 +14,9 @@ export const commsKeys = {
 };
 
 export const useTemplates = (p: Params = {}) => useQuery({ queryKey: commsKeys.templates(p), queryFn: () => commsApi.templates(p) });
+/** All versions of a template (institution rows; a platform default returns itself). Shares the 'comm-templates' root. */
+export const useTemplateVersions = (id: string | undefined) =>
+  useQuery({ queryKey: ['comm-templates', 'versions', id], queryFn: () => commsApi.templateVersions(id!), enabled: !!id });
 export const useLogs = (p: Params = {}) =>
   useQuery({ queryKey: commsKeys.logs(p), queryFn: () => commsApi.logs(p), placeholderData: keepPreviousData });
 export const useMyNotifications = (p: Params = {}) =>

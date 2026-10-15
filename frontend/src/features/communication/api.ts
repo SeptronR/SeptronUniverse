@@ -26,8 +26,9 @@ export const commsApi = {
   createTemplate: (body: Record<string, unknown>) => post<NotificationTemplate>('/communication/templates', body, once),
   updateTemplate: (id: string, body: Record<string, unknown>) => put<NotificationTemplate>(`/communication/templates/${id}`, body),
   templateVersions: (id: string) => get<NotificationTemplate[]>(`/communication/templates/${id}/versions`),
-  previewTemplate: (id: string, context: Record<string, unknown>) =>
-    post<TemplatePreview>(`/communication/templates/${id}/preview`, { context }, once),
+  /** Renders the stored version, or the unsaved ``draft`` (subject / body / variables) when one is passed. */
+  previewTemplate: (id: string, context: Record<string, unknown>, draft?: { subject_template: string | null; body_template: string; variables: string[] }) =>
+    post<TemplatePreview>(`/communication/templates/${id}/preview`, { context, ...draft }, once),
   activateTemplate: (id: string) => post<NotificationTemplate>(`/communication/templates/${id}/activate`, undefined, once),
   dlt: () => get<DltTemplate[]>('/communication/dlt-templates'),
   createDlt: (body: Record<string, unknown>) => post<DltTemplate>('/communication/dlt-templates', body, once),

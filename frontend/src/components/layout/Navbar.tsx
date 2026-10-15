@@ -47,10 +47,13 @@ export function Navbar({ onToggleSidebar }: NavbarProps) {
     staleTime: 5 * 60_000,
   });
   useEffect(() => {
-    const rows = sessions.data?.data;
-    if (!rows) return;
+    const all = sessions.data?.data;
+    if (!all) return;
+    // the selected college's years + the institution-wide ones (other colleges' years share names like "2026-27")
+    const scoped = all.filter((y) => y.college_id === null || y.college_id === collegeId);
+    const rows = scoped.length ? scoped : all;
     setYears(
-      rows.map((y) => ({ id: y.id, name: y.name, is_current: y.is_current })),
+      rows.map((y) => ({ id: y.id, name: y.college_code ? `${y.name} · ${y.college_code}` : y.name, is_current: y.is_current })),
       rows.flatMap((y) => y.terms.map((t) => ({ id: t.id, name: t.name, academic_year_id: y.id, is_current: t.is_current }))),
     );
     const state = useSessionStore.getState();

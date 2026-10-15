@@ -39346,11 +39346,48 @@
         "type": "object"
       },
       "TemplatePreviewRequest": {
+        "description": "``context`` renders the stored version; the optional draft fields render unsaved edits instead (editor preview).",
         "properties": {
+          "body_template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body Template"
+          },
           "context": {
             "additionalProperties": true,
             "title": "Context",
             "type": "object"
+          },
+          "subject_template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject Template"
+          },
+          "variables": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables"
           }
         },
         "title": "TemplatePreviewRequest",

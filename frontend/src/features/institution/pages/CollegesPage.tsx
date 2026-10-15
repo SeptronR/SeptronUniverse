@@ -162,7 +162,7 @@ export default function CollegesPage() {
           <FormField label="AISHE code" {...form.register('aishe_code')} />
           <FormField label="Exam centre code" {...form.register('exam_centre_code')} />
           <label className="flex items-center gap-2 text-sm">
-            <Checkbox checked={form.watch('is_exam_centre')} onCheckedChange={(c) => form.setValue('is_exam_centre', c === true)} />
+            <Checkbox aria-label="Exam centre" checked={form.watch('is_exam_centre')} onCheckedChange={(c) => form.setValue('is_exam_centre', c === true)} />
             Exam centre
           </label>
         </form>

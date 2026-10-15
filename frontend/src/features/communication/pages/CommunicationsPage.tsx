@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 import { BarChart3, Plus, Send } from 'lucide-react';
 import { getApiError } from '@/api/axios';
@@ -14,11 +15,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { toast } from '@/components/ui/Toaster';
 import { useFeature } from '@/hooks/useFeature';
 import { usePermission } from '@/hooks/usePermission';
-import { formatRelative } from '@/utils/formatters';
+import { formatDateTime, formatRelative } from '@/utils/formatters';
 import { commsApi } from '../api';
 import { AudienceBuilder } from '../components/AudienceBuilder';
 import { RichTextEditor } from '../components/RichTextEditor';
-import { useAnnouncements, useCommsMutation, useLogs, useTemplates } from '../hooks';
+import { useAnnouncements, useCommsMutation, useLogs, useTemplateVersions, useTemplates } from '../hooks';
 import { CHANNELS, EMPTY_AUDIENCE, type AudienceRules, type Channel, type MessageLog, type NotificationTemplate } from '../types';
 
 const onErr = (e: unknown) => toast.error(getApiError(e));
@@ -28,7 +29,7 @@ function ChannelToggles({ value, onChange }: { value: Channel[]; onChange: (v: C
     <div className="flex flex-wrap gap-3 text-sm">
       {CHANNELS.map((c) => (
         <label key={c} className="flex items-center gap-1">
-          <Checkbox checked={value.includes(c)} onCheckedChange={(on) => onChange(on ? [...value, c] : value.filter((x) => x !== c))} />
+          <Checkbox aria-label={c} checked={value.includes(c)} onCheckedChange={(on) => onChange(on ? [...value, c] : value.filter((x) => x !== c))} />
           {c}
         </label>
       ))}
@@ -52,7 +53,7 @@ function TemplatesTab() {
         subject_template: draft.subject_template || null,
         body_template: draft.body_template,
         channels: draft.channels,
-        variables: draft.variables.split(',').map((s) => s.trim()).filter(Boolean),
+        variables: variableList(draft.variables),
         dlt_template_id: draft.dlt_template_id || null,
         whatsapp_template_name: draft.whatsapp_template_name || null,
       };
@@ -63,6 +64,8 @@ function TemplatesTab() {
     ['comm-templates'],
   );
   const activate = useCommsMutation((id: string) => commsApi.activateTemplate(id), ['comm-templates']);
+  const versions = useTemplateVersions(editing && !editing.is_platform ? editing.id : undefined);
+  const variableList = (v: string) => v.split(',').map((x) => x.trim()).filter(Boolean);
   const open = (t: NotificationTemplate) => {
     setEditing(t);
     setPreview(null);
@@ -79,7 +82,12 @@ function TemplatesTab() {
   };
   const runPreview = async () => {
     try {
-      const r = await commsApi.previewTemplate(editing!.id, JSON.parse(context || '{}'));
+      // preview the editor's draft (unsaved edits), not the stored version
+      const r = await commsApi.previewTemplate(editing!.id, JSON.parse(context || '{}'), {
+        subject_template: draft.subject_template || null,
+        body_template: draft.body_template,
+        variables: variableList(draft.variables),
+      });
       setPreview(r.data);
     } catch (e) {
       onErr(e);
@@ -88,7 +96,7 @@ function TemplatesTab() {
   const manage = can('communication', 'template_manage');
   return (
     <div className="space-y-3">
-      <Input className="w-72" placeholder="Filter by event (e.g. fees.payment_received)" value={event} onChange={(e) => setEvent(e.target.value)} />
+      <Input className="w-72" aria-label="Filter by event" placeholder="Filter by event (e.g. fees.payment_received)" value={event} onChange={(e) => setEvent(e.target.value)} />
       <table className="w-full text-sm">
         <thead className="text-left text-muted-foreground">
           <tr>
@@ -127,11 +135,6 @@ function TemplatesTab() {
         description={editing?.is_platform ? 'Platform default — saving creates an institution override.' : 'Saving creates a new version.'}
         footer={
           <>
-            {editing && !editing.is_platform && !editing.is_active && manage && (
-              <Button variant="outline" onClick={() => activate.mutate(editing.id, { onSuccess: () => toast.success('Activated'), onError: onErr })}>
-                Activate this version
-              </Button>
-            )}
             <Button variant="outline" onClick={runPreview}>
               Preview
             </Button>
@@ -171,10 +174,41 @@ function TemplatesTab() {
               <Textarea rows={6} className="font-mono text-xs" value={context} onChange={(e) => setContext(e.target.value)} />
             </label>
             {preview && (
-              <div className="rounded-md border p-3 text-sm">
+              <div className="rounded-md border p-3 text-sm" aria-live="polite" data-testid="template-preview">
                 {preview.subject && <p className="font-semibold">{preview.subject}</p>}
                 <p className="whitespace-pre-wrap">{preview.body}</p>
                 {preview.missing_variables.length > 0 && <p className="mt-2 text-xs text-destructive">Missing: {preview.missing_variables.join(', ')}</p>}
+              </div>
+            )}
+            {editing && !editing.is_platform && (
+              <div className="rounded-md border">
+                <p className="border-b px-3 py-2 text-sm font-medium">Versions</p>
+                <ul className="max-h-48 divide-y overflow-y-auto text-sm">
+                  {(versions.data?.data ?? []).map((v) => (
+                    <li key={v.id} className="flex items-center gap-2 px-3 py-1.5">
+                      <span className="font-mono">v{v.version}</span>
+                      <span className="min-w-0 flex-1 truncate text-muted-foreground">{v.name}</span>
+                      {v.is_active ? (
+                        <Badge variant="success">active</Badge>
+                      ) : (
+                        <>
+                          <Button size="sm" variant="ghost" onClick={() => open(v)}>Load</Button>
+                          {manage && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              loading={activate.isPending && activate.variables === v.id}
+                              aria-label={`Activate version ${v.version}`}
+                              onClick={() => activate.mutate(v.id, { onSuccess: () => toast.success(`Version ${v.version} activated`), onError: onErr })}
+                            >
+                              Activate
+                            </Button>
+                          )}
+                        </>
+                      )}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
@@ -185,6 +219,19 @@ function TemplatesTab() {
 }
 
 // ---- Logs --------------------------------------------------------------------------------------------------------------
+const LOG_FIELDS = [
+  ['channel', 'Channel'],
+  ['recipient', 'Recipient'],
+  ['status', 'Status'],
+  ['provider', 'Provider'],
+  ['provider_message_id', 'Provider message id'],
+  ['subject', 'Subject'],
+  ['body_preview', 'Body'],
+  ['error', 'Error'],
+  ['sent_at', 'Sent'],
+  ['delivered_at', 'Delivered'],
+  ['cost_paise', 'Cost'],
+] as const;
 function LogsTab() {
   const [params, setParams] = useState<{ page: number; page_size: number; channel?: string; status?: string; recipient?: string }>({ page: 1, page_size: 25 });
   const logs = useLogs(params);
@@ -203,9 +250,9 @@ function LogsTab() {
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
-        <Select className="w-40" placeholder="All channels" options={CHANNELS.map((c) => ({ value: c, label: c }))} onChange={(e) => setParams({ ...params, channel: e.target.value || undefined, page: 1 })} />
-        <Select className="w-40" placeholder="All statuses" options={['queued', 'deferred', 'sent', 'delivered', 'failed', 'bounced', 'read'].map((s) => ({ value: s, label: s }))} onChange={(e) => setParams({ ...params, status: e.target.value || undefined, page: 1 })} />
-        <Input className="w-56" placeholder="Recipient contains…" onChange={(e) => setParams({ ...params, recipient: e.target.value || undefined, page: 1 })} />
+        <Select className="w-40" aria-label="Channel" placeholder="All channels" options={CHANNELS.map((c) => ({ value: c, label: c }))} onChange={(e) => setParams({ ...params, channel: e.target.value || undefined, page: 1 })} />
+        <Select className="w-40" aria-label="Status" placeholder="All statuses" options={['queued', 'deferred', 'sent', 'delivered', 'failed', 'bounced', 'read'].map((s) => ({ value: s, label: s }))} onChange={(e) => setParams({ ...params, status: e.target.value || undefined, page: 1 })} />
+        <Input className="w-56" aria-label="Recipient" placeholder="Recipient contains…" onChange={(e) => setParams({ ...params, recipient: e.target.value || undefined, page: 1 })} />
       </div>
       <DataTable
         columns={columns}
@@ -220,10 +267,20 @@ function LogsTab() {
       <Modal open={detail !== null} onOpenChange={(o) => !o && setDetail(null)} title="Message" description={detail?.id}>
         {detail && (
           <dl className="grid grid-cols-3 gap-2 text-sm">
-            {(['channel', 'recipient', 'status', 'provider', 'provider_message_id', 'subject', 'body_preview', 'error', 'sent_at', 'delivered_at', 'cost_paise'] as const).map((k) => (
+            {LOG_FIELDS.map(([k, label]) => (
               <div key={k} className="contents">
-                <dt className="text-muted-foreground">{k}</dt>
-                <dd className="col-span-2 break-words">{String(detail[k] ?? '—')}</dd>
+                <dt className="text-muted-foreground">{label}</dt>
+                <dd className="col-span-2 break-words">
+                  {k === 'status' ? (
+                    <StatusBadge status={detail.status} />
+                  ) : k === 'sent_at' || k === 'delivered_at' ? (
+                    formatDateTime(detail[k]) || '—'
+                  ) : k === 'cost_paise' ? (
+                    detail.cost_paise == null ? '—' : `₹${(detail.cost_paise / 100).toFixed(2)}`
+                  ) : (
+                    String(detail[k] ?? '—')
+                  )}
+                </dd>
               </div>
             ))}
           </dl>
@@ -292,14 +349,22 @@ function AnnouncementsTab() {
   );
 }
 
+/** Read / acknowledgement counts; once opened they refresh every 15 s (and on focus) so acks show up live. */
 function StatsButton({ id }: { id: string }) {
-  const [stats, setStats] = useState<{ total: number; read: number; acknowledged: number } | null>(null);
-  return stats ? (
-    <span className="text-xs text-muted-foreground">
-      {stats.read}/{stats.total} read · {stats.acknowledged} ack
+  const [shown, setShown] = useState(false);
+  const stats = useQuery({
+    queryKey: ['announcements', 'stats', id],
+    queryFn: () => commsApi.announcementStats(id),
+    enabled: shown,
+    refetchInterval: shown ? 15_000 : false,
+  });
+  const s = stats.data?.data;
+  return s ? (
+    <span className="text-xs text-muted-foreground" aria-live="polite" data-testid={`stats-${id}`}>
+      {s.read}/{s.total} read · {s.acknowledged} ack
     </span>
   ) : (
-    <Button size="icon" variant="ghost" aria-label="Stats" onClick={async () => setStats((await commsApi.announcementStats(id)).data)}>
+    <Button size="icon" variant="ghost" aria-label="Stats" loading={stats.isFetching} onClick={() => setShown(true)}>
       <BarChart3 className="h-4 w-4" />
     </Button>
   );

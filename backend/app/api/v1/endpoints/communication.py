@@ -111,7 +111,7 @@ async def preview_template(
     principal: Principal = Depends(READ_TEMPLATES),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
-    return ok(await CommunicationService(db, principal, request).preview(id, body.context))
+    return ok(await CommunicationService(db, principal, request).preview(id, body))
 
 
 @router.post(

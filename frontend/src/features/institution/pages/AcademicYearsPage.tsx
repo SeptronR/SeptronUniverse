@@ -108,11 +108,11 @@ function RolloverWizard({ current, onClose }: { current: AcademicYear | undefine
       {step === 2 && (
         <div className="space-y-3 text-sm">
           <label className="flex items-center gap-2">
-            <Checkbox checked={data.promote_batches} onCheckedChange={(c) => setData({ ...data, promote_batches: c === true })} />
+            <Checkbox aria-label="Promote batches to the next term" checked={data.promote_batches} onCheckedChange={(c) => setData({ ...data, promote_batches: c === true })} />
             Promote batches to the next term (runs the batch/student hooks — available from Phases 05/07)
           </label>
           <label className="flex items-center gap-2">
-            <Checkbox checked={!!data.lock_previous} onCheckedChange={(c) => setData({ ...data, lock_previous: c === true })} />
+            <Checkbox aria-label="Lock the previous year" checked={!!data.lock_previous} onCheckedChange={(c) => setData({ ...data, lock_previous: c === true })} />
             Lock the previous year {current ? `(${current.name})` : ''}
           </label>
         </div>
@@ -158,7 +158,7 @@ function NewYearModal({ onClose }: { onClose: () => void }) {
         <DateField label="Starts" value={v.start_date} onChange={(d) => setV({ ...v, start_date: d ?? '' })} />
         <DateField label="Ends" value={v.end_date} onChange={(d) => setV({ ...v, end_date: d ?? '' })} />
         <label className="flex items-center gap-2 text-sm">
-          <Checkbox checked={v.is_current} onCheckedChange={(c) => setV({ ...v, is_current: c === true })} /> Make current
+          <Checkbox aria-label="Make current" checked={v.is_current} onCheckedChange={(c) => setV({ ...v, is_current: c === true })} /> Make current
         </label>
       </div>
     </Modal>
@@ -208,19 +208,19 @@ export default function AcademicYearsPage() {
                 <CalendarRange className="h-4 w-4" /> {y.name}
                 {y.is_current && <Badge variant="success">current</Badge>}
                 {y.is_locked && <Badge variant="warning">locked</Badge>}
-                {y.college_id && <Badge variant="outline">college</Badge>}
+                {y.college_id && <Badge variant="outline">college {y.college_code ?? ''}</Badge>}
               </CardTitle>
               <div className="flex items-center gap-1">
                 <span className="mr-2 text-xs text-muted-foreground">
                   {y.start_date} → {y.end_date}
                 </span>
                 {manage && !y.is_current && (
-                  <Button size="sm" variant="ghost" onClick={() => setCurrent.mutate(y.id, { onSuccess: () => toast.success(`${y.name} is current`), onError: onErr })}>
+                  <Button size="sm" variant="ghost" aria-label={`Set ${y.name}${y.college_code ? ` (${y.college_code})` : ''} current`} onClick={() => setCurrent.mutate(y.id, { onSuccess: () => toast.success(`${y.name} is current`), onError: onErr })}>
                     <Star className="h-4 w-4" /> Set current
                   </Button>
                 )}
                 {can('sessions', 'lock') && (
-                  <Button size="sm" variant="ghost" onClick={() => lock.mutate({ id: y.id, lock: !y.is_locked }, { onError: onErr })}>
+                  <Button size="sm" variant="ghost" aria-label={`${y.is_locked ? 'Unlock' : 'Lock'} ${y.name}${y.college_code ? ` (${y.college_code})` : ''}`} onClick={() => lock.mutate({ id: y.id, lock: !y.is_locked }, { onError: onErr })}>
                     {y.is_locked ? <LockOpen className="h-4 w-4" /> : <Lock className="h-4 w-4" />} {y.is_locked ? 'Unlock' : 'Lock'}
                   </Button>
                 )}

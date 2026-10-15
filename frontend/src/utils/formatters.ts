@@ -27,8 +27,13 @@ export const formatRelative = (value: string | Date | null | undefined) => {
   return d ? formatDistanceToNow(d, { addSuffix: true }) : '—';
 };
 
+/** Whole words shown upper-case by titleCase ("hr" → "HR", "sms_logs" → "SMS Logs"). */
+const ACRONYMS = new Set(['hr', 'sms', 'otp', 'id', 'pdf', 'api', 'sso', 'mfa', 'ip', 'url', 'ui', 'cas', 'pbas', 'gst', 'upi', 'dlt', 'cgpa', 'sgpa', 'obe']);
+
 export const titleCase = (s: string | null | undefined) =>
-  (s ?? '').replace(/[_-]+/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  (s ?? '')
+    .replace(/[_-]+/g, ' ')
+    .replace(/\b\w+/g, (w) => (ACRONYMS.has(w.toLowerCase()) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1)));
 
 export const initials = (name: string | null | undefined) =>
   (name ?? '')

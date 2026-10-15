@@ -174,7 +174,7 @@ export default function HolidaysPage() {
           </Button>
         }
       >
-        <Textarea rows={8} className="font-mono text-xs" value={csv} onChange={(e) => setCsv(e.target.value)} />
+        <Textarea rows={8} aria-label="Holidays CSV" className="font-mono text-xs" value={csv} onChange={(e) => setCsv(e.target.value)} />
         {report && (
           <div className="mt-3 text-sm">
             <p>

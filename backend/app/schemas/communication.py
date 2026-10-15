@@ -61,7 +61,12 @@ class TemplateResponse(ORMModel):
 
 
 class TemplatePreviewRequest(BaseModel):
+    """``context`` renders the stored version; the optional draft fields render unsaved edits instead (editor preview)."""
+
     context: dict[str, Any] = Field(default_factory=dict)
+    subject_template: str | None = None
+    body_template: str | None = None
+    variables: list[str] | None = None
 
 
 class TemplatePreview(BaseModel):

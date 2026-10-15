@@ -100,6 +100,7 @@ export interface TermBrief {
 export interface AcademicYear {
   id: string;
   college_id: string | null;
+  college_code?: string | null;
   name: string;
   start_date: string;
   end_date: string;
@@ -125,6 +126,7 @@ export interface AcademicTerm extends TermBrief {
   add_drop_end: string | null;
   last_instruction_date: string | null;
   is_locked: boolean;
+  year_locked?: boolean;
   version: number;
   next_status: string | null;
   blocking_checks: TermCloseCheck[];

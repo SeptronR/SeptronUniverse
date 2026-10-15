@@ -9,16 +9,23 @@ sees two current rows in one transaction.
 import uuid
 from collections.abc import Sequence
 from datetime import date
+from typing import Any
 
 from sqlalchemy import Select, and_, or_, select, update
 
 from app.core.errors import APIError, ErrorCode
 from app.models.academic import AcademicTerm, AcademicYear
+from app.models.platform import College
 from app.repositories.base import BaseRepository
 
 
 def _same_scope(col: object, college_id: uuid.UUID | None) -> object:
     return col.is_(None) if college_id is None else col == college_id  # type: ignore[attr-defined]
+
+
+def _live_college(column: Any) -> Any:
+    """Institution-wide rows, or rows whose college is not soft-deleted."""
+    return or_(column.is_(None), column.in_(select(College.id).where(College.deleted_at.is_(None))))
 
 
 class AcademicYearRepository(BaseRepository[AcademicYear]):
@@ -28,7 +35,8 @@ class AcademicYearRepository(BaseRepository[AcademicYear]):
     def filtered(
         self, college_id: uuid.UUID | None = None, include_institution: bool = True, current_only: bool = False
     ) -> Select[tuple[AcademicYear]]:
-        stmt = self._base()
+        # years of a soft-deleted college are history, not choices (Phase 03 UI walk, 2026-10-05)
+        stmt = self._base().where(_live_college(AcademicYear.college_id))
         if college_id is not None:
             stmt = stmt.where(
                 or_(AcademicYear.college_id == college_id, AcademicYear.college_id.is_(None))
@@ -113,7 +121,7 @@ class AcademicTermRepository(BaseRepository[AcademicTerm]):
         status: str | None = None,
         current_only: bool = False,
     ) -> Select[tuple[AcademicTerm]]:
-        stmt = self._base()
+        stmt = self._base().where(_live_college(AcademicTerm.college_id))
         if academic_year_id:
             stmt = stmt.where(AcademicTerm.academic_year_id == academic_year_id)
         if college_id is not None:
