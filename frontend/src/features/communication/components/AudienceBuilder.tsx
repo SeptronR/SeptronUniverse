@@ -19,6 +19,7 @@ export function AudienceBuilder({ value, onChange }: { value: AudienceRules; onC
       <label className="block space-y-1">
         <span className="font-medium">Roles</span>
         <Input
+          aria-label="Roles"
           placeholder={ROLE_HINT}
           value={value.roles.join(', ')}
           onChange={(e) => onChange({ ...value, roles: e.target.value.split(',').map((s) => s.trim()).filter(Boolean) })}
@@ -46,7 +47,10 @@ export function AudienceBuilder({ value, onChange }: { value: AudienceRules; onC
           ))}
         </div>
       </div>
-      <p className="text-xs text-muted-foreground">No rule selected = the whole institution.</p>
+      <p className="text-xs text-muted-foreground">
+        Selections add up: anyone matching <b>any</b> selected role, college or department receives it (e.g. role
+        &ldquo;student&rdquo; + department A/CSE = every student and everyone in A/CSE). No selection = the whole institution.
+      </p>
     </div>
   );
 }

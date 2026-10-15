@@ -44,6 +44,7 @@ class AcademicTermBrief(ORMModel):
 class AcademicYearResponse(ORMModel):
     id: uuid.UUID
     college_id: uuid.UUID | None = None
+    college_code: str | None = None  # labels college-level years (several colleges share year names)
     name: str
     start_date: date
     end_date: date
@@ -90,6 +91,7 @@ class AcademicTermResponse(ORMModel):
     college_id: uuid.UUID | None = None
     academic_year_id: uuid.UUID
     academic_year_name: str | None = None
+    year_locked: bool = False  # the parent year is locked → dates/status are read-only (409 RECORD_LOCKED)
     name: str
     term_type: str
     sequence: int

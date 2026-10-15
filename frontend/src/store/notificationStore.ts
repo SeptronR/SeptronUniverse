@@ -28,7 +28,8 @@ export const useNotificationStore = create<NotificationState>()((set) => ({
   items: [],
   connected: false,
   setUnread: (n) => set({ unread: n }),
-  setItems: (items) => set({ items, unread: items.filter((i) => !i.read_at).length }),
+  // the list is only the first page — the unread total comes from GET /notifications/unread-count (setUnread)
+  setItems: (items) => set({ items }),
   push: (item) => set((s) => ({ items: [item, ...s.items].slice(0, 50), unread: s.unread + 1 })),
   markRead: (id) =>
     set((s) => ({

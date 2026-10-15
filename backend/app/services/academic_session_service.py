@@ -128,9 +128,13 @@ class AcademicSessionService:
     # ---- responses ------------------------------------------------------------------------------------------------
     async def _year_responses(self, rows: list[AcademicYear]) -> list[AcademicYearResponse]:
         terms = await self.terms.of_years([y.id for y in rows])
+        codes = await CollegeRepository(self.db, self.principal, self.inst).codes(
+            [y.college_id for y in rows if y.college_id]
+        )
         out = []
         for y in rows:
             r = AcademicYearResponse.model_validate(y)
+            r.college_code = codes.get(y.college_id) if y.college_id else None
             r.terms = [AcademicTermBrief.model_validate(t) for t in terms.get(y.id, [])]
             out.append(r)
         return out
@@ -139,6 +143,7 @@ class AcademicSessionService:
         r = AcademicTermResponse.model_validate(t)
         year = await self.years.get_one(t.academic_year_id)
         r.academic_year_name = year.name
+        r.year_locked = year.is_locked
         r.next_status = next_status(t.status)
         if with_checks and r.next_status == TermStatus.CLOSED:
             r.blocking_checks = [c for c in await self.close_checks(t) if not c.passed]

@@ -1,6 +1,6 @@
 import { CheckCircle2, CircleDashed, Clock, Forward, SkipForward, TriangleAlert, XCircle } from 'lucide-react';
 import { cn } from '@/utils/cn';
-import { formatRelative } from '@/utils/formatters';
+import { formatDateTime, formatRelative } from '@/utils/formatters';
 import type { WorkflowInstance, WorkflowStep } from '../types';
 
 const ICON: Record<string, typeof Clock> = {
@@ -59,12 +59,21 @@ export function WorkflowTimeline({ instance, className }: { instance: WorkflowIn
                       <p className="text-xs text-muted-foreground">
                         by {s.acted_by_name ?? 'someone'}
                         {s.delegated_from ? ` on behalf of ${s.approver_name ?? 'the approver'}` : ''}
-                        {s.acted_at ? ` · ${formatRelative(s.acted_at)}` : ''}
+                        {s.acted_at && (
+                          <>
+                            {' · '}
+                            <time dateTime={s.acted_at} title={formatDateTime(s.acted_at)}>
+                              {formatDateTime(s.acted_at)} ({formatRelative(s.acted_at)})
+                            </time>
+                          </>
+                        )}
                       </p>
                     )}
                     {s.comment && <p className="mt-1 italic">“{s.comment}”</p>}
                     {s.sla_due_at && ['pending', 'escalated'].includes(s.status) && (
-                      <p className="text-xs text-muted-foreground">SLA due {formatRelative(s.sla_due_at)}</p>
+                      <p className="text-xs text-muted-foreground">
+                        SLA due <time dateTime={s.sla_due_at} title={formatDateTime(s.sla_due_at)}>{formatRelative(s.sla_due_at)}</time>
+                      </p>
                     )}
                   </div>
                 );

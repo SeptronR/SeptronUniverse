@@ -45,6 +45,7 @@ from app.schemas.communication import (
     SendMessageResponse,
     TemplateCreate,
     TemplatePreview,
+    TemplatePreviewRequest,
     TemplateResponse,
     TemplateUpdate,
     WebhookCallback,
@@ -179,14 +180,21 @@ class CommunicationService:
         return [template_response(v) for v in await self.templates.versions(self.inst, t.event_trigger, t.language)]
 
     # ---- rule 2 ---------------------------------------------------------------------------------------------------
-    async def preview(self, template_id: uuid.UUID, context: dict[str, Any]) -> TemplatePreview:
+    async def preview(self, template_id: uuid.UUID, body: TemplatePreviewRequest) -> TemplatePreview:
         t = await self._template(template_id)
-        missing = missing_variables(t.variables, context, t.subject_template, t.body_template)
+        context = body.context
+        draft = body.model_fields_set & {"subject_template", "body_template", "variables"}
+        subject = body.subject_template if "subject_template" in draft else t.subject_template
+        text = body.body_template if "body_template" in draft and body.body_template is not None else t.body_template
+        variables = body.variables if "variables" in draft else t.variables
+        if draft:
+            self._check_syntax(subject, text)
+        missing = missing_variables(variables, context, subject, text)
         ctx = {**{m: f"{{{{{m}}}}}" for m in missing}, **context}
         try:
             return TemplatePreview(
-                subject=render(t.subject_template, ctx) or None,
-                body=render(t.body_template, ctx),
+                subject=render(subject, ctx) or None,
+                body=render(text, ctx),
                 missing_variables=missing,
             )
         except Exception as exc:  # noqa: BLE001 - sandbox errors are the template author's to fix

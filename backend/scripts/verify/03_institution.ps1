@@ -283,7 +283,11 @@ try {
   Call $admin DELETE "/users/$facultyId/roles/$($hodNow.id)" | Out-Null
   Call $admin DELETE "/departments/$eceId" | Out-Null
   Call $admin DELETE "/colleges/$collegeV" | Out-Null
-  Assert $true "verification college $code, its ECE department and the HOD assignment removed"
+  # the bulk-imported holidays are institution-wide — remove them so runs do not accumulate calendar entries
+  foreach ($h in ((Call $admin GET "/holidays?page_size=200&from=2026-12-01&to=2026-12-31").data | Where-Object { $_.name -like "Verify Day $run *" })) {
+    Call $admin DELETE "/holidays/$($h.id)" | Out-Null
+  }
+  Assert $true "verification college $code, its ECE department, the HOD assignment and the imported holidays removed"
 
   Summary "PHASE 03 institution structure, sessions, settings"
 }

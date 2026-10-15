@@ -40,6 +40,7 @@ from app.schemas.communication import (
 from app.services.institution.context import tenant_id
 from app.utils.pagination import PageParams
 from app.utils.response import PaginationMeta, VisibilityMeta
+from app.utils.text import html_to_text
 
 
 def _status(a: Announcement) -> str:
@@ -206,7 +207,7 @@ class AnnouncementService:
             if audience_users is not None
             else {"roles": await self._all_roles()}
         )
-        summary = (a.body or "")[:140]
+        summary = html_to_text(a.body, 140)  # the body is TipTap HTML; SMS / push / the bell need plain text
         await notify_event(
             self.db,
             self.inst,

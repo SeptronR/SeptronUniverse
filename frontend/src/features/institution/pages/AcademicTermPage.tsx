@@ -43,7 +43,10 @@ export default function AcademicTermPage() {
 
   if (term.isLoading || !t) return <PageSkeleton />;
   const idx = TERM_STATUSES.indexOf(t.status as (typeof TERM_STATUSES)[number]);
-  const manage = can('sessions', 'manage') && !t.is_locked;
+  // a locked term — or a term of a locked year — is read-only (the API answers 409 RECORD_LOCKED); setting the
+  // current term stays possible (rollover undo)
+  const canSetCurrent = can('sessions', 'manage') && !t.is_locked;
+  const manage = canSetCurrent && !t.year_locked;
   const onErr = (e: unknown) => toast.error(getApiError(e));
 
   return (
@@ -53,7 +56,7 @@ export default function AcademicTermPage() {
         breadcrumbs={[{ label: 'Academic years', to: '/admin/academic-years' }, { label: t.academic_year_name ?? '' }, { label: t.name }]}
         description={`${t.term_type} · sequence ${t.sequence}`}
         actions={
-          manage &&
+          canSetCurrent &&
           !t.is_current && (
             <Button variant="outline" onClick={() => current.mutate(undefined, { onSuccess: () => toast.success('Current term set'), onError: onErr })}>
               <Star className="h-4 w-4" /> Set current
@@ -111,6 +114,11 @@ export default function AcademicTermPage() {
             </Button>
           )}
           {t.is_locked && <Badge variant="warning">locked</Badge>}
+          {t.year_locked && (
+            <p role="status" className="rounded-md border border-status-pending/40 bg-status-pending/10 p-3 text-sm">
+              Academic year {t.academic_year_name} is locked — unlock it on the Academic years page to change this term.
+            </p>
+          )}
         </CardContent>
       </Card>
       <Card>

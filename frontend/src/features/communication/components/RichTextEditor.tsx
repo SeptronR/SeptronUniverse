@@ -4,10 +4,11 @@ import { Bold, Italic, List, ListOrdered } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 /** Minimal TipTap editor (bold/italic/lists) for announcement bodies; emits HTML. */
-export function RichTextEditor({ value, onChange }: { value: string; onChange: (html: string) => void }) {
+export function RichTextEditor({ value, onChange, label = 'Body' }: { value: string; onChange: (html: string) => void; label?: string }) {
   const editor = useEditor({
     extensions: [StarterKit],
     content: value,
+    editorProps: { attributes: { role: 'textbox', 'aria-multiline': 'true', 'aria-label': label } },
     onUpdate: ({ editor: e }) => onChange(e.getHTML()),
   });
   if (!editor) return null;
@@ -18,7 +19,7 @@ export function RichTextEditor({ value, onChange }: { value: string; onChange: (
   );
   return (
     <div className="rounded-md border">
-      <div className="flex gap-1 border-b p-1">
+      <div className="flex gap-1 border-b p-1" role="toolbar" aria-label={`${label} formatting`}>
         {tool('Bold', Bold, () => editor.chain().focus().toggleBold().run(), editor.isActive('bold'))}
         {tool('Italic', Italic, () => editor.chain().focus().toggleItalic().run(), editor.isActive('italic'))}
         {tool('Bullet list', List, () => editor.chain().focus().toggleBulletList().run(), editor.isActive('bulletList'))}

@@ -19292,12 +19292,21 @@ export interface components {
             /** Missing Variables */
             missing_variables?: string[];
         };
-        /** TemplatePreviewRequest */
+        /**
+         * TemplatePreviewRequest
+         * @description ``context`` renders the stored version; the optional draft fields render unsaved edits instead (editor preview).
+         */
         TemplatePreviewRequest: {
             /** Context */
             context?: {
                 [key: string]: unknown;
             };
+            /** Subject Template */
+            subject_template?: string | null;
+            /** Body Template */
+            body_template?: string | null;
+            /** Variables */
+            variables?: string[] | null;
         };
         /** TemplateResponse */
         TemplateResponse: {

@@ -7,7 +7,7 @@ from datetime import date
 from sqlalchemy import Select, func, or_, select
 
 from app.core.errors import APIError, ErrorCode
-from app.models.platform import Holiday
+from app.models.platform import College, Holiday
 from app.repositories.base import BaseRepository
 
 
@@ -24,7 +24,13 @@ class HolidayRepository(BaseRepository[Holiday]):
         holiday_type: str | None = None,
         applies_to: str | None = None,
     ) -> Select[tuple[Holiday]]:
-        stmt = self._base()
+        # holidays of a soft-deleted college are not shown or exported (Phase 03 UI walk, 2026-10-05)
+        stmt = self._base().where(
+            or_(
+                Holiday.college_id.is_(None),
+                Holiday.college_id.in_(select(College.id).where(College.deleted_at.is_(None))),
+            )
+        )
         if college_id is not None:
             stmt = stmt.where(or_(Holiday.college_id == college_id, Holiday.college_id.is_(None)))
         if date_from:

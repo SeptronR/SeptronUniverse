@@ -191,5 +191,26 @@ try {
   Summary "PHASE 04 communication core & workflow engine"
 }
 finally {
+  # this run's announcement ("Ack <run>") and custom templates (custom.verify<run> / custom.dlt<run>; no DELETE
+  # endpoint — deactivating hides them) so the admin lists don't fill up with verification rows
+  if ($ann) {
+    try { Call $admin DELETE "/announcements/$($ann.data.id)" | Out-Null }
+    catch { Write-Host "cleanup: $($_.Exception.Message)" -ForegroundColor Yellow }
+  }
+  # this run's dev workflow instances still open (delegated → waiting on HR, escalated, no-dues on a failed run) would
+  # otherwise sit in the hod / registrar / hr inboxes; close them like engine.cancel does (open steps → skipped)
+  $open = @($wf, $wf2, $wf3, $wf4) | Where-Object { $_ } | ForEach-Object { "'$($_.data.id)'" }
+  if ($open) {
+    $ids = $open -join ', '
+    try {
+      SqlWrite ("UPDATE workflow_steps SET status = 'skipped' WHERE instance_id IN ($ids) AND status IN ('pending', 'escalated'); " +
+        "UPDATE workflow_instances SET status = 'cancelled', closed_at = now() WHERE id IN ($ids) AND status IN ('pending', 'escalated')")
+    }
+    catch { Write-Host "cleanup: $($_.Exception.Message)" -ForegroundColor Yellow }
+  }
+  if ($instId -and $run) {
+    try { SqlWrite "UPDATE notification_templates SET is_active = FALSE WHERE institution_id = '$instId' AND event_trigger IN ('custom.verify$run', 'custom.dlt$run')" | Out-Null }
+    catch { Write-Host "cleanup: $($_.Exception.Message)" -ForegroundColor Yellow }
+  }
   Pop-Location
 }
