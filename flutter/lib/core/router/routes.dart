@@ -34,6 +34,11 @@ class AppRoutes {
   static const applicantsSearch = '/app/admissions/applicants';
   static const applicantDetail = '/app/admissions/applicants/detail';
   static const enquiries = '/app/admissions/enquiries';
+  // Phase 09 — student registration cart, faculty offerings + roster, advisor registration approvals
+  static const studentRegistration = '/app/registration';
+  static const myOfferings = '/app/offerings/mine';
+  static const offeringRoster = '/app/offerings/roster';
+  static const registrationApprovals = '/app/registration/approvals';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

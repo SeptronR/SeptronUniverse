@@ -3,6 +3,28 @@
 Phases append their module here (``from app.models import <module>  # noqa: F401``).
 """
 
-from app.models import academic, admissions, communication, curriculum, hr, platform, saas, students  # noqa: F401
+from app.models import (  # noqa: F401
+    academic,
+    admissions,
+    communication,
+    curriculum,
+    hr,
+    offerings,
+    platform,
+    registration,
+    saas,
+    students,
+)
 
-__all__ = ["academic", "admissions", "communication", "curriculum", "hr", "platform", "saas", "students"]
+__all__ = [
+    "academic",
+    "admissions",
+    "communication",
+    "curriculum",
+    "hr",
+    "offerings",
+    "platform",
+    "registration",
+    "saas",
+    "students",
+]

@@ -150,6 +150,30 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
         "admissions", "applicant_validity_days", "int", 365, label="Applicant account validity after close", min=30
     ),
     SettingDef("admissions", "lateral_entry_term", "int", 3, label="Entry term of lateral admits", min=2, max=10),
+    # registration (Phase 09) — workload enforcement on faculty allocation, seat defaults, waitlist offer validity,
+    # arrear rules and the registration fees that stand in for Phase 12 invoices (mock payment order until then)
+    SettingDef(
+        "hr", "workload_enforce", "enum", "warn", False, ("block", "warn"), "Faculty allocation above the workload norm"
+    ),
+    SettingDef("registration", "default_max_seats", "int", 60, label="Default seats per offering", min=1, max=1000),
+    SettingDef("registration", "waitlist_offer_hours", "int", 48, label="Waitlist offer validity (hours)", min=1),
+    SettingDef(
+        "registration", "allow_arrear_with_regular", "bool", False, label="Arrear courses in a regular window"
+    ),
+    SettingDef(
+        "registration", "auto_confirm_allocations", "bool", False, label="Elective allocation confirms the item"
+    ),
+    SettingDef(
+        "registration",
+        "prerequisite_bypass",
+        "bool",
+        False,
+        label="Skip prerequisite checks (development only — before Phase 15 results)",
+    ),
+    SettingDef("registration", "fee_paise", "int", 0, label="Registration fee per submission (paise)", min=0),
+    SettingDef(
+        "registration", "arrear_fee_per_credit_paise", "int", 50000, label="Arrear fee per credit (paise)", min=0
+    ),
 )
 
 CATEGORIES: tuple[str, ...] = tuple(dict.fromkeys(d.category for d in SETTINGS_TEMPLATE))

@@ -82,4 +82,10 @@ register_beat("admissions.lapse_allotments", "beat.admissions.lapse_allotments",
 register_beat("admissions.close_cycles", "beat.admissions.close_cycles", crontab(hour=0, minute=20))
 register_beat("enquiries.follow_up_reminders", "beat.enquiries.follow_up_reminders", crontab(hour=9, minute=0))
 
+# ---- Phase 09 registration (app/tasks/registration.py) -------------------------------------------------------------------
+register_beat("registration.window_status", "beat.registration.window_status", 300.0)
+register_beat("registration.lock_windows", "beat.registration.lock_windows", crontab(minute=17))
+register_beat("waitlist.expire", "beat.waitlist.expire", crontab(minute=27))
+register_beat("registration.reminders", "beat.registration.reminders", crontab(hour=8, minute=30))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE

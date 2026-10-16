@@ -8,8 +8,9 @@ transfers) hangs off a ``students`` row, so one predicate family covers them all
   ``guardian_portal_consent`` is on (the parent portal; consent off hides the ward completely → 404);
 * **advisees** — students whose *latest* term record (of an open enrolment) sits in a section the principal advises:
   ``batch_sections.class_advisor_staff_id`` = the principal's staff row, or a ``class_advisor`` @offering assignment
-  whose scope id is the section (Phase 05 — kept until Phase 09 offerings exist). Faculty see students of their own
-  offerings from Phase 09 and mentors their mentees from Phase 27 — both append to ``OWNERSHIP_LINKS``;
+  whose scope id is the section (Phase 05) or a real course offering targeted at the section (Phase 09). Faculty see
+  students of their own offerings (``registration_scope`` appends ``own_offerings``, Phase 09) and mentors their
+  mentees from Phase 27 — both append to ``OWNERSHIP_LINKS``;
 * **unit** — only with ``students:view_all``: ``department`` assignments see students enrolled in those departments
   (``student_program_enrollments.department_id``), ``faculty`` assignments the departments of the faculty, ``college``
   assignments ``students.college_id`` and an ``institution`` assignment everyone.
@@ -35,6 +36,7 @@ from app.core.authz.visibility import ModuleVisibility, OwnershipLink, register_
 from app.enums.students import OPEN_ENROLLMENT
 from app.models.academic import BatchSection
 from app.models.hr import Staff
+from app.models.offerings import CourseOfferingTarget
 from app.models.platform import Department
 from app.models.students import Student, StudentGuardian, StudentProgramEnrollment, StudentTermRecord
 from app.utils.response import VisibilityMeta
@@ -114,7 +116,14 @@ def advised_sections(principal: Any) -> Any:
     )
     offering_ids = _ids(principal, "offering") if principal.has("students", "view") else []
     if offering_ids:
-        return by_staff.union(select(BatchSection.id).where(BatchSection.id.in_(offering_ids)))
+        # a section id (Phase 05 assignments) or a real course offering (Phase 09) → the sections it targets
+        targeted = select(CourseOfferingTarget.section_id).where(
+            CourseOfferingTarget.offering_id.in_(offering_ids), CourseOfferingTarget.section_id.is_not(None)
+        )
+        return by_staff.union(
+            select(BatchSection.id).where(BatchSection.id.in_(offering_ids)),
+            select(BatchSection.id).where(BatchSection.id.in_(targeted)),
+        )
     return by_staff
 
 

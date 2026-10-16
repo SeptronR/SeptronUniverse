@@ -274,6 +274,9 @@ class WorkloadService(HrServiceBase):
             )
         if await self.repo.offerings_count(row.department_id, row.term_id) == 0:
             raise APIError(409, ErrorCode.RULE_VIOLATION, DEFERRED, {"reason": "offerings_missing"})
+        from app.services.registration.offering_service import OfferingService
+
+        applied = await OfferingService(self.db, self.principal, self.request, self.inst).apply_allocation_proposal(row)
         row.status = "applied"
         await self.db.flush()
         await self._audit(
@@ -281,7 +284,12 @@ class WorkloadService(HrServiceBase):
         )
         await self._emit(
             "course_allocation.applied",
-            {"proposal_id": str(row.id), "department_id": str(row.department_id), "term_id": str(row.term_id)},
+            {
+                "proposal_id": str(row.id),
+                "department_id": str(row.department_id),
+                "term_id": str(row.term_id),
+                "applied": applied,
+            },
             "course_allocation_proposal",
             row.id,
         )
@@ -300,6 +308,14 @@ async def _on_allocation_approved(db: Any, instance: WorkflowInstance, actor: An
     if row.status == "submitted":
         row.status, row.approved_by = "dean_approved", getattr(actor, "id", None)
         await db.flush()
+        # Phase 09: the dean's approval applies the allocation to the term's offerings when they exist
+        if await WorkloadRepository(db).offerings_count(row.department_id, row.term_id):
+            from app.services.registration.offering_service import OfferingService
+            from app.services.students.common import SystemActor
+
+            await OfferingService(db, actor or SystemActor(row.institution_id), None, row.institution_id).apply_allocation_proposal(row)
+            row.status = "applied"
+            await db.flush()
 
 
 @workflow_engine.on(ALLOC_KEY, "rejected")

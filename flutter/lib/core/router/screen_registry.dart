@@ -6,6 +6,7 @@ import '../../features/approvals/approvals_screen.dart';
 import '../../features/auth/profile_screens.dart';
 import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
+import '../../features/registration/registration_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/students/students_screens.dart';
@@ -213,6 +214,35 @@ class ScreenRegistry {
       feature: 'admissions.enquiry_crm',
       permission: 'admissions:create|admissions:manage',
       builder: (_, __) => const EnquiriesScreen(),
+    ),
+    // Phase 09 — registration cart (student), my offerings + roster (faculty), registration approvals (advisor)
+    AppRoutes.studentRegistration: ScreenEntry(
+      route: AppRoutes.studentRegistration,
+      titleKey: 'registration',
+      feature: 'registration.self_service',
+      permission: 'registration:self',
+      builder: (_, __) => const StudentRegistrationScreen(),
+    ),
+    AppRoutes.myOfferings: ScreenEntry(
+      route: AppRoutes.myOfferings,
+      titleKey: 'my_offerings',
+      feature: 'registration.core',
+      permission: 'offerings:view|offerings:view_all',
+      builder: (_, __) => const MyOfferingsScreen(),
+    ),
+    AppRoutes.offeringRoster: ScreenEntry(
+      route: AppRoutes.offeringRoster,
+      titleKey: 'roster',
+      feature: 'registration.core',
+      permission: 'offerings:view|offerings:view_all',
+      builder: (_, params) => OfferingRosterScreen(id: params['id'] ?? ''),
+    ),
+    AppRoutes.registrationApprovals: ScreenEntry(
+      route: AppRoutes.registrationApprovals,
+      titleKey: 'registration_approvals',
+      feature: 'registration.advisor_approval',
+      permission: 'registration:approve',
+      builder: (_, __) => const RegistrationApprovalsScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

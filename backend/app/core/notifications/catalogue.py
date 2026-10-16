@@ -523,7 +523,101 @@ ADMISSION_EVENTS: tuple[EventDef, ...] = (
         link="/admin/admissions/enquiries?enquiry={{ enquiry_id }}",
     ),
 )
-EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS
+# Phase 09 — registration: status changes (``registration.approved`` ships with Phase 04), waitlist offers, elective
+# allocation results, window reminders and arrear waivers.
+REGISTRATION_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "registration.submitted",
+        "academics",
+        "Registration submitted",
+        "Course registration submitted",
+        "Your course registration for {{ term }} ({{ credits }} credits) was submitted: {{ status }}.",
+        ("term", "credits", "status"),
+        ("in_app",),
+        link="/student/registration",
+    ),
+    EventDef(
+        "registration.rejected",
+        "academics",
+        "Registration returned",
+        "Course registration {{ decision }}",
+        "Your course registration for {{ term }} was {{ decision }}: {{ comment }}",
+        ("term", "decision", "comment"),
+        ("in_app", "push"),
+        link="/student/registration",
+    ),
+    EventDef(
+        "registration.locked",
+        "academics",
+        "Registration locked",
+        "Course registration locked",
+        "Add/drop has ended and your course registration for {{ term }} is locked.",
+        ("term",),
+        ("in_app",),
+        link="/student/registration",
+    ),
+    EventDef(
+        "registration.item_withdrawn",
+        "academics",
+        "Course withdrawn",
+        "Withdrawn from {{ course }}",
+        "You were withdrawn from {{ course }} ({{ reason }}). The transcript will show W.",
+        ("course", "reason"),
+        ("in_app", "email"),
+        link="/student/registration",
+    ),
+    EventDef(
+        "registration.window_open",
+        "academics",
+        "Registration window open",
+        "{{ window }} is open",
+        "{{ window }} for {{ term }} is open until {{ ends_at }}. Complete your course registration.",
+        ("window", "term", "ends_at"),
+        ("in_app", "push"),
+        link="/student/registration",
+    ),
+    EventDef(
+        "waitlist.offered",
+        "academics",
+        "Waitlist seat offered",
+        "A seat in {{ course }} is available",
+        "A seat in {{ course }} is now available to you. Accept it before {{ offered_until }}.",
+        ("course", "offered_until"),
+        ("in_app", "push", "email"),
+        link="/student/registration",
+    ),
+    EventDef(
+        "waitlist.expired",
+        "academics",
+        "Waitlist offer expired",
+        "Seat offer in {{ course }} expired",
+        "The seat offered to you in {{ course }} was not accepted in time and passed to the next student.",
+        ("course",),
+        ("in_app",),
+        link="/student/registration",
+    ),
+    EventDef(
+        "elective.allocated",
+        "academics",
+        "Elective allocation",
+        "Elective allocation: {{ basket }}",
+        "{{ basket }}: {{ result }}",
+        ("basket", "result"),
+        ("in_app", "push"),
+        link="/student/registration",
+    ),
+    EventDef(
+        "arrear.waived",
+        "academics",
+        "Arrear waived",
+        "Arrear in {{ course }} waived",
+        "The arrear in {{ course }} was waived by the registrar: {{ reason }}",
+        ("course", "reason"),
+        ("in_app",),
+        link="/student/registration",
+    ),
+)
+EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 

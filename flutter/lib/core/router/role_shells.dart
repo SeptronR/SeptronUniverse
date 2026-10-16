@@ -191,6 +191,30 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.orange,
       permission: 'admissions:create|admissions:manage',
       feature: 'admissions.enquiry_crm'),
+  // Phase 09 — registration (student), my offerings (faculty), registration approvals (advisor / HOD)
+  const MoreMenuModule(
+      titleKey: 'registration',
+      icon: Icons.playlist_add_check,
+      route: AppRoutes.studentRegistration,
+      color: Colors.indigo,
+      permission: 'registration:self',
+      feature: 'registration.self_service',
+      roles: ['student']),
+  const MoreMenuModule(
+      titleKey: 'my_offerings',
+      icon: Icons.class_outlined,
+      route: AppRoutes.myOfferings,
+      color: Colors.teal,
+      permission: 'offerings:view',
+      feature: 'registration.core',
+      roles: ['faculty', 'class_advisor', 'hod', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'registration_approvals',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.registrationApprovals,
+      color: Colors.green,
+      permission: 'registration:approve',
+      feature: 'registration.advisor_approval'),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',

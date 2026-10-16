@@ -324,6 +324,8 @@ export interface StudentDashboard {
   undertakings_pending: UndertakingStatus[];
   standing: string | null;
   credit_transfers_pending: number;
+  /** Phase 09: confirmed courses of the current term */
+  confirmed_courses?: { course_code: string; course_title: string; credits: number; section_code: string | null; registration_type: string }[];
   quick_links: { key: string; label: string; route: string; feature: string | null }[];
 }
 

@@ -55,8 +55,11 @@ class WorkloadRepository:
     async def offerings_count(self, department_id: uuid.UUID, term_id: uuid.UUID) -> int:
         row = (
             await self.db.execute(
-                text("SELECT COUNT(*) FROM course_offerings WHERE department_id = :d AND term_id = :t"),
-                {"d": department_id, "t": term_id},
+                text(
+                    "SELECT COUNT(*) FROM course_offerings WHERE department_id = CAST(:d AS uuid) AND term_id = CAST(:t AS uuid) "
+                    "AND deleted_at IS NULL AND status <> 'cancelled'"
+                ),
+                {"d": str(department_id), "t": str(term_id)},
             )
         ).scalar()
         return int(row or 0)

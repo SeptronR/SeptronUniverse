@@ -23,6 +23,7 @@ from app.models.students import (
     StudentTermRecord,
     StudentUndertaking,
 )
+from app.repositories import registration_scope  # noqa: F401  (Phase 09 own-offerings link on students)
 from app.repositories.base import BaseRepository
 from app.repositories.student_scope import student_predicate
 
