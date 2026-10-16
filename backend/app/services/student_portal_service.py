@@ -7,6 +7,9 @@ the same payload.
 """
 
 import uuid
+from typing import Any
+
+from sqlalchemy import select
 
 from app.core.errors import APIError, ErrorCode
 from app.core.features import is_enabled
@@ -23,6 +26,7 @@ QUICK_LINKS: tuple[tuple[str, str, str, str | None], ...] = (
     ("id_card", "ID card", "/student/id-card", "students.id_cards"),
     ("curriculum", "My curriculum", "/student/curriculum", "academics.curriculum"),
     ("credit_transfers", "Credit transfers", "/student/credit-transfers", "academics.credit_transfer_mooc"),
+    ("registration", "Course registration", "/student/registration", "registration.self_service"),
 )
 
 
@@ -59,7 +63,34 @@ class StudentPortalService(StudentServiceBase):
             standing=detail.enrollment.academic_standing if detail.enrollment else None,
             credit_transfers_pending=ct_pending,
             quick_links=[] if ward else links,
+            confirmed_courses=await self._confirmed_courses(detail),
         )
+
+    async def _confirmed_courses(self, detail: Any) -> list[dict[str, Any]]:
+        from app.models.curriculum import Course
+        from app.models.offerings import CourseOffering
+        from app.repositories.registration_repository import RegistrationRepository
+
+        if detail.enrollment is None or detail.current_term is None:
+            return []
+        items = await RegistrationRepository(self.db, None, self.inst).confirmed_courses(
+            detail.enrollment.id, detail.current_term.term_id
+        )
+        out = []
+        for i in items:
+            c = (await self.db.execute(select(Course).where(Course.id == i.course_id))).scalar_one_or_none()
+            o = (await self.db.execute(select(CourseOffering).where(CourseOffering.id == i.offering_id))).scalar_one_or_none()
+            if c is not None:
+                out.append(
+                    {
+                        "course_code": c.code,
+                        "course_title": c.title,
+                        "credits": float(c.credits or 0),
+                        "section_code": o.section_code if o else None,
+                        "registration_type": i.registration_type,
+                    }
+                )
+        return out
 
     async def wards(self) -> list[WardSummary]:
         pairs = await self.guardians.wards_of(self.principal.id)

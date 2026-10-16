@@ -414,8 +414,9 @@ SCOPE_TABLES: dict[str, str] = {
     "committee": "committees",
     "hostel": "hostels",
 }
-# additional tables a scope id may name (Phase 05: ``class_advisor`` @offering is assigned to a batch *section* until
-# Phase 09 course offerings exist; both share the ``offering`` scope type)
+# additional tables a scope id may name (Phase 05: ``class_advisor`` @offering is assigned to a batch *section*; from
+# Phase 09 a real ``course_offerings`` id is valid too — both share the ``offering`` scope type and section assignments
+# keep working: ``student_scope.advised_sections`` reads either)
 SCOPE_ALT_TABLES: dict[str, tuple[str, ...]] = {"offering": ("batch_sections",)}
 # roles that may additionally be college-scoped although their template default is ``institution``
 COLLEGE_SCOPABLE_ROLES: frozenset[str] = frozenset(
@@ -595,6 +596,12 @@ DEAN_ACADEMICS: set[str] = P("courses", "approve")  # dean @faculty approves the
 # Phase 06: dean @faculty approves the course-allocation proposals and reads the workload of its departments
 DEAN_HR: set[str] = P("faculty", "workload_manage")
 AUDITOR_HR: set[str] = P("attendance", "staff_view_all")
+# Phase 09 (Prompts/09 "Visibility rules"): the registrar creates offerings and owns registration (windows, overrides,
+# bulk registration, elective allocation); the dean creates / bulk-generates the offerings of its faculty's departments
+REGISTRAR_REGISTRATION: set[str] = P(
+    "offerings", "view_all", "create", "update", "manage", "bulk_create", "allocate_faculty", "export"
+) | P("registration", "view_all", "manage", "override", "bulk", "allocate", "approve", "export")
+DEAN_OFFERINGS: set[str] = P("offerings", "create", "bulk_create")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -633,7 +640,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("batches", "view_all")
     | P("attendance", "view_all")
     # Phase 05: the registrar owns the academic backbone (programmes, regulations short of approval, curricula)
-    | REGISTRAR_ACADEMICS,
+    | REGISTRAR_ACADEMICS
+    | REGISTRAR_REGISTRATION,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -682,6 +690,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_ACADEMICS
     | DEAN_HR
     | P("offerings", "allocate_faculty")
+    | DEAN_OFFERINGS
     | P("events", "approve")
     | STAFF_SELF,
     "hod": FACULTY
@@ -929,6 +938,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0006": frozenset(P("leaves", "encash") | DEAN_HR | AUDITOR_HR),
     "0007": frozenset(STUDENTS_ADMIN_PII | HOD_STUDENTS),
     "0008": frozenset(ADMISSIONS_STAFF_READ | HOD_ADMISSIONS | ADMISSIONS_PII),
+    "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
 }
 
 

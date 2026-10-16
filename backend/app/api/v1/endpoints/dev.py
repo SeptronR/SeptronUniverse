@@ -290,3 +290,29 @@ async def dev_lapse_allotments(
     from app.services.admissions.counselling_service import CounsellingService
 
     return ok({"lapsed": await CounsellingService(db, principal, request).lapse_due()}, message="Lapse run")
+
+
+# ---- Phase 09 --------------------------------------------------------------------------------------------------------
+@router.post(
+    "/registration/{task}",
+    summary="Run a registration Beat body in-process (lock-windows | waitlist-expire | window-status | reminders)",
+    dependencies=[feature_required("registration.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_registration_beat(
+    task: str,
+    request: Request,
+    principal: Principal = Depends(permission_required("registration", "manage")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.registration.offering_service import WindowService
+    from app.services.registration.registration_service import RegistrationService
+
+    methods = {"lock-windows": "lock_due", "waitlist-expire": "expire_waitlists", "reminders": "reminders"}
+    if task == "window-status":
+        n = await WindowService(db, principal, request).tick()
+    elif task in methods:
+        n = await getattr(RegistrationService(db, principal, request), methods[task])()
+    else:
+        raise APIError(422, ErrorCode.VALIDATION, f"Unknown task {task!r}", {"allowed": [*methods, "window-status"]})
+    return ok({"task": task, "changed": n}, message="Run")

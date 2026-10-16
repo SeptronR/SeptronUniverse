@@ -100,6 +100,31 @@ const UndertakingGate = lazy(() =>
 );
 const ParentHomePage = lazy(() => import('@/features/students/pages/ParentPortal'));
 const VerifyPage = lazy(() => import('@/features/students/pages/VerifyPage'));
+// Phase 09 — offerings & registration
+const OfferingsPage = lazy(() => import('@/features/registration/pages/OfferingsPage'));
+const OfferingRosterPage = lazy(() =>
+  import('@/features/registration/pages/OfferingsPage').then((m) => ({ default: m.OfferingRosterPage })),
+);
+const RegistrationsPage = lazy(() => import('@/features/registration/pages/RegistrationsPage'));
+const RegistrationDetailPage = lazy(() =>
+  import('@/features/registration/pages/RegistrationsPage').then((m) => ({ default: m.RegistrationDetailPage })),
+);
+const RegWindowsPage = lazy(() =>
+  import('@/features/registration/pages/AdminRegistrationPages').then((m) => ({ default: m.WindowsPage })),
+);
+const AllocationPage = lazy(() =>
+  import('@/features/registration/pages/AdminRegistrationPages').then((m) => ({ default: m.AllocationPage })),
+);
+const ArrearsPage = lazy(() =>
+  import('@/features/registration/pages/AdminRegistrationPages').then((m) => ({ default: m.ArrearsPage })),
+);
+const StudentRegistrationPage = lazy(() => import('@/features/registration/pages/StudentRegistrationPage'));
+const StudentRegistrationsHistory = lazy(() =>
+  import('@/features/registration/pages/StudentRegistrationPage').then((m) => ({ default: m.StudentRegistrationsHistory })),
+);
+const FacultyOfferingsPage = lazy(() =>
+  import('@/features/registration/pages/StudentRegistrationPage').then((m) => ({ default: m.FacultyOfferingsPage })),
+);
 // Phase 08 — admissions
 const CyclesPage = lazy(() => import('@/features/admissions/pages/CyclesPage'));
 const CycleWorkspacePage = lazy(() => import('@/features/admissions/pages/CycleWorkspacePage'));
@@ -299,6 +324,14 @@ export const router = createBrowserRouter([
               ['/admin/students/transfers', 'students.transfers_migration', 'students', 'transfer', [['students', 'view_all']], <TransfersPage key="t" />],
               ['/admin/students/credit-transfers', 'academics.credit_transfer_mooc', 'credit_transfers', 'verify', [['credit_transfers', 'approve'], ['credit_transfers', 'view_all']], <CreditTransfersPage key="c" />],
               ['/admin/students/:id', 'students.core', 'students', 'view', [['students', 'view_all']], <StudentDetailPage key="d" />],
+              // Phase 09 — offerings (staff read institution-wide) and registration (advisees | department | all)
+              ['/admin/academics/offerings', 'registration.core', 'offerings', 'view', [['offerings', 'view_all']], <OfferingsPage key="of" />],
+              ['/admin/academics/offerings/:id/roster', 'registration.core', 'offerings', 'view', [['offerings', 'view_all']], <OfferingRosterPage key="or" />],
+              ['/admin/registration', 'registration.core', 'registration', 'view', [['registration', 'view_all'], ['registration', 'approve']], <RegistrationsPage key="rg" />],
+              ['/admin/registration/windows', 'registration.core', 'registration', 'manage', [['registration', 'view_all']], <RegWindowsPage key="rw" />],
+              ['/admin/registration/allocation', 'registration.elective_allocation', 'registration', 'allocate', [['registration', 'manage']], <AllocationPage key="ra" />],
+              ['/admin/registration/arrears', 'registration.arrears', 'registration', 'view', [['registration', 'view_all'], ['registration', 'approve'], ['students', 'view_all']], <ArrearsPage key="rr" />],
+              ['/admin/registration/:id', 'registration.core', 'registration', 'view', [['registration', 'view_all'], ['registration', 'approve']], <RegistrationDetailPage key="rd" />],
               // Phase 08 — admissions (cycles readable by all staff; applicants need view_all — HOD / college slices)
               ['/admin/admissions/cycles', 'admissions.cycles', 'admissions', 'view', [], <CyclesPage key="ac" />],
               ['/admin/admissions/cycles/:id', 'admissions.cycles', 'admissions', 'view', [], <CycleWorkspacePage key="aw" />],
@@ -422,6 +455,8 @@ export const router = createBrowserRouter([
               ['id-card', <StudentIdCardPage key="i" />],
               ['curriculum', <StudentCurriculumPage key="c" />],
               ['credit-transfers', <StudentCreditTransfersPage key="t" />],
+              ['registration', <StudentRegistrationPage key="r" />],
+              ['registrations', <StudentRegistrationsHistory key="h" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -434,7 +469,11 @@ export const router = createBrowserRouter([
       {
         path: '/faculty',
         element: <PortalRoute roles={['faculty', 'guest_faculty']} title="Faculty" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        children: [
+          { index: true, element: page(<PortalHomePage />) },
+          { path: 'offerings', element: page(<FacultyOfferingsPage />) },
+          { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
+        ],
       },
       {
         path: '/alumni',

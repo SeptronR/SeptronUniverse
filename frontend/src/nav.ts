@@ -88,6 +88,12 @@ export const NAV_GROUPS: NavGroup[] = [
         feature: 'academics.regulations',
       },
       { label: 'Batches', to: '/admin/academics/batches', icon: UsersRound, module: 'batches', feature: 'academics.programs' },
+      // Phase 09 — offerings, registration, windows, elective allocation, arrears
+      { label: 'Offerings', to: '/admin/academics/offerings', icon: BookOpen, module: 'offerings', feature: 'registration.core' },
+      { label: 'Registration', to: '/admin/registration', icon: ClipboardCheck, module: 'registration', altActions: ['view_all', 'approve'], feature: 'registration.core' },
+      { label: 'Windows', to: '/admin/registration/windows', icon: CalendarRange, module: 'registration', action: 'manage', feature: 'registration.core' },
+      { label: 'Elective allocation', to: '/admin/registration/allocation', icon: Percent, module: 'registration', action: 'allocate', altActions: ['manage'], feature: 'registration.elective_allocation' },
+      { label: 'Arrears', to: '/admin/registration/arrears', icon: ScrollText, module: 'registration', altActions: ['view_all', 'approve'], feature: 'registration.arrears' },
     ],
   },
   { title: 'EXAMINATIONS', items: [] },

@@ -686,6 +686,8 @@ class StudentDashboard(BaseModel):
     standing: str | None = None
     credit_transfers_pending: int = 0
     quick_links: list[QuickLink] = Field(default_factory=list)
+    # Phase 09: confirmed courses of the current term (parents read their ward's confirmed items)
+    confirmed_courses: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class WardSummary(BaseModel):

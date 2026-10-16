@@ -11,7 +11,10 @@ from app.core.rbac.registry import SCOPE_ALT_TABLES, SCOPE_TABLES
 from app.models.platform import Role, UserRole
 
 # label column per scope table (Database_Schema.sql §7, §11, §19, §30)
-SCOPE_LABEL_COLUMNS: dict[str, str] = {"course_offerings": "section_code"}
+# label expression per scope table (a real Phase 09 offering reads "<course code> / <section>")
+SCOPE_LABEL_COLUMNS: dict[str, str] = {
+    "course_offerings": "(SELECT c.code FROM courses c WHERE c.id = course_id) || ' / ' || section_code"
+}
 
 
 class UserRoleRepository:

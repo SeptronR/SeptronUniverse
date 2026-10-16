@@ -180,6 +180,18 @@ PHASES: dict[str, list[str]] = {
         "admission_offers",
         "enquiries",
     ],
+    "09": [
+        "course_offerings",
+        "course_offering_faculty",
+        "course_offering_targets",
+        "registration_windows",
+        "course_registrations",
+        "course_registration_items",
+        "elective_choice_forms",
+        "elective_allocation_runs",
+        "offering_waitlists",
+        "student_arrears",
+    ],
 }
 
 VIEWS: set[str] = set()

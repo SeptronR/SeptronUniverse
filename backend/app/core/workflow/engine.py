@@ -147,6 +147,8 @@ class WorkflowEngine:
                     WorkflowInstance.entity_type == entity_type,
                     WorkflowInstance.entity_id == entity_id,
                     WorkflowInstance.definition_id == definition.id,
+                    # a closed (approved / rejected / cancelled) instance does not block a resubmission (Phase 09)
+                    WorkflowInstance.status.in_(("pending", "escalated")),
                 )
             )
         ).scalar_one_or_none()

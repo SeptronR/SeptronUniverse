@@ -60,9 +60,35 @@ export default function ParentHomePage() {
               ))}
             </div>
           )}
-          {dash.data ? <DashboardCards d={dash.data.data} ward /> : dash.error ? <EmptyState title="Unavailable" description={getApiError(dash.error)} /> : <PageSkeleton />}
+          {dash.data ? (
+            <>
+              <DashboardCards d={dash.data.data} ward />
+              <ConfirmedCourses courses={dash.data.data.confirmed_courses ?? []} />
+            </>
+          ) : dash.error ? <EmptyState title="Unavailable" description={getApiError(dash.error)} /> : <PageSkeleton />}
         </>
       )}
     </div>
+  );
+}
+
+/** Phase 09: the ward's confirmed courses of the current term. */
+function ConfirmedCourses({ courses }: { courses: { course_code: string; course_title: string; credits: number; section_code: string | null }[] }) {
+  return (
+    <section className="rounded-lg border bg-card p-4">
+      <h2 className="mb-2 text-sm font-semibold">Registered courses</h2>
+      {courses.length === 0 ? (
+        <p className="text-sm text-muted-foreground">No confirmed course registration for the current term yet.</p>
+      ) : (
+        <ul className="space-y-1 text-sm">
+          {courses.map((c) => (
+            <li key={c.course_code} className="flex justify-between gap-2">
+              <span><b>{c.course_code}</b> {c.course_title}{c.section_code ? ` · section ${c.section_code}` : ''}</span>
+              <span className="text-muted-foreground">{c.credits} cr</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
