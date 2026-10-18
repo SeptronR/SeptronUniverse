@@ -613,6 +613,14 @@ REGISTRAR_TIMETABLE: set[str] = P("timetable", "manage", "view_all")
 HOD_TIMETABLE: set[str] = P("timetable", "create", "update", "publish", "approve", "substitute", "export")
 ESTATE_TIMETABLE: set[str] = P("timetable", "update")
 FACULTY_TIMETABLE: set[str] = P("timetable", "substitute")
+# Phase 11 (Prompts/11 "Visibility rules"): the registrar marks / corrects attendance (``edit_finalized``), approves
+# condonation and computes / decides eligibility (``exams:eligibility``); the HOD edits finalized attendance of its
+# department with a reason; the controller of examinations computes eligibility; the vice-chancellor (principal) holds
+# the final condonation step of the Phase 04 template
+REGISTRAR_ATTENDANCE: set[str] = P("attendance", "mark", "edit_finalized", "condone") | P("exams", "eligibility")
+HOD_ATTENDANCE: set[str] = P("attendance", "edit_finalized")
+COE_ATTENDANCE: set[str] = P("exams", "eligibility")
+VC_ATTENDANCE: set[str] = P("attendance", "condone")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -625,6 +633,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("governance", "manage")
     | P("grievances", "escalate")
     | P("results", "approve")
+    | VC_ATTENDANCE
     | STAFF_SELF,
     "registrar": STAFF_SELF
     | P("students", "manage", "view_pii")
@@ -653,7 +662,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     # Phase 05: the registrar owns the academic backbone (programmes, regulations short of approval, curricula)
     | REGISTRAR_ACADEMICS
     | REGISTRAR_REGISTRATION
-    | REGISTRAR_TIMETABLE,
+    | REGISTRAR_TIMETABLE
+    | REGISTRAR_ATTENDANCE,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -668,7 +678,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("courses", "view_all")
     | P("offerings", "view_all")
     | P("programs", "view_all")
-    | P("batches", "view_all"),
+    | P("batches", "view_all")
+    | COE_ATTENDANCE,
     "exam_cell": STAFF_SELF
     | P(
         "exams",
@@ -731,7 +742,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_ACADEMICS
     | HOD_STUDENTS
     | HOD_ADMISSIONS
-    | HOD_TIMETABLE,
+    | HOD_TIMETABLE
+    | HOD_ATTENDANCE,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view"),
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -954,6 +966,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0008": frozenset(ADMISSIONS_STAFF_READ | HOD_ADMISSIONS | ADMISSIONS_PII),
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
+    "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
 }
 
 

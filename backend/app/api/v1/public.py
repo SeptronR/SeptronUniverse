@@ -33,6 +33,8 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/public/catalog/courses/{regulation}/{code}",
     # Phase 06 — biometric device punches (device token) and the public careers page ({hr.recruitment})
     "POST /api/v1/attendance-devices/{id}/punches",
+    # Phase 11 — student device punches (device token; {attendance.biometric|rfid} checked in the route)
+    "POST /api/v1/attendance/devices/{id}/punches",
     "GET /api/v1/public/careers",
     "POST /api/v1/public/careers/{posting_id}/apply",
     # Phase 07 — public verification of the ID-card QR (HMAC-signed token; Phase 26 unifies document verification)

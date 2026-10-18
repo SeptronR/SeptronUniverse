@@ -201,14 +201,25 @@ TIMETABLE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("hod", sla=24, escalate="registrar"),
     },
 )
+# Phase 11: optional on-duty approval by the HOD of the student's department (``attendance.condonation`` ships with
+# Prompts/04: HOD → registrar → vice-chancellor)
+ATTENDANCE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "attendance.on_duty",
+        "module": "attendance",
+        "name": "On-duty request",
+        "steps": _chain("hod", sla=48, escalate="registrar"),
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
     + STUDENT_WORKFLOW_TEMPLATES
     + ADMISSION_WORKFLOW_TEMPLATES
     + TIMETABLE_WORKFLOW_TEMPLATES
+    + ATTENDANCE_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 27, (
-    "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1"
+assert len(WORKFLOW_TEMPLATES) == 28, (
+    "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1"
 )

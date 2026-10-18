@@ -203,6 +203,15 @@ PHASES: dict[str, list[str]] = {
         "class_sessions",
         "calendar_feed_tokens",
     ],
+    # class_sessions (Phase 10) and attendance_devices (Phase 06) already modelled; student_class_attendance is the
+    # partitioned parent (its _default partition is skipped by the drift check)
+    "11": [
+        "student_class_attendance",
+        "on_duty_requests",
+        "attendance_summaries",
+        "attendance_condonations",
+        "term_eligibility",
+    ],
 }
 
 VIEWS: set[str] = set()

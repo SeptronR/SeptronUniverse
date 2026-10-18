@@ -79,6 +79,13 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("exams", "valuation_mode_default", "enum", "single", False, ("single", "double")),
     SettingDef("exams", "discrepancy_pct_default", "int", 15, min=0, max=100),
     SettingDef("exams", "hall_ticket_requires_no_dues", "bool", True),
+    SettingDef(
+        "exams",
+        "eligibility_requires_fee_clear",
+        "bool",
+        False,
+        label="Overdue fees make a student ineligible (Phase 11)",
+    ),
     SettingDef("exams", "result_public_lookup", "bool", False, True),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
@@ -110,6 +117,25 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     # attendance (Phase 06) — self check-in geo-fence {lat, lng, radius_m} (a college row overrides it)
     SettingDef("attendance", "geo_fence", "json", None, label="Self check-in geo-fence {lat, lng, radius_m}"),
     SettingDef("attendance", "staff_self_checkin", "bool", True, label="Staff may check in from the app / web"),
+    # attendance (Phase 11) — student marking window, QR, alerts, auto-finalize, OD approver, eligibility notices
+    SettingDef("attendance", "future_marking_days", "int", 0, label="Days ahead a session may be marked", min=0, max=7),
+    SettingDef("attendance", "qr_ttl_seconds", "int", 120, label="Session QR validity (seconds)", min=30, max=900),
+    SettingDef(
+        "attendance", "qr_late_minutes", "int", 10, label="QR / app check-ins after N minutes are late", min=0, max=120
+    ),
+    SettingDef(
+        "attendance", "auto_finalize_days", "int", 3, label="Finalize taken sessions after N days", min=0, max=60
+    ),
+    SettingDef(
+        "attendance", "absent_alert_consecutive", "int", 3, label="Guardian alert after N consecutive absences", min=1
+    ),
+    SettingDef("attendance", "checkpoints", "json", [25, 50, 75], label="Warning checkpoints (% of instruction days)"),
+    SettingDef("attendance", "notify_guardians", "bool", True, label="Copy absence / threshold alerts to guardians"),
+    SettingDef("attendance", "notify_mentor", "bool", True, label="Copy threshold warnings to the mentor / advisor"),
+    SettingDef(
+        "attendance", "od_approver", "enum", "hod", False, ("hod", "registrar"), "Who approves on-duty requests"
+    ),
+    SettingDef("attendance", "notify_detained", "bool", True, label="Notify detained students once per version"),
     # students (Phase 07) — gates read ``undertakings_required`` (empty list = the pack default); an adult student
     # (``adult_age``) controls the guardian-portal consent; ID-card QR tokens live until the expected graduation year
     SettingDef(
