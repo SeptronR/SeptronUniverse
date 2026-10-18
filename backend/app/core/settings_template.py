@@ -157,9 +157,7 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     ),
     SettingDef("registration", "default_max_seats", "int", 60, label="Default seats per offering", min=1, max=1000),
     SettingDef("registration", "waitlist_offer_hours", "int", 48, label="Waitlist offer validity (hours)", min=1),
-    SettingDef(
-        "registration", "allow_arrear_with_regular", "bool", False, label="Arrear courses in a regular window"
-    ),
+    SettingDef("registration", "allow_arrear_with_regular", "bool", False, label="Arrear courses in a regular window"),
     SettingDef(
         "registration", "auto_confirm_allocations", "bool", False, label="Elective allocation confirms the item"
     ),
@@ -173,6 +171,28 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("registration", "fee_paise", "int", 0, label="Registration fee per submission (paise)", min=0),
     SettingDef(
         "registration", "arrear_fee_per_credit_paise", "int", 50000, label="Arrear fee per credit (paise)", min=0
+    ),
+    # timetable (Phase 10) — the default slot group the 0010 revision seeds per college, nightly missed-session flagging
+    SettingDef(
+        "timetable",
+        "default_slot_group",
+        "json",
+        [
+            {"name": "P1", "start_time": "09:00", "end_time": "09:50", "slot_type": "lecture"},
+            {"name": "P2", "start_time": "09:50", "end_time": "10:40", "slot_type": "lecture"},
+            {"name": "BRK", "start_time": "10:40", "end_time": "11:00", "slot_type": "break"},
+            {"name": "P3", "start_time": "11:00", "end_time": "11:50", "slot_type": "lecture"},
+            {"name": "P4", "start_time": "11:50", "end_time": "12:40", "slot_type": "lecture"},
+            {"name": "LUNCH", "start_time": "12:40", "end_time": "13:30", "slot_type": "lunch"},
+            {"name": "P5", "start_time": "13:30", "end_time": "14:20", "slot_type": "lecture"},
+            {"name": "P6", "start_time": "14:20", "end_time": "15:10", "slot_type": "lecture"},
+            {"name": "P7", "start_time": "15:20", "end_time": "16:10", "slot_type": "lecture"},
+            {"name": "P8", "start_time": "16:10", "end_time": "17:00", "slot_type": "lecture"},
+        ],
+        label="Default slot group (P1–P8 with breaks)",
+    ),
+    SettingDef(
+        "timetable", "mark_missed_sessions", "bool", True, label="Flag past sessions without attendance nightly"
     ),
 )
 

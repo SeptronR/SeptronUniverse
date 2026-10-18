@@ -14,6 +14,7 @@ from app.models import (  # noqa: F401
     registration,
     saas,
     students,
+    timetable,
 )
 
 __all__ = [
@@ -27,4 +28,5 @@ __all__ = [
     "registration",
     "saas",
     "students",
+    "timetable",
 ]

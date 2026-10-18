@@ -617,7 +617,80 @@ REGISTRATION_EVENTS: tuple[EventDef, ...] = (
         link="/student/registration",
     ),
 )
-EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS
+# Phase 10 — timetable publication, substitutions, session changes
+TIMETABLE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "timetable.published",
+        "academics",
+        "Timetable published",
+        "Timetable published: {{ scope }}",
+        "Version {{ version }} of the {{ scope }} timetable is effective from {{ effective_from }}.",
+        ("scope", "version", "effective_from"),
+        ("in_app", "push"),
+        link="/timetable",
+    ),
+    EventDef(
+        "substitution.requested",
+        "approvals",
+        "Substitution requested",
+        "Substitution needed: {{ course }} on {{ on_date }}",
+        "A substitute is needed for {{ course }} on {{ on_date }} ({{ source }}).",
+        ("course", "on_date", "source"),
+        ("in_app", "email"),
+        link="/admin/timetable/substitutions",
+    ),
+    EventDef(
+        "substitution.approved",
+        "academics",
+        "Substitution approved",
+        "Substitution: {{ course }} on {{ on_date }}",
+        "The {{ course }} class on {{ on_date }} at {{ time }} has a substitute.",
+        ("course", "on_date", "time"),
+        ("in_app", "push"),
+        link="/faculty/timetable",
+    ),
+    EventDef(
+        "substitution.rejected",
+        "academics",
+        "Substitution rejected",
+        "Substitution for {{ on_date }} rejected",
+        "Your substitution request for {{ on_date }} was rejected. {{ comment }}",
+        ("on_date", "comment"),
+        ("in_app",),
+        link="/faculty/timetable",
+    ),
+    EventDef(
+        "session.created",
+        "academics",
+        "Extra class",
+        "Extra class: {{ course }} on {{ date }}",
+        "An {{ change }} of {{ course }} is scheduled on {{ date }} at {{ time }}.",
+        ("course", "date", "time", "change"),
+        ("in_app", "push"),
+        link="/timetable",
+    ),
+    EventDef(
+        "session.cancelled",
+        "academics",
+        "Class cancelled",
+        "Cancelled: {{ course }} on {{ date }}",
+        "The {{ course }} class on {{ date }} at {{ time }} is cancelled. {{ reason }}",
+        ("course", "date", "time", "reason"),
+        ("in_app", "push"),
+        link="/timetable",
+    ),
+    EventDef(
+        "session.rescheduled",
+        "academics",
+        "Class rescheduled",
+        "Rescheduled: {{ course }}",
+        "The {{ course }} class of {{ from_date }} moves to {{ date }} at {{ time }}.",
+        ("course", "date", "time", "from_date"),
+        ("in_app", "push"),
+        link="/timetable",
+    ),
+)
+EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS + TIMETABLE_EVENTS
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 

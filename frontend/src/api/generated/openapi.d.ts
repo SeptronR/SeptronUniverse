@@ -21,6 +21,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/_dev/class-sessions/{session_id}/attendance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark a session's attendance taken / finalized (dev fixture until Phase 11) */
+        post: operations["dev_session_attendance_api_v1__dev_class_sessions__session_id__attendance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/_dev/fees/pay/{ref}": {
         parameters: {
             query?: never;
@@ -134,6 +151,40 @@ export interface paths {
         put?: never;
         /** Write SGPA / CGPA history and recompute the standing (dev fixture until Phase 15) */
         post: operations["dev_term_results_api_v1__dev_students__id__term_results_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/timetable/consume/{event}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run a Phase 10 outbox consumer body in-process (leave.approved | leave.cancelled | holiday.changed) */
+        post: operations["dev_timetable_consume_api_v1__dev_timetable_consume__event__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/timetable/mark-missed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run the sessions.mark_missed Beat body in-process */
+        post: operations["dev_mark_missed_api_v1__dev_timetable_mark_missed_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1878,6 +1929,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/buildings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Buildings */
+        get: operations["list_buildings_api_v1_buildings_get"];
+        put?: never;
+        /** Create a building */
+        post: operations["create_building_api_v1_buildings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/buildings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a building */
+        put: operations["update_building_api_v1_buildings__id__put"];
+        post?: never;
+        /** Delete a building */
+        delete: operations["delete_building_api_v1_buildings__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/cas-applications": {
         parameters: {
             query?: never;
@@ -1941,6 +2028,109 @@ export interface paths {
         put?: never;
         /** Submit (workflow hr.cas) */
         post: operations["submit_cas_api_v1_cas_applications__id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/class-sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Class sessions */
+        get: operations["list_sessions_api_v1_class_sessions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/class-sessions/extra": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Extra / remedial session */
+        post: operations["extra_session_api_v1_class_sessions_extra_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/class-sessions/today": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My sessions today */
+        get: operations["sessions_today_api_v1_class_sessions_today_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/class-sessions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Class session */
+        get: operations["get_session_api_v1_class_sessions__id__get"];
+        /** Update topic / room / link / status */
+        put: operations["update_session_api_v1_class_sessions__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/class-sessions/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel (attendance not taken) */
+        post: operations["cancel_session_api_v1_class_sessions__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/class-sessions/{id}/reschedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reschedule (attendance not taken) */
+        post: operations["reschedule_session_api_v1_class_sessions__id__reschedule_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5369,6 +5559,60 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/rooms": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rooms */
+        get: operations["list_rooms_api_v1_rooms_get"];
+        put?: never;
+        /** Create a room */
+        post: operations["create_room_api_v1_rooms_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rooms/availability": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Free / busy rooms at a date × slot */
+        get: operations["room_availability_api_v1_rooms_availability_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rooms/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Room */
+        get: operations["get_room_api_v1_rooms__id__get"];
+        /** Update a room (If-Match: version) */
+        put: operations["update_room_api_v1_rooms__id__put"];
+        post?: never;
+        /** Delete a room */
+        delete: operations["delete_room_api_v1_rooms__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/search": {
         parameters: {
             query?: never;
@@ -6349,6 +6593,386 @@ export interface paths {
         put?: never;
         /** Request a transfer / migration (workflow students.transfer) */
         post: operations["request_transfer_api_v1_students__id__transfers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/substitutions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Substitution queue */
+        get: operations["list_substitutions_api_v1_substitutions_get"];
+        put?: never;
+        /** Request a substitution */
+        post: operations["create_substitution_api_v1_substitutions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/substitutions/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve (swap the session staff) */
+        post: operations["approve_substitution_api_v1_substitutions__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/substitutions/{id}/candidates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Substitute candidates with availability */
+        get: operations["substitution_candidates_api_v1_substitutions__id__candidates_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/substitutions/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["reject_substitution_api_v1_substitutions__id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/substitutions/{id}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw */
+        post: operations["withdraw_substitution_api_v1_substitutions__id__withdraw_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/time-slots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Time slots of a slot group */
+        get: operations["list_slots_api_v1_time_slots_get"];
+        /** Replace a slot group (ordered, non-overlapping) */
+        put: operations["replace_slots_api_v1_time_slots_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Timetables (versions per scope) */
+        get: operations["list_timetables_api_v1_timetables_get"];
+        put?: never;
+        /** Create a draft (optionally from a version) */
+        post: operations["create_timetable_api_v1_timetables_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/ical/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create my iCal feed token (revokes the previous one) */
+        post: operations["ical_token_api_v1_timetables_ical_token_post"];
+        /** Revoke my iCal feed */
+        delete: operations["ical_revoke_api_v1_timetables_ical_token_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/ical/{token}.ics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Personal iCal feed (public with token) */
+        get: operations["ical_feed_api_v1_timetables_ical__token__ics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My week (faculty / student; parents pass ward_id) */
+        get: operations["my_timetable_api_v1_timetables_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/sections/{id}.ics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Section iCal feed (public with signed token) */
+        get: operations["section_feed_api_v1_timetables_sections__id__ics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/sections/{id}/ical-link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Signed iCal link of a section */
+        post: operations["section_ical_link_api_v1_timetables_sections__id__ical_link_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/view": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Weekly view of a scope */
+        get: operations["weekly_view_api_v1_timetables_view_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Timetable with entries */
+        get: operations["get_timetable_api_v1_timetables__id__get"];
+        put?: never;
+        post?: never;
+        /** Delete a draft */
+        delete: operations["delete_timetable_api_v1_timetables__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Archive the published version */
+        post: operations["archive_api_v1_timetables__id__archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/auto-generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Auto-generate entries into a draft (dry_run → preview; else job) */
+        post: operations["auto_generate_api_v1_timetables__id__auto_generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/check-conflicts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Conflict report for a candidate entry (or the whole draft without a body) */
+        post: operations["check_conflicts_api_v1_timetables__id__check_conflicts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/clone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Clone into a new draft version */
+        post: operations["clone_timetable_api_v1_timetables__id__clone_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add an entry (conflict pre-check) */
+        post: operations["add_entry_api_v1_timetables__id__entries_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/entries/{eid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update an entry */
+        put: operations["update_entry_api_v1_timetables__id__entries__eid__put"];
+        post?: never;
+        /** Delete an entry */
+        delete: operations["delete_entry_api_v1_timetables__id__entries__eid__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export the entries as CSV (job) */
+        get: operations["export_timetable_api_v1_timetables__id__export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/timetables/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish (+ generate sessions) */
+        post: operations["publish_api_v1_timetables__id__publish_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8257,6 +8881,35 @@ export interface components {
             /** User Ids */
             user_ids?: string[];
         };
+        /** AutoGenerateRequest */
+        AutoGenerateRequest: {
+            /**
+             * Days
+             * @description ISO weekdays to fill
+             */
+            days?: number[];
+            /**
+             * Max Consecutive
+             * @default 3
+             */
+            max_consecutive: number;
+            /**
+             * Respect Room Type
+             * @default true
+             */
+            respect_room_type: boolean;
+            /**
+             * Slot Group
+             * @default Default
+             */
+            slot_group: string;
+            /**
+             * Spread
+             * @description prefer one session of an offering per day
+             * @default true
+             */
+            spread: boolean;
+        };
         /** BankDetails */
         BankDetails: {
             /** Account No */
@@ -8627,6 +9280,59 @@ export interface components {
             doc_type: string;
             /** File */
             file: string;
+        };
+        /** BuildingIn */
+        BuildingIn: {
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /** Code */
+            code: string;
+            /**
+             * College Id
+             * @description defaults to the caller's college
+             */
+            college_id?: string | null;
+            /** Floors */
+            floors?: number | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Name */
+            name: string;
+        };
+        /** BuildingOut */
+        BuildingOut: {
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /** Code */
+            code: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Floors */
+            floors?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /**
+             * Rooms Count
+             * @default 0
+             */
+            rooms_count: number;
         };
         /** BulkFailure */
         BulkFailure: {
@@ -9109,6 +9815,69 @@ export interface components {
             /** Term Id */
             term_id?: string | null;
         };
+        /** ClassSessionResponse */
+        ClassSessionResponse: {
+            /** Attendance Status */
+            attendance_status: string;
+            /** Course Code */
+            course_code?: string | null;
+            /** Course Title */
+            course_title?: string | null;
+            /**
+             * End Time
+             * Format: time
+             */
+            end_time: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Offering Id
+             * Format: uuid
+             */
+            offering_id: string;
+            /** Online Link */
+            online_link?: string | null;
+            /** Room Code */
+            room_code?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /** Section Name */
+            section_name?: string | null;
+            /**
+             * Session Date
+             * Format: date
+             */
+            session_date: string;
+            /** Session Type */
+            session_type: string;
+            /** Slot Name */
+            slot_name?: string | null;
+            /** Staff Id */
+            staff_id?: string | null;
+            /** Staff Name */
+            staff_name?: string | null;
+            /**
+             * Start Time
+             * Format: time
+             */
+            start_time: string;
+            /** Status */
+            status: string;
+            /**
+             * Substituted
+             * @default false
+             */
+            substituted: boolean;
+            /** Time Slot Id */
+            time_slot_id?: string | null;
+            /** Timetable Entry Id */
+            timetable_entry_id?: string | null;
+            /** Topic */
+            topic?: string | null;
+        };
         /** CollegeCreate */
         CollegeCreate: {
             /** Address */
@@ -9303,6 +10072,36 @@ export interface components {
          * @enum {string}
          */
         ComponentType: "earning" | "deduction" | "employer_contribution" | "reimbursement";
+        /** ConflictItem */
+        ConflictItem: {
+            /** Course Code */
+            course_code?: string | null;
+            /** Day Of Week */
+            day_of_week?: number | null;
+            /** Entry Id */
+            entry_id?: string | null;
+            /** Kind */
+            kind: string;
+            /** Message */
+            message: string;
+            /** Slot Name */
+            slot_name?: string | null;
+            /** Timetable Id */
+            timetable_id?: string | null;
+        };
+        /** ConflictReport */
+        ConflictReport: {
+            /** Capacity */
+            capacity?: components["schemas"]["ConflictItem"][];
+            /** Room */
+            room?: components["schemas"]["ConflictItem"][];
+            /** Section */
+            section?: components["schemas"]["ConflictItem"][];
+            /** Staff */
+            staff?: components["schemas"]["ConflictItem"][];
+            /** Workload */
+            workload?: components["schemas"]["ConflictItem"][];
+        };
         /** ConsentRequest */
         ConsentRequest: {
             /** Granted */
@@ -10767,6 +11566,121 @@ export interface components {
          * @enum {string}
          */
         EntranceSource: "jee" | "neet" | "cuet" | "state_cet" | "gate" | "cat" | "institution_test" | "merit_only";
+        /** EntryCreate */
+        EntryCreate: {
+            /**
+             * Day Of Week
+             * @description ISO weekday, 1 = Monday
+             */
+            day_of_week: number;
+            /**
+             * Offering Id
+             * Format: uuid
+             */
+            offering_id: string;
+            /** Room Id */
+            room_id?: string | null;
+            /** Section Id */
+            section_id?: string | null;
+            /** @default lecture */
+            session_type: components["schemas"]["SessionType"];
+            /**
+             * Slot Span
+             * @default 1
+             */
+            slot_span: number;
+            /** Staff Id */
+            staff_id?: string | null;
+            /**
+             * Time Slot Id
+             * Format: uuid
+             */
+            time_slot_id: string;
+            /** @default all */
+            week_pattern: components["schemas"]["WeekPattern"];
+        };
+        /** EntryOut */
+        EntryOut: {
+            /** Course Code */
+            course_code?: string | null;
+            /** Course Title */
+            course_title?: string | null;
+            /** Day Of Week */
+            day_of_week: number;
+            /** End Time */
+            end_time?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Offering Id
+             * Format: uuid
+             */
+            offering_id: string;
+            /** Room Code */
+            room_code?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /** Section Id */
+            section_id?: string | null;
+            /** Section Name */
+            section_name?: string | null;
+            /** Session Type */
+            session_type: string;
+            /** Slot Name */
+            slot_name?: string | null;
+            /** Slot Span */
+            slot_span: number;
+            /** Staff Id */
+            staff_id?: string | null;
+            /** Staff Name */
+            staff_name?: string | null;
+            /** Start Time */
+            start_time?: string | null;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /**
+             * Time Slot Id
+             * Format: uuid
+             */
+            time_slot_id: string;
+            /**
+             * Timetable Id
+             * Format: uuid
+             */
+            timetable_id: string;
+            /** Week Pattern */
+            week_pattern: string;
+        };
+        /** EntryResult */
+        EntryResult: {
+            entry: components["schemas"]["EntryOut"];
+            warnings: components["schemas"]["ConflictReport"];
+        };
+        /** EntryUpdate */
+        EntryUpdate: {
+            /** Day Of Week */
+            day_of_week?: number | null;
+            /** Room Id */
+            room_id?: string | null;
+            /** Section Id */
+            section_id?: string | null;
+            session_type?: components["schemas"]["SessionType"] | null;
+            /** Slot Span */
+            slot_span?: number | null;
+            /** Staff Id */
+            staff_id?: string | null;
+            /** Time Slot Id */
+            time_slot_id?: string | null;
+            week_pattern?: components["schemas"]["WeekPattern"] | null;
+        };
         /** Envelope[AcademicTermResponse] */
         Envelope_AcademicTermResponse_: {
             data?: components["schemas"]["AcademicTermResponse"] | null;
@@ -11052,6 +11966,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[BuildingOut] */
+        Envelope_BuildingOut_: {
+            data?: components["schemas"]["BuildingOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[BulkImportResult] */
         Envelope_BulkImportResult_: {
             data?: components["schemas"]["BulkImportResult"] | null;
@@ -11127,9 +12056,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ClassSessionResponse] */
+        Envelope_ClassSessionResponse_: {
+            data?: components["schemas"]["ClassSessionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CollegeResponse] */
         Envelope_CollegeResponse_: {
             data?: components["schemas"]["CollegeResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ConflictReport] */
+        Envelope_ConflictReport_: {
+            data?: components["schemas"]["ConflictReport"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -11382,6 +12341,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[EntryResult] */
+        Envelope_EntryResult_: {
+            data?: components["schemas"]["EntryResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[FacultyProfileOut] */
         Envelope_FacultyProfileOut_: {
             data?: components["schemas"]["FacultyProfileOut"] | null;
@@ -11520,6 +12494,21 @@ export interface components {
         /** Envelope[HolidayResponse] */
         Envelope_HolidayResponse_: {
             data?: components["schemas"]["HolidayResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ICalToken] */
+        Envelope_ICalToken_: {
+            data?: components["schemas"]["ICalToken"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -12313,6 +13302,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PublishSummary] */
+        Envelope_PublishSummary_: {
+            data?: components["schemas"]["PublishSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PunchIngestResult] */
         Envelope_PunchIngestResult_: {
             data?: components["schemas"]["PunchIngestResult"] | null;
@@ -12493,6 +13497,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RoomOut] */
+        Envelope_RoomOut_: {
+            data?: components["schemas"]["RoomOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RoundResponse] */
         Envelope_RoundResponse_: {
             data?: components["schemas"]["RoundResponse"] | null;
@@ -12571,6 +13590,21 @@ export interface components {
         /** Envelope[SeatStatusResponse] */
         Envelope_SeatStatusResponse_: {
             data?: components["schemas"]["SeatStatusResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[SectionFeed] */
+        Envelope_SectionFeed_: {
+            data?: components["schemas"]["SectionFeed"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -12823,6 +13857,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[SubstitutionResponse] */
+        Envelope_SubstitutionResponse_: {
+            data?: components["schemas"]["SubstitutionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[TemplatePreview] */
         Envelope_TemplatePreview_: {
             data?: components["schemas"]["TemplatePreview"] | null;
@@ -12841,6 +13890,21 @@ export interface components {
         /** Envelope[TemplateResponse] */
         Envelope_TemplateResponse_: {
             data?: components["schemas"]["TemplateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TimetableResponse] */
+        Envelope_TimetableResponse_: {
+            data?: components["schemas"]["TimetableResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -13021,6 +14085,21 @@ export interface components {
         /** Envelope[VerifyResponse] */
         Envelope_VerifyResponse_: {
             data?: components["schemas"]["VerifyResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[WeeklyView] */
+        Envelope_WeeklyView_: {
+            data?: components["schemas"]["WeeklyView"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -13385,6 +14464,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[BuildingOut]] */
+        Envelope_list_BuildingOut__: {
+            /** Data */
+            data?: components["schemas"]["BuildingOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CasApplicationOut]] */
         Envelope_list_CasApplicationOut__: {
             /** Data */
@@ -13405,6 +14500,22 @@ export interface components {
         Envelope_list_ChoiceFormResponse__: {
             /** Data */
             data?: components["schemas"]["ChoiceFormResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ClassSessionResponse]] */
+        Envelope_list_ClassSessionResponse__: {
+            /** Data */
+            data?: components["schemas"]["ClassSessionResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -14201,6 +15312,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[RoomAvailability]] */
+        Envelope_list_RoomAvailability__: {
+            /** Data */
+            data?: components["schemas"]["RoomAvailability"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RoomOut]] */
+        Envelope_list_RoomOut__: {
+            /** Data */
+            data?: components["schemas"]["RoomOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[RosterItem]] */
         Envelope_list_RosterItem__: {
             /** Data */
@@ -14313,6 +15456,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[SlotOut]] */
+        Envelope_list_SlotOut__: {
+            /** Data */
+            data?: components["schemas"]["SlotOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[StaffAttendanceOut]] */
         Envelope_list_StaffAttendanceOut__: {
             /** Data */
@@ -14377,6 +15536,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[SubstituteCandidate]] */
+        Envelope_list_SubstituteCandidate__: {
+            /** Data */
+            data?: components["schemas"]["SubstituteCandidate"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[SubstitutionResponse]] */
+        Envelope_list_SubstitutionResponse__: {
+            /** Data */
+            data?: components["schemas"]["SubstitutionResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[TemplateResponse]] */
         Envelope_list_TemplateResponse__: {
             /** Data */
@@ -14413,6 +15604,22 @@ export interface components {
         Envelope_list_TimelineEntry__: {
             /** Data */
             data?: components["schemas"]["TimelineEntry"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[TimetableResponse]] */
+        Envelope_list_TimetableResponse__: {
+            /** Data */
+            data?: components["schemas"]["TimetableResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -14632,6 +15839,37 @@ export interface components {
             exit_date?: string | null;
             /** Reason */
             reason?: string | null;
+        };
+        /** ExtraSessionCreate */
+        ExtraSessionCreate: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * End
+             * Format: time
+             */
+            end: string;
+            /**
+             * Offering Id
+             * Format: uuid
+             */
+            offering_id: string;
+            /** Room Id */
+            room_id?: string | null;
+            /** @default lecture */
+            session_type: components["schemas"]["SessionType"];
+            /** Staff Id */
+            staff_id?: string | null;
+            /**
+             * Start
+             * Format: time
+             */
+            start: string;
+            /** Topic */
+            topic?: string | null;
         };
         /** FacultyCreate */
         FacultyCreate: {
@@ -15532,6 +16770,23 @@ export interface components {
             holiday_type?: components["schemas"]["HolidayType"] | null;
             /** Name */
             name?: string | null;
+        };
+        /** ICalToken */
+        ICalToken: {
+            /** Created At */
+            created_at?: string | null;
+            /**
+             * Revoked
+             * @default false
+             */
+            revoked: boolean;
+            /**
+             * Token
+             * @description shown once — store it
+             */
+            token?: string | null;
+            /** Url */
+            url?: string | null;
         };
         /** IdCardRequest */
         IdCardRequest: {
@@ -18648,6 +19903,42 @@ export interface components {
             /** Username */
             username?: string | null;
         };
+        /** PublishRequest */
+        PublishRequest: {
+            /**
+             * Effective From
+             * @description defaults to today (institution-local)
+             */
+            effective_from?: string | null;
+            /**
+             * Regenerate Sessions
+             * @default true
+             */
+            regenerate_sessions: boolean;
+        };
+        /** PublishSummary */
+        PublishSummary: {
+            /** Archived Version Id */
+            archived_version_id?: string | null;
+            /** Job Id */
+            job_id?: string | null;
+            /**
+             * Sessions Created
+             * @default 0
+             */
+            sessions_created: number;
+            /**
+             * Sessions Preserved
+             * @default 0
+             */
+            sessions_preserved: number;
+            /**
+             * Sessions Removed
+             * @default 0
+             */
+            sessions_removed: number;
+            timetable: components["schemas"]["TimetableResponse"];
+        };
         /** PunchIn */
         PunchIn: {
             /**
@@ -19468,6 +20759,104 @@ export interface components {
             start_date: string;
             term_type: components["schemas"]["TermType"];
         };
+        /** RoomAvailability */
+        RoomAvailability: {
+            /**
+             * Busy With
+             * @description course codes / sessions occupying the room
+             */
+            busy_with?: string[];
+            /** Free */
+            free: boolean;
+            room: components["schemas"]["RoomOut"];
+        };
+        /** RoomIn */
+        RoomIn: {
+            /** Building Id */
+            building_id?: string | null;
+            /**
+             * Capacity
+             * @default 0
+             */
+            capacity: number;
+            /** Code */
+            code: string;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Department Id
+             * @description department lab — a HOD may only edit labs tagged with its department
+             */
+            department_id?: string | null;
+            /** Exam Capacity */
+            exam_capacity?: number | null;
+            /**
+             * Features
+             * @description tags the solver matches (projector, ac, lab:cse …)
+             */
+            features?: string[];
+            /** Floor */
+            floor?: number | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /**
+             * Is Bookable
+             * @default true
+             */
+            is_bookable: boolean;
+            /** Name */
+            name: string;
+            /** @default classroom */
+            room_type: components["schemas"]["RoomType"];
+        };
+        /** RoomOut */
+        RoomOut: {
+            /** Building Code */
+            building_code?: string | null;
+            /** Building Id */
+            building_id?: string | null;
+            /** Capacity */
+            capacity: number;
+            /** Code */
+            code: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Exam Capacity */
+            exam_capacity?: number | null;
+            /** Features */
+            features?: string[];
+            /** Floor */
+            floor?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Is Bookable */
+            is_bookable: boolean;
+            /** Name */
+            name: string;
+            /** Room Type */
+            room_type: string;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+        };
+        /**
+         * RoomType
+         * @enum {string}
+         */
+        RoomType: "classroom" | "lab" | "seminar" | "auditorium" | "exam_hall" | "smart_class" | "sports" | "other";
         /** RosterItem */
         RosterItem: {
             /** Added At */
@@ -19849,6 +21238,16 @@ export interface components {
              */
             section_id: string;
         };
+        /** SectionFeed */
+        SectionFeed: {
+            /**
+             * Section Id
+             * Format: uuid
+             */
+            section_id: string;
+            /** Url */
+            url: string;
+        };
         /** SelfCheckinRequest */
         SelfCheckinRequest: {
             geo?: components["schemas"]["GeoPoint"] | null;
@@ -19927,6 +21326,33 @@ export interface components {
          * @enum {string}
          */
         ServiceBookEntryType: "joining" | "promotion" | "increment" | "transfer" | "award" | "disciplinary" | "leave_without_pay" | "exit";
+        /** SessionCancel */
+        SessionCancel: {
+            /** Reason */
+            reason?: string | null;
+        };
+        /** SessionReschedule */
+        SessionReschedule: {
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /**
+             * End
+             * Format: time
+             */
+            end: string;
+            /** Reason */
+            reason?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /**
+             * Start
+             * Format: time
+             */
+            start: string;
+        };
         /** SessionResponse */
         SessionResponse: {
             /**
@@ -19962,6 +21388,26 @@ export interface components {
             platform?: string | null;
             /** User Agent */
             user_agent?: string | null;
+        };
+        /**
+         * SessionStatus
+         * @enum {string}
+         */
+        SessionStatus: "scheduled" | "conducted" | "cancelled" | "rescheduled";
+        /**
+         * SessionType
+         * @enum {string}
+         */
+        SessionType: "lecture" | "tutorial" | "lab" | "project";
+        /** SessionUpdate */
+        SessionUpdate: {
+            /** Online Link */
+            online_link?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            status?: components["schemas"]["SessionStatus"] | null;
+            /** Topic */
+            topic?: string | null;
         };
         /** SettingItem */
         SettingItem: {
@@ -20029,6 +21475,73 @@ export interface components {
             /** Min Screening Score */
             min_screening_score?: number | string | null;
         };
+        /** SlotGroupReplace */
+        SlotGroupReplace: {
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Slot Group
+             * @default Default
+             */
+            slot_group: string;
+            /** Slots */
+            slots: components["schemas"]["SlotIn"][];
+        };
+        /** SlotIn */
+        SlotIn: {
+            /**
+             * End Time
+             * Format: time
+             */
+            end_time: string;
+            /** Name */
+            name: string;
+            /** @default lecture */
+            slot_type: components["schemas"]["SlotType"];
+            /**
+             * Start Time
+             * Format: time
+             */
+            start_time: string;
+        };
+        /** SlotOut */
+        SlotOut: {
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /**
+             * End Time
+             * Format: time
+             */
+            end_time: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /** Sequence */
+            sequence: number;
+            /** Slot Group */
+            slot_group: string;
+            /** Slot Type */
+            slot_type: string;
+            /**
+             * Start Time
+             * Format: time
+             */
+            start_time: string;
+        };
+        /**
+         * SlotType
+         * @enum {string}
+         */
+        SlotType: "lecture" | "lab" | "break" | "lunch";
         /** SpecialGrade */
         SpecialGrade: {
             /**
@@ -21430,6 +22943,98 @@ export interface components {
             /** Workflow Instance Id */
             workflow_instance_id?: string | null;
         };
+        /** SubstituteCandidate */
+        SubstituteCandidate: {
+            /** Department Id */
+            department_id?: string | null;
+            /** Free */
+            free: boolean;
+            /** Name */
+            name: string;
+            /**
+             * On Leave
+             * @default false
+             */
+            on_leave: boolean;
+            /**
+             * Staff Id
+             * Format: uuid
+             */
+            staff_id: string;
+            /**
+             * Teaches Offering
+             * @default false
+             */
+            teaches_offering: boolean;
+        };
+        /** SubstitutionCreate */
+        SubstitutionCreate: {
+            /**
+             * Entry Id
+             * Format: uuid
+             */
+            entry_id: string;
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /** Reason */
+            reason?: string | null;
+            /** Substitute Staff Id */
+            substitute_staff_id?: string | null;
+        };
+        /** SubstitutionDecision */
+        SubstitutionDecision: {
+            /** Comment */
+            comment?: string | null;
+            /** Substitute Staff Id */
+            substitute_staff_id?: string | null;
+        };
+        /** SubstitutionResponse */
+        SubstitutionResponse: {
+            /** Approved By */
+            approved_by?: string | null;
+            /** Course Code */
+            course_code?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Leave Id */
+            leave_id?: string | null;
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /** Reason */
+            reason?: string | null;
+            /** Section Name */
+            section_name?: string | null;
+            /** Slot Name */
+            slot_name?: string | null;
+            /** Source */
+            source: string;
+            /** Staff Id */
+            staff_id?: string | null;
+            /** Staff Name */
+            staff_name?: string | null;
+            /** Status */
+            status: string;
+            /** Substitute Name */
+            substitute_name?: string | null;
+            /** Substitute Staff Id */
+            substitute_staff_id?: string | null;
+            /**
+             * Timetable Entry Id
+             * Format: uuid
+             */
+            timetable_entry_id: string;
+        };
         /** SummaryRow */
         SummaryRow: {
             /**
@@ -21726,6 +23331,88 @@ export interface components {
             /** Status To */
             status_to?: string | null;
         };
+        /** TimetableCreate */
+        TimetableCreate: {
+            /**
+             * Base Version Id
+             * @description clone this version's entries
+             */
+            base_version_id?: string | null;
+            /** Name */
+            name?: string | null;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            scope_type: components["schemas"]["TimetableScope"];
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+        };
+        /** TimetableResponse */
+        TimetableResponse: {
+            /**
+             * Can Edit
+             * @default false
+             */
+            can_edit: boolean;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Effective From */
+            effective_from?: string | null;
+            /** Entries */
+            entries?: components["schemas"]["EntryOut"][];
+            /**
+             * Entries Count
+             * @default 0
+             */
+            entries_count: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name?: string | null;
+            /** Published At */
+            published_at?: string | null;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            /** Scope Label */
+            scope_label?: string | null;
+            /** Scope Type */
+            scope_type: string;
+            /** Status */
+            status: string;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /** Term Name */
+            term_name?: string | null;
+            /** Version */
+            version: number;
+        };
+        /**
+         * TimetableScope
+         * @enum {string}
+         */
+        TimetableScope: "section" | "batch" | "department";
+        /**
+         * TimetableStatus
+         * @enum {string}
+         */
+        TimetableStatus: "draft" | "published" | "archived";
         /** TransferComplete */
         TransferComplete: {
             /** Effective Date */
@@ -22243,6 +23930,41 @@ export interface components {
             /** Valid Until */
             valid_until?: string | null;
         };
+        /** ViewDay */
+        ViewDay: {
+            /** Date */
+            date?: string | null;
+            /** Day Of Week */
+            day_of_week: number;
+            /** Label */
+            label: string;
+            /** Slots */
+            slots?: components["schemas"]["ViewSlot"][];
+        };
+        /** ViewSlot */
+        ViewSlot: {
+            /**
+             * End Time
+             * Format: time
+             */
+            end_time: string;
+            /** Entries */
+            entries?: components["schemas"]["EntryOut"][];
+            /** Name */
+            name: string;
+            /**
+             * Slot Id
+             * Format: uuid
+             */
+            slot_id: string;
+            /** Slot Type */
+            slot_type: string;
+            /**
+             * Start Time
+             * Format: time
+             */
+            start_time: string;
+        };
         /** VisibilityDefault */
         VisibilityDefault: {
             /**
@@ -22339,6 +24061,28 @@ export interface components {
             student_id: string;
             /** Term Number */
             term_number?: number | null;
+        };
+        /**
+         * WeekPattern
+         * @enum {string}
+         */
+        WeekPattern: "all" | "odd" | "even";
+        /** WeeklyView */
+        WeeklyView: {
+            /** Days */
+            days?: components["schemas"]["ViewDay"][];
+            /** Iso Week */
+            iso_week?: number | null;
+            /** Label */
+            label?: string | null;
+            /** Scope */
+            scope: string;
+            /** Scope Id */
+            scope_id?: string | null;
+            /** Sessions */
+            sessions?: components["schemas"]["ClassSessionResponse"][];
+            /** Week Start */
+            week_start?: string | null;
         };
         /** WhatsappTemplateCreate */
         WhatsappTemplateCreate: {
@@ -22773,6 +24517,39 @@ export interface operations {
             };
         };
     };
+    dev_session_attendance_api_v1__dev_class_sessions__session_id__attendance_post: {
+        parameters: {
+            query?: {
+                status?: string;
+            };
+            header?: never;
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     dev_fee_paid_api_v1__dev_fees_pay__ref__post: {
         parameters: {
             query?: never;
@@ -22998,6 +24775,63 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_timetable_consume_api_v1__dev_timetable_consume__event__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                event: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_mark_missed_api_v1__dev_timetable_mark_missed_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
                 };
             };
         };
@@ -26880,6 +28714,136 @@ export interface operations {
             };
         };
     };
+    list_buildings_api_v1_buildings_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BuildingOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_building_api_v1_buildings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BuildingIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BuildingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_building_api_v1_buildings__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BuildingIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BuildingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_building_api_v1_buildings__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_cas_api_v1_cas_applications_get: {
         parameters: {
             query?: {
@@ -27036,6 +29000,237 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_CasApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sessions_api_v1_class_sessions_get: {
+        parameters: {
+            query?: {
+                offering_id?: string | null;
+                date?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                staff_id?: string | null;
+                section_id?: string | null;
+                room_id?: string | null;
+                status?: string | null;
+                scope?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ClassSessionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    extra_session_api_v1_class_sessions_extra_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtraSessionCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClassSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    sessions_today_api_v1_class_sessions_today_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ClassSessionResponse__"];
+                };
+            };
+        };
+    };
+    get_session_api_v1_class_sessions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClassSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_session_api_v1_class_sessions__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SessionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClassSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_session_api_v1_class_sessions__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SessionCancel"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClassSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reschedule_session_api_v1_class_sessions__id__reschedule_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SessionReschedule"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClassSessionResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -35284,6 +37479,212 @@ export interface operations {
             };
         };
     };
+    list_rooms_api_v1_rooms_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                building_id?: string | null;
+                room_type?: components["schemas"]["RoomType"] | null;
+                min_capacity?: number | null;
+                bookable?: boolean | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RoomOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_room_api_v1_rooms_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoomIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RoomOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    room_availability_api_v1_rooms_availability_get: {
+        parameters: {
+            query: {
+                date: string;
+                slot_id: string;
+                type?: components["schemas"]["RoomType"] | null;
+                college_id?: string | null;
+                min_capacity?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RoomAvailability__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_room_api_v1_rooms__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RoomOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_room_api_v1_rooms__id__put: {
+        parameters: {
+            query?: never;
+            header?: {
+                "if-match"?: string | null;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoomIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RoomOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_room_api_v1_rooms__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     search_api_v1_search_get: {
         parameters: {
             query: {
@@ -37684,6 +40085,911 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_TransferResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_substitutions_api_v1_substitutions_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                source?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                scope?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SubstitutionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_substitution_api_v1_substitutions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubstitutionCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SubstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_substitution_api_v1_substitutions__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SubstitutionDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SubstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    substitution_candidates_api_v1_substitutions__id__candidates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SubstituteCandidate__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_substitution_api_v1_substitutions__id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["SubstitutionDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SubstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withdraw_substitution_api_v1_substitutions__id__withdraw_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SubstitutionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_slots_api_v1_time_slots_get: {
+        parameters: {
+            query?: {
+                slot_group?: string | null;
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SlotOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_slots_api_v1_time_slots_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SlotGroupReplace"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SlotOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_timetables_api_v1_timetables_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+                college_id?: string | null;
+                scope_type?: components["schemas"]["TimetableScope"] | null;
+                scope_id?: string | null;
+                status?: components["schemas"]["TimetableStatus"] | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TimetableResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_timetable_api_v1_timetables_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TimetableCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TimetableResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ical_token_api_v1_timetables_ical_token_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ICalToken_"];
+                };
+            };
+        };
+    };
+    ical_revoke_api_v1_timetables_ical_token_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ICalToken_"];
+                };
+            };
+        };
+    };
+    ical_feed_api_v1_timetables_ical__token__ics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_timetable_api_v1_timetables_me_get: {
+        parameters: {
+            query?: {
+                week?: string | null;
+                ward_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WeeklyView_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    section_feed_api_v1_timetables_sections__id__ics_get: {
+        parameters: {
+            query: {
+                token: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    section_ical_link_api_v1_timetables_sections__id__ical_link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SectionFeed_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    weekly_view_api_v1_timetables_view_get: {
+        parameters: {
+            query: {
+                scope: string;
+                id: string;
+                week?: string | null;
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_WeeklyView_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_timetable_api_v1_timetables__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TimetableResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_timetable_api_v1_timetables__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_api_v1_timetables__id__archive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TimetableResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    auto_generate_api_v1_timetables__id__auto_generate_post: {
+        parameters: {
+            query?: {
+                dry_run?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AutoGenerateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_conflicts_api_v1_timetables__id__check_conflicts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["EntryCreate"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ConflictReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    clone_timetable_api_v1_timetables__id__clone_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TimetableResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_entry_api_v1_timetables__id__entries_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntryCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EntryResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_entry_api_v1_timetables__id__entries__eid__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EntryUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EntryResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_entry_api_v1_timetables__id__entries__eid__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_timetable_api_v1_timetables__id__export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_api_v1_timetables__id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PublishRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublishSummary_"];
                 };
             };
             /** @description Validation Error */

@@ -39,6 +39,10 @@ class AppRoutes {
   static const myOfferings = '/app/offerings/mine';
   static const offeringRoster = '/app/offerings/roster';
   static const registrationApprovals = '/app/registration/approvals';
+  // Phase 10 — my timetable (student / faculty), today's sessions, substitutions
+  static const myTimetable = '/app/timetable';
+  static const todaySessions = '/app/timetable/today';
+  static const substitutions = '/app/timetable/substitutions';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

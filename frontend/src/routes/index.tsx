@@ -125,6 +125,28 @@ const StudentRegistrationsHistory = lazy(() =>
 const FacultyOfferingsPage = lazy(() =>
   import('@/features/registration/pages/StudentRegistrationPage').then((m) => ({ default: m.FacultyOfferingsPage })),
 );
+// Phase 10 — timetable & rooms
+const RoomsPage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.RoomsPage })),
+);
+const SlotsPage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.SlotsPage })),
+);
+const TimetableEditorPage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.TimetableEditorPage })),
+);
+const SubstitutionsPage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.SubstitutionsPage })),
+);
+const SessionsPage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.SessionsPage })),
+);
+const MyTimetablePage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.MyTimetablePage })),
+);
+const RoomKioskPage = lazy(() =>
+  import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.RoomKioskPage })),
+);
 // Phase 08 — admissions
 const CyclesPage = lazy(() => import('@/features/admissions/pages/CyclesPage'));
 const CycleWorkspacePage = lazy(() => import('@/features/admissions/pages/CycleWorkspacePage'));
@@ -332,6 +354,15 @@ export const router = createBrowserRouter([
               ['/admin/registration/allocation', 'registration.elective_allocation', 'registration', 'allocate', [['registration', 'manage']], <AllocationPage key="ra" />],
               ['/admin/registration/arrears', 'registration.arrears', 'registration', 'view', [['registration', 'view_all'], ['registration', 'approve'], ['students', 'view_all']], <ArrearsPage key="rr" />],
               ['/admin/registration/:id', 'registration.core', 'registration', 'view', [['registration', 'view_all'], ['registration', 'approve']], <RegistrationDetailPage key="rd" />],
+              // Phase 10 — timetable & rooms (staff read institution-wide; edits narrowed by the services)
+              ['/admin/facilities/rooms', 'timetable.rooms', 'timetable', 'view', [['timetable', 'view_all']], <RoomsPage key="tr" />],
+              ['/admin/timetable/slots', 'timetable.core', 'timetable', 'update', [['timetable', 'manage']], <SlotsPage key="ts" />],
+              ['/admin/timetable/substitutions', 'timetable.substitutions', 'timetable', 'substitute', [['timetable', 'approve'], ['timetable', 'manage']], <SubstitutionsPage key="tu" />],
+              ['/admin/timetable/sessions', 'timetable.core', 'attendance', 'view', [['attendance', 'view_all'], ['attendance', 'mark']], <SessionsPage key="tx" />],
+              ['/admin/timetable', 'timetable.core', 'timetable', 'view', [['timetable', 'view_all']], <TimetableEditorPage key="te" />],
+              ['/admin/timetable/:termId', 'timetable.core', 'timetable', 'view', [['timetable', 'view_all']], <TimetableEditorPage key="tt" />],
+              ['/rooms/:id/today', 'timetable.rooms', 'timetable', 'view', [['timetable', 'view_all']], <RoomKioskPage key="rk" />],
+              ['/timetable', 'timetable.core', 'timetable', 'view', [], <MyTimetablePage key="tm" />],
               // Phase 08 — admissions (cycles readable by all staff; applicants need view_all — HOD / college slices)
               ['/admin/admissions/cycles', 'admissions.cycles', 'admissions', 'view', [], <CyclesPage key="ac" />],
               ['/admin/admissions/cycles/:id', 'admissions.cycles', 'admissions', 'view', [], <CycleWorkspacePage key="aw" />],
@@ -457,6 +488,7 @@ export const router = createBrowserRouter([
               ['credit-transfers', <StudentCreditTransfersPage key="t" />],
               ['registration', <StudentRegistrationPage key="r" />],
               ['registrations', <StudentRegistrationsHistory key="h" />],
+              ['timetable', <MyTimetablePage key="t" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -464,7 +496,10 @@ export const router = createBrowserRouter([
       {
         path: '/parent',
         element: <PortalRoute roles={['parent']} title="Parent" />,
-        children: [{ index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) }],
+        children: [
+          { index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) },
+          { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
+        ],
       },
       {
         path: '/faculty',
@@ -473,6 +508,7 @@ export const router = createBrowserRouter([
           { index: true, element: page(<PortalHomePage />) },
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
+          { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
         ],
       },
       {
