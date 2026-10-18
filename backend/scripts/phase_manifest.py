@@ -1,4 +1,4 @@
-"""Tables each phase owns in ``Database_Schema.sql`` — consumed by ``check_schema_drift.py --phase NN``.
+"""Tables each phase owns in ``Database_Schema.sql`` â€” consumed by ``check_schema_drift.py --phase NN``.
 
 Phase 00 mapped the tables the core skeleton needs; Phase 01 lists all 44 platform tables (sections 2-6); every later
 phase appends its section's tables. Materialized views (Phase 35) are registered under ``VIEWS`` so the drift guard
@@ -29,7 +29,7 @@ PHASES: dict[str, list[str]] = {
         "audit_logs",
     ],
     "01": [
-        # §2 tenancy
+        # Â§2 tenancy
         "institutions",
         "institution_profile",
         "colleges",
@@ -38,7 +38,7 @@ PHASES: dict[str, list[str]] = {
         "institution_settings",
         "holidays",
         "number_sequences",
-        # §3 auth
+        # Â§3 auth
         "users",
         "password_reset_tokens",
         "user_sessions",
@@ -47,16 +47,16 @@ PHASES: dict[str, list[str]] = {
         "ip_allowlists",
         "device_tokens",
         "credential_sheets",
-        # §4 rbac
+        # Â§4 rbac
         "permissions",
         "roles",
         "role_permissions",
         "user_roles",
-        # §5 features
+        # Â§5 features
         "platform_features",
         "institution_feature_flags",
         "feature_flag_changes",
-        # §6 platform services
+        # Â§6 platform services
         "background_jobs",
         "domain_events",
         "event_consumptions",
@@ -80,7 +80,7 @@ PHASES: dict[str, list[str]] = {
         "audit_logs",
     ],
     "02": [
-        # §32 SaaS tables the entitlement / impersonation services need (Prompts/02 §02.3); the auth, RBAC and
+        # Â§32 SaaS tables the entitlement / impersonation services need (Prompts/02 Â§02.3); the auth, RBAC and
         # feature tables of this phase were mapped in Phase 01
         "subscription_plans",
         "institution_subscriptions",
@@ -88,12 +88,12 @@ PHASES: dict[str, list[str]] = {
         "impersonation_logs",
     ],
     "03": [
-        # section 7 academic sessions (Prompts/03 §03.1); the section 2 tenancy tables were mapped in Phase 01
+        # section 7 academic sessions (Prompts/03 Â§03.1); the section 2 tenancy tables were mapped in Phase 01
         "academic_years",
         "academic_terms",
     ],
     "04": [
-        # section 23 communication (Prompts/04 §04.1); workflow tables + device_tokens were mapped in Phase 01
+        # section 23 communication (Prompts/04 Â§04.1); workflow tables + device_tokens were mapped in Phase 01
         "notification_templates",
         "dlt_templates",
         "whatsapp_templates",
@@ -110,7 +110,7 @@ PHASES: dict[str, list[str]] = {
         "workflow_delegations",
         "device_tokens",
     ],
-    # Phase 05 — programmes, regulations & curriculum (section 7; no new tables)
+    # Phase 05 â€” programmes, regulations & curriculum (section 7; no new tables)
     "05": [
         "grading_scales",
         "programs",
@@ -153,7 +153,7 @@ PHASES: dict[str, list[str]] = {
         "faculty_workloads",
         "course_allocation_proposals",
     ],
-    # Phase 07 — students, enrolment, holds & standing (section 8; no new tables)
+    # Phase 07 â€” students, enrolment, holds & standing (section 8; no new tables)
     "07": [
         "students",
         "student_guardians",
@@ -165,7 +165,7 @@ PHASES: dict[str, list[str]] = {
         "student_transfers",
         "credit_transfers",
     ],
-    # Phase 08 — admissions (section 10; no new tables)
+    # Phase 08 â€” admissions (section 10; no new tables)
     "08": [
         "admission_cycles",
         "admission_cycle_programs",
@@ -192,7 +192,7 @@ PHASES: dict[str, list[str]] = {
         "offering_waitlists",
         "student_arrears",
     ],
-    # calendar_feed_tokens lives in §24 (Phase 25) but the iCal feeds of Phase 10 create the model
+    # calendar_feed_tokens lives in Â§24 (Phase 25) but the iCal feeds of Phase 10 create the model
     "10": [
         "buildings",
         "rooms",
@@ -212,7 +212,7 @@ PHASES: dict[str, list[str]] = {
         "attendance_condonations",
         "term_eligibility",
     ],
-    # ledger_accounts lives in §22 (Phase 23 extends the chart) but fee heads map to it from Phase 12;
+    # ledger_accounts lives in Â§22 (Phase 23 extends the chart) but fee heads map to it from Phase 12;
     # integration_connections is already modelled (Phase 01 platform tables)
     "12": [
         "fee_heads",
@@ -234,7 +234,7 @@ PHASES: dict[str, list[str]] = {
         "no_dues_signoffs",
         "ledger_accounts",
     ],
-    # assessment_schemes / assessment_components are Phase 05; college_data_submissions lives in §34 (Phase 34 owns the
+    # assessment_schemes / assessment_components are Phase 05; college_data_submissions lives in Â§34 (Phase 34 owns the
     # module) but the CIA university submission of Phase 13 writes it
     "13": [
         "outcome_definitions",
@@ -269,8 +269,8 @@ PHASES: dict[str, list[str]] = {
         "course_files",
         "college_data_submissions",
     ],
-    # exam_centres (§31) for university tenants; malpractice_cases (Phase 16 runs the inquiry — the hall report files it
-    # here) and calendar_events (§24, Phase 25 owns the module — the date-sheet publishes exam events)
+    # exam_centres (Â§31) for university tenants; malpractice_cases (Phase 16 runs the inquiry â€” the hall report files it
+    # here) and calendar_events (Â§24, Phase 25 owns the module â€” the date-sheet publishes exam events)
     "14": [
         "exam_sessions",
         "exam_papers",
@@ -286,9 +286,26 @@ PHASES: dict[str, list[str]] = {
         "malpractice_cases",
         "calendar_events",
     ],
+    # evaluation (§15) + results (§16); abc_credit_ledger rows are created here and pushed in Phase 18
+    "15": [
+        "answer_script_bundles",
+        "answer_scripts",
+        "script_custody_log",
+        "valuation_assignments",
+        "script_valuations",
+        "script_final_marks",
+        "moderation_actions",
+        "result_processing_runs",
+        "student_course_results",
+        "student_term_results",
+        "result_publications",
+        "grade_cards",
+        "legacy_result_imports",
+        "abc_credit_ledger",
+    ],
 }
 
-VIEWS: set[str] = set()
+VIEWS: set[str] = {"answer_scripts_for_evaluation"}
 
 
 def tables_for(phase: str) -> list[str]:

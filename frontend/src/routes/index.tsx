@@ -163,6 +163,16 @@ const ProgramOutcomesPage = lazy(() => import('@/features/assessment/pages/Admin
 const ObeProgramsPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.ObeProgramsPage })));
 const StudentCoursePage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentCoursePage })));
 const StudentMarksPage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentMarksPage })));
+// Phase 15 — evaluation & results
+const EvaluatorPortalPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.EvaluatorPortalPage })));
+const StudentResultsPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.StudentResultsPage })));
+const ParentResultsPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.ParentResultsPage })));
+const OfferingResultsPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.OfferingResultsPage })));
+const TabulationPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.TabulationPage })));
+const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.ResultAnalysisPage })));
+const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
+const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
+const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
 // Phase 14 — exam administration
 const ExamSessionsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionsPage })));
 const ExamSessionWorkspacePage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionWorkspacePage })));
@@ -235,6 +245,8 @@ export const router = createBrowserRouter([
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
   { path: '/verify/:token', element: page(<VerifyPage />) },
+  // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
+  { path: '/results/lookup', element: page(<PublicResultLookupPage />) },
   // Phase 08 — public admissions: cycles, masked merit lists and the application wizard (account step needs no
   // sign-in; the API checks the admissions features for the tenant)
   { path: '/admissions', element: page(<PublicAdmissionsPage />) },
@@ -415,6 +427,11 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 15 — result registers, analysis, rank lists, legacy import
+              ['/admin/results/tabulation', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <TabulationPage key="rt" />],
+              ['/admin/results/analysis', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <ResultAnalysisPage key="ra" />],
+              ['/admin/results/rank-lists', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <RankListPage key="rr" />],
+              ['/admin/results/legacy-import', 'results.legacy_import', 'results', 'legacy_import', [], <LegacyImportPage key="rl" />],
               // Phase 14 — exam sessions (exam cell / COE; HOD and auditors read)
               ['/admin/exams/sessions', 'exams.sessions', 'exams', 'view_all', [['exams', 'configure'], ['exams', 'manage'], ['exams', 'view']], <ExamSessionsPage key="es" />],
               ['/admin/exams/sessions/:id', 'exams.sessions', 'exams', 'view_all', [['exams', 'configure'], ['exams', 'manage'], ['exams', 'view']], <ExamSessionWorkspacePage key="ew" />],
@@ -568,6 +585,7 @@ export const router = createBrowserRouter([
               ['fees', <StudentFeesPage key="f" />],
               ['marks', <StudentMarksPage key="mk" />],
               ['exams', <StudentExamsPage key="ex" />],
+              ['results', <StudentResultsPage key="res" />],
               ['courses/:offeringId', <StudentCoursePage key="sc" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
@@ -582,6 +600,7 @@ export const router = createBrowserRouter([
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><ParentAttendancePage /></FeatureRoute>) },
           { path: 'fees', element: page(<FeatureRoute feature="fees.core"><ParentFeesPage /></FeatureRoute>) },
           { path: 'exams/:studentId', element: page(<FeatureRoute feature="exams.sessions"><ParentExamsPage /></FeatureRoute>) },
+          { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
         ],
       },
       {
@@ -591,6 +610,9 @@ export const router = createBrowserRouter([
           { index: true, element: page(<PortalHomePage />) },
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
+          // Phase 15 — evaluator portal (dummy numbers only) and the offering result sheet
+          { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
+          { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
           // Phase 14 — exam duties and question-paper setting
           { path: 'duties', element: page(<FeatureRoute feature="exams.invigilation"><MyDutiesPage /></FeatureRoute>) },
           { path: 'qp', element: page(<FeatureRoute feature="exams.qp_management"><MyQpPage /></FeatureRoute>) },

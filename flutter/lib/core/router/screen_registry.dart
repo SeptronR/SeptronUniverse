@@ -11,6 +11,7 @@ import '../../features/attendance/attendance_screens.dart';
 import '../../features/fees/fees_screens.dart';
 import '../../features/assessment/assessment_screens.dart';
 import '../../features/exams/exam_screens.dart';
+import '../../features/results/result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -292,6 +293,28 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 15 — results (students), evaluation (evaluators), result runs (COE / exam cell)
+    AppRoutes.myResults: ScreenEntry(
+      route: AppRoutes.myResults,
+      titleKey: 'results',
+      feature: 'results.publication_portal',
+      permission: 'results:self',
+      builder: (_, __) => const StudentResultsScreen(),
+    ),
+    AppRoutes.evaluation: ScreenEntry(
+      route: AppRoutes.evaluation,
+      titleKey: 'evaluation',
+      feature: 'exams.coding_dummy',
+      permission: 'exams:evaluate',
+      builder: (_, __) => const EvaluationScreen(),
+    ),
+    AppRoutes.resultRuns: ScreenEntry(
+      route: AppRoutes.resultRuns,
+      titleKey: 'result_runs',
+      feature: 'results.processing',
+      permission: 'results:verify',
+      builder: (_, __) => const ResultRunsScreen(),
     ),
     // Phase 14 — exams (student registration / hall ticket, faculty duties, hall attendance)
     AppRoutes.myExams: ScreenEntry(

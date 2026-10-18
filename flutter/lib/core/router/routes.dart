@@ -53,6 +53,10 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 15 — results, evaluation, result runs
+  static const myResults = '/app/results';
+  static const evaluation = '/app/evaluation';
+  static const resultRuns = '/app/result-runs';
   static const myDuties = '/app/exams/duties';
   static const examConduct = '/app/exams/conduct';
   static const marksVerification = '/app/marks/verification';

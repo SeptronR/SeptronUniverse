@@ -101,6 +101,15 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
         label="Overdue fees make a student ineligible (Phase 11)",
     ),
     SettingDef("exams", "result_public_lookup", "bool", False, True),
+    # exams (Phase 15) — coding, evaluator conflicts, script retention, valuation remuneration (paise per script)
+    SettingDef("exams", "bundle_size", "int", 30, label="Answer scripts per bundle", min=1, max=500),
+    SettingDef(
+        "exams", "allow_teacher_evaluation", "bool", False, label="Teachers may value their own course's scripts"
+    ),
+    SettingDef(
+        "exams", "script_retention_months", "int", 6, label="Archive scripts N months after publication", min=1, max=120
+    ),
+    SettingDef("exams", "valuation_remuneration", "json", None, label="Valuation remuneration per script (paise)"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),

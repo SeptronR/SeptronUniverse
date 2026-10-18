@@ -859,6 +859,40 @@ EXAM_EVENTS: tuple[EventDef, ...] = (
         link="/faculty/duties",
     ),
 )
+# Phase 15 — valuation assignments / reminders, result publication (masked SMS: SGPA only, no course detail)
+RESULT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "valuation.assigned",
+        "exams",
+        "Valuation assigned",
+        "Valuation: {{ paper }}",
+        "{{ bundles }} bundle(s) of {{ paper }} (round {{ round }}) are assigned to you.",
+        ("paper", "bundles", "round"),
+        ("in_app", "email"),
+        link="/faculty/evaluation",
+    ),
+    EventDef(
+        "valuation.due_reminder",
+        "exams",
+        "Valuation due",
+        "Valuation due soon",
+        "{{ bundles }} bundle(s) are due for valuation within two days.",
+        ("bundles",),
+        ("in_app", "push", "email"),
+        link="/faculty/evaluation",
+    ),
+    EventDef(
+        "results.published",
+        "exams",
+        "Result declared",
+        "Result declared",
+        "Result declared. SGPA {{ sgpa }}. Log in to view details.",
+        ("sgpa",),
+        ("in_app", "push", "sms", "email"),
+        hi_body="परिणाम घोषित। SGPA {{ sgpa }}। विवरण के लिए लॉग इन करें।",
+        link="/student/results",
+    ),
+)
 # Phase 13 — marks deadlines, LMS publication / announcements
 ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -902,6 +936,7 @@ EVENTS = (
     + FEE_EVENTS
     + ASSESSMENT_EVENTS
     + EXAM_EVENTS
+    + RESULT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

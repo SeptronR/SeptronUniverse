@@ -109,6 +109,12 @@ export const NAV_GROUPS: NavGroup[] = [
     title: 'EXAMINATIONS',
     items: [
       // Phase 11 — eligibility snapshots / detention (Phase 14 joins this group)
+      // Phase 15 — valuation (evaluators), result registers, legacy import (coding / valuation / runs live in the session workspace)
+      { label: 'Valuation', to: '/faculty/evaluation', icon: ClipboardCheck, module: 'exams', action: 'evaluate', feature: 'exams.coding_dummy' },
+      { label: 'Tabulation register', to: '/admin/results/tabulation', icon: ScrollText, module: 'results', action: 'view_all', feature: 'results.rank_lists' },
+      { label: 'Result analysis', to: '/admin/results/analysis', icon: TrendingUp, module: 'results', action: 'view_all', feature: 'results.rank_lists' },
+      { label: 'Rank lists', to: '/admin/results/rank-lists', icon: GraduationCap, module: 'results', action: 'view_all', feature: 'results.rank_lists' },
+      { label: 'Legacy result import', to: '/admin/results/legacy-import', icon: Repeat, module: 'results', action: 'legacy_import', feature: 'results.legacy_import' },
       // Phase 14 — exam sessions (papers, date-sheet, registrations, hall tickets, seating, invigilation, QP, conduct)
       { label: 'Exam sessions', to: '/admin/exams/sessions', icon: CalendarCheck, module: 'exams', action: 'view_all', altActions: ['configure', 'manage', 'view'], feature: 'exams.sessions' },
       // Phase 13 — marks verification (HOD) and locks (exam cell)

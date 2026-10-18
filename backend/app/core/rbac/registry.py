@@ -651,6 +651,8 @@ PARENT_LMS: set[str] = P("lms", "view") | P("projects", "view")
 HOD_EXAMS: set[str] = P("exams", "view", "view_all")
 FACULTY_QP: set[str] = P("exams", "qp")
 PARENT_EXAMS: set[str] = P("exams", "view")
+# Phase 15 (Prompts/15 visibility): the HOD reads its department's runs (after verification) and published results
+HOD_RESULTS: set[str] = P("results", "view_all")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -781,7 +783,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_ATTENDANCE
     | HOD_FEES
     | HOD_ASSESSMENT
-    | HOD_EXAMS,
+    | HOD_EXAMS
+    | HOD_RESULTS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -1013,6 +1016,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0015": frozenset(HOD_RESULTS),
     "0014": frozenset(HOD_EXAMS | FACULTY_QP | PARENT_EXAMS),
     "0013": frozenset(EXAM_CELL_MARKS | HOD_ASSESSMENT | DEAN_OBE | REGISTRAR_MARKS | PARENT_LMS),
     "0012": frozenset(

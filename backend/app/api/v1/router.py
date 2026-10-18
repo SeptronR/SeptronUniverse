@@ -32,6 +32,7 @@ Phase 13: ``assessment`` {assessment.internal_marks} (+ ``obe_router`` {obe.defi
 (+ ``projects_router`` {assessment.projects}), ``content`` {lms.question_bank} (+ ``materials_router``
 {lms.study_materials}).
 Phase 14: ``exams`` {exams.sessions} with per-route sub-features (+ the public hall-ticket verification).
+Phase 15: ``results`` {exams.sessions} with per-route sub-features (+ the public result lookup).
 """
 
 from fastapi import APIRouter
@@ -73,6 +74,7 @@ from app.api.v1.endpoints import (
     recruitment,
     registration,
     regulations,
+    results,
     scholarships,
     search,
     staff,
@@ -139,6 +141,8 @@ api_router.include_router(content.router, dependencies=[feature_required("lms.qu
 api_router.include_router(content.materials_router, dependencies=[feature_required("lms.study_materials")])
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
+api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])
+api_router.include_router(results.public_router)  # public result lookup (rate-limited; audience=public only)
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])

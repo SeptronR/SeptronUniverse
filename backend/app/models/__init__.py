@@ -5,9 +5,9 @@ Phases append their module here (``from app.models import <module>  # noqa: F401
 
 from app.models import (  # noqa: F401
     academic,
+    admissions,
     assessment,
     attendance,
-    admissions,
     communication,
     content,
     curriculum,
@@ -20,9 +20,11 @@ from app.models import (  # noqa: F401
     platform,
     projects,
     registration,
+    results,
     saas,
     students,
     timetable,
+    valuation,
 )
 
 __all__ = [
@@ -42,7 +44,9 @@ __all__ = [
     "platform",
     "projects",
     "registration",
+    "results",
     "saas",
     "students",
     "timetable",
+    "valuation",
 ]

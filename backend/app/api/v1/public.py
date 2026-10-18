@@ -53,6 +53,9 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/webhooks/payments/{provider}",
     # Phase 14 — public hall-ticket verification (random token; masked identity)
     "GET /api/v1/hall-tickets/verify/{token}",
+    # Phase 15 — public result lookup (reg. no + DOB; rate-limited + captcha; audience=public sessions only).
+    # Grade-card QR verification reuses "GET /api/v1/verify/{token}" (Phase 07).
+    "POST /api/v1/public/results/lookup",
 }
 
 

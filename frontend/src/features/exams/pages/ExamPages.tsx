@@ -13,6 +13,8 @@ import { Modal } from '@/components/ui/Modal';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { toast } from '@/components/ui/Toaster';
 import { SimpleTable } from '@/features/hr/components/shared';
+import { CodingTab, CustodyTab, DecodeTab, ModerationTab, ResultsRunTab, ValuationTab } from '@/features/results/pages/EvaluationTabs';
+import { usePermission } from '@/hooks/usePermission';
 import { examsApi, openBlob } from '../api';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -254,6 +256,7 @@ export function ExamSessionWorkspacePage() {
   const { id } = useParams();
   const s = useQ(['session', id], () => examsApi.session(id!), !!id);
   const run = useRun();
+  const { can } = usePermission();
   const d = s.data?.data;
   useTitle(d?.name ?? 'Exam session');
   if (!id) return null;
@@ -271,6 +274,13 @@ export function ExamSessionWorkspacePage() {
           <TabsTrigger value="invigilation">Invigilation</TabsTrigger>
           <TabsTrigger value="qp">Question papers</TabsTrigger>
           <TabsTrigger value="conduct">Conduct</TabsTrigger>
+          {/* Phase 15 — evaluation & results */}
+          <TabsTrigger value="coding">Coding</TabsTrigger>
+          <TabsTrigger value="valuation">Valuation</TabsTrigger>
+          <TabsTrigger value="moderation">Moderation</TabsTrigger>
+          {can('exams', 'decode') && <TabsTrigger value="decode">Decode</TabsTrigger>}
+          <TabsTrigger value="results">Results run</TabsTrigger>
+          <TabsTrigger value="custody">Custody & retention</TabsTrigger>
         </TabsList>
         <TabsContent value="papers"><PapersTab id={id} /></TabsContent>
         <TabsContent value="registrations"><RegistrationsTab id={id} /></TabsContent>
@@ -279,6 +289,12 @@ export function ExamSessionWorkspacePage() {
         <TabsContent value="invigilation"><InvigilationTab id={id} /></TabsContent>
         <TabsContent value="qp"><QpTab id={id} /></TabsContent>
         <TabsContent value="conduct"><ConductTab id={id} /></TabsContent>
+        <TabsContent value="coding"><CodingTab id={id} /></TabsContent>
+        <TabsContent value="valuation"><ValuationTab id={id} /></TabsContent>
+        <TabsContent value="moderation"><ModerationTab id={id} /></TabsContent>
+        <TabsContent value="decode"><DecodeTab id={id} /></TabsContent>
+        <TabsContent value="results"><ResultsRunTab id={id} /></TabsContent>
+        <TabsContent value="custody"><CustodyTab id={id} /></TabsContent>
       </Tabs>
     </div>
   );

@@ -1242,6 +1242,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/answer-scripts/{id}/scan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Signed scan URL */
+        get: operations["script_scan_api_v1_answer_scripts__id__scan_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/answer-scripts/{id}/valuations/{round}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Enter the marks of a script */
+        post: operations["submit_valuation_api_v1_answer_scripts__id__valuations__round__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/applicants/me": {
         parameters: {
             query?: never;
@@ -2477,6 +2511,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/bundles/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Bundle */
+        get: operations["get_bundle_api_v1_bundles__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/bundles/{id}/code": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Code a bundle with dummy numbers */
+        post: operations["code_bundle_api_v1_bundles__id__code_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/bundles/{id}/custody": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Custody timeline */
+        get: operations["custody_log_api_v1_bundles__id__custody_get"];
+        put?: never;
+        /** Log a custody movement */
+        post: operations["log_custody_api_v1_bundles__id__custody_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/cas-applications": {
         parameters: {
             query?: never;
@@ -3571,6 +3657,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/course-offerings/{id}/results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Result sheet of an offering */
+        get: operations["offering_results_api_v1_course_offerings__id__results_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/course-offerings/{id}/roster": {
         parameters: {
             query?: never;
@@ -4476,6 +4579,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/exam-papers/{id}/bundles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Answer-script bundles of a paper */
+        get: operations["list_bundles_api_v1_exam_papers__id__bundles_get"];
+        put?: never;
+        /** Create bundles from present candidates */
+        post: operations["create_bundles_api_v1_exam_papers__id__bundles_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/decode": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decode dummy numbers (decoder; IP allow-list) */
+        post: operations["decode_api_v1_exam_papers__id__decode_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/exam-papers/{id}/malpractice-reports": {
         parameters: {
             query?: never;
@@ -4487,6 +4625,41 @@ export interface paths {
         put?: never;
         /** Report malpractice */
         post: operations["malpractice_api_v1_exam_papers__id__malpractice_reports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/moderation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Moderation actions (with impact preview) */
+        get: operations["list_moderation_api_v1_exam_papers__id__moderation_get"];
+        put?: never;
+        /** Propose a moderation action */
+        post: operations["propose_moderation_api_v1_exam_papers__id__moderation_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/online-import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import online-paper totals as final marks */
+        post: operations["online_import_api_v1_exam_papers__id__online_import_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4539,6 +4712,74 @@ export interface paths {
         put?: never;
         /** Invite a setter for a set */
         post: operations["qp_create_api_v1_exam_papers__id__qp_assignments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/valuation/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign bundles to an evaluator */
+        post: operations["assign_valuation_api_v1_exam_papers__id__valuation_assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/valuation/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reconcile valuations (discrepancies, final marks) */
+        post: operations["reconcile_api_v1_exam_papers__id__valuation_reconcile_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/valuation/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Valuation progress of a paper */
+        get: operations["valuation_status_api_v1_exam_papers__id__valuation_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/valuation/third-assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign third valuations */
+        post: operations["third_assign_api_v1_exam_papers__id__valuation_third_assign_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5068,6 +5309,57 @@ export interface paths {
         };
         /** Remuneration by role / staff */
         get: operations["remuneration_api_v1_exam_sessions__id__remuneration_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/scripts/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Archive scripts */
+        post: operations["scripts_archive_api_v1_exam_sessions__id__scripts_archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/scripts/destroy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Destroy archived scripts (COE) */
+        post: operations["scripts_destroy_api_v1_exam_sessions__id__scripts_destroy_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/scripts/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Script custody / retention register */
+        get: operations["scripts_register_api_v1_exam_sessions__id__scripts_register_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -6173,6 +6465,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/grade-cards/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My grade cards */
+        get: operations["my_cards_api_v1_grade_cards_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/grade-cards/{id}.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Grade card PDF */
+        get: operations["card_pdf_api_v1_grade_cards__id__pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/grading-scales": {
         parameters: {
             query?: never;
@@ -6843,6 +7169,91 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/legacy-results/imports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload legacy results */
+        post: operations["legacy_create_api_v1_legacy_results_imports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legacy-results/imports/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Legacy import */
+        get: operations["legacy_get_api_v1_legacy_results_imports__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legacy-results/imports/{id}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply a validated import */
+        post: operations["legacy_apply_api_v1_legacy_results_imports__id__apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legacy-results/imports/{id}/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Roll back an applied import */
+        post: operations["legacy_rollback_api_v1_legacy_results_imports__id__rollback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legacy-results/imports/{id}/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Validate a legacy import */
+        post: operations["legacy_validate_api_v1_legacy_results_imports__id__validate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/lesson-plans/{id}": {
         parameters: {
             query?: never;
@@ -7010,6 +7421,57 @@ export interface paths {
         put?: never;
         /** Mobile remote config (POST variant used by the app bootstrap) */
         post: operations["mobile_config_post_api_v1_mobile_config_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/moderation-actions/{id}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply an approved action */
+        post: operations["apply_moderation_api_v1_moderation_actions__id__apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/moderation-actions/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve (controller of examinations) */
+        post: operations["approve_moderation_api_v1_moderation_actions__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/moderation-actions/{id}/revert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revert an applied action (before decode) */
+        post: operations["revert_moderation_api_v1_moderation_actions__id__revert_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8377,6 +8839,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/public/results/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Public result lookup (registration no. + date of birth) */
+        post: operations["public_lookup_route_api_v1_public_results_lookup_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/qp-assignments/me": {
         parameters: {
             query?: never;
@@ -9524,6 +10003,296 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/result-runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Result runs */
+        get: operations["list_runs_api_v1_result_runs_get"];
+        put?: never;
+        /** Create and compute a run (job) */
+        post: operations["create_run_api_v1_result_runs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Result run */
+        get: operations["get_run_api_v1_result_runs__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/anomalies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Anomalies of a run */
+        get: operations["run_anomalies_api_v1_result_runs__id__anomalies_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve (COE) */
+        post: operations["approve_run_api_v1_result_runs__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rows of a run as XLSX */
+        get: operations["run_export_api_v1_result_runs__id__export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/grade-cards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate grade cards (job) */
+        post: operations["run_grade_cards_api_v1_result_runs__id__grade_cards_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish */
+        post: operations["publish_run_api_v1_result_runs__id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/rollback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Roll back before publication */
+        post: operations["rollback_run_api_v1_result_runs__id__rollback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/rows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rows of a run */
+        get: operations["run_rows_api_v1_result_runs__id__rows_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/result-runs/{id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify (exam cell) */
+        post: operations["verify_run_api_v1_result_runs__id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Result analysis */
+        get: operations["analysis_api_v1_results_analysis_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My published results */
+        get: operations["my_results_api_v1_results_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/me/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My SGPA / CGPA summary */
+        get: operations["my_summary_api_v1_results_me_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/rank-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rank list */
+        get: operations["rank_list_api_v1_results_rank_list_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/tabulation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Tabulation register */
+        get: operations["tabulation_api_v1_results_tabulation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/tabulation/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Tabulation register (XLSX) */
+        get: operations["tabulation_export_api_v1_results_tabulation_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/wards/{student_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A ward's results */
+        get: operations["ward_results_api_v1_results_wards__student_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/roles": {
         parameters: {
             query?: never;
@@ -10616,6 +11385,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/students/{id}/grade-cards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A student's grade cards */
+        get: operations["student_cards_api_v1_students__id__grade_cards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/students/{id}/guardian-consent": {
         parameters: {
             query?: never;
@@ -10764,6 +11550,23 @@ export interface paths {
         };
         /** A student's registration history */
         get: operations["student_registrations_api_v1_students__id__registrations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/students/{id}/results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A student's published results */
+        get: operations["student_results_api_v1_students__id__results_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -11549,6 +12352,91 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/valuation-assignments/{id}/reassign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reassign a bundle round */
+        post: operations["reassign_api_v1_valuation_assignments__id__reassign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/valuation/bundles/{id}/scripts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Scripts of my bundle (dummy numbers only) */
+        get: operations["bundle_scripts_api_v1_valuation_bundles__id__scripts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/valuation/bundles/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit (lock) my bundle */
+        post: operations["submit_bundle_api_v1_valuation_bundles__id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/valuation/me/bundles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My valuation bundles */
+        get: operations["my_bundles_api_v1_valuation_me_bundles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/valuation/me/marks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit several valuations */
+        post: operations["bulk_marks_api_v1_valuation_me_marks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/verify/{token}": {
         parameters: {
             query?: never;
@@ -11556,7 +12444,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Verify an ID card QR token (public) */
+        /** Verify an ID card / grade card QR token (public) */
         get: operations["verify_api_v1_verify__token__get"];
         put?: never;
         post?: never;
@@ -12596,6 +13484,25 @@ export interface components {
             /** Title */
             title?: string | null;
         };
+        /** AnomalyRow */
+        AnomalyRow: {
+            /** Code */
+            code: string;
+            /** Course */
+            course?: string | null;
+            /** Course Id */
+            course_id?: string | null;
+            /** Detail */
+            detail: string;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Row Id */
+            row_id?: string | null;
+            /** Student */
+            student?: string | null;
+        };
         /** ApplicableStructureResponse */
         ApplicableStructureResponse: {
             /**
@@ -13325,6 +14232,29 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** AssignValuationRequest */
+        AssignValuationRequest: {
+            /** Bundle Ids */
+            bundle_ids: string[];
+            /** Due At */
+            due_at?: string | null;
+            /** Evaluator Staff Id */
+            evaluator_staff_id?: string | null;
+            /**
+             * Evaluator Type
+             * @default internal
+             * @enum {string}
+             */
+            evaluator_type: "internal" | "external";
+            external_evaluator?: components["schemas"]["ExternalEvaluator"] | null;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
+            /**
+             * Round
+             * @default 1
+             */
+            round: number;
+        };
         /** AssignmentIn */
         AssignmentIn: {
             /**
@@ -14027,6 +14957,23 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_legacy_create_api_v1_legacy_results_imports_post */
+        Body_legacy_create_api_v1_legacy_results_imports_post: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /** File */
+            file?: string | null;
+            /**
+             * Mapping
+             * @description JSON {field: column}
+             */
+            mapping?: string | null;
+            /** Term Number */
+            term_number: number;
+        };
         /** Body_od_document_api_v1_on_duty__id__documents_post */
         Body_od_document_api_v1_on_duty__id__documents_post: {
             /** File */
@@ -14379,6 +15326,85 @@ export interface components {
              * Format: uuid
              */
             term_id: string;
+        };
+        /** BulkValuationRow */
+        BulkValuationRow: {
+            /** Annotations Url */
+            annotations_url?: string | null;
+            /**
+             * Answer Script Id
+             * Format: uuid
+             */
+            answer_script_id: string;
+            /** Marks */
+            marks: number | string;
+            /**
+             * Question Wise
+             * @description {question: marks}
+             */
+            question_wise?: {
+                [key: string]: number | string;
+            } | null;
+        };
+        /** BulkValuationSubmit */
+        BulkValuationSubmit: {
+            /** Round */
+            round: number;
+            /** Rows */
+            rows: components["schemas"]["BulkValuationRow"][];
+        };
+        /** BundleCreateRequest */
+        BundleCreateRequest: {
+            /** Centre Id */
+            centre_id?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /**
+             * Size
+             * @description scripts per bundle (setting exams.bundle_size)
+             * @default 30
+             */
+            size: number;
+        };
+        /** BundleResponse */
+        BundleResponse: {
+            /** Bundle Number */
+            bundle_number: string;
+            /** Coded At */
+            coded_at?: string | null;
+            /** Custody Holder Staff Id */
+            custody_holder_staff_id?: string | null;
+            /** Custody Location */
+            custody_location?: string | null;
+            /** Exam Centre Id */
+            exam_centre_id?: string | null;
+            /**
+             * Exam Paper Id
+             * Format: uuid
+             */
+            exam_paper_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Paper Code */
+            paper_code?: string | null;
+            /** Room Code */
+            room_code?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /**
+             * Rounds
+             * @default []
+             */
+            rounds: {
+                [key: string]: unknown;
+            }[];
+            /** Script Count */
+            script_count: number;
+            /** Status */
+            status: string;
         };
         /**
          * Cadre
@@ -15010,6 +16036,12 @@ export interface components {
         CoReplace: {
             /** Outcomes */
             outcomes: components["schemas"]["CoIn"][];
+        };
+        /** CodeBundleResponse */
+        CodeBundleResponse: {
+            bundle: components["schemas"]["BundleResponse"];
+            /** Scripts */
+            scripts: components["schemas"]["DummyScript"][];
         };
         /** CollectRequest */
         CollectRequest: {
@@ -15735,6 +16767,93 @@ export interface components {
             /** Version */
             version: number;
         };
+        /** CourseResultResponse */
+        CourseResultResponse: {
+            /** Attempt Number */
+            attempt_number: number;
+            /** Attempt Type */
+            attempt_type: string;
+            /** Cia Marks */
+            cia_marks?: string | null;
+            /** Cia Max */
+            cia_max?: string | null;
+            /** Counts Toward Cgpa */
+            counts_toward_cgpa: boolean;
+            /** Course Code */
+            course_code?: string | null;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title?: string | null;
+            /** Credits */
+            credits: string;
+            /** Ese Marks */
+            ese_marks?: string | null;
+            /** Ese Max */
+            ese_max?: string | null;
+            /** Grace Marks */
+            grace_marks: string;
+            /** Grace Reason */
+            grace_reason?: string | null;
+            /** Grade Point */
+            grade_point?: string | null;
+            /** Hash */
+            hash?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Current */
+            is_current: boolean;
+            /** Letter Grade */
+            letter_grade?: string | null;
+            /** Moderation Delta */
+            moderation_delta?: string | null;
+            /** Offering Id */
+            offering_id?: string | null;
+            /** Percentage */
+            percentage?: string | null;
+            /** Published At */
+            published_at?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Result Status */
+            result_status: string;
+            /**
+             * Revised
+             * @default false
+             */
+            revised: boolean;
+            /**
+             * Run Id
+             * Format: uuid
+             */
+            run_id: string;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /** Total Marks */
+            total_marks?: string | null;
+            /** Total Max */
+            total_max?: string | null;
+            /** Version */
+            version: number;
+        };
         /**
          * CourseStatus
          * @enum {string}
@@ -16009,6 +17128,48 @@ export interface components {
             sequence: number;
             /** Term Number */
             term_number: number;
+        };
+        /** CustodyLogCreate */
+        CustodyLogCreate: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "dispatched" | "received" | "handed_over" | "returned";
+            /** Location */
+            location?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /** To Staff Id */
+            to_staff_id?: string | null;
+        };
+        /** CustodyLogResponse */
+        CustodyLogResponse: {
+            /** Action */
+            action: string;
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /**
+             * Bundle Id
+             * Format: uuid
+             */
+            bundle_id: string;
+            /** From Staff Id */
+            from_staff_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Location */
+            location?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /** To Staff Id */
+            to_staff_id?: string | null;
         };
         /** CycleCreate */
         CycleCreate: {
@@ -16393,6 +17554,18 @@ export interface components {
             decision: components["schemas"]["EligibilityDecision"];
             /** Reason */
             reason: string;
+        };
+        /** DecodeResponse */
+        DecodeResponse: {
+            /** Decoded Count */
+            decoded_count: number;
+            /** Ese Marks Written */
+            ese_marks_written: number;
+            /**
+             * Paper
+             * Format: uuid
+             */
+            paper: string;
         };
         /** DelegationCreate */
         DelegationCreate: {
@@ -16947,6 +18120,18 @@ export interface components {
              * @default 0
              */
             total_due: number;
+        };
+        /** DummyScript */
+        DummyScript: {
+            /** Dummy Number */
+            dummy_number: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Status */
+            status: string;
         };
         /** DutyCreate */
         DutyCreate: {
@@ -18011,6 +19196,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[BundleResponse] */
+        Envelope_BundleResponse_: {
+            data?: components["schemas"]["BundleResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CasApplicationOut] */
         Envelope_CasApplicationOut_: {
             data?: components["schemas"]["CasApplicationOut"] | null;
@@ -18104,6 +19304,21 @@ export interface components {
         /** Envelope[ClassSessionResponse] */
         Envelope_ClassSessionResponse_: {
             data?: components["schemas"]["ClassSessionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CodeBundleResponse] */
+        Envelope_CodeBundleResponse_: {
+            data?: components["schemas"]["CodeBundleResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -18281,6 +19496,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CustodyLogResponse] */
+        Envelope_CustodyLogResponse_: {
+            data?: components["schemas"]["CustodyLogResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CycleResponse] */
         Envelope_CycleResponse_: {
             data?: components["schemas"]["CycleResponse"] | null;
@@ -18314,6 +19544,21 @@ export interface components {
         /** Envelope[DayBookResponse] */
         Envelope_DayBookResponse_: {
             data?: components["schemas"]["DayBookResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DecodeResponse] */
+        Envelope_DecodeResponse_: {
+            data?: components["schemas"]["DecodeResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -19136,6 +20381,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[LegacyImportResponse] */
+        Envelope_LegacyImportResponse_: {
+            data?: components["schemas"]["LegacyImportResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[LessonPlanOut] */
         Envelope_LessonPlanOut_: {
             data?: components["schemas"]["LessonPlanOut"] | null;
@@ -19376,9 +20636,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ModerationResponse] */
+        Envelope_ModerationResponse_: {
+            data?: components["schemas"]["ModerationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ModuleOut] */
         Envelope_ModuleOut_: {
             data?: components["schemas"]["ModuleOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MyResultsResponse] */
+        Envelope_MyResultsResponse_: {
+            data?: components["schemas"]["MyResultsResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -19575,6 +20865,21 @@ export interface components {
         /** Envelope[OnboardingResponse] */
         Envelope_OnboardingResponse_: {
             data?: components["schemas"]["OnboardingResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OnlineImportResponse] */
+        Envelope_OnlineImportResponse_: {
+            data?: components["schemas"]["OnlineImportResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -19947,6 +21252,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PublicLookupResponse] */
+        Envelope_PublicLookupResponse_: {
+            data?: components["schemas"]["PublicLookupResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PublicMeritList] */
         Envelope_PublicMeritList_: {
             data?: components["schemas"]["PublicMeritList"] | null;
@@ -20202,21 +21522,6 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[ReconcileSummary] */
-        Envelope_ReconcileSummary_: {
-            data?: components["schemas"]["ReconcileSummary"] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
         /** Envelope[RecoveryCodesResponse] */
         Envelope_RecoveryCodesResponse_: {
             data?: components["schemas"]["RecoveryCodesResponse"] | null;
@@ -20367,6 +21672,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ResultAnalysis] */
+        Envelope_ResultAnalysis_: {
+            data?: components["schemas"]["ResultAnalysis"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RolePermissionMatrix] */
         Envelope_RolePermissionMatrix_: {
             data?: components["schemas"]["RolePermissionMatrix"] | null;
@@ -20472,6 +21792,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RunResponse] */
+        Envelope_RunResponse_: {
+            data?: components["schemas"]["RunResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[SalaryStructureOut] */
         Envelope_SalaryStructureOut_: {
             data?: components["schemas"]["SalaryStructureOut"] | null;
@@ -20520,6 +21855,21 @@ export interface components {
         /** Envelope[ScoreOut] */
         Envelope_ScoreOut_: {
             data?: components["schemas"]["ScoreOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ScriptValuationResponse] */
+        Envelope_ScriptValuationResponse_: {
+            data?: components["schemas"]["ScriptValuationResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -21117,6 +22467,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[Union[VerifyResponse, ResultVerifyResponse]] */
+        Envelope_Union_VerifyResponse__ResultVerifyResponse__: {
+            /** Data */
+            data?: components["schemas"]["VerifyResponse"] | components["schemas"]["ResultVerifyResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[UnreadCount] */
         Envelope_UnreadCount_: {
             data?: components["schemas"]["UnreadCount"] | null;
@@ -21192,9 +22558,24 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[VerifyResponse] */
-        Envelope_VerifyResponse_: {
-            data?: components["schemas"]["VerifyResponse"] | null;
+        /** Envelope[ValuationAssignmentResponse] */
+        Envelope_ValuationAssignmentResponse_: {
+            data?: components["schemas"]["ValuationAssignmentResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ValuationStatus] */
+        Envelope_ValuationStatus_: {
+            data?: components["schemas"]["ValuationStatus"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -21446,6 +22827,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[AnomalyRow]] */
+        Envelope_list_AnomalyRow__: {
+            /** Data */
+            data?: components["schemas"]["AnomalyRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ApplicantListItem]] */
         Envelope_list_ApplicantListItem__: {
             /** Data */
@@ -21670,6 +23067,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[BundleResponse]] */
+        Envelope_list_BundleResponse__: {
+            /** Data */
+            data?: components["schemas"]["BundleResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CasApplicationOut]] */
         Envelope_list_CasApplicationOut__: {
             /** Data */
@@ -21814,10 +23227,42 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[CourseResultResponse]] */
+        Envelope_list_CourseResultResponse__: {
+            /** Data */
+            data?: components["schemas"]["CourseResultResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CreditTransferResponse]] */
         Envelope_list_CreditTransferResponse__: {
             /** Data */
             data?: components["schemas"]["CreditTransferResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CustodyLogResponse]] */
+        Envelope_list_CustodyLogResponse__: {
+            /** Data */
+            data?: components["schemas"]["CustodyLogResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22086,6 +23531,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[EvaluatorBundleResponse]] */
+        Envelope_list_EvaluatorBundleResponse__: {
+            /** Data */
+            data?: components["schemas"]["EvaluatorBundleResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[EvaluatorScript]] */
+        Envelope_list_EvaluatorScript__: {
+            /** Data */
+            data?: components["schemas"]["EvaluatorScript"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ExamCentreOut]] */
         Envelope_list_ExamCentreOut__: {
             /** Data */
@@ -22234,6 +23711,22 @@ export interface components {
         Envelope_list_FineConfigOut__: {
             /** Data */
             data?: components["schemas"]["FineConfigOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[GradeCardResponse]] */
+        Envelope_list_GradeCardResponse__: {
+            /** Data */
+            data?: components["schemas"]["GradeCardResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22586,6 +24079,22 @@ export interface components {
         Envelope_list_MissingSessionRow__: {
             /** Data */
             data?: components["schemas"]["MissingSessionRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ModerationResponse]] */
+        Envelope_list_ModerationResponse__: {
+            /** Data */
+            data?: components["schemas"]["ModerationResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -23126,6 +24635,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[RunResponse]] */
+        Envelope_list_RunResponse__: {
+            /** Data */
+            data?: components["schemas"]["RunResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[SalaryStructureOut]] */
         Envelope_list_SalaryStructureOut__: {
             /** Data */
@@ -23162,6 +24687,38 @@ export interface components {
         Envelope_list_ScholarshipOut__: {
             /** Data */
             data?: components["schemas"]["ScholarshipOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ScriptRegisterRow]] */
+        Envelope_list_ScriptRegisterRow__: {
+            /** Data */
+            data?: components["schemas"]["ScriptRegisterRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ScriptValuationResponse]] */
+        Envelope_list_ScriptValuationResponse__: {
+            /** Data */
+            data?: components["schemas"]["ScriptValuationResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -23446,6 +25003,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[TabulationRow]] */
+        Envelope_list_TabulationRow__: {
+            /** Data */
+            data?: components["schemas"]["TabulationRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[TemplateResponse]] */
         Envelope_list_TemplateResponse__: {
             /** Data */
@@ -23606,6 +25179,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ValuationAssignmentResponse]] */
+        Envelope_list_ValuationAssignmentResponse__: {
+            /** Data */
+            data?: components["schemas"]["ValuationAssignmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[WaitlistResponse]] */
         Envelope_list_WaitlistResponse__: {
             /** Data */
@@ -23751,6 +25340,74 @@ export interface components {
              * @default true
              */
             success: boolean;
+        };
+        /** EvaluatorBundleResponse */
+        EvaluatorBundleResponse: {
+            /**
+             * Assignment Id
+             * Format: uuid
+             */
+            assignment_id: string;
+            /**
+             * Bundle Id
+             * Format: uuid
+             */
+            bundle_id: string;
+            /** Bundle Number */
+            bundle_number: string;
+            /** Course Title */
+            course_title?: string | null;
+            /** Due At */
+            due_at?: string | null;
+            /** Max Marks */
+            max_marks: string;
+            /** Paper Code */
+            paper_code?: string | null;
+            /** Qp Pattern */
+            qp_pattern?: {
+                [key: string]: unknown;
+            } | null;
+            /** Scripts */
+            scripts: number;
+            /** Status */
+            status: string;
+            /** Valuation Round */
+            valuation_round: number;
+            /** Valued */
+            valued: number;
+        };
+        /**
+         * EvaluatorScript
+         * @description Dummy-number projection (``answer_scripts_for_evaluation``) + this round's marks.
+         */
+        EvaluatorScript: {
+            /** Dummy Number */
+            dummy_number: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Locked
+             * @default false
+             */
+            is_locked: boolean;
+            /** Marks */
+            marks?: string | null;
+            /** Pages */
+            pages?: number | null;
+            /** Question Wise */
+            question_wise?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Scan Available
+             * @default false
+             */
+            scan_available: boolean;
+            /** Status */
+            status: string;
         };
         /**
          * ExamAuthority
@@ -24140,6 +25797,20 @@ export interface components {
             exit_date?: string | null;
             /** Reason */
             reason?: string | null;
+        };
+        /** ExternalEvaluator */
+        ExternalEvaluator: {
+            /** Email */
+            email?: string | null;
+            /** Institution */
+            institution?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * User Id
+             * @description time-boxed external_examiner account
+             */
+            user_id?: string | null;
         };
         /** ExtraSessionCreate */
         ExtraSessionCreate: {
@@ -25076,6 +26747,39 @@ export interface components {
         GradeBulk: {
             /** Rows */
             rows: components["schemas"]["GradeRow"][];
+        };
+        /** GradeCardResponse */
+        GradeCardResponse: {
+            /** Document Number */
+            document_number: string;
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Qr Token */
+            qr_token: string;
+            /** Sgpa */
+            sgpa?: string | null;
+            /**
+             * Student Term Result Id
+             * Format: uuid
+             */
+            student_term_result_id: string;
+            /**
+             * Superseded
+             * @default false
+             */
+            superseded: boolean;
+            /** Term Number */
+            term_number?: number | null;
+            /** Version */
+            version: number;
         };
         /** GradeRange */
         GradeRange: {
@@ -26667,6 +28371,34 @@ export interface components {
             /** Parent Id */
             parent_id?: string | null;
         };
+        /** LegacyImportResponse */
+        LegacyImportResponse: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Run Id */
+            run_id?: string | null;
+            /** Status */
+            status: string;
+            /** Term Number */
+            term_number: number;
+            /** Validation Report */
+            validation_report?: {
+                [key: string]: unknown;
+            } | null;
+        };
         /** LessonPlanIn */
         LessonPlanIn: {
             /** Co Id */
@@ -27495,6 +29227,69 @@ export interface components {
             /** Update Available */
             update_available: boolean;
         };
+        /** ModerationDecision */
+        ModerationDecision: {
+            /** Comment */
+            comment?: string | null;
+        };
+        /** ModerationProposal */
+        ModerationProposal: {
+            /**
+             * Action Type
+             * @enum {string}
+             */
+            action_type: "scale_up" | "scale_down" | "add_flat" | "grace" | "normalize" | "cap";
+            /** Justification */
+            justification: string;
+            /**
+             * Rule
+             * @description {factor} | {marks} | {target_mean, target_sd} | {cap} | {below, up_to}
+             */
+            rule: {
+                [key: string]: unknown;
+            };
+        };
+        /** ModerationResponse */
+        ModerationResponse: {
+            /** Action Type */
+            action_type: string;
+            /** Affected Count */
+            affected_count?: number | null;
+            /** Approved By */
+            approved_by?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Exam Paper Id
+             * Format: uuid
+             */
+            exam_paper_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Justification */
+            justification: string;
+            /** Preview */
+            preview?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Proposed By
+             * Format: uuid
+             */
+            proposed_by: string;
+            /** Rule */
+            rule: {
+                [key: string]: unknown;
+            };
+            /** Status */
+            status: string;
+        };
         /** ModuleIn */
         ModuleIn: {
             /**
@@ -27553,6 +29348,21 @@ export interface components {
              */
             offering_id: string;
         };
+        /** MyResultsResponse */
+        MyResultsResponse: {
+            /** Cgpa */
+            cgpa?: string | null;
+            /** Credits Earned */
+            credits_earned?: string | null;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Standing */
+            standing?: string | null;
+            /** Student Id */
+            student_id?: string | null;
+            /** Terms */
+            terms: components["schemas"]["MyTerm"][];
+        };
         /** MySummaryResponse */
         MySummaryResponse: {
             /**
@@ -27576,6 +29386,12 @@ export interface components {
             student_program_enrollment_id: string;
             /** Term Id */
             term_id?: string | null;
+        };
+        /** MyTerm */
+        MyTerm: {
+            /** Courses */
+            courses: components["schemas"]["CourseResultResponse"][];
+            term: components["schemas"]["TermResultResponse"];
         };
         /** NoDuesCreate */
         NoDuesCreate: {
@@ -28374,6 +30190,16 @@ export interface components {
             plan_code: string;
             /** Roles Created */
             roles_created: number;
+        };
+        /** OnlineImportResponse */
+        OnlineImportResponse: {
+            /** Items */
+            items: number;
+            /**
+             * Paper
+             * Format: uuid
+             */
+            paper: string;
         };
         /** OnlineInitiateRequest */
         OnlineInitiateRequest: {
@@ -29857,6 +31683,32 @@ export interface components {
             /** Source Page */
             source_page?: string | null;
         };
+        /** PublicLookupRequest */
+        PublicLookupRequest: {
+            /**
+             * Dob
+             * Format: date
+             */
+            dob: string;
+            /**
+             * Institution
+             * @description institution slug
+             */
+            institution?: string | null;
+            /** Reg No */
+            reg_no: string;
+        };
+        /** PublicLookupResponse */
+        PublicLookupResponse: {
+            /** Name */
+            name: string;
+            /** Registration Number */
+            registration_number: string;
+            /** Terms */
+            terms: {
+                [key: string]: unknown;
+            }[];
+        };
         /** PublicMeritEntry */
         PublicMeritEntry: {
             /** Application Number */
@@ -29962,19 +31814,6 @@ export interface components {
             ttl_seconds?: number | null;
             /** Username */
             username?: string | null;
-        };
-        /** PublishRequest */
-        PublishRequest: {
-            /**
-             * Effective From
-             * @description defaults to today (institution-local)
-             */
-            effective_from?: string | null;
-            /**
-             * Regenerate Sessions
-             * @default true
-             */
-            regenerate_sessions: boolean;
         };
         /** PublishSummary */
         PublishSummary: {
@@ -30508,6 +32347,14 @@ export interface components {
             /** Reason */
             reason: string;
         };
+        /** ReassignRequest */
+        ReassignRequest: {
+            /** Due At */
+            due_at?: string | null;
+            /** Evaluator Staff Id */
+            evaluator_staff_id?: string | null;
+            external_evaluator?: components["schemas"]["ExternalEvaluator"] | null;
+        };
         /** ReceiptResponse */
         ReceiptResponse: {
             /**
@@ -30572,29 +32419,6 @@ export interface components {
             status: string;
             /** Utr */
             utr?: string | null;
-        };
-        /** ReconcileSummary */
-        ReconcileSummary: {
-            /**
-             * Auto Matched
-             * @default 0
-             */
-            auto_matched: number;
-            /**
-             * Dry Run
-             * @default false
-             */
-            dry_run: boolean;
-            /**
-             * Rows
-             * @default 0
-             */
-            rows: number;
-            /**
-             * Unmatched
-             * @default 0
-             */
-            unmatched: number;
         };
         /** ReconcileUpload */
         ReconcileUpload: {
@@ -31282,6 +33106,58 @@ export interface components {
          * @enum {string}
          */
         ResetPolicy: "never" | "yearly" | "per_term";
+        /** ResultAnalysis */
+        ResultAnalysis: {
+            /** Grade Distribution */
+            grade_distribution: {
+                [key: string]: number;
+            };
+            /** Pass Pct */
+            pass_pct?: number | null;
+            /** Pass Pct By Course */
+            pass_pct_by_course: {
+                [key: string]: unknown;
+            }[];
+            /** Students */
+            students: number;
+            /** Toppers */
+            toppers: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** ResultVerifyResponse */
+        ResultVerifyResponse: {
+            /** Cgpa */
+            cgpa?: string | null;
+            /** Document Number */
+            document_number?: string | null;
+            /**
+             * Document Type
+             * @default grade_card
+             */
+            document_type: string;
+            /** Hash */
+            hash?: string | null;
+            /** Holder Name */
+            holder_name?: string | null;
+            /** Institution */
+            institution?: string | null;
+            /** Message */
+            message?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Sgpa */
+            sgpa?: string | null;
+            /**
+             * Superseded
+             * @default false
+             */
+            superseded: boolean;
+            /** Term Number */
+            term_number?: number | null;
+            /** Valid */
+            valid: boolean;
+        };
         /** ReviewIn */
         ReviewIn: {
             /** Marks */
@@ -31835,6 +33711,129 @@ export interface components {
             /** Key */
             key: string;
         };
+        /** RunAction */
+        RunAction: {
+            /**
+             * Acknowledge Anomalies
+             * @description checklist ack (verify)
+             * @default false
+             */
+            acknowledge_anomalies: boolean;
+            /** Comment */
+            comment?: string | null;
+            /** Decision */
+            decision?: ("verify" | "approve" | "rollback") | null;
+            /** Resolution Id */
+            resolution_id?: string | null;
+        };
+        /** RunCreateRequest */
+        RunCreateRequest: {
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Run Type
+             * @default provisional
+             * @enum {string}
+             */
+            run_type: "provisional" | "final" | "revaluation" | "supplementary_merge" | "correction";
+            scope?: components["schemas"]["RunScope"];
+        };
+        /** RunResponse */
+        RunResponse: {
+            /**
+             * Anomalies Count
+             * @default 0
+             */
+            anomalies_count: number;
+            /** Approval Resolution Id */
+            approval_resolution_id?: string | null;
+            /** Approved At */
+            approved_at?: string | null;
+            /** Approved By */
+            approved_by?: string | null;
+            /** Checksum */
+            checksum?: string | null;
+            /** Config Snapshot */
+            config_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Exam Session Id */
+            exam_session_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Job Id */
+            job_id?: string | null;
+            /** Published At */
+            published_at?: string | null;
+            /** Run Type */
+            run_type: string;
+            /** Scope */
+            scope?: {
+                [key: string]: unknown;
+            } | null;
+            /** Session Name */
+            session_name?: string | null;
+            /** Stats */
+            stats?: {
+                [key: string]: unknown;
+            } | null;
+            /** Status */
+            status: string;
+            /** Triggered By */
+            triggered_by?: string | null;
+            /** Verified At */
+            verified_at?: string | null;
+            /** Verified By */
+            verified_by?: string | null;
+        };
+        /** RunScope */
+        RunScope: {
+            /**
+             * Batch Ids
+             * @default []
+             */
+            batch_ids: string[];
+            /**
+             * College Ids
+             * @default []
+             */
+            college_ids: string[];
+            /**
+             * Course Ids
+             * @default []
+             */
+            course_ids: string[];
+            /**
+             * Enrollment Ids
+             * @description correction / revaluation runs: affected students
+             * @default []
+             */
+            enrollment_ids: string[];
+            /**
+             * Marks Delta
+             * @description correction runs: {'<enrolment>:<course>': delta ESE marks}
+             * @default {}
+             */
+            marks_delta: {
+                [key: string]: number | string;
+            };
+            /**
+             * Program Ids
+             * @default []
+             */
+            program_ids: string[];
+        };
         /** SalaryStructureIn */
         SalaryStructureIn: {
             /** Basic Paise */
@@ -32099,6 +34098,62 @@ export interface components {
             remarks?: string | null;
             /** Screening Score */
             screening_score: number | string;
+        };
+        /** ScriptRegisterRow */
+        ScriptRegisterRow: {
+            /**
+             * Bundle Id
+             * Format: uuid
+             */
+            bundle_id: string;
+            /** Bundle Number */
+            bundle_number: string;
+            /** Last Action */
+            last_action?: string | null;
+            /** Last Action At */
+            last_action_at?: string | null;
+            /** Paper Code */
+            paper_code?: string | null;
+            /** Script Count */
+            script_count: number;
+            /** Status */
+            status: string;
+        };
+        /** ScriptRetentionRequest */
+        ScriptRetentionRequest: {
+            /**
+             * Action
+             * @default archive
+             * @enum {string}
+             */
+            action: "archive" | "destroy";
+            /** Approval Note */
+            approval_note?: string | null;
+            /** Bundle Ids */
+            bundle_ids?: string[] | null;
+        };
+        /** ScriptValuationResponse */
+        ScriptValuationResponse: {
+            /**
+             * Answer Script Id
+             * Format: uuid
+             */
+            answer_script_id: string;
+            /** Is Locked */
+            is_locked: boolean;
+            /** Marks */
+            marks: string;
+            /** Question Wise */
+            question_wise?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+            /** Valuation Round */
+            valuation_round: number;
         };
         /** SearchResponse */
         SearchResponse: {
@@ -34583,6 +36638,35 @@ export interface components {
             /** Unit */
             unit: number;
         };
+        /** TabulationRow */
+        TabulationRow: {
+            /**
+             * Backlogs
+             * @default 0
+             */
+            backlogs: number;
+            /** Cgpa */
+            cgpa?: string | null;
+            /** Courses */
+            courses: {
+                [key: string]: string;
+            };
+            /** Credits Earned */
+            credits_earned?: string | null;
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Result Class */
+            result_class?: string | null;
+            /** Sgpa */
+            sgpa?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+        };
         /** TargetIn */
         TargetIn: {
             /**
@@ -34808,6 +36892,54 @@ export interface components {
             /** Term Number */
             term_number: number;
         };
+        /** TermResultResponse */
+        TermResultResponse: {
+            /** Backlog Count */
+            backlog_count: number;
+            /** Cgpa */
+            cgpa?: string | null;
+            /** Credits Earned */
+            credits_earned: string;
+            /** Credits Registered */
+            credits_registered: string;
+            /** Cumulative Credits */
+            cumulative_credits?: string | null;
+            /** Grade Card Id */
+            grade_card_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Current */
+            is_current: boolean;
+            /** Published At */
+            published_at?: string | null;
+            /** Result Class */
+            result_class?: string | null;
+            /**
+             * Run Id
+             * Format: uuid
+             */
+            run_id: string;
+            /** Sgpa */
+            sgpa?: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Student Term Record Id
+             * Format: uuid
+             */
+            student_term_record_id: string;
+            /** Term Id */
+            term_id?: string | null;
+            /** Term Name */
+            term_name?: string | null;
+            /** Term Number */
+            term_number?: number | null;
+            /** Version */
+            version: number;
+        };
         /**
          * TermStatus
          * @enum {string}
@@ -34842,6 +36974,16 @@ export interface components {
              * @default 32
              */
             width: number;
+        };
+        /** ThirdValuationAssign */
+        ThirdValuationAssign: {
+            /** Due At */
+            due_at?: string | null;
+            /** Evaluator Staff Id */
+            evaluator_staff_id?: string | null;
+            external_evaluator?: components["schemas"]["ExternalEvaluator"] | null;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
         };
         /** ThreadIn */
         ThreadIn: {
@@ -35562,6 +37704,93 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** ValuationAssignmentResponse */
+        ValuationAssignmentResponse: {
+            /**
+             * Assigned At
+             * Format: date-time
+             */
+            assigned_at: string;
+            /**
+             * Bundle Id
+             * Format: uuid
+             */
+            bundle_id: string;
+            /** Bundle Number */
+            bundle_number?: string | null;
+            /** Due At */
+            due_at?: string | null;
+            /** Evaluator Name */
+            evaluator_name?: string | null;
+            /** Evaluator Staff Id */
+            evaluator_staff_id?: string | null;
+            /** Evaluator Type */
+            evaluator_type: string;
+            /** Evaluator User Id */
+            evaluator_user_id?: string | null;
+            /**
+             * Exam Paper Id
+             * Format: uuid
+             */
+            exam_paper_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
+            /**
+             * Scripts
+             * @default 0
+             */
+            scripts: number;
+            /** Status */
+            status: string;
+            /** Submitted At */
+            submitted_at?: string | null;
+            /** Valuation Round */
+            valuation_round: number;
+            /**
+             * Valued
+             * @default 0
+             */
+            valued: number;
+        };
+        /** ValuationStatus */
+        ValuationStatus: {
+            /** Assignments */
+            assignments: components["schemas"]["ValuationAssignmentResponse"][];
+            /** Bundles */
+            bundles: number;
+            /**
+             * Exam Paper Id
+             * Format: uuid
+             */
+            exam_paper_id: string;
+            /** Final Marks */
+            final_marks: {
+                [key: string]: number;
+            };
+            /** Scripts */
+            scripts: number;
+            /** Valuation Mode */
+            valuation_mode: string;
+        };
+        /** ValuationSubmit */
+        ValuationSubmit: {
+            /** Annotations Url */
+            annotations_url?: string | null;
+            /** Marks */
+            marks: number | string;
+            /**
+             * Question Wise
+             * @description {question: marks}
+             */
+            question_wise?: {
+                [key: string]: number | string;
+            } | null;
+        };
         /** VerifyRequest */
         VerifyRequest: {
             /** Comment */
@@ -36149,10 +38378,116 @@ export interface components {
              */
             status: "verified" | "rejected" | "resubmit";
         };
+        /** Envelope[ReconcileSummary] */
+        app__schemas__common__Envelope_ReconcileSummary___1: {
+            data?: components["schemas"]["app__schemas__fees__ReconcileSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ReconcileSummary] */
+        app__schemas__common__Envelope_ReconcileSummary___2: {
+            data?: components["schemas"]["app__schemas__valuation__ReconcileSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** ReconcileSummary */
+        app__schemas__fees__ReconcileSummary: {
+            /**
+             * Auto Matched
+             * @default 0
+             */
+            auto_matched: number;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * Rows
+             * @default 0
+             */
+            rows: number;
+            /**
+             * Unmatched
+             * @default 0
+             */
+            unmatched: number;
+        };
+        /** PublishRequest */
+        app__schemas__results__PublishRequest: {
+            /**
+             * Audience
+             * @default student
+             * @enum {string}
+             */
+            audience: "student" | "college" | "public";
+            /**
+             * Notify
+             * @default true
+             */
+            notify: boolean;
+            /**
+             * Withhold Ids
+             * @description enrolment ids to withhold
+             * @default []
+             */
+            withhold_ids: string[];
+        };
         /** DocumentVerifyRequest */
         app__schemas__students__DocumentVerifyRequest: {
             /** Remarks */
             remarks?: string | null;
+        };
+        /** PublishRequest */
+        app__schemas__timetable__PublishRequest: {
+            /**
+             * Effective From
+             * @description defaults to today (institution-local)
+             */
+            effective_from?: string | null;
+            /**
+             * Regenerate Sessions
+             * @default true
+             */
+            regenerate_sessions: boolean;
+        };
+        /** ReconcileSummary */
+        app__schemas__valuation__ReconcileSummary: {
+            /** Average Discrepancy */
+            average_discrepancy?: number | null;
+            /**
+             * Discrepancies
+             * @default []
+             */
+            discrepancies: {
+                [key: string]: unknown;
+            }[];
+            /** Needs Third */
+            needs_third: number;
+            /** Resolved */
+            resolved: number;
+            /** Rule */
+            rule: string;
+            /** Tolerance */
+            tolerance: number;
         };
     };
     responses: never;
@@ -39000,6 +41335,75 @@ export interface operations {
             };
         };
     };
+    script_scan_api_v1_answer_scripts__id__scan_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_valuation_api_v1_answer_scripts__id__valuations__round__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                round: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ValuationSubmit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScriptValuationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     my_application_api_v1_applicants_me_get: {
         parameters: {
             query?: never;
@@ -41537,6 +43941,134 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_bundle_api_v1_bundles__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BundleResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    code_bundle_api_v1_bundles__id__code_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CodeBundleResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    custody_log_api_v1_bundles__id__custody_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CustodyLogResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    log_custody_api_v1_bundles__id__custody_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CustodyLogCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CustodyLogResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -44354,6 +46886,37 @@ export interface operations {
             };
         };
     };
+    offering_results_api_v1_course_offerings__id__results_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CourseResultResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     offering_roster_api_v1_course_offerings__id__roster_get: {
         parameters: {
             query?: {
@@ -46757,6 +49320,103 @@ export interface operations {
             };
         };
     };
+    list_bundles_api_v1_exam_papers__id__bundles_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BundleResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_bundles_api_v1_exam_papers__id__bundles_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BundleCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BundleResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decode_api_v1_exam_papers__id__decode_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DecodeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     malpractice_api_v1_exam_papers__id__malpractice_reports_post: {
         parameters: {
             query?: never;
@@ -46779,6 +49439,103 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_MalpracticeOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_moderation_api_v1_exam_papers__id__moderation_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ModerationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    propose_moderation_api_v1_exam_papers__id__moderation_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ModerationProposal"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ModerationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    online_import_api_v1_exam_papers__id__online_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OnlineImportResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -46911,6 +49668,138 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_QpAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_valuation_api_v1_exam_papers__id__valuation_assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AssignValuationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ValuationAssignmentResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconcile_api_v1_exam_papers__id__valuation_reconcile_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ReconcileSummary___2"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    valuation_status_api_v1_exam_papers__id__valuation_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ValuationStatus_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    third_assign_api_v1_exam_papers__id__valuation_third_assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ThirdValuationAssign"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ValuationAssignmentResponse__"];
                 };
             };
             /** @description Validation Error */
@@ -48040,6 +50929,111 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_RemunerationSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scripts_archive_api_v1_exam_sessions__id__scripts_archive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ScriptRetentionRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scripts_destroy_api_v1_exam_sessions__id__scripts_destroy_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ScriptRetentionRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scripts_register_api_v1_exam_sessions__id__scripts_register_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScriptRegisterRow__"];
                 };
             };
             /** @description Validation Error */
@@ -49832,7 +52826,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_ReconcileSummary_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ReconcileSummary___1"];
                 };
             };
             /** @description Validation Error */
@@ -50305,6 +53299,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_FineConfigOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_cards_api_v1_grade_cards_me_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GradeCardResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    card_pdf_api_v1_grade_cards__id__pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -51785,6 +54841,163 @@ export interface operations {
             };
         };
     };
+    legacy_create_api_v1_legacy_results_imports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_legacy_create_api_v1_legacy_results_imports_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegacyImportResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legacy_get_api_v1_legacy_results_imports__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegacyImportResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legacy_apply_api_v1_legacy_results_imports__id__apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegacyImportResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legacy_rollback_api_v1_legacy_results_imports__id__rollback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegacyImportResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legacy_validate_api_v1_legacy_results_imports__id__validate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegacyImportResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     update_plan_api_v1_lesson_plans__id__put: {
         parameters: {
             query?: never;
@@ -52203,6 +55416,103 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_moderation_api_v1_moderation_actions__id__apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ModerationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_moderation_api_v1_moderation_actions__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["ModerationDecision"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ModerationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    revert_moderation_api_v1_moderation_actions__id__revert_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ModerationResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -55347,6 +58657,39 @@ export interface operations {
             };
         };
     };
+    public_lookup_route_api_v1_public_results_lookup_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PublicLookupRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicLookupResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     my_qp_api_v1_qp_assignments_me_get: {
         parameters: {
             query?: never;
@@ -57772,6 +61115,587 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_RulesEffectiveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_runs_api_v1_result_runs_get: {
+        parameters: {
+            query?: {
+                exam_session_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RunResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_run_api_v1_result_runs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RunCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_run_api_v1_result_runs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_anomalies_api_v1_result_runs__id__anomalies_get: {
+        parameters: {
+            query?: {
+                code?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AnomalyRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_run_api_v1_result_runs__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RunAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_export_api_v1_result_runs__id__export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_grade_cards_api_v1_result_runs__id__grade_cards_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_run_api_v1_result_runs__id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__results__PublishRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rollback_run_api_v1_result_runs__id__rollback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RunAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    run_rows_api_v1_result_runs__id__rows_get: {
+        parameters: {
+            query?: {
+                program_id?: string | null;
+                course_id?: string | null;
+                status?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CourseResultResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    verify_run_api_v1_result_runs__id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RunAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    analysis_api_v1_results_analysis_get: {
+        parameters: {
+            query?: {
+                session_id?: string | null;
+                batch_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ResultAnalysis_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_results_api_v1_results_me_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MyResultsResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_summary_api_v1_results_me_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MyResultsResponse_"];
+                };
+            };
+        };
+    };
+    rank_list_api_v1_results_rank_list_get: {
+        parameters: {
+            query: {
+                batch_id: string;
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    tabulation_api_v1_results_tabulation_get: {
+        parameters: {
+            query: {
+                batch_id: string;
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TabulationRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    tabulation_export_api_v1_results_tabulation_export_get: {
+        parameters: {
+            query: {
+                batch_id: string;
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ward_results_api_v1_results_wards__student_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MyResultsResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -60530,6 +64454,37 @@ export interface operations {
             };
         };
     };
+    student_cards_api_v1_students__id__grade_cards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GradeCardResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     guardian_consent_api_v1_students__id__guardian_consent_put: {
         parameters: {
             query?: never;
@@ -60917,6 +64872,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_RegistrationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    student_results_api_v1_students__id__results_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MyResultsResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -62366,7 +66352,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["PublishRequest"];
+                "application/json": components["schemas"]["app__schemas__timetable__PublishRequest"];
             };
         };
         responses: {
@@ -62787,6 +66773,156 @@ export interface operations {
             };
         };
     };
+    reassign_api_v1_valuation_assignments__id__reassign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReassignRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ValuationAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bundle_scripts_api_v1_valuation_bundles__id__scripts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EvaluatorScript__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_bundle_api_v1_valuation_bundles__id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ValuationAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_bundles_api_v1_valuation_me_bundles_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EvaluatorBundleResponse__"];
+                };
+            };
+        };
+    };
+    bulk_marks_api_v1_valuation_me_marks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkValuationSubmit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScriptValuationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     verify_api_v1_verify__token__get: {
         parameters: {
             query?: never;
@@ -62804,7 +66940,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_VerifyResponse_"];
+                    "application/json": components["schemas"]["Envelope_Union_VerifyResponse__ResultVerifyResponse__"];
                 };
             };
             /** @description Validation Error */

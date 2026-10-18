@@ -265,6 +265,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 15 — results (students), evaluation (faculty / external examiners), result runs (exam cell / COE)
+  const MoreMenuModule(
+      titleKey: 'results',
+      icon: Icons.grade_outlined,
+      route: AppRoutes.myResults,
+      color: Colors.green,
+      permission: 'results:self',
+      feature: 'results.publication_portal',
+      roles: ['student', 'learner']),
+  const MoreMenuModule(
+      titleKey: 'evaluation',
+      icon: Icons.rate_review_outlined,
+      route: AppRoutes.evaluation,
+      color: Colors.indigo,
+      permission: 'exams:evaluate',
+      feature: 'exams.coding_dummy',
+      roles: ['faculty', 'hod', 'external_examiner', 'class_advisor', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'result_runs',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.resultRuns,
+      color: Colors.teal,
+      permission: 'results:verify',
+      feature: 'results.processing',
+      roles: ['exam_cell', 'controller_of_examinations']),
   // Phase 14 — exams (students), duties (faculty / invigilators), hall attendance (invigilators / exam cell)
   const MoreMenuModule(
       titleKey: 'exams',

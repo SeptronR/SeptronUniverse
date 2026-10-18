@@ -53,6 +53,11 @@ register_beat("exams.session_auto_status", "beat.exams.session_auto_status", cro
 register_beat("exams.lapse_fee_pending", "beat.exams.lapse_fee_pending", crontab(minute=37))
 register_beat("exams.duty_reminders", "beat.exams.duty_reminders", crontab(hour=2, minute=30))  # 08:00 IST
 
+# ---- Phase 15 results (app/tasks/results.py) -----------------------------------------------------------------------------
+register_beat("valuation.due_reminders", "beat.valuation.due_reminders", crontab(hour=3, minute=0))  # 08:30 IST
+register_beat("results.publish_notifications_retry", "beat.results.publish_notifications_retry", 600.0)
+register_beat("scripts.retention_check", "beat.scripts.retention_check", crontab(day_of_week=0, hour=20, minute=15))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 
