@@ -14,6 +14,12 @@
 
 ``scope`` narrows a session list like the other modules: ``self``/``own``/``mine`` → the ownership links, a unit tab
 the caller holds → that unit; anything else narrows silently to the ownership links.
+
+**Phase 11 attendance records** (marks, summaries, OD, condonations, eligibility rows) share the ``attendance``
+module registered here (``record_predicate``): self / wards (consent-aware, ``learner_enrollment_ids``), the
+offerings the caller teaches, the caller's advisees (class advisor of the student's latest section); with
+``attendance:view_all`` the held unit scopes over the offering's department (or the enrolment's department for rows
+without an offering) / faculty / college, and institution → ``all``.
 """
 
 import uuid
@@ -26,7 +32,7 @@ from app.models.hr import Staff
 from app.models.offerings import CourseOffering
 from app.models.platform import Department
 from app.models.registration import CourseRegistration, CourseRegistrationItem
-from app.models.students import StudentProgramEnrollment, StudentTermRecord
+from app.models.students import Student, StudentProgramEnrollment, StudentTermRecord
 from app.models.timetable import ClassSession, Timetable, TimetableEntry
 from app.repositories.registration_scope import taught_offering_ids, visible_enrollment_ids, ward_enrollment_ids
 from app.utils.response import VisibilityMeta
@@ -209,6 +215,81 @@ def _timetable_self(p: Any, m: Any) -> ColumnElement[bool]:
     return timetable_predicate(p)
 
 
+# ---- Phase 11 attendance records ------------------------------------------------------------------------------------------
+def advisee_enrollment_ids(principal: Any) -> Any:
+    from app.repositories.student_scope import advisees_predicate
+
+    return select(StudentProgramEnrollment.id).where(
+        StudentProgramEnrollment.deleted_at.is_(None),
+        StudentProgramEnrollment.student_id.in_(select(Student.id).where(advisees_predicate(principal))),
+    )
+
+
+def own_record_predicate(principal: Any, offering_col: Any, enrollment_col: Any) -> ColumnElement[bool]:
+    if getattr(principal, "id", None) is None:
+        return false()
+    parts = [
+        enrollment_col.in_(learner_enrollment_ids(principal)),
+        enrollment_col.in_(advisee_enrollment_ids(principal)),
+    ]
+    if offering_col is not None:
+        parts.append(offering_col.in_(taught_offering_ids(principal)))
+    else:  # OD / aggregate condonations: students of any offering the caller teaches
+        parts.append(
+            enrollment_col.in_(
+                select(CourseRegistration.student_program_enrollment_id)
+                .join(CourseRegistrationItem, CourseRegistrationItem.registration_id == CourseRegistration.id)
+                .where(
+                    CourseRegistrationItem.status == "confirmed",
+                    CourseRegistrationItem.offering_id.in_(taught_offering_ids(principal)),
+                )
+            )
+        )
+    return or_(*parts)
+
+
+def record_predicate(
+    principal: Any, offering_col: Any, enrollment_col: Any, scope: str | None = None
+) -> ColumnElement[bool]:
+    """Visibility of a Phase 11 row keyed by (offering, enrolment); ``offering_col`` may be ``None``."""
+    if principal is None or (getattr(principal, "is_super_admin", False) and scope in (None, "all")):
+        return true()
+    eff = effective_scope(principal, scope)
+    own = own_record_predicate(principal, offering_col, enrollment_col)
+    if eff == "self":
+        return own
+    if eff == "all" and _institution(principal):
+        return true()
+    wanted = UNIT_TABS if eff == "all" else (eff,)
+    depts: list[uuid.UUID] = list(_ids(principal, "department")) if "department" in wanted else []
+    if "faculty" in wanted and _ids(principal, "faculty"):
+        faculty_depts: Any = select(Department.id).where(Department.faculty_id.in_(_ids(principal, "faculty")))
+    else:
+        faculty_depts = None
+    colleges = _ids(principal, "college") if "college" in wanted else []
+    parts: list[ColumnElement[bool]] = []
+    if offering_col is not None:
+        if depts:
+            parts.append(offering_col.in_(select(CourseOffering.id).where(CourseOffering.department_id.in_(depts))))
+        if faculty_depts is not None:
+            parts.append(
+                offering_col.in_(select(CourseOffering.id).where(CourseOffering.department_id.in_(faculty_depts)))
+            )
+        if colleges:
+            parts.append(offering_col.in_(select(CourseOffering.id).where(CourseOffering.college_id.in_(colleges))))
+    else:
+        enrol = select(StudentProgramEnrollment.id).where(StudentProgramEnrollment.deleted_at.is_(None))
+        if depts:
+            parts.append(enrollment_col.in_(enrol.where(StudentProgramEnrollment.department_id.in_(depts))))
+        if faculty_depts is not None:
+            parts.append(enrollment_col.in_(enrol.where(StudentProgramEnrollment.department_id.in_(faculty_depts))))
+        if colleges:
+            parts.append(enrollment_col.in_(enrol.where(StudentProgramEnrollment.college_id.in_(colleges))))
+    if not parts:
+        return own
+    return or_(own, *parts)
+
+
 register_module(
     ModuleVisibility(
         module="attendance",
@@ -228,6 +309,7 @@ register_module(
 register_link(OwnershipLink(module="attendance", name="own_sessions", predicate=lambda p, m: own_sessions_predicate(p)))
 
 __all__ = [
+    "advisee_enrollment_ids",
     "confirmed_offering_ids",
     "effective_scope",
     "entry_predicate",
@@ -236,7 +318,9 @@ __all__ = [
     "learner_scope_ids",
     "may_view_all_sessions",
     "my_staff_ids",
+    "own_record_predicate",
     "own_sessions_predicate",
+    "record_predicate",
     "scope_tabs",
     "session_predicate",
     "session_visibility",

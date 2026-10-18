@@ -7,6 +7,7 @@ import '../../features/auth/profile_screens.dart';
 import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/registration/registration_screens.dart';
+import '../../features/attendance/attendance_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -266,6 +267,28 @@ class ScreenRegistry {
       feature: 'timetable.substitutions',
       permission: 'timetable:substitute|timetable:approve',
       builder: (_, __) => const SubstitutionsScreen(),
+    ),
+    // Phase 11 — attendance (faculty tap-mark grid + offline queue, student rings / calculator, HOD condonations)
+    AppRoutes.attendance: ScreenEntry(
+      route: AppRoutes.attendance,
+      titleKey: 'attendance',
+      feature: 'attendance.core',
+      permission: 'attendance:mark',
+      builder: (_, __) => const FacultyAttendanceScreen(),
+    ),
+    AppRoutes.myAttendance: ScreenEntry(
+      route: AppRoutes.myAttendance,
+      titleKey: 'my_attendance',
+      feature: 'attendance.core',
+      permission: 'attendance:self|attendance:view',
+      builder: (_, __) => const StudentAttendanceScreen(),
+    ),
+    AppRoutes.condonations: ScreenEntry(
+      route: AppRoutes.condonations,
+      titleKey: 'condonations',
+      feature: 'attendance.condonation',
+      permission: 'attendance:condone',
+      builder: (_, __) => const CondonationRecommendScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

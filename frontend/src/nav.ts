@@ -94,6 +94,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Windows', to: '/admin/registration/windows', icon: CalendarRange, module: 'registration', action: 'manage', feature: 'registration.core' },
       { label: 'Elective allocation', to: '/admin/registration/allocation', icon: Percent, module: 'registration', action: 'allocate', altActions: ['manage'], feature: 'registration.elective_allocation' },
       { label: 'Arrears', to: '/admin/registration/arrears', icon: ScrollText, module: 'registration', altActions: ['view_all', 'approve'], feature: 'registration.arrears' },
+      // Phase 11 — attendance
+      { label: 'Attendance', to: '/admin/attendance', icon: ClipboardCheck, module: 'attendance', altActions: ['view_all'], feature: 'attendance.core' },
+      { label: 'On-duty requests', to: '/admin/attendance/od', icon: ClipboardCheck, module: 'attendance', action: 'condone', altActions: ['view_all', 'edit_finalized'], feature: 'attendance.on_duty' },
+      { label: 'Condonations', to: '/admin/attendance/condonations', icon: ClipboardCheck, module: 'attendance', action: 'condone', altActions: ['view_all'], feature: 'attendance.condonation' },
       // Phase 10 — timetable & rooms
       { label: 'Timetable', to: '/admin/timetable', icon: CalendarRange, module: 'timetable', altActions: ['view_all'], feature: 'timetable.core' },
       { label: 'Rooms & Slots', to: '/admin/facilities/rooms', icon: Building2, module: 'timetable', altActions: ['view_all'], feature: 'timetable.rooms' },
@@ -101,7 +105,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Sessions', to: '/admin/timetable/sessions', icon: Clock, module: 'attendance', altActions: ['view_all', 'mark'], feature: 'timetable.core' },
     ],
   },
-  { title: 'EXAMINATIONS', items: [] },
+  {
+    title: 'EXAMINATIONS',
+    items: [
+      // Phase 11 — eligibility snapshots / detention (Phase 14 joins this group)
+      { label: 'Eligibility', to: '/admin/attendance/eligibility', icon: ClipboardCheck, module: 'exams', action: 'eligibility', altActions: [], feature: 'attendance.eligibility_detention' },
+    ],
+  },
   {
     title: 'ADMISSIONS',
     items: [

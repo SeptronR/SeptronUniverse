@@ -690,7 +690,90 @@ TIMETABLE_EVENTS: tuple[EventDef, ...] = (
         link="/timetable",
     ),
 )
-EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS + TIMETABLE_EVENTS
+# Phase 11 — on duty, condonation, detention, missing-attendance follow-up (absent_alert / below_threshold are Phase 04)
+ATTENDANCE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "od.requested",
+        "approvals",
+        "On-duty request",
+        "On duty: {{ student_name }}",
+        "{{ student_name }} applied for on duty from {{ from_date }} to {{ to_date }}.",
+        ("student_name", "from_date", "to_date"),
+        ("in_app", "email"),
+        link="/admin/attendance/od",
+    ),
+    EventDef(
+        "od.approved",
+        "attendance",
+        "On duty approved",
+        "On duty approved",
+        "Your on-duty request for {{ from_date }} – {{ to_date }} was approved. {{ comment }}",
+        ("from_date", "to_date", "comment"),
+        ("in_app", "push"),
+        link="/student/attendance",
+    ),
+    EventDef(
+        "od.rejected",
+        "attendance",
+        "On duty rejected",
+        "On duty rejected",
+        "Your on-duty request for {{ from_date }} – {{ to_date }} was rejected. {{ comment }}",
+        ("from_date", "to_date", "comment"),
+        ("in_app", "push"),
+        link="/student/attendance",
+    ),
+    EventDef(
+        "condonation.requested",
+        "approvals",
+        "Condonation request",
+        "Condonation: {{ student_name }}",
+        "{{ student_name }} requested condonation of attendance ({{ percentage }}%).",
+        ("student_name", "percentage"),
+        ("in_app", "email"),
+        link="/admin/attendance/condonations",
+    ),
+    EventDef(
+        "condonation.approved",
+        "attendance",
+        "Condonation approved",
+        "Condonation approved",
+        "Your attendance condonation was approved ({{ fee }}).",
+        ("fee",),
+        ("in_app", "push", "sms"),
+        link="/student/attendance",
+    ),
+    EventDef(
+        "condonation.rejected",
+        "attendance",
+        "Condonation rejected",
+        "Condonation rejected",
+        "Your attendance condonation request was rejected. {{ comment }}",
+        ("comment",),
+        ("in_app", "push"),
+        link="/student/attendance",
+    ),
+    EventDef(
+        "eligibility.detained",
+        "exams",
+        "Detained from examinations",
+        "Detention notice",
+        "You are not eligible to write the examinations of: {{ courses }}. Contact your department.",
+        ("courses",),
+        ("in_app", "email", "sms"),
+        link="/student/attendance",
+    ),
+    EventDef(
+        "attendance.missing_sessions",
+        "attendance",
+        "Attendance not taken",
+        "{{ count }} session(s) without attendance",
+        "{{ count }} class session(s) of the last {{ days }} days have no attendance marked.",
+        ("count", "days"),
+        ("in_app", "email"),
+        link="/faculty/attendance",
+    ),
+)
+EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS + TIMETABLE_EVENTS + ATTENDANCE_EVENTS
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 

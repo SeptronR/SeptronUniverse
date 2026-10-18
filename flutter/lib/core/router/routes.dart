@@ -43,6 +43,10 @@ class AppRoutes {
   static const myTimetable = '/app/timetable';
   static const todaySessions = '/app/timetable/today';
   static const substitutions = '/app/timetable/substitutions';
+  // Phase 11 — attendance (faculty marking, student / parent rings, HOD condonations)
+  static const attendance = '/app/attendance';
+  static const myAttendance = '/app/attendance/me';
+  static const condonations = '/app/attendance/condonations';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

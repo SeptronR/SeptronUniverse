@@ -240,6 +240,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'timetable:substitute',
       feature: 'timetable.substitutions',
       roles: ['faculty', 'class_advisor', 'hod']),
+  // Phase 11 — attendance (faculty marking, student rings, HOD condonations)
+  const MoreMenuModule(
+      titleKey: 'attendance',
+      icon: Icons.fact_check,
+      route: AppRoutes.attendance,
+      color: Colors.green,
+      permission: 'attendance:mark',
+      feature: 'attendance.core',
+      roles: ['faculty', 'class_advisor', 'hod', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'my_attendance',
+      icon: Icons.donut_large,
+      route: AppRoutes.myAttendance,
+      color: Colors.teal,
+      permission: 'attendance:self|attendance:view',
+      feature: 'attendance.core',
+      roles: ['student', 'parent']),
+  const MoreMenuModule(
+      titleKey: 'condonations',
+      icon: Icons.gavel,
+      route: AppRoutes.condonations,
+      color: Colors.deepOrange,
+      permission: 'attendance:condone',
+      feature: 'attendance.condonation',
+      roles: ['hod']),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',

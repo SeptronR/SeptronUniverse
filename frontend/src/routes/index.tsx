@@ -125,6 +125,15 @@ const StudentRegistrationsHistory = lazy(() =>
 const FacultyOfferingsPage = lazy(() =>
   import('@/features/registration/pages/StudentRegistrationPage').then((m) => ({ default: m.FacultyOfferingsPage })),
 );
+// Phase 11 — attendance
+const FacultyAttendancePage = lazy(() => import('@/features/attendance/pages/FacultyAttendancePages').then((m) => ({ default: m.FacultyAttendancePage })));
+const FacultySummaryPage = lazy(() => import('@/features/attendance/pages/FacultyAttendancePages').then((m) => ({ default: m.FacultySummaryPage })));
+const AdminAttendancePage = lazy(() => import('@/features/attendance/pages/AdminAttendancePages').then((m) => ({ default: m.AdminAttendancePage })));
+const OdQueuePage = lazy(() => import('@/features/attendance/pages/AdminAttendancePages').then((m) => ({ default: m.OdQueuePage })));
+const CondonationsPage = lazy(() => import('@/features/attendance/pages/AdminAttendancePages').then((m) => ({ default: m.CondonationsPage })));
+const EligibilityPage = lazy(() => import('@/features/attendance/pages/AdminAttendancePages').then((m) => ({ default: m.EligibilityPage })));
+const StudentAttendancePage = lazy(() => import('@/features/attendance/pages/StudentAttendancePage').then((m) => ({ default: m.StudentAttendancePage })));
+const ParentAttendancePage = lazy(() => import('@/features/attendance/pages/StudentAttendancePage').then((m) => ({ default: m.ParentAttendancePage })));
 // Phase 10 — timetable & rooms
 const RoomsPage = lazy(() =>
   import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.RoomsPage })),
@@ -363,6 +372,11 @@ export const router = createBrowserRouter([
               ['/admin/timetable/:termId', 'timetable.core', 'timetable', 'view', [['timetable', 'view_all']], <TimetableEditorPage key="tt" />],
               ['/rooms/:id/today', 'timetable.rooms', 'timetable', 'view', [['timetable', 'view_all']], <RoomKioskPage key="rk" />],
               ['/timetable', 'timetable.core', 'timetable', 'view', [], <MyTimetablePage key="tm" />],
+              // Phase 11 — attendance (narrowed further by the services)
+              ['/admin/attendance/od', 'attendance.on_duty', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'mark'], ['attendance', 'edit_finalized']], <OdQueuePage key="ao" />],
+              ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
+              ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
+              ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
               // Phase 08 — admissions (cycles readable by all staff; applicants need view_all — HOD / college slices)
               ['/admin/admissions/cycles', 'admissions.cycles', 'admissions', 'view', [], <CyclesPage key="ac" />],
               ['/admin/admissions/cycles/:id', 'admissions.cycles', 'admissions', 'view', [], <CycleWorkspacePage key="aw" />],
@@ -489,6 +503,7 @@ export const router = createBrowserRouter([
               ['registration', <StudentRegistrationPage key="r" />],
               ['registrations', <StudentRegistrationsHistory key="h" />],
               ['timetable', <MyTimetablePage key="t" />],
+              ['attendance', <StudentAttendancePage key="a" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -499,6 +514,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
+          { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><ParentAttendancePage /></FeatureRoute>) },
         ],
       },
       {
@@ -509,6 +525,8 @@ export const router = createBrowserRouter([
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
+          { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><FacultyAttendancePage /></FeatureRoute>) },
+          { path: 'attendance/summary', element: page(<FeatureRoute feature="attendance.core"><FacultySummaryPage /></FeatureRoute>) },
         ],
       },
       {

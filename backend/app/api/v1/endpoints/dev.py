@@ -30,6 +30,12 @@ Phase 10 adds ``POST /_dev/class-sessions/{id}/attendance`` (step 10 — mark a 
 ``finalized`` until Phase 11 exists), ``POST /_dev/timetable/mark-missed`` (the nightly Beat body) and
 ``POST /_dev/timetable/consume/{event}`` (runs the ``leave.approved`` / ``leave.cancelled`` / ``holiday.changed``
 consumer bodies in-process with a given payload, for runs without a Celery worker).
+
+Phase 11 keeps the Phase 10 attendance fixture (older verify scripts; the real flow is ``POST
+/class-sessions/{id}/attendance``) and adds ``POST /_dev/attendance/{task}`` (``auto-finalize`` | ``missing-digest`` |
+``checkpoints`` [``?checkpoint=50`` forces one] | ``streak-alerts`` — the Beat bodies in-process),
+``POST /_dev/condonations/{id}/paid`` (the condonation fee payment until Phase 12 invoices exist) and
+``POST /_dev/attendance/consume/{event}`` (``timetable.published`` / ``session.created`` OD consumers).
 """
 
 import asyncio
@@ -404,3 +410,85 @@ async def dev_timetable_consume(
     else:
         raise APIError(422, ErrorCode.VALIDATION, f"Unknown event {event!r}")
     return ok({"event": event, "result": out}, message="Consumed")
+
+
+# ---- Phase 11 --------------------------------------------------------------------------------------------------------
+@router.post(
+    "/attendance/{task}",
+    summary="Run an attendance Beat body in-process (auto-finalize | missing-digest | checkpoints | streak-alerts)",
+    dependencies=[feature_required("attendance.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_attendance_beat(
+    task: str,
+    request: Request,
+    checkpoint: int | None = Query(default=None, ge=1, le=100),
+    principal: Principal = Depends(any_permission_required(("attendance", "view_all"), ("exams", "eligibility"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.attendance.marking_service import MarkingService
+    from app.services.attendance.summary_service import SummaryService
+
+    if task == "auto-finalize":
+        n = await MarkingService(db, principal, request).auto_finalize()
+    elif task == "missing-digest":
+        n = await MarkingService(db, principal, request).missing_digest()
+    elif task == "checkpoints":
+        n = await SummaryService(db, principal, request).checkpoints(checkpoint)
+    elif task == "streak-alerts":
+        svc = SummaryService(db, principal, request)
+        term = await svc.require_current_term(None)
+        n = (await svc.recompute_term(term.id))["rows"]
+    else:
+        raise APIError(
+            422,
+            ErrorCode.VALIDATION,
+            f"Unknown task {task!r}",
+            {"allowed": ["auto-finalize", "missing-digest", "checkpoints", "streak-alerts"]},
+        )
+    return ok({"task": task, "changed": n}, message="Run")
+
+
+@router.post(
+    "/attendance/consume/{event}",
+    summary="Run a Phase 11 consumer body in-process (timetable.published | session.created)",
+    dependencies=[feature_required("attendance.on_duty")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_attendance_consume(
+    event: str,
+    request: Request,
+    payload: dict[str, Any] = Body(default_factory=dict),
+    principal: Principal = Depends(any_permission_required(("attendance", "view_all"), ("attendance", "condone"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.attendance.od_service import OdService
+
+    svc = OdService(db, principal, request)
+    if event == "timetable.published":
+        n = await svc.apply_to_sessions()
+    elif event == "session.created" and payload.get("session_id"):
+        from datetime import date as _date
+
+        n = await svc.apply_to_sessions([uuid.UUID(str(payload["session_id"]))], _date(1970, 1, 1))
+    else:
+        raise APIError(422, ErrorCode.VALIDATION, f"Unknown event {event!r} (session.created needs session_id)")
+    return ok({"event": event, "od_marks": n}, message="Consumed")
+
+
+@router.post(
+    "/condonations/{condonation_id}/paid",
+    summary="Simulate the condonation fee payment (until Phase 12 invoices)",
+    dependencies=[feature_required("attendance.condonation")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_condonation_paid(
+    condonation_id: uuid.UUID,
+    request: Request,
+    principal: Principal = Depends(any_permission_required(("attendance", "condone"), ("fees", "manage"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.attendance.condonation_service import CondonationService
+
+    out = await CondonationService(db, principal, request).mark_paid(condonation_id, "DEV")
+    return ok(out.model_dump(mode="json"), message="Paid")

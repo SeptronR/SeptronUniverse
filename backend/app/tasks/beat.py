@@ -91,4 +91,12 @@ register_beat("registration.reminders", "beat.registration.reminders", crontab(h
 # ---- Phase 10 timetable (app/tasks/timetable.py) ------------------------------------------------------------------------
 register_beat("sessions.mark_missed", "beat.sessions.mark_missed", crontab(hour=23, minute=40))
 
+# ---- Phase 11 attendance (app/tasks/attendance.py) — crontab in UTC like the rest; institution-local "today" inside -----
+register_beat("attendance.auto_finalize", "beat.attendance.auto_finalize", crontab(hour=19, minute=0))
+register_beat(
+    "attendance.missing_sessions_digest", "beat.attendance.missing_sessions_digest", crontab(hour=12, minute=30)
+)
+register_beat("attendance.checkpoints", "beat.attendance.checkpoints", crontab(hour=1, minute=30))
+register_beat("attendance.streak_alerts", "beat.attendance.streak_alerts", crontab(hour=18, minute=25))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
