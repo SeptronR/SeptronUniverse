@@ -51,6 +51,10 @@ class AppRoutes {
   static const myFees = '/app/fees';
   // Phase 13 — faculty marks entry, HOD verification, student courses & marks
   static const facultyMarks = '/app/marks';
+  // Phase 14 — student exams, faculty duties, invigilator hall attendance
+  static const myExams = '/app/exams';
+  static const myDuties = '/app/exams/duties';
+  static const examConduct = '/app/exams/conduct';
   static const marksVerification = '/app/marks/verification';
   static const myCourses = '/app/courses';
   static const feeCollect = '/app/fees/collect';

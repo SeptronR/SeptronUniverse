@@ -51,6 +51,8 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/timetables/sections/{id}.ics",
     # Phase 12 — payment gateway webhooks (provider signature verified; tenant from ?institution=<slug> / header)
     "POST /api/v1/webhooks/payments/{provider}",
+    # Phase 14 — public hall-ticket verification (random token; masked identity)
+    "GET /api/v1/hall-tickets/verify/{token}",
 }
 
 

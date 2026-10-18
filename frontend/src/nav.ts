@@ -109,6 +109,8 @@ export const NAV_GROUPS: NavGroup[] = [
     title: 'EXAMINATIONS',
     items: [
       // Phase 11 — eligibility snapshots / detention (Phase 14 joins this group)
+      // Phase 14 — exam sessions (papers, date-sheet, registrations, hall tickets, seating, invigilation, QP, conduct)
+      { label: 'Exam sessions', to: '/admin/exams/sessions', icon: CalendarCheck, module: 'exams', action: 'view_all', altActions: ['configure', 'manage', 'view'], feature: 'exams.sessions' },
       // Phase 13 — marks verification (HOD) and locks (exam cell)
       { label: 'Marks verification', to: '/admin/assessment/verification', icon: ClipboardCheck, module: 'marks', action: 'verify', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Marks locks', to: '/admin/assessment/locks', icon: ClipboardCheck, module: 'marks', action: 'lock', altActions: [], feature: 'assessment.marks_workflow' },

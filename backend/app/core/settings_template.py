@@ -91,6 +91,8 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("exams", "valuation_mode_default", "enum", "single", False, ("single", "double")),
     SettingDef("exams", "discrepancy_pct_default", "int", 15, min=0, max=100),
     SettingDef("exams", "hall_ticket_requires_no_dues", "bool", True),
+    # exams (Phase 14) — duty remuneration per role (paise); empty = built-in defaults
+    SettingDef("exams", "duty_remuneration", "json", None, label="Exam duty remuneration per role (paise)"),
     SettingDef(
         "exams",
         "eligibility_requires_fee_clear",

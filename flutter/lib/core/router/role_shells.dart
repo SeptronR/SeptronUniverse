@@ -265,6 +265,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 14 — exams (students), duties (faculty / invigilators), hall attendance (invigilators / exam cell)
+  const MoreMenuModule(
+      titleKey: 'exams',
+      icon: Icons.event_note,
+      route: AppRoutes.myExams,
+      color: Colors.deepOrange,
+      permission: 'exams:self',
+      feature: 'exams.sessions',
+      roles: ['student', 'learner']),
+  const MoreMenuModule(
+      titleKey: 'exam_duties',
+      icon: Icons.assignment_ind_outlined,
+      route: AppRoutes.myDuties,
+      color: Colors.brown,
+      permission: 'exams:invigilation',
+      feature: 'exams.invigilation',
+      roles: ['faculty', 'hod', 'invigilator', 'class_advisor', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'exam_conduct',
+      icon: Icons.how_to_reg_outlined,
+      route: AppRoutes.examConduct,
+      color: Colors.red,
+      permission: 'exams:conduct',
+      feature: 'exams.sessions',
+      roles: ['invigilator', 'exam_cell', 'controller_of_examinations', 'college_exam_coordinator']),
   // Phase 13 — marks (faculty), verification (HOD), courses & marks (students)
   const MoreMenuModule(
       titleKey: 'marks',

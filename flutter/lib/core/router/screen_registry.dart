@@ -10,6 +10,7 @@ import '../../features/registration/registration_screens.dart';
 import '../../features/attendance/attendance_screens.dart';
 import '../../features/fees/fees_screens.dart';
 import '../../features/assessment/assessment_screens.dart';
+import '../../features/exams/exam_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -291,6 +292,28 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 14 — exams (student registration / hall ticket, faculty duties, hall attendance)
+    AppRoutes.myExams: ScreenEntry(
+      route: AppRoutes.myExams,
+      titleKey: 'exams',
+      feature: 'exams.sessions',
+      permission: 'exams:self',
+      builder: (_, __) => const StudentExamsScreen(),
+    ),
+    AppRoutes.myDuties: ScreenEntry(
+      route: AppRoutes.myDuties,
+      titleKey: 'exam_duties',
+      feature: 'exams.invigilation',
+      permission: 'exams:invigilation',
+      builder: (_, __) => const MyDutiesScreen(),
+    ),
+    AppRoutes.examConduct: ScreenEntry(
+      route: AppRoutes.examConduct,
+      titleKey: 'exam_conduct',
+      feature: 'exams.sessions',
+      permission: 'exams:conduct',
+      builder: (_, __) => const ExamConductScreen(),
     ),
     // Phase 13 — marks entry (faculty), verification (HOD), courses & marks (students)
     AppRoutes.facultyMarks: ScreenEntry(

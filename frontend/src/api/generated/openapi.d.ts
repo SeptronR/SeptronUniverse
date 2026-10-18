@@ -4406,6 +4406,744 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/exam-centres/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a centre */
+        put: operations["update_centre_api_v1_exam_centres__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a paper */
+        put: operations["update_paper_api_v1_exam_papers__id__put"];
+        post?: never;
+        /** Delete a paper without registrations */
+        delete: operations["delete_paper_api_v1_exam_papers__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/attendance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hall attendance roster */
+        get: operations["hall_roster_api_v1_exam_papers__id__attendance_get"];
+        put?: never;
+        /** Mark hall attendance (Idempotency-Key) */
+        post: operations["mark_hall_api_v1_exam_papers__id__attendance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/attendance-sheet.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Attendance sheet */
+        get: operations["hall_sheet_api_v1_exam_papers__id__attendance_sheet_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/malpractice-reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Report malpractice */
+        post: operations["malpractice_api_v1_exam_papers__id__malpractice_reports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/online/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Access the online paper in its window */
+        get: operations["online_access_api_v1_exam_papers__id__online_access_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/online/setup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Link a quiz + proctoring */
+        post: operations["online_setup_api_v1_exam_papers__id__online_setup_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-papers/{id}/qp-assignments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Sets of a paper */
+        get: operations["qp_list_api_v1_exam_papers__id__qp_assignments_get"];
+        put?: never;
+        /** Invite a setter for a set */
+        post: operations["qp_create_api_v1_exam_papers__id__qp_assignments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registration/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My (ward's) registration, built from confirmed items + arrears */
+        get: operations["my_registration_api_v1_exam_registration_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registration/me/hall-ticket.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My hall ticket (after release) */
+        get: operations["my_hall_ticket_api_v1_exam_registration_me_hall_ticket_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registration/me/history": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My registrations */
+        get: operations["my_history_api_v1_exam_registration_me_history_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registration/me/seat": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My published seats */
+        get: operations["my_seat_api_v1_exam_registration_me_seat_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registration/me/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit (Idempotency-Key) → fee invoice / confirmed */
+        post: operations["submit_registration_api_v1_exam_registration_me_submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registrations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Admin registration */
+        post: operations["admin_create_api_v1_exam_registrations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registrations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Registration */
+        get: operations["get_registration_api_v1_exam_registrations__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registrations/{id}/hall-ticket.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hall ticket of a registration */
+        get: operations["hall_ticket_api_v1_exam_registrations__id__hall_ticket_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-registrations/{id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** cancel | debar | reinstate */
+        post: operations["registration_action_api_v1_exam_registrations__id___action__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-seat-allocations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Manual move (audited) */
+        put: operations["move_seat_api_v1_exam_seat_allocations__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-seating-plans/{id}/chart.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Room seating chart */
+        get: operations["chart_api_v1_exam_seating_plans__id__chart_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-seating-plans/{id}/door-list.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Door list */
+        get: operations["door_list_api_v1_exam_seating_plans__id__door_list_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Exam sessions */
+        get: operations["list_sessions_api_v1_exam_sessions_get"];
+        put?: never;
+        /** Create a session */
+        post: operations["create_session_api_v1_exam_sessions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Session */
+        get: operations["get_session_api_v1_exam_sessions__id__get"];
+        /** Update a session */
+        put: operations["update_session_api_v1_exam_sessions__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/centres": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Exam centres */
+        get: operations["centres_api_v1_exam_sessions__id__centres_get"];
+        put?: never;
+        /** Add a centre (central sessions) */
+        post: operations["create_centre_api_v1_exam_sessions__id__centres_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/date-sheet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Assign dates / slots / times */
+        put: operations["date_sheet_api_v1_exam_sessions__id__date_sheet_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/date-sheet.ics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Date-sheet ICS */
+        get: operations["date_sheet_ics_api_v1_exam_sessions__id__date_sheet_ics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/date-sheet.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Date-sheet PDF */
+        get: operations["date_sheet_pdf_api_v1_exam_sessions__id__date_sheet_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/date-sheet/check-clashes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Student clashes, holidays, unscheduled papers */
+        post: operations["check_clashes_api_v1_exam_sessions__id__date_sheet_check_clashes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/date-sheet/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish (409 DATE_SHEET_CLASH unless force by the COE) */
+        post: operations["publish_date_sheet_api_v1_exam_sessions__id__date_sheet_publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/eligibility/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply the term eligibility snapshot (job) */
+        post: operations["eligibility_apply_api_v1_exam_sessions__id__eligibility_apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/eligibility/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Items by eligibility */
+        get: operations["eligibility_summary_api_v1_exam_sessions__id__eligibility_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/hall-tickets/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate hall tickets (job) */
+        post: operations["generate_hall_tickets_api_v1_exam_sessions__id__hall_tickets_generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/invigilation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Duty roster */
+        get: operations["roster_api_v1_exam_sessions__id__invigilation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/invigilation/auto-assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Auto-assign duties (dry_run inline, else job) */
+        post: operations["auto_assign_api_v1_exam_sessions__id__invigilation_auto_assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/lock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Lock the session */
+        post: operations["lock_session_api_v1_exam_sessions__id__lock_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/papers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Papers */
+        get: operations["papers_api_v1_exam_sessions__id__papers_get"];
+        put?: never;
+        /** Add a paper */
+        post: operations["create_paper_api_v1_exam_sessions__id__papers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/papers/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Papers from offerings + arrears (dry_run inline, else job) */
+        post: operations["papers_bulk_api_v1_exam_sessions__id__papers_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/registrations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Registrations */
+        get: operations["registrations_api_v1_exam_sessions__id__registrations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/registrations/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Register every enrolment with confirmed items (job) */
+        post: operations["bulk_register_api_v1_exam_sessions__id__registrations_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/remuneration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Remuneration by role / staff */
+        get: operations["remuneration_api_v1_exam_sessions__id__remuneration_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/seating": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Seat allocations */
+        get: operations["seating_api_v1_exam_sessions__id__seating_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/seating/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate seating (dry_run inline, else job) */
+        post: operations["seating_generate_api_v1_exam_sessions__id__seating_generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/seating/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish seating (hall tickets regenerated with venue) */
+        post: operations["publish_seating_api_v1_exam_sessions__id__seating_publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Move the status forward */
+        post: operations["change_status_api_v1_exam_sessions__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/faculties": {
         parameters: {
             query?: never;
@@ -5504,6 +6242,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/hall-tickets/verify/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public hall-ticket verification (masked) */
+        get: operations["verify_hall_ticket_api_v1_hall_tickets_verify__token__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/help/articles": {
         parameters: {
             query?: never;
@@ -5722,6 +6477,126 @@ export interface paths {
         /** Platform toggle for one feature (super admin) */
         put: operations["set_platform_flag_api_v1_institutions__id__features__key__put"];
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a duty */
+        post: operations["create_duty_api_v1_invigilation_duties_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My duties */
+        get: operations["my_duties_api_v1_invigilation_duties_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a duty */
+        put: operations["update_duty_api_v1_invigilation_duties__id__put"];
+        post?: never;
+        /** Remove a duty */
+        delete: operations["delete_duty_api_v1_invigilation_duties__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties/{id}/letter.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Duty letter */
+        get: operations["duty_letter_api_v1_invigilation_duties__id__letter_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties/{id}/mark-absent": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark the invigilator absent */
+        post: operations["duty_absent_api_v1_invigilation_duties__id__mark_absent_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties/{id}/swap-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request a swap (own duty) */
+        post: operations["swap_request_api_v1_invigilation_duties__id__swap_request_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/invigilation-duties/{id}/swap/{decision}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject a swap (availability checked) */
+        post: operations["swap_decide_api_v1_invigilation_duties__id__swap__decision__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7496,6 +8371,142 @@ export interface paths {
         put?: never;
         /** Website enquiry form (public, captcha) */
         post: operations["public_enquiry_api_v1_public_enquiries_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My setter assignments (internal / external) */
+        get: operations["my_qp_api_v1_qp_assignments_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update an assignment */
+        put: operations["qp_update_api_v1_qp_assignments__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/{id}/generate-from-blueprint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate from the blueprint (frozen paper + PDF) */
+        post: operations["qp_generate_api_v1_qp_assignments__id__generate_from_blueprint_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/{id}/print": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Watermarked print → single-use token */
+        post: operations["qp_print_api_v1_qp_assignments__id__print_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/{id}/scrutinise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Scrutiny approve / reject */
+        post: operations["qp_scrutinise_api_v1_qp_assignments__id__scrutinise_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/{id}/select": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Select the set (others rejected) */
+        post: operations["qp_select_api_v1_qp_assignments__id__select_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp-assignments/{id}/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload the paper (stored encrypted) */
+        post: operations["qp_upload_api_v1_qp_assignments__id__upload_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/qp/download/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Single-use watermarked print download */
+        get: operations["qp_download_api_v1_qp_download__token__get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -13021,6 +14032,11 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_qp_upload_api_v1_qp_assignments__id__upload_post */
+        Body_qp_upload_api_v1_qp_assignments__id__upload_post: {
+            /** File */
+            file: string;
+        };
         /** Body_reconcile_upload_api_v1_fees_reconcile_upload_post */
         Body_reconcile_upload_api_v1_fees_reconcile_upload_post: {
             body?: components["schemas"]["ReconcileUpload"] | null;
@@ -13216,6 +14232,62 @@ export interface components {
             source: components["schemas"]["AttendanceSource"];
             /** Topic */
             topic?: string | null;
+        };
+        /** BulkPapersPreview */
+        BulkPapersPreview: {
+            /**
+             * Arrear Only
+             * @default 0
+             */
+            arrear_only: number;
+            /**
+             * Created
+             * @default 0
+             */
+            created: number;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * Existing
+             * @default 0
+             */
+            existing: number;
+            /**
+             * Practical
+             * @default 0
+             */
+            practical: number;
+            /**
+             * Project Viva
+             * @default 0
+             */
+            project_viva: number;
+            /**
+             * Theory
+             * @default 0
+             */
+            theory: number;
+        };
+        /** BulkPapersRequest */
+        BulkPapersRequest: {
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * From Offerings
+             * @default true
+             */
+            from_offerings: boolean;
+            /**
+             * Include Arrears
+             * @default true
+             */
+            include_arrears: boolean;
         };
         /** BulkPreview */
         BulkPreview: {
@@ -13783,6 +14855,36 @@ export interface components {
              * Format: uuid
              */
             student_program_enrollment_id: string;
+        };
+        /** ClashItem */
+        ClashItem: {
+            /**
+             * Exam Date
+             * Format: date
+             */
+            exam_date: string;
+            /** Papers */
+            papers?: string[];
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Session Slot */
+            session_slot: string;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+        };
+        /** ClashReport */
+        ClashReport: {
+            /** Holidays */
+            holidays?: {
+                [key: string]: unknown;
+            }[];
+            /** Items */
+            items?: components["schemas"]["ClashItem"][];
+            /** Unscheduled */
+            unscheduled?: string[];
         };
         /** ClassSessionResponse */
         ClassSessionResponse: {
@@ -15180,6 +16282,33 @@ export interface components {
             /** User Id */
             user_id?: string | null;
         };
+        /** DateSheetEntry */
+        DateSheetEntry: {
+            /** Duration Minutes */
+            duration_minutes?: number | null;
+            /**
+             * Exam Date
+             * Format: date
+             */
+            exam_date: string;
+            /**
+             * Paper Id
+             * Format: uuid
+             */
+            paper_id: string;
+            /**
+             * Session Slot
+             * @enum {string}
+             */
+            session_slot: "FN" | "AN" | "EVE";
+            /** Start Time */
+            start_time?: string | null;
+        };
+        /** DateSheetUpdate */
+        DateSheetUpdate: {
+            /** Entries */
+            entries: components["schemas"]["DateSheetEntry"][];
+        };
         /** DayBookClose */
         DayBookClose: {
             /** Counter */
@@ -15819,12 +16948,119 @@ export interface components {
              */
             total_due: number;
         };
+        /** DutyCreate */
+        DutyCreate: {
+            /**
+             * Exam Date
+             * Format: date
+             */
+            exam_date: string;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Role
+             * @default invigilator
+             */
+            role: string;
+            /** Room Id */
+            room_id?: string | null;
+            /**
+             * Session Slot
+             * @enum {string}
+             */
+            session_slot: "FN" | "AN" | "EVE";
+            /**
+             * Staff Id
+             * Format: uuid
+             */
+            staff_id: string;
+        };
+        /** DutyResponse */
+        DutyResponse: {
+            /**
+             * Exam Date
+             * Format: date
+             */
+            exam_date: string;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
+            /** Role */
+            role: string;
+            /** Room Code */
+            room_code?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /** Session Slot */
+            session_slot: string;
+            /**
+             * Staff Id
+             * Format: uuid
+             */
+            staff_id: string;
+            /** Staff Name */
+            staff_name?: string | null;
+            /** Status */
+            status: string;
+            /** Swap With Staff Id */
+            swap_with_staff_id?: string | null;
+        };
+        /** DutyUpdate */
+        DutyUpdate: {
+            /** Role */
+            role?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /** Status */
+            status?: string | null;
+        };
         /** EditFinalizedRequest */
         EditFinalizedRequest: {
             /** Marks */
             marks: components["schemas"]["MarkItem"][];
             /** Reason */
             reason: string;
+        };
+        /** EligibilityApplyRequest */
+        EligibilityApplyRequest: {
+            /**
+             * Recompute
+             * @default false
+             */
+            recompute: boolean;
+            /** Version */
+            version?: number | null;
+        };
+        /** EligibilityApplySummary */
+        EligibilityApplySummary: {
+            /** By Decision */
+            by_decision?: {
+                [key: string]: number;
+            };
+            /**
+             * Items
+             * @default 0
+             */
+            items: number;
+            /**
+             * Registrations
+             * @default 0
+             */
+            registrations: number;
+            /** Version */
+            version?: number | null;
         };
         /** EligibilityComputeRequest */
         EligibilityComputeRequest: {
@@ -16745,6 +17981,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[BulkPapersPreview] */
+        Envelope_BulkPapersPreview_: {
+            data?: components["schemas"]["BulkPapersPreview"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[BulkPreview] */
         Envelope_BulkPreview_: {
             data?: components["schemas"]["BulkPreview"] | null;
@@ -16823,6 +18074,21 @@ export interface components {
         /** Envelope[ChoiceFormResponse] */
         Envelope_ChoiceFormResponse_: {
             data?: components["schemas"]["ChoiceFormResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ClashReport] */
+        Envelope_ClashReport_: {
+            data?: components["schemas"]["ClashReport"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -17195,6 +18461,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DutyResponse] */
+        Envelope_DutyResponse_: {
+            data?: components["schemas"]["DutyResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[EligibilityApplySummary] */
+        Envelope_EligibilityApplySummary_: {
+            data?: components["schemas"]["EligibilityApplySummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[EligibilityRow] */
         Envelope_EligibilityRow_: {
             data?: components["schemas"]["EligibilityRow"] | null;
@@ -17288,6 +18584,66 @@ export interface components {
         /** Envelope[EntryResult] */
         Envelope_EntryResult_: {
             data?: components["schemas"]["EntryResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExamCentreOut] */
+        Envelope_ExamCentreOut_: {
+            data?: components["schemas"]["ExamCentreOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExamPaperResponse] */
+        Envelope_ExamPaperResponse_: {
+            data?: components["schemas"]["ExamPaperResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExamRegistrationResponse] */
+        Envelope_ExamRegistrationResponse_: {
+            data?: components["schemas"]["ExamRegistrationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExamSessionResponse] */
+        Envelope_ExamSessionResponse_: {
+            data?: components["schemas"]["ExamSessionResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -17468,6 +18824,21 @@ export interface components {
         /** Envelope[GradingScaleResponse] */
         Envelope_GradingScaleResponse_: {
             data?: components["schemas"]["GradingScaleResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HallTicketVerifyResponse] */
+        Envelope_HallTicketVerifyResponse_: {
+            data?: components["schemas"]["HallTicketVerifyResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -17813,6 +19184,21 @@ export interface components {
         /** Envelope[LogoUploadResponse] */
         Envelope_LogoUploadResponse_: {
             data?: components["schemas"]["LogoUploadResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MalpracticeOut] */
+        Envelope_MalpracticeOut_: {
+            data?: components["schemas"]["MalpracticeOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -18651,6 +20037,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[QpAssignmentResponse] */
+        Envelope_QpAssignmentResponse_: {
+            data?: components["schemas"]["QpAssignmentResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[QpPrintResponse] */
+        Envelope_QpPrintResponse_: {
+            data?: components["schemas"]["QpPrintResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[QrIssueResponse] */
         Envelope_QrIssueResponse_: {
             data?: components["schemas"]["QrIssueResponse"] | null;
@@ -18936,6 +20352,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RemunerationSummary] */
+        Envelope_RemunerationSummary_: {
+            data?: components["schemas"]["RemunerationSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RolePermissionMatrix] */
         Envelope_RolePermissionMatrix_: {
             data?: components["schemas"]["RolePermissionMatrix"] | null;
@@ -18984,6 +20415,21 @@ export interface components {
         /** Envelope[RoomOut] */
         Envelope_RoomOut_: {
             data?: components["schemas"]["RoomOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RosterSummary] */
+        Envelope_RosterSummary_: {
+            data?: components["schemas"]["RosterSummary"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -19101,9 +20547,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[SeatAllocationRow] */
+        Envelope_SeatAllocationRow_: {
+            data?: components["schemas"]["SeatAllocationRow"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[SeatStatusResponse] */
         Envelope_SeatStatusResponse_: {
             data?: components["schemas"]["SeatStatusResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[SeatingSummary] */
+        Envelope_SeatingSummary_: {
+            data?: components["schemas"]["SeatingSummary"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -20546,6 +22022,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[DutyResponse]] */
+        Envelope_list_DutyResponse__: {
+            /** Data */
+            data?: components["schemas"]["DutyResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[EligibilityRow]] */
         Envelope_list_EligibilityRow__: {
             /** Data */
@@ -20582,6 +22074,70 @@ export interface components {
         Envelope_list_EnrollmentResponse__: {
             /** Data */
             data?: components["schemas"]["EnrollmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExamCentreOut]] */
+        Envelope_list_ExamCentreOut__: {
+            /** Data */
+            data?: components["schemas"]["ExamCentreOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExamPaperResponse]] */
+        Envelope_list_ExamPaperResponse__: {
+            /** Data */
+            data?: components["schemas"]["ExamPaperResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExamRegistrationResponse]] */
+        Envelope_list_ExamRegistrationResponse__: {
+            /** Data */
+            data?: components["schemas"]["ExamRegistrationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExamSessionResponse]] */
+        Envelope_list_ExamSessionResponse__: {
+            /** Data */
+            data?: components["schemas"]["ExamSessionResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -20710,6 +22266,22 @@ export interface components {
         Envelope_list_GuardianOut__: {
             /** Data */
             data?: components["schemas"]["GuardianOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HallAttendanceRowOut]] */
+        Envelope_list_HallAttendanceRowOut__: {
+            /** Data */
+            data?: components["schemas"]["HallAttendanceRowOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -21314,6 +22886,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[QpAssignmentResponse]] */
+        Envelope_list_QpAssignmentResponse__: {
+            /** Data */
+            data?: components["schemas"]["QpAssignmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[QualificationOut]] */
         Envelope_list_QualificationOut__: {
             /** Data */
@@ -21574,6 +23162,22 @@ export interface components {
         Envelope_list_ScholarshipOut__: {
             /** Data */
             data?: components["schemas"]["ScholarshipOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[SeatAllocationRow]] */
+        Envelope_list_SeatAllocationRow__: {
+            /** Data */
+            data?: components["schemas"]["SeatAllocationRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22153,6 +23757,381 @@ export interface components {
          * @enum {string}
          */
         ExamAuthority: "university" | "autonomous_college";
+        /** ExamCentreIn */
+        ExamCentreIn: {
+            /** Assigned Colleges */
+            assigned_colleges?: string[];
+            /** Capacity */
+            capacity?: number | null;
+            /** Centre Code */
+            centre_code: string;
+            /** Chief Superintendent Staff Id */
+            chief_superintendent_staff_id?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+        };
+        /** ExamCentreOut */
+        ExamCentreOut: {
+            /** Assigned Colleges */
+            assigned_colleges?: string[] | null;
+            /** Capacity */
+            capacity?: number | null;
+            /** Centre Code */
+            centre_code: string;
+            /** Chief Superintendent Staff Id */
+            chief_superintendent_staff_id?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
+        /** ExamPaperCreate */
+        ExamPaperCreate: {
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Duration Minutes */
+            duration_minutes?: number | null;
+            /** Exam Date */
+            exam_date?: string | null;
+            /**
+             * Max Marks
+             * @default 100
+             */
+            max_marks: number;
+            /** Paper Code */
+            paper_code?: string | null;
+            /**
+             * Paper Type
+             * @default theory
+             * @enum {string}
+             */
+            paper_type: "theory" | "practical" | "project_viva" | "dissertation" | "online";
+            /** Qp Pattern */
+            qp_pattern?: {
+                [key: string]: unknown;
+            } | null;
+            /** Quiz Id */
+            quiz_id?: string | null;
+            /** Session Slot */
+            session_slot?: ("FN" | "AN" | "EVE") | null;
+            /** Start Time */
+            start_time?: string | null;
+        };
+        /** ExamPaperResponse */
+        ExamPaperResponse: {
+            /** Course Code */
+            course_code?: string | null;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title?: string | null;
+            /** Duration Minutes */
+            duration_minutes?: number | null;
+            /** Exam Date */
+            exam_date?: string | null;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Max Marks */
+            max_marks: number;
+            /** Paper Code */
+            paper_code?: string | null;
+            /** Paper Type */
+            paper_type: string;
+            /** Qp Pattern */
+            qp_pattern?: {
+                [key: string]: unknown;
+            } | null;
+            /** Quiz Id */
+            quiz_id?: string | null;
+            /**
+             * Registered
+             * @default 0
+             */
+            registered: number;
+            /** Session Slot */
+            session_slot?: string | null;
+            /** Start Time */
+            start_time?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** ExamPaperUpdate */
+        ExamPaperUpdate: {
+            /** Duration Minutes */
+            duration_minutes?: number | null;
+            /** Exam Date */
+            exam_date?: string | null;
+            /** Max Marks */
+            max_marks?: number | null;
+            /** Qp Pattern */
+            qp_pattern?: {
+                [key: string]: unknown;
+            } | null;
+            /** Session Slot */
+            session_slot?: ("FN" | "AN" | "EVE") | null;
+            /** Start Time */
+            start_time?: string | null;
+            /** Status */
+            status?: string | null;
+        };
+        /** ExamRegistrationItemOut */
+        ExamRegistrationItemOut: {
+            /** Attempt Number */
+            attempt_number: number;
+            /** Attempt Type */
+            attempt_type: string;
+            /** Course Code */
+            course_code?: string | null;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title?: string | null;
+            /** Eligibility */
+            eligibility: string;
+            /** Exam Date */
+            exam_date?: string | null;
+            /**
+             * Exam Paper Id
+             * Format: uuid
+             */
+            exam_paper_id: string;
+            /** Fee Paise */
+            fee_paise: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Paper Type */
+            paper_type?: string | null;
+            /** Seat */
+            seat?: {
+                [key: string]: unknown;
+            } | null;
+            /** Session Slot */
+            session_slot?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** ExamRegistrationResponse */
+        ExamRegistrationResponse: {
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Eligibility Snapshot */
+            eligibility_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /**
+             * Hall Ticket Available
+             * @default false
+             */
+            hall_ticket_available: boolean;
+            /** Hall Ticket Issued At */
+            hall_ticket_issued_at?: string | null;
+            /** Hall Ticket Number */
+            hall_ticket_number?: string | null;
+            /** Holds */
+            holds?: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Status */
+            invoice_status?: string | null;
+            /** Items */
+            items?: components["schemas"]["ExamRegistrationItemOut"][];
+            /**
+             * Late Fee Paise
+             * @default 0
+             */
+            late_fee_paise: number;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Session Name */
+            session_name?: string | null;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** Total Fee Paise */
+            total_fee_paise: number;
+            /** Version */
+            version: number;
+        };
+        /** ExamSessionCreate */
+        ExamSessionCreate: {
+            /** Coe Staff Id */
+            coe_staff_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Discrepancy Pct */
+            discrepancy_pct?: number | null;
+            /** End Date */
+            end_date?: string | null;
+            /**
+             * Exam Kind
+             * @default regular
+             * @enum {string}
+             */
+            exam_kind: "regular" | "supplementary" | "arrear" | "improvement" | "special" | "summer" | "practical";
+            /**
+             * Fee Rules
+             * @description {per_course_paise, per_arrear_paise, practical_paise, max_paise, late_fee_paise}
+             */
+            fee_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /** Grading Scale Id */
+            grading_scale_id?: string | null;
+            /** Hall Ticket Release At */
+            hall_ticket_release_at?: string | null;
+            /** Late Fee Until */
+            late_fee_until?: string | null;
+            /** Name */
+            name: string;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Start Date */
+            start_date?: string | null;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /** Valuation Mode */
+            valuation_mode?: ("single" | "double") | null;
+        };
+        /** ExamSessionResponse */
+        ExamSessionResponse: {
+            /** Coe Staff Id */
+            coe_staff_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Counts */
+            counts?: {
+                [key: string]: number;
+            };
+            /** Discrepancy Pct */
+            discrepancy_pct: number;
+            /** End Date */
+            end_date?: string | null;
+            /** Exam Kind */
+            exam_kind: string;
+            /** Fee Rules */
+            fee_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /** Grading Scale Id */
+            grading_scale_id?: string | null;
+            /** Hall Ticket Release At */
+            hall_ticket_release_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Locked */
+            is_locked: boolean;
+            /** Late Fee Until */
+            late_fee_until?: string | null;
+            /** Name */
+            name: string;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Start Date */
+            start_date?: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /** Valuation Mode */
+            valuation_mode: string;
+            /** Version */
+            version: number;
+        };
+        /** ExamSessionUpdate */
+        ExamSessionUpdate: {
+            /** Coe Staff Id */
+            coe_staff_id?: string | null;
+            /** Discrepancy Pct */
+            discrepancy_pct?: number | null;
+            /** End Date */
+            end_date?: string | null;
+            /** Fee Rules */
+            fee_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /** Hall Ticket Release At */
+            hall_ticket_release_at?: string | null;
+            /** Late Fee Until */
+            late_fee_until?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Registration End */
+            registration_end?: string | null;
+            /** Registration Start */
+            registration_start?: string | null;
+            /** Start Date */
+            start_date?: string | null;
+            /** Valuation Mode */
+            valuation_mode?: ("single" | "double") | null;
+            /** Version */
+            version?: number | null;
+        };
         /** ExitRequest */
         ExitRequest: {
             /** Exit Award */
@@ -23328,6 +25307,83 @@ export interface components {
          * @enum {string}
          */
         HalfDay: "first_half" | "second_half";
+        /** HallAttendanceMark */
+        HallAttendanceMark: {
+            /** Items */
+            items: components["schemas"]["HallAttendanceRow"][];
+        };
+        /** HallAttendanceRow */
+        HallAttendanceRow: {
+            /** Answer Booklet Number */
+            answer_booklet_number?: string | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /** Face Match Score */
+            face_match_score?: number | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "present" | "absent" | "late" | "malpractice";
+        };
+        /** HallAttendanceRowOut */
+        HallAttendanceRowOut: {
+            /** Answer Booklet Number */
+            answer_booklet_number?: string | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /** Face Match Score */
+            face_match_score?: number | null;
+            /** Hall Ticket Number */
+            hall_ticket_number?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Room Code */
+            room_code?: string | null;
+            /** Seat Number */
+            seat_number?: string | null;
+            /** Status */
+            status?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+        };
+        /** HallTicketGenerateRequest */
+        HallTicketGenerateRequest: {
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Only Missing
+             * @default true
+             */
+            only_missing: boolean;
+            /** Program Id */
+            program_id?: string | null;
+        };
+        /** HallTicketVerifyResponse */
+        HallTicketVerifyResponse: {
+            /** Hall Ticket Number */
+            hall_ticket_number?: string | null;
+            /** Issued At */
+            issued_at?: string | null;
+            /** Papers */
+            papers?: {
+                [key: string]: unknown;
+            }[];
+            /** Reason */
+            reason?: string | null;
+            /** Session */
+            session?: string | null;
+            /** Student Masked */
+            student_masked?: string | null;
+            /** Valid */
+            valid: boolean;
+        };
         /**
          * HeadType
          * @enum {string}
@@ -24016,6 +26072,35 @@ export interface components {
          * @enum {string}
          */
         InstitutionType: "university" | "deemed_university" | "autonomous_college" | "affiliated_college" | "standalone_college" | "multi_campus";
+        /** InvigilationAutoAssignRequest */
+        InvigilationAutoAssignRequest: {
+            /**
+             * Date From
+             * Format: date
+             */
+            date_from: string;
+            /**
+             * Date To
+             * Format: date
+             */
+            date_to: string;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /** Exclude Staff Ids */
+            exclude_staff_ids?: string[];
+            /**
+             * Max Duties Per Staff
+             * @default 6
+             */
+            max_duties_per_staff: number;
+            /** Roles Per Room */
+            roles_per_room?: {
+                [key: string]: number;
+            };
+        };
         /** InvoiceCancelRequest */
         InvoiceCancelRequest: {
             /** Reason */
@@ -24813,6 +26898,49 @@ export interface components {
             key: string;
             /** Logo Url */
             logo_url: string;
+        };
+        /** MalpracticeOut */
+        MalpracticeOut: {
+            /** Case Number */
+            case_number: string;
+            /** Category */
+            category: string;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Reported At
+             * Format: date-time
+             */
+            reported_at: string;
+            /** Status */
+            status: string;
+        };
+        /** MalpracticeReportCreate */
+        MalpracticeReportCreate: {
+            /**
+             * Category
+             * @enum {string}
+             */
+            category: "copying" | "impersonation" | "device" | "material" | "misconduct" | "tampering" | "other";
+            /** Evidence */
+            evidence?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /** Invigilator Report */
+            invigilator_report: string;
         };
         /** ManualAllocation */
         ManualAllocation: {
@@ -26279,6 +28407,18 @@ export interface components {
             link?: string | null;
             /** Provider */
             provider?: string | null;
+        };
+        /** OnlinePaperSetup */
+        OnlinePaperSetup: {
+            /** Proctoring */
+            proctoring?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Quiz Id
+             * Format: uuid
+             */
+            quiz_id: string;
         };
         /** OnlineVerifyRequest */
         OnlineVerifyRequest: {
@@ -27900,6 +30040,102 @@ export interface components {
              */
             written: number;
         };
+        /** QpAssignmentCreate */
+        QpAssignmentCreate: {
+            /** Blueprint Id */
+            blueprint_id?: string | null;
+            /** Due At */
+            due_at?: string | null;
+            /**
+             * External Setter
+             * @description {name, email, phone, institution, user_id?}
+             */
+            external_setter?: {
+                [key: string]: unknown;
+            } | null;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
+            /**
+             * Set Label
+             * @default A
+             */
+            set_label: string;
+            /** Setter Staff Id */
+            setter_staff_id?: string | null;
+        };
+        /** QpAssignmentResponse */
+        QpAssignmentResponse: {
+            /** Blueprint Id */
+            blueprint_id?: string | null;
+            /** Course Code */
+            course_code?: string | null;
+            /** Due At */
+            due_at?: string | null;
+            /**
+             * Exam Paper Id
+             * Format: uuid
+             */
+            exam_paper_id: string;
+            /** External Setter */
+            external_setter?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Has File
+             * @default false
+             */
+            has_file: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Paper Code */
+            paper_code?: string | null;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
+            /** Scrutiny Remarks */
+            scrutiny_remarks?: string | null;
+            /** Set Label */
+            set_label: string;
+            /** Setter Name */
+            setter_name?: string | null;
+            /** Setter Staff Id */
+            setter_staff_id?: string | null;
+            /** Status */
+            status: string;
+            /** Submitted At */
+            submitted_at?: string | null;
+        };
+        /** QpPrintRequest */
+        QpPrintRequest: {
+            /** Copies */
+            copies: number;
+            /** Watermark Text */
+            watermark_text?: string | null;
+        };
+        /** QpPrintResponse */
+        QpPrintResponse: {
+            /** Copies */
+            copies: number;
+            /** Download Token */
+            download_token: string;
+            /**
+             * Expires In
+             * @default 600
+             */
+            expires_in: number;
+        };
+        /** QpScrutinyRequest */
+        QpScrutinyRequest: {
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "approve" | "reject";
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** QrCheckinRequest */
         QrCheckinRequest: {
             geo?: components["schemas"]["CheckinGeo"] | null;
@@ -28262,6 +30498,11 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** ReasonBody */
+        ReasonBody: {
+            /** Reason */
+            reason: string;
+        };
         /** ReasonRequest */
         ReasonRequest: {
             /** Reason */
@@ -28539,6 +30780,25 @@ export interface components {
             /** Year */
             year: number;
         };
+        /** RegistrationAdminCreate */
+        RegistrationAdminCreate: {
+            /** Attempt Types */
+            attempt_types?: {
+                [key: string]: string;
+            } | null;
+            /**
+             * Confirm
+             * @default false
+             */
+            confirm: boolean;
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Paper Ids */
+            paper_ids: string[];
+        };
         /** RegistrationItemOut */
         RegistrationItemOut: {
             /** Added At */
@@ -28730,6 +30990,11 @@ export interface components {
          * @enum {string}
          */
         RegistrationStatus: "draft" | "submitted" | "advisor_pending" | "approved" | "changes_requested" | "rejected" | "locked";
+        /** RegistrationSubmit */
+        RegistrationSubmit: {
+            /** Item Ids */
+            item_ids?: string[] | null;
+        };
         /**
          * RegistrationType
          * @enum {string}
@@ -28928,6 +31193,27 @@ export interface components {
              * Format: uuid
              */
             student_program_enrollment_id: string;
+        };
+        /** RemunerationSummary */
+        RemunerationSummary: {
+            /** By Role */
+            by_role?: {
+                [key: string]: number;
+            };
+            /** By Staff */
+            by_staff?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Qp
+             * @default 0
+             */
+            qp: number;
+            /**
+             * Total Paise
+             * @default 0
+             */
+            total_paise: number;
         };
         /** RequiredDocument */
         RequiredDocument: {
@@ -29406,6 +31692,38 @@ export interface components {
              */
             student_program_enrollment_id: string;
         };
+        /** RosterSummary */
+        RosterSummary: {
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * Duties
+             * @default 0
+             */
+            duties: number;
+            /**
+             * Per Staff Max
+             * @default 0
+             */
+            per_staff_max: number;
+            /**
+             * Rooms
+             * @default 0
+             */
+            rooms: number;
+            /**
+             * Slots
+             * @default 0
+             */
+            slots: number;
+            /** Unfilled */
+            unfilled?: {
+                [key: string]: unknown;
+            }[];
+        };
         /** RoundCreate */
         RoundCreate: {
             /** Allotment At */
@@ -29812,10 +32130,51 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** SeatAllocationRow */
+        SeatAllocationRow: {
+            /** Col No */
+            col_no?: number | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /** Hall Ticket Number */
+            hall_ticket_number?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Paper Code */
+            paper_code?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Room Code */
+            room_code?: string | null;
+            /** Row No */
+            row_no?: number | null;
+            /** Seat Number */
+            seat_number: string;
+            /**
+             * Seating Plan Id
+             * Format: uuid
+             */
+            seating_plan_id: string;
+            /** Status */
+            status?: string | null;
+        };
         /** SeatMatrixReplace */
         SeatMatrixReplace: {
             /** Rows */
             rows: components["schemas"]["SeatRow"][];
+        };
+        /** SeatMove */
+        SeatMove: {
+            /** Seat Number */
+            seat_number: string;
+            /** Seating Plan Id */
+            seating_plan_id?: string | null;
         };
         /** SeatRow */
         SeatRow: {
@@ -29881,6 +32240,69 @@ export interface components {
             quotas: string[];
             /** Rows */
             rows: components["schemas"]["SeatRowOut"][];
+        };
+        /** SeatingGenerateRequest */
+        SeatingGenerateRequest: {
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * Exam Date
+             * Format: date
+             */
+            exam_date: string;
+            /** Room Ids */
+            room_ids: string[];
+            /**
+             * Seats Per Row
+             * @default 6
+             */
+            seats_per_row: number;
+            /**
+             * Session Slot
+             * @enum {string}
+             */
+            session_slot: "FN" | "AN" | "EVE";
+            /**
+             * Strategy
+             * @default mixed_course
+             * @enum {string}
+             */
+            strategy: "mixed_course" | "by_course";
+        };
+        /** SeatingSummary */
+        SeatingSummary: {
+            /**
+             * Adjacency Same Paper
+             * @default 0
+             */
+            adjacency_same_paper: number;
+            /**
+             * Allocated
+             * @default 0
+             */
+            allocated: number;
+            /**
+             * Candidates
+             * @default 0
+             */
+            candidates: number;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /** Rooms */
+            rooms?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Seats
+             * @default 0
+             */
+            seats: number;
         };
         /** SectionChange */
         SectionChange: {
@@ -30108,6 +32530,13 @@ export interface components {
          * @enum {string}
          */
         SessionStatus: "scheduled" | "conducted" | "cancelled" | "rescheduled";
+        /** SessionStatusChange */
+        SessionStatusChange: {
+            /** Reason */
+            reason?: string | null;
+            /** Status */
+            status: string;
+        };
         /**
          * SessionType
          * @enum {string}
@@ -32096,6 +34525,13 @@ export interface components {
         SuspendRequest: {
             /** Reason */
             reason?: string | null;
+        };
+        /** SwapRequest */
+        SwapRequest: {
+            /** Reason */
+            reason: string;
+            /** With Staff Id */
+            with_staff_id?: string | null;
         };
         /** SyllabusTopicIn */
         SyllabusTopicIn: {
@@ -44123,6 +46559,1638 @@ export interface operations {
             };
         };
     };
+    update_centre_api_v1_exam_centres__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamCentreIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamCentreOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_paper_api_v1_exam_papers__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamPaperUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamPaperResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_paper_api_v1_exam_papers__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hall_roster_api_v1_exam_papers__id__attendance_get: {
+        parameters: {
+            query?: {
+                room_id?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HallAttendanceRowOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mark_hall_api_v1_exam_papers__id__attendance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HallAttendanceMark"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HallAttendanceRowOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hall_sheet_api_v1_exam_papers__id__attendance_sheet_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    malpractice_api_v1_exam_papers__id__malpractice_reports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MalpracticeReportCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    online_access_api_v1_exam_papers__id__online_access_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    online_setup_api_v1_exam_papers__id__online_setup_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnlinePaperSetup"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_list_api_v1_exam_papers__id__qp_assignments_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_QpAssignmentResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_create_api_v1_exam_papers__id__qp_assignments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QpAssignmentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QpAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_registration_api_v1_exam_registration_me_get: {
+        parameters: {
+            query?: {
+                session_id?: string | null;
+                student_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamRegistrationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_hall_ticket_api_v1_exam_registration_me_hall_ticket_pdf_get: {
+        parameters: {
+            query?: {
+                session_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_history_api_v1_exam_registration_me_history_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExamRegistrationResponse__"];
+                };
+            };
+        };
+    };
+    my_seat_api_v1_exam_registration_me_seat_get: {
+        parameters: {
+            query?: {
+                paper_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_registration_api_v1_exam_registration_me_submit_post: {
+        parameters: {
+            query?: {
+                session_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RegistrationSubmit"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamRegistrationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    admin_create_api_v1_exam_registrations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegistrationAdminCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamRegistrationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_registration_api_v1_exam_registrations__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamRegistrationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hall_ticket_api_v1_exam_registrations__id__hall_ticket_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registration_action_api_v1_exam_registrations__id___action__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                action: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReasonBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamRegistrationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    move_seat_api_v1_exam_seat_allocations__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SeatMove"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SeatAllocationRow_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chart_api_v1_exam_seating_plans__id__chart_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    door_list_api_v1_exam_seating_plans__id__door_list_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_sessions_api_v1_exam_sessions_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExamSessionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_session_api_v1_exam_sessions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamSessionCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_session_api_v1_exam_sessions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_session_api_v1_exam_sessions__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamSessionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    centres_api_v1_exam_sessions__id__centres_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExamCentreOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_centre_api_v1_exam_sessions__id__centres_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamCentreIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamCentreOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    date_sheet_api_v1_exam_sessions__id__date_sheet_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DateSheetUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExamPaperResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    date_sheet_ics_api_v1_exam_sessions__id__date_sheet_ics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    date_sheet_pdf_api_v1_exam_sessions__id__date_sheet_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_clashes_api_v1_exam_sessions__id__date_sheet_check_clashes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClashReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_date_sheet_api_v1_exam_sessions__id__date_sheet_publish_post: {
+        parameters: {
+            query?: {
+                force?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClashReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eligibility_apply_api_v1_exam_sessions__id__eligibility_apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["EligibilityApplyRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eligibility_summary_api_v1_exam_sessions__id__eligibility_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EligibilityApplySummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generate_hall_tickets_api_v1_exam_sessions__id__hall_tickets_generate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["HallTicketGenerateRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    roster_api_v1_exam_sessions__id__invigilation_get: {
+        parameters: {
+            query?: {
+                date?: string | null;
+                room_id?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DutyResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    auto_assign_api_v1_exam_sessions__id__invigilation_auto_assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InvigilationAutoAssignRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RosterSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lock_session_api_v1_exam_sessions__id__lock_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    papers_api_v1_exam_sessions__id__papers_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExamPaperResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_paper_api_v1_exam_sessions__id__papers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExamPaperCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamPaperResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    papers_bulk_api_v1_exam_sessions__id__papers_bulk_post: {
+        parameters: {
+            query?: {
+                dry_run?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["BulkPapersRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BulkPapersPreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registrations_api_v1_exam_sessions__id__registrations_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                college_id?: string | null;
+                program_id?: string | null;
+                search?: string | null;
+                scope?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExamRegistrationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_register_api_v1_exam_sessions__id__registrations_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remuneration_api_v1_exam_sessions__id__remuneration_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RemunerationSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    seating_api_v1_exam_sessions__id__seating_get: {
+        parameters: {
+            query?: {
+                date?: string | null;
+                slot?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SeatAllocationRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    seating_generate_api_v1_exam_sessions__id__seating_generate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SeatingGenerateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SeatingSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_seating_api_v1_exam_sessions__id__seating_publish_post: {
+        parameters: {
+            query?: {
+                date?: string | null;
+                slot?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    change_status_api_v1_exam_sessions__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SessionStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExamSessionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_faculties_api_v1_faculties_get: {
         parameters: {
             query?: {
@@ -46404,6 +50472,37 @@ export interface operations {
             };
         };
     };
+    verify_hall_ticket_api_v1_hall_tickets_verify__token__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HallTicketVerifyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_articles_api_v1_help_articles_get: {
         parameters: {
             query?: {
@@ -46894,6 +50993,254 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_InstitutionFeatureFlagResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_duty_api_v1_invigilation_duties_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DutyCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DutyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_duties_api_v1_invigilation_duties_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DutyResponse__"];
+                };
+            };
+        };
+    };
+    update_duty_api_v1_invigilation_duties__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DutyUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DutyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_duty_api_v1_invigilation_duties__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    duty_letter_api_v1_invigilation_duties__id__letter_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    duty_absent_api_v1_invigilation_duties__id__mark_absent_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DutyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    swap_request_api_v1_invigilation_duties__id__swap_request_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SwapRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DutyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    swap_decide_api_v1_invigilation_duties__id__swap__decision__post: {
+        parameters: {
+            query?: {
+                with_staff_id?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+                decision: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DutyResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -50988,6 +55335,257 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Envelope_dict_str__Any__"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_qp_api_v1_qp_assignments_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_QpAssignmentResponse__"];
+                };
+            };
+        };
+    };
+    qp_update_api_v1_qp_assignments__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QpAssignmentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QpAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_generate_api_v1_qp_assignments__id__generate_from_blueprint_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QpAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_print_api_v1_qp_assignments__id__print_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QpPrintRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QpPrintResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_scrutinise_api_v1_qp_assignments__id__scrutinise_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QpScrutinyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QpAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_select_api_v1_qp_assignments__id__select_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_QpAssignmentResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_upload_api_v1_qp_assignments__id__upload_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_qp_upload_api_v1_qp_assignments__id__upload_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QpAssignmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    qp_download_api_v1_qp_download__token__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {

@@ -505,7 +505,7 @@ FACULTY: set[str] = (
     | P("projects", "guide", "review", "view")
     | P("research", "manage", "view")
     | P("mentoring", "manage", "view")
-    | P("exams", "evaluate", "invigilation", "malpractice", "view")
+    | P("exams", "evaluate", "invigilation", "malpractice", "view", "qp")
     | P("surveys", "analyse", "view")
     | P("courses", "view")
     | P("offerings", "view")
@@ -646,6 +646,11 @@ HOD_ASSESSMENT: set[str] = P("obe", "manage", "view") | P("lms", "view_all") | P
 DEAN_OBE: set[str] = P("obe", "manage")
 REGISTRAR_MARKS: set[str] = P("marks", "view_all")
 PARENT_LMS: set[str] = P("lms", "view") | P("projects", "view")
+# Phase 14 (Prompts/14 visibility): HOD reads its department's sessions / registrations / duties; faculty set question
+# papers (own assignments only — qp_predicate); parents read their wards' exam registrations / hall tickets / seats
+HOD_EXAMS: set[str] = P("exams", "view", "view_all")
+FACULTY_QP: set[str] = P("exams", "qp")
+PARENT_EXAMS: set[str] = P("exams", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -775,7 +780,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_TIMETABLE
     | HOD_ATTENDANCE
     | HOD_FEES
-    | HOD_ASSESSMENT,
+    | HOD_ASSESSMENT
+    | HOD_EXAMS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -976,7 +982,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("events", "view")
     | P("transport", "view")
     | PARENT_FEES
-    | PARENT_LMS,
+    | PARENT_LMS
+    | PARENT_EXAMS,
     "alumni": COMMON
     | P("alumni", "self")
     | P("certificates", "self")
@@ -1006,6 +1013,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0014": frozenset(HOD_EXAMS | FACULTY_QP | PARENT_EXAMS),
     "0013": frozenset(EXAM_CELL_MARKS | HOD_ASSESSMENT | DEAN_OBE | REGISTRAR_MARKS | PARENT_LMS),
     "0012": frozenset(
         REGISTRAR_FEES | VC_FEES | HOD_FEES | ADVISOR_FEES | ACCOUNTANT_FEES | OFFICE_NO_DUES | PARENT_FEES

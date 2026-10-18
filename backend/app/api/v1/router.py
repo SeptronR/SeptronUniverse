@@ -31,6 +31,7 @@ route so ``/webhooks/payments/{provider}`` is not shadowed.
 Phase 13: ``assessment`` {assessment.internal_marks} (+ ``obe_router`` {obe.definitions}), ``lms`` {lms.content}
 (+ ``projects_router`` {assessment.projects}), ``content`` {lms.question_bank} (+ ``materials_router``
 {lms.study_materials}).
+Phase 14: ``exams`` {exams.sessions} with per-route sub-features (+ the public hall-ticket verification).
 """
 
 from fastapi import APIRouter
@@ -51,6 +52,7 @@ from app.api.v1.endpoints import (
     credit_transfers,
     curriculum,
     enrollments,
+    exams,
     features,
     feedback,
     fees,
@@ -135,6 +137,8 @@ api_router.include_router(lms.router, dependencies=[feature_required("lms.conten
 api_router.include_router(lms.projects_router, dependencies=[feature_required("assessment.projects")])
 api_router.include_router(content.router, dependencies=[feature_required("lms.question_bank")])
 api_router.include_router(content.materials_router, dependencies=[feature_required("lms.study_materials")])
+api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
+api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])

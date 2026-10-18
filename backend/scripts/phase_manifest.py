@@ -269,6 +269,23 @@ PHASES: dict[str, list[str]] = {
         "course_files",
         "college_data_submissions",
     ],
+    # exam_centres (§31) for university tenants; malpractice_cases (Phase 16 runs the inquiry — the hall report files it
+    # here) and calendar_events (§24, Phase 25 owns the module — the date-sheet publishes exam events)
+    "14": [
+        "exam_sessions",
+        "exam_papers",
+        "exam_registrations",
+        "exam_registration_items",
+        "exam_seating_plans",
+        "exam_seat_allocations",
+        "invigilation_duties",
+        "exam_attendance",
+        "question_paper_assignments",
+        "question_paper_print_log",
+        "exam_centres",
+        "malpractice_cases",
+        "calendar_events",
+    ],
 }
 
 VIEWS: set[str] = set()

@@ -163,6 +163,13 @@ const ProgramOutcomesPage = lazy(() => import('@/features/assessment/pages/Admin
 const ObeProgramsPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.ObeProgramsPage })));
 const StudentCoursePage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentCoursePage })));
 const StudentMarksPage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentMarksPage })));
+// Phase 14 — exam administration
+const ExamSessionsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionsPage })));
+const ExamSessionWorkspacePage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionWorkspacePage })));
+const MyDutiesPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.MyDutiesPage })));
+const MyQpPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.MyQpPage })));
+const StudentExamsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.StudentExamsPage })));
+const ParentExamsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ParentExamsPage })));
 const StudentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.StudentFeesPage })));
 const ParentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.ParentFeesPage })));
 // Phase 10 — timetable & rooms
@@ -408,6 +415,9 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 14 — exam sessions (exam cell / COE; HOD and auditors read)
+              ['/admin/exams/sessions', 'exams.sessions', 'exams', 'view_all', [['exams', 'configure'], ['exams', 'manage'], ['exams', 'view']], <ExamSessionsPage key="es" />],
+              ['/admin/exams/sessions/:id', 'exams.sessions', 'exams', 'view_all', [['exams', 'configure'], ['exams', 'manage'], ['exams', 'view']], <ExamSessionWorkspacePage key="ew" />],
               // Phase 13 — marks verification / locks, OBE programme outcomes
               ['/admin/assessment/verification', 'assessment.marks_workflow', 'marks', 'verify', [], <MarksVerificationPage key="mv" />],
               ['/admin/assessment/locks', 'assessment.marks_workflow', 'marks', 'lock', [], <MarksLocksPage key="ml" />],
@@ -557,6 +567,7 @@ export const router = createBrowserRouter([
               ['attendance', <StudentAttendancePage key="a" />],
               ['fees', <StudentFeesPage key="f" />],
               ['marks', <StudentMarksPage key="mk" />],
+              ['exams', <StudentExamsPage key="ex" />],
               ['courses/:offeringId', <StudentCoursePage key="sc" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
@@ -570,6 +581,7 @@ export const router = createBrowserRouter([
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><ParentAttendancePage /></FeatureRoute>) },
           { path: 'fees', element: page(<FeatureRoute feature="fees.core"><ParentFeesPage /></FeatureRoute>) },
+          { path: 'exams/:studentId', element: page(<FeatureRoute feature="exams.sessions"><ParentExamsPage /></FeatureRoute>) },
         ],
       },
       {
@@ -579,6 +591,9 @@ export const router = createBrowserRouter([
           { index: true, element: page(<PortalHomePage />) },
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
+          // Phase 14 — exam duties and question-paper setting
+          { path: 'duties', element: page(<FeatureRoute feature="exams.invigilation"><MyDutiesPage /></FeatureRoute>) },
+          { path: 'qp', element: page(<FeatureRoute feature="exams.qp_management"><MyQpPage /></FeatureRoute>) },
           // Phase 13 — marks, CIA, LMS, lesson plan, projects, question bank, course outcomes
           { path: 'marks/:offeringId', element: page(<FeatureRoute feature="assessment.internal_marks"><FacultyMarksPage /></FeatureRoute>) },
           { path: 'offerings/:id/cia', element: page(<FeatureRoute feature="assessment.internal_marks"><CiaPage /></FeatureRoute>) },

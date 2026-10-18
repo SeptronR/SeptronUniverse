@@ -48,6 +48,11 @@ register_beat("assessment.auto_lock", "beat.assessment.auto_lock", crontab(hour=
 register_beat("assignments.close_due", "beat.assignments.close_due", crontab(minute=12))
 register_beat("quizzes.auto_submit", "beat.quizzes.auto_submit", 60.0)
 
+# ---- Phase 14 exams (app/tasks/exams.py) ---------------------------------------------------------------------------------
+register_beat("exams.session_auto_status", "beat.exams.session_auto_status", crontab(hour=0, minute=45))  # 06:15 IST
+register_beat("exams.lapse_fee_pending", "beat.exams.lapse_fee_pending", crontab(minute=37))
+register_beat("exams.duty_reminders", "beat.exams.duty_reminders", crontab(hour=2, minute=30))  # 08:00 IST
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

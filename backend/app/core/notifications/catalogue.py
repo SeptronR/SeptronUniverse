@@ -836,6 +836,29 @@ FEE_EVENTS: tuple[EventDef, ...] = (
         link="/student/fees",
     ),
 )
+# Phase 14 — date-sheet and duty reminders (hall tickets ready ships with Phase 04)
+EXAM_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "exams.date_sheet_published",
+        "exams",
+        "Date-sheet published",
+        "Date-sheet: {{ session }}",
+        "The date-sheet for {{ session }} is published.",
+        ("session",),
+        ("in_app", "push"),
+        link="/student/exams",
+    ),
+    EventDef(
+        "exams.duty_reminder",
+        "exams",
+        "Exam duty tomorrow",
+        "Exam duty {{ date }} {{ slot }}",
+        "You have {{ role }} duty on {{ date }} ({{ slot }}).",
+        ("date", "slot", "role"),
+        ("in_app", "push", "sms"),
+        link="/faculty/duties",
+    ),
+)
 # Phase 13 — marks deadlines, LMS publication / announcements
 ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -878,6 +901,7 @@ EVENTS = (
     + ATTENDANCE_EVENTS
     + FEE_EVENTS
     + ASSESSMENT_EVENTS
+    + EXAM_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
