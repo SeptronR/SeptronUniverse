@@ -149,6 +149,20 @@ const FeeRefundsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages')
 const FeeScholarshipsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeScholarshipsPage })));
 const FeeNoDuesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeNoDuesPage })));
 const FeeReportsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeReportsPage })));
+// Phase 13 — internal assessment, OBE, LMS, projects, question bank
+const FacultyMarksPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.FacultyMarksPage })));
+const CiaPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.CiaPage })));
+const OfferingLmsPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.OfferingLmsPage })));
+const LessonPlanPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.LessonPlanPage })));
+const FacultyProjectsPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.FacultyProjectsPage })));
+const QuestionBankPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.QuestionBankPage })));
+const CourseOutcomesPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.CourseOutcomesPage })));
+const MarksVerificationPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.MarksVerificationPage })));
+const MarksLocksPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.MarksLocksPage })));
+const ProgramOutcomesPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.ProgramOutcomesPage })));
+const ObeProgramsPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.ObeProgramsPage })));
+const StudentCoursePage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentCoursePage })));
+const StudentMarksPage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentMarksPage })));
 const StudentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.StudentFeesPage })));
 const ParentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.ParentFeesPage })));
 // Phase 10 — timetable & rooms
@@ -394,6 +408,11 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 13 — marks verification / locks, OBE programme outcomes
+              ['/admin/assessment/verification', 'assessment.marks_workflow', 'marks', 'verify', [], <MarksVerificationPage key="mv" />],
+              ['/admin/assessment/locks', 'assessment.marks_workflow', 'marks', 'lock', [], <MarksLocksPage key="ml" />],
+              ['/admin/obe/programs', 'obe.definitions', 'obe', 'manage', [['obe', 'view'], ['obe', 'view_all']], <ObeProgramsPage key="op" />],
+              ['/admin/obe/programs/:id', 'obe.definitions', 'obe', 'manage', [['obe', 'view'], ['obe', 'view_all']], <ProgramOutcomesPage key="po" />],
               // Phase 12 — fees (accountant / registrar / auditor; HOD + offices reach no-dues and scholarships)
               ['/admin/fees', 'fees.core', 'fees', 'view_all', [['fees', 'collect']], <FeesDashboardPage key="fd" />],
               ['/admin/fees/collect', 'fees.core', 'fees', 'collect', [], <FeeCollectPage key="fc" />],
@@ -537,6 +556,8 @@ export const router = createBrowserRouter([
               ['timetable', <MyTimetablePage key="t" />],
               ['attendance', <StudentAttendancePage key="a" />],
               ['fees', <StudentFeesPage key="f" />],
+              ['marks', <StudentMarksPage key="mk" />],
+              ['courses/:offeringId', <StudentCoursePage key="sc" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -558,6 +579,14 @@ export const router = createBrowserRouter([
           { index: true, element: page(<PortalHomePage />) },
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
+          // Phase 13 — marks, CIA, LMS, lesson plan, projects, question bank, course outcomes
+          { path: 'marks/:offeringId', element: page(<FeatureRoute feature="assessment.internal_marks"><FacultyMarksPage /></FeatureRoute>) },
+          { path: 'offerings/:id/cia', element: page(<FeatureRoute feature="assessment.internal_marks"><CiaPage /></FeatureRoute>) },
+          { path: 'offerings/:id/lms', element: page(<FeatureRoute feature="lms.content"><OfferingLmsPage /></FeatureRoute>) },
+          { path: 'offerings/:id/plan', element: page(<FeatureRoute feature="lms.lesson_plans"><LessonPlanPage /></FeatureRoute>) },
+          { path: 'projects', element: page(<FeatureRoute feature="assessment.projects"><FacultyProjectsPage /></FeatureRoute>) },
+          { path: 'question-bank', element: page(<FeatureRoute feature="lms.question_bank"><QuestionBankPage /></FeatureRoute>) },
+          { path: 'courses/:id/outcomes', element: page(<FeatureRoute feature="obe.definitions"><CourseOutcomesPage /></FeatureRoute>) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><FacultyAttendancePage /></FeatureRoute>) },
           { path: 'attendance/summary', element: page(<FeatureRoute feature="attendance.core"><FacultySummaryPage /></FeatureRoute>) },

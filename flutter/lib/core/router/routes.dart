@@ -49,6 +49,10 @@ class AppRoutes {
   static const condonations = '/app/attendance/condonations';
   // Phase 12 — fees (student / parent dues, accountant collect + reconciliation, office no-dues sign-off)
   static const myFees = '/app/fees';
+  // Phase 13 — faculty marks entry, HOD verification, student courses & marks
+  static const facultyMarks = '/app/marks';
+  static const marksVerification = '/app/marks/verification';
+  static const myCourses = '/app/courses';
   static const feeCollect = '/app/fees/collect';
   static const feeReconcile = '/app/fees/reconcile';
   static const noDuesSignoff = '/app/no-dues/signoff';

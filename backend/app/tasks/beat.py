@@ -42,6 +42,12 @@ register_beat("fees.overdue_holds", "beat.fees.overdue_holds", crontab(hour=19, 
 register_beat("fees.day_book_close_reminder", "beat.fees.day_book_close_reminder", crontab(hour=12, minute=30))  # 18:00
 register_beat("fees.gateway_status_poll", "beat.fees.gateway_status_poll", 600.0)
 
+# ---- Phase 13 assessment / LMS (app/tasks/assessment.py) ---------------------------------------------------------------------
+register_beat("assessment.deadline_reminders", "beat.assessment.deadline_reminders", crontab(hour=3, minute=30))  # 09:00 IST
+register_beat("assessment.auto_lock", "beat.assessment.auto_lock", crontab(hour=19, minute=30))  # 01:00 IST
+register_beat("assignments.close_due", "beat.assignments.close_due", crontab(minute=12))
+register_beat("quizzes.auto_submit", "beat.quizzes.auto_submit", 60.0)
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

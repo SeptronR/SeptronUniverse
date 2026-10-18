@@ -836,6 +836,39 @@ FEE_EVENTS: tuple[EventDef, ...] = (
         link="/student/fees",
     ),
 )
+# Phase 13 — marks deadlines, LMS publication / announcements
+ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "marks.deadline",
+        "academics",
+        "Marks entry deadline",
+        "Marks due: {{ assessment }}",
+        "Enter and submit the marks of {{ assessment }} by {{ deadline }}.",
+        ("assessment", "deadline"),
+        ("in_app", "email"),
+        link="/faculty/offerings",
+    ),
+    EventDef(
+        "lms.assignment_published",
+        "academics",
+        "New assignment",
+        "Assignment: {{ title }}",
+        "A new assignment '{{ title }}' is due {{ due }}.",
+        ("title", "due"),
+        ("in_app", "push"),
+        link="/student",
+    ),
+    EventDef(
+        "lms.announcement",
+        "academics",
+        "Course announcement",
+        "{{ title }}",
+        "{{ body }}",
+        ("title", "body"),
+        ("in_app", "push"),
+        link="/student",
+    ),
+)
 EVENTS = (
     EVENTS
     + STUDENT_EVENTS
@@ -844,6 +877,7 @@ EVENTS = (
     + TIMETABLE_EVENTS
     + ATTENDANCE_EVENTS
     + FEE_EVENTS
+    + ASSESSMENT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

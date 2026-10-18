@@ -109,6 +109,9 @@ export const NAV_GROUPS: NavGroup[] = [
     title: 'EXAMINATIONS',
     items: [
       // Phase 11 — eligibility snapshots / detention (Phase 14 joins this group)
+      // Phase 13 — marks verification (HOD) and locks (exam cell)
+      { label: 'Marks verification', to: '/admin/assessment/verification', icon: ClipboardCheck, module: 'marks', action: 'verify', altActions: [], feature: 'assessment.marks_workflow' },
+      { label: 'Marks locks', to: '/admin/assessment/locks', icon: ClipboardCheck, module: 'marks', action: 'lock', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Eligibility', to: '/admin/attendance/eligibility', icon: ClipboardCheck, module: 'exams', action: 'eligibility', altActions: [], feature: 'attendance.eligibility_detention' },
     ],
   },
@@ -201,7 +204,13 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   { title: 'ENGAGEMENT', items: [] },
-  { title: 'QUALITY & GOVERNANCE', items: [] },
+  {
+    title: 'QUALITY & GOVERNANCE',
+    items: [
+      // Phase 13 — OBE definitions
+      { label: 'OBE definitions', to: '/admin/obe/programs', icon: ScrollText, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.definitions' },
+    ],
+  },
   {
     title: 'COMMUNICATION',
     items: [

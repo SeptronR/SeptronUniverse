@@ -591,3 +591,30 @@ async def dev_fee_task(
     else:
         raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown task {task!r}")
     return ok({"task": task, "result": n}, message="Done")
+
+
+# ---- Phase 13 assessment / LMS -------------------------------------------------------------------------------------------
+@router.post(
+    "/assessment/{task}",
+    summary="Run an assessment / LMS Beat body in-process: auto-lock | deadline-reminders | quizzes-auto-submit",
+    dependencies=[feature_required("assessment.internal_marks")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_assessment_task(
+    task: str,
+    request: Request,
+    principal: Principal = Depends(any_permission_required(("marks", "lock"), ("lms", "manage"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.assessment.assessment_service import AssessmentService
+    from app.services.assessment.lms_service import LmsService
+
+    if task == "auto-lock":
+        n = await AssessmentService(db, principal, request).auto_lock()
+    elif task == "deadline-reminders":
+        n = await AssessmentService(db, principal, request).deadline_reminders()
+    elif task == "quizzes-auto-submit":
+        n = await LmsService(db, principal, request).auto_submit()
+    else:
+        raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown task {task!r}")
+    return ok({"task": task, "count": n}, message="Done")

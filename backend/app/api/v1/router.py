@@ -28,6 +28,9 @@ Phase 12: ``fees`` {fees.core} (heads, structures, discounts, fines, invoices, c
 reconciliation, day-book, refunds, reports) with per-route sub-features, ``scholarships`` {fees.scholarships},
 ``no_dues`` {fees.no_dues}; the public payment webhook is included before the Phase 04 ``/webhooks/{provider}/{channel}``
 route so ``/webhooks/payments/{provider}`` is not shadowed.
+Phase 13: ``assessment`` {assessment.internal_marks} (+ ``obe_router`` {obe.definitions}), ``lms`` {lms.content}
+(+ ``projects_router`` {assessment.projects}), ``content`` {lms.question_bank} (+ ``materials_router``
+{lms.study_materials}).
 """
 
 from fastapi import APIRouter
@@ -38,10 +41,12 @@ from app.api.v1.endpoints import (
     admissions,
     announcements,
     appraisals,
+    assessment,
     attendance,
     auth,
     catalog,
     communication,
+    content,
     courses,
     credit_transfers,
     curriculum,
@@ -54,6 +59,7 @@ from app.api.v1.endpoints import (
     institution,
     jobs,
     leaves,
+    lms,
     no_dues,
     notifications,
     payroll,
@@ -123,6 +129,12 @@ api_router.include_router(attendance.public_router)  # device token; checks {att
 api_router.include_router(fees.router, dependencies=[feature_required("fees.core")])
 api_router.include_router(scholarships.router, dependencies=[feature_required("fees.scholarships")])
 api_router.include_router(no_dues.router, dependencies=[feature_required("fees.no_dues")])
+api_router.include_router(assessment.router, dependencies=[feature_required("assessment.internal_marks")])
+api_router.include_router(assessment.obe_router, dependencies=[feature_required("obe.definitions")])
+api_router.include_router(lms.router, dependencies=[feature_required("lms.content")])
+api_router.include_router(lms.projects_router, dependencies=[feature_required("assessment.projects")])
+api_router.include_router(content.router, dependencies=[feature_required("lms.question_bank")])
+api_router.include_router(content.materials_router, dependencies=[feature_required("lms.study_materials")])
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])

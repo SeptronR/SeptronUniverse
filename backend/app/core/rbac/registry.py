@@ -637,6 +637,15 @@ ADVISOR_FEES: set[str] = P("fees", "view")
 ACCOUNTANT_FEES: set[str] = P("scholarships", "verify")
 OFFICE_NO_DUES: set[str] = P("no_dues", "approve", "view")
 PARENT_FEES: set[str] = P("scholarships", "view") | P("no_dues", "view")
+# Phase 13 (Prompts/13 visibility): the exam cell locks / reopens marks; the HOD edits OBE definitions of its
+# programmes / courses (narrowed in the service), shares the department's question bank / projects and handles
+# post-lock change requests; the dean edits OBE definitions; the registrar reads marks institution-wide; parents read
+# their wards' LMS pages and projects
+EXAM_CELL_MARKS: set[str] = P("marks", "lock")
+HOD_ASSESSMENT: set[str] = P("obe", "manage", "view") | P("lms", "view_all") | P("projects", "view_all") | P("marks", "correct")
+DEAN_OBE: set[str] = P("obe", "manage")
+REGISTRAR_MARKS: set[str] = P("marks", "view_all")
+PARENT_LMS: set[str] = P("lms", "view") | P("projects", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -681,7 +690,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_REGISTRATION
     | REGISTRAR_TIMETABLE
     | REGISTRAR_ATTENDANCE
-    | REGISTRAR_FEES,
+    | REGISTRAR_FEES
+    | REGISTRAR_MARKS,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -723,7 +733,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("attendance", "view_all")
     | P("marks", "view_all")
     | P("courses", "view_all")
-    | P("offerings", "view_all"),
+    | P("offerings", "view_all")
+    | EXAM_CELL_MARKS,
     "exam_decoder": STAFF_SELF | P("exams", "decode", "view"),
     "dean": ALL("view", "view_all")
     | P("leaves", "approve")
@@ -733,6 +744,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("offerings", "allocate_faculty")
     | DEAN_OFFERINGS
     | P("events", "approve")
+    | DEAN_OBE
     | STAFF_SELF,
     "hod": FACULTY
     | P("students", "view_all")
@@ -762,7 +774,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_ADMISSIONS
     | HOD_TIMETABLE
     | HOD_ATTENDANCE
-    | HOD_FEES,
+    | HOD_FEES
+    | HOD_ASSESSMENT,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -962,7 +975,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("calendar", "view")
     | P("events", "view")
     | P("transport", "view")
-    | PARENT_FEES,
+    | PARENT_FEES
+    | PARENT_LMS,
     "alumni": COMMON
     | P("alumni", "self")
     | P("certificates", "self")
@@ -992,6 +1006,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0013": frozenset(EXAM_CELL_MARKS | HOD_ASSESSMENT | DEAN_OBE | REGISTRAR_MARKS | PARENT_LMS),
     "0012": frozenset(
         REGISTRAR_FEES | VC_FEES | HOD_FEES | ADVISOR_FEES | ACCOUNTANT_FEES | OFFICE_NO_DUES | PARENT_FEES
     ),

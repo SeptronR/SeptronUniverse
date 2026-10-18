@@ -9,6 +9,7 @@ import '../../features/notifications/notifications_screens.dart';
 import '../../features/registration/registration_screens.dart';
 import '../../features/attendance/attendance_screens.dart';
 import '../../features/fees/fees_screens.dart';
+import '../../features/assessment/assessment_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -290,6 +291,28 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 13 — marks entry (faculty), verification (HOD), courses & marks (students)
+    AppRoutes.facultyMarks: ScreenEntry(
+      route: AppRoutes.facultyMarks,
+      titleKey: 'marks',
+      feature: 'assessment.internal_marks',
+      permission: 'marks:enter',
+      builder: (_, __) => const FacultyMarksScreen(),
+    ),
+    AppRoutes.marksVerification: ScreenEntry(
+      route: AppRoutes.marksVerification,
+      titleKey: 'marks_verification',
+      feature: 'assessment.marks_workflow',
+      permission: 'marks:verify',
+      builder: (_, __) => const MarksVerificationScreen(),
+    ),
+    AppRoutes.myCourses: ScreenEntry(
+      route: AppRoutes.myCourses,
+      titleKey: 'my_courses',
+      feature: 'assessment.internal_marks',
+      permission: 'marks:view',
+      builder: (_, __) => const StudentMarksScreen(),
     ),
     // Phase 12 — fees (student / parent tab, accountant collect + reconciliation, office no-dues sign-off)
     AppRoutes.myFees: ScreenEntry(

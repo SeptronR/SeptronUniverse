@@ -265,6 +265,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 13 — marks (faculty), verification (HOD), courses & marks (students)
+  const MoreMenuModule(
+      titleKey: 'marks',
+      icon: Icons.edit_note,
+      route: AppRoutes.facultyMarks,
+      color: Colors.indigo,
+      permission: 'marks:enter',
+      feature: 'assessment.internal_marks',
+      roles: ['faculty', 'class_advisor', 'hod', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'marks_verification',
+      icon: Icons.verified_outlined,
+      route: AppRoutes.marksVerification,
+      color: Colors.teal,
+      permission: 'marks:verify',
+      feature: 'assessment.marks_workflow',
+      roles: ['hod']),
+  const MoreMenuModule(
+      titleKey: 'my_courses',
+      icon: Icons.menu_book,
+      route: AppRoutes.myCourses,
+      color: Colors.blue,
+      permission: 'marks:view',
+      feature: 'assessment.internal_marks',
+      roles: ['student', 'learner']),
   // Phase 12 — fees (student / parent tab; accountant collect + reconciliation; office no-dues sign-off)
   const MoreMenuModule(
       titleKey: 'fees',
