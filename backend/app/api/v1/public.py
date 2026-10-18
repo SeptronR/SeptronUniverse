@@ -49,6 +49,8 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 10 — iCal feeds: a personal feed token (hash in ``calendar_feed_tokens``) or a signed section link
     "GET /api/v1/timetables/ical/{token}.ics",
     "GET /api/v1/timetables/sections/{id}.ics",
+    # Phase 12 — payment gateway webhooks (provider signature verified; tenant from ?institution=<slug> / header)
+    "POST /api/v1/webhooks/payments/{provider}",
 }
 
 

@@ -89,6 +89,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/_dev/fees/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a linkage invoice {source_type, source_id, amount_paise, enrollment_id?} (idempotent per source) */
+        post: operations["dev_fee_link_api_v1__dev_fees_link_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/_dev/fees/pay/{ref}": {
         parameters: {
             query?: never;
@@ -100,6 +117,57 @@ export interface paths {
         put?: never;
         /** Simulate the payment event of an application / admission fee (dev fixture until Phase 12 invoices) */
         post: operations["dev_fee_paid_api_v1__dev_fees_pay__ref__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/fees/sign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mock-gateway signatures: {order_id, payment_id} → client signature; {body} → webhook signature */
+        post: operations["dev_fee_sign_api_v1__dev_fees_sign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/fees/upi/{ref}/callback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mock UPI callback (success | failed) */
+        post: operations["dev_upi_callback_api_v1__dev_fees_upi__ref__callback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/_dev/fees/{task}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Run a fees Beat body in-process: late-fees | due-reminders | overdue-holds | gateway-poll | backfill */
+        post: operations["dev_fee_task_api_v1__dev_fees__task__post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3851,6 +3919,215 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/fee-discounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Discounts */
+        get: operations["list_discounts_api_v1_fee_discounts_get"];
+        put?: never;
+        /** Create a discount */
+        post: operations["create_discount_api_v1_fee_discounts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-discounts/assignments/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Concessions awaiting approval */
+        get: operations["pending_discounts_api_v1_fee_discounts_assignments_pending_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-discounts/assignments/{id}/{decision}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject a concession (workflow fees.concession) */
+        post: operations["decide_discount_api_v1_fee_discounts_assignments__id___decision__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-discounts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a discount */
+        put: operations["update_discount_api_v1_fee_discounts__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-discounts/{id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign a discount to an enrolment (workflow when it requires approval) */
+        post: operations["assign_discount_api_v1_fee_discounts__id__assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-heads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fee heads */
+        get: operations["list_heads_api_v1_fee_heads_get"];
+        put?: never;
+        /** Create a fee head */
+        post: operations["create_head_api_v1_fee_heads_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-heads/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a fee head */
+        put: operations["update_head_api_v1_fee_heads__id__put"];
+        post?: never;
+        /** Delete (or deactivate when used) a fee head */
+        delete: operations["delete_head_api_v1_fee_heads__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-structures": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fee structures */
+        get: operations["list_structures_api_v1_fee_structures_get"];
+        put?: never;
+        /** Create a structure (overlapping identical dimensions → 409) */
+        post: operations["create_structure_api_v1_fee_structures_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-structures/applicable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Most specific effective structure for an enrolment */
+        get: operations["applicable_api_v1_fee_structures_applicable_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-structures/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Structure with items */
+        get: operations["get_structure_api_v1_fee_structures__id__get"];
+        /** Update a structure (items replace) */
+        put: operations["update_structure_api_v1_fee_structures__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-structures/{id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign to enrolments / a batch (+ term invoices; > 200 → job) */
+        post: operations["assign_structure_api_v1_fee_structures__id__assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fee-structures/{id}/clone": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Clone to the next year */
+        post: operations["clone_structure_api_v1_fee_structures__id__clone_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/feedback": {
         parameters: {
             query?: never;
@@ -3862,6 +4139,722 @@ export interface paths {
         put?: never;
         /** Submit in-app feedback */
         post: operations["create_feedback_api_v1_feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/accounting-export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Tally XML / CSV vouchers (job) */
+        post: operations["accounting_export_api_v1_fees_accounting_export_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/backfill-stubs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Turn earlier phases' fee stubs into invoices (idempotent) */
+        post: operations["backfill_api_v1_fees_backfill_stubs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/bulk-invoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Term invoices for a batch from its applicable structures (job; dry_run inline) */
+        post: operations["bulk_invoice_api_v1_fees_bulk_invoice_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/collect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Counter collection (Idempotency-Key) */
+        post: operations["collect_api_v1_fees_collect_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Collections today, dues, overdue, pending queues */
+        get: operations["dashboard_api_v1_fees_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/day-book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Day-book by counter / collector / mode */
+        get: operations["day_book_api_v1_fees_day_book_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/day-book/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close the day / record the deposit */
+        post: operations["day_book_close_api_v1_fees_day_book_close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/day-book/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Cash-bank register CSV */
+        get: operations["day_book_export_api_v1_fees_day_book_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Invoices (scope = self | department | college | all) */
+        get: operations["list_invoices_api_v1_fees_invoices_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/invoices/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Invoice with items, payments and source link */
+        get: operations["get_invoice_api_v1_fees_invoices__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/invoices/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel an invoice without payments */
+        post: operations["cancel_invoice_api_v1_fees_invoices__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/ledger-accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Minimal ledger chart (Phase 23 extends it) */
+        get: operations["ledger_api_v1_fees_ledger_accounts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/me/dues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My dues */
+        get: operations["my_dues_api_v1_fees_me_dues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/me/invoices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My invoices */
+        get: operations["my_invoices_api_v1_fees_me_invoices_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/me/receipts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My receipts */
+        get: operations["my_receipts_api_v1_fees_me_receipts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/offline/declare": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Declare an NEFT / challan / DD payment with UTR */
+        post: operations["declare_api_v1_fees_offline_declare_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/online/initiate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a gateway order */
+        post: operations["online_initiate_api_v1_fees_online_initiate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/online/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Client-side verification (signature mandatory) */
+        post: operations["online_verify_api_v1_fees_online_verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/online/{order_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Gateway order status */
+        get: operations["online_status_api_v1_fees_online__order_id__status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Payment register */
+        get: operations["list_payments_api_v1_fees_payments_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/cancel-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Receipt cancellations awaiting approval */
+        get: operations["cancel_requests_api_v1_fees_payments_cancel_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Payment */
+        get: operations["get_payment_api_v1_fees_payments__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/{id}/bounce": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cheque / DD bounce (+ bank charges, invoice reopened) */
+        post: operations["bounce_api_v1_fees_payments__id__bounce_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/{id}/cancel-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request receipt cancellation (workflow accountant → principal) */
+        post: operations["cancel_request_api_v1_fees_payments__id__cancel_request_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/{id}/cancel-request/{decision}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject a receipt cancellation (the current workflow step) */
+        post: operations["cancel_decide_api_v1_fees_payments__id__cancel_request__decision__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/{id}/receipt.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Receipt PDF */
+        get: operations["receipt_pdf_api_v1_fees_payments__id__receipt_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/payments/{id}/thermal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** ESC/POS thermal payload */
+        get: operations["thermal_api_v1_fees_payments__id__thermal_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Statement rows (status = unmatched | matched | ignored) with proposed matches */
+        get: operations["reconcile_list_api_v1_fees_reconcile_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/reconcile/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Bank statement rows / CSV (job; dry_run inline) */
+        post: operations["reconcile_upload_api_v1_fees_reconcile_upload_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/reconcile/{id}/ignore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ignore a statement row */
+        post: operations["reconcile_ignore_api_v1_fees_reconcile__id__ignore_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/reconcile/{id}/match": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm a match (→ reconciled) */
+        post: operations["reconcile_match_api_v1_fees_reconcile__id__match_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/refunds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Refund queue */
+        get: operations["list_refunds_api_v1_fees_refunds_get"];
+        put?: never;
+        /** Request a refund (workflow fees.refund) */
+        post: operations["create_refund_api_v1_fees_refunds_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/refunds/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My refunds */
+        get: operations["my_refunds_api_v1_fees_refunds_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/refunds/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve (current workflow step) */
+        post: operations["approve_refund_api_v1_fees_refunds__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/refunds/{id}/process": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Process an approved refund */
+        post: operations["process_refund_api_v1_fees_refunds__id__process_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/refunds/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["reject_refund_api_v1_fees_refunds__id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/reports/{report}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** collection | dues | defaulters | scholarships | refunds (format=csv → job) */
+        get: operations["report_api_v1_fees_reports__report__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/students/{enrollment_id}/dues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Dues of an enrolment (counter / advisors) */
+        get: operations["enrolment_dues_api_v1_fees_students__enrollment_id__dues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/upi-qr": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Dynamic UPI QR for an invoice */
+        post: operations["upi_qr_api_v1_fees_upi_qr_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/upi-qr/{ref}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** UPI QR status (polled) */
+        get: operations["upi_status_api_v1_fees_upi_qr__ref__status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fees/wards/{student_id}/dues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A consented ward's dues (parents) */
+        get: operations["ward_dues_api_v1_fees_wards__student_id__dues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fine-configurations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fine configuration */
+        get: operations["get_fines_api_v1_fine_configurations_get"];
+        /** Save fine configuration (one row per applies_to) */
+        put: operations["put_fines_api_v1_fine_configurations_put"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -4448,6 +5441,92 @@ export interface paths {
         put?: never;
         /** Mobile remote config (POST variant used by the app bootstrap) */
         post: operations["mobile_config_post_api_v1_mobile_config_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/no-dues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requests (scope = mine | department | all; department_key filters) */
+        get: operations["list_requests_api_v1_no_dues_get"];
+        put?: never;
+        /** Request no-dues (parallel sign-offs) */
+        post: operations["create_api_v1_no_dues_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/no-dues/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My (or my ward's) requests */
+        get: operations["mine_api_v1_no_dues_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/no-dues/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Request with sign-offs */
+        get: operations["get_request_api_v1_no_dues__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/no-dues/{id}/certificate.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** No-dues certificate (cleared requests) */
+        get: operations["certificate_api_v1_no_dues__id__certificate_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/no-dues/{id}/signoff": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign off for your office (cleared | dues_pending) */
+        post: operations["signoff_api_v1_no_dues__id__signoff_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -6246,6 +7325,177 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/scholarship-applications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Applications pipeline */
+        get: operations["list_applications_api_v1_scholarship_applications_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarship-applications/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My (or my ward's) applications */
+        get: operations["my_applications_api_v1_scholarship_applications_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarship-applications/{id}/disburse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Disburse (fee credit / bank transfer / external portal) */
+        post: operations["disburse_api_v1_scholarship_applications__id__disburse_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarship-applications/{id}/recommend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** HOD recommendation (starts scholarship.sanction) */
+        post: operations["scholarship_recommend_api_v1_scholarship_applications__id__recommend_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarship-applications/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["scholarship_reject_api_v1_scholarship_applications__id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarship-applications/{id}/sanction": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sanction */
+        post: operations["scholarship_sanction_api_v1_scholarship_applications__id__sanction_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarship-applications/{id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify documents / income */
+        post: operations["scholarship_verify_api_v1_scholarship_applications__id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Schemes */
+        get: operations["list_schemes_api_v1_scholarships_get"];
+        put?: never;
+        /** Create a scheme */
+        post: operations["create_scheme_api_v1_scholarships_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarships/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a scheme */
+        put: operations["update_scheme_api_v1_scholarships__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/scholarships/{id}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply (eligibility rules → 422 NOT_ELIGIBLE) */
+        post: operations["apply_api_v1_scholarships__id__apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/search": {
         parameters: {
             query?: never;
@@ -6981,6 +8231,23 @@ export interface paths {
         };
         /** A student's credit transfers */
         get: operations["student_credit_transfers_api_v1_students__id__credit_transfers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/students/{id}/discounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A student's discounts */
+        get: operations["student_discounts_api_v1_students__id__discounts_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -7870,6 +9137,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/webhooks/payments/{provider}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Gateway webhook (signature verified; tenant from ?institution=) */
+        post: operations["payment_webhook_api_v1_webhooks_payments__provider__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/webhooks/{provider}/{channel}": {
         parameters: {
             query?: never;
@@ -8296,6 +9580,25 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** AccountingExportRequest */
+        AccountingExportRequest: {
+            /**
+             * Date From
+             * Format: date
+             */
+            date_from: string;
+            /**
+             * Date To
+             * Format: date
+             */
+            date_to: string;
+            /**
+             * Format
+             * @default tally_xml
+             * @enum {string}
+             */
+            format: "tally_xml" | "csv";
+        };
         /** AckStats */
         AckStats: {
             /** Acknowledged */
@@ -8395,6 +9698,16 @@ export interface components {
              * @default true
              */
             notify_mentor: boolean;
+        };
+        /** AllocationIn */
+        AllocationIn: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Invoice Id
+             * Format: uuid
+             */
+            invoice_id: string;
         };
         /** AllocationItem */
         AllocationItem: {
@@ -8696,6 +10009,11 @@ export interface components {
              */
             upgraded: number;
         };
+        /**
+         * AmountType
+         * @enum {string}
+         */
+        AmountType: "fixed" | "fee_pct" | "fee_full";
         /** AnnouncementCreate */
         AnnouncementCreate: {
             /** Attachments */
@@ -8810,6 +10128,17 @@ export interface components {
             requires_ack?: boolean | null;
             /** Title */
             title?: string | null;
+        };
+        /** ApplicableStructureResponse */
+        ApplicableStructureResponse: {
+            /**
+             * Candidates
+             * @default 0
+             */
+            candidates: number;
+            /** Matched On */
+            matched_on?: string[];
+            structure?: components["schemas"]["FeeStructureResponse"] | null;
         };
         /** ApplicantDocumentOut */
         ApplicantDocumentOut: {
@@ -9998,6 +11327,12 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_reconcile_upload_api_v1_fees_reconcile_upload_post */
+        Body_reconcile_upload_api_v1_fees_reconcile_upload_post: {
+            body?: components["schemas"]["ReconcileUpload"] | null;
+            /** File */
+            file?: string | null;
+        };
         /** Body_set_plan_limits_api_v1__dev_plans__code__put */
         Body_set_plan_limits_api_v1__dev_plans__code__put: {
             /** Staff Limit */
@@ -10038,6 +11373,16 @@ export interface components {
             doc_type: string;
             /** File */
             file: string;
+        };
+        /** BounceRequest */
+        BounceRequest: {
+            /**
+             * Bank Charges Paise
+             * @default 0
+             */
+            bank_charges_paise: number;
+            /** Reason */
+            reason: string;
         };
         /** BuildingIn */
         BuildingIn: {
@@ -10152,6 +11497,21 @@ export interface components {
             /** Total */
             total: number;
         };
+        /** BulkInvoiceRequest */
+        BulkInvoiceRequest: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /** Term Id */
+            term_id?: string | null;
+        };
         /** BulkMarkRequest */
         BulkMarkRequest: {
             /** Mark Rest As */
@@ -10264,6 +11624,11 @@ export interface components {
          * @enum {string}
          */
         CalcType: "fixed" | "pct_of_basic" | "formula" | "statutory";
+        /** CancelReceiptRequest */
+        CancelReceiptRequest: {
+            /** Reason */
+            reason: string;
+        };
         /** CartItemAdd */
         CartItemAdd: {
             /**
@@ -10554,6 +11919,18 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** ChequeIn */
+        ChequeIn: {
+            /** Bank */
+            bank: string;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** No */
+            no: string;
+        };
         /** Choice */
         Choice: {
             /**
@@ -10674,6 +12051,30 @@ export interface components {
             timetable_entry_id?: string | null;
             /** Topic */
             topic?: string | null;
+        };
+        /** CollectRequest */
+        CollectRequest: {
+            /** Allocation */
+            allocation?: components["schemas"]["AllocationIn"][] | null;
+            /**
+             * Allow Advance
+             * @default false
+             */
+            allow_advance: boolean;
+            /** Amount Paise */
+            amount_paise: number;
+            /** Bank */
+            bank?: string | null;
+            cheque?: components["schemas"]["ChequeIn"] | null;
+            /** Counter */
+            counter?: string | null;
+            /** Invoice Id */
+            invoice_id?: string | null;
+            mode: components["schemas"]["PaymentMode"];
+            /** Reference */
+            reference?: string | null;
+            /** Utr */
+            utr?: string | null;
         };
         /** CollegeCreate */
         CollegeCreate: {
@@ -11784,6 +13185,85 @@ export interface components {
             /** User Id */
             user_id?: string | null;
         };
+        /** DayBookClose */
+        DayBookClose: {
+            /** Counter */
+            counter?: string | null;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Deposited Paise */
+            deposited_paise?: number | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** DayBookResponse */
+        DayBookResponse: {
+            /** By Mode */
+            by_mode?: {
+                [key: string]: number;
+            };
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Rows */
+            rows?: components["schemas"]["DayBookRow"][];
+            /**
+             * Total Paise
+             * @default 0
+             */
+            total_paise: number;
+        };
+        /** DayBookRow */
+        DayBookRow: {
+            /**
+             * Cash Paise
+             * @default 0
+             */
+            cash_paise: number;
+            /**
+             * Cheque Paise
+             * @default 0
+             */
+            cheque_paise: number;
+            /** Collected By */
+            collected_by?: string | null;
+            /** Collector Name */
+            collector_name?: string | null;
+            /** Counter */
+            counter?: string | null;
+            /**
+             * Deposited Paise
+             * @default 0
+             */
+            deposited_paise: number;
+            /**
+             * Digital Paise
+             * @default 0
+             */
+            digital_paise: number;
+            /**
+             * Entry Date
+             * Format: date
+             */
+            entry_date: string;
+            /** Id */
+            id?: string | null;
+            /**
+             * Receipts
+             * @default 0
+             */
+            receipts: number;
+            /**
+             * Status
+             * @default open
+             */
+            status: string;
+        };
         /** DecideRequest */
         DecideRequest: {
             decision: components["schemas"]["EligibilityDecision"];
@@ -12085,6 +13565,129 @@ export interface components {
          * @enum {string}
          */
         DeviceType: "biometric" | "rfid" | "qr_kiosk";
+        /** DisburseRequest */
+        DisburseRequest: {
+            /** Invoice Id */
+            invoice_id?: string | null;
+            mode: components["schemas"]["DisbursementMode"];
+            /** Reference */
+            reference?: string | null;
+        };
+        /**
+         * DisbursementMode
+         * @enum {string}
+         */
+        DisbursementMode: "fee_credit" | "bank_transfer" | "external_portal";
+        /** DiscountAssign */
+        DiscountAssign: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Reason */
+            reason: string;
+        };
+        /** DiscountAssignmentOut */
+        DiscountAssignmentOut: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Approved By */
+            approved_by?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Discount Code */
+            discount_code?: string | null;
+            /**
+             * Discount Id
+             * Format: uuid
+             */
+            discount_id: string;
+            /** Discount Name */
+            discount_name?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Reason */
+            reason?: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** DiscountIn */
+        DiscountIn: {
+            /** Applies To Heads */
+            applies_to_heads?: string[] | null;
+            /** Code */
+            code: string;
+            discount_type: components["schemas"]["DiscountType"];
+            /** Eligibility Rules */
+            eligibility_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Max Per Year */
+            max_per_year?: number | null;
+            /** Name */
+            name: string;
+            /**
+             * Requires Approval
+             * @default true
+             */
+            requires_approval: boolean;
+            /** Value */
+            value: number;
+        };
+        /** DiscountOut */
+        DiscountOut: {
+            /** Applies To Heads */
+            applies_to_heads?: string[] | null;
+            /** Code */
+            code: string;
+            /** Discount Type */
+            discount_type: string;
+            /** Eligibility Rules */
+            eligibility_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Max Per Year */
+            max_per_year?: number | null;
+            /** Name */
+            name: string;
+            /** Requires Approval */
+            requires_approval: boolean;
+            /** Value */
+            value: number;
+        };
+        /**
+         * DiscountType
+         * @enum {string}
+         */
+        DiscountType: "percentage" | "fixed";
         /** DltTemplateCreate */
         DltTemplateCreate: {
             /**
@@ -12172,6 +13775,27 @@ export interface components {
             verified_at?: string | null;
             /** Verified By */
             verified_by?: string | null;
+        };
+        /** DuesResponse */
+        DuesResponse: {
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Invoices */
+            invoices?: components["schemas"]["InvoiceResponse"][];
+            /** Next Due */
+            next_due?: string | null;
+            /**
+             * Overdue
+             * @default 0
+             */
+            overdue: number;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Total Due
+             * @default 0
+             */
+            total_due: number;
         };
         /** EditFinalizedRequest */
         EditFinalizedRequest: {
@@ -12874,6 +14498,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ApplicableStructureResponse] */
+        Envelope_ApplicableStructureResponse_: {
+            data?: components["schemas"]["ApplicableStructureResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ApplicantResponse] */
         Envelope_ApplicantResponse_: {
             data?: components["schemas"]["ApplicantResponse"] | null;
@@ -13264,6 +14903,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DayBookResponse] */
+        Envelope_DayBookResponse_: {
+            data?: components["schemas"]["DayBookResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DelegationResponse] */
         Envelope_DelegationResponse_: {
             data?: components["schemas"]["DelegationResponse"] | null;
@@ -13324,6 +14978,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DiscountAssignmentOut] */
+        Envelope_DiscountAssignmentOut_: {
+            data?: components["schemas"]["DiscountAssignmentOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DiscountOut] */
+        Envelope_DiscountOut_: {
+            data?: components["schemas"]["DiscountOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DltTemplateResponse] */
         Envelope_DltTemplateResponse_: {
             data?: components["schemas"]["DltTemplateResponse"] | null;
@@ -13342,6 +15026,21 @@ export interface components {
         /** Envelope[DocumentOut] */
         Envelope_DocumentOut_: {
             data?: components["schemas"]["DocumentOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DuesResponse] */
+        Envelope_DuesResponse_: {
+            data?: components["schemas"]["DuesResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -13492,6 +15191,96 @@ export interface components {
         /** Envelope[FeatureMatrixResponse] */
         Envelope_FeatureMatrixResponse_: {
             data?: components["schemas"]["FeatureMatrixResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeeAssignResult] */
+        Envelope_FeeAssignResult_: {
+            data?: components["schemas"]["FeeAssignResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeeDashboard] */
+        Envelope_FeeDashboard_: {
+            data?: components["schemas"]["FeeDashboard"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeeHeadOut] */
+        Envelope_FeeHeadOut_: {
+            data?: components["schemas"]["FeeHeadOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeePaymentOut] */
+        Envelope_FeePaymentOut_: {
+            data?: components["schemas"]["FeePaymentOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeeReport] */
+        Envelope_FeeReport_: {
+            data?: components["schemas"]["FeeReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeeStructureResponse] */
+        Envelope_FeeStructureResponse_: {
+            data?: components["schemas"]["FeeStructureResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -13717,6 +15506,21 @@ export interface components {
         /** Envelope[InstitutionProfileResponse] */
         Envelope_InstitutionProfileResponse_: {
             data?: components["schemas"]["InstitutionProfileResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[InvoiceResponse] */
+        Envelope_InvoiceResponse_: {
+            data?: components["schemas"]["InvoiceResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -13999,6 +15803,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[NoDuesResponse] */
+        Envelope_NoDuesResponse_: {
+            data?: components["schemas"]["NoDuesResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[NoneType] */
         Envelope_NoneType_: {
             /** Data */
@@ -14138,6 +15957,36 @@ export interface components {
         /** Envelope[OnboardingResponse] */
         Envelope_OnboardingResponse_: {
             data?: components["schemas"]["OnboardingResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OnlineInitiateResponse] */
+        Envelope_OnlineInitiateResponse_: {
+            data?: components["schemas"]["OnlineInitiateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OrderStatusResponse] */
+        Envelope_OrderStatusResponse_: {
+            data?: components["schemas"]["OrderStatusResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -14525,6 +16374,51 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ReceiptResponse] */
+        Envelope_ReceiptResponse_: {
+            data?: components["schemas"]["ReceiptResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ReconcileRowOut] */
+        Envelope_ReconcileRowOut_: {
+            data?: components["schemas"]["ReconcileRowOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ReconcileSummary] */
+        Envelope_ReconcileSummary_: {
+            data?: components["schemas"]["ReconcileSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RecoveryCodesResponse] */
         Envelope_RecoveryCodesResponse_: {
             data?: components["schemas"]["RecoveryCodesResponse"] | null;
@@ -14543,6 +16437,21 @@ export interface components {
         /** Envelope[RefreshResponse] */
         Envelope_RefreshResponse_: {
             data?: components["schemas"]["RefreshResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RefundResponse] */
+        Envelope_RefundResponse_: {
+            data?: components["schemas"]["RefundResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -14738,6 +16647,36 @@ export interface components {
         /** Envelope[SalaryStructureOut] */
         Envelope_SalaryStructureOut_: {
             data?: components["schemas"]["SalaryStructureOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ScholarshipApplicationOut] */
+        Envelope_ScholarshipApplicationOut_: {
+            data?: components["schemas"]["ScholarshipApplicationOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ScholarshipOut] */
+        Envelope_ScholarshipOut_: {
+            data?: components["schemas"]["ScholarshipOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -15125,6 +17064,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ThermalReceipt] */
+        Envelope_ThermalReceipt_: {
+            data?: components["schemas"]["ThermalReceipt"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[TimetableResponse] */
         Envelope_TimetableResponse_: {
             data?: components["schemas"]["TimetableResponse"] | null;
@@ -15248,6 +17202,21 @@ export interface components {
         /** Envelope[UnreadCount] */
         Envelope_UnreadCount_: {
             data?: components["schemas"]["UnreadCount"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[UpiQrResponse] */
+        Envelope_UpiQrResponse_: {
+            data?: components["schemas"]["UpiQrResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -15943,6 +17912,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[DiscountAssignmentOut]] */
+        Envelope_list_DiscountAssignmentOut__: {
+            /** Data */
+            data?: components["schemas"]["DiscountAssignmentOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DiscountOut]] */
+        Envelope_list_DiscountOut__: {
+            /** Data */
+            data?: components["schemas"]["DiscountOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[DltTemplateResponse]] */
         Envelope_list_DltTemplateResponse__: {
             /** Data */
@@ -16055,6 +18056,70 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[FeeHeadOut]] */
+        Envelope_list_FeeHeadOut__: {
+            /** Data */
+            data?: components["schemas"]["FeeHeadOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[FeePaymentOut]] */
+        Envelope_list_FeePaymentOut__: {
+            /** Data */
+            data?: components["schemas"]["FeePaymentOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[FeeStructureResponse]] */
+        Envelope_list_FeeStructureResponse__: {
+            /** Data */
+            data?: components["schemas"]["FeeStructureResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[FineConfigOut]] */
+        Envelope_list_FineConfigOut__: {
+            /** Data */
+            data?: components["schemas"]["FineConfigOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[GradingScaleResponse]] */
         Envelope_list_GradingScaleResponse__: {
             /** Data */
@@ -16139,6 +18204,22 @@ export interface components {
         Envelope_list_InboxItem__: {
             /** Data */
             data?: components["schemas"]["InboxItem"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[InvoiceResponse]] */
+        Envelope_list_InvoiceResponse__: {
+            /** Data */
+            data?: components["schemas"]["InvoiceResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -16263,6 +18344,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[LedgerAccountOut]] */
+        Envelope_list_LedgerAccountOut__: {
+            /** Data */
+            data?: components["schemas"]["LedgerAccountOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[LoanOut]] */
         Envelope_list_LoanOut__: {
             /** Data */
@@ -16331,6 +18428,22 @@ export interface components {
         Envelope_list_MissingSessionRow__: {
             /** Data */
             data?: components["schemas"]["MissingSessionRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[NoDuesResponse]] */
+        Envelope_list_NoDuesResponse__: {
+            /** Data */
+            data?: components["schemas"]["NoDuesResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -16551,6 +18664,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ReconcileRowOut]] */
+        Envelope_list_ReconcileRowOut__: {
+            /** Data */
+            data?: components["schemas"]["ReconcileRowOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RefundResponse]] */
+        Envelope_list_RefundResponse__: {
+            /** Data */
+            data?: components["schemas"]["RefundResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[RegistrationListItem]] */
         Envelope_list_RegistrationListItem__: {
             /** Data */
@@ -16699,6 +18844,38 @@ export interface components {
         Envelope_list_SalaryStructureOut__: {
             /** Data */
             data?: components["schemas"]["SalaryStructureOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ScholarshipApplicationOut]] */
+        Envelope_list_ScholarshipApplicationOut__: {
+            /** Data */
+            data?: components["schemas"]["ScholarshipApplicationOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ScholarshipOut]] */
+        Envelope_list_ScholarshipOut__: {
+            /** Data */
+            data?: components["schemas"]["ScholarshipOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -17531,6 +19708,151 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** FeeAssignRequest */
+        FeeAssignRequest: {
+            /** Batch Id */
+            batch_id?: string | null;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /** Enrollment Ids */
+            enrollment_ids?: string[] | null;
+            /**
+             * Generate Invoices
+             * @default true
+             */
+            generate_invoices: boolean;
+            /** Term Id */
+            term_id?: string | null;
+        };
+        /** FeeAssignResult */
+        FeeAssignResult: {
+            /**
+             * Already
+             * @default 0
+             */
+            already: number;
+            /**
+             * Assigned
+             * @default 0
+             */
+            assigned: number;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * Invoices Created
+             * @default 0
+             */
+            invoices_created: number;
+            /** Skipped */
+            skipped?: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** FeeDashboard */
+        FeeDashboard: {
+            /**
+             * Cancel Pending
+             * @default 0
+             */
+            cancel_pending: number;
+            /**
+             * Dues Total
+             * @default 0
+             */
+            dues_total: number;
+            /**
+             * Online Initiated
+             * @default 0
+             */
+            online_initiated: number;
+            /**
+             * Overdue Count
+             * @default 0
+             */
+            overdue_count: number;
+            /**
+             * Overdue Total
+             * @default 0
+             */
+            overdue_total: number;
+            /**
+             * Reconcile Pending
+             * @default 0
+             */
+            reconcile_pending: number;
+            /**
+             * Refunds Pending
+             * @default 0
+             */
+            refunds_pending: number;
+            /** Today By Mode */
+            today_by_mode?: {
+                [key: string]: number;
+            };
+            /**
+             * Today Total
+             * @default 0
+             */
+            today_total: number;
+        };
+        /** FeeHeadIn */
+        FeeHeadIn: {
+            /** Code */
+            code: string;
+            /** Gst Rate */
+            gst_rate?: number | null;
+            /** @default tuition */
+            head_type: components["schemas"]["HeadType"];
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /**
+             * Is Refundable
+             * @default false
+             */
+            is_refundable: boolean;
+            /**
+             * Is Taxable
+             * @default false
+             */
+            is_taxable: boolean;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Name */
+            name: string;
+        };
+        /** FeeHeadOut */
+        FeeHeadOut: {
+            /** Code */
+            code: string;
+            /** Gst Rate */
+            gst_rate?: number | null;
+            /** Head Type */
+            head_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Is Refundable */
+            is_refundable: boolean;
+            /** Is Taxable */
+            is_taxable: boolean;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Name */
+            name: string;
+        };
         /**
          * FeeOrder
          * @description Mock-payment order standing in for the Phase 12 registration invoice (``fee_invoice_id`` stays NULL).
@@ -17557,6 +19879,61 @@ export interface components {
              */
             status: string;
         };
+        /** FeePaymentOut */
+        FeePaymentOut: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Bank Name */
+            bank_name?: string | null;
+            /** Cancel Reason */
+            cancel_reason?: string | null;
+            /** Cancel Workflow Instance Id */
+            cancel_workflow_instance_id?: string | null;
+            /** Collected By */
+            collected_by?: string | null;
+            /** Counter */
+            counter?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Gateway */
+            gateway?: string | null;
+            /** Gateway Order Id */
+            gateway_order_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Invoice Id
+             * Format: uuid
+             */
+            invoice_id: string;
+            /** Invoice Number */
+            invoice_number?: string | null;
+            /** Payer Name */
+            payer_name?: string | null;
+            /**
+             * Payment Date
+             * Format: date
+             */
+            payment_date: string;
+            /** Payment Mode */
+            payment_mode: string;
+            /** Receipt Number */
+            receipt_number: string;
+            /** Receipt Url */
+            receipt_url?: string | null;
+            /** Reference No */
+            reference_no?: string | null;
+            /** Status */
+            status: string;
+            /** Utr */
+            utr?: string | null;
+        };
         /** FeePreview */
         FeePreview: {
             /**
@@ -17581,6 +19958,185 @@ export interface components {
              * @default 0
              */
             total_paise: number;
+        };
+        /** FeeReport */
+        FeeReport: {
+            /** Report */
+            report: string;
+            /** Rows */
+            rows?: components["schemas"]["FeeReportRow"][];
+            /**
+             * Total Paise
+             * @default 0
+             */
+            total_paise: number;
+        };
+        /** FeeReportRow */
+        FeeReportRow: {
+            /**
+             * Amount Paise
+             * @default 0
+             */
+            amount_paise: number;
+            /**
+             * Count
+             * @default 0
+             */
+            count: number;
+            /** Extra */
+            extra?: {
+                [key: string]: unknown;
+            };
+            /** Key */
+            key: string;
+            /** Label */
+            label?: string | null;
+        };
+        /** FeeStructureCreate */
+        FeeStructureCreate: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Category */
+            category?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Effective From
+             * Format: date
+             */
+            effective_from: string;
+            /** Effective To */
+            effective_to?: string | null;
+            /** Items */
+            items?: components["schemas"]["FeeStructureItemIn"][];
+            /** Name */
+            name: string;
+            /** Per Credit Paise */
+            per_credit_paise?: number | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Program Regulation Id */
+            program_regulation_id?: string | null;
+            /** Quota */
+            quota?: string | null;
+            /** Term Number */
+            term_number?: number | null;
+        };
+        /** FeeStructureItemIn */
+        FeeStructureItemIn: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Due Date */
+            due_date?: string | null;
+            /** Due Offset Days */
+            due_offset_days?: number | null;
+            /**
+             * Fee Head Id
+             * Format: uuid
+             */
+            fee_head_id: string;
+            /**
+             * Instalment No
+             * @default 1
+             */
+            instalment_no: number;
+            /**
+             * Is Optional
+             * @default false
+             */
+            is_optional: boolean;
+        };
+        /** FeeStructureItemOut */
+        FeeStructureItemOut: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Due Date */
+            due_date?: string | null;
+            /** Due Offset Days */
+            due_offset_days?: number | null;
+            /**
+             * Fee Head Id
+             * Format: uuid
+             */
+            fee_head_id: string;
+            /** Head Code */
+            head_code?: string | null;
+            /** Head Name */
+            head_name?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Instalment No */
+            instalment_no: number;
+            /** Is Optional */
+            is_optional: boolean;
+        };
+        /** FeeStructureResponse */
+        FeeStructureResponse: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /**
+             * Assigned Count
+             * @default 0
+             */
+            assigned_count: number;
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Category */
+            category?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Effective From
+             * Format: date
+             */
+            effective_from: string;
+            /** Effective To */
+            effective_to?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Items */
+            items?: components["schemas"]["FeeStructureItemOut"][];
+            /** Name */
+            name: string;
+            /** Per Credit Paise */
+            per_credit_paise?: number | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Program Regulation Id */
+            program_regulation_id?: string | null;
+            /** Quota */
+            quota?: string | null;
+            /** Status */
+            status: string;
+            /** Term Number */
+            term_number?: number | null;
+            /** Total Paise */
+            total_paise: number;
+            /** Version */
+            version: number;
+        };
+        /** FeeStructureUpdate */
+        FeeStructureUpdate: {
+            /** Effective To */
+            effective_to?: string | null;
+            /** Items */
+            items?: components["schemas"]["FeeStructureItemIn"][] | null;
+            /** Name */
+            name?: string | null;
+            /** Per Credit Paise */
+            per_credit_paise?: number | null;
+            /** Status */
+            status?: ("active" | "draft" | "archived") | null;
+            /** Version */
+            version?: number | null;
         };
         /** FeedbackCreate */
         FeedbackCreate: {
@@ -17634,6 +20190,65 @@ export interface components {
         FinalizeRequest: {
             /** Note */
             note?: string | null;
+        };
+        /**
+         * FineAppliesTo
+         * @enum {string}
+         */
+        FineAppliesTo: "late_fee" | "library_overdue" | "hostel" | "discipline";
+        /**
+         * FineCalcType
+         * @enum {string}
+         */
+        FineCalcType: "per_day" | "flat" | "slab";
+        /** FineConfigIn */
+        FineConfigIn: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            applies_to: components["schemas"]["FineAppliesTo"];
+            calc_type: components["schemas"]["FineCalcType"];
+            /**
+             * Grace Days
+             * @default 0
+             */
+            grace_days: number;
+            /** Id */
+            id?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Max Paise */
+            max_paise?: number | null;
+            /** Slabs */
+            slabs?: {
+                [key: string]: unknown;
+            }[] | null;
+        };
+        /** FineConfigOut */
+        FineConfigOut: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** Applies To */
+            applies_to: string;
+            /** Calc Type */
+            calc_type: string;
+            /** Grace Days */
+            grace_days: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Max Paise */
+            max_paise?: number | null;
+            /** Slabs */
+            slabs?: {
+                [key: string]: unknown;
+            }[] | null;
         };
         /** ForgotPasswordRequest */
         ForgotPasswordRequest: {
@@ -17924,6 +20539,11 @@ export interface components {
          * @enum {string}
          */
         HalfDay: "first_half" | "second_half";
+        /**
+         * HeadType
+         * @enum {string}
+         */
+        HeadType: "tuition" | "admission" | "exam" | "hostel" | "mess" | "transport" | "library" | "lab" | "caution_deposit" | "fine" | "certificate" | "reval" | "condonation" | "convocation" | "affiliation" | "other";
         /** HelpArticleResponse */
         HelpArticleResponse: {
             /** Audience */
@@ -18587,6 +21207,95 @@ export interface components {
          * @enum {string}
          */
         InstitutionType: "university" | "deemed_university" | "autonomous_college" | "affiliated_college" | "standalone_college" | "multi_campus";
+        /** InvoiceCancelRequest */
+        InvoiceCancelRequest: {
+            /** Reason */
+            reason: string;
+        };
+        /** InvoiceItemOut */
+        InvoiceItemOut: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Description */
+            description: string;
+            /** Due Date */
+            due_date?: string | null;
+            /** Fee Head Id */
+            fee_head_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Instalment No */
+            instalment_no?: number | null;
+            /** Tax Paise */
+            tax_paise: number;
+        };
+        /** InvoiceResponse */
+        InvoiceResponse: {
+            /** Balance Paise */
+            balance_paise: number;
+            /** Cancelled Reason */
+            cancelled_reason?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Description */
+            description?: string | null;
+            /** Discount Paise */
+            discount_paise: number;
+            /** Due Date */
+            due_date?: string | null;
+            /** Fine Paise */
+            fine_paise: number;
+            /** Gst Number */
+            gst_number?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Number */
+            invoice_number: string;
+            /** Items */
+            items?: components["schemas"]["InvoiceItemOut"][];
+            /** Paid Paise */
+            paid_paise: number;
+            /**
+             * Payer Id
+             * Format: uuid
+             */
+            payer_id: string;
+            /** Payer Name */
+            payer_name?: string | null;
+            /** Payer Type */
+            payer_type: string;
+            /** Payments */
+            payments?: components["schemas"]["FeePaymentOut"][];
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Source Id */
+            source_id?: string | null;
+            /** Source Link */
+            source_link?: string | null;
+            /** Source Type */
+            source_type?: string | null;
+            /** Status */
+            status: string;
+            /** Student Program Enrollment Id */
+            student_program_enrollment_id?: string | null;
+            /** Tax Paise */
+            tax_paise: number;
+            /** Term Id */
+            term_id?: string | null;
+            /** Total Paise */
+            total_paise: number;
+        };
         /** ItemDecision */
         ItemDecision: {
             /** Decision */
@@ -19047,6 +21756,22 @@ export interface components {
             name: string;
             /** Requires Document */
             requires_document: boolean;
+        };
+        /** LedgerAccountOut */
+        LedgerAccountOut: {
+            /** Account Type */
+            account_type: string;
+            /** Code */
+            code: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: string | null;
         };
         /** LoanIn */
         LoanIn: {
@@ -19677,6 +22402,74 @@ export interface components {
             /** Term Id */
             term_id?: string | null;
         };
+        /** NoDuesCreate */
+        NoDuesCreate: {
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            purpose: components["schemas"]["NoDuesPurpose"];
+        };
+        /**
+         * NoDuesPurpose
+         * @enum {string}
+         */
+        NoDuesPurpose: "graduation" | "transfer" | "hostel_vacate" | "exit" | "transcript";
+        /** NoDuesResponse */
+        NoDuesResponse: {
+            /** Certificate Number */
+            certificate_number?: string | null;
+            /** Cleared At */
+            cleared_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Purpose */
+            purpose: string;
+            /** Registration Number */
+            registration_number?: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /** Signoffs */
+            signoffs?: components["schemas"]["NoDuesSignoffOut"][];
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+        };
+        /** NoDuesSignoffOut */
+        NoDuesSignoffOut: {
+            /**
+             * Can Sign
+             * @default false
+             */
+            can_sign: boolean;
+            /** Department Key */
+            department_key: string;
+            /** Dues Paise */
+            dues_paise: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Remarks */
+            remarks?: string | null;
+            /** Signed At */
+            signed_at?: string | null;
+            /** Signed By */
+            signed_by?: string | null;
+            /** Status */
+            status: string;
+        };
         /** NotificationResponse */
         NotificationResponse: {
             /** Body */
@@ -20185,6 +22978,27 @@ export interface components {
              */
             replayed: boolean;
         };
+        /** OfflineDeclare */
+        OfflineDeclare: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Bank */
+            bank?: string | null;
+            /**
+             * Invoice Id
+             * Format: uuid
+             */
+            invoice_id: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "neft" | "challan" | "dd" | "cheque";
+            /** Paid On */
+            paid_on?: string | null;
+            /** Utr */
+            utr: string;
+        };
         /** OfflineItem */
         OfflineItem: {
             /** Client Id */
@@ -20323,6 +23137,52 @@ export interface components {
             /** Roles Created */
             roles_created: number;
         };
+        /** OnlineInitiateRequest */
+        OnlineInitiateRequest: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** Gateway */
+            gateway?: string | null;
+            /** Invoice Ids */
+            invoice_ids: string[];
+        };
+        /** OnlineInitiateResponse */
+        OnlineInitiateResponse: {
+            /** Amount */
+            amount: number;
+            /** Checkout */
+            checkout?: {
+                [key: string]: unknown;
+            };
+            /** Gateway */
+            gateway: string;
+            /** Key */
+            key?: string | null;
+            /** Order Id */
+            order_id: string;
+            /** Payment Ids */
+            payment_ids?: string[];
+        };
+        /** OnlineVerifyRequest */
+        OnlineVerifyRequest: {
+            /** Order Id */
+            order_id: string;
+            /** Payment Id */
+            payment_id: string;
+            /** Signature */
+            signature: string;
+        };
+        /** OrderStatusResponse */
+        OrderStatusResponse: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Order Id */
+            order_id: string;
+            /** Receipt Numbers */
+            receipt_numbers?: string[];
+            /** Status */
+            status: string;
+        };
         /** OtpSendRequest */
         OtpSendRequest: {
             /** Captcha Token */
@@ -20435,6 +23295,11 @@ export interface components {
             /** Total Min Pct */
             total_min_pct?: number | null;
         };
+        /**
+         * PaymentMode
+         * @enum {string}
+         */
+        PaymentMode: "cash" | "upi" | "card" | "netbanking" | "cheque" | "dd" | "neft" | "challan" | "gateway" | "adjustment" | "scholarship_credit" | "wallet";
         /** PaymentResult */
         PaymentResult: {
             /** Amount Paise */
@@ -21726,6 +24591,106 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** ReceiptResponse */
+        ReceiptResponse: {
+            /**
+             * Amount Paise
+             * @default 0
+             */
+            amount_paise: number;
+            /** Invoices */
+            invoices?: components["schemas"]["InvoiceResponse"][];
+            /** Payments */
+            payments?: components["schemas"]["FeePaymentOut"][];
+            /** Receipt Numbers */
+            receipt_numbers?: string[];
+        };
+        /** ReconcileMatch */
+        ReconcileMatch: {
+            /** Invoice Id */
+            invoice_id?: string | null;
+            /** Payment Id */
+            payment_id?: string | null;
+        };
+        /** ReconcileRowIn */
+        ReconcileRowIn: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Bank Account */
+            bank_account?: string | null;
+            /** Payer Hint */
+            payer_hint?: string | null;
+            /** Statement Date */
+            statement_date?: string | null;
+            /** Utr */
+            utr?: string | null;
+        };
+        /** ReconcileRowOut */
+        ReconcileRowOut: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** Bank Account */
+            bank_account?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Matched Payment Id */
+            matched_payment_id?: string | null;
+            /** Payer Hint */
+            payer_hint?: string | null;
+            /** Proposed Payment Id */
+            proposed_payment_id?: string | null;
+            /** Proposed Receipt */
+            proposed_receipt?: string | null;
+            /** Statement Date */
+            statement_date?: string | null;
+            /** Status */
+            status: string;
+            /** Utr */
+            utr?: string | null;
+        };
+        /** ReconcileSummary */
+        ReconcileSummary: {
+            /**
+             * Auto Matched
+             * @default 0
+             */
+            auto_matched: number;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /**
+             * Rows
+             * @default 0
+             */
+            rows: number;
+            /**
+             * Unmatched
+             * @default 0
+             */
+            unmatched: number;
+        };
+        /** ReconcileUpload */
+        ReconcileUpload: {
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /** File Url */
+            file_url?: string | null;
+            /** Rows */
+            rows?: components["schemas"]["ReconcileRowIn"][] | null;
+        };
         /** RecoveryCodesResponse */
         RecoveryCodesResponse: {
             /** Recovery Codes */
@@ -21768,6 +24733,22 @@ export interface components {
              */
             refresh_token?: string | null;
         };
+        /** RefundCreate */
+        RefundCreate: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Invoice Id */
+            invoice_id?: string | null;
+            /** Payment Id */
+            payment_id?: string | null;
+            /** Reason */
+            reason: string;
+        };
+        /** RefundDecision */
+        RefundDecision: {
+            /** Comment */
+            comment?: string | null;
+        };
         /** RefundOut */
         RefundOut: {
             /** Amount Paise */
@@ -21776,6 +24757,63 @@ export interface components {
             paid_paise: number;
             /** Policy */
             policy: string;
+            /** Status */
+            status: string;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** RefundProcess */
+        RefundProcess: {
+            /** Reference No */
+            reference_no: string;
+            /**
+             * Refund Mode
+             * @enum {string}
+             */
+            refund_mode: "neft" | "cheque" | "cash" | "upi" | "gateway" | "adjustment";
+        };
+        /** RefundResponse */
+        RefundResponse: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Can Act
+             * @default false
+             */
+            can_act: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Id */
+            invoice_id?: string | null;
+            /** Invoice Number */
+            invoice_number?: string | null;
+            /**
+             * Payer Id
+             * Format: uuid
+             */
+            payer_id: string;
+            /** Payer Name */
+            payer_name?: string | null;
+            /** Payer Type */
+            payer_type: string;
+            /** Payment Id */
+            payment_id?: string | null;
+            /** Processed At */
+            processed_at?: string | null;
+            /** Reason */
+            reason: string;
+            /** Reference No */
+            reference_no?: string | null;
+            /** Refund Mode */
+            refund_mode?: string | null;
             /** Status */
             status: string;
             /** Workflow Instance Id */
@@ -22810,6 +25848,150 @@ export interface components {
          * @enum {string}
          */
         ScaleType: "absolute" | "relative";
+        /** ScholarshipApplicationOut */
+        ScholarshipApplicationOut: {
+            /**
+             * Can Act
+             * @default false
+             */
+            can_act: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Disbursed At */
+            disbursed_at?: string | null;
+            /** Disbursement Mode */
+            disbursement_mode?: string | null;
+            /** Documents */
+            documents?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** External Ref */
+            external_ref?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Income Paise */
+            income_paise?: number | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Sanctioned Paise */
+            sanctioned_paise?: number | null;
+            /**
+             * Scholarship Id
+             * Format: uuid
+             */
+            scholarship_id: string;
+            /** Scholarship Name */
+            scholarship_name?: string | null;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** ScholarshipApply */
+        ScholarshipApply: {
+            /** Documents */
+            documents?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Income Paise */
+            income_paise?: number | null;
+        };
+        /** ScholarshipDecision */
+        ScholarshipDecision: {
+            /** Comment */
+            comment?: string | null;
+            /** Sanctioned Paise */
+            sanctioned_paise?: number | null;
+        };
+        /** ScholarshipIn */
+        ScholarshipIn: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** @default fixed */
+            amount_type: components["schemas"]["AmountType"];
+            /** Applications Close */
+            applications_close?: string | null;
+            /** Applications Open */
+            applications_open?: string | null;
+            /** Description */
+            description?: string | null;
+            /**
+             * Eligibility Rules
+             * @description {categories:[], income_cap_paise, min_cgpa, program_ids:[]}
+             */
+            eligibility_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            provider: components["schemas"]["ScholarshipProvider"];
+            /** Scheme Code */
+            scheme_code?: string | null;
+        };
+        /** ScholarshipOut */
+        ScholarshipOut: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** Amount Type */
+            amount_type: string;
+            /**
+             * Applications
+             * @default 0
+             */
+            applications: number;
+            /** Applications Close */
+            applications_close?: string | null;
+            /** Applications Open */
+            applications_open?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Eligibility Rules */
+            eligibility_rules?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /** Provider */
+            provider: string;
+            /** Scheme Code */
+            scheme_code?: string | null;
+        };
+        /**
+         * ScholarshipProvider
+         * @enum {string}
+         */
+        ScholarshipProvider: "central_govt" | "state_govt" | "institution" | "private" | "alumni";
         /** ScopeOut */
         ScopeOut: {
             /** Label */
@@ -23270,6 +26452,23 @@ export interface components {
             limit?: number | null;
             /** Min Screening Score */
             min_screening_score?: number | string | null;
+        };
+        /** SignoffRequest */
+        SignoffRequest: {
+            /**
+             * Department Key
+             * @description defaults to the only department the caller owns
+             */
+            department_key?: string | null;
+            /**
+             * Dues Paise
+             * @default 0
+             */
+            dues_paise: number;
+            /** Remarks */
+            remarks?: string | null;
+            /** Status */
+            status: string;
         };
         /** SlotGroupReplace */
         SlotGroupReplace: {
@@ -23941,6 +27140,25 @@ export interface components {
             order: number;
             /** Sla Hours */
             sla_hours?: number | null;
+        };
+        /** StructureCloneRequest */
+        StructureCloneRequest: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /**
+             * Effective From
+             * Format: date
+             */
+            effective_from: string;
+            /** Effective To */
+            effective_to?: string | null;
+            /**
+             * Increase Pct
+             * @default 0
+             */
+            increase_pct: number;
+            /** Name */
+            name?: string | null;
         };
         /** StructureIssue */
         StructureIssue: {
@@ -25279,6 +28497,25 @@ export interface components {
          * @enum {string}
          */
         TermType: "odd" | "even" | "summer" | "trimester" | "annual";
+        /** ThermalReceipt */
+        ThermalReceipt: {
+            /** Commands */
+            commands?: {
+                [key: string]: unknown;
+            }[];
+            /** Receipt Number */
+            receipt_number: string;
+            /**
+             * Text
+             * @default
+             */
+            text: string;
+            /**
+             * Width
+             * @default 32
+             */
+            width: number;
+        };
         /** TimelineEntry */
         TimelineEntry: {
             /** Action */
@@ -25599,6 +28836,34 @@ export interface components {
         UnreadCount: {
             /** Unread */
             unread: number;
+        };
+        /** UpiQrRequest */
+        UpiQrRequest: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /**
+             * Invoice Id
+             * Format: uuid
+             */
+            invoice_id: string;
+        };
+        /** UpiQrResponse */
+        UpiQrResponse: {
+            /** Amount */
+            amount: number;
+            /** Qr Png */
+            qr_png?: string | null;
+            /** Ref */
+            ref: string;
+            /**
+             * Status
+             * @default pending
+             */
+            status: string;
+            /** Upi Uri */
+            upi_uri: string;
+            /** Vpa */
+            vpa: string;
         };
         /** UserCreate */
         UserCreate: {
@@ -26669,12 +29934,146 @@ export interface operations {
             };
         };
     };
+    dev_fee_link_api_v1__dev_fees_link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     dev_fee_paid_api_v1__dev_fees_pay__ref__post: {
         parameters: {
             query?: never;
             header?: never;
             path: {
                 ref: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_fee_sign_api_v1__dev_fees_sign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_upi_callback_api_v1__dev_fees_upi__ref__callback_post: {
+        parameters: {
+            query?: {
+                status?: string;
+            };
+            header?: never;
+            path: {
+                ref: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dev_fee_task_api_v1__dev_fees__task__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                task: string;
             };
             cookie?: never;
         };
@@ -35494,6 +38893,534 @@ export interface operations {
             };
         };
     };
+    list_discounts_api_v1_fee_discounts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DiscountOut__"];
+                };
+            };
+        };
+    };
+    create_discount_api_v1_fee_discounts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DiscountOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pending_discounts_api_v1_fee_discounts_assignments_pending_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DiscountAssignmentOut__"];
+                };
+            };
+        };
+    };
+    decide_discount_api_v1_fee_discounts_assignments__id___decision__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                decision: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DiscountAssignmentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_discount_api_v1_fee_discounts__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DiscountOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_discount_api_v1_fee_discounts__id__assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DiscountAssign"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DiscountAssignmentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_heads_api_v1_fee_heads_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeeHeadOut__"];
+                };
+            };
+        };
+    };
+    create_head_api_v1_fee_heads_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeHeadIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_head_api_v1_fee_heads__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeHeadIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_head_api_v1_fee_heads__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_structures_api_v1_fee_structures_get: {
+        parameters: {
+            query?: {
+                program_id?: string | null;
+                batch_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeeStructureResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_structure_api_v1_fee_structures_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeStructureCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeStructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    applicable_api_v1_fee_structures_applicable_get: {
+        parameters: {
+            query: {
+                enrollment_id: string;
+                term_number?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicableStructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_structure_api_v1_fee_structures__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeStructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_structure_api_v1_fee_structures__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeStructureUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeStructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_structure_api_v1_fee_structures__id__assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeAssignRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeAssignResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    clone_structure_api_v1_fee_structures__id__clone_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StructureCloneRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeStructureResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     create_feedback_api_v1_feedback_post: {
         parameters: {
             query?: never;
@@ -35514,6 +39441,1349 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_FeedbackResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accounting_export_api_v1_fees_accounting_export_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountingExportRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    backfill_api_v1_fees_backfill_stubs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
+                };
+            };
+        };
+    };
+    bulk_invoice_api_v1_fees_bulk_invoice_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkInvoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    collect_api_v1_fees_collect_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CollectRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReceiptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_api_v1_fees_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeDashboard_"];
+                };
+            };
+        };
+    };
+    day_book_api_v1_fees_day_book_get: {
+        parameters: {
+            query?: {
+                date?: string | null;
+                counter?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DayBookResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    day_book_close_api_v1_fees_day_book_close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DayBookClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DayBookResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    day_book_export_api_v1_fees_day_book_export_get: {
+        parameters: {
+            query: {
+                date_from: string;
+                date_to: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_invoices_api_v1_fees_invoices_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                payer_type?: string | null;
+                status?: string | null;
+                overdue?: boolean | null;
+                batch_id?: string | null;
+                source_type?: string | null;
+                q?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InvoiceResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_invoice_api_v1_fees_invoices__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InvoiceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_invoice_api_v1_fees_invoices__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InvoiceCancelRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InvoiceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ledger_api_v1_fees_ledger_accounts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LedgerAccountOut__"];
+                };
+            };
+        };
+    };
+    my_dues_api_v1_fees_me_dues_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DuesResponse_"];
+                };
+            };
+        };
+    };
+    my_invoices_api_v1_fees_me_invoices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InvoiceResponse__"];
+                };
+            };
+        };
+    };
+    my_receipts_api_v1_fees_me_receipts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeePaymentOut__"];
+                };
+            };
+        };
+    };
+    declare_api_v1_fees_offline_declare_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OfflineDeclare"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeePaymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    online_initiate_api_v1_fees_online_initiate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnlineInitiateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OnlineInitiateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    online_verify_api_v1_fees_online_verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnlineVerifyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OrderStatusResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    online_status_api_v1_fees_online__order_id__status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                order_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OrderStatusResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_payments_api_v1_fees_payments_get: {
+        parameters: {
+            query?: {
+                date?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                mode?: string | null;
+                counter?: string | null;
+                status?: string | null;
+                scope?: string | null;
+                page?: number;
+                page_size?: number;
+                sort?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeePaymentOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_requests_api_v1_fees_payments_cancel_requests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeePaymentOut__"];
+                };
+            };
+        };
+    };
+    get_payment_api_v1_fees_payments__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeePaymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bounce_api_v1_fees_payments__id__bounce_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BounceRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeePaymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_request_api_v1_fees_payments__id__cancel_request_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CancelReceiptRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeePaymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_decide_api_v1_fees_payments__id__cancel_request__decision__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                decision: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RefundDecision"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeePaymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    receipt_pdf_api_v1_fees_payments__id__receipt_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    thermal_api_v1_fees_payments__id__thermal_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ThermalReceipt_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconcile_list_api_v1_fees_reconcile_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ReconcileRowOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconcile_upload_api_v1_fees_reconcile_upload_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_reconcile_upload_api_v1_fees_reconcile_upload_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconcileSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconcile_ignore_api_v1_fees_reconcile__id__ignore_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconcileRowOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconcile_match_api_v1_fees_reconcile__id__match_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconcileMatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconcileRowOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_refunds_api_v1_fees_refunds_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RefundResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_refund_api_v1_fees_refunds_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefundCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RefundResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_refunds_api_v1_fees_refunds_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RefundResponse__"];
+                };
+            };
+        };
+    };
+    approve_refund_api_v1_fees_refunds__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RefundDecision"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RefundResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    process_refund_api_v1_fees_refunds__id__process_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RefundProcess"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RefundResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reject_refund_api_v1_fees_refunds__id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["RefundDecision"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RefundResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    report_api_v1_fees_reports__report__get: {
+        parameters: {
+            query?: {
+                date_from?: string | null;
+                date_to?: string | null;
+                group_by?: string | null;
+                batch_id?: string | null;
+                batch_year?: number | null;
+                format?: string | null;
+            };
+            header?: never;
+            path: {
+                report: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    enrolment_dues_api_v1_fees_students__enrollment_id__dues_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DuesResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upi_qr_api_v1_fees_upi_qr_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpiQrRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UpiQrResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upi_status_api_v1_fees_upi_qr__ref__status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                ref: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OrderStatusResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ward_dues_api_v1_fees_wards__student_id__dues_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                student_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DuesResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_fines_api_v1_fine_configurations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FineConfigOut__"];
+                };
+            };
+        };
+    };
+    put_fines_api_v1_fine_configurations_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FineConfigIn"][];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FineConfigOut__"];
                 };
             };
             /** @description Validation Error */
@@ -36867,6 +42137,187 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_MobileConfigResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_requests_api_v1_no_dues_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                status?: string | null;
+                department_key?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_NoDuesResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_v1_no_dues_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoDuesCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoDuesResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mine_api_v1_no_dues_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_NoDuesResponse__"];
+                };
+            };
+        };
+    };
+    get_request_api_v1_no_dues__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoDuesResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    certificate_api_v1_no_dues__id__certificate_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    signoff_api_v1_no_dues__id__signoff_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SignoffRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoDuesResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -41050,6 +46501,368 @@ export interface operations {
             };
         };
     };
+    list_applications_api_v1_scholarship_applications_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                scope?: string | null;
+                scholarship_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScholarshipApplicationOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_applications_api_v1_scholarship_applications_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScholarshipApplicationOut__"];
+                };
+            };
+        };
+    };
+    disburse_api_v1_scholarship_applications__id__disburse_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisburseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholarship_recommend_api_v1_scholarship_applications__id__recommend_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholarship_reject_api_v1_scholarship_applications__id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholarship_sanction_api_v1_scholarship_applications__id__sanction_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholarship_verify_api_v1_scholarship_applications__id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_schemes_api_v1_scholarships_get: {
+        parameters: {
+            query?: {
+                active?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScholarshipOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_scheme_api_v1_scholarships_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_scheme_api_v1_scholarships__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_api_v1_scholarships__id__apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarshipApply"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarshipApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     search_api_v1_search_get: {
         parameters: {
             query: {
@@ -42821,6 +48634,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_CreditTransferResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    student_discounts_api_v1_students__id__discounts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DiscountAssignmentOut__"];
                 };
             };
             /** @description Validation Error */
@@ -44954,6 +50798,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_VerifyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    payment_webhook_api_v1_webhooks_payments__provider__post: {
+        parameters: {
+            query?: {
+                institution?: string | null;
+            };
+            header?: never;
+            path: {
+                provider: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
                 };
             };
             /** @description Validation Error */

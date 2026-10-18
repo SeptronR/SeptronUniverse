@@ -24,6 +24,10 @@ sub-features, ``credit_transfers`` {academics.credit_transfer_mooc}, ``verify`` 
 ``POST /students`` development stub was removed (``module_stubs`` keeps ``/hostels`` until Phase 20).
 Phase 11: ``attendance`` (session marking, QR / geo / offline, summaries, on duty, condonation, eligibility)
 {attendance.core} with per-route sub-features (+ the token-authenticated student punch route).
+Phase 12: ``fees`` {fees.core} (heads, structures, discounts, fines, invoices, collection, online / UPI, offline
+reconciliation, day-book, refunds, reports) with per-route sub-features, ``scholarships`` {fees.scholarships},
+``no_dues`` {fees.no_dues}; the public payment webhook is included before the Phase 04 ``/webhooks/{provider}/{channel}``
+route so ``/webhooks/payments/{provider}`` is not shadowed.
 """
 
 from fastapi import APIRouter
@@ -44,11 +48,13 @@ from app.api.v1.endpoints import (
     enrollments,
     features,
     feedback,
+    fees,
     grading,
     help,
     institution,
     jobs,
     leaves,
+    no_dues,
     notifications,
     payroll,
     platform,
@@ -59,6 +65,7 @@ from app.api.v1.endpoints import (
     recruitment,
     registration,
     regulations,
+    scholarships,
     search,
     staff,
     staff_attendance,
@@ -83,6 +90,7 @@ api_router.include_router(institution.router, dependencies=[feature_required("co
 api_router.include_router(academic_sessions.router, dependencies=[feature_required("core.institution")])
 api_router.include_router(settings_routes.router, dependencies=[feature_required("core.settings")])
 api_router.include_router(platform_institutions.router, dependencies=[feature_required("core.institution")])
+api_router.include_router(fees.public_router)  # gateway webhook; signature + {fees.online_payment} checked inside
 api_router.include_router(communication.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(notifications.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(announcements.router, dependencies=[feature_required("comms.announcements")])
@@ -112,6 +120,9 @@ api_router.include_router(timetable.router, dependencies=[feature_required("time
 api_router.include_router(timetable.public_router)  # token-authenticated iCal feeds; the services check the token
 api_router.include_router(attendance.router, dependencies=[feature_required("attendance.core")])
 api_router.include_router(attendance.public_router)  # device token; checks {attendance.biometric|rfid} itself
+api_router.include_router(fees.router, dependencies=[feature_required("fees.core")])
+api_router.include_router(scholarships.router, dependencies=[feature_required("fees.scholarships")])
+api_router.include_router(no_dues.router, dependencies=[feature_required("fees.no_dues")])
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])

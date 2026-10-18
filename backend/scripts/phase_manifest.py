@@ -212,6 +212,28 @@ PHASES: dict[str, list[str]] = {
         "attendance_condonations",
         "term_eligibility",
     ],
+    # ledger_accounts lives in §22 (Phase 23 extends the chart) but fee heads map to it from Phase 12;
+    # integration_connections is already modelled (Phase 01 platform tables)
+    "12": [
+        "fee_heads",
+        "fee_structures",
+        "fee_structure_items",
+        "fee_discounts",
+        "student_fee_assignments",
+        "student_discount_assignments",
+        "fine_configurations",
+        "fee_invoices",
+        "fee_invoice_items",
+        "fee_payments",
+        "offline_payment_reconciliations",
+        "fee_refunds",
+        "day_book_entries",
+        "scholarships",
+        "scholarship_applications",
+        "no_dues_requests",
+        "no_dues_signoffs",
+        "ledger_accounts",
+    ],
 }
 
 VIEWS: set[str] = set()

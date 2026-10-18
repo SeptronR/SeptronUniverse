@@ -26,6 +26,7 @@ celery = Celery(
         "app.tasks.registration",
         "app.tasks.timetable",
         "app.tasks.attendance",
+        "app.tasks.fees",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",

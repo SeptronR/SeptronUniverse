@@ -47,6 +47,11 @@ class AppRoutes {
   static const attendance = '/app/attendance';
   static const myAttendance = '/app/attendance/me';
   static const condonations = '/app/attendance/condonations';
+  // Phase 12 — fees (student / parent dues, accountant collect + reconciliation, office no-dues sign-off)
+  static const myFees = '/app/fees';
+  static const feeCollect = '/app/fees/collect';
+  static const feeReconcile = '/app/fees/reconcile';
+  static const noDuesSignoff = '/app/no-dues/signoff';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

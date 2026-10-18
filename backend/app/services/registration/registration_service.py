@@ -682,8 +682,13 @@ class RegistrationService(RegistrationBase):
 
         await StudentRecordsService(self.db, self.principal, self.request).assert_undertakings(student, "registration")
         warnings = []
-        if window.requires_fee_clearance:
-            warnings.append("Fee clearance is checked from Phase 12 (fee invoices) — not enforced yet")
+        if window.requires_fee_clearance and not overrides.get("skip_holds"):
+            # Phase 12: overdue fee invoices block a window that requires fee clearance
+            from app.services.fees.invoice_service import overdue_balance
+
+            due = await overdue_balance(self.db, enrolment.id, await self.today())
+            if due > 0:
+                raise rule("Overdue fee invoices must be cleared first", "FEE_DUES", due_paise=due)
         arrear_credits = sum(
             (credits_of(courses.get(i.course_id)) for i in live if i.registration_type == "arrear"), Decimal(0)
         )
@@ -705,6 +710,15 @@ class RegistrationService(RegistrationBase):
                 },
             },
         )
+        if preview.total_paise > 0:
+            # Phase 12: the fee order becomes a real invoice (source course_registration; fee_invoice_id set)
+            from app.core.features import is_enabled
+            from app.services.fees.invoice_service import InvoiceService
+
+            if await is_enabled(self.inst, "fees.core"):
+                await InvoiceService(self.db, self.principal, self.request, self.inst).link(
+                    "course_registration", reg.id, preview.total_paise, enrolment.id, "Registration fee", "tuition"
+                )
         reg.status, reg.submitted_at, reg.window_id = "submitted", utcnow(), window.id
         await self.db.flush()
         await self._audit("submit", REG, reg.id, None, {"credits": float(total), "window": window.name})

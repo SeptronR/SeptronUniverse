@@ -537,6 +537,10 @@ class ApplicationService(AdmissionsBase):
         pay["status"], pay["paid_at"] = status, utcnow().isoformat() if status == "paid" else None
         self.set_payment(a, purpose, pay)
         await self.db.flush()
+        if status == "paid" and pay.get("invoice_id"):
+            # Phase 12: settle the backing invoice when the payment arrived outside the fees module (mock / _dev);
+            # a fees.payment_received replay finds it paid and does nothing
+            await self._settle_invoice(uuid.UUID(str(pay["invoice_id"])))
         await self._audit("payment", "applicant", a.id, None, {"purpose": purpose, "ref": pay["ref"], "status": status})
         if status != "paid":
             return
@@ -547,6 +551,20 @@ class ApplicationService(AdmissionsBase):
             from app.services.admissions.counselling_service import CounsellingService
 
             await CounsellingService(self.db, self.principal, self.request, self.inst).on_admission_fee_paid(a)
+
+    async def _settle_invoice(self, invoice_id: uuid.UUID) -> None:
+        from app.models.fees import FeeInvoice
+        from app.services.fees.payment_service import PaymentService
+
+        ps = PaymentService(self.db, self.principal, self.request, self.inst)
+        inv = (
+            await self.db.execute(select(FeeInvoice).where(FeeInvoice.id == invoice_id).with_for_update())
+        ).scalar_one_or_none()
+        if inv is None:
+            return
+        await ps.recompute(inv)
+        if inv.balance_paise > 0:
+            await ps.record(inv, inv.balance_paise, "gateway", gateway_name="mock", reference="admissions", emit=False)
 
     # ---- rule 3: verification --------------------------------------------------------------------------------------
     async def verify_document(

@@ -211,6 +211,16 @@ ATTENDANCE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("hod", sla=48, escalate="registrar"),
     },
 )
+# Phase 12: concessions (accountant → registrar). ``fees.refund``, ``fees.receipt_cancel``, ``scholarship.sanction`` and
+# the parallel ``no_dues.clearance`` ship with Prompts/04.
+FEE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "fees.concession",
+        "module": "fees",
+        "name": "Fee concession",
+        "steps": _chain("accountant", "registrar", sla=72),
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -218,8 +228,10 @@ WORKFLOW_TEMPLATES = (
     + ADMISSION_WORKFLOW_TEMPLATES
     + TIMETABLE_WORKFLOW_TEMPLATES
     + ATTENDANCE_WORKFLOW_TEMPLATES
+    + FEE_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 28, (
-    "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1"
+assert len(WORKFLOW_TEMPLATES) == 29, (
+    "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
+    "Prompts/12 1"
 )

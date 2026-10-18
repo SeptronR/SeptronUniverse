@@ -163,10 +163,14 @@ def seed_institution_defaults(
             sequences += 1
     workflows = seed_workflow_definitions(conn, iid)  # Phase 04
     hr = seed_hr_defaults(conn, iid, pack.code)  # Phase 06
+    from app.services.fees.defaults import seed_fee_defaults
+
+    fees = seed_fee_defaults(conn, iid)  # Phase 12
     return {
         "pack": pack.code,
         "workflow_definitions": workflows,
         "hr": hr,
+        "fees": fees,
         "settings": created_settings,
         "grading_scales": scales,
         "number_sequences": sequences,

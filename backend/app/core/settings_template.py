@@ -75,6 +75,15 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("fees", "gateway_provider", "str", "mock"),
     SettingDef("fees", "upi_vpa", "str", None),
     SettingDef("fees", "gst_enabled", "bool", False),
+    # fees (Phase 12) — GSTIN on taxable invoices, reminders, overdue holds, linkage due days, no-dues offices
+    SettingDef("fees", "gstin", "str", None, label="GSTIN printed on taxable invoices / receipts"),
+    SettingDef("fees", "reminder_days", "json", [7, 1, -7], label="Due reminders: days before (+) / after (-) due"),
+    SettingDef(
+        "fees", "hold_on_overdue_days", "int", 0, label="Place holds after N days overdue (0 = off)", min=0, max=365
+    ),
+    SettingDef("fees", "overdue_hold_types", "json", ["registration", "exam"], label="Hold types placed when overdue"),
+    SettingDef("fees", "linkage_due_days", "int", 7, label="Due days of linkage invoices (condonation …)", min=0),
+    SettingDef("fees", "no_dues_departments", "json", None, label="No-dues offices per purpose (empty = defaults)"),
     # exams
     SettingDef("exams", "valuation_mode_default", "enum", "single", False, ("single", "double")),
     SettingDef("exams", "discrepancy_pct_default", "int", 15, min=0, max=100),
@@ -265,6 +274,7 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("employee_id", "EMP{seq:5}", 5, "never", "Employee id"),
     SequenceTemplate("hall_ticket_no", "HT{yy}{term}{seq:6}", 6, "per_term", "Hall ticket number"),
     SequenceTemplate("fee_receipt_no", "RCP/{yyyy}/{seq:6}", 6, "yearly", "Fee receipt"),
+    SequenceTemplate("fee_invoice_no", "INV/{yyyy}/{seq:6}", 6, "yearly", "Fee invoice"),
     SequenceTemplate("certificate_no", "CERT/{yyyy}/{seq:5}", 5, "yearly", "Certificate number"),
 )
 

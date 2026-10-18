@@ -621,6 +621,22 @@ REGISTRAR_ATTENDANCE: set[str] = P("attendance", "mark", "edit_finalized", "cond
 HOD_ATTENDANCE: set[str] = P("attendance", "edit_finalized")
 COE_ATTENDANCE: set[str] = P("exams", "eligibility")
 VC_ATTENDANCE: set[str] = P("attendance", "condone")
+# Phase 12 (Prompts/12 visibility table): registrar sanctions scholarships / approves refunds; the vice-chancellor
+# ("principal") is the last step of receipt cancellation / refund / sanction; HOD recommends scholarships, signs the
+# department / lab no-dues and reads its department's dues; class advisors read advisees' dues; the warden, sports,
+# transport and placement offices sign their own no-dues; the accountant verifies scholarships; parents read their
+# wards' scholarships / no-dues
+REGISTRAR_FEES: set[str] = P("fees", "approve", "refund") | P("scholarships", "sanction", "view_all", "view") | P(
+    "no_dues", "approve", "view_all", "view"
+)
+VC_FEES: set[str] = P("fees", "approve", "cancel_receipt") | P("scholarships", "sanction")
+HOD_FEES: set[str] = P("fees", "view_all") | P("scholarships", "approve", "view_all", "view") | P(
+    "no_dues", "approve", "view_all", "view"
+)
+ADVISOR_FEES: set[str] = P("fees", "view")
+ACCOUNTANT_FEES: set[str] = P("scholarships", "verify")
+OFFICE_NO_DUES: set[str] = P("no_dues", "approve", "view")
+PARENT_FEES: set[str] = P("scholarships", "view") | P("no_dues", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -634,6 +650,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("grievances", "escalate")
     | P("results", "approve")
     | VC_ATTENDANCE
+    | VC_FEES
     | STAFF_SELF,
     "registrar": STAFF_SELF
     | P("students", "manage", "view_pii")
@@ -663,7 +680,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_ACADEMICS
     | REGISTRAR_REGISTRATION
     | REGISTRAR_TIMETABLE
-    | REGISTRAR_ATTENDANCE,
+    | REGISTRAR_ATTENDANCE
+    | REGISTRAR_FEES,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -743,8 +761,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_STUDENTS
     | HOD_ADMISSIONS
     | HOD_TIMETABLE
-    | HOD_ATTENDANCE,
-    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view"),
+    | HOD_ATTENDANCE
+    | HOD_FEES,
+    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
@@ -812,7 +831,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("inventory", "view_all")
     | P("transport", "view_all")
     | P("fundraising", "view_all", "receipt")
-    | P("reports", "run", "view"),
+    | P("reports", "run", "view")
+    | ACCOUNTANT_FEES,
     "hr_officer": STAFF_SELF
     | P("hr", "manage", "view_pii")
     | P("recruitment", "manage")
@@ -833,7 +853,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("alumni", "view_all")
     | P("reports", "run", "view")
     | P("communication", "send")
-    | P("events", "organise"),
+    | P("events", "organise")
+    | OFFICE_NO_DUES,
     "alumni_coordinator": STAFF_SELF
     | P("alumni", "manage")
     | P("fundraising", "manage")
@@ -845,7 +866,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("students", "view")
     | P("attendance", "view")
     | P("fees", "view")
-    | P("communication", "send"),
+    | P("communication", "send")
+    | OFFICE_NO_DUES,
     "hostel_gate_staff": COMMON | P("hostel", "gate", "view"),
     "librarian": STAFF_SELF
     | P("library", "manage")
@@ -859,7 +881,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("students", "view_all")
     | P("hr", "view_all")
     | P("fees", "view_all")
-    | P("reports", "run", "view"),
+    | P("reports", "run", "view")
+    | OFFICE_NO_DUES,
     "inventory_manager": STAFF_SELF
     | P("inventory", "manage")
     | P("procurement", "quote", "po_approve", "view_all", "create", "update")
@@ -882,7 +905,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("sports", "manage")
     | P("clubs", "verify_hours", "view")
     | P("events", "organise")
-    | P("students", "view_all"),
+    | P("students", "view_all")
+    | OFFICE_NO_DUES,
     "grievance_officer": STAFF_SELF
     | P("grievances", "triage", "resolve", "escalate", "committee", "view_all", "update", "view")
     | P("students", "view")
@@ -937,7 +961,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("timetable", "view")
     | P("calendar", "view")
     | P("events", "view")
-    | P("transport", "view"),
+    | P("transport", "view")
+    | PARENT_FEES,
     "alumni": COMMON
     | P("alumni", "self")
     | P("certificates", "self")
@@ -967,6 +992,9 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0012": frozenset(
+        REGISTRAR_FEES | VC_FEES | HOD_FEES | ADVISOR_FEES | ACCOUNTANT_FEES | OFFICE_NO_DUES | PARENT_FEES
+    ),
 }
 
 

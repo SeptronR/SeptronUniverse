@@ -134,6 +134,23 @@ const CondonationsPage = lazy(() => import('@/features/attendance/pages/AdminAtt
 const EligibilityPage = lazy(() => import('@/features/attendance/pages/AdminAttendancePages').then((m) => ({ default: m.EligibilityPage })));
 const StudentAttendancePage = lazy(() => import('@/features/attendance/pages/StudentAttendancePage').then((m) => ({ default: m.StudentAttendancePage })));
 const ParentAttendancePage = lazy(() => import('@/features/attendance/pages/StudentAttendancePage').then((m) => ({ default: m.ParentAttendancePage })));
+// Phase 12 — fees, scholarships & no-dues
+const FeesDashboardPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeesDashboardPage })));
+const FeeStructuresPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeStructuresPage })));
+const FeeDiscountsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeDiscountsPage })));
+const FeeFinesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeFinesPage })));
+const FeeInvoicesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeInvoicesPage })));
+const FeeCollectPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeCollectPage })));
+const FeePaymentsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeePaymentsPage })));
+const FeeOnlinePage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeOnlinePage })));
+const FeeReconcilePage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeReconcilePage })));
+const FeeDayBookPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeDayBookPage })));
+const FeeRefundsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeRefundsPage })));
+const FeeScholarshipsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeScholarshipsPage })));
+const FeeNoDuesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeNoDuesPage })));
+const FeeReportsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeReportsPage })));
+const StudentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.StudentFeesPage })));
+const ParentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.ParentFeesPage })));
 // Phase 10 — timetable & rooms
 const RoomsPage = lazy(() =>
   import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.RoomsPage })),
@@ -377,6 +394,21 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 12 — fees (accountant / registrar / auditor; HOD + offices reach no-dues and scholarships)
+              ['/admin/fees', 'fees.core', 'fees', 'view_all', [['fees', 'collect']], <FeesDashboardPage key="fd" />],
+              ['/admin/fees/collect', 'fees.core', 'fees', 'collect', [], <FeeCollectPage key="fc" />],
+              ['/admin/fees/structures', 'fees.core', 'fees', 'structure_manage', [['fees', 'view_all']], <FeeStructuresPage key="fs" />],
+              ['/admin/fees/discounts', 'fees.discounts', 'fees', 'concession', [['fees', 'view_all'], ['fees', 'approve']], <FeeDiscountsPage key="fdi" />],
+              ['/admin/fees/fines', 'fees.fines', 'fees', 'structure_manage', [['fees', 'view_all']], <FeeFinesPage key="ff" />],
+              ['/admin/fees/invoices', 'fees.core', 'fees', 'view_all', [['fees', 'view'], ['fees', 'collect']], <FeeInvoicesPage key="fi" />],
+              ['/admin/fees/payments', 'fees.core', 'fees', 'view_all', [['fees', 'collect'], ['fees', 'cancel_receipt']], <FeePaymentsPage key="fp" />],
+              ['/admin/fees/online', 'fees.online_payment', 'fees', 'view_all', [['fees', 'collect']], <FeeOnlinePage key="fo" />],
+              ['/admin/fees/reconcile', 'fees.offline_challan_reconciliation', 'fees', 'reconcile', [], <FeeReconcilePage key="fr" />],
+              ['/admin/fees/day-book', 'fees.core', 'fees', 'view_all', [['fees', 'collect']], <FeeDayBookPage key="fb" />],
+              ['/admin/fees/refunds', 'fees.refunds', 'fees', 'refund', [['fees', 'view_all'], ['fees', 'approve']], <FeeRefundsPage key="frf" />],
+              ['/admin/fees/scholarships', 'fees.scholarships', 'scholarships', 'view_all', [['scholarships', 'verify'], ['scholarships', 'approve'], ['scholarships', 'sanction'], ['scholarships', 'disburse']], <FeeScholarshipsPage key="fsc" />],
+              ['/admin/fees/no-dues', 'fees.no_dues', 'no_dues', 'approve', [['no_dues', 'view_all']], <FeeNoDuesPage key="fnd" />],
+              ['/admin/fees/reports', 'fees.core', 'fees', 'view_all', [['fees', 'export']], <FeeReportsPage key="frp" />],
               // Phase 08 — admissions (cycles readable by all staff; applicants need view_all — HOD / college slices)
               ['/admin/admissions/cycles', 'admissions.cycles', 'admissions', 'view', [], <CyclesPage key="ac" />],
               ['/admin/admissions/cycles/:id', 'admissions.cycles', 'admissions', 'view', [], <CycleWorkspacePage key="aw" />],
@@ -504,6 +536,7 @@ export const router = createBrowserRouter([
               ['registrations', <StudentRegistrationsHistory key="h" />],
               ['timetable', <MyTimetablePage key="t" />],
               ['attendance', <StudentAttendancePage key="a" />],
+              ['fees', <StudentFeesPage key="f" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -515,6 +548,7 @@ export const router = createBrowserRouter([
           { index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><ParentAttendancePage /></FeatureRoute>) },
+          { path: 'fees', element: page(<FeatureRoute feature="fees.core"><ParentFeesPage /></FeatureRoute>) },
         ],
       },
       {

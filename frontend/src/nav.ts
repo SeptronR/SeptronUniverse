@@ -180,7 +180,26 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   { title: 'CAMPUS', items: [] },
-  { title: 'FINANCE', items: [] },
+  {
+    title: 'FINANCE',
+    items: [
+      // Phase 12 — fees, scholarships & no-dues
+      { label: 'Fees', to: '/admin/fees', icon: Banknote, module: 'fees', action: 'view_all', altActions: ['collect'], feature: 'fees.core' },
+      { label: 'Collect', to: '/admin/fees/collect', icon: HandCoins, module: 'fees', action: 'collect', altActions: [], feature: 'fees.core' },
+      { label: 'Structures', to: '/admin/fees/structures', icon: ScrollText, module: 'fees', action: 'structure_manage', altActions: ['view_all'], feature: 'fees.core' },
+      { label: 'Discounts', to: '/admin/fees/discounts', icon: Percent, module: 'fees', action: 'concession', altActions: ['approve'], feature: 'fees.discounts' },
+      { label: 'Fines', to: '/admin/fees/fines', icon: Ban, module: 'fees', action: 'structure_manage', altActions: [], feature: 'fees.fines' },
+      { label: 'Invoices', to: '/admin/fees/invoices', icon: ScrollText, module: 'fees', action: 'view_all', altActions: ['view', 'collect'], feature: 'fees.core' },
+      { label: 'Payments', to: '/admin/fees/payments', icon: Banknote, module: 'fees', action: 'view_all', altActions: ['collect', 'cancel_receipt'], feature: 'fees.core' },
+      { label: 'Gateway orders', to: '/admin/fees/online', icon: Activity, module: 'fees', action: 'view_all', altActions: ['collect'], feature: 'fees.online_payment' },
+      { label: 'Reconciliation', to: '/admin/fees/reconcile', icon: ArrowRightLeft, module: 'fees', action: 'reconcile', altActions: [], feature: 'fees.offline_challan_reconciliation' },
+      { label: 'Day-book', to: '/admin/fees/day-book', icon: CalendarCheck, module: 'fees', action: 'view_all', altActions: ['collect'], feature: 'fees.core' },
+      { label: 'Refunds', to: '/admin/fees/refunds', icon: Repeat, module: 'fees', action: 'refund', altActions: ['approve', 'view_all'], feature: 'fees.refunds' },
+      { label: 'Scholarships', to: '/admin/fees/scholarships', icon: GraduationCap, module: 'scholarships', action: 'view_all', altActions: ['verify', 'approve', 'sanction', 'disburse'], feature: 'fees.scholarships' },
+      { label: 'No-dues', to: '/admin/fees/no-dues', icon: ClipboardCheck, module: 'no_dues', action: 'approve', altActions: ['view_all'], feature: 'fees.no_dues' },
+      { label: 'Reports', to: '/admin/fees/reports', icon: TrendingUp, module: 'fees', action: 'view_all', altActions: ['export'], feature: 'fees.core' },
+    ],
+  },
   { title: 'ENGAGEMENT', items: [] },
   { title: 'QUALITY & GOVERNANCE', items: [] },
   {

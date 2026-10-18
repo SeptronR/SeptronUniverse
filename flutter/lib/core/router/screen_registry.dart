@@ -8,6 +8,7 @@ import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/registration/registration_screens.dart';
 import '../../features/attendance/attendance_screens.dart';
+import '../../features/fees/fees_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -289,6 +290,35 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 12 — fees (student / parent tab, accountant collect + reconciliation, office no-dues sign-off)
+    AppRoutes.myFees: ScreenEntry(
+      route: AppRoutes.myFees,
+      titleKey: 'fees',
+      feature: 'fees.core',
+      permission: 'fees:self',
+      builder: (_, __) => const StudentFeesScreen(),
+    ),
+    AppRoutes.feeCollect: ScreenEntry(
+      route: AppRoutes.feeCollect,
+      titleKey: 'fee_collect',
+      feature: 'fees.core',
+      permission: 'fees:collect',
+      builder: (_, __) => const CollectScreen(),
+    ),
+    AppRoutes.feeReconcile: ScreenEntry(
+      route: AppRoutes.feeReconcile,
+      titleKey: 'fee_reconcile',
+      feature: 'fees.offline_challan_reconciliation',
+      permission: 'fees:reconcile',
+      builder: (_, __) => const ReconcileReviewScreen(),
+    ),
+    AppRoutes.noDuesSignoff: ScreenEntry(
+      route: AppRoutes.noDuesSignoff,
+      titleKey: 'no_dues_signoff',
+      feature: 'fees.no_dues',
+      permission: 'no_dues:approve',
+      builder: (_, __) => const NoDuesSignoffScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

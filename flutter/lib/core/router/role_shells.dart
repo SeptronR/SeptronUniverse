@@ -265,6 +265,39 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 12 — fees (student / parent tab; accountant collect + reconciliation; office no-dues sign-off)
+  const MoreMenuModule(
+      titleKey: 'fees',
+      icon: Icons.account_balance_wallet_outlined,
+      route: AppRoutes.myFees,
+      color: Colors.green,
+      permission: 'fees:self',
+      feature: 'fees.core',
+      roles: ['student', 'parent', 'learner']),
+  const MoreMenuModule(
+      titleKey: 'fee_collect',
+      icon: Icons.point_of_sale,
+      route: AppRoutes.feeCollect,
+      color: Colors.indigo,
+      permission: 'fees:collect',
+      feature: 'fees.core',
+      roles: ['accountant']),
+  const MoreMenuModule(
+      titleKey: 'fee_reconcile',
+      icon: Icons.compare_arrows,
+      route: AppRoutes.feeReconcile,
+      color: Colors.blueGrey,
+      permission: 'fees:reconcile',
+      feature: 'fees.offline_challan_reconciliation',
+      roles: ['accountant']),
+  const MoreMenuModule(
+      titleKey: 'no_dues_signoff',
+      icon: Icons.task_alt,
+      route: AppRoutes.noDuesSignoff,
+      color: Colors.deepPurple,
+      permission: 'no_dues:approve',
+      feature: 'fees.no_dues',
+      roles: ['accountant', 'librarian', 'hostel_warden', 'hod', 'sports_officer', 'transport_manager', 'placement_officer']),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',

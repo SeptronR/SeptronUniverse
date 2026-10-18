@@ -773,7 +773,78 @@ ATTENDANCE_EVENTS: tuple[EventDef, ...] = (
         link="/faculty/attendance",
     ),
 )
-EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS + TIMETABLE_EVENTS + ATTENDANCE_EVENTS
+# Phase 12 — bounces, refunds, day-book, scholarships, no-dues (invoice / receipt / reminder are Phase 04)
+FEE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "fees.payment_bounced",
+        "fees",
+        "Cheque bounced",
+        "Payment {{ receipt_no }} bounced",
+        "Your payment of {{ amount }} (receipt {{ receipt_no }}) bounced: {{ reason }}. The dues are open again.",
+        ("receipt_no", "amount", "reason"),
+        ("in_app", "sms", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "fees.refund_processed",
+        "fees",
+        "Refund processed",
+        "Refund of {{ amount }}",
+        "Your refund of {{ amount }} was processed (reference {{ reference }}).",
+        ("amount", "reference"),
+        ("in_app", "sms", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "fees.day_book_open",
+        "fees",
+        "Day-book open",
+        "Close the day-book for {{ date }}",
+        "Your collections for {{ date }} are not closed yet.",
+        ("date",),
+        ("in_app",),
+        link="/admin/fees/day-book",
+    ),
+    EventDef(
+        "scholarship.sanctioned",
+        "fees",
+        "Scholarship sanctioned",
+        "{{ scholarship }} sanctioned",
+        "Your {{ scholarship }} application was sanctioned: {{ amount }}.",
+        ("scholarship", "amount"),
+        ("in_app", "push", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "no_dues.blocked",
+        "fees",
+        "No-dues blocked",
+        "No-dues: dues pending",
+        "Your no-dues request ({{ purpose }}) is blocked by: {{ departments }}.",
+        ("purpose", "departments"),
+        ("in_app", "push"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "no_dues.cleared",
+        "fees",
+        "No-dues cleared",
+        "No-dues cleared",
+        "Your no-dues request ({{ purpose }}) is cleared — certificate {{ certificate_no }}.",
+        ("purpose", "certificate_no"),
+        ("in_app", "push", "email"),
+        link="/student/fees",
+    ),
+)
+EVENTS = (
+    EVENTS
+    + STUDENT_EVENTS
+    + ADMISSION_EVENTS
+    + REGISTRATION_EVENTS
+    + TIMETABLE_EVENTS
+    + ATTENDANCE_EVENTS
+    + FEE_EVENTS
+)
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 
