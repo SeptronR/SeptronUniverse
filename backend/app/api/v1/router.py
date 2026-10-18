@@ -60,6 +60,7 @@ from app.api.v1.endpoints import (
     staff,
     staff_attendance,
     students,
+    timetable,
     verify,
     workflow,
     workload,
@@ -104,6 +105,8 @@ api_router.include_router(credit_transfers.router, dependencies=[feature_require
 api_router.include_router(verify.router)  # public ID-card verification (token-signed)
 api_router.include_router(admissions.router, dependencies=[feature_required("admissions.cycles")])
 api_router.include_router(registration.router, dependencies=[feature_required("registration.core")])
+api_router.include_router(timetable.router, dependencies=[feature_required("timetable.core")])
+api_router.include_router(timetable.public_router)  # token-authenticated iCal feeds; the services check the token
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])

@@ -88,4 +88,7 @@ register_beat("registration.lock_windows", "beat.registration.lock_windows", cro
 register_beat("waitlist.expire", "beat.waitlist.expire", crontab(minute=27))
 register_beat("registration.reminders", "beat.registration.reminders", crontab(hour=8, minute=30))
 
+# ---- Phase 10 timetable (app/tasks/timetable.py) ------------------------------------------------------------------------
+register_beat("sessions.mark_missed", "beat.sessions.mark_missed", crontab(hour=23, minute=40))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE

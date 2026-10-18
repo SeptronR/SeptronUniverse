@@ -94,6 +94,11 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Windows', to: '/admin/registration/windows', icon: CalendarRange, module: 'registration', action: 'manage', feature: 'registration.core' },
       { label: 'Elective allocation', to: '/admin/registration/allocation', icon: Percent, module: 'registration', action: 'allocate', altActions: ['manage'], feature: 'registration.elective_allocation' },
       { label: 'Arrears', to: '/admin/registration/arrears', icon: ScrollText, module: 'registration', altActions: ['view_all', 'approve'], feature: 'registration.arrears' },
+      // Phase 10 — timetable & rooms
+      { label: 'Timetable', to: '/admin/timetable', icon: CalendarRange, module: 'timetable', altActions: ['view_all'], feature: 'timetable.core' },
+      { label: 'Rooms & Slots', to: '/admin/facilities/rooms', icon: Building2, module: 'timetable', altActions: ['view_all'], feature: 'timetable.rooms' },
+      { label: 'Substitutions', to: '/admin/timetable/substitutions', icon: Repeat, module: 'timetable', action: 'substitute', altActions: ['approve', 'manage'], feature: 'timetable.substitutions' },
+      { label: 'Sessions', to: '/admin/timetable/sessions', icon: Clock, module: 'attendance', altActions: ['view_all', 'mark'], feature: 'timetable.core' },
     ],
   },
   { title: 'EXAMINATIONS', items: [] },

@@ -25,6 +25,11 @@ runs ``recompute_standing`` until Phase 15 publishes results).
 
 Phase 08 adds ``POST /_dev/fees/pay/{ref}`` (steps 3 / 8 — the payment event of an application / admission fee until
 Phase 12 invoices exist) and ``POST /_dev/admissions/lapse-allotments`` (step 8 — runs the Beat body in-process).
+
+Phase 10 adds ``POST /_dev/class-sessions/{id}/attendance`` (step 10 — mark a session's attendance ``taken`` /
+``finalized`` until Phase 11 exists), ``POST /_dev/timetable/mark-missed`` (the nightly Beat body) and
+``POST /_dev/timetable/consume/{event}`` (runs the ``leave.approved`` / ``leave.cancelled`` / ``holiday.changed``
+consumer bodies in-process with a given payload, for runs without a Celery worker).
 """
 
 import asyncio
@@ -316,3 +321,86 @@ async def dev_registration_beat(
     else:
         raise APIError(422, ErrorCode.VALIDATION, f"Unknown task {task!r}", {"allowed": [*methods, "window-status"]})
     return ok({"task": task, "changed": n}, message="Run")
+
+
+# ---- Phase 10 --------------------------------------------------------------------------------------------------------
+@router.post(
+    "/class-sessions/{session_id}/attendance",
+    summary="Mark a session's attendance taken / finalized (dev fixture until Phase 11)",
+    dependencies=[feature_required("timetable.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_session_attendance(
+    session_id: uuid.UUID,
+    status: str = Query(default="finalized", pattern="^(not_taken|taken|finalized)$"),
+    principal: Principal = Depends(any_permission_required(("attendance", "mark"), ("timetable", "manage"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from datetime import UTC
+
+    from app.models.timetable import ClassSession
+
+    row = (
+        await db.execute(
+            select(ClassSession).where(
+                ClassSession.id == session_id, ClassSession.institution_id == principal.institution_id
+            )
+        )
+    ).scalar_one_or_none()
+    if row is None:
+        raise APIError(404, ErrorCode.NOT_FOUND, "Class session not found")
+    now = datetime.now(UTC)
+    row.attendance_status = status
+    row.attendance_taken_at = now if status != "not_taken" else None
+    row.finalized_at, row.finalized_by = (now, principal.id) if status == "finalized" else (None, None)
+    if status != "not_taken" and row.status == "scheduled":
+        row.status = "conducted"
+    await db.flush()
+    return ok({"session_id": str(row.id), "attendance_status": status, "status": row.status}, message="Marked")
+
+
+@router.post(
+    "/timetable/mark-missed",
+    summary="Run the sessions.mark_missed Beat body in-process",
+    dependencies=[feature_required("timetable.core")],
+    response_model=Envelope[dict[str, int]],
+)
+async def dev_mark_missed(
+    request: Request,
+    principal: Principal = Depends(permission_required("timetable", "manage")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.timetable.session_service import SessionService
+
+    return ok({"changed": await SessionService(db, principal, request).mark_missed()}, message="Run")
+
+
+@router.post(
+    "/timetable/consume/{event}",
+    summary="Run a Phase 10 outbox consumer body in-process (leave.approved | leave.cancelled | holiday.changed)",
+    dependencies=[feature_required("timetable.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_timetable_consume(
+    event: str,
+    request: Request,
+    payload: dict[str, Any] = Body(default_factory=dict),
+    principal: Principal = Depends(permission_required("timetable", "manage")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from datetime import date as _date
+
+    from app.services.timetable.substitution_service import SubstitutionService
+    from app.services.timetable.timetable_service import TimetableService
+
+    if event == "leave.approved":
+        out: Any = await SubstitutionService(db, principal, request).from_leave(payload)
+    elif event == "leave.cancelled":
+        out = await SubstitutionService(db, principal, request).leave_cancelled(payload)
+    elif event == "holiday.changed":
+        out = await TimetableService(db, principal, request).resync_dates(
+            [_date.fromisoformat(d) for d in payload.get("dates", [])]
+        )
+    else:
+        raise APIError(422, ErrorCode.VALIDATION, f"Unknown event {event!r}")
+    return ok({"event": event, "result": out}, message="Consumed")

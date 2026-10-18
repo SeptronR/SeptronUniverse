@@ -44,6 +44,9 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/public/admissions/{slug}/start",
     "GET /api/v1/public/admissions/{slug}/merit-lists/{id}",
     "POST /api/v1/public/enquiries",
+    # Phase 10 — iCal feeds: a personal feed token (hash in ``calendar_feed_tokens``) or a signed section link
+    "GET /api/v1/timetables/ical/{token}.ics",
+    "GET /api/v1/timetables/sections/{id}.ics",
 }
 
 

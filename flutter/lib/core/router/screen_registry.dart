@@ -7,6 +7,7 @@ import '../../features/auth/profile_screens.dart';
 import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/registration/registration_screens.dart';
+import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/students/students_screens.dart';
@@ -243,6 +244,28 @@ class ScreenRegistry {
       feature: 'registration.advisor_approval',
       permission: 'registration:approve',
       builder: (_, __) => const RegistrationApprovalsScreen(),
+    ),
+    // Phase 10 — timetable (week / day, cached offline 24 h), today's sessions, substitutions
+    AppRoutes.myTimetable: ScreenEntry(
+      route: AppRoutes.myTimetable,
+      titleKey: 'timetable',
+      feature: 'timetable.core',
+      permission: 'timetable:view',
+      builder: (_, __) => const MyTimetableScreen(),
+    ),
+    AppRoutes.todaySessions: ScreenEntry(
+      route: AppRoutes.todaySessions,
+      titleKey: 'today_sessions',
+      feature: 'timetable.core',
+      permission: 'attendance:view|attendance:self|attendance:mark',
+      builder: (_, __) => const TodaySessionsScreen(),
+    ),
+    AppRoutes.substitutions: ScreenEntry(
+      route: AppRoutes.substitutions,
+      titleKey: 'substitutions',
+      feature: 'timetable.substitutions',
+      permission: 'timetable:substitute|timetable:approve',
+      builder: (_, __) => const SubstitutionsScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

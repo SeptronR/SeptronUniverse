@@ -215,6 +215,31 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.green,
       permission: 'registration:approve',
       feature: 'registration.advisor_approval'),
+  // Phase 10 — timetable (student / faculty), today's sessions (faculty), substitutions (faculty requests, HOD)
+  const MoreMenuModule(
+      titleKey: 'timetable',
+      icon: Icons.calendar_view_week,
+      route: AppRoutes.myTimetable,
+      color: Colors.blue,
+      permission: 'timetable:view',
+      feature: 'timetable.core',
+      roles: ['student', 'faculty', 'class_advisor', 'hod', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'today_sessions',
+      icon: Icons.today,
+      route: AppRoutes.todaySessions,
+      color: Colors.orange,
+      permission: 'attendance:mark',
+      feature: 'timetable.core',
+      roles: ['faculty', 'class_advisor', 'hod', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'substitutions',
+      icon: Icons.swap_horiz,
+      route: AppRoutes.substitutions,
+      color: Colors.purple,
+      permission: 'timetable:substitute',
+      feature: 'timetable.substitutions',
+      roles: ['faculty', 'class_advisor', 'hod']),
   // Phase 03 — language / theme / college picker (every role)
   const MoreMenuModule(
       titleKey: 'settings',

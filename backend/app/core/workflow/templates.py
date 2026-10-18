@@ -191,8 +191,24 @@ ADMISSION_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("admissions_officer", "accountant", sla=72, escalate="registrar"),
     },
 )
+# Phase 10: a timetable substitution (manual or auto-requested from approved leave) is decided by the HOD of the
+# offering's department (``department_id`` in the start context); escalation to the registrar
+TIMETABLE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "timetable.substitution",
+        "module": "timetable",
+        "name": "Class substitution",
+        "steps": _chain("hod", sla=24, escalate="registrar"),
+    },
+)
 WORKFLOW_TEMPLATES = (
-    WORKFLOW_TEMPLATES + HR_WORKFLOW_TEMPLATES + STUDENT_WORKFLOW_TEMPLATES + ADMISSION_WORKFLOW_TEMPLATES
+    WORKFLOW_TEMPLATES
+    + HR_WORKFLOW_TEMPLATES
+    + STUDENT_WORKFLOW_TEMPLATES
+    + ADMISSION_WORKFLOW_TEMPLATES
+    + TIMETABLE_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 26, "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1"
+assert len(WORKFLOW_TEMPLATES) == 27, (
+    "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1"
+)

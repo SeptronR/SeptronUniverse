@@ -192,6 +192,17 @@ PHASES: dict[str, list[str]] = {
         "offering_waitlists",
         "student_arrears",
     ],
+    # calendar_feed_tokens lives in §24 (Phase 25) but the iCal feeds of Phase 10 create the model
+    "10": [
+        "buildings",
+        "rooms",
+        "time_slots",
+        "timetables",
+        "timetable_entries",
+        "timetable_substitutions",
+        "class_sessions",
+        "calendar_feed_tokens",
+    ],
 }
 
 VIEWS: set[str] = set()
