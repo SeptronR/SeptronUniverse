@@ -24,6 +24,15 @@ sub-features, ``credit_transfers`` {academics.credit_transfer_mooc}, ``verify`` 
 ``POST /students`` development stub was removed (``module_stubs`` keeps ``/hostels`` until Phase 20).
 Phase 11: ``attendance`` (session marking, QR / geo / offline, summaries, on duty, condonation, eligibility)
 {attendance.core} with per-route sub-features (+ the token-authenticated student punch route).
+Phase 12: ``fees`` {fees.core} (heads, structures, discounts, fines, invoices, collection, online / UPI, offline
+reconciliation, day-book, refunds, reports) with per-route sub-features, ``scholarships`` {fees.scholarships},
+``no_dues`` {fees.no_dues}; the public payment webhook is included before the Phase 04 ``/webhooks/{provider}/{channel}``
+route so ``/webhooks/payments/{provider}`` is not shadowed.
+Phase 13: ``assessment`` {assessment.internal_marks} (+ ``obe_router`` {obe.definitions}), ``lms`` {lms.content}
+(+ ``projects_router`` {assessment.projects}), ``content`` {lms.question_bank} (+ ``materials_router``
+{lms.study_materials}).
+Phase 14: ``exams`` {exams.sessions} with per-route sub-features (+ the public hall-ticket verification).
+Phase 15: ``results`` {exams.sessions} with per-route sub-features (+ the public result lookup).
 """
 
 from fastapi import APIRouter
@@ -34,21 +43,27 @@ from app.api.v1.endpoints import (
     admissions,
     announcements,
     appraisals,
+    assessment,
     attendance,
     auth,
     catalog,
     communication,
+    content,
     courses,
     credit_transfers,
     curriculum,
     enrollments,
+    exams,
     features,
     feedback,
+    fees,
     grading,
     help,
     institution,
     jobs,
     leaves,
+    lms,
+    no_dues,
     notifications,
     payroll,
     platform,
@@ -59,6 +74,8 @@ from app.api.v1.endpoints import (
     recruitment,
     registration,
     regulations,
+    results,
+    scholarships,
     search,
     staff,
     staff_attendance,
@@ -83,6 +100,7 @@ api_router.include_router(institution.router, dependencies=[feature_required("co
 api_router.include_router(academic_sessions.router, dependencies=[feature_required("core.institution")])
 api_router.include_router(settings_routes.router, dependencies=[feature_required("core.settings")])
 api_router.include_router(platform_institutions.router, dependencies=[feature_required("core.institution")])
+api_router.include_router(fees.public_router)  # gateway webhook; signature + {fees.online_payment} checked inside
 api_router.include_router(communication.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(notifications.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(announcements.router, dependencies=[feature_required("comms.announcements")])
@@ -112,6 +130,19 @@ api_router.include_router(timetable.router, dependencies=[feature_required("time
 api_router.include_router(timetable.public_router)  # token-authenticated iCal feeds; the services check the token
 api_router.include_router(attendance.router, dependencies=[feature_required("attendance.core")])
 api_router.include_router(attendance.public_router)  # device token; checks {attendance.biometric|rfid} itself
+api_router.include_router(fees.router, dependencies=[feature_required("fees.core")])
+api_router.include_router(scholarships.router, dependencies=[feature_required("fees.scholarships")])
+api_router.include_router(no_dues.router, dependencies=[feature_required("fees.no_dues")])
+api_router.include_router(assessment.router, dependencies=[feature_required("assessment.internal_marks")])
+api_router.include_router(assessment.obe_router, dependencies=[feature_required("obe.definitions")])
+api_router.include_router(lms.router, dependencies=[feature_required("lms.content")])
+api_router.include_router(lms.projects_router, dependencies=[feature_required("assessment.projects")])
+api_router.include_router(content.router, dependencies=[feature_required("lms.question_bank")])
+api_router.include_router(content.materials_router, dependencies=[feature_required("lms.study_materials")])
+api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
+api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
+api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])
+api_router.include_router(results.public_router)  # public result lookup (rate-limited; audience=public only)
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])

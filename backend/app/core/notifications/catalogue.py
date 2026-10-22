@@ -773,7 +773,171 @@ ATTENDANCE_EVENTS: tuple[EventDef, ...] = (
         link="/faculty/attendance",
     ),
 )
-EVENTS = EVENTS + STUDENT_EVENTS + ADMISSION_EVENTS + REGISTRATION_EVENTS + TIMETABLE_EVENTS + ATTENDANCE_EVENTS
+# Phase 12 — bounces, refunds, day-book, scholarships, no-dues (invoice / receipt / reminder are Phase 04)
+FEE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "fees.payment_bounced",
+        "fees",
+        "Cheque bounced",
+        "Payment {{ receipt_no }} bounced",
+        "Your payment of {{ amount }} (receipt {{ receipt_no }}) bounced: {{ reason }}. The dues are open again.",
+        ("receipt_no", "amount", "reason"),
+        ("in_app", "sms", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "fees.refund_processed",
+        "fees",
+        "Refund processed",
+        "Refund of {{ amount }}",
+        "Your refund of {{ amount }} was processed (reference {{ reference }}).",
+        ("amount", "reference"),
+        ("in_app", "sms", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "fees.day_book_open",
+        "fees",
+        "Day-book open",
+        "Close the day-book for {{ date }}",
+        "Your collections for {{ date }} are not closed yet.",
+        ("date",),
+        ("in_app",),
+        link="/admin/fees/day-book",
+    ),
+    EventDef(
+        "scholarship.sanctioned",
+        "fees",
+        "Scholarship sanctioned",
+        "{{ scholarship }} sanctioned",
+        "Your {{ scholarship }} application was sanctioned: {{ amount }}.",
+        ("scholarship", "amount"),
+        ("in_app", "push", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "no_dues.blocked",
+        "fees",
+        "No-dues blocked",
+        "No-dues: dues pending",
+        "Your no-dues request ({{ purpose }}) is blocked by: {{ departments }}.",
+        ("purpose", "departments"),
+        ("in_app", "push"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "no_dues.cleared",
+        "fees",
+        "No-dues cleared",
+        "No-dues cleared",
+        "Your no-dues request ({{ purpose }}) is cleared — certificate {{ certificate_no }}.",
+        ("purpose", "certificate_no"),
+        ("in_app", "push", "email"),
+        link="/student/fees",
+    ),
+)
+# Phase 14 — date-sheet and duty reminders (hall tickets ready ships with Phase 04)
+EXAM_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "exams.date_sheet_published",
+        "exams",
+        "Date-sheet published",
+        "Date-sheet: {{ session }}",
+        "The date-sheet for {{ session }} is published.",
+        ("session",),
+        ("in_app", "push"),
+        link="/student/exams",
+    ),
+    EventDef(
+        "exams.duty_reminder",
+        "exams",
+        "Exam duty tomorrow",
+        "Exam duty {{ date }} {{ slot }}",
+        "You have {{ role }} duty on {{ date }} ({{ slot }}).",
+        ("date", "slot", "role"),
+        ("in_app", "push", "sms"),
+        link="/faculty/duties",
+    ),
+)
+# Phase 15 — valuation assignments / reminders, result publication (masked SMS: SGPA only, no course detail)
+RESULT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "valuation.assigned",
+        "exams",
+        "Valuation assigned",
+        "Valuation: {{ paper }}",
+        "{{ bundles }} bundle(s) of {{ paper }} (round {{ round }}) are assigned to you.",
+        ("paper", "bundles", "round"),
+        ("in_app", "email"),
+        link="/faculty/evaluation",
+    ),
+    EventDef(
+        "valuation.due_reminder",
+        "exams",
+        "Valuation due",
+        "Valuation due soon",
+        "{{ bundles }} bundle(s) are due for valuation within two days.",
+        ("bundles",),
+        ("in_app", "push", "email"),
+        link="/faculty/evaluation",
+    ),
+    EventDef(
+        "results.published",
+        "exams",
+        "Result declared",
+        "Result declared",
+        "Result declared. SGPA {{ sgpa }}. Log in to view details.",
+        ("sgpa",),
+        ("in_app", "push", "sms", "email"),
+        hi_body="परिणाम घोषित। SGPA {{ sgpa }}। विवरण के लिए लॉग इन करें।",
+        link="/student/results",
+    ),
+)
+# Phase 13 — marks deadlines, LMS publication / announcements
+ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "marks.deadline",
+        "academics",
+        "Marks entry deadline",
+        "Marks due: {{ assessment }}",
+        "Enter and submit the marks of {{ assessment }} by {{ deadline }}.",
+        ("assessment", "deadline"),
+        ("in_app", "email"),
+        link="/faculty/offerings",
+    ),
+    EventDef(
+        "lms.assignment_published",
+        "academics",
+        "New assignment",
+        "Assignment: {{ title }}",
+        "A new assignment '{{ title }}' is due {{ due }}.",
+        ("title", "due"),
+        ("in_app", "push"),
+        link="/student",
+    ),
+    EventDef(
+        "lms.announcement",
+        "academics",
+        "Course announcement",
+        "{{ title }}",
+        "{{ body }}",
+        ("title", "body"),
+        ("in_app", "push"),
+        link="/student",
+    ),
+)
+EVENTS = (
+    EVENTS
+    + STUDENT_EVENTS
+    + ADMISSION_EVENTS
+    + REGISTRATION_EVENTS
+    + TIMETABLE_EVENTS
+    + ATTENDANCE_EVENTS
+    + FEE_EVENTS
+    + ASSESSMENT_EVENTS
+    + EXAM_EVENTS
+    + RESULT_EVENTS
+)
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
 

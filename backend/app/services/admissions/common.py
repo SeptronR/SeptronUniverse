@@ -292,6 +292,37 @@ class AdmissionsBase(StudentServiceBase):
             "created_at": utcnow().isoformat(),
             "paid_at": utcnow().isoformat() if amount_paise == 0 else None,
         }
+        if amount_paise > 0:
+            # Phase 12: the order is backed by a real invoice (payer applicant, source ``<purpose>_fee``); the
+            # ``fees.payment_received`` consumer calls ``ApplicationService.mark_paid``
+            from app.core.features import is_enabled
+
+            if await is_enabled(self.inst, "fees.core"):
+                from app.schemas.fees import InvoiceCreate, InvoiceItemIn
+                from app.services.fees.invoice_service import InvoiceService
+
+                inv_svc = InvoiceService(self.db, self.principal, self.request, self.inst)
+                head = await inv_svc.head_by_type("admission")
+                inv = await inv_svc.create_invoice(
+                    InvoiceCreate(
+                        payer_type="applicant",
+                        payer_id=applicant.id,
+                        source_type=f"{purpose}_fee",
+                        source_id=applicant.id,
+                        description=f"{purpose.title()} fee · {applicant.application_number}",
+                        items=[
+                            InvoiceItemIn(
+                                description=f"{purpose.title()} fee",
+                                amount_paise=amount_paise,
+                                fee_head_id=head.id if head else None,
+                            )
+                        ],
+                        due_date=await inv_svc.today(),
+                    ),
+                    notify=False,
+                )
+                data["invoice_id"] = str(inv.id)
+                data["invoice_number"] = inv.invoice_number
         self.set_payment(applicant, purpose, data)
         await self.db.flush()
         await self._audit("payment_created", "applicant", applicant.id, None, {"purpose": purpose, **data})

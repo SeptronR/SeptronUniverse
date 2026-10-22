@@ -8,6 +8,10 @@ import '../../features/hr/hr_screens.dart';
 import '../../features/notifications/notifications_screens.dart';
 import '../../features/registration/registration_screens.dart';
 import '../../features/attendance/attendance_screens.dart';
+import '../../features/fees/fees_screens.dart';
+import '../../features/assessment/assessment_screens.dart';
+import '../../features/exams/exam_screens.dart';
+import '../../features/results/result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -289,6 +293,101 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 15 — results (students), evaluation (evaluators), result runs (COE / exam cell)
+    AppRoutes.myResults: ScreenEntry(
+      route: AppRoutes.myResults,
+      titleKey: 'results',
+      feature: 'results.publication_portal',
+      permission: 'results:self',
+      builder: (_, __) => const StudentResultsScreen(),
+    ),
+    AppRoutes.evaluation: ScreenEntry(
+      route: AppRoutes.evaluation,
+      titleKey: 'evaluation',
+      feature: 'exams.coding_dummy',
+      permission: 'exams:evaluate',
+      builder: (_, __) => const EvaluationScreen(),
+    ),
+    AppRoutes.resultRuns: ScreenEntry(
+      route: AppRoutes.resultRuns,
+      titleKey: 'result_runs',
+      feature: 'results.processing',
+      permission: 'results:verify',
+      builder: (_, __) => const ResultRunsScreen(),
+    ),
+    // Phase 14 — exams (student registration / hall ticket, faculty duties, hall attendance)
+    AppRoutes.myExams: ScreenEntry(
+      route: AppRoutes.myExams,
+      titleKey: 'exams',
+      feature: 'exams.sessions',
+      permission: 'exams:self',
+      builder: (_, __) => const StudentExamsScreen(),
+    ),
+    AppRoutes.myDuties: ScreenEntry(
+      route: AppRoutes.myDuties,
+      titleKey: 'exam_duties',
+      feature: 'exams.invigilation',
+      permission: 'exams:invigilation',
+      builder: (_, __) => const MyDutiesScreen(),
+    ),
+    AppRoutes.examConduct: ScreenEntry(
+      route: AppRoutes.examConduct,
+      titleKey: 'exam_conduct',
+      feature: 'exams.sessions',
+      permission: 'exams:conduct',
+      builder: (_, __) => const ExamConductScreen(),
+    ),
+    // Phase 13 — marks entry (faculty), verification (HOD), courses & marks (students)
+    AppRoutes.facultyMarks: ScreenEntry(
+      route: AppRoutes.facultyMarks,
+      titleKey: 'marks',
+      feature: 'assessment.internal_marks',
+      permission: 'marks:enter',
+      builder: (_, __) => const FacultyMarksScreen(),
+    ),
+    AppRoutes.marksVerification: ScreenEntry(
+      route: AppRoutes.marksVerification,
+      titleKey: 'marks_verification',
+      feature: 'assessment.marks_workflow',
+      permission: 'marks:verify',
+      builder: (_, __) => const MarksVerificationScreen(),
+    ),
+    AppRoutes.myCourses: ScreenEntry(
+      route: AppRoutes.myCourses,
+      titleKey: 'my_courses',
+      feature: 'assessment.internal_marks',
+      permission: 'marks:view',
+      builder: (_, __) => const StudentMarksScreen(),
+    ),
+    // Phase 12 — fees (student / parent tab, accountant collect + reconciliation, office no-dues sign-off)
+    AppRoutes.myFees: ScreenEntry(
+      route: AppRoutes.myFees,
+      titleKey: 'fees',
+      feature: 'fees.core',
+      permission: 'fees:self',
+      builder: (_, __) => const StudentFeesScreen(),
+    ),
+    AppRoutes.feeCollect: ScreenEntry(
+      route: AppRoutes.feeCollect,
+      titleKey: 'fee_collect',
+      feature: 'fees.core',
+      permission: 'fees:collect',
+      builder: (_, __) => const CollectScreen(),
+    ),
+    AppRoutes.feeReconcile: ScreenEntry(
+      route: AppRoutes.feeReconcile,
+      titleKey: 'fee_reconcile',
+      feature: 'fees.offline_challan_reconciliation',
+      permission: 'fees:reconcile',
+      builder: (_, __) => const ReconcileReviewScreen(),
+    ),
+    AppRoutes.noDuesSignoff: ScreenEntry(
+      route: AppRoutes.noDuesSignoff,
+      titleKey: 'no_dues_signoff',
+      feature: 'fees.no_dues',
+      permission: 'no_dues:approve',
+      builder: (_, __) => const NoDuesSignoffScreen(),
     ),
     // Phase 03 — language / theme / college (every role; no admin editing on mobile)
     AppRoutes.settings: ScreenEntry(

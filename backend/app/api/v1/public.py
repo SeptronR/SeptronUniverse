@@ -49,6 +49,13 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 10 — iCal feeds: a personal feed token (hash in ``calendar_feed_tokens``) or a signed section link
     "GET /api/v1/timetables/ical/{token}.ics",
     "GET /api/v1/timetables/sections/{id}.ics",
+    # Phase 12 — payment gateway webhooks (provider signature verified; tenant from ?institution=<slug> / header)
+    "POST /api/v1/webhooks/payments/{provider}",
+    # Phase 14 — public hall-ticket verification (random token; masked identity)
+    "GET /api/v1/hall-tickets/verify/{token}",
+    # Phase 15 — public result lookup (reg. no + DOB; rate-limited + captcha; audience=public sessions only).
+    # Grade-card QR verification reuses "GET /api/v1/verify/{token}" (Phase 07).
+    "POST /api/v1/public/results/lookup",
 }
 
 

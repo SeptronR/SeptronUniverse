@@ -75,10 +75,24 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("fees", "gateway_provider", "str", "mock"),
     SettingDef("fees", "upi_vpa", "str", None),
     SettingDef("fees", "gst_enabled", "bool", False),
+    # assessment (Phase 13) — marks deadline after instantiation, auto-lock after the deadline
+    SettingDef("assessment", "marks_deadline_days", "int", 14, label="Marks entry deadline (days after instantiation)", min=1),
+    SettingDef("assessment", "auto_lock_days", "int", 7, label="Auto-lock verified marks N days after the deadline", min=0),
+    # fees (Phase 12) — GSTIN on taxable invoices, reminders, overdue holds, linkage due days, no-dues offices
+    SettingDef("fees", "gstin", "str", None, label="GSTIN printed on taxable invoices / receipts"),
+    SettingDef("fees", "reminder_days", "json", [7, 1, -7], label="Due reminders: days before (+) / after (-) due"),
+    SettingDef(
+        "fees", "hold_on_overdue_days", "int", 0, label="Place holds after N days overdue (0 = off)", min=0, max=365
+    ),
+    SettingDef("fees", "overdue_hold_types", "json", ["registration", "exam"], label="Hold types placed when overdue"),
+    SettingDef("fees", "linkage_due_days", "int", 7, label="Due days of linkage invoices (condonation …)", min=0),
+    SettingDef("fees", "no_dues_departments", "json", None, label="No-dues offices per purpose (empty = defaults)"),
     # exams
     SettingDef("exams", "valuation_mode_default", "enum", "single", False, ("single", "double")),
     SettingDef("exams", "discrepancy_pct_default", "int", 15, min=0, max=100),
     SettingDef("exams", "hall_ticket_requires_no_dues", "bool", True),
+    # exams (Phase 14) — duty remuneration per role (paise); empty = built-in defaults
+    SettingDef("exams", "duty_remuneration", "json", None, label="Exam duty remuneration per role (paise)"),
     SettingDef(
         "exams",
         "eligibility_requires_fee_clear",
@@ -87,6 +101,15 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
         label="Overdue fees make a student ineligible (Phase 11)",
     ),
     SettingDef("exams", "result_public_lookup", "bool", False, True),
+    # exams (Phase 15) — coding, evaluator conflicts, script retention, valuation remuneration (paise per script)
+    SettingDef("exams", "bundle_size", "int", 30, label="Answer scripts per bundle", min=1, max=500),
+    SettingDef(
+        "exams", "allow_teacher_evaluation", "bool", False, label="Teachers may value their own course's scripts"
+    ),
+    SettingDef(
+        "exams", "script_retention_months", "int", 6, label="Archive scripts N months after publication", min=1, max=120
+    ),
+    SettingDef("exams", "valuation_remuneration", "json", None, label="Valuation remuneration per script (paise)"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),
@@ -265,6 +288,7 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("employee_id", "EMP{seq:5}", 5, "never", "Employee id"),
     SequenceTemplate("hall_ticket_no", "HT{yy}{term}{seq:6}", 6, "per_term", "Hall ticket number"),
     SequenceTemplate("fee_receipt_no", "RCP/{yyyy}/{seq:6}", 6, "yearly", "Fee receipt"),
+    SequenceTemplate("fee_invoice_no", "INV/{yyyy}/{seq:6}", 6, "yearly", "Fee invoice"),
     SequenceTemplate("certificate_no", "CERT/{yyyy}/{seq:5}", 5, "yearly", "Certificate number"),
 )
 

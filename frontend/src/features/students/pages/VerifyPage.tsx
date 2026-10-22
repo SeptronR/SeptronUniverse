@@ -7,6 +7,9 @@ import { formatDate } from '@/utils/formatters';
 import { studentsApi } from '../api';
 import { label } from '../types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+
 /** /verify/:token — public verification of a student ID card / document QR (no sign-in). */
 export default function VerifyPage() {
   const { token = '' } = useParams();
@@ -20,7 +23,18 @@ export default function VerifyPage() {
         <CardContent className="space-y-3 pt-6 sm:pt-6 text-center">
           {valid ? <BadgeCheck className="mx-auto h-12 w-12 text-status-approved" /> : <ShieldX className="mx-auto h-12 w-12 text-status-rejected" />}
           <h1 className="text-lg font-semibold">{valid ? `Valid ${label(r?.document_type)}` : 'Not valid'}</h1>
-          {r && valid ? (
+          {r && valid && r.document_type === 'grade_card' ? (
+            <dl className="grid grid-cols-2 gap-2 text-left text-sm">
+              <dt className="text-muted-foreground">Grade card</dt><dd className="font-mono">{(r as Any).document_number}</dd>
+              <dt className="text-muted-foreground">Name</dt><dd>{r.holder_name}</dd>
+              <dt className="text-muted-foreground">Registration no.</dt><dd className="font-mono">{r.registration_number}</dd>
+              <dt className="text-muted-foreground">Term</dt><dd>{(r as Any).term_number}</dd>
+              <dt className="text-muted-foreground">SGPA / CGPA</dt><dd>{(r as Any).sgpa ?? '—'} / {(r as Any).cgpa ?? '—'}</dd>
+              <dt className="text-muted-foreground">Result hash</dt><dd className="break-all font-mono text-xs">{(r as Any).hash}</dd>
+              <dt className="text-muted-foreground">Institution</dt><dd>{r.institution}</dd>
+              {(r as Any).superseded && <dd className="col-span-2 text-status-pending">Superseded by a revised grade card</dd>}
+            </dl>
+          ) : r && valid ? (
             <dl className="grid grid-cols-2 gap-2 text-left text-sm">
               <dt className="text-muted-foreground">Name</dt><dd>{r.holder_name}</dd>
               <dt className="text-muted-foreground">Registration no.</dt><dd className="font-mono">{r.registration_number}</dd>

@@ -35,6 +35,29 @@ register_beat("admissions.lapse_allotments", "beat.admissions.lapse_allotments",
 register_beat("admissions.close_cycles", "beat.admissions.close_cycles", crontab(hour=0, minute=20))
 register_beat("enquiries.follow_up_reminders", "beat.enquiries.follow_up_reminders", crontab(hour=9, minute=0))
 
+# ---- Phase 12 fees (app/tasks/fees.py) — UTC crontab ≈ IST times in the comments ------------------------------------------
+register_beat("fees.late_fees", "beat.fees.late_fees", crontab(hour=19, minute=10))  # 00:40 IST
+register_beat("fees.due_reminders", "beat.fees.due_reminders", crontab(hour=2, minute=30))  # 08:00 IST
+register_beat("fees.overdue_holds", "beat.fees.overdue_holds", crontab(hour=19, minute=20))  # 00:50 IST
+register_beat("fees.day_book_close_reminder", "beat.fees.day_book_close_reminder", crontab(hour=12, minute=30))  # 18:00
+register_beat("fees.gateway_status_poll", "beat.fees.gateway_status_poll", 600.0)
+
+# ---- Phase 13 assessment / LMS (app/tasks/assessment.py) ---------------------------------------------------------------------
+register_beat("assessment.deadline_reminders", "beat.assessment.deadline_reminders", crontab(hour=3, minute=30))  # 09:00 IST
+register_beat("assessment.auto_lock", "beat.assessment.auto_lock", crontab(hour=19, minute=30))  # 01:00 IST
+register_beat("assignments.close_due", "beat.assignments.close_due", crontab(minute=12))
+register_beat("quizzes.auto_submit", "beat.quizzes.auto_submit", 60.0)
+
+# ---- Phase 14 exams (app/tasks/exams.py) ---------------------------------------------------------------------------------
+register_beat("exams.session_auto_status", "beat.exams.session_auto_status", crontab(hour=0, minute=45))  # 06:15 IST
+register_beat("exams.lapse_fee_pending", "beat.exams.lapse_fee_pending", crontab(minute=37))
+register_beat("exams.duty_reminders", "beat.exams.duty_reminders", crontab(hour=2, minute=30))  # 08:00 IST
+
+# ---- Phase 15 results (app/tasks/results.py) -----------------------------------------------------------------------------
+register_beat("valuation.due_reminders", "beat.valuation.due_reminders", crontab(hour=3, minute=0))  # 08:30 IST
+register_beat("results.publish_notifications_retry", "beat.results.publish_notifications_retry", 600.0)
+register_beat("scripts.retention_check", "beat.scripts.retention_check", crontab(day_of_week=0, hour=20, minute=15))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 
@@ -98,5 +121,12 @@ register_beat(
 )
 register_beat("attendance.checkpoints", "beat.attendance.checkpoints", crontab(hour=1, minute=30))
 register_beat("attendance.streak_alerts", "beat.attendance.streak_alerts", crontab(hour=18, minute=25))
+
+# ---- Phase 12 fees (app/tasks/fees.py) — UTC crontab ≈ IST times in the comments ------------------------------------------
+register_beat("fees.late_fees", "beat.fees.late_fees", crontab(hour=19, minute=10))  # 00:40 IST
+register_beat("fees.due_reminders", "beat.fees.due_reminders", crontab(hour=2, minute=30))  # 08:00 IST
+register_beat("fees.overdue_holds", "beat.fees.overdue_holds", crontab(hour=19, minute=20))  # 00:50 IST
+register_beat("fees.day_book_close_reminder", "beat.fees.day_book_close_reminder", crontab(hour=12, minute=30))  # 18:00
+register_beat("fees.gateway_status_poll", "beat.fees.gateway_status_poll", 600.0)
 
 celery.conf.beat_schedule = BEAT_SCHEDULE

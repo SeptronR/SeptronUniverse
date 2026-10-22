@@ -231,7 +231,13 @@ export function FacultyOfferingsPage() {
           o.section_code,
           `${o.enrolled_count}/${o.max_seats ?? '∞'}`,
           <StatusBadge key="s" status={o.status} />,
-          <Link key="r" className="text-primary hover:underline" to={`/faculty/offerings/${o.id}`}>Roster</Link>,
+          <span key="r" className="flex gap-3">
+            <Link className="text-primary hover:underline" to={`/faculty/offerings/${o.id}`}>Roster</Link>
+            <Link className="text-primary hover:underline" to={`/faculty/marks/${o.id}`}>Marks</Link>
+            <Link className="text-primary hover:underline" to={`/faculty/offerings/${o.id}/lms`}>LMS</Link>
+            <Link className="text-primary hover:underline" to={`/faculty/offerings/${o.id}/plan`}>Plan</Link>
+            <Link className="text-primary hover:underline" to={`/faculty/courses/${o.course_id}/outcomes`}>COs</Link>
+          </span>,
         ])}
         empty={offerings.isLoading ? 'Loading…' : 'No offerings allocated to you.'}
       />

@@ -47,6 +47,23 @@ class AppRoutes {
   static const attendance = '/app/attendance';
   static const myAttendance = '/app/attendance/me';
   static const condonations = '/app/attendance/condonations';
+  // Phase 12 — fees (student / parent dues, accountant collect + reconciliation, office no-dues sign-off)
+  static const myFees = '/app/fees';
+  // Phase 13 — faculty marks entry, HOD verification, student courses & marks
+  static const facultyMarks = '/app/marks';
+  // Phase 14 — student exams, faculty duties, invigilator hall attendance
+  static const myExams = '/app/exams';
+  // Phase 15 — results, evaluation, result runs
+  static const myResults = '/app/results';
+  static const evaluation = '/app/evaluation';
+  static const resultRuns = '/app/result-runs';
+  static const myDuties = '/app/exams/duties';
+  static const examConduct = '/app/exams/conduct';
+  static const marksVerification = '/app/marks/verification';
+  static const myCourses = '/app/courses';
+  static const feeCollect = '/app/fees/collect';
+  static const feeReconcile = '/app/fees/reconcile';
+  static const noDuesSignoff = '/app/no-dues/signoff';
   static const placeholder = '/app/placeholder';
 
   /// Universal links handled by deeplinks.dart

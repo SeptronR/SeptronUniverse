@@ -109,6 +109,17 @@ export const NAV_GROUPS: NavGroup[] = [
     title: 'EXAMINATIONS',
     items: [
       // Phase 11 — eligibility snapshots / detention (Phase 14 joins this group)
+      // Phase 15 — valuation (evaluators), result registers, legacy import (coding / valuation / runs live in the session workspace)
+      { label: 'Valuation', to: '/faculty/evaluation', icon: ClipboardCheck, module: 'exams', action: 'evaluate', feature: 'exams.coding_dummy' },
+      { label: 'Tabulation register', to: '/admin/results/tabulation', icon: ScrollText, module: 'results', action: 'view_all', feature: 'results.rank_lists' },
+      { label: 'Result analysis', to: '/admin/results/analysis', icon: TrendingUp, module: 'results', action: 'view_all', feature: 'results.rank_lists' },
+      { label: 'Rank lists', to: '/admin/results/rank-lists', icon: GraduationCap, module: 'results', action: 'view_all', feature: 'results.rank_lists' },
+      { label: 'Legacy result import', to: '/admin/results/legacy-import', icon: Repeat, module: 'results', action: 'legacy_import', feature: 'results.legacy_import' },
+      // Phase 14 — exam sessions (papers, date-sheet, registrations, hall tickets, seating, invigilation, QP, conduct)
+      { label: 'Exam sessions', to: '/admin/exams/sessions', icon: CalendarCheck, module: 'exams', action: 'view_all', altActions: ['configure', 'manage', 'view'], feature: 'exams.sessions' },
+      // Phase 13 — marks verification (HOD) and locks (exam cell)
+      { label: 'Marks verification', to: '/admin/assessment/verification', icon: ClipboardCheck, module: 'marks', action: 'verify', altActions: [], feature: 'assessment.marks_workflow' },
+      { label: 'Marks locks', to: '/admin/assessment/locks', icon: ClipboardCheck, module: 'marks', action: 'lock', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Eligibility', to: '/admin/attendance/eligibility', icon: ClipboardCheck, module: 'exams', action: 'eligibility', altActions: [], feature: 'attendance.eligibility_detention' },
     ],
   },
@@ -180,9 +191,34 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   { title: 'CAMPUS', items: [] },
-  { title: 'FINANCE', items: [] },
+  {
+    title: 'FINANCE',
+    items: [
+      // Phase 12 — fees, scholarships & no-dues
+      { label: 'Fees', to: '/admin/fees', icon: Banknote, module: 'fees', action: 'view_all', altActions: ['collect'], feature: 'fees.core' },
+      { label: 'Collect', to: '/admin/fees/collect', icon: HandCoins, module: 'fees', action: 'collect', altActions: [], feature: 'fees.core' },
+      { label: 'Structures', to: '/admin/fees/structures', icon: ScrollText, module: 'fees', action: 'structure_manage', altActions: ['view_all'], feature: 'fees.core' },
+      { label: 'Discounts', to: '/admin/fees/discounts', icon: Percent, module: 'fees', action: 'concession', altActions: ['approve'], feature: 'fees.discounts' },
+      { label: 'Fines', to: '/admin/fees/fines', icon: Ban, module: 'fees', action: 'structure_manage', altActions: [], feature: 'fees.fines' },
+      { label: 'Invoices', to: '/admin/fees/invoices', icon: ScrollText, module: 'fees', action: 'view_all', altActions: ['view', 'collect'], feature: 'fees.core' },
+      { label: 'Payments', to: '/admin/fees/payments', icon: Banknote, module: 'fees', action: 'view_all', altActions: ['collect', 'cancel_receipt'], feature: 'fees.core' },
+      { label: 'Gateway orders', to: '/admin/fees/online', icon: Activity, module: 'fees', action: 'view_all', altActions: ['collect'], feature: 'fees.online_payment' },
+      { label: 'Reconciliation', to: '/admin/fees/reconcile', icon: ArrowRightLeft, module: 'fees', action: 'reconcile', altActions: [], feature: 'fees.offline_challan_reconciliation' },
+      { label: 'Day-book', to: '/admin/fees/day-book', icon: CalendarCheck, module: 'fees', action: 'view_all', altActions: ['collect'], feature: 'fees.core' },
+      { label: 'Refunds', to: '/admin/fees/refunds', icon: Repeat, module: 'fees', action: 'refund', altActions: ['approve', 'view_all'], feature: 'fees.refunds' },
+      { label: 'Scholarships', to: '/admin/fees/scholarships', icon: GraduationCap, module: 'scholarships', action: 'view_all', altActions: ['verify', 'approve', 'sanction', 'disburse'], feature: 'fees.scholarships' },
+      { label: 'No-dues', to: '/admin/fees/no-dues', icon: ClipboardCheck, module: 'no_dues', action: 'approve', altActions: ['view_all'], feature: 'fees.no_dues' },
+      { label: 'Reports', to: '/admin/fees/reports', icon: TrendingUp, module: 'fees', action: 'view_all', altActions: ['export'], feature: 'fees.core' },
+    ],
+  },
   { title: 'ENGAGEMENT', items: [] },
-  { title: 'QUALITY & GOVERNANCE', items: [] },
+  {
+    title: 'QUALITY & GOVERNANCE',
+    items: [
+      // Phase 13 — OBE definitions
+      { label: 'OBE definitions', to: '/admin/obe/programs', icon: ScrollText, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.definitions' },
+    ],
+  },
   {
     title: 'COMMUNICATION',
     items: [

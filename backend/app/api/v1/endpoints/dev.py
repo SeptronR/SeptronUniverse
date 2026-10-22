@@ -492,3 +492,129 @@ async def dev_condonation_paid(
 
     out = await CondonationService(db, principal, request).mark_paid(condonation_id, "DEV")
     return ok(out.model_dump(mode="json"), message="Paid")
+
+
+# ---- Phase 12 fees ---------------------------------------------------------------------------------------------------------
+_FEES_DEV = any_permission_required(("fees", "manage"), ("fees", "collect"))
+
+
+@router.post(
+    "/fees/link",
+    summary="Create a linkage invoice {source_type, source_id, amount_paise, enrollment_id?} (idempotent per source)",
+    dependencies=[feature_required("fees.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_fee_link(
+    request: Request,
+    body: dict[str, Any] = Body(...),
+    principal: Principal = Depends(_FEES_DEV),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.schemas.fees import FeeLinkRequest
+    from app.services.fees.invoice_service import InvoiceService
+
+    req = FeeLinkRequest.model_validate(body)
+    svc = InvoiceService(db, principal, request)
+    inv = await svc.link(req.source_type, req.source_id, req.amount_paise, req.enrollment_id, req.description)
+    out = (await svc.invoice_outs([inv]))[0]
+    return ok(out.model_dump(mode="json"), message=inv.invoice_number)
+
+
+@router.post(
+    "/fees/sign",
+    summary="Mock-gateway signatures: {order_id, payment_id} → client signature; {body} → webhook signature",
+    dependencies=[feature_required("fees.online_payment")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_fee_sign(
+    body: dict[str, Any] = Body(...), principal: Principal = Depends(any_permission_required(("fees", "self"), ("fees", "collect")))
+) -> dict[str, Any]:
+    import json as _json
+
+    from app.integrations.payments import MOCK_SECRET, hmac_hex
+
+    out: dict[str, Any] = {}
+    if body.get("order_id"):
+        out["signature"] = hmac_hex(MOCK_SECRET, f"{body['order_id']}|{body.get('payment_id') or ''}")
+    if "body" in body:
+        raw = body["body"] if isinstance(body["body"], str) else _json.dumps(body["body"], separators=(",", ":"))
+        out["webhook_body"] = raw
+        out["webhook_signature"] = hmac_hex(MOCK_SECRET, raw)
+    return ok(out)
+
+
+@router.post(
+    "/fees/upi/{ref}/callback",
+    summary="Mock UPI callback (success | failed)",
+    dependencies=[feature_required("fees.upi_qr")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_upi_callback(
+    ref: str,
+    request: Request,
+    status: str = Query("success", pattern="^(success|failed)$"),
+    principal: Principal = Depends(any_permission_required(("fees", "self"), ("fees", "collect"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.fees.payment_service import PaymentService
+
+    svc = PaymentService(db, principal, request)
+    if status == "failed":
+        return ok({"ref": ref, "failed": await svc.fail_order(ref)})
+    out = await svc.settle_order(ref, f"upi_{ref.lower()}", None, mode="upi")
+    return ok(out.model_dump(mode="json"), message="UPI payment received")
+
+
+@router.post(
+    "/fees/{task}",
+    summary="Run a fees Beat body in-process: late-fees | due-reminders | overdue-holds | gateway-poll | backfill",
+    dependencies=[feature_required("fees.core")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_fee_task(
+    task: str, request: Request, principal: Principal = Depends(_FEES_DEV), db: AsyncSession = Depends(get_db)
+) -> dict[str, Any]:
+    from app.services.fees.invoice_service import InvoiceService
+    from app.services.fees.payment_service import PaymentService
+
+    inv = InvoiceService(db, principal, request)
+    if task == "late-fees":
+        n: Any = await inv.late_fees()
+    elif task == "due-reminders":
+        n = await inv.due_reminders()
+    elif task == "overdue-holds":
+        n = await inv.overdue_holds()
+    elif task == "gateway-poll":
+        n = await PaymentService(db, principal, request).poll_initiated()
+    elif task == "backfill":
+        n = await inv.backfill_stubs()
+    else:
+        raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown task {task!r}")
+    return ok({"task": task, "result": n}, message="Done")
+
+
+# ---- Phase 13 assessment / LMS -------------------------------------------------------------------------------------------
+@router.post(
+    "/assessment/{task}",
+    summary="Run an assessment / LMS Beat body in-process: auto-lock | deadline-reminders | quizzes-auto-submit",
+    dependencies=[feature_required("assessment.internal_marks")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_assessment_task(
+    task: str,
+    request: Request,
+    principal: Principal = Depends(any_permission_required(("marks", "lock"), ("lms", "manage"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from app.services.assessment.assessment_service import AssessmentService
+    from app.services.assessment.lms_service import LmsService
+
+    if task == "auto-lock":
+        n = await AssessmentService(db, principal, request).auto_lock()
+    elif task == "deadline-reminders":
+        n = await AssessmentService(db, principal, request).deadline_reminders()
+    elif task == "quizzes-auto-submit":
+        n = await LmsService(db, principal, request).auto_submit()
+    else:
+        raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown task {task!r}")
+    return ok({"task": task, "count": n}, message="Done")

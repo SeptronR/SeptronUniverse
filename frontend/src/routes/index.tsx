@@ -134,6 +134,54 @@ const CondonationsPage = lazy(() => import('@/features/attendance/pages/AdminAtt
 const EligibilityPage = lazy(() => import('@/features/attendance/pages/AdminAttendancePages').then((m) => ({ default: m.EligibilityPage })));
 const StudentAttendancePage = lazy(() => import('@/features/attendance/pages/StudentAttendancePage').then((m) => ({ default: m.StudentAttendancePage })));
 const ParentAttendancePage = lazy(() => import('@/features/attendance/pages/StudentAttendancePage').then((m) => ({ default: m.ParentAttendancePage })));
+// Phase 12 — fees, scholarships & no-dues
+const FeesDashboardPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeesDashboardPage })));
+const FeeStructuresPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeStructuresPage })));
+const FeeDiscountsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeDiscountsPage })));
+const FeeFinesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeFinesPage })));
+const FeeInvoicesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeInvoicesPage })));
+const FeeCollectPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeCollectPage })));
+const FeePaymentsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeePaymentsPage })));
+const FeeOnlinePage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeOnlinePage })));
+const FeeReconcilePage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeReconcilePage })));
+const FeeDayBookPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeDayBookPage })));
+const FeeRefundsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeRefundsPage })));
+const FeeScholarshipsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeScholarshipsPage })));
+const FeeNoDuesPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeNoDuesPage })));
+const FeeReportsPage = lazy(() => import('@/features/fees/pages/AdminFeesPages').then((m) => ({ default: m.FeeReportsPage })));
+// Phase 13 — internal assessment, OBE, LMS, projects, question bank
+const FacultyMarksPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.FacultyMarksPage })));
+const CiaPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.CiaPage })));
+const OfferingLmsPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.OfferingLmsPage })));
+const LessonPlanPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.LessonPlanPage })));
+const FacultyProjectsPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.FacultyProjectsPage })));
+const QuestionBankPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.QuestionBankPage })));
+const CourseOutcomesPage = lazy(() => import('@/features/assessment/pages/FacultyAssessmentPages').then((m) => ({ default: m.CourseOutcomesPage })));
+const MarksVerificationPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.MarksVerificationPage })));
+const MarksLocksPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.MarksLocksPage })));
+const ProgramOutcomesPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.ProgramOutcomesPage })));
+const ObeProgramsPage = lazy(() => import('@/features/assessment/pages/AdminAssessmentPages').then((m) => ({ default: m.ObeProgramsPage })));
+const StudentCoursePage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentCoursePage })));
+const StudentMarksPage = lazy(() => import('@/features/assessment/pages/StudentCoursePages').then((m) => ({ default: m.StudentMarksPage })));
+// Phase 15 — evaluation & results
+const EvaluatorPortalPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.EvaluatorPortalPage })));
+const StudentResultsPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.StudentResultsPage })));
+const ParentResultsPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.ParentResultsPage })));
+const OfferingResultsPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.OfferingResultsPage })));
+const TabulationPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.TabulationPage })));
+const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.ResultAnalysisPage })));
+const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
+const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
+const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 14 — exam administration
+const ExamSessionsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionsPage })));
+const ExamSessionWorkspacePage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionWorkspacePage })));
+const MyDutiesPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.MyDutiesPage })));
+const MyQpPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.MyQpPage })));
+const StudentExamsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.StudentExamsPage })));
+const ParentExamsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ParentExamsPage })));
+const StudentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.StudentFeesPage })));
+const ParentFeesPage = lazy(() => import('@/features/fees/pages/StudentFeesPage').then((m) => ({ default: m.ParentFeesPage })));
 // Phase 10 — timetable & rooms
 const RoomsPage = lazy(() =>
   import('@/features/timetable/pages/TimetablePages').then((m) => ({ default: m.RoomsPage })),
@@ -197,6 +245,8 @@ export const router = createBrowserRouter([
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
   { path: '/verify/:token', element: page(<VerifyPage />) },
+  // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
+  { path: '/results/lookup', element: page(<PublicResultLookupPage />) },
   // Phase 08 — public admissions: cycles, masked merit lists and the application wizard (account step needs no
   // sign-in; the API checks the admissions features for the tenant)
   { path: '/admissions', element: page(<PublicAdmissionsPage />) },
@@ -377,6 +427,34 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 15 — result registers, analysis, rank lists, legacy import
+              ['/admin/results/tabulation', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <TabulationPage key="rt" />],
+              ['/admin/results/analysis', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <ResultAnalysisPage key="ra" />],
+              ['/admin/results/rank-lists', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <RankListPage key="rr" />],
+              ['/admin/results/legacy-import', 'results.legacy_import', 'results', 'legacy_import', [], <LegacyImportPage key="rl" />],
+              // Phase 14 — exam sessions (exam cell / COE; HOD and auditors read)
+              ['/admin/exams/sessions', 'exams.sessions', 'exams', 'view_all', [['exams', 'configure'], ['exams', 'manage'], ['exams', 'view']], <ExamSessionsPage key="es" />],
+              ['/admin/exams/sessions/:id', 'exams.sessions', 'exams', 'view_all', [['exams', 'configure'], ['exams', 'manage'], ['exams', 'view']], <ExamSessionWorkspacePage key="ew" />],
+              // Phase 13 — marks verification / locks, OBE programme outcomes
+              ['/admin/assessment/verification', 'assessment.marks_workflow', 'marks', 'verify', [], <MarksVerificationPage key="mv" />],
+              ['/admin/assessment/locks', 'assessment.marks_workflow', 'marks', 'lock', [], <MarksLocksPage key="ml" />],
+              ['/admin/obe/programs', 'obe.definitions', 'obe', 'manage', [['obe', 'view'], ['obe', 'view_all']], <ObeProgramsPage key="op" />],
+              ['/admin/obe/programs/:id', 'obe.definitions', 'obe', 'manage', [['obe', 'view'], ['obe', 'view_all']], <ProgramOutcomesPage key="po" />],
+              // Phase 12 — fees (accountant / registrar / auditor; HOD + offices reach no-dues and scholarships)
+              ['/admin/fees', 'fees.core', 'fees', 'view_all', [['fees', 'collect']], <FeesDashboardPage key="fd" />],
+              ['/admin/fees/collect', 'fees.core', 'fees', 'collect', [], <FeeCollectPage key="fc" />],
+              ['/admin/fees/structures', 'fees.core', 'fees', 'structure_manage', [['fees', 'view_all']], <FeeStructuresPage key="fs" />],
+              ['/admin/fees/discounts', 'fees.discounts', 'fees', 'concession', [['fees', 'view_all'], ['fees', 'approve']], <FeeDiscountsPage key="fdi" />],
+              ['/admin/fees/fines', 'fees.fines', 'fees', 'structure_manage', [['fees', 'view_all']], <FeeFinesPage key="ff" />],
+              ['/admin/fees/invoices', 'fees.core', 'fees', 'view_all', [['fees', 'view'], ['fees', 'collect']], <FeeInvoicesPage key="fi" />],
+              ['/admin/fees/payments', 'fees.core', 'fees', 'view_all', [['fees', 'collect'], ['fees', 'cancel_receipt']], <FeePaymentsPage key="fp" />],
+              ['/admin/fees/online', 'fees.online_payment', 'fees', 'view_all', [['fees', 'collect']], <FeeOnlinePage key="fo" />],
+              ['/admin/fees/reconcile', 'fees.offline_challan_reconciliation', 'fees', 'reconcile', [], <FeeReconcilePage key="fr" />],
+              ['/admin/fees/day-book', 'fees.core', 'fees', 'view_all', [['fees', 'collect']], <FeeDayBookPage key="fb" />],
+              ['/admin/fees/refunds', 'fees.refunds', 'fees', 'refund', [['fees', 'view_all'], ['fees', 'approve']], <FeeRefundsPage key="frf" />],
+              ['/admin/fees/scholarships', 'fees.scholarships', 'scholarships', 'view_all', [['scholarships', 'verify'], ['scholarships', 'approve'], ['scholarships', 'sanction'], ['scholarships', 'disburse']], <FeeScholarshipsPage key="fsc" />],
+              ['/admin/fees/no-dues', 'fees.no_dues', 'no_dues', 'approve', [['no_dues', 'view_all']], <FeeNoDuesPage key="fnd" />],
+              ['/admin/fees/reports', 'fees.core', 'fees', 'view_all', [['fees', 'export']], <FeeReportsPage key="frp" />],
               // Phase 08 — admissions (cycles readable by all staff; applicants need view_all — HOD / college slices)
               ['/admin/admissions/cycles', 'admissions.cycles', 'admissions', 'view', [], <CyclesPage key="ac" />],
               ['/admin/admissions/cycles/:id', 'admissions.cycles', 'admissions', 'view', [], <CycleWorkspacePage key="aw" />],
@@ -504,6 +582,11 @@ export const router = createBrowserRouter([
               ['registrations', <StudentRegistrationsHistory key="h" />],
               ['timetable', <MyTimetablePage key="t" />],
               ['attendance', <StudentAttendancePage key="a" />],
+              ['fees', <StudentFeesPage key="f" />],
+              ['marks', <StudentMarksPage key="mk" />],
+              ['exams', <StudentExamsPage key="ex" />],
+              ['results', <StudentResultsPage key="res" />],
+              ['courses/:offeringId', <StudentCoursePage key="sc" />],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -515,6 +598,9 @@ export const router = createBrowserRouter([
           { index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><ParentAttendancePage /></FeatureRoute>) },
+          { path: 'fees', element: page(<FeatureRoute feature="fees.core"><ParentFeesPage /></FeatureRoute>) },
+          { path: 'exams/:studentId', element: page(<FeatureRoute feature="exams.sessions"><ParentExamsPage /></FeatureRoute>) },
+          { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
         ],
       },
       {
@@ -524,6 +610,20 @@ export const router = createBrowserRouter([
           { index: true, element: page(<PortalHomePage />) },
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
+          // Phase 15 — evaluator portal (dummy numbers only) and the offering result sheet
+          { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
+          { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
+          // Phase 14 — exam duties and question-paper setting
+          { path: 'duties', element: page(<FeatureRoute feature="exams.invigilation"><MyDutiesPage /></FeatureRoute>) },
+          { path: 'qp', element: page(<FeatureRoute feature="exams.qp_management"><MyQpPage /></FeatureRoute>) },
+          // Phase 13 — marks, CIA, LMS, lesson plan, projects, question bank, course outcomes
+          { path: 'marks/:offeringId', element: page(<FeatureRoute feature="assessment.internal_marks"><FacultyMarksPage /></FeatureRoute>) },
+          { path: 'offerings/:id/cia', element: page(<FeatureRoute feature="assessment.internal_marks"><CiaPage /></FeatureRoute>) },
+          { path: 'offerings/:id/lms', element: page(<FeatureRoute feature="lms.content"><OfferingLmsPage /></FeatureRoute>) },
+          { path: 'offerings/:id/plan', element: page(<FeatureRoute feature="lms.lesson_plans"><LessonPlanPage /></FeatureRoute>) },
+          { path: 'projects', element: page(<FeatureRoute feature="assessment.projects"><FacultyProjectsPage /></FeatureRoute>) },
+          { path: 'question-bank', element: page(<FeatureRoute feature="lms.question_bank"><QuestionBankPage /></FeatureRoute>) },
+          { path: 'courses/:id/outcomes', element: page(<FeatureRoute feature="obe.definitions"><CourseOutcomesPage /></FeatureRoute>) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><FacultyAttendancePage /></FeatureRoute>) },
           { path: 'attendance/summary', element: page(<FeatureRoute feature="attendance.core"><FacultySummaryPage /></FeatureRoute>) },
