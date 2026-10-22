@@ -21,6 +21,7 @@ class RunScope(_Strict):
     marks_delta: dict[str, Decimal] = Field(
         default={}, description="correction runs: {'<enrolment>:<course>': delta ESE marks}"
     )
+    ignore_holds: bool = Field(default=False, description="withheld release (Phase 16): holds do not withhold")
 
 
 class RunCreateRequest(_Strict):
