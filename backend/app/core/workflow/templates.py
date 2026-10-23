@@ -221,6 +221,28 @@ FEE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("accountant", "registrar", sla=72),
     },
 )
+# Phase 16: transcript issue (registrar verifies dues / holds), readmission of a detained student (registrar) and the
+# malpractice appeal (committee secretary → COE). ``marks.change`` is reused for result corrections.
+POST_RESULT_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "transcripts.issue",
+        "module": "results",
+        "name": "Transcript issue",
+        "steps": _chain("registrar", sla=72, escalate="vice_chancellor"),
+    },
+    {
+        "key": "students.readmission",
+        "module": "students",
+        "name": "Readmission after detention",
+        "steps": _chain("registrar", sla=120, escalate="vice_chancellor"),
+    },
+    {
+        "key": "malpractice.appeal",
+        "module": "exams",
+        "name": "Malpractice appeal",
+        "steps": _chain("committee_secretary", "controller_of_examinations", sla=168, escalate="vice_chancellor"),
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -229,9 +251,10 @@ WORKFLOW_TEMPLATES = (
     + TIMETABLE_WORKFLOW_TEMPLATES
     + ATTENDANCE_WORKFLOW_TEMPLATES
     + FEE_WORKFLOW_TEMPLATES
+    + POST_RESULT_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 29, (
+assert len(WORKFLOW_TEMPLATES) == 32, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1"
+    "Prompts/12 1, Prompts/16 3"
 )

@@ -15,6 +15,7 @@ affected rows (the COE publishes it). Appeal (student, within ``exams.malpractic
 ``appeal_decided`` → ``closed``. Timeline = the case's audit rows.
 """
 
+import contextlib
 import uuid
 from datetime import timedelta
 from typing import Any
@@ -57,6 +58,10 @@ class MalpracticeService(PostResultBase):
     def _office(self) -> bool:
         return any(self.can(m, a) for m, a in (("exams", "manage"), ("exams", "view_all"), ("results", "view_all")))
 
+    def require_office(self) -> None:
+        if not any(self.can(m, a) for m, a in (("exams", "manage"), ("exams", "view_all"))):
+            raise APIError(403, ErrorCode.PERMISSION_DENIED, "Handled by the exam cell / controller of examinations")
+
     def _predicate(self) -> Any:
         p = self.principal
         if p is None or getattr(p, "is_super_admin", False) or self._office():
@@ -73,7 +78,9 @@ class MalpracticeService(PostResultBase):
         )
 
     async def case(self, cid: uuid.UUID, *, for_update: bool = False) -> MalpracticeCase:
-        q = select(MalpracticeCase).where(MalpracticeCase.id == cid, MalpracticeCase.institution_id == self.inst, self._predicate())
+        q = select(MalpracticeCase).where(
+            MalpracticeCase.id == cid, MalpracticeCase.institution_id == self.inst, self._predicate()
+        )
         if for_update:
             q = q.with_for_update()
         c = (await self.db.execute(q)).scalar_one_or_none()
@@ -84,13 +91,17 @@ class MalpracticeService(PostResultBase):
     async def _ctx(self, c: MalpracticeCase) -> ItemContext:
         return await self.item_context(c.exam_registration_item_id)
 
-    async def out(self, c: MalpracticeCase, run_id: uuid.UUID | None = None, *, timeline: bool = False) -> MalpracticeCaseResponse:
+    async def out(
+        self, c: MalpracticeCase, run_id: uuid.UUID | None = None, *, timeline: bool = False
+    ) -> MalpracticeCaseResponse:
         o = MalpracticeCaseResponse.model_validate(c, from_attributes=True)
-        try:
+        with contextlib.suppress(APIError):
             ctx = await self._ctx(c)
-            o.student_name, o.registration_number, o.course_code = ctx.student_name, ctx.student.registration_number, ctx.course.code
-        except APIError:
-            pass
+            o.student_name, o.registration_number, o.course_code = (
+                ctx.student_name,
+                ctx.student.registration_number,
+                ctx.course.code,
+            )
         if timeline:
             rows = (
                 await self.db.execute(
@@ -111,17 +122,23 @@ class MalpracticeService(PostResultBase):
             q = q.where(MalpracticeCase.exam_session_id == session_id)
         if status:
             q = q.where(MalpracticeCase.status == status)
-        return [await self.out(c) for c in (await self.db.execute(q.order_by(MalpracticeCase.reported_at.desc()))).scalars()]
+        return [
+            await self.out(c) for c in (await self.db.execute(q.order_by(MalpracticeCase.reported_at.desc()))).scalars()
+        ]
 
     async def my_cases(self) -> list[MalpracticeCaseResponse]:
         own_items = (
             select(ExamRegistrationItem.id)
             .join(ExamRegistration, ExamRegistration.id == ExamRegistrationItem.exam_registration_id)
-            .where(ExamRegistration.student_program_enrollment_id.in_(own_enrollment_ids(self.principal, advisees=False)))
+            .where(
+                ExamRegistration.student_program_enrollment_id.in_(own_enrollment_ids(self.principal, advisees=False))
+            )
         )
         rows = (
             await self.db.execute(
-                select(MalpracticeCase).where(MalpracticeCase.exam_registration_item_id.in_(own_items)).order_by(MalpracticeCase.reported_at.desc())
+                select(MalpracticeCase)
+                .where(MalpracticeCase.exam_registration_item_id.in_(own_items))
+                .order_by(MalpracticeCase.reported_at.desc())
             )
         ).scalars()
         return [await self.out(c, timeline=True) for c in rows]
@@ -132,7 +149,9 @@ class MalpracticeService(PostResultBase):
     async def create(self, body: MalpracticeCaseCreate) -> MalpracticeCaseResponse:
         ctx = await self.item_context(body.exam_registration_item_id, for_update=True)
         n = (
-            await self.db.execute(select(func.count()).select_from(MalpracticeCase).where(MalpracticeCase.institution_id == self.inst))
+            await self.db.execute(
+                select(func.count()).select_from(MalpracticeCase).where(MalpracticeCase.institution_id == self.inst)
+            )
         ).scalar_one()
         c = MalpracticeCase(
             institution_id=self.inst,
@@ -148,17 +167,22 @@ class MalpracticeService(PostResultBase):
         self.db.add(c)
         ctx.item.status = "malpractice"
         await self.db.flush()
-        await self._audit("malpractice_register", "malpractice_case", c.id, None, {"case": c.case_number, "category": c.category})
+        await self._audit(
+            "malpractice_register", "malpractice_case", c.id, None, {"case": c.case_number, "category": c.category}
+        )
         await self._emit("malpractice.registered", {"case_id": str(c.id)}, "malpractice_case", c.id)
         return await self.out(c)
 
     async def inquiry(self, cid: uuid.UUID, body: InquiryUpdate) -> MalpracticeCaseResponse:
+        self.require_office()
         c = await self.case(cid, for_update=True)
         if c.status not in ("reported", "under_inquiry", "hearing_scheduled"):
             raise rule(f"A {c.status} case is past the inquiry", "INVALID_TRANSITION")
         if body.committee_id:
             com = (
-                await self.db.execute(select(Committee).where(Committee.id == body.committee_id, Committee.institution_id == self.inst))
+                await self.db.execute(
+                    select(Committee).where(Committee.id == body.committee_id, Committee.institution_id == self.inst)
+                )
             ).scalar_one_or_none()
             if com is None:
                 raise APIError(404, ErrorCode.NOT_FOUND, "Committee not found")
@@ -170,7 +194,16 @@ class MalpracticeService(PostResultBase):
             ctx = await self._ctx(c)
             ctx.item.status = "malpractice"
         await self.db.flush()
-        await self._audit("malpractice_inquiry", "malpractice_case", c.id, None, {"committee_id": str(c.committee_id) if c.committee_id else None, "hearing_at": c.hearing_at.isoformat() if c.hearing_at else None})
+        await self._audit(
+            "malpractice_inquiry",
+            "malpractice_case",
+            c.id,
+            None,
+            {
+                "committee_id": str(c.committee_id) if c.committee_id else None,
+                "hearing_at": c.hearing_at.isoformat() if c.hearing_at else None,
+            },
+        )
         if body.hearing_at:
             await self._emit("malpractice.hearing_scheduled", {"case_id": str(c.id)}, "malpractice_case", c.id)
         return await self.out(c)
@@ -186,6 +219,7 @@ class MalpracticeService(PostResultBase):
         from app.core.files import build_key, storage
         from app.utils.pdf import simple_pdf
 
+        self.require_office()
         c = await self.case(cid, for_update=True)
         ctx = await self._ctx(c)
         lines = [
@@ -206,7 +240,11 @@ class MalpracticeService(PostResultBase):
             await self._notify(
                 "results.malpractice_notice",
                 [ctx.student.user_id],
-                {"case": c.case_number, "course": ctx.course.code, "hearing": c.hearing_at.strftime("%Y-%m-%d %H:%M") if c.hearing_at else "to be scheduled"},
+                {
+                    "case": c.case_number,
+                    "course": ctx.course.code,
+                    "hearing": c.hearing_at.strftime("%Y-%m-%d %H:%M") if c.hearing_at else "to be scheduled",
+                },
                 guardians=True,
             )
         await self._audit("malpractice_notice", "malpractice_case", c.id, None, {"key": key})
@@ -244,7 +282,9 @@ class MalpracticeService(PostResultBase):
                                     CommitteeMember.role.in_(("chair", "chairperson")),
                                     or_(
                                         CommitteeMember.user_id == self.principal.id,
-                                        CommitteeMember.staff_id.in_(select(Staff.id).where(Staff.user_id == self.principal.id)),
+                                        CommitteeMember.staff_id.in_(
+                                            select(Staff.id).where(Staff.user_id == self.principal.id)
+                                        ),
                                     ),
                                 )
                             ),
@@ -254,7 +294,9 @@ class MalpracticeService(PostResultBase):
             ).first()
             if chair:
                 return
-        raise APIError(403, ErrorCode.PERMISSION_DENIED, "Decided by the controller of examinations or the committee chair")
+        raise APIError(
+            403, ErrorCode.PERMISSION_DENIED, "Decided by the controller of examinations or the committee chair"
+        )
 
     async def _debar_term(self, session: ExamSession, terms: int) -> uuid.UUID | None:
         base = (await self.db.execute(select(AcademicTerm).where(AcademicTerm.id == session.term_id))).scalar_one()
@@ -264,7 +306,9 @@ class MalpracticeService(PostResultBase):
                     select(AcademicTerm.id)
                     .where(
                         AcademicTerm.institution_id == self.inst,
-                        AcademicTerm.college_id.is_(base.college_id) if base.college_id is None else AcademicTerm.college_id == base.college_id,
+                        AcademicTerm.college_id.is_(base.college_id)
+                        if base.college_id is None
+                        else AcademicTerm.college_id == base.college_id,
                         AcademicTerm.start_date > base.start_date,
                         AcademicTerm.deleted_at.is_(None),
                     )
@@ -279,7 +323,9 @@ class MalpracticeService(PostResultBase):
         for h in (
             await self.db.execute(
                 select(StudentHold).where(
-                    StudentHold.source_type == "malpractice_case", StudentHold.source_id == c.id, StudentHold.released_at.is_(None)
+                    StudentHold.source_type == "malpractice_case",
+                    StudentHold.source_id == c.id,
+                    StudentHold.released_at.is_(None),
                 )
             )
         ).scalars():
@@ -301,13 +347,17 @@ class MalpracticeService(PostResultBase):
             ctx.enrolment.status = "active"
         if c.punishment in ("cancel_session",):
             for it in (
-                await self.db.execute(select(ExamRegistrationItem).where(ExamRegistrationItem.exam_registration_id == ctx.registration.id))
+                await self.db.execute(
+                    select(ExamRegistrationItem).where(ExamRegistrationItem.exam_registration_id == ctx.registration.id)
+                )
             ).scalars():
                 if it.status == "malpractice" and it.id != c.exam_registration_item_id:
                     it.status = "appeared"
         c.debar_until_term_id = None
 
-    async def _apply(self, c: MalpracticeCase, ctx: ItemContext, punishment: str, debar_terms: int | None) -> list[uuid.UUID]:
+    async def _apply(
+        self, c: MalpracticeCase, ctx: ItemContext, punishment: str, debar_terms: int | None
+    ) -> list[uuid.UUID]:
         from app.services.hold_service import HoldService
 
         affected = [ctx.course.id]
@@ -318,7 +368,9 @@ class MalpracticeService(PostResultBase):
             ctx.item.status = "malpractice"
         elif punishment == "cancel_session":
             for it in (
-                await self.db.execute(select(ExamRegistrationItem).where(ExamRegistrationItem.exam_registration_id == ctx.registration.id))
+                await self.db.execute(
+                    select(ExamRegistrationItem).where(ExamRegistrationItem.exam_registration_id == ctx.registration.id)
+                )
             ).scalars():
                 if it.status != "cancelled":
                     it.status = "malpractice"
@@ -326,8 +378,12 @@ class MalpracticeService(PostResultBase):
         elif punishment == "debar_terms":
             ctx.item.status = "malpractice"
             c.debar_until_term_id = await self._debar_term(ctx.session, debar_terms or 1)
-            await holds.place_system(ctx.enrolment, "exam", f"Debarred — malpractice case {c.case_number}", "malpractice_case", c.id)
-            until = (await self.db.execute(select(AcademicTerm.start_date).where(AcademicTerm.id == c.debar_until_term_id))).scalar_one()
+            await holds.place_system(
+                ctx.enrolment, "exam", f"Debarred — malpractice case {c.case_number}", "malpractice_case", c.id
+            )
+            until = (
+                await self.db.execute(select(AcademicTerm.start_date).where(AcademicTerm.id == c.debar_until_term_id))
+            ).scalar_one()
             for reg in (
                 await self.db.execute(
                     select(ExamRegistration)
@@ -345,7 +401,9 @@ class MalpracticeService(PostResultBase):
         elif punishment == "expel":
             ctx.item.status = "malpractice"
             ctx.enrolment.status = "expelled"
-            await holds.place_system(ctx.enrolment, "all", f"Expelled — malpractice case {c.case_number}", "malpractice_case", c.id)
+            await holds.place_system(
+                ctx.enrolment, "all", f"Expelled — malpractice case {c.case_number}", "malpractice_case", c.id
+            )
         c.punishment = punishment
         return affected
 
@@ -376,8 +434,16 @@ class MalpracticeService(PostResultBase):
         c.decision_text, c.decided_by, c.decided_at, c.status = body.decision_text, self.actor_id, now_utc(), "decided"
         await self.db.flush()
         run_id = await self._rerun(c, ctx, affected)
-        await self._audit("malpractice_decide", "malpractice_case", c.id, None, {"punishment": c.punishment, "debar_terms": body.debar_terms, "run_id": str(run_id) if run_id else None})
-        await self._emit("malpractice.decided", {"case_id": str(c.id), "punishment": c.punishment}, "malpractice_case", c.id)
+        await self._audit(
+            "malpractice_decide",
+            "malpractice_case",
+            c.id,
+            None,
+            {"punishment": c.punishment, "debar_terms": body.debar_terms, "run_id": str(run_id) if run_id else None},
+        )
+        await self._emit(
+            "malpractice.decided", {"case_id": str(c.id), "punishment": c.punishment}, "malpractice_case", c.id
+        )
         if ctx.student.user_id:
             await self._notify(
                 "results.malpractice_notice",
@@ -399,10 +465,13 @@ class MalpracticeService(PostResultBase):
         days = int(await self.setting("exams", "malpractice_appeal_days") or 30)
         if now_utc() > c.decided_at + timedelta(days=days):
             raise rule(f"The appeal window ({days} days) has closed", "APPEAL_WINDOW_CLOSED")
-        c.evidence = [*(c.evidence or []), {"type": "appeal", "grounds": body.grounds, "attachments": body.attachments, "at": now_utc().isoformat()}]
+        c.evidence = [
+            *(c.evidence or []),
+            {"type": "appeal", "grounds": body.grounds, "attachments": body.attachments, "at": now_utc().isoformat()},
+        ]
         c.status = "appealed"
         await self.db.flush()
-        try:
+        with contextlib.suppress(APIError):  # the appeal is decided from the case page either way
             await workflow_engine.start(
                 self.db,
                 institution_id=self.inst,
@@ -413,8 +482,6 @@ class MalpracticeService(PostResultBase):
                 context={"case": c.case_number, "punishment": c.punishment},
                 title=f"Malpractice appeal — {c.case_number}",
             )
-        except APIError:
-            pass  # the appeal is decided from the case page either way
         await self._audit("malpractice_appeal", "malpractice_case", c.id, None, {"grounds": body.grounds[:200]})
         await self._emit("malpractice.appealed", {"case_id": str(c.id)}, "malpractice_case", c.id)
         return await self.out(c, timeline=True)
@@ -434,13 +501,30 @@ class MalpracticeService(PostResultBase):
             await self.db.flush()
             run_id = await self._rerun(c, ctx, affected)
         c.status = "appeal_decided"
-        c.evidence = [*(c.evidence or []), {"type": "appeal_decision", "outcome": body.outcome, "text": body.decision_text, "at": now_utc().isoformat()}]
+        c.evidence = [
+            *(c.evidence or []),
+            {
+                "type": "appeal_decision",
+                "outcome": body.outcome,
+                "text": body.decision_text,
+                "at": now_utc().isoformat(),
+            },
+        ]
         await self.db.flush()
-        await self._audit("malpractice_appeal_decide", "malpractice_case", c.id, None, {"outcome": body.outcome, "punishment": c.punishment})
-        await self._emit("malpractice.appeal_decided", {"case_id": str(c.id), "outcome": body.outcome}, "malpractice_case", c.id)
+        await self._audit(
+            "malpractice_appeal_decide",
+            "malpractice_case",
+            c.id,
+            None,
+            {"outcome": body.outcome, "punishment": c.punishment},
+        )
+        await self._emit(
+            "malpractice.appeal_decided", {"case_id": str(c.id), "outcome": body.outcome}, "malpractice_case", c.id
+        )
         return await self.out(c, run_id, timeline=True)
 
     async def close(self, cid: uuid.UUID) -> MalpracticeCaseResponse:
+        self.require_office()
         c = await self.case(cid, for_update=True)
         if c.status not in ("decided", "appeal_decided"):
             raise rule("Only decided cases close", "INVALID_TRANSITION")
@@ -470,8 +554,11 @@ class MalpracticeService(PostResultBase):
                 await self._notify(
                     "results.malpractice_notice",
                     [ctx.student.user_id],
-                    {"case": c.case_number, "course": ctx.course.code, "hearing": c.hearing_at.strftime("%Y-%m-%d %H:%M") if c.hearing_at else ""},
+                    {
+                        "case": c.case_number,
+                        "course": ctx.course.code,
+                        "hearing": c.hearing_at.strftime("%Y-%m-%d %H:%M") if c.hearing_at else "",
+                    },
                 )
                 n += 1
         return n
-

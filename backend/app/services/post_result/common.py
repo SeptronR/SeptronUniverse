@@ -63,9 +63,19 @@ class PostResultBase(ResultBase):
 
     async def item_context(self, item_id: uuid.UUID, *, for_update: bool = False) -> ItemContext:
         q = (
-            select(ExamRegistrationItem, ExamRegistration, StudentProgramEnrollment, Student, Course, ExamPaper, ExamSession)
+            select(
+                ExamRegistrationItem,
+                ExamRegistration,
+                StudentProgramEnrollment,
+                Student,
+                Course,
+                ExamPaper,
+                ExamSession,
+            )
             .join(ExamRegistration, ExamRegistration.id == ExamRegistrationItem.exam_registration_id)
-            .join(StudentProgramEnrollment, StudentProgramEnrollment.id == ExamRegistration.student_program_enrollment_id)
+            .join(
+                StudentProgramEnrollment, StudentProgramEnrollment.id == ExamRegistration.student_program_enrollment_id
+            )
             .join(Student, Student.id == StudentProgramEnrollment.student_id)
             .join(Course, Course.id == ExamRegistrationItem.course_id)
             .join(ExamPaper, ExamPaper.id == ExamRegistrationItem.exam_paper_id)

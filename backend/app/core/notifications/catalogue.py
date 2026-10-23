@@ -893,6 +893,39 @@ RESULT_EVENTS: tuple[EventDef, ...] = (
         link="/student/results",
     ),
 )
+# Phase 16 — revaluation decisions, malpractice notices / decisions, transcripts ready
+POST_RESULT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "results.reval_decided",
+        "exams",
+        "Revaluation decided",
+        "{{ type }} decided: {{ course }}",
+        "Your {{ type }} request for {{ course }} is decided: {{ outcome }}.",
+        ("course", "type", "outcome"),
+        ("in_app", "push", "email"),
+        link="/student/exams/reval",
+    ),
+    EventDef(
+        "results.malpractice_notice",
+        "exams",
+        "Malpractice notice",
+        "Malpractice case {{ case }}",
+        "Case {{ case }} ({{ course }}): hearing {{ hearing }}. You may submit a statement on the portal.",
+        ("case", "course", "hearing"),
+        ("in_app", "email", "sms"),
+        link="/student/exams/malpractice",
+    ),
+    EventDef(
+        "results.transcript_ready",
+        "exams",
+        "Transcript ready",
+        "Transcript ready",
+        "Your {{ type }} transcript {{ number }} is issued.",
+        ("type", "number"),
+        ("in_app", "push", "email"),
+        link="/student/transcripts",
+    ),
+)
 # Phase 13 — marks deadlines, LMS publication / announcements
 ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -937,6 +970,7 @@ EVENTS = (
     + ASSESSMENT_EVENTS
     + EXAM_EVENTS
     + RESULT_EVENTS
+    + POST_RESULT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

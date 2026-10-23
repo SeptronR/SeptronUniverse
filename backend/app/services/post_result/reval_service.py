@@ -20,6 +20,7 @@
    (job) for the affected rows — the COE verifies / approves / publishes it (new versions, arrears cleared on a pass).
 """
 
+import contextlib
 import uuid
 from datetime import timedelta
 from decimal import Decimal
@@ -121,7 +122,9 @@ class RevalService(PostResultBase):
             i.id: i
             for i in (
                 await self.db.execute(
-                    select(FeeInvoice).where(FeeInvoice.id.in_({r.fee_invoice_id for r in rows if r.fee_invoice_id} or {uuid.uuid4()}))
+                    select(FeeInvoice).where(
+                        FeeInvoice.id.in_({r.fee_invoice_id for r in rows if r.fee_invoice_id} or {uuid.uuid4()})
+                    )
                 )
             ).scalars()
         }
@@ -147,7 +150,9 @@ class RevalService(PostResultBase):
                 await self.db.execute(
                     select(ExamRegistration.student_program_enrollment_id).where(
                         ExamRegistration.exam_session_id == s.id,
-                        ExamRegistration.student_program_enrollment_id.in_(own_enrollment_ids(self.principal, advisees=False)),
+                        ExamRegistration.student_program_enrollment_id.in_(
+                            own_enrollment_ids(self.principal, advisees=False)
+                        ),
                     )
                 )
             ).scalars()
@@ -160,11 +165,16 @@ class RevalService(PostResultBase):
 
         rows = (
             await self.db.execute(
-                select(StudentCourseResult, ExamPaper.paper_type, Course, StudentProgramEnrollment.program_regulation_id)
+                select(
+                    StudentCourseResult, ExamPaper.paper_type, Course, StudentProgramEnrollment.program_regulation_id
+                )
                 .join(ExamRegistrationItem, ExamRegistrationItem.id == StudentCourseResult.exam_registration_item_id)
                 .join(ExamPaper, ExamPaper.id == ExamRegistrationItem.exam_paper_id)
                 .join(Course, Course.id == StudentCourseResult.course_id)
-                .join(StudentProgramEnrollment, StudentProgramEnrollment.id == StudentCourseResult.student_program_enrollment_id)
+                .join(
+                    StudentProgramEnrollment,
+                    StudentProgramEnrollment.id == StudentCourseResult.student_program_enrollment_id,
+                )
                 .where(
                     StudentCourseResult.exam_session_id == s.id,
                     StudentCourseResult.student_program_enrollment_id.in_(enrs),
@@ -179,7 +189,9 @@ class RevalService(PostResultBase):
         for r in (
             await self.db.execute(
                 select(RevalRequest).where(
-                    RevalRequest.exam_registration_item_id.in_([x.exam_registration_item_id for x, *_ in rows] or [uuid.uuid4()])
+                    RevalRequest.exam_registration_item_id.in_(
+                        [x.exam_registration_item_id for x, *_ in rows] or [uuid.uuid4()]
+                    )
                 )
             )
         ).scalars():
@@ -289,12 +301,19 @@ class RevalService(PostResultBase):
         ]
         if r.answer_script_id:
             sc = (await self.db.execute(select(AnswerScript).where(AnswerScript.id == r.answer_script_id))).scalar_one()
-            lines.append(f"Script pages: {sc.pages or '—'} · scan {'attached' if sc.scan_url else 'pending (exam cell scan)'}")
+            lines.append(
+                f"Script pages: {sc.pages or '—'} · scan {'attached' if sc.scan_url else 'pending (exam cell scan)'}"
+            )
         pdf = simple_pdf(lines, title="Answer script photocopy")
         key = build_key(self.inst, "reval/photocopies", f"{r.id}.pdf")
         await storage.put(key, pdf, "application/pdf")
         r.photocopy_url, r.status = key, "evaluated"
         await self._emit("photocopy.ready", {"request_id": str(r.id)}, "reval_request", r.id)
+
+    async def render_photocopy(self, r: RevalRequest) -> None:
+        """``reval.photocopy_scan`` job: re-render once the exam cell attached the scan."""
+        await self._photocopy(r)
+        await self.db.flush()
 
     async def photocopy(self, rid: uuid.UUID) -> bytes:
         from app.core.files import storage
@@ -320,7 +339,9 @@ class RevalService(PostResultBase):
                     .join(ExamRegistration, ExamRegistration.id == ExamRegistrationItem.exam_registration_id)
                     .where(
                         RevalRequest.institution_id == self.inst,
-                        ExamRegistration.student_program_enrollment_id.in_(own_enrollment_ids(self.principal, advisees=False)),
+                        ExamRegistration.student_program_enrollment_id.in_(
+                            own_enrollment_ids(self.principal, advisees=False)
+                        ),
                     )
                     .order_by(RevalRequest.created_at.desc())
                 )
@@ -347,7 +368,9 @@ class RevalService(PostResultBase):
         users = set(
             (
                 await self.db.execute(
-                    select(ScriptValuation.evaluator_user_id).where(ScriptValuation.answer_script_id == r.answer_script_id)
+                    select(ScriptValuation.evaluator_user_id).where(
+                        ScriptValuation.answer_script_id == r.answer_script_id
+                    )
                 )
             ).scalars()
         )
@@ -414,7 +437,11 @@ class RevalService(PostResultBase):
         await self.db.flush()
         await self._emit("reval.assigned", {"request_id": str(r.id)}, "reval_request", r.id)
         if a.evaluator_user_id:
-            await self._notify("valuation.assigned", [a.evaluator_user_id], {"paper": ctx.paper.paper_code or "", "bundles": 1, "round": "reval"})
+            await self._notify(
+                "valuation.assigned",
+                [a.evaluator_user_id],
+                {"paper": ctx.paper.paper_code or "", "bundles": 1, "round": "reval"},
+            )
         return (await self.outs([r]))[0]
 
     async def challenge_panel(self, sid: uuid.UUID, body: ChallengePanelRequest) -> list[RevalResponse]:
@@ -423,7 +450,11 @@ class RevalService(PostResultBase):
         for rid in body.request_ids:
             r = await self.req(rid, for_update=True)
             if r.exam_session_id != s.id or r.request_type != "challenge" or r.status != "fee_paid":
-                raise rule("Only paid challenge requests of this session form a panel", "INVALID_TRANSITION", request_id=str(rid))
+                raise rule(
+                    "Only paid challenge requests of this session form a panel",
+                    "INVALID_TRANSITION",
+                    request_id=str(rid),
+                )
             ctx = await self.item_context(r.exam_registration_item_id)
             first = None
             for staff_id in body.evaluator_staff_ids:
@@ -437,7 +468,9 @@ class RevalService(PostResultBase):
     async def my_scripts(self) -> list[RevalScript]:
         rows = (
             await self.db.execute(
-                select(ValuationAssignment, ExamPaper.max_marks).join(ExamPaper, ExamPaper.id == ValuationAssignment.exam_paper_id).where(
+                select(ValuationAssignment, ExamPaper.max_marks)
+                .join(ExamPaper, ExamPaper.id == ValuationAssignment.exam_paper_id)
+                .where(
                     ValuationAssignment.institution_id == self.inst,
                     ValuationAssignment.evaluator_user_id == self.actor_id,
                     ValuationAssignment.valuation_round >= REVAL_ROUND,
@@ -449,11 +482,15 @@ class RevalService(PostResultBase):
             rid = (a.external_evaluator or {}).get("reval_request_id")
             if not rid:
                 continue
-            r = (await self.db.execute(select(RevalRequest).where(RevalRequest.id == uuid.UUID(rid)))).scalar_one_or_none()
+            r = (
+                await self.db.execute(select(RevalRequest).where(RevalRequest.id == uuid.UUID(rid)))
+            ).scalar_one_or_none()
             if r is None or r.answer_script_id is None:
                 continue
             sc = (
-                await self.db.execute(select(AnswerScriptForEvaluation).where(AnswerScriptForEvaluation.id == r.answer_script_id))
+                await self.db.execute(
+                    select(AnswerScriptForEvaluation).where(AnswerScriptForEvaluation.id == r.answer_script_id)
+                )
             ).scalar_one()
             v = (
                 await self.db.execute(
@@ -481,7 +518,9 @@ class RevalService(PostResultBase):
     async def submit_valuation(self, rid: uuid.UUID, body: RevalMarks) -> RevalScript:
         r = (
             await self.db.execute(
-                select(RevalRequest).where(RevalRequest.id == rid, RevalRequest.institution_id == self.inst).with_for_update()
+                select(RevalRequest)
+                .where(RevalRequest.id == rid, RevalRequest.institution_id == self.inst)
+                .with_for_update()
             )
         ).scalar_one_or_none()
         if r is None or r.answer_script_id is None:
@@ -523,7 +562,8 @@ class RevalService(PostResultBase):
             for a in (
                 await self.db.execute(
                     select(ValuationAssignment).where(
-                        ValuationAssignment.bundle_id == mine.bundle_id, ValuationAssignment.valuation_round >= REVAL_ROUND
+                        ValuationAssignment.bundle_id == mine.bundle_id,
+                        ValuationAssignment.valuation_round >= REVAL_ROUND,
                     )
                 )
             ).scalars()
@@ -553,7 +593,9 @@ class RevalService(PostResultBase):
         rv = (await self._rules(ctx.enrolment.program_regulation_id)).get("reval") or {}
         return Decimal(str(rv.get("min_delta_to_apply", 5))), bool(rv.get("refund_if_changed", True))
 
-    async def _close_decision(self, r: RevalRequest, changed: bool, refund_if_changed: bool, remarks: str | None) -> None:
+    async def _close_decision(
+        self, r: RevalRequest, changed: bool, refund_if_changed: bool, remarks: str | None
+    ) -> None:
         from app.schemas.fees import RefundCreate
         from app.services.fees.refund_service import RefundService
 
@@ -561,16 +603,20 @@ class RevalService(PostResultBase):
         r.decided_by, r.decided_at = self.actor_id, now_utc()
         inv = None
         if r.fee_invoice_id:
-            inv = (await self.db.execute(select(FeeInvoice).where(FeeInvoice.id == r.fee_invoice_id))).scalar_one_or_none()
+            inv = (
+                await self.db.execute(select(FeeInvoice).where(FeeInvoice.id == r.fee_invoice_id))
+            ).scalar_one_or_none()
         r.refund_due = bool(changed and refund_if_changed and inv is not None and inv.paid_paise > 0)
         await self.db.flush()
         if r.refund_due and inv is not None:
-            try:
+            with contextlib.suppress(APIError):  # the refund can be raised manually from the fee desk
                 await RefundService(self.db, self.principal, self.request, self.inst).submit(
-                    RefundCreate(invoice_id=inv.id, amount_paise=int(inv.paid_paise), reason=f"Revaluation changed the marks ({r.request_type})")
+                    RefundCreate(
+                        invoice_id=inv.id,
+                        amount_paise=int(inv.paid_paise),
+                        reason=f"Revaluation changed the marks ({r.request_type})",
+                    )
                 )
-            except APIError:
-                pass  # the refund can be raised manually from the fee desk
         await self._audit(
             "reval_decide",
             "reval_request",
@@ -656,7 +702,9 @@ class RevalService(PostResultBase):
             if r.answer_script_id and r.revised_marks is not None:
                 fm = (
                     await self.db.execute(
-                        select(ScriptFinalMarks).where(ScriptFinalMarks.answer_script_id == r.answer_script_id).with_for_update()
+                        select(ScriptFinalMarks)
+                        .where(ScriptFinalMarks.answer_script_id == r.answer_script_id)
+                        .with_for_update()
                     )
                 ).scalar_one_or_none()
                 if fm is not None:
@@ -675,7 +723,12 @@ class RevalService(PostResultBase):
         j = await enqueue(self.db, self.principal, "results.compute_run", {"run_id": str(run.id)})
         run.job_id = j.id
         await self.db.flush()
-        await self._emit("reval.applied", {"session_id": str(s.id), "run_id": str(run.id), "requests": len(reqs)}, "exam_session", s.id)
+        await self._emit(
+            "reval.applied",
+            {"session_id": str(s.id), "run_id": str(run.id), "requests": len(reqs)},
+            "exam_session",
+            s.id,
+        )
         return RevalApplyResponse(requests=len(reqs), run_id=run.id, job_id=j.id)
 
     async def window_close(self) -> int:
@@ -693,4 +746,23 @@ class RevalService(PostResultBase):
             r.status = "closed"
             n += 1
         await self.db.flush()
+        return n
+
+    async def due_reminders(self) -> int:
+        """Beat (daily): remind revaluation evaluators of assignments due within two days."""
+        n = 0
+        for a in (
+            await self.db.execute(
+                select(ValuationAssignment).where(
+                    ValuationAssignment.institution_id == self.inst,
+                    ValuationAssignment.valuation_round >= REVAL_ROUND,
+                    ValuationAssignment.status == "assigned",
+                    ValuationAssignment.due_at.is_not(None),
+                    ValuationAssignment.due_at <= now_utc() + timedelta(days=2),
+                )
+            )
+        ).scalars():
+            if a.evaluator_user_id:
+                await self._notify("valuation.due_reminder", [a.evaluator_user_id], {"bundles": 1})
+                n += 1
         return n

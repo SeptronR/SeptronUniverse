@@ -27,7 +27,9 @@ from app.services.post_result.common import PostResultBase
 class SupplementaryService(PostResultBase):
     audit_module = "exams"
 
-    async def _arrears(self, body: SupplementaryCreateRequest) -> list[tuple[StudentArrear, StudentProgramEnrollment, Course]]:
+    async def _arrears(
+        self, body: SupplementaryCreateRequest
+    ) -> list[tuple[StudentArrear, StudentProgramEnrollment, Course]]:
         q = (
             select(StudentArrear, StudentProgramEnrollment, Course)
             .join(StudentProgramEnrollment, StudentProgramEnrollment.id == StudentArrear.student_program_enrollment_id)
@@ -41,7 +43,9 @@ class SupplementaryService(PostResultBase):
         if body.from_session_id:
             q = q.where(
                 StudentArrear.course_id.in_(
-                    select(StudentCourseResult.course_id).where(StudentCourseResult.exam_session_id == body.from_session_id)
+                    select(StudentCourseResult.course_id).where(
+                        StudentCourseResult.exam_session_id == body.from_session_id
+                    )
                 )
             )
         colleges = self._college_ids()
@@ -53,11 +57,15 @@ class SupplementaryService(PostResultBase):
         rows = await self._arrears(body)
         by_course: dict[uuid.UUID, dict[str, Any]] = {}
         students: set[uuid.UUID] = set()
-        for a, e, c in rows:
+        for _a, e, c in rows:
             students.add(e.id)
-            d = by_course.setdefault(c.id, {"course_id": str(c.id), "course_code": c.code, "course_title": c.title, "students": 0})
+            d = by_course.setdefault(
+                c.id, {"course_id": str(c.id), "course_code": c.code, "course_title": c.title, "students": 0}
+            )
             d["students"] += 1
-        return SupplementaryPreview(students=len(students), papers=sorted(by_course.values(), key=lambda x: x["course_code"]))
+        return SupplementaryPreview(
+            students=len(students), papers=sorted(by_course.values(), key=lambda x: x["course_code"])
+        )
 
     async def create(self, body: SupplementaryCreateRequest) -> dict[str, Any]:
         from app.services.exams.registration_service import ExamRegistrationService
@@ -82,7 +90,9 @@ class SupplementaryService(PostResultBase):
         papers = 0
         for c in sorted(courses.values(), key=lambda x: x.code):
             try:
-                await sessions.create_paper(out.id, ExamPaperCreate(course_id=c.id, paper_type="theory", paper_code=f"{c.code}-S"[:30]))
+                await sessions.create_paper(
+                    out.id, ExamPaperCreate(course_id=c.id, paper_type="theory", paper_code=f"{c.code}-S"[:30])
+                )
                 papers += 1
             except APIError:
                 continue
@@ -91,7 +101,7 @@ class SupplementaryService(PostResultBase):
         by_enrol: dict[uuid.UUID, StudentProgramEnrollment] = {}
         for _, e, _ in rows:
             by_enrol[e.id] = e
-        built = defaultdict(int)
+        built: defaultdict[str, int] = defaultdict(int)
         for e in by_enrol.values():
             reg = await regs.build_for(s, e)
             if reg.status != "draft":
@@ -104,6 +114,9 @@ class SupplementaryService(PostResultBase):
                 built["skipped"] += 1
         await self._audit("supplementary_create", "exam_session", out.id, None, {"papers": papers, **built})
         await self._emit(
-            "supplementary.session_created", {"session_id": str(out.id), "papers": papers, "students": len(by_enrol)}, "exam_session", out.id
+            "supplementary.session_created",
+            {"session_id": str(out.id), "papers": papers, "students": len(by_enrol)},
+            "exam_session",
+            out.id,
         )
         return {"session_id": str(out.id), "papers": papers, "students": len(by_enrol), "registrations": dict(built)}
