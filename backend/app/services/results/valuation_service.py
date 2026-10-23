@@ -399,8 +399,7 @@ class ValuationService(ExamBase):
             ValuationAssignment.institution_id == self.inst,
             ValuationAssignment.evaluator_user_id == self.actor_id,
         )
-        if rnd is not None:
-            q = q.where(ValuationAssignment.valuation_round == rnd)
+        q = q.where(ValuationAssignment.valuation_round == rnd) if rnd is not None else q.where(ValuationAssignment.valuation_round < 90)
         a = (await self.db.execute(q.order_by(ValuationAssignment.valuation_round.desc()))).scalars().first()
         if a is None:
             raise APIError(404, ErrorCode.NOT_FOUND, "Bundle not found")
@@ -418,6 +417,7 @@ class ValuationService(ExamBase):
                 .where(
                     ValuationAssignment.institution_id == self.inst,
                     ValuationAssignment.evaluator_user_id == self.actor_id,
+                    ValuationAssignment.valuation_round < 90,  # rounds 90+ are revaluations (Phase 16)
                 )
                 .order_by(ValuationAssignment.due_at.nulls_last(), AnswerScriptBundle.bundle_number)
             )
@@ -492,6 +492,8 @@ class ValuationService(ExamBase):
         return sc, a
 
     async def submit_valuation(self, script_id: uuid.UUID, rnd: int, body: ValuationSubmit) -> ScriptValuationResponse:
+        if rnd >= 90:
+            raise APIError(404, ErrorCode.NOT_FOUND, "Script not found")  # revaluation marks go through Phase 16
         sc, a = await self._script_for_me(script_id, rnd)
         if a.status in ("submitted", "verified"):
             raise APIError(409, ErrorCode.RECORD_LOCKED, "The bundle has been submitted; valuations are locked")

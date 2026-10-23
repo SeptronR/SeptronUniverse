@@ -303,6 +303,15 @@ PHASES: dict[str, list[str]] = {
         "legacy_result_imports",
         "abc_credit_ledger",
     ],
+    # post-result (§16): reval_requests, transcripts; committees / committee_members (§30, governance UI in Phase 33)
+    # and student_achievements (§27, Phase 27 module) are modelled here for the malpractice inquiry and medals
+    "16": [
+        "reval_requests",
+        "transcripts",
+        "committees",
+        "committee_members",
+        "student_achievements",
+    ],
 }
 
 VIEWS: set[str] = {"answer_scripts_for_evaluation"}

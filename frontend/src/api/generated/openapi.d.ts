@@ -5008,6 +5008,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/exam-sessions/supplementary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create a supplementary / arrear session with registrations */
+        post: operations["supplementary_create_api_v1_exam_sessions_supplementary_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/supplementary/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Open arrears by course */
+        post: operations["supplementary_preview_api_v1_exam_sessions_supplementary_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/exam-sessions/{id}": {
         parameters: {
             query?: never;
@@ -5038,6 +5072,23 @@ export interface paths {
         put?: never;
         /** Add a centre (central sessions) */
         post: operations["create_centre_api_v1_exam_sessions__id__centres_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/challenge-panel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign a two-evaluator challenge panel */
+        post: operations["challenge_panel_api_v1_exam_sessions__id__challenge_panel_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -5311,6 +5362,40 @@ export interface paths {
         get: operations["remuneration_api_v1_exam_sessions__id__remuneration_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/reval-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requests of a session */
+        get: operations["reval_session_api_v1_exam_sessions__id__reval_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/exam-sessions/{id}/reval/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply changed marks → revaluation run (job) */
+        post: operations["reval_apply_api_v1_exam_sessions__id__reval_apply_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -7323,6 +7408,194 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/malpractice-cases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Cases */
+        get: operations["mal_list_api_v1_malpractice_cases_get"];
+        put?: never;
+        /** Register a case */
+        post: operations["mal_create_api_v1_malpractice_cases_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My cases (student / ward) */
+        get: operations["mal_mine_api_v1_malpractice_cases_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Case */
+        get: operations["mal_get_api_v1_malpractice_cases__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/appeal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Appeal */
+        post: operations["mal_appeal_api_v1_malpractice_cases__id__appeal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/appeal/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide the appeal (committee / COE) */
+        post: operations["mal_appeal_decide_api_v1_malpractice_cases__id__appeal_decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close */
+        post: operations["mal_close_api_v1_malpractice_cases__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide the punishment (COE / committee chair) */
+        post: operations["mal_decide_api_v1_malpractice_cases__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/hearing": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Schedule the hearing (sends the notice) */
+        post: operations["mal_hearing_api_v1_malpractice_cases__id__hearing_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/inquiry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign the inquiry committee / hearing */
+        post: operations["mal_inquiry_api_v1_malpractice_cases__id__inquiry_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/notice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send the notice (student + guardians) */
+        post: operations["mal_notice_api_v1_malpractice_cases__id__notice_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/malpractice-cases/{id}/statement": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit the student's statement */
+        post: operations["mal_statement_api_v1_malpractice_cases__id__statement_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/marks-change-requests": {
         parameters: {
             query?: never;
@@ -8856,6 +9129,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/public/results/rank-lists/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Published rank list (masked; public when allowed) */
+        get: operations["public_rank_api_v1_public_results_rank_lists__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/qp-assignments/me": {
         parameters: {
             query?: never;
@@ -9261,6 +9551,58 @@ export interface paths {
         put?: never;
         /** Start / resume an attempt (shuffled, no answers) */
         post: operations["start_quiz_api_v1_quizzes__id__start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/readmissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Readmission requests */
+        get: operations["readmissions_api_v1_readmissions_get"];
+        put?: never;
+        /** Request readmission (workflow students.readmission) */
+        post: operations["readmission_create_api_v1_readmissions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/readmissions/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve */
+        post: operations["readmission_approve_api_v1_readmissions__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/readmissions/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["readmission_reject_api_v1_readmissions__id__reject_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -10191,6 +10533,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/results/corrections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Correction requests */
+        get: operations["corrections_api_v1_results_corrections_get"];
+        put?: never;
+        /** Raise a correction on a published row (workflow marks.change) */
+        post: operations["correction_create_api_v1_results_corrections_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/corrections/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve the current step */
+        post: operations["correction_approve_api_v1_results_corrections__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/corrections/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["correction_reject_api_v1_results_corrections__id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/results/me": {
         parameters: {
             query?: never;
@@ -10225,6 +10619,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/results/medals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Medals */
+        get: operations["medals_api_v1_results_medals_get"];
+        put?: never;
+        /** Award a medal */
+        post: operations["medal_award_api_v1_results_medals_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/medals/{id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke a medal */
+        post: operations["medal_revoke_api_v1_results_medals__id__revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/results/rank-list": {
         parameters: {
             query?: never;
@@ -10234,6 +10663,74 @@ export interface paths {
         };
         /** Rank list */
         get: operations["rank_list_api_v1_results_rank_list_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/rank-lists": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Compute a rank list (term SGPA or cumulative CGPA) */
+        get: operations["rank_lists_api_v1_results_rank_lists_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/rank-lists/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My ranks */
+        get: operations["rank_mine_api_v1_results_rank_lists_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/rank-lists/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish a rank list */
+        post: operations["rank_publish_api_v1_results_rank_lists_publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/rank-lists/published": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Published rank lists */
+        get: operations["rank_lists_published_api_v1_results_rank_lists_published_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -10285,6 +10782,227 @@ export interface paths {
         };
         /** A ward's results */
         get: operations["ward_results_api_v1_results_wards__student_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/withheld": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Withheld rows with reasons */
+        get: operations["withheld_api_v1_results_withheld_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/results/withheld/release": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Release withheld rows (correction run, published) */
+        post: operations["withheld_release_api_v1_results_withheld_release_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Raise a request (Idempotency-Key) */
+        post: operations["reval_create_api_v1_reval_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My requests */
+        get: operations["reval_mine_api_v1_reval_requests_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Request */
+        get: operations["reval_get_api_v1_reval_requests__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign a revaluation evaluator */
+        post: operations["reval_assign_api_v1_reval_requests__id__assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/challenge/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide a challenge (panel mean) */
+        post: operations["challenge_decide_api_v1_reval_requests__id__challenge_decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide */
+        post: operations["reval_decide_api_v1_reval_requests__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/photocopy.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Watermarked photocopy */
+        get: operations["reval_photocopy_api_v1_reval_requests__id__photocopy_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject */
+        post: operations["reval_reject_api_v1_reval_requests__id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/retotal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retotal (exam cell) */
+        post: operations["reval_retotal_api_v1_reval_requests__id__retotal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval-requests/{id}/valuation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit revaluation marks (assigned evaluator) */
+        post: operations["reval_valuation_api_v1_reval_requests__id__valuation_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reval/eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Results open for retotaling / photocopy / revaluation */
+        get: operations["reval_eligibility_api_v1_reval_eligibility_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -11782,6 +12500,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/terms/{id}/detained": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Detained students of a term */
+        get: operations["detained_api_v1_terms__id__detained_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/terms/{id}/detention-list": {
         parameters: {
             query?: never;
@@ -12196,6 +12931,177 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/transcripts/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My transcripts */
+        get: operations["transcript_mine_api_v1_transcripts_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Transcript queue */
+        get: operations["transcript_queue_api_v1_transcripts_requests_get"];
+        put?: never;
+        /** Request a transcript (Idempotency-Key) */
+        post: operations["transcript_request_api_v1_transcripts_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Transcript types and fees */
+        get: operations["transcript_types_api_v1_transcripts_types_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve (registrar) */
+        post: operations["transcript_approve_api_v1_transcripts__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel */
+        post: operations["transcript_cancel_api_v1_transcripts__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/checks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Holds / no-dues checks */
+        get: operations["transcript_checks_api_v1_transcripts__id__checks_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Transcript PDF */
+        get: operations["transcript_download_api_v1_transcripts__id__download_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate the PDF */
+        post: operations["transcript_generate_api_v1_transcripts__id__generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Issue */
+        post: operations["transcript_issue_api_v1_transcripts__id__issue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transcripts/{id}/reissue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reissue with a new token */
+        post: operations["transcript_reissue_api_v1_transcripts__id__reissue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/users": {
         parameters: {
             query?: never;
@@ -12437,6 +13343,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/valuation/me/reval-scripts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Revaluation scripts assigned to me (dummy numbers) */
+        get: operations["reval_scripts_api_v1_valuation_me_reval_scripts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/verify/{token}": {
         parameters: {
             query?: never;
@@ -12444,7 +13367,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Verify an ID card / grade card QR token (public) */
+        /** Verify an ID card / grade card / transcript QR token (public) */
         get: operations["verify_api_v1_verify__token__get"];
         put?: never;
         post?: never;
@@ -13502,6 +14425,30 @@ export interface components {
             row_id?: string | null;
             /** Student */
             student?: string | null;
+        };
+        /** AppealCreate */
+        AppealCreate: {
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: string[];
+            /** Grounds */
+            grounds: string;
+        };
+        /** AppealDecision */
+        AppealDecision: {
+            /** Debar Terms */
+            debar_terms?: number | null;
+            /** Decision Text */
+            decision_text: string;
+            /**
+             * Outcome
+             * @enum {string}
+             */
+            outcome: "uphold" | "modify";
+            /** Punishment */
+            punishment?: ("none" | "warning" | "cancel_paper" | "cancel_session" | "debar_terms" | "expel") | null;
         };
         /** ApplicableStructureResponse */
         ApplicableStructureResponse: {
@@ -15676,6 +16623,15 @@ export interface components {
             /** Windows */
             windows?: components["schemas"]["WindowResponse"][];
         };
+        /** ChallengePanelRequest */
+        ChallengePanelRequest: {
+            /** Due At */
+            due_at?: string | null;
+            /** Evaluator Staff Ids */
+            evaluator_staff_ids: string[];
+            /** Request Ids */
+            request_ids: string[];
+        };
         /** ChangePasswordRequest */
         ChangePasswordRequest: {
             /** Current Password */
@@ -16517,6 +17473,47 @@ export interface components {
             seats: number;
             /** To Category */
             to_category: string;
+        };
+        /** CorrectionRequestCreate */
+        CorrectionRequestCreate: {
+            /**
+             * Ese Delta
+             * @description ESE marks change to apply
+             * @default 0
+             */
+            ese_delta: number | string;
+            /** Evidence */
+            evidence?: string | null;
+            /** Reason */
+            reason: string;
+            /**
+             * Result Id
+             * Format: uuid
+             */
+            result_id: string;
+        };
+        /** CorrectionResponse */
+        CorrectionResponse: {
+            /** Ese Delta */
+            ese_delta?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Reason */
+            reason?: string | null;
+            /** Result Id */
+            result_id?: string | null;
+            /** Run Id */
+            run_id?: string | null;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Status */
+            status: string;
         };
         /** CourseBrief */
         CourseBrief: {
@@ -17786,6 +18783,36 @@ export interface components {
             student_program_enrollment_id?: string | null;
             /** Version */
             version: number;
+        };
+        /** DetentionRow */
+        DetentionRow: {
+            /** Attendance Pct */
+            attendance_pct?: string | null;
+            /**
+             * Detained Courses
+             * @default []
+             */
+            detained_courses: string[];
+            /** Readmission */
+            readmission?: {
+                [key: string]: unknown;
+            } | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /**
+             * Student Term Record Id
+             * Format: uuid
+             */
+            student_term_record_id: string;
+            /** Term Number */
+            term_number: number;
         };
         /** DevTermResult */
         DevTermResult: {
@@ -19421,6 +20448,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CorrectionResponse] */
+        Envelope_CorrectionResponse_: {
+            data?: components["schemas"]["CorrectionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CourseFileChecklist] */
         Envelope_CourseFileChecklist_: {
             data?: components["schemas"]["CourseFileChecklist"] | null;
@@ -20456,6 +21498,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[MalpracticeCaseResponse] */
+        Envelope_MalpracticeCaseResponse_: {
+            data?: components["schemas"]["MalpracticeCaseResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[MalpracticeOut] */
         Envelope_MalpracticeOut_: {
             data?: components["schemas"]["MalpracticeOut"] | null;
@@ -20519,6 +21576,21 @@ export interface components {
         /** Envelope[MeResponse] */
         Envelope_MeResponse_: {
             data?: components["schemas"]["MeResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MedalResponse] */
+        Envelope_MedalResponse_: {
+            data?: components["schemas"]["MedalResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -21477,9 +22549,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RankListResponse] */
+        Envelope_RankListResponse_: {
+            data?: components["schemas"]["RankListResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ReadOnlyState] */
         Envelope_ReadOnlyState_: {
             data?: components["schemas"]["ReadOnlyState"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ReadmissionResponse] */
+        Envelope_ReadmissionResponse_: {
+            data?: components["schemas"]["ReadmissionResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -21675,6 +22777,66 @@ export interface components {
         /** Envelope[ResultAnalysis] */
         Envelope_ResultAnalysis_: {
             data?: components["schemas"]["ResultAnalysis"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RevalApplyResponse] */
+        Envelope_RevalApplyResponse_: {
+            data?: components["schemas"]["RevalApplyResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RevalEligibilityResponse] */
+        Envelope_RevalEligibilityResponse_: {
+            data?: components["schemas"]["RevalEligibilityResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RevalResponse] */
+        Envelope_RevalResponse_: {
+            data?: components["schemas"]["RevalResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RevalScript] */
+        Envelope_RevalScript_: {
+            data?: components["schemas"]["RevalScript"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22272,6 +23434,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[SupplementaryPreview] */
+        Envelope_SupplementaryPreview_: {
+            data?: components["schemas"]["SupplementaryPreview"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[SyllabusTopicOut] */
         Envelope_SyllabusTopicOut_: {
             data?: components["schemas"]["SyllabusTopicOut"] | null;
@@ -22350,6 +23527,21 @@ export interface components {
         /** Envelope[TimetableResponse] */
         Envelope_TimetableResponse_: {
             data?: components["schemas"]["TimetableResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TranscriptResponse] */
+        Envelope_TranscriptResponse_: {
+            data?: components["schemas"]["TranscriptResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22467,10 +23659,10 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[Union[VerifyResponse, ResultVerifyResponse]] */
-        Envelope_Union_VerifyResponse__ResultVerifyResponse__: {
+        /** Envelope[Union[VerifyResponse, ResultVerifyResponse, TranscriptVerifyResponse]] */
+        Envelope_Union_VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__: {
             /** Data */
-            data?: components["schemas"]["VerifyResponse"] | components["schemas"]["ResultVerifyResponse"] | null;
+            data?: components["schemas"]["VerifyResponse"] | components["schemas"]["ResultVerifyResponse"] | components["schemas"]["TranscriptVerifyResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -23211,6 +24403,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[CorrectionResponse]] */
+        Envelope_list_CorrectionResponse__: {
+            /** Data */
+            data?: components["schemas"]["CorrectionResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CourseResponse]] */
         Envelope_list_CourseResponse__: {
             /** Data */
@@ -23375,6 +24583,22 @@ export interface components {
         Envelope_list_DetentionListRow__: {
             /** Data */
             data?: components["schemas"]["DetentionListRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DetentionRow]] */
+        Envelope_list_DetentionRow__: {
+            /** Data */
+            data?: components["schemas"]["DetentionRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -24043,6 +25267,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[MalpracticeCaseResponse]] */
+        Envelope_list_MalpracticeCaseResponse__: {
+            /** Data */
+            data?: components["schemas"]["MalpracticeCaseResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MedalResponse]] */
+        Envelope_list_MedalResponse__: {
+            /** Data */
+            data?: components["schemas"]["MedalResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[MeritListResponse]] */
         Envelope_list_MeritListResponse__: {
             /** Data */
@@ -24459,6 +25715,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[RankListResponse]] */
+        Envelope_list_RankListResponse__: {
+            /** Data */
+            data?: components["schemas"]["RankListResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ReadmissionResponse]] */
+        Envelope_list_ReadmissionResponse__: {
+            /** Data */
+            data?: components["schemas"]["ReadmissionResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ReconcileRowOut]] */
         Envelope_list_ReconcileRowOut__: {
             /** Data */
@@ -24527,6 +25815,38 @@ export interface components {
         Envelope_list_RegulationResponse__: {
             /** Data */
             data?: components["schemas"]["RegulationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RevalResponse]] */
+        Envelope_list_RevalResponse__: {
+            /** Data */
+            data?: components["schemas"]["RevalResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RevalScript]] */
+        Envelope_list_RevalScript__: {
+            /** Data */
+            data?: components["schemas"]["RevalScript"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -25099,6 +26419,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[TranscriptResponse]] */
+        Envelope_list_TranscriptResponse__: {
+            /** Data */
+            data?: components["schemas"]["TranscriptResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[TranscriptTypeOut]] */
+        Envelope_list_TranscriptTypeOut__: {
+            /** Data */
+            data?: components["schemas"]["TranscriptTypeOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[TransferResponse]] */
         Envelope_list_TransferResponse__: {
             /** Data */
@@ -25247,6 +26599,22 @@ export interface components {
         Envelope_list_WindowResponse__: {
             /** Data */
             data?: components["schemas"]["WindowResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[WithheldRow]] */
+        Envelope_list_WithheldRow__: {
+            /** Data */
+            data?: components["schemas"]["WithheldRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -27461,6 +28829,18 @@ export interface components {
              */
             via: "direct" | "role" | "delegation" | "escalation";
         };
+        /** InquiryUpdate */
+        InquiryUpdate: {
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Hearing At */
+            hearing_at?: string | null;
+            /**
+             * Invalidate Paper
+             * @default false
+             */
+            invalidate_paper: boolean;
+        };
         /** InstallRequest */
         InstallRequest: {
             /** Install Key */
@@ -28631,6 +30011,101 @@ export interface components {
             /** Logo Url */
             logo_url: string;
         };
+        /** MalpracticeCaseCreate */
+        MalpracticeCaseCreate: {
+            /**
+             * Category
+             * @enum {string}
+             */
+            category: "copying" | "impersonation" | "device" | "material" | "misconduct" | "tampering" | "other";
+            /** Evidence */
+            evidence?: {
+                [key: string]: unknown;
+            }[] | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /** Invigilator Report */
+            invigilator_report: string;
+        };
+        /** MalpracticeCaseResponse */
+        MalpracticeCaseResponse: {
+            /** Case Number */
+            case_number: string;
+            /** Category */
+            category: string;
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Course Code */
+            course_code?: string | null;
+            /** Debar Until Term Id */
+            debar_until_term_id?: string | null;
+            /** Decided At */
+            decided_at?: string | null;
+            /** Decision Text */
+            decision_text?: string | null;
+            /** Evidence */
+            evidence?: {
+                [key: string]: unknown;
+            }[] | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /** Hearing At */
+            hearing_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invigilator Report */
+            invigilator_report?: string | null;
+            /** Punishment */
+            punishment?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /**
+             * Reported At
+             * Format: date-time
+             */
+            reported_at: string;
+            /** Run Id */
+            run_id?: string | null;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /** Student Statement */
+            student_statement?: string | null;
+            /**
+             * Timeline
+             * @default []
+             */
+            timeline: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** MalpracticeDecision */
+        MalpracticeDecision: {
+            /** Debar Terms */
+            debar_terms?: number | null;
+            /** Decision Text */
+            decision_text: string;
+            /**
+             * Punishment
+             * @enum {string}
+             */
+            punishment: "none" | "warning" | "cancel_paper" | "cancel_session" | "debar_terms" | "expel";
+        };
         /** MalpracticeOut */
         MalpracticeOut: {
             /** Case Number */
@@ -28934,6 +30409,51 @@ export interface components {
             username: string;
             /** Valid To */
             valid_to?: string | null;
+        };
+        /** MedalAwardCreate */
+        MedalAwardCreate: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /** Citation */
+            citation?: string | null;
+            /**
+             * Medal
+             * @enum {string}
+             */
+            medal: "gold" | "silver" | "bronze";
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+        };
+        /** MedalResponse */
+        MedalResponse: {
+            /** Held On */
+            held_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Level */
+            level?: string | null;
+            /** Position */
+            position?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** Title */
+            title: string;
         };
         /** MemberIn */
         MemberIn: {
@@ -32301,6 +33821,67 @@ export interface components {
             /** Total Score */
             total_score?: number | null;
         };
+        /** RankListEntry */
+        RankListEntry: {
+            /** Cgpa */
+            cgpa?: string | null;
+            /** Credits */
+            credits?: string | null;
+            /** Rank */
+            rank: number;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Sgpa */
+            sgpa?: string | null;
+            /** Student Masked */
+            student_masked: string;
+            /** Student Program Enrollment Id */
+            student_program_enrollment_id?: string | null;
+            /** Tie Break */
+            tie_break?: string | null;
+        };
+        /** RankListPublish */
+        RankListPublish: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /** Program Id */
+            program_id?: string | null;
+            /**
+             * Public
+             * @default false
+             */
+            public: boolean;
+            /** Term Id */
+            term_id?: string | null;
+            /**
+             * Top N
+             * @default 10
+             */
+            top_n: number;
+        };
+        /** RankListResponse */
+        RankListResponse: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /** Cumulative */
+            cumulative: boolean;
+            /** Entries */
+            entries: components["schemas"]["RankListEntry"][];
+            /** Key */
+            key?: string | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Published At */
+            published_at?: string | null;
+            /** Term Id */
+            term_id?: string | null;
+        };
         /** ReadOnlyModeRequest */
         ReadOnlyModeRequest: {
             /** Enabled */
@@ -32336,6 +33917,47 @@ export interface components {
             platform: boolean;
             /** Reason */
             reason?: string | null;
+        };
+        /** ReadmissionRequest */
+        ReadmissionRequest: {
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Reason */
+            reason: string;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+        };
+        /** ReadmissionResponse */
+        ReadmissionResponse: {
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** New Term Record Id */
+            new_term_record_id?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /**
+             * Started At
+             * Format: date-time
+             */
+            started_at: string;
+            /** Status */
+            status: string;
+            /** Term Id */
+            term_id?: string | null;
         };
         /** ReasonBody */
         ReasonBody: {
@@ -33158,6 +34780,204 @@ export interface components {
             /** Valid */
             valid: boolean;
         };
+        /** RetotalRequest */
+        RetotalRequest: {
+            /** Remarks */
+            remarks?: string | null;
+            /** Revised Marks */
+            revised_marks: number | string;
+        };
+        /** RevalApplyResponse */
+        RevalApplyResponse: {
+            /** Job Id */
+            job_id?: string | null;
+            /** Requests */
+            requests: number;
+            /** Run Id */
+            run_id?: string | null;
+        };
+        /** RevalAssignRequest */
+        RevalAssignRequest: {
+            /** Due At */
+            due_at?: string | null;
+            /** Evaluator Staff Id */
+            evaluator_staff_id?: string | null;
+            /** External Evaluator */
+            external_evaluator?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** RevalCreate */
+        RevalCreate: {
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /**
+             * Request Type
+             * @enum {string}
+             */
+            request_type: "retotaling" | "photocopy" | "revaluation" | "challenge";
+        };
+        /** RevalDecision */
+        RevalDecision: {
+            /**
+             * Decision
+             * @description omit to apply the min-delta rule
+             */
+            decision?: ("marks_changed" | "no_change" | "rejected") | null;
+            /** Remarks */
+            remarks?: string | null;
+            /** Revised Marks */
+            revised_marks?: number | string | null;
+        };
+        /** RevalEligibilityResponse */
+        RevalEligibilityResponse: {
+            /** Items */
+            items: components["schemas"]["RevalEligibleItem"][];
+            /**
+             * Session Id
+             * Format: uuid
+             */
+            session_id: string;
+        };
+        /** RevalEligibleItem */
+        RevalEligibleItem: {
+            /** Allowed Types */
+            allowed_types: string[];
+            /** Course Code */
+            course_code?: string | null;
+            /** Course Title */
+            course_title?: string | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /**
+             * Existing
+             * @default {}
+             */
+            existing: {
+                [key: string]: string;
+            };
+            /** Fees */
+            fees: {
+                [key: string]: number;
+            };
+            /** Letter Grade */
+            letter_grade?: string | null;
+            /**
+             * Result Id
+             * Format: uuid
+             */
+            result_id: string;
+            /** Result Status */
+            result_status: string;
+            /** Window Ends At */
+            window_ends_at?: string | null;
+        };
+        /** RevalMarks */
+        RevalMarks: {
+            /** Marks */
+            marks: number | string;
+            /** Question Wise */
+            question_wise?: {
+                [key: string]: number | string;
+            } | null;
+        };
+        /** RevalResponse */
+        RevalResponse: {
+            /** Course Code */
+            course_code?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Decided At */
+            decided_at?: string | null;
+            /** Delta */
+            delta?: string | null;
+            /** Evaluator Assignment Id */
+            evaluator_assignment_id?: string | null;
+            /**
+             * Exam Registration Item Id
+             * Format: uuid
+             */
+            exam_registration_item_id: string;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /**
+             * Fee Paise
+             * @default 0
+             */
+            fee_paise: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Status */
+            invoice_status?: string | null;
+            /** Original Marks */
+            original_marks?: string | null;
+            /**
+             * Photocopy Ready
+             * @default false
+             */
+            photocopy_ready: boolean;
+            /** Refund Due */
+            refund_due: boolean;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Request Type */
+            request_type: string;
+            /** Revised Marks */
+            revised_marks?: string | null;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+        };
+        /** RevalScript */
+        RevalScript: {
+            /**
+             * Answer Script Id
+             * Format: uuid
+             */
+            answer_script_id: string;
+            /** Due At */
+            due_at?: string | null;
+            /** Dummy Number */
+            dummy_number: string;
+            /** Marks */
+            marks?: string | null;
+            /** Max Marks */
+            max_marks: string;
+            /** Pages */
+            pages?: number | null;
+            /** Request Type */
+            request_type: string;
+            /**
+             * Reval Request Id
+             * Format: uuid
+             */
+            reval_request_id: string;
+            /**
+             * Scan Available
+             * @default false
+             */
+            scan_available: boolean;
+            /** Status */
+            status: string;
+        };
         /** ReviewIn */
         ReviewIn: {
             /** Marks */
@@ -33820,6 +35640,12 @@ export interface components {
              * @default []
              */
             enrollment_ids: string[];
+            /**
+             * Ignore Holds
+             * @description withheld release (Phase 16): holds do not withhold
+             * @default false
+             */
+            ignore_holds: boolean;
             /**
              * Marks Delta
              * @description correction runs: {'<enrolment>:<course>': delta ESE marks}
@@ -36136,6 +37962,16 @@ export interface components {
             /** Phone */
             phone?: string | null;
         };
+        /** StudentStatementSubmit */
+        StudentStatementSubmit: {
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: string[];
+            /** Text */
+            text: string;
+        };
         /** StudentStats */
         StudentStats: {
             /** By Batch */
@@ -36575,6 +38411,37 @@ export interface components {
             quota: string;
             /** Seats */
             seats: number;
+        };
+        /** SupplementaryCreateRequest */
+        SupplementaryCreateRequest: {
+            /**
+             * Exam Kind
+             * @default supplementary
+             * @enum {string}
+             */
+            exam_kind: "supplementary" | "arrear";
+            /** Fee Rules */
+            fee_rules?: {
+                [key: string]: number;
+            } | null;
+            /** From Session Id */
+            from_session_id?: string | null;
+            /** Name */
+            name?: string | null;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+        };
+        /** SupplementaryPreview */
+        SupplementaryPreview: {
+            /** Papers */
+            papers: {
+                [key: string]: unknown;
+            }[];
+            /** Students */
+            students: number;
         };
         /** SuspendRequest */
         SuspendRequest: {
@@ -37162,6 +39029,133 @@ export interface components {
              * @default 0
              */
             total_sessions: number;
+        };
+        /** TranscriptIssueRequest */
+        TranscriptIssueRequest: {
+            /**
+             * Delivery
+             * @default digital
+             * @enum {string}
+             */
+            delivery: "digital" | "pickup" | "post";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** TranscriptRequestCreate */
+        TranscriptRequestCreate: {
+            /**
+             * Copies
+             * @default 1
+             */
+            copies: number;
+            /**
+             * Delivery
+             * @default digital
+             * @enum {string}
+             */
+            delivery: "digital" | "pickup" | "post";
+            /**
+             * Enrollment Id
+             * @description staff requests on behalf of a student
+             */
+            enrollment_id?: string | null;
+            /** Purpose */
+            purpose?: string | null;
+            /**
+             * Transcript Type
+             * @default consolidated
+             * @enum {string}
+             */
+            transcript_type: "provisional" | "consolidated" | "final" | "duplicate" | "migration";
+        };
+        /** TranscriptResponse */
+        TranscriptResponse: {
+            /** Copies */
+            copies: number;
+            /** Document Number */
+            document_number?: string | null;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Status */
+            invoice_status?: string | null;
+            /** Issued At */
+            issued_at?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /**
+             * Superseded
+             * @default false
+             */
+            superseded: boolean;
+            /** Transcript Type */
+            transcript_type: string;
+            /** Verification Token */
+            verification_token?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** TranscriptTypeOut */
+        TranscriptTypeOut: {
+            /** Fee Paise */
+            fee_paise: number;
+            /** Requires No Dues */
+            requires_no_dues: boolean;
+            /** Transcript Type */
+            transcript_type: string;
+        };
+        /** TranscriptVerifyResponse */
+        TranscriptVerifyResponse: {
+            /** Cgpa */
+            cgpa?: string | null;
+            /** Credits Earned */
+            credits_earned?: string | null;
+            /** Document Number */
+            document_number?: string | null;
+            /**
+             * Document Type
+             * @default transcript
+             */
+            document_type: string;
+            /** Hash */
+            hash?: string | null;
+            /** Holder Name */
+            holder_name?: string | null;
+            /** Institution */
+            institution?: string | null;
+            /** Issued At */
+            issued_at?: string | null;
+            /** Message */
+            message?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /**
+             * Superseded
+             * @default false
+             */
+            superseded: boolean;
+            /** Transcript Type */
+            transcript_type?: string | null;
+            /** Valid */
+            valid: boolean;
         };
         /** TransferComplete */
         TransferComplete: {
@@ -38179,6 +40173,36 @@ export interface components {
             applicant: components["schemas"]["ApplicantResponse"];
             refund?: components["schemas"]["RefundOut"] | null;
         };
+        /** WithheldReleaseRequest */
+        WithheldReleaseRequest: {
+            /** Reason */
+            reason: string;
+            /** Result Ids */
+            result_ids: string[];
+        };
+        /** WithheldRow */
+        WithheldRow: {
+            /** Course Code */
+            course_code?: string | null;
+            /** Reasons */
+            reasons: string[];
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Releasable */
+            releasable: boolean;
+            /**
+             * Result Id
+             * Format: uuid
+             */
+            result_id: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+        };
         /** WorkflowActRequest */
         WorkflowActRequest: {
             /** Comment */
@@ -38195,6 +40219,11 @@ export interface components {
         WorkflowCancelRequest: {
             /** Reason */
             reason?: string | null;
+        };
+        /** WorkflowDecisionBody */
+        WorkflowDecisionBody: {
+            /** Comment */
+            comment?: string | null;
         };
         /** WorkflowDefinitionCreate */
         WorkflowDefinitionCreate: {
@@ -50247,6 +52276,72 @@ export interface operations {
             };
         };
     };
+    supplementary_create_api_v1_exam_sessions_supplementary_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SupplementaryCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    supplementary_preview_api_v1_exam_sessions_supplementary_preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SupplementaryCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_SupplementaryPreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_session_api_v1_exam_sessions__id__get: {
         parameters: {
             query?: never;
@@ -50366,6 +52461,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_ExamCentreOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    challenge_panel_api_v1_exam_sessions__id__challenge_panel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChallengePanelRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RevalResponse__"];
                 };
             };
             /** @description Validation Error */
@@ -50929,6 +53059,71 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_RemunerationSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_session_api_v1_exam_sessions__id__reval_requests_get: {
+        parameters: {
+            query?: {
+                type?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RevalResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_apply_api_v1_exam_sessions__id__reval_apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalApplyResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -55167,6 +57362,394 @@ export interface operations {
             };
         };
     };
+    mal_list_api_v1_malpractice_cases_get: {
+        parameters: {
+            query?: {
+                session_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MalpracticeCaseResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_create_api_v1_malpractice_cases_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MalpracticeCaseCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_mine_api_v1_malpractice_cases_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MalpracticeCaseResponse__"];
+                };
+            };
+        };
+    };
+    mal_get_api_v1_malpractice_cases__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_appeal_api_v1_malpractice_cases__id__appeal_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AppealCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_appeal_decide_api_v1_malpractice_cases__id__appeal_decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AppealDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_close_api_v1_malpractice_cases__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_decide_api_v1_malpractice_cases__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MalpracticeDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_hearing_api_v1_malpractice_cases__id__hearing_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InquiryUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_inquiry_api_v1_malpractice_cases__id__inquiry_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InquiryUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_notice_api_v1_malpractice_cases__id__notice_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mal_statement_api_v1_malpractice_cases__id__statement_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StudentStatementSubmit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MalpracticeCaseResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_cr_api_v1_marks_change_requests_get: {
         parameters: {
             query?: {
@@ -58690,6 +61273,37 @@ export interface operations {
             };
         };
     };
+    public_rank_api_v1_public_results_rank_lists__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     my_qp_api_v1_qp_assignments_me_get: {
         parameters: {
             query?: never;
@@ -59549,6 +62163,140 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_QuizStartResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    readmissions_api_v1_readmissions_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ReadmissionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    readmission_create_api_v1_readmissions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReadmissionRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadmissionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    readmission_approve_api_v1_readmissions__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadmissionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    readmission_reject_api_v1_readmissions__id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReadmissionResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -61529,6 +64277,140 @@ export interface operations {
             };
         };
     };
+    corrections_api_v1_results_corrections_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CorrectionResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    correction_create_api_v1_results_corrections_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CorrectionRequestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CorrectionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    correction_approve_api_v1_results_corrections__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CorrectionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    correction_reject_api_v1_results_corrections__id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CorrectionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     my_results_api_v1_results_me_get: {
         parameters: {
             query?: {
@@ -61580,6 +64462,101 @@ export interface operations {
             };
         };
     };
+    medals_api_v1_results_medals_get: {
+        parameters: {
+            query?: {
+                batch_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MedalResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    medal_award_api_v1_results_medals_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MedalAwardCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MedalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    medal_revoke_api_v1_results_medals__id__revoke_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     rank_list_api_v1_results_rank_list_get: {
         parameters: {
             query: {
@@ -61610,6 +64587,114 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rank_lists_api_v1_results_rank_lists_get: {
+        parameters: {
+            query: {
+                batch_id: string;
+                term_id?: string | null;
+                cumulative?: boolean;
+                program_id?: string | null;
+                top_n?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RankListResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rank_mine_api_v1_results_rank_lists_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+        };
+    };
+    rank_publish_api_v1_results_rank_lists_publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RankListPublish"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RankListResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rank_lists_published_api_v1_results_rank_lists_published_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RankListResponse__"];
                 };
             };
         };
@@ -61696,6 +64781,426 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_MyResultsResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withheld_api_v1_results_withheld_get: {
+        parameters: {
+            query?: {
+                session_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_WithheldRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withheld_release_api_v1_results_withheld_release_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WithheldReleaseRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_create_api_v1_reval_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevalCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_mine_api_v1_reval_requests_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RevalResponse__"];
+                };
+            };
+        };
+    };
+    reval_get_api_v1_reval_requests__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_assign_api_v1_reval_requests__id__assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevalAssignRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    challenge_decide_api_v1_reval_requests__id__challenge_decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevalDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_decide_api_v1_reval_requests__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevalDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_photocopy_api_v1_reval_requests__id__photocopy_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_reject_api_v1_reval_requests__id__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_retotal_api_v1_reval_requests__id__retotal_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RetotalRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_valuation_api_v1_reval_requests__id__valuation_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RevalMarks"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalScript_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reval_eligibility_api_v1_reval_eligibility_get: {
+        parameters: {
+            query: {
+                session_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RevalEligibilityResponse_"];
                 };
             };
             /** @description Validation Error */
@@ -65402,6 +68907,37 @@ export interface operations {
             };
         };
     };
+    detained_api_v1_terms__id__detained_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DetentionRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     detention_list_api_v1_terms__id__detention_list_get: {
         parameters: {
             query?: {
@@ -66376,6 +69912,335 @@ export interface operations {
             };
         };
     };
+    transcript_mine_api_v1_transcripts_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TranscriptResponse__"];
+                };
+            };
+        };
+    };
+    transcript_queue_api_v1_transcripts_requests_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TranscriptResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_request_api_v1_transcripts_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TranscriptRequestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TranscriptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_types_api_v1_transcripts_types_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TranscriptTypeOut__"];
+                };
+            };
+        };
+    };
+    transcript_approve_api_v1_transcripts__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkflowDecisionBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TranscriptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_cancel_api_v1_transcripts__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TranscriptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_checks_api_v1_transcripts__id__checks_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_download_api_v1_transcripts__id__download_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_generate_api_v1_transcripts__id__generate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TranscriptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_issue_api_v1_transcripts__id__issue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TranscriptIssueRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TranscriptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transcript_reissue_api_v1_transcripts__id__reissue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TranscriptResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_users_api_v1_users_get: {
         parameters: {
             query?: {
@@ -66923,6 +70788,26 @@ export interface operations {
             };
         };
     };
+    reval_scripts_api_v1_valuation_me_reval_scripts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RevalScript__"];
+                };
+            };
+        };
+    };
     verify_api_v1_verify__token__get: {
         parameters: {
             query?: never;
@@ -66940,7 +70825,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_Union_VerifyResponse__ResultVerifyResponse__"];
+                    "application/json": components["schemas"]["Envelope_Union_VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__"];
                 };
             };
             /** @description Validation Error */

@@ -56,6 +56,9 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 15 — public result lookup (reg. no + DOB; rate-limited + captcha; audience=public sessions only).
     # Grade-card QR verification reuses "GET /api/v1/verify/{token}" (Phase 07).
     "POST /api/v1/public/results/lookup",
+    # Phase 16 — masked rank lists published ``public`` (setting ``exams.rank_list_public``). Transcript QR
+    # verification (``tr`` + 48 hex tokens) reuses "GET /api/v1/verify/{token}".
+    "GET /api/v1/public/results/rank-lists/{id}",
 }
 
 

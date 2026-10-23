@@ -74,6 +74,7 @@ from app.api.v1.endpoints import (
     recruitment,
     registration,
     regulations,
+    post_result,
     results,
     scholarships,
     search,
@@ -139,6 +140,10 @@ api_router.include_router(lms.router, dependencies=[feature_required("lms.conten
 api_router.include_router(lms.projects_router, dependencies=[feature_required("assessment.projects")])
 api_router.include_router(content.router, dependencies=[feature_required("lms.question_bank")])
 api_router.include_router(content.materials_router, dependencies=[feature_required("lms.study_materials")])
+# Phase 16 before the Phase 14 router: ``/exam-sessions/supplementary`` must win over ``/exam-sessions/{id}``; each
+# route carries its own results.* / students.core feature
+api_router.include_router(post_result.router)
+api_router.include_router(post_result.public_router)  # masked public rank lists (published public + setting)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

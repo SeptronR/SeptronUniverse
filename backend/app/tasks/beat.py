@@ -58,6 +58,13 @@ register_beat("valuation.due_reminders", "beat.valuation.due_reminders", crontab
 register_beat("results.publish_notifications_retry", "beat.results.publish_notifications_retry", 600.0)
 register_beat("scripts.retention_check", "beat.scripts.retention_check", crontab(day_of_week=0, hour=20, minute=15))
 
+# ---- Phase 16 post-result services (app/tasks/post_result.py) ----------------------------------------------------------------
+register_beat("reval.window_close", "beat.reval.window_close", crontab(hour=19, minute=5))  # 00:35 IST
+register_beat("reval.due_reminders", "beat.reval.due_reminders", crontab(hour=3, minute=10))  # 08:40 IST
+register_beat("malpractice.hearing_reminders", "beat.malpractice.hearing_reminders", crontab(hour=2, minute=40))  # 08:10
+register_beat("withheld.auto_release", "beat.withheld.auto_release", crontab(minute=23))
+register_beat("transcripts.reminders", "beat.transcripts.reminders", crontab(hour=4, minute=0))  # 09:30 IST
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

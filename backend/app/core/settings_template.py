@@ -110,6 +110,10 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
         "exams", "script_retention_months", "int", 6, label="Archive scripts N months after publication", min=1, max=120
     ),
     SettingDef("exams", "valuation_remuneration", "json", None, label="Valuation remuneration per script (paise)"),
+    # exams (Phase 16) — malpractice appeals, transcript fees (paise per copy by type), public rank lists
+    SettingDef("exams", "malpractice_appeal_days", "int", 30, label="Malpractice appeal window (days)", min=1, max=365),
+    SettingDef("exams", "transcript_fees", "json", None, label="Transcript fee per copy by type (paise)"),
+    SettingDef("exams", "rank_list_public", "bool", False, label="Publish masked rank lists publicly"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),

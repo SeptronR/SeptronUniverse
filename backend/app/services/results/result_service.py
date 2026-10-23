@@ -418,7 +418,7 @@ class ResultRunService(ResultBase):
                     await self.db.execute(
                         select(MalpracticeCase.exam_registration_item_id).where(
                             MalpracticeCase.exam_registration_item_id.in_(item_ids),
-                            MalpracticeCase.status.notin_(("closed", "dismissed", "decided")),
+                            MalpracticeCase.status.in_(("reported", "under_inquiry", "hearing_scheduled", "appealed")),
                         )
                     )
                 ).scalars()
@@ -432,9 +432,8 @@ class ResultRunService(ResultBase):
                     await self.db.execute(
                         select(MalpracticeCase.exam_registration_item_id).where(
                             MalpracticeCase.exam_registration_item_id.in_(item_ids),
-                            MalpracticeCase.status == "decided",
-                            MalpracticeCase.punishment.is_not(None),
-                            MalpracticeCase.punishment != "none",
+                            MalpracticeCase.status.in_(("decided", "appeal_decided", "closed")),
+                            MalpracticeCase.punishment.in_(("cancel_paper", "cancel_session", "debar_terms", "expel")),
                         )
                     )
                 ).scalars()
@@ -442,6 +441,22 @@ class ResultRunService(ResultBase):
             if item_ids
             else set()
         )
+        # cancel_session: every item of a registration with such a decided case is cancelled (Phase 16)
+        if item_ids:
+            cancelled_regs = set(
+                (
+                    await self.db.execute(
+                        select(ExamRegistrationItem.exam_registration_id)
+                        .join(MalpracticeCase, MalpracticeCase.exam_registration_item_id == ExamRegistrationItem.id)
+                        .where(
+                            ExamRegistrationItem.id.in_(item_ids),
+                            MalpracticeCase.status.in_(("decided", "appeal_decided", "closed")),
+                            MalpracticeCase.punishment == "cancel_session",
+                        )
+                    )
+                ).scalars()
+            )
+            mal_decided |= {i.id for i in items if i.exam_registration_id in cancelled_regs}
         enr_ids = list(enr_by_id)
         holds = (
             set(
@@ -563,7 +578,7 @@ class ResultRunService(ResultBase):
             elif it.id in mal:
                 result_status = "withheld"
                 anomaly(enr_id, c.id, "MALPRACTICE_PENDING", "Open malpractice case")
-            elif enr_id in holds:
+            elif enr_id in holds and not scope.get("ignore_holds"):
                 result_status = "withheld"
                 anomaly(enr_id, c.id, "WITHHELD_HOLD", "Active exam hold")
             elif status_att == "absent" or it.status == "absent":

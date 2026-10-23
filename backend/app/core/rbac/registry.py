@@ -653,6 +653,11 @@ FACULTY_QP: set[str] = P("exams", "qp")
 PARENT_EXAMS: set[str] = P("exams", "view")
 # Phase 15 (Prompts/15 visibility): the HOD reads its department's runs (after verification) and published results
 HOD_RESULTS: set[str] = P("results", "view_all")
+# Phase 16 (Prompts/16 visibility): the registrar reads reval / malpractice queues (exams view_all) and approves medals;
+# discipline-committee members and committee secretaries read the malpractice cases of their committees (narrowed by
+# ``committee_members`` in the service) and the committee chair decides them
+REGISTRAR_POST_RESULT: set[str] = P("exams", "view_all") | P("results", "approve")
+COMMITTEE_EXAMS: set[str] = P("exams", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -698,7 +703,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_TIMETABLE
     | REGISTRAR_ATTENDANCE
     | REGISTRAR_FEES
-    | REGISTRAR_MARKS,
+    | REGISTRAR_MARKS
+    | REGISTRAR_POST_RESULT,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -933,9 +939,14 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("grievances", "triage", "resolve", "escalate", "committee", "view_all", "update", "view")
     | P("students", "view")
     | P("communication", "send"),
-    "discipline_committee": STAFF_SELF | P("discipline", "manage") | P("students", "view") | P("hostel", "view"),
+    "discipline_committee": STAFF_SELF
+    | P("discipline", "manage")
+    | P("students", "view")
+    | P("hostel", "view")
+    | COMMITTEE_EXAMS,
     "committee_secretary": STAFF_SELF
-    | P("governance", "committees", "minutes", "resolutions", "view", "create", "update"),
+    | P("governance", "committees", "minutes", "resolutions", "view", "create", "update")
+    | COMMITTEE_EXAMS,
     "legal_officer": STAFF_SELF | P("legal", "manage") | P("efile", "manage") | P("rti", "view"),
     "pio": STAFF_SELF | P("rti", "manage") | P("efile", "view"),
     "receptionist": STAFF_SELF | P("admissions", "create", "view") | P("facilities", "manage") | P("students", "view"),
@@ -1016,6 +1027,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0016": frozenset(REGISTRAR_POST_RESULT | COMMITTEE_EXAMS),
     "0015": frozenset(HOD_RESULTS),
     "0014": frozenset(HOD_EXAMS | FACULTY_QP | PARENT_EXAMS),
     "0013": frozenset(EXAM_CELL_MARKS | HOD_ASSESSMENT | DEAN_OBE | REGISTRAR_MARKS | PARENT_LMS),
