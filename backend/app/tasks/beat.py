@@ -69,6 +69,11 @@ register_beat("transcripts.reminders", "beat.transcripts.reminders", crontab(hou
 register_beat("cqi.due_reminders", "beat.cqi.due_reminders", crontab(day_of_week=1, hour=3, minute=20))  # Mon 08:50 IST
 register_beat("obe.coverage_digest", "beat.obe.coverage_digest", crontab(day_of_month=1, hour=3, minute=40))  # 1st 09:10
 
+# ---- Phase 18 degrees & credentials (app/tasks/degrees.py) -------------------------------------------------------------------------
+register_beat("credentials.retry_failed", "beat.credentials.retry_failed", crontab(minute=37))
+register_beat("abc.push_pending", "beat.abc.push_pending", crontab(hour=20, minute=50))  # 02:20 IST
+register_beat("convocation.reminders", "beat.convocation.reminders", crontab(hour=3, minute=30))  # 09:00 IST
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

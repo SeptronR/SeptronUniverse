@@ -173,6 +173,15 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 18 — degrees, convocation, digital credentials
+const DegreeEligibilityPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.DegreeEligibilityPage })));
+const ConvocationsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.ConvocationsPage })));
+const AwardsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.AwardsPage })));
+const ProvisionalPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.ProvisionalPage })));
+const CredentialsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.CredentialsPage })));
+const GraduationStatsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.GraduationStatsPage })));
+const StudentDegreePage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.StudentDegreePage })));
+const BulkVerifyPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.BulkVerifyPage })));
 // Phase 17 — OBE attainment, CQI, NBA export
 const ObeConfigPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.ObeConfigPage })));
 const OfferingAttainmentPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.OfferingAttainmentPage })));
@@ -252,6 +261,7 @@ export const router = createBrowserRouter([
   // Phase 06 — public careers page (no sign-in; the API checks hr.recruitment for the tenant)
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
+  { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
   { path: '/verify/:token', element: page(<VerifyPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
   { path: '/results/lookup', element: page(<PublicResultLookupPage />) },
@@ -435,6 +445,13 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 18 — degrees & convocation (narrowed by the services: units / institution)
+              ['/admin/degrees/eligibility', 'degrees.eligibility', 'degrees', 'view_all', [['degrees', 'manage'], ['degrees', 'award']], <DegreeEligibilityPage key="de" />],
+              ['/admin/degrees/convocations', 'degrees.convocation', 'degrees', 'convocation_manage', [['degrees', 'view_all']], <ConvocationsPage key="dc" />],
+              ['/admin/degrees/awards', 'degrees.certificates', 'degrees', 'award', [['degrees', 'issue'], ['degrees', 'view_all'], ['degrees', 'create']], <AwardsPage key="da" />],
+              ['/admin/degrees/provisional', 'degrees.provisional', 'degrees', 'issue', [], <ProvisionalPage key="dp" />],
+              ['/admin/degrees/credentials', 'degrees.digilocker_nad', 'degrees', 'issue', [], <CredentialsPage key="dd" />],
+              ['/admin/degrees/stats', 'degrees.certificates', 'degrees', 'view_all', [], <GraduationStatsPage key="ds" />],
               // Phase 17 — OBE attainment (narrowed by the services: own offerings / units / institution)
               ['/admin/obe/config', 'obe.attainment', 'obe', 'configure', [['obe', 'view'], ['obe', 'view_all'], ['obe', 'manage']], <ObeConfigPage key="oc" />],
               ['/admin/obe/program-attainment', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage']], <ProgramAttainmentPage key="op" />],
@@ -603,6 +620,7 @@ export const router = createBrowserRouter([
               ['results', <StudentResultsPage key="res" />],
               ['courses/:offeringId', <StudentCoursePage key="sc" />],
               ['courses/:offeringId/outcomes', <FeatureRoute key="so" feature="obe.attainment"><StudentOutcomesPage /></FeatureRoute>],
+              ['degree', <FeatureRoute key="dg" feature="degrees.eligibility"><StudentDegreePage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],

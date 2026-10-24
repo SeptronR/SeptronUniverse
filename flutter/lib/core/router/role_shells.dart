@@ -265,6 +265,39 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 18 — degree (students / alumni), eligibility + approvals + convocation scanner (registrar / VC)
+  const MoreMenuModule(
+      titleKey: 'degree',
+      icon: Icons.school_outlined,
+      route: AppRoutes.myDegree,
+      color: Colors.indigo,
+      permission: 'degrees:view',
+      feature: 'degrees.eligibility',
+      roles: ['student', 'alumni', 'learner']),
+  const MoreMenuModule(
+      titleKey: 'degree_eligibility',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.degreeEligibility,
+      color: Colors.teal,
+      permission: 'degrees:view_all',
+      feature: 'degrees.eligibility',
+      roles: ['registrar', 'controller_of_examinations', 'vice_chancellor']),
+  const MoreMenuModule(
+      titleKey: 'award_approvals',
+      icon: Icons.approval_outlined,
+      route: AppRoutes.awardApprovals,
+      color: Colors.deepPurple,
+      permission: 'degrees:award',
+      feature: 'degrees.certificates',
+      roles: ['registrar', 'vice_chancellor']),
+  const MoreMenuModule(
+      titleKey: 'convocation_scanner',
+      icon: Icons.qr_code_scanner,
+      route: AppRoutes.convocationScanner,
+      color: Colors.orange,
+      permission: 'degrees:convocation_manage',
+      feature: 'degrees.convocation',
+      roles: ['registrar']),
   // Phase 17 — attainment (faculty), attainment dashboard + CQI (HOD / IQAC / OBE coordinator / dean)
   const MoreMenuModule(
       titleKey: 'attainment',

@@ -122,6 +122,9 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("obe", "show_students", "bool", False, label="Students see their own CO achievement"),
     SettingDef("obe", "auto_run", "bool", True, label="Compute CO attainment when results are published"),
     SettingDef("obe", "strict_prereq", "bool", False, label="Refuse attainment runs before CIA lock / publication"),
+    # degrees (Phase 18) — dues rule, award needs convocation registration
+    SettingDef("degrees", "zero_outstanding_ok", "bool", False, label="Zero outstanding fees counts as dues cleared"),
+    SettingDef("degrees", "award_requires_registration", "bool", False, label="Awards only for convocation registrants"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),

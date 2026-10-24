@@ -13,6 +13,7 @@ import '../../features/assessment/assessment_screens.dart';
 import '../../features/exams/exam_screens.dart';
 import '../../features/results/result_screens.dart';
 import '../../features/obe/obe_screens.dart';
+import '../../features/degrees/degree_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -294,6 +295,35 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 18 — degree (students / alumni), eligibility, approvals, convocation-day scanner (registrar)
+    AppRoutes.myDegree: ScreenEntry(
+      route: AppRoutes.myDegree,
+      titleKey: 'degree',
+      feature: 'degrees.eligibility',
+      permission: 'degrees:view',
+      builder: (_, __) => const StudentDegreeScreen(),
+    ),
+    AppRoutes.degreeEligibility: ScreenEntry(
+      route: AppRoutes.degreeEligibility,
+      titleKey: 'degree_eligibility',
+      feature: 'degrees.eligibility',
+      permission: 'degrees:view_all',
+      builder: (_, __) => const DegreeEligibilityScreen(),
+    ),
+    AppRoutes.awardApprovals: ScreenEntry(
+      route: AppRoutes.awardApprovals,
+      titleKey: 'award_approvals',
+      feature: 'degrees.certificates',
+      permission: 'degrees:award',
+      builder: (_, __) => const AwardApprovalsScreen(),
+    ),
+    AppRoutes.convocationScanner: ScreenEntry(
+      route: AppRoutes.convocationScanner,
+      titleKey: 'convocation_scanner',
+      feature: 'degrees.convocation',
+      permission: 'degrees:convocation_manage',
+      builder: (_, __) => const ConvocationScannerScreen(),
     ),
     // Phase 17 — attainment (faculty), attainment dashboard (HOD / IQAC), CQI actions
     AppRoutes.attainment: ScreenEntry(

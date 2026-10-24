@@ -979,6 +979,49 @@ OBE_EVENTS: tuple[EventDef, ...] = (
         link="/admin/obe/program-attainment",
     ),
 )
+# Phase 18 — degree eligibility, awards, convocation, credential pushes
+DEGREE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "degrees.eligible",
+        "academics",
+        "Degree eligibility",
+        "Degree eligibility: {{ status }}",
+        "Your degree eligibility check: {{ status }}. Pending items: {{ reasons }}.",
+        ("status", "reasons"),
+        ("in_app", "email"),
+        link="/student/degree",
+    ),
+    EventDef(
+        "degrees.awarded",
+        "academics",
+        "Degree awarded",
+        "{{ degree }} awarded",
+        "Congratulations! Your {{ degree }} is issued (certificate {{ number }}).",
+        ("degree", "number"),
+        ("in_app", "push", "email"),
+        link="/student/degree",
+    ),
+    EventDef(
+        "convocation.registration_open",
+        "academics",
+        "Convocation registration",
+        "Register for {{ name }}",
+        "Registration for {{ name }} is open until {{ deadline }}.",
+        ("name", "deadline"),
+        ("in_app", "email"),
+        link="/student/degree",
+    ),
+    EventDef(
+        "credentials.pushed",
+        "academics",
+        "Credential pushed",
+        "Your {{ document }} is in DigiLocker",
+        "Your {{ document }} was pushed to {{ channel }}.",
+        ("document", "channel"),
+        ("in_app",),
+        link="/student/degree",
+    ),
+)
 # Phase 13 — marks deadlines, LMS publication / announcements
 ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1025,6 +1068,7 @@ EVENTS = (
     + RESULT_EVENTS
     + POST_RESULT_EVENTS
     + OBE_EVENTS
+    + DEGREE_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

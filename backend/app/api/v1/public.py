@@ -59,6 +59,9 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 16 — masked rank lists published ``public`` (setting ``exams.rank_list_public``). Transcript QR
     # verification (``tr`` + 48 hex tokens) reuses "GET /api/v1/verify/{token}".
     "GET /api/v1/public/results/rank-lists/{id}",
+    # Phase 18 — degree / provisional QR tokens resolve through "GET /api/v1/verify/{token}"; employers verify in bulk
+    # (rate-limited + captcha).
+    "POST /api/v1/verify/bulk",
 }
 
 

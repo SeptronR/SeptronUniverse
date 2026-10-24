@@ -22,8 +22,20 @@ export default function VerifyPage() {
       <Card className="w-full max-w-md">
         <CardContent className="space-y-3 pt-6 sm:pt-6 text-center">
           {valid ? <BadgeCheck className="mx-auto h-12 w-12 text-status-approved" /> : <ShieldX className="mx-auto h-12 w-12 text-status-rejected" />}
-          <h1 className="text-lg font-semibold">{valid ? `Valid ${label(r?.document_type)}` : 'Not valid'}</h1>
-          {r && valid && r.document_type === 'grade_card' ? (
+          <h1 className="text-lg font-semibold">{valid ? `Valid ${label(r?.document_type ?? (r as Any)?.entity_type)}` : 'Not valid'}</h1>
+          {r && ['degree', 'provisional_certificate'].includes((r as Any).entity_type) ? (
+            // Phase 18 — degree / provisional certificate tokens (masked holder; revoked / superseded states)
+            <dl className="grid grid-cols-2 gap-2 text-left text-sm">
+              <dt className="text-muted-foreground">Holder</dt><dd>{(r as Any).holder_masked ?? '—'}</dd>
+              {Object.entries((r as Any).award ?? {}).filter(([, v]) => v !== null && v !== undefined).map(([k, v]) => (
+                <div key={k} className="contents"><dt className="text-muted-foreground">{label(k)}</dt><dd>{String(v)}</dd></div>
+              ))}
+              <dt className="text-muted-foreground">Institution</dt><dd>{(r as Any).institution ?? '—'}</dd>
+              <dt className="text-muted-foreground">Hash</dt><dd className="break-all font-mono text-xs">{(r as Any).hash}</dd>
+              {(r as Any).revoked && <dd className="col-span-2 text-status-rejected">Revoked {(r as Any).message ?? ''}</dd>}
+              {(r as Any).superseded && <dd className="col-span-2 text-status-pending">{(r as Any).version_note ?? 'Superseded by a newer version'}</dd>}
+            </dl>
+          ) : r && valid && r.document_type === 'grade_card' ? (
             <dl className="grid grid-cols-2 gap-2 text-left text-sm">
               <dt className="text-muted-foreground">Grade card</dt><dd className="font-mono">{(r as Any).document_number}</dd>
               <dt className="text-muted-foreground">Name</dt><dd>{r.holder_name}</dd>

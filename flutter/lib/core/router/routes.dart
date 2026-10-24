@@ -53,6 +53,11 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 18 — degree (students / alumni), eligibility, award approvals, convocation scanner (registrar)
+  static const myDegree = '/app/degree';
+  static const degreeEligibility = '/app/degrees/eligibility';
+  static const awardApprovals = '/app/degrees/approvals';
+  static const convocationScanner = '/app/degrees/scanner';
   // Phase 17 — OBE attainment (faculty), dashboard (HOD / IQAC), CQI actions
   static const attainment = '/app/attainment';
   static const attainmentDashboard = '/app/attainment/dashboard';

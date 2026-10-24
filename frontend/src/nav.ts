@@ -121,6 +121,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Marks verification', to: '/admin/assessment/verification', icon: ClipboardCheck, module: 'marks', action: 'verify', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Marks locks', to: '/admin/assessment/locks', icon: ClipboardCheck, module: 'marks', action: 'lock', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Eligibility', to: '/admin/attendance/eligibility', icon: ClipboardCheck, module: 'exams', action: 'eligibility', altActions: [], feature: 'attendance.eligibility_detention' },
+      // Phase 18 — degrees & convocation
+      { label: 'Degree eligibility', to: '/admin/degrees/eligibility', icon: GraduationCap, module: 'degrees', action: 'view_all', altActions: ['manage', 'award'], feature: 'degrees.eligibility' },
+      { label: 'Convocations', to: '/admin/degrees/convocations', icon: CalendarCheck, module: 'degrees', action: 'convocation_manage', altActions: ['view_all'], feature: 'degrees.convocation' },
+      { label: 'Degree awards', to: '/admin/degrees/awards', icon: ScrollText, module: 'degrees', action: 'award', altActions: ['issue', 'view_all', 'create'], feature: 'degrees.certificates' },
+      { label: 'Provisional certificates', to: '/admin/degrees/provisional', icon: ScrollText, module: 'degrees', action: 'issue', feature: 'degrees.provisional' },
+      { label: 'Digital credentials', to: '/admin/degrees/credentials', icon: ShieldCheck, module: 'degrees', action: 'issue', feature: 'degrees.digilocker_nad' },
+      { label: 'Graduation stats', to: '/admin/degrees/stats', icon: TrendingUp, module: 'degrees', action: 'view_all', feature: 'degrees.certificates' },
     ],
   },
   {

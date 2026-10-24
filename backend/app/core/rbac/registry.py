@@ -561,6 +561,7 @@ STUDENT: set[str] = (
     | P("exams", "self")
     | P("results", "self")
     | P("obe", "view")
+    | P("degrees", "view")
     | P("fees", "self")
     | P("scholarships", "create", "view")
     | P("no_dues", "request")
@@ -674,6 +675,12 @@ FACULTY_OBE: set[str] = P("obe", "view", "compute")
 DEAN_ATTAINMENT: set[str] = P("obe", "configure", "compute", "export")
 IQAC_OBE: set[str] = P("obe", "manage", "compute", "export")
 STUDENT_OBE: set[str] = P("obe", "view")
+# Phase 18 (Prompts/18 visibility): students / parents / alumni read their own (wards') eligibility, convocation,
+# awards and credential status (narrowed in the services); the registrar overrides eligibility (degrees:manage); the
+# HOD reads its department's checks and awards
+SELF_DEGREES: set[str] = P("degrees", "view")
+REGISTRAR_DEGREES: set[str] = P("degrees", "manage", "view")
+HOD_DEGREES: set[str] = P("degrees", "view_all")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -720,7 +727,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_ATTENDANCE
     | REGISTRAR_FEES
     | REGISTRAR_MARKS
-    | REGISTRAR_POST_RESULT,
+    | REGISTRAR_POST_RESULT
+    | REGISTRAR_DEGREES,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -807,7 +815,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_FEES
     | HOD_ASSESSMENT
     | HOD_EXAMS
-    | HOD_RESULTS,
+    | HOD_RESULTS
+    | HOD_DEGREES,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -999,6 +1008,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("library", "self"),
     "student": STUDENT,
     "parent": COMMON
+    | SELF_DEGREES
     | P("students", "view")
     | P("attendance", "view")
     | P("results", "view")
@@ -1017,6 +1027,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | PARENT_LMS
     | PARENT_EXAMS,
     "alumni": COMMON
+    | SELF_DEGREES
     | P("alumni", "self")
     | P("certificates", "self")
     | P("results", "transcript", "self")
@@ -1045,6 +1056,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0018": frozenset(SELF_DEGREES | REGISTRAR_DEGREES | HOD_DEGREES),
     "0017": frozenset(FACULTY_OBE | DEAN_ATTAINMENT | IQAC_OBE | STUDENT_OBE),
     "0016": frozenset(REGISTRAR_POST_RESULT | COMMITTEE_EXAMS),
     "0015": frozenset(HOD_RESULTS),

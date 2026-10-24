@@ -52,6 +52,7 @@ from app.api.v1.endpoints import (
     courses,
     credit_transfers,
     curriculum,
+    degrees,
     enrollments,
     exams,
     features,
@@ -147,6 +148,8 @@ api_router.include_router(post_result.router)
 api_router.include_router(post_result.public_router)  # masked public rank lists (published public + setting)
 # Phase 17: OBE attainment / CQI / NBA export — each route carries its obe.* feature
 api_router.include_router(obe_attainment.router)
+# Phase 18: degrees, convocation, credentials, ABC — each route carries its degrees.* feature
+api_router.include_router(degrees.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])
