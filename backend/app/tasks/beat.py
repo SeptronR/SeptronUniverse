@@ -96,6 +96,14 @@ register_beat("transport.fee_suspension", "beat.transport.fee_suspension", cront
 register_beat("transport.live_cache_cleanup", "beat.transport.live_cache_cleanup", crontab(minute=12))
 register_beat("transport.schedule_ahead", "beat.transport.schedule_ahead", crontab(hour=19, minute=20))  # 00:50 IST
 
+# ---- Phase 22 inventory & procurement (app/tasks/inventory.py) ----------------------------------------------------------------
+register_beat("inventory.low_stock_scan", "beat.inventory.low_stock_scan", crontab(hour=1, minute=30))  # 07:00 IST
+register_beat("inventory.chemical_expiry_scan", "beat.inventory.chemical_expiry_scan", crontab(day_of_week=1, hour=2, minute=0))
+register_beat("inventory.po_overdue_scan", "beat.inventory.po_overdue_scan", crontab(hour=2, minute=15))
+register_beat("inventory.bill_due_reminders", "beat.inventory.bill_due_reminders", crontab(hour=2, minute=45))
+register_beat("inventory.audit_due", "beat.inventory.audit_due", crontab(day_of_month=1, hour=3, minute=0))
+register_beat("inventory.warranty_expiry", "beat.inventory.warranty_expiry", crontab(day_of_week=1, hour=3, minute=15))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

@@ -51,6 +51,9 @@ export const ROLES = {
   PARENT: 'parent',
   ALUMNI: 'alumni',
   APPLICANT: 'applicant',
+  // Phase 22
+  VENDOR: 'vendor',
+  STORE_KEEPER: 'store_keeper',
 } as const;
 export type RoleSlug = (typeof ROLES)[keyof typeof ROLES];
 
@@ -94,6 +97,7 @@ export const PORTAL_HOME: Partial<Record<RoleSlug, string>> = {
   research_scholar: '/scholar',
   recruiter: '/recruiter',
   applicant: '/apply',
+  vendor: '/vendor',
 };
 export const PORTAL_ONLY_ROLES = Object.keys(PORTAL_HOME) as RoleSlug[];
 

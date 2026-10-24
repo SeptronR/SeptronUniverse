@@ -62,6 +62,7 @@ from app.api.v1.endpoints import (
     help,
     hostel,
     institution,
+    inventory,
     jobs,
     leaves,
     library,
@@ -161,6 +162,11 @@ api_router.include_router(hostel.router)
 # Phase 21: transport (each route carries its transport.* feature) and the GPS device ingest (device token)
 api_router.include_router(transport.router)
 api_router.include_router(transport.public_router)  # X-Device-Token; checks {transport.gps_live} itself
+# Phase 22: inventory, procurement, assets, bills (each route carries its inventory.* feature), the vendor portal
+# and the public supplier self-registration (rate-limited + captcha; checks {inventory.vendor_portal} itself)
+api_router.include_router(inventory.router)
+api_router.include_router(inventory.vendor_router)
+api_router.include_router(inventory.public_router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

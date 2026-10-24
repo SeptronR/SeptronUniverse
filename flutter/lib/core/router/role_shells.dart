@@ -298,6 +298,44 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'exams:reval',
       feature: 'results.revaluation',
       roles: ['controller_of_examinations', 'exam_cell']),
+  // Phase 22 — store keeper stock / receive, staff indents / assets, asset audit scanner
+  const MoreMenuModule(
+      titleKey: 'stock',
+      icon: Icons.inventory_outlined,
+      route: AppRoutes.stockLookup,
+      color: Colors.brown,
+      permission: 'inventory:issue',
+      feature: 'inventory.core',
+      roles: ['store_keeper', 'inventory_manager']),
+  const MoreMenuModule(
+      titleKey: 'receive_goods',
+      icon: Icons.local_shipping_outlined,
+      route: AppRoutes.grnReceive,
+      color: Colors.brown,
+      permission: 'inventory:receive',
+      feature: 'inventory.procurement',
+      roles: ['store_keeper', 'inventory_manager']),
+  const MoreMenuModule(
+      titleKey: 'indents',
+      icon: Icons.assignment_outlined,
+      route: AppRoutes.myIndents,
+      color: Colors.deepPurple,
+      permission: 'inventory:indent',
+      feature: 'inventory.procurement'),
+  const MoreMenuModule(
+      titleKey: 'my_assets',
+      icon: Icons.devices_other_outlined,
+      route: AppRoutes.myAssets,
+      color: Colors.blueGrey,
+      permission: 'inventory:view',
+      feature: 'inventory.assets'),
+  const MoreMenuModule(
+      titleKey: 'asset_audit',
+      icon: Icons.qr_code_scanner,
+      route: AppRoutes.assetAudit,
+      color: Colors.teal,
+      permission: 'inventory:asset_audit',
+      feature: 'inventory.assets'),
   // Phase 21 — driver trips, my transport (students / staff), ward transport (parents), fleet (transport manager)
   const MoreMenuModule(
       titleKey: 'driver_trips',

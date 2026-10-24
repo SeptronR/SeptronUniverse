@@ -185,6 +185,23 @@ const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultP
 const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
 const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
 const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 22 — inventory, procurement, assets, bills, supplier portal
+const InvItemsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.ItemsPage })));
+const InvStoresPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.StoresPage })));
+const InvSuppliersPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.SuppliersPage })));
+const InvIndentsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.IndentsPage })));
+const InvQuotationsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.QuotationsPage })));
+const InvPurchaseOrdersPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.PurchaseOrdersPage })));
+const InvGoodsReceiptsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.GoodsReceiptsPage })));
+const InvAssetsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.AssetsPage })));
+const InvAuditsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.AuditsPage })));
+const InvBillsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.BillsPage })));
+const InvVendorStorePage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.VendorStorePage })));
+const InventoryReportsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.InventoryReportsPage })));
+const InventorySettingsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.InventorySettingsPage })));
+const StaffIndentsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.StaffIndentsPage })));
+const VendorHomePage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.VendorHomePage })));
+const VendorRegisterPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.VendorRegisterPage })));
 // Phase 21 — transport
 const FleetPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.FleetPage })));
 const RoutesPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.RoutesPage })));
@@ -316,6 +333,7 @@ export const router = createBrowserRouter([
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
   { path: '/opac', element: page(<OpacPage />) },
+  { path: '/vendor/register', element: page(<VendorRegisterPage />) },
   { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
   { path: '/verify/:token', element: page(<VerifyPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
@@ -509,6 +527,21 @@ export const router = createBrowserRouter([
               ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
               ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
               ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 22 — inventory & procurement (narrowed by the services: own / custodian / store keeper / department / college / all)
+              ['/admin/inventory/items', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'issue'], ['inventory', 'receive']], <InvItemsPage key="ii" />],
+              ['/admin/inventory/stores', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'issue'], ['inventory', 'receive'], ['inventory', 'approve_indent']], <InvStoresPage key="is" />],
+              ['/admin/inventory/suppliers', 'inventory.core', 'inventory', 'manage', [['procurement', 'view_all'], ['procurement', 'quote']], <InvSuppliersPage key="isu" />],
+              ['/admin/inventory/indents', 'inventory.procurement', 'inventory', 'view_all', [['inventory', 'indent'], ['inventory', 'approve_indent'], ['inventory', 'issue'], ['inventory', 'manage']], <InvIndentsPage key="iin" />],
+              ['/admin/inventory/quotations', 'inventory.procurement', 'procurement', 'quote', [['procurement', 'manage'], ['inventory', 'manage']], <InvQuotationsPage key="iq" />],
+              ['/admin/inventory/purchase-orders', 'inventory.procurement', 'procurement', 'view_all', [['procurement', 'po_approve'], ['procurement', 'create'], ['inventory', 'manage']], <InvPurchaseOrdersPage key="ipo" />],
+              ['/admin/inventory/goods-receipts', 'inventory.procurement', 'inventory', 'receive', [['inventory', 'view_all'], ['inventory', 'manage']], <InvGoodsReceiptsPage key="igr" />],
+              ['/admin/inventory/assets', 'inventory.assets', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'asset_audit'], ['inventory', 'approve_indent']], <InvAssetsPage key="ia" />],
+              ['/admin/inventory/audits', 'inventory.assets', 'inventory', 'asset_audit', [['inventory', 'manage'], ['inventory', 'view_all']], <InvAuditsPage key="iau" />],
+              ['/admin/inventory/bills', 'inventory.bills', 'procurement', 'bill_approve', [['inventory', 'manage'], ['inventory', 'view_all'], ['accounting', 'view']], <InvBillsPage key="ib" />],
+              ['/admin/inventory/vendor-store', 'inventory.vendor_store', 'inventory', 'issue', [['inventory', 'manage']], <InvVendorStorePage key="ivs" />],
+              ['/admin/inventory/reports', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['reports', 'export']], <InventoryReportsPage key="ir" />],
+              ['/admin/inventory/settings', 'inventory.core', 'inventory', 'manage', [], <InventorySettingsPage key="ist" />],
+              ['/staff/indents', 'inventory.procurement', 'inventory', 'indent', [['inventory', 'view']], <StaffIndentsPage key="sin" />],
               // Phase 21 — transport (narrowed by the services: college / driver-owned / all; department for HODs)
               ['/admin/transport/fleet', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <FleetPage key="tf" />],
               ['/admin/transport/routes', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <RoutesPage key="tr" />],
@@ -519,7 +552,6 @@ export const router = createBrowserRouter([
               ['/admin/transport/reports', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TransportReportsPage key="tz" />],
               ['/admin/transport/settings', 'transport.core', 'transport', 'manage', [], <TransportSettingsPage key="ts" />],
               ['/staff/transport', 'transport.core', 'transport', 'view', [['transport', 'manage']], <StaffTransportPage key="tsm" />],
-              ['/driver', 'transport.core', 'transport', 'driver', [['transport', 'manage']], <DriverPage key="tdr" />],
               // Phase 20 — hostel (narrowed by the services: warden-owned hostels / college / all; department for HODs)
               ['/admin/hostel/hostels', 'hostel.core', 'hostel', 'view_all', [['hostel', 'manage'], ['hostel', 'warden']], <HostelsPage key="hh" />],
               ['/admin/hostel/applications', 'hostel.core', 'hostel', 'allot', [['hostel', 'view_all'], ['hostel', 'warden']], <HostelApplicationsPage key="ha" />],
@@ -790,7 +822,12 @@ export const router = createBrowserRouter([
       {
         path: '/driver',
         element: <PortalRoute roles={['driver']} title="Driver" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        children: [{ index: true, element: page(<FeatureRoute feature="transport.core"><DriverPage /></FeatureRoute>) }],
+      },
+      {
+        path: '/vendor',
+        element: <PortalRoute roles={['vendor']} title="Supplier" />,
+        children: [{ index: true, element: page(<FeatureRoute feature="inventory.vendor_portal"><VendorHomePage /></FeatureRoute>) }],
       },
       {
         path: '/evaluator',

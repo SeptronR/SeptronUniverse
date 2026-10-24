@@ -170,6 +170,17 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("transport", "fee_grace_days", "int", 15, label="Days after the due date before suspension", min=0, max=120),
     SettingDef("transport", "notify_boarding", "bool", True, label="Notify guardians on boarding / alighting"),
     SettingDef("transport", "working_days", "json", [0, 1, 2, 3, 4, 5], label="Trip days (Mon=0)"),
+    # inventory & procurement (Phase 22)
+    SettingDef("inventory", "po_approval_threshold_paise", "int", 10000000, label="PO amount needing the workflow (paise)", min=0),
+    SettingDef("inventory", "bill_approval_threshold_paise", "int", 10000000, label="Bill amount needing the workflow (paise)", min=0),
+    SettingDef("inventory", "three_quotes_above_paise", "int", 2500000, label="Three quotations above (paise)", min=0),
+    SettingDef("inventory", "write_off_approval_paise", "int", 500000, label="Write-off value needing an approval ref (paise)", min=0),
+    SettingDef("inventory", "depreciation_defaults", "json", {"furniture": {"method": "wdv", "rate": 10}, "it": {"method": "slm", "rate": 33.33}}, label="Depreciation by category"),
+    SettingDef("inventory", "salvage_pct", "int", 5, label="Salvage floor (% of cost)", min=0, max=100),
+    SettingDef("inventory", "audit_cycle_months", "int", 12, label="Physical audit cycle (months)", min=1, max=60),
+    SettingDef("inventory", "bill_variance_pct", "int", 2, label="Three-way match tolerance (%)", min=0, max=100),
+    SettingDef("inventory", "tds_threshold_paise", "int", 3000000, label="TDS above (paise)", min=0),
+    SettingDef("inventory", "tds_rates", "json", {"company": 2.0, "individual": 1.0, "firm": 1.0, "government": 0.0}, label="TDS % by supplier type"),
     # communication
     SettingDef("communication", "sms_sender_id", "str", None),
     SettingDef("communication", "dlt_entity_id", "str", None),
@@ -355,6 +366,12 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("lib:member", "LM{yy}{seq:5}", 5, "yearly", "Library member code"),
     # Phase 21 — trip numbers (no monthly reset policy exists: yearly)
     SequenceTemplate("trip", "TRP{yyyy}{seq:6}", 6, "yearly", "Transport trip number"),
+    # Phase 22 — indents, purchase orders, goods receipts, assets, items
+    SequenceTemplate("indent", "IND/{yyyy}/{seq:5}", 5, "yearly", "Indent number"),
+    SequenceTemplate("po", "PO/{yyyy}/{seq:5}", 5, "yearly", "Purchase order number"),
+    SequenceTemplate("grn", "GRN/{yyyy}/{seq:5}", 5, "yearly", "Goods receipt number"),
+    SequenceTemplate("asset", "AST{seq:6}", 6, "never", "Asset tag"),
+    SequenceTemplate("item", "ITM{seq:5}", 5, "never", "Item code"),
 )
 
 

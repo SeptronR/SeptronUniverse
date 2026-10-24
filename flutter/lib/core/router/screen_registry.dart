@@ -17,6 +17,7 @@ import '../../features/degrees/degree_screens.dart';
 import '../../features/library/library_screens.dart';
 import '../../features/hostel/hostel_screens.dart';
 import '../../features/transport/transport_screens.dart';
+import '../../features/inventory/inventory_screens.dart';
 import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
@@ -328,6 +329,42 @@ class ScreenRegistry {
       feature: 'results.revaluation',
       permission: 'exams:reval',
       builder: (_, __) => const RevalQueueScreen(),
+    ),
+    // Phase 22 — inventory
+    AppRoutes.stockLookup: ScreenEntry(
+      route: AppRoutes.stockLookup,
+      titleKey: 'stock',
+      feature: 'inventory.core',
+      permission: 'inventory:issue',
+      builder: (_, __) => const StockLookupScreen(),
+    ),
+    AppRoutes.grnReceive: ScreenEntry(
+      route: AppRoutes.grnReceive,
+      titleKey: 'receive_goods',
+      feature: 'inventory.procurement',
+      permission: 'inventory:receive',
+      builder: (_, __) => const GrnReceiveScreen(),
+    ),
+    AppRoutes.myIndents: ScreenEntry(
+      route: AppRoutes.myIndents,
+      titleKey: 'indents',
+      feature: 'inventory.procurement',
+      permission: 'inventory:indent',
+      builder: (_, __) => const MyIndentsScreen(),
+    ),
+    AppRoutes.myAssets: ScreenEntry(
+      route: AppRoutes.myAssets,
+      titleKey: 'my_assets',
+      feature: 'inventory.assets',
+      permission: 'inventory:view',
+      builder: (_, __) => const MyAssetsScreen(),
+    ),
+    AppRoutes.assetAudit: ScreenEntry(
+      route: AppRoutes.assetAudit,
+      titleKey: 'asset_audit',
+      feature: 'inventory.assets',
+      permission: 'inventory:asset_audit',
+      builder: (_, __) => const AssetAuditScanScreen(),
     ),
     // Phase 21 — transport: driver trips, my / ward transport, fleet status
     AppRoutes.driverTrips: ScreenEntry(

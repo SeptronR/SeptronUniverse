@@ -36,6 +36,7 @@ CATEGORIES = (
     "hostel",
     "library",
     "transport",
+    "inventory",
     "placement",
     "mentoring",
     "grievances",
@@ -1097,6 +1098,129 @@ HOSTEL_EVENTS: tuple[EventDef, ...] = (
         ("in_app",),
     ),
 )
+# Phase 22 — inventory, procurement, assets, bills, supplier portal
+INVENTORY_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "inventory.indent_submitted",
+        "inventory",
+        "Indent submitted",
+        "Indent {{ indent }} submitted",
+        "Indent {{ indent }} awaits your approval.",
+        ("indent",),
+        ("in_app",),
+        link="/admin/inventory/indents",
+    ),
+    EventDef(
+        "inventory.indent_approved",
+        "inventory",
+        "Indent approved",
+        "Indent {{ indent }} approved",
+        "Your indent {{ indent }} is approved.",
+        ("indent",),
+        ("in_app", "email"),
+        link="/staff/indents",
+    ),
+    EventDef(
+        "inventory.indent_rejected",
+        "inventory",
+        "Indent returned",
+        "Indent {{ indent }}: {{ reason }}",
+        "Your indent {{ indent }} was returned: {{ reason }}.",
+        ("indent", "reason"),
+        ("in_app", "email"),
+        link="/staff/indents",
+    ),
+    EventDef(
+        "inventory.indent_fulfilled",
+        "inventory",
+        "Indent fulfilled",
+        "Indent {{ indent }} fulfilled",
+        "All lines of indent {{ indent }} are issued from stock.",
+        ("indent",),
+        ("in_app",),
+        link="/staff/indents",
+    ),
+    EventDef(
+        "inventory.low_stock",
+        "inventory",
+        "Low stock",
+        "{{ count }} item(s) below minimum",
+        "Below minimum stock: {{ items }}.",
+        ("count", "items"),
+        ("in_app", "email"),
+        link="/admin/inventory/stores",
+    ),
+    EventDef(
+        "inventory.po_sent",
+        "inventory",
+        "Purchase order",
+        "PO {{ po }} — {{ supplier }}",
+        "Purchase order {{ po }} (Rs {{ total }}) for {{ supplier }}.",
+        ("po", "supplier", "total"),
+        ("in_app", "email"),
+        link="/vendor/pos",
+    ),
+    EventDef(
+        "inventory.grn_received",
+        "inventory",
+        "Goods received",
+        "GRN {{ grn }} for PO {{ po }}",
+        "Goods were received against PO {{ po }} (GRN {{ grn }}).",
+        ("po", "grn"),
+        ("in_app",),
+        link="/admin/inventory/goods-receipts",
+    ),
+    EventDef(
+        "inventory.bill_status",
+        "inventory",
+        "Bill status",
+        "Bill {{ bill }}: {{ status }}",
+        "Bill {{ bill }} is now {{ status }}.",
+        ("bill", "status"),
+        ("in_app", "email"),
+        link="/vendor/bills",
+    ),
+    EventDef(
+        "inventory.asset_assigned",
+        "inventory",
+        "Asset custody",
+        "Asset assigned: {{ asset }}",
+        "Accept custody of {{ asset }} under My assets.",
+        ("asset",),
+        ("in_app", "email"),
+        link="/staff/indents",
+    ),
+    EventDef(
+        "inventory.audit_due",
+        "inventory",
+        "Inventory reminder",
+        "Inventory: {{ what }}",
+        "{{ count }} — {{ what }}.",
+        ("count", "what"),
+        ("in_app",),
+        link="/admin/inventory/audits",
+    ),
+    EventDef(
+        "vendor.registered",
+        "inventory",
+        "Supplier registration",
+        "Supplier registration — {{ supplier }}",
+        "{{ supplier }} registered on the supplier portal and awaits verification.",
+        ("supplier",),
+        ("in_app", "email"),
+        link="/admin/inventory/suppliers",
+    ),
+    EventDef(
+        "vendor.verified",
+        "inventory",
+        "Supplier verified",
+        "Your supplier account is verified",
+        "{{ supplier }} is verified. Use Forgot password on the portal to set your password.",
+        ("supplier",),
+        ("email", "in_app"),
+        link="/vendor",
+    ),
+)
 # Phase 21 — transport allocations, trips, live alerts, fleet compliance
 TRANSPORT_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1356,6 +1480,7 @@ EVENTS = (
     + LIBRARY_EVENTS
     + HOSTEL_EVENTS
     + TRANSPORT_EVENTS
+    + INVENTORY_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

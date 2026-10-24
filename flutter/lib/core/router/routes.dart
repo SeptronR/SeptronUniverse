@@ -58,6 +58,12 @@ class AppRoutes {
   static const myMalpractice = '/app/exams/malpractice';
   static const myTranscripts = '/app/transcripts';
   static const revalQueue = '/app/exams/reval-queue';
+  // Phase 22 — stock / receive goods (store keeper), indents / my assets (staff), audit scanner
+  static const stockLookup = '/app/inventory/stock';
+  static const grnReceive = '/app/inventory/receive';
+  static const myIndents = '/app/inventory/indents';
+  static const myAssets = '/app/inventory/assets';
+  static const assetAudit = '/app/inventory/audit';
   // Phase 21 — transport: driver trips, my / ward transport, fleet status (transport manager)
   static const driverTrips = '/app/transport/driver';
   static const myTransport = '/app/transport';

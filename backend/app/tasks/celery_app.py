@@ -36,6 +36,7 @@ celery = Celery(
         "app.tasks.library",
         "app.tasks.hostel",
         "app.tasks.transport",
+        "app.tasks.inventory",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",
