@@ -14,6 +14,7 @@ import '../../features/exams/exam_screens.dart';
 import '../../features/results/result_screens.dart';
 import '../../features/obe/obe_screens.dart';
 import '../../features/degrees/degree_screens.dart';
+import '../../features/library/library_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -295,6 +296,28 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
+    AppRoutes.myLibrary: ScreenEntry(
+      route: AppRoutes.myLibrary,
+      titleKey: 'library',
+      feature: 'library.core',
+      permission: 'library:self',
+      builder: (_, __) => const MyLibraryScreen(),
+    ),
+    AppRoutes.wardLibrary: ScreenEntry(
+      route: AppRoutes.wardLibrary,
+      titleKey: 'ward_library',
+      feature: 'library.core',
+      permission: 'library:self',
+      builder: (_, __) => const MyLibraryScreen(ward: true),
+    ),
+    AppRoutes.libraryCirculation: ScreenEntry(
+      route: AppRoutes.libraryCirculation,
+      titleKey: 'library_circulation',
+      feature: 'library.core',
+      permission: 'library:circulate',
+      builder: (_, __) => const LibraryCirculationScreen(),
     ),
     // Phase 18 — degree (students / alumni), eligibility, approvals, convocation-day scanner (registrar)
     AppRoutes.myDegree: ScreenEntry(

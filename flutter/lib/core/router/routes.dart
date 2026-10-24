@@ -53,6 +53,10 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
+  static const myLibrary = '/app/library';
+  static const wardLibrary = '/app/library/ward';
+  static const libraryCirculation = '/app/library/circulation';
   // Phase 18 — degree (students / alumni), eligibility, award approvals, convocation scanner (registrar)
   static const myDegree = '/app/degree';
   static const degreeEligibility = '/app/degrees/eligibility';

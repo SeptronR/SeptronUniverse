@@ -125,6 +125,18 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     # degrees (Phase 18) — dues rule, award needs convocation registration
     SettingDef("degrees", "zero_outstanding_ok", "bool", False, label="Zero outstanding fees counts as dues cleared"),
     SettingDef("degrees", "award_requires_registration", "bool", False, label="Awards only for convocation registrants"),
+    # library (Phase 19) — member rules, blocks, holds, reservations, lost books, ILL
+    SettingDef("library", "member_rules", "json", None, label="Loan rules per member type"),
+    SettingDef("library", "block_fine_threshold_paise", "int", 50000, label="Block borrowing above this unpaid fine", min=0),
+    SettingDef("library", "block_overdue_days", "int", 30, label="Block borrowing when a book is overdue this long", min=1, max=365),
+    SettingDef("library", "hold_after_days", "int", 30, label="Place a library hold after N days overdue", min=1, max=365),
+    SettingDef("library", "hold_hours", "int", 48, label="Reservation pickup window (hours)", min=1, max=336),
+    SettingDef("library", "weekly_off", "json", ["sunday"], label="Library weekly-off days"),
+    SettingDef("library", "allow_reserve_available", "bool", False, label="Allow reserving titles with copies on the shelf"),
+    SettingDef("library", "one_copy_per_title", "bool", True, label="One copy of a title per member"),
+    SettingDef("library", "lost_replacement_pct", "int", 150, label="Lost book charge (% of price)", min=0, max=1000),
+    SettingDef("library", "found_cancels_invoice", "bool", True, label="A found lost book cancels its unpaid charge"),
+    SettingDef("library", "ill_students_allowed", "bool", False, label="Students may request inter-library loans"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),
@@ -305,6 +317,12 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("fee_receipt_no", "RCP/{yyyy}/{seq:6}", 6, "yearly", "Fee receipt"),
     SequenceTemplate("fee_invoice_no", "INV/{yyyy}/{seq:6}", 6, "yearly", "Fee invoice"),
     SequenceTemplate("certificate_no", "CERT/{yyyy}/{seq:5}", 5, "yearly", "Certificate number"),
+    # Phase 18 — degree certificates and their serial numbers
+    SequenceTemplate("degree", "DEG/{yyyy}/{seq:6}", 6, "yearly", "Degree certificate number"),
+    SequenceTemplate("degree_serial", "SN{yyyy}{seq:7}", 7, "never", "Degree serial number"),
+    # Phase 19 — library accession numbers and member codes
+    SequenceTemplate("lib:acc", "ACC{seq:6}", 6, "never", "Library accession number"),
+    SequenceTemplate("lib:member", "LM{yy}{seq:5}", 5, "yearly", "Library member code"),
 )
 
 

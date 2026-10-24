@@ -8245,6 +8245,696 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/library/books": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Catalogue */
+        get: operations["books_api_v1_library_books_get"];
+        put?: never;
+        /** Create a book (duplicate ISBN → warning) */
+        post: operations["book_create_api_v1_library_books_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/books/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import a CSV catalogue (job) */
+        post: operations["books_import_api_v1_library_books_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/books/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Book */
+        get: operations["book_get_api_v1_library_books__id__get"];
+        /** Edit a book */
+        put: operations["book_update_api_v1_library_books__id__put"];
+        post?: never;
+        /** Delete a book */
+        delete: operations["book_delete_api_v1_library_books__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/books/{id}/copies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Copies of a book */
+        get: operations["book_copies_api_v1_library_books__id__copies_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/books/{id}/copies/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add copies (accession numbers) */
+        post: operations["copies_bulk_api_v1_library_books__id__copies_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Categories */
+        get: operations["categories_api_v1_library_categories_get"];
+        put?: never;
+        /** Create a category */
+        post: operations["category_create_api_v1_library_categories_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/categories/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit a category */
+        put: operations["category_update_api_v1_library_categories__id__put"];
+        post?: never;
+        /** Delete (or deactivate) a category */
+        delete: operations["category_delete_api_v1_library_categories__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/circulation/issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Issue (Idempotency-Key) */
+        post: operations["circ_issue_api_v1_library_circulation_issue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/circulation/lost": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark lost (replacement invoice) */
+        post: operations["circ_lost_api_v1_library_circulation_lost_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/circulation/renew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Renew at the counter */
+        post: operations["circ_renew_api_v1_library_circulation_renew_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/circulation/return": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Return (Idempotency-Key) */
+        post: operations["circ_return_api_v1_library_circulation_return_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/circulation/self-renew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Renew my book */
+        post: operations["circ_self_renew_api_v1_library_circulation_self_renew_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/copies/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolve a scan (barcode / accession / RFID) */
+        get: operations["copy_resolve_api_v1_library_copies_resolve_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/copies/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Change a copy's status */
+        put: operations["copy_status_api_v1_library_copies__id__status_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/eresources": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** E-resources */
+        get: operations["eresources_api_v1_library_eresources_get"];
+        put?: never;
+        /** Add an e-resource */
+        post: operations["eresource_create_api_v1_library_eresources_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/eresources/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit an e-resource */
+        put: operations["eresource_update_api_v1_library_eresources__id__put"];
+        post?: never;
+        /** Deactivate an e-resource */
+        delete: operations["eresource_delete_api_v1_library_eresources__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/eresources/{id}/open": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Open (authenticated redirect; logs usage) */
+        get: operations["eresource_open_api_v1_library_eresources__id__open_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/fines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fines */
+        get: operations["fines_api_v1_library_fines_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/fines/{issue_id}/waive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Waive a fine (librarian) */
+        post: operations["fine_waive_api_v1_library_fines__issue_id__waive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/ill-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Inter-library loan requests */
+        get: operations["ill_list_api_v1_library_ill_requests_get"];
+        put?: never;
+        /** Request an inter-library loan */
+        post: operations["ill_create_api_v1_library_ill_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/ill-requests/{id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** decide | receive | return */
+        post: operations["ill_action_api_v1_library_ill_requests__id___action__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/issues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Issues (self / wards / department / all) */
+        get: operations["issues_api_v1_library_issues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/issues/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Issue */
+        get: operations["issue_get_api_v1_library_issues__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Members */
+        get: operations["members_api_v1_library_members_get"];
+        put?: never;
+        /** Create an external / alumni member (deposit invoice) */
+        post: operations["member_create_api_v1_library_members_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My library card */
+        get: operations["member_me_api_v1_library_members_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/me/fines": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My fines */
+        get: operations["member_me_fines_api_v1_library_members_me_fines_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/me/issues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My books */
+        get: operations["member_me_issues_api_v1_library_members_me_issues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My wards' library cards */
+        get: operations["member_wards_api_v1_library_members_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Member */
+        get: operations["member_get_api_v1_library_members__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/{id}/activate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Activate */
+        post: operations["member_activate_api_v1_library_members__id__activate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/{id}/rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Member limits */
+        put: operations["member_rules_api_v1_library_members__id__rules_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/members/{id}/suspend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Suspend */
+        post: operations["member_suspend_api_v1_library_members__id__suspend_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/reports/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Report export (job → XLSX) */
+        get: operations["report_api_v1_library_reports__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/reservations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Reservations (own, or the queue for circulation staff) */
+        get: operations["reservations_api_v1_library_reservations_get"];
+        put?: never;
+        /** Reserve a title */
+        post: operations["reserve_api_v1_library_reservations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/reservations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Cancel a reservation */
+        delete: operations["reservation_cancel_api_v1_library_reservations__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Library dashboard counts */
+        get: operations["stats_api_v1_library_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/stock-verification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stock verification (job) */
+        post: operations["stock_verification_api_v1_library_stock_verification_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/stock-verification/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stock verification result */
+        get: operations["stock_verification_get_api_v1_library_stock_verification__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/sync/koha": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Koha / DSpace sync (job) */
+        post: operations["koha_sync_api_v1_library_sync_koha_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/library/sync/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Last sync jobs */
+        get: operations["koha_status_api_v1_library_sync_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/loans": {
         parameters: {
             query?: never;
@@ -9271,6 +9961,57 @@ export interface paths {
         put?: never;
         /** Withdraw (student) */
         post: operations["od_withdraw_api_v1_on_duty__id__withdraw_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/opac/books/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public book page */
+        get: operations["opac_book_get_api_v1_opac_books__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/opac/new-arrivals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** New arrivals */
+        get: operations["opac_arrivals_api_v1_opac_new_arrivals_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/opac/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Public catalogue search */
+        get: operations["opac_api_v1_opac_search_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -17293,6 +18034,308 @@ export interface components {
             /** File */
             file: string;
         };
+        /** BookCategoryIn */
+        BookCategoryIn: {
+            /** Ddc Code */
+            ddc_code?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: string | null;
+        };
+        /** BookCategoryOut */
+        BookCategoryOut: {
+            /**
+             * Books
+             * @default 0
+             */
+            books: number;
+            /** Ddc Code */
+            ddc_code?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: string | null;
+        };
+        /** BookCreate */
+        BookCreate: {
+            /** Authors */
+            authors?: string[];
+            /** Call Number */
+            call_number?: string | null;
+            /** Category Id */
+            category_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Cover Url */
+            cover_url?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Edition */
+            edition?: string | null;
+            /** Isbn */
+            isbn?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Pages */
+            pages?: number | null;
+            /** Price Paise */
+            price_paise?: number | null;
+            /** Publisher */
+            publisher?: string | null;
+            /**
+             * Resource Type
+             * @default book
+             * @enum {string}
+             */
+            resource_type: "book" | "journal" | "thesis" | "ebook" | "ejournal" | "cd" | "reference";
+            /** Subject */
+            subject?: string | null;
+            /** Title */
+            title: string;
+            /** Year */
+            year?: number | null;
+        };
+        /** BookImportRequest */
+        BookImportRequest: {
+            /** Copies Column */
+            copies_column?: string | null;
+            /** Csv */
+            csv: string;
+            /** Mapping */
+            mapping?: {
+                [key: string]: string;
+            } | null;
+        };
+        /** BookIssueResponse */
+        BookIssueResponse: {
+            /** Accession Number */
+            accession_number?: string | null;
+            /** Book Id */
+            book_id?: string | null;
+            /**
+             * Copy Id
+             * Format: uuid
+             */
+            copy_id: string;
+            /**
+             * Days Overdue
+             * @default 0
+             */
+            days_overdue: number;
+            /**
+             * Due On
+             * Format: date
+             */
+            due_on: string;
+            /** Fine Invoice Id */
+            fine_invoice_id?: string | null;
+            /**
+             * Fine Paise
+             * @default 0
+             */
+            fine_paise: number;
+            /** Fine Status */
+            fine_status?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Issued On
+             * Format: date
+             */
+            issued_on: string;
+            /** Member Code */
+            member_code?: string | null;
+            /**
+             * Member Id
+             * Format: uuid
+             */
+            member_id: string;
+            /** Member Name */
+            member_name?: string | null;
+            /** Renewals */
+            renewals: number;
+            /** Returned On */
+            returned_on?: string | null;
+            /** Status */
+            status: string;
+            /** Title */
+            title?: string | null;
+        };
+        /** BookLostRequest */
+        BookLostRequest: {
+            /**
+             * Issue Id
+             * Format: uuid
+             */
+            issue_id: string;
+            /** Replacement Cost Paise */
+            replacement_cost_paise?: number | null;
+        };
+        /** BookRenewRequest */
+        BookRenewRequest: {
+            /**
+             * Issue Id
+             * Format: uuid
+             */
+            issue_id: string;
+        };
+        /** BookResponse */
+        BookResponse: {
+            /**
+             * Authors
+             * @default []
+             */
+            authors: string[];
+            /** Available Copies */
+            available_copies: number;
+            /** Call Number */
+            call_number?: string | null;
+            /** Category */
+            category?: string | null;
+            /** Category Id */
+            category_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Copies By Status
+             * @default {}
+             */
+            copies_by_status: {
+                [key: string]: number;
+            };
+            /** Cover Url */
+            cover_url?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Description */
+            description?: string | null;
+            /** Edition */
+            edition?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Isbn */
+            isbn?: string | null;
+            /** Language */
+            language?: string | null;
+            /**
+             * Locations
+             * @default []
+             */
+            locations: string[];
+            /** Price Paise */
+            price_paise?: number | null;
+            /** Publisher */
+            publisher?: string | null;
+            /** Resource Type */
+            resource_type: string;
+            /** Subject */
+            subject?: string | null;
+            /** Title */
+            title: string;
+            /** Total Copies */
+            total_copies: number;
+            /**
+             * Warnings
+             * @default []
+             */
+            warnings: string[];
+            /** Year */
+            year?: number | null;
+        };
+        /** BookReturnRequest */
+        BookReturnRequest: {
+            /** Accession Number */
+            accession_number?: string | null;
+            /** Barcode */
+            barcode?: string | null;
+            /**
+             * Condition
+             * @default good
+             * @enum {string}
+             */
+            condition: "good" | "damaged";
+            /** Damage Charge Paise */
+            damage_charge_paise?: number | null;
+            /** Rfid Tag */
+            rfid_tag?: string | null;
+        };
+        /** BookReturnResponse */
+        BookReturnResponse: {
+            /** Fine Paise */
+            fine_paise: number;
+            /**
+             * Hold Released
+             * @default false
+             */
+            hold_released: boolean;
+            /** Invoice Id */
+            invoice_id?: string | null;
+            issue: components["schemas"]["BookIssueResponse"];
+            /**
+             * Reservation Notified
+             * @default false
+             */
+            reservation_notified: boolean;
+        };
+        /** BookUpdate */
+        BookUpdate: {
+            /** Authors */
+            authors?: string[] | null;
+            /** Call Number */
+            call_number?: string | null;
+            /** Category Id */
+            category_id?: string | null;
+            /** Cover Url */
+            cover_url?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Edition */
+            edition?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Isbn */
+            isbn?: string | null;
+            /** Language */
+            language?: string | null;
+            /** Pages */
+            pages?: number | null;
+            /** Price Paise */
+            price_paise?: number | null;
+            /** Publisher */
+            publisher?: string | null;
+            /** Resource Type */
+            resource_type?: ("book" | "journal" | "thesis" | "ebook" | "ejournal" | "cd" | "reference") | null;
+            /** Subject */
+            subject?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Year */
+            year?: number | null;
+        };
         /** BounceRequest */
         BounceRequest: {
             /**
@@ -18173,6 +19216,23 @@ export interface components {
              */
             student_program_enrollment_id: string;
         };
+        /** CirculationIssueRequest */
+        CirculationIssueRequest: {
+            /** Accession Number */
+            accession_number?: string | null;
+            /** Barcode */
+            barcode?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /** Id Card Token */
+            id_card_token?: string | null;
+            /** Member Code */
+            member_code?: string | null;
+            /** Rfid Tag */
+            rfid_tag?: string | null;
+            /** User Id */
+            user_id?: string | null;
+        };
         /** ClashItem */
         ClashItem: {
             /**
@@ -19003,6 +20063,62 @@ export interface components {
             registration_deadline?: string | null;
             /** Venue */
             venue?: string | null;
+        };
+        /** CopyBulkCreate */
+        CopyBulkCreate: {
+            /** Acquired On */
+            acquired_on?: string | null;
+            /** Barcode Prefix */
+            barcode_prefix?: string | null;
+            /** Count */
+            count: number;
+            /** Location */
+            location?: string | null;
+            /** Price Paise */
+            price_paise?: number | null;
+        };
+        /** CopyResponse */
+        CopyResponse: {
+            /** Accession Number */
+            accession_number: string;
+            /** Acquired On */
+            acquired_on?: string | null;
+            /** Barcode */
+            barcode?: string | null;
+            /**
+             * Book Id
+             * Format: uuid
+             */
+            book_id: string;
+            /** Current Issue Id */
+            current_issue_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Location */
+            location?: string | null;
+            /** Price Paise */
+            price_paise?: number | null;
+            /** Rfid Tag */
+            rfid_tag?: string | null;
+            /** Status */
+            status: string;
+            /** Title */
+            title?: string | null;
+        };
+        /** CopyStatusChange */
+        CopyStatusChange: {
+            /** Remarks */
+            remarks?: string | null;
+            /** Rfid Tag */
+            rfid_tag?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "available" | "damaged" | "withdrawn" | "reference_only";
         };
         /** CorrectionRequestCreate */
         CorrectionRequestCreate: {
@@ -22154,6 +23270,66 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[BookCategoryOut] */
+        Envelope_BookCategoryOut_: {
+            data?: components["schemas"]["BookCategoryOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[BookIssueResponse] */
+        Envelope_BookIssueResponse_: {
+            data?: components["schemas"]["BookIssueResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[BookResponse] */
+        Envelope_BookResponse_: {
+            data?: components["schemas"]["BookResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[BookReturnResponse] */
+        Envelope_BookReturnResponse_: {
+            data?: components["schemas"]["BookReturnResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[BuildingOut] */
         Envelope_BuildingOut_: {
             data?: components["schemas"]["BuildingOut"] | null;
@@ -22487,6 +23663,21 @@ export interface components {
         /** Envelope[ConvocationRegistrationResponse] */
         Envelope_ConvocationRegistrationResponse_: {
             data?: components["schemas"]["ConvocationRegistrationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CopyResponse] */
+        Envelope_CopyResponse_: {
+            data?: components["schemas"]["CopyResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -23012,6 +24203,21 @@ export interface components {
         /** Envelope[EntryResult] */
         Envelope_EntryResult_: {
             data?: components["schemas"]["EntryResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[EresourceOut] */
+        Envelope_EresourceOut_: {
+            data?: components["schemas"]["EresourceOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -23639,6 +24845,96 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[LibraryFineRow] */
+        Envelope_LibraryFineRow_: {
+            data?: components["schemas"]["LibraryFineRow"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[LibraryIllResponse] */
+        Envelope_LibraryIllResponse_: {
+            data?: components["schemas"]["LibraryIllResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[LibraryJobAccepted] */
+        Envelope_LibraryJobAccepted_: {
+            data?: components["schemas"]["LibraryJobAccepted"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[LibraryMemberResponse] */
+        Envelope_LibraryMemberResponse_: {
+            data?: components["schemas"]["LibraryMemberResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[LibraryReservationResponse] */
+        Envelope_LibraryReservationResponse_: {
+            data?: components["schemas"]["LibraryReservationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[LibraryStatsResponse] */
+        Envelope_LibraryStatsResponse_: {
+            data?: components["schemas"]["LibraryStatsResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[LoanOut] */
         Envelope_LoanOut_: {
             data?: components["schemas"]["LoanOut"] | null;
@@ -24153,6 +25449,36 @@ export interface components {
         /** Envelope[OnlineInitiateResponse] */
         Envelope_OnlineInitiateResponse_: {
             data?: components["schemas"]["OnlineInitiateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OpacResult] */
+        Envelope_OpacResult_: {
+            data?: components["schemas"]["OpacResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OpacSearchResponse] */
+        Envelope_OpacSearchResponse_: {
+            data?: components["schemas"]["OpacSearchResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -26521,6 +27847,54 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[BookCategoryOut]] */
+        Envelope_list_BookCategoryOut__: {
+            /** Data */
+            data?: components["schemas"]["BookCategoryOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[BookIssueResponse]] */
+        Envelope_list_BookIssueResponse__: {
+            /** Data */
+            data?: components["schemas"]["BookIssueResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[BookResponse]] */
+        Envelope_list_BookResponse__: {
+            /** Data */
+            data?: components["schemas"]["BookResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[BuildingOut]] */
         Envelope_list_BuildingOut__: {
             /** Data */
@@ -26701,6 +28075,22 @@ export interface components {
         Envelope_list_ConvocationRegistrationResponse__: {
             /** Data */
             data?: components["schemas"]["ConvocationRegistrationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CopyResponse]] */
+        Envelope_list_CopyResponse__: {
+            /** Data */
+            data?: components["schemas"]["CopyResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -27117,6 +28507,22 @@ export interface components {
         Envelope_list_EnrollmentResponse__: {
             /** Data */
             data?: components["schemas"]["EnrollmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[EresourceOut]] */
+        Envelope_list_EresourceOut__: {
+            /** Data */
+            data?: components["schemas"]["EresourceOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -27625,6 +29031,70 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[LibraryFineRow]] */
+        Envelope_list_LibraryFineRow__: {
+            /** Data */
+            data?: components["schemas"]["LibraryFineRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[LibraryIllResponse]] */
+        Envelope_list_LibraryIllResponse__: {
+            /** Data */
+            data?: components["schemas"]["LibraryIllResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[LibraryMemberResponse]] */
+        Envelope_list_LibraryMemberResponse__: {
+            /** Data */
+            data?: components["schemas"]["LibraryMemberResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[LibraryReservationResponse]] */
+        Envelope_list_LibraryReservationResponse__: {
+            /** Data */
+            data?: components["schemas"]["LibraryReservationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[LoanOut]] */
         Envelope_list_LoanOut__: {
             /** Data */
@@ -27885,6 +29355,22 @@ export interface components {
         Envelope_list_OfferingResponse__: {
             /** Data */
             data?: components["schemas"]["OfferingResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[OpacResult]] */
+        Envelope_list_OpacResult__: {
+            /** Data */
+            data?: components["schemas"]["OpacResult"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -29147,6 +30633,78 @@ export interface components {
              */
             success: boolean;
         };
+        /** EresourceIn */
+        EresourceIn: {
+            /**
+             * Access Type
+             * @default ip
+             * @enum {string}
+             */
+            access_type: "ip" | "remote" | "open";
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Provider */
+            provider?: string | null;
+            /**
+             * Resource Type
+             * @enum {string}
+             */
+            resource_type: "ejournal" | "ebook_db" | "database" | "repository";
+            /** Subscription From */
+            subscription_from?: string | null;
+            /** Subscription To */
+            subscription_to?: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url: string;
+        };
+        /** EresourceOut */
+        EresourceOut: {
+            /** Access Type */
+            access_type: string;
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /**
+             * Expired
+             * @default false
+             */
+            expired: boolean;
+            /**
+             * Expiring Soon
+             * @default false
+             */
+            expiring_soon: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Provider */
+            provider?: string | null;
+            /** Resource Type */
+            resource_type: string;
+            /** Subscription From */
+            subscription_from?: string | null;
+            /** Subscription To */
+            subscription_to?: string | null;
+            /** Title */
+            title: string;
+            /** Url */
+            url?: string | null;
+            /**
+             * Usage Count
+             * @default 0
+             */
+            usage_count: number;
+        };
         /** EvaluatorBundleResponse */
         EvaluatorBundleResponse: {
             /**
@@ -29635,6 +31193,24 @@ export interface components {
              * @description time-boxed external_examiner account
              */
             user_id?: string | null;
+        };
+        /** ExternalMemberCreate */
+        ExternalMemberCreate: {
+            /** Deposit Paise */
+            deposit_paise?: number | null;
+            /**
+             * Member Type
+             * @default external
+             * @enum {string}
+             */
+            member_type: "external" | "alumni";
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            /** Valid To */
+            valid_to?: string | null;
         };
         /** ExtraSessionCreate */
         ExtraSessionCreate: {
@@ -30485,6 +32061,11 @@ export interface components {
             slabs?: {
                 [key: string]: unknown;
             }[] | null;
+        };
+        /** FineWaiveRequest */
+        FineWaiveRequest: {
+            /** Reason */
+            reason: string;
         };
         /** ForgotPasswordRequest */
         ForgotPasswordRequest: {
@@ -32033,6 +33614,23 @@ export interface components {
              */
             joining_date: string;
         };
+        /** KohaSyncRequest */
+        KohaSyncRequest: {
+            /**
+             * Direction
+             * @default pull
+             * @enum {string}
+             */
+            direction: "pull" | "push";
+            /** Since */
+            since?: string | null;
+            /**
+             * Source
+             * @default koha
+             * @enum {string}
+             */
+            source: "koha" | "dspace";
+        };
         /**
          * LeaveAccrual
          * @enum {string}
@@ -32427,6 +34025,247 @@ export interface components {
             level: number;
             /** Min Pct */
             min_pct: number;
+        };
+        /** LibraryFineRow */
+        LibraryFineRow: {
+            /**
+             * Balance Paise
+             * @default 0
+             */
+            balance_paise: number;
+            /** Fine Paise */
+            fine_paise: number;
+            /** Invoice Id */
+            invoice_id?: string | null;
+            /** Invoice Status */
+            invoice_status?: string | null;
+            /**
+             * Issue Id
+             * Format: uuid
+             */
+            issue_id: string;
+            /** Member Code */
+            member_code?: string | null;
+            /** Member Name */
+            member_name?: string | null;
+            /** Returned On */
+            returned_on?: string | null;
+            /** Status */
+            status: string;
+            /** Title */
+            title?: string | null;
+        };
+        /** LibraryIllDecision */
+        LibraryIllDecision: {
+            /**
+             * Approve
+             * @default true
+             */
+            approve: boolean;
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /** Source Library */
+            source_library?: string | null;
+        };
+        /** LibraryIllRequestIn */
+        LibraryIllRequestIn: {
+            /** Member Code */
+            member_code?: string | null;
+            /** Source Library */
+            source_library?: string | null;
+            /** Title */
+            title: string;
+        };
+        /** LibraryIllResponse */
+        LibraryIllResponse: {
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Member Code */
+            member_code?: string | null;
+            /**
+             * Member Id
+             * Format: uuid
+             */
+            member_id: string;
+            /** Member Name */
+            member_name?: string | null;
+            /** Received On */
+            received_on?: string | null;
+            /**
+             * Requested At
+             * Format: date-time
+             */
+            requested_at: string;
+            /** Returned On */
+            returned_on?: string | null;
+            /** Source Library */
+            source_library?: string | null;
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+        };
+        /** LibraryJobAccepted */
+        LibraryJobAccepted: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+            /**
+             * Status
+             * @default queued
+             */
+            status: string;
+        };
+        /** LibraryMemberResponse */
+        LibraryMemberResponse: {
+            /**
+             * Active Issues
+             * @default 0
+             */
+            active_issues: number;
+            /**
+             * Block Reasons
+             * @default []
+             */
+            block_reasons: string[];
+            /** Department */
+            department?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Is Blocked
+             * @default false
+             */
+            is_blocked: boolean;
+            /** Loan Days */
+            loan_days: number;
+            /** Max Books Allowed */
+            max_books_allowed: number;
+            /**
+             * Max Renewals
+             * @default 1
+             */
+            max_renewals: number;
+            /** Member Code */
+            member_code: string;
+            /** Member Type */
+            member_type: string;
+            /** Name */
+            name?: string | null;
+            /**
+             * Outstanding Fine Paise
+             * @default 0
+             */
+            outstanding_fine_paise: number;
+            /**
+             * Overdue Issues
+             * @default 0
+             */
+            overdue_issues: number;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** LibraryMemberRulesUpdate */
+        LibraryMemberRulesUpdate: {
+            /** Loan Days */
+            loan_days?: number | null;
+            /** Max Books Allowed */
+            max_books_allowed?: number | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** LibraryReservationCreate */
+        LibraryReservationCreate: {
+            /**
+             * Book Id
+             * Format: uuid
+             */
+            book_id: string;
+            /** Member Code */
+            member_code?: string | null;
+        };
+        /** LibraryReservationResponse */
+        LibraryReservationResponse: {
+            /**
+             * Book Id
+             * Format: uuid
+             */
+            book_id: string;
+            /** Expires At */
+            expires_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Member Code */
+            member_code?: string | null;
+            /**
+             * Member Id
+             * Format: uuid
+             */
+            member_id: string;
+            /** Member Name */
+            member_name?: string | null;
+            /** Position */
+            position?: number | null;
+            /**
+             * Reserved At
+             * Format: date-time
+             */
+            reserved_at: string;
+            /** Status */
+            status: string;
+            /** Title */
+            title?: string | null;
+        };
+        /** LibraryStatsResponse */
+        LibraryStatsResponse: {
+            /** Available */
+            available: number;
+            /** Books */
+            books: number;
+            /** Copies */
+            copies: number;
+            /** Eresources */
+            eresources: number;
+            /** Eresources Expired */
+            eresources_expired: number;
+            /** Issued */
+            issued: number;
+            /** Issued Today */
+            issued_today: number;
+            /** Lost */
+            lost: number;
+            /** Members */
+            members: number;
+            /** Outstanding Fine Paise */
+            outstanding_fine_paise: number;
+            /** Overdue */
+            overdue: number;
+            /** Reservations Available */
+            reservations_available: number;
+            /** Reservations Waiting */
+            reservations_waiting: number;
+            /** Returned Today */
+            returned_today: number;
         };
         /** LoanIn */
         LoanIn: {
@@ -34394,6 +36233,60 @@ export interface components {
             payment_id: string;
             /** Signature */
             signature: string;
+        };
+        /** OpacResult */
+        OpacResult: {
+            /**
+             * Authors
+             * @default []
+             */
+            authors: string[];
+            /** Available Copies */
+            available_copies: number;
+            /** Category */
+            category?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Isbn */
+            isbn?: string | null;
+            /** Language */
+            language?: string | null;
+            /**
+             * Locations
+             * @default []
+             */
+            locations: string[];
+            /** Publisher */
+            publisher?: string | null;
+            /** Resource Type */
+            resource_type: string;
+            /** Score */
+            score?: number | null;
+            /** Title */
+            title: string;
+            /** Total Copies */
+            total_copies: number;
+            /** Year */
+            year?: number | null;
+        };
+        /** OpacSearchResponse */
+        OpacSearchResponse: {
+            /**
+             * Facets
+             * @default {}
+             */
+            facets: {
+                [key: string]: {
+                    [key: string]: unknown;
+                }[];
+            };
+            /** Items */
+            items: components["schemas"]["OpacResult"][];
+            /** Total */
+            total: number;
         };
         /** OptionIn */
         OptionIn: {
@@ -39968,6 +41861,13 @@ export interface components {
             order: number;
             /** Sla Hours */
             sla_hours?: number | null;
+        };
+        /** StockVerificationRequest */
+        StockVerificationRequest: {
+            /** Location */
+            location?: string | null;
+            /** Scanned Barcodes */
+            scanned_barcodes?: string[];
         };
         /** StructureCloneRequest */
         StructureCloneRequest: {
@@ -61967,6 +63867,1533 @@ export interface operations {
             };
         };
     };
+    books_api_v1_library_books_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                category_id?: string | null;
+                resource_type?: string | null;
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BookResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    book_create_api_v1_library_books_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    books_import_api_v1_library_books_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookImportRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    book_get_api_v1_library_books__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    book_update_api_v1_library_books__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    book_delete_api_v1_library_books__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    book_copies_api_v1_library_books__id__copies_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CopyResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copies_bulk_api_v1_library_books__id__copies_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CopyBulkCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CopyResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    categories_api_v1_library_categories_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BookCategoryOut__"];
+                };
+            };
+        };
+    };
+    category_create_api_v1_library_categories_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookCategoryIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookCategoryOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    category_update_api_v1_library_categories__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookCategoryIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookCategoryOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    category_delete_api_v1_library_categories__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    circ_issue_api_v1_library_circulation_issue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CirculationIssueRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookIssueResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    circ_lost_api_v1_library_circulation_lost_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookLostRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookIssueResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    circ_renew_api_v1_library_circulation_renew_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookRenewRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookIssueResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    circ_return_api_v1_library_circulation_return_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookReturnRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookReturnResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    circ_self_renew_api_v1_library_circulation_self_renew_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BookRenewRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookIssueResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copy_resolve_api_v1_library_copies_resolve_get: {
+        parameters: {
+            query?: {
+                barcode?: string | null;
+                accession?: string | null;
+                rfid?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CopyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    copy_status_api_v1_library_copies__id__status_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CopyStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CopyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eresources_api_v1_library_eresources_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EresourceOut__"];
+                };
+            };
+        };
+    };
+    eresource_create_api_v1_library_eresources_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EresourceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EresourceOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eresource_update_api_v1_library_eresources__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EresourceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EresourceOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eresource_delete_api_v1_library_eresources__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eresource_open_api_v1_library_eresources__id__open_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fines_api_v1_library_fines_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                member_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LibraryFineRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fine_waive_api_v1_library_fines__issue_id__waive_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                issue_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FineWaiveRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryFineRow_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ill_list_api_v1_library_ill_requests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LibraryIllResponse__"];
+                };
+            };
+        };
+    };
+    ill_create_api_v1_library_ill_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryIllRequestIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryIllResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ill_action_api_v1_library_ill_requests__id___action__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                action: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["LibraryIllDecision"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryIllResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issues_api_v1_library_issues_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                member_id?: string | null;
+                overdue?: boolean;
+                department_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BookIssueResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issue_get_api_v1_library_issues__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BookIssueResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    members_api_v1_library_members_get: {
+        parameters: {
+            query?: {
+                type?: string | null;
+                status?: string | null;
+                department_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LibraryMemberResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_create_api_v1_library_members_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExternalMemberCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryMemberResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_me_api_v1_library_members_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryMemberResponse_"];
+                };
+            };
+        };
+    };
+    member_me_fines_api_v1_library_members_me_fines_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LibraryFineRow__"];
+                };
+            };
+        };
+    };
+    member_me_issues_api_v1_library_members_me_issues_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BookIssueResponse__"];
+                };
+            };
+        };
+    };
+    member_wards_api_v1_library_members_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LibraryMemberResponse__"];
+                };
+            };
+        };
+    };
+    member_get_api_v1_library_members__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryMemberResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_activate_api_v1_library_members__id__activate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryMemberResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_rules_api_v1_library_members__id__rules_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryMemberRulesUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryMemberResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    member_suspend_api_v1_library_members__id__suspend_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryMemberResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    report_api_v1_library_reports__kind__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reservations_api_v1_library_reservations_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                mine?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LibraryReservationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reserve_api_v1_library_reservations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LibraryReservationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryReservationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reservation_cancel_api_v1_library_reservations__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryReservationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stats_api_v1_library_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryStatsResponse_"];
+                };
+            };
+        };
+    };
+    stock_verification_api_v1_library_stock_verification_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockVerificationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stock_verification_get_api_v1_library_stock_verification__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    koha_sync_api_v1_library_sync_koha_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KohaSyncRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LibraryJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    koha_status_api_v1_library_sync_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+        };
+    };
     list_loans_api_v1_loans_get: {
         parameters: {
             query?: {
@@ -64265,6 +67692,109 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_OdResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    opac_book_get_api_v1_opac_books__id__get: {
+        parameters: {
+            query?: {
+                institution?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OpacResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    opac_arrivals_api_v1_opac_new_arrivals_get: {
+        parameters: {
+            query?: {
+                institution?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_OpacResult__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    opac_api_v1_opac_search_get: {
+        parameters: {
+            query?: {
+                institution?: string | null;
+                q?: string | null;
+                category?: string | null;
+                author?: string | null;
+                year?: number | null;
+                resource_type?: string | null;
+                language?: string | null;
+                available_only?: boolean;
+                page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OpacSearchResponse_"];
                 };
             };
             /** @description Validation Error */

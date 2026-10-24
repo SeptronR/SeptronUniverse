@@ -173,6 +173,20 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 19 — library
+const CataloguePage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.CataloguePage })));
+const CirculationPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.CirculationPage })));
+const LibraryIssuesPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.IssuesPage })));
+const LibraryReservationsPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.ReservationsPage })));
+const LibraryFinesPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.FinesPage })));
+const LibraryMembersPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.MembersPage })));
+const EresourcesPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.EresourcesPage })));
+const IllPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.IllPage })));
+const StockVerificationPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.StockVerificationPage })));
+const LibraryReportsPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.LibraryReportsPage })));
+const MyLibraryPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.MyLibraryPage })));
+const WardLibraryPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.WardLibraryPage })));
+const OpacPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.OpacPage })));
 // Phase 18 — degrees, convocation, digital credentials
 const DegreeEligibilityPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.DegreeEligibilityPage })));
 const ConvocationsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.ConvocationsPage })));
@@ -261,6 +275,7 @@ export const router = createBrowserRouter([
   // Phase 06 — public careers page (no sign-in; the API checks hr.recruitment for the tenant)
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
+  { path: '/opac', element: page(<OpacPage />) },
   { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
   { path: '/verify/:token', element: page(<VerifyPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
@@ -445,6 +460,17 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 19 — library (narrowed by the services: own / wards / department / college / all)
+              ['/admin/library/catalogue', 'library.core', 'library', 'view_all', [['library', 'manage'], ['library', 'circulate']], <CataloguePage key="lc" />],
+              ['/admin/library/circulation', 'library.core', 'library', 'circulate', [['library', 'manage']], <CirculationPage key="lx" />],
+              ['/admin/library/issues', 'library.core', 'library', 'view_all', [['library', 'manage'], ['library', 'circulate']], <LibraryIssuesPage key="li" />],
+              ['/admin/library/reservations', 'library.core', 'library', 'circulate', [['library', 'manage']], <LibraryReservationsPage key="lr" />],
+              ['/admin/library/fines', 'library.fines', 'library', 'fines', [['library', 'manage']], <LibraryFinesPage key="lf" />],
+              ['/admin/library/members', 'library.core', 'library', 'view_all', [['library', 'manage']], <LibraryMembersPage key="lm" />],
+              ['/admin/library/eresources', 'library.eresources', 'library', 'manage', [], <EresourcesPage key="le" />],
+              ['/admin/library/ill', 'library.inter_library_loan', 'library', 'manage', [], <IllPage key="ll" />],
+              ['/admin/library/stock-verification', 'library.core', 'library', 'manage', [], <StockVerificationPage key="ls" />],
+              ['/admin/library/reports', 'library.core', 'library', 'view_all', [['library', 'manage']], <LibraryReportsPage key="lp" />],
               // Phase 18 — degrees & convocation (narrowed by the services: units / institution)
               ['/admin/degrees/eligibility', 'degrees.eligibility', 'degrees', 'view_all', [['degrees', 'manage'], ['degrees', 'award']], <DegreeEligibilityPage key="de" />],
               ['/admin/degrees/convocations', 'degrees.convocation', 'degrees', 'convocation_manage', [['degrees', 'view_all']], <ConvocationsPage key="dc" />],
@@ -621,6 +647,7 @@ export const router = createBrowserRouter([
               ['courses/:offeringId', <StudentCoursePage key="sc" />],
               ['courses/:offeringId/outcomes', <FeatureRoute key="so" feature="obe.attainment"><StudentOutcomesPage /></FeatureRoute>],
               ['degree', <FeatureRoute key="dg" feature="degrees.eligibility"><StudentDegreePage /></FeatureRoute>],
+              ['library', <FeatureRoute key="lb" feature="library.core"><MyLibraryPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -635,6 +662,7 @@ export const router = createBrowserRouter([
           { path: 'fees', element: page(<FeatureRoute feature="fees.core"><ParentFeesPage /></FeatureRoute>) },
           { path: 'exams/:studentId', element: page(<FeatureRoute feature="exams.sessions"><ParentExamsPage /></FeatureRoute>) },
           { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
+          { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
         ],
       },
       {
@@ -647,6 +675,7 @@ export const router = createBrowserRouter([
           // Phase 15 — evaluator portal (dummy numbers only) and the offering result sheet
           { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
           { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
+          { path: 'library', element: page(<FeatureRoute feature="library.core"><MyLibraryPage /></FeatureRoute>) },
           // Phase 17 — CO attainment of an own offering
           { path: 'offerings/:id/attainment', element: page(<FeatureRoute feature="obe.attainment"><OfferingAttainmentPage /></FeatureRoute>) },
           // Phase 14 — exam duties and question-paper setting

@@ -74,6 +74,12 @@ register_beat("credentials.retry_failed", "beat.credentials.retry_failed", cront
 register_beat("abc.push_pending", "beat.abc.push_pending", crontab(hour=20, minute=50))  # 02:20 IST
 register_beat("convocation.reminders", "beat.convocation.reminders", crontab(hour=3, minute=30))  # 09:00 IST
 
+# ---- Phase 19 library (app/tasks/library.py) ---------------------------------------------------------------------------------------
+register_beat("library.overdue_scan", "beat.library.overdue_scan", crontab(hour=19, minute=30))  # 01:00 IST
+register_beat("library.reservation_expiry", "beat.library.reservation_expiry", crontab(minute=12))
+register_beat("library.eresource_expiry_reminders", "beat.library.eresource_expiry_reminders", crontab(hour=3, minute=45))
+register_beat("library.membership_expiry", "beat.library.membership_expiry", crontab(hour=20, minute=10))  # 01:40 IST
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

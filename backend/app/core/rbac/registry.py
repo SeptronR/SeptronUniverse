@@ -681,6 +681,10 @@ STUDENT_OBE: set[str] = P("obe", "view")
 SELF_DEGREES: set[str] = P("degrees", "view")
 REGISTRAR_DEGREES: set[str] = P("degrees", "manage", "view")
 HOD_DEGREES: set[str] = P("degrees", "view_all")
+# Phase 19 (Prompts/19 visibility): parents read their wards' library cards / issues / fines; the HOD reads its
+# department's members and overdue lists
+PARENT_LIBRARY: set[str] = P("library", "self")
+HOD_LIBRARY: set[str] = P("library", "view_all")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -816,7 +820,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_ASSESSMENT
     | HOD_EXAMS
     | HOD_RESULTS
-    | HOD_DEGREES,
+    | HOD_DEGREES
+    | HOD_LIBRARY,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -1009,6 +1014,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "student": STUDENT,
     "parent": COMMON
     | SELF_DEGREES
+    | PARENT_LIBRARY
     | P("students", "view")
     | P("attendance", "view")
     | P("results", "view")
@@ -1056,6 +1062,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0019": frozenset(PARENT_LIBRARY | HOD_LIBRARY),
     "0018": frozenset(SELF_DEGREES | REGISTRAR_DEGREES | HOD_DEGREES),
     "0017": frozenset(FACULTY_OBE | DEAN_ATTAINMENT | IQAC_OBE | STUDENT_OBE),
     "0016": frozenset(REGISTRAR_POST_RESULT | COMMITTEE_EXAMS),

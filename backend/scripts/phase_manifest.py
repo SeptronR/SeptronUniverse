@@ -305,6 +305,16 @@ PHASES: dict[str, list[str]] = {
     ],
     # post-result (§16): reval_requests, transcripts; committees / committee_members (§30, governance UI in Phase 33)
     # and student_achievements (§27, Phase 27 module) are modelled here for the malpractice inquiry and medals
+    "19": [
+        "book_categories",
+        "books",
+        "library_copies",
+        "library_eresources",
+        "library_members",
+        "book_issues",
+        "library_reservations",
+        "library_ill_requests",
+    ],
     "18": [
         "degree_eligibility_checks",
         "convocations",

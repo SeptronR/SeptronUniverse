@@ -197,7 +197,22 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Workload', to: '/admin/hr/workload', icon: Gauge, module: 'faculty', action: 'workload_manage', altActions: ['view_all'], feature: 'hr.workload' },
     ],
   },
-  { title: 'CAMPUS', items: [] },
+  {
+    title: 'CAMPUS',
+    items: [
+      // Phase 19 — library
+      { label: 'Library catalogue', to: '/admin/library/catalogue', icon: BookOpen, module: 'library', action: 'view_all', altActions: ['manage', 'circulate'], feature: 'library.core' },
+      { label: 'Circulation', to: '/admin/library/circulation', icon: Repeat, module: 'library', action: 'circulate', altActions: ['manage'], feature: 'library.core' },
+      { label: 'Library issues', to: '/admin/library/issues', icon: ClipboardCheck, module: 'library', action: 'view_all', altActions: ['manage', 'circulate'], feature: 'library.core' },
+      { label: 'Reservations', to: '/admin/library/reservations', icon: Clock, module: 'library', action: 'circulate', altActions: ['manage'], feature: 'library.core' },
+      { label: 'Library fines', to: '/admin/library/fines', icon: HandCoins, module: 'library', action: 'fines', altActions: ['manage'], feature: 'library.fines' },
+      { label: 'Library members', to: '/admin/library/members', icon: UsersRound, module: 'library', action: 'view_all', altActions: ['manage'], feature: 'library.core' },
+      { label: 'E-resources', to: '/admin/library/eresources', icon: Landmark, module: 'library', action: 'manage', feature: 'library.eresources' },
+      { label: 'Inter-library loans', to: '/admin/library/ill', icon: ArrowRightLeft, module: 'library', action: 'manage', feature: 'library.inter_library_loan' },
+      { label: 'Stock verification', to: '/admin/library/stock-verification', icon: ClipboardCheck, module: 'library', action: 'manage', feature: 'library.core' },
+      { label: 'Library reports', to: '/admin/library/reports', icon: TrendingUp, module: 'library', action: 'view_all', altActions: ['manage'], feature: 'library.core' },
+    ],
+  },
   {
     title: 'FINANCE',
     items: [

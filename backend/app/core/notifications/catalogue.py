@@ -979,6 +979,59 @@ OBE_EVENTS: tuple[EventDef, ...] = (
         link="/admin/obe/program-attainment",
     ),
 )
+# Phase 19 — library circulation, reservations, fines, e-resources
+LIBRARY_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "library.issued",
+        "library",
+        "Book issued",
+        "Issued: {{ title }}",
+        "“{{ title }}” is issued to you, due {{ due }}.",
+        ("title", "due"),
+        ("in_app", "push"),
+        link="/student/library",
+    ),
+    EventDef(
+        "library.overdue",
+        "library",
+        "Book overdue",
+        "Overdue: {{ book }}",
+        "“{{ book }}” was due on {{ due_date }} ({{ days }} day(s) overdue). Please return it to avoid more fines.",
+        ("book", "due_date", "days"),
+        ("in_app", "push", "email"),
+        link="/student/library",
+    ),
+    EventDef(
+        "library.reservation_available",
+        "library",
+        "Reservation ready",
+        "Ready to collect: {{ title }}",
+        "Your reserved book “{{ title }}” is held for you until {{ until }}.",
+        ("title", "until"),
+        ("in_app", "push", "email"),
+        link="/student/library",
+    ),
+    EventDef(
+        "library.fine_created",
+        "library",
+        "Library fine",
+        "Library fine {{ amount }}",
+        "A library charge of {{ amount }} was raised: {{ reason }}. Pay under Fees.",
+        ("amount", "reason"),
+        ("in_app", "email"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "library.eresource_expiring",
+        "library",
+        "E-resource expiring",
+        "{{ title }} expires {{ until }}",
+        "The subscription to {{ title }} ends on {{ until }}.",
+        ("title", "until"),
+        ("in_app", "email"),
+        link="/admin/library/eresources",
+    ),
+)
 # Phase 18 — degree eligibility, awards, convocation, credential pushes
 DEGREE_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1069,6 +1122,7 @@ EVENTS = (
     + POST_RESULT_EVENTS
     + OBE_EVENTS
     + DEGREE_EVENTS
+    + LIBRARY_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

@@ -63,6 +63,7 @@ from app.api.v1.endpoints import (
     institution,
     jobs,
     leaves,
+    library,
     lms,
     no_dues,
     notifications,
@@ -150,6 +151,9 @@ api_router.include_router(post_result.public_router)  # masked public rank lists
 api_router.include_router(obe_attainment.router)
 # Phase 18: degrees, convocation, credentials, ABC — each route carries its degrees.* feature
 api_router.include_router(degrees.router)
+# Phase 19: library (each route carries its library.* feature) and the public OPAC
+api_router.include_router(library.router)
+api_router.include_router(library.public_router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

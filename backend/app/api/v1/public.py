@@ -62,6 +62,10 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 18 — degree / provisional QR tokens resolve through "GET /api/v1/verify/{token}"; employers verify in bulk
     # (rate-limited + captcha).
     "POST /api/v1/verify/bulk",
+    # Phase 19 — public OPAC (tenant from ?institution=<slug>; rate-limited)
+    "GET /api/v1/opac/search",
+    "GET /api/v1/opac/new-arrivals",
+    "GET /api/v1/opac/books/{id}",
 }
 
 

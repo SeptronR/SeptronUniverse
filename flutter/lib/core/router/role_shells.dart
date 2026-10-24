@@ -265,6 +265,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
+  const MoreMenuModule(
+      titleKey: 'library',
+      icon: Icons.local_library_outlined,
+      route: AppRoutes.myLibrary,
+      color: Colors.brown,
+      permission: 'library:self',
+      feature: 'library.core',
+      roles: ['student', 'faculty', 'hod', 'class_advisor', 'guest_faculty', 'alumni', 'learner', 'research_scholar']),
+  const MoreMenuModule(
+      titleKey: 'ward_library',
+      icon: Icons.local_library_outlined,
+      route: AppRoutes.wardLibrary,
+      color: Colors.brown,
+      permission: 'library:self',
+      feature: 'library.core',
+      roles: ['parent']),
+  const MoreMenuModule(
+      titleKey: 'library_circulation',
+      icon: Icons.qr_code_scanner,
+      route: AppRoutes.libraryCirculation,
+      color: Colors.teal,
+      permission: 'library:circulate',
+      feature: 'library.core',
+      roles: ['librarian']),
   // Phase 18 — degree (students / alumni), eligibility + approvals + convocation scanner (registrar / VC)
   const MoreMenuModule(
       titleKey: 'degree',
