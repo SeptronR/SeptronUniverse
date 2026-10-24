@@ -243,6 +243,46 @@ POST_RESULT_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("committee_secretary", "controller_of_examinations", sla=168, escalate="vice_chancellor"),
     },
 )
+# Phase 20: hostel leave and room change (the warden of the hostel — resolved from ``context.warden_user_id``) and the
+# eviction (warden → registrar). Guardian consent is a service gate, not a step.
+_WARDEN = {"type": "scope_rule", "value": "context.warden_user_id"}
+HOSTEL_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "hostel.leave",
+        "module": "hostel",
+        "name": "Hostel leave / out-pass",
+        "steps": [
+            {
+                "order": 1,
+                "approver": _WARDEN,
+                "mode": "sequential",
+                "sla_hours": 12,
+                "escalate_to": {"type": "role", "value": "registrar"},
+            }
+        ],
+    },
+    {
+        "key": "hostel.room_change",
+        "module": "hostel",
+        "name": "Hostel room change",
+        "steps": [{"order": 1, "approver": _WARDEN, "mode": "sequential", "sla_hours": 72}],
+    },
+    {
+        "key": "hostel.eviction",
+        "module": "hostel",
+        "name": "Hostel eviction",
+        "steps": [
+            {"order": 1, "approver": _WARDEN, "mode": "sequential", "sla_hours": 48},
+            {
+                "order": 2,
+                "approver": {"type": "role", "value": "registrar"},
+                "mode": "sequential",
+                "sla_hours": 72,
+                "escalate_to": {"type": "role", "value": "vice_chancellor"},
+            },
+        ],
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -252,9 +292,10 @@ WORKFLOW_TEMPLATES = (
     + ATTENDANCE_WORKFLOW_TEMPLATES
     + FEE_WORKFLOW_TEMPLATES
     + POST_RESULT_WORKFLOW_TEMPLATES
+    + HOSTEL_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 32, (
+assert len(WORKFLOW_TEMPLATES) == 35, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3"
 )

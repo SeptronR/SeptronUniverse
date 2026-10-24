@@ -685,6 +685,11 @@ HOD_DEGREES: set[str] = P("degrees", "view_all")
 # department's members and overdue lists
 PARENT_LIBRARY: set[str] = P("library", "self")
 HOD_LIBRARY: set[str] = P("library", "view_all")
+# Phase 20 (Prompts/20 visibility): the registrar runs allotments / approves evictions (hostel:manage, institution);
+# the HOD reads its department's residents (view_all, department); class advisors read their advisees (view)
+REGISTRAR_HOSTEL: set[str] = P("hostel", "manage")
+HOD_HOSTEL: set[str] = P("hostel", "view_all")
+ADVISOR_HOSTEL: set[str] = P("hostel", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -732,7 +737,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_FEES
     | REGISTRAR_MARKS
     | REGISTRAR_POST_RESULT
-    | REGISTRAR_DEGREES,
+    | REGISTRAR_DEGREES
+    | REGISTRAR_HOSTEL,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -821,8 +827,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_EXAMS
     | HOD_RESULTS
     | HOD_DEGREES
-    | HOD_LIBRARY,
-    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
+    | HOD_LIBRARY
+    | HOD_HOSTEL,
+    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
@@ -1062,6 +1069,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0020": frozenset(REGISTRAR_HOSTEL | HOD_HOSTEL | ADVISOR_HOSTEL),
     "0019": frozenset(PARENT_LIBRARY | HOD_LIBRARY),
     "0018": frozenset(SELF_DEGREES | REGISTRAR_DEGREES | HOD_DEGREES),
     "0017": frozenset(FACULTY_OBE | DEAN_ATTAINMENT | IQAC_OBE | STUDENT_OBE),

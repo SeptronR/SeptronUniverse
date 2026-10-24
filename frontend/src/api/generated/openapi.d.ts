@@ -7646,6 +7646,762 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/hostel-allocations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Allocations */
+        get: operations["allocations_api_v1_hostel_allocations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My allocation(s) */
+        get: operations["alloc_me_api_v1_hostel_allocations_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/me/vacate-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Ask the warden to vacate */
+        post: operations["vacate_request_api_v1_hostel_allocations_me_vacate_request_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My wards' allocations */
+        get: operations["alloc_wards_api_v1_hostel_allocations_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Allocation */
+        get: operations["alloc_get_api_v1_hostel_allocations__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/{id}/check-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Check in */
+        post: operations["check_in_api_v1_hostel_allocations__id__check_in_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/{id}/evict": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Propose / apply eviction */
+        post: operations["evict_api_v1_hostel_allocations__id__evict_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/{id}/transfer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transfer to another bed */
+        post: operations["transfer_api_v1_hostel_allocations__id__transfer_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-allocations/{id}/vacate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Vacate (damages → no-dues → deposit refund) */
+        post: operations["vacate_api_v1_hostel_allocations__id__vacate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-applications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Applications */
+        get: operations["applications_api_v1_hostel_applications_get"];
+        put?: never;
+        /** Apply (Idempotency-Key) */
+        post: operations["apply_api_v1_hostel_applications_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-applications/allot": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Allotment run (job; dry_run inline) */
+        post: operations["allot_api_v1_hostel_applications_allot_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-applications/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My applications */
+        get: operations["my_applications_api_v1_hostel_applications_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-applications/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Cancel my application */
+        delete: operations["app_cancel_api_v1_hostel_applications__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-applications/{id}/allot-manual": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Allot a bed manually */
+        post: operations["allot_manual_api_v1_hostel_applications__id__allot_manual_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-applications/{id}/decline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decline */
+        post: operations["app_decline_api_v1_hostel_applications__id__decline_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-beds/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Block / free a bed */
+        put: operations["bed_status_api_v1_hostel_beds__id__status_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-complaints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Complaints */
+        get: operations["complaints_api_v1_hostel_complaints_get"];
+        put?: never;
+        /** Raise a complaint */
+        post: operations["complaint_create_api_v1_hostel_complaints_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-complaints/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update status (warden) */
+        put: operations["complaint_update_api_v1_hostel_complaints__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-complaints/{id}/rate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rate the resolution */
+        post: operations["complaint_rate_api_v1_hostel_complaints__id__rate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-discipline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Discipline records */
+        get: operations["discipline_api_v1_hostel_discipline_get"];
+        put?: never;
+        /** Record an incident */
+        post: operations["discipline_create_api_v1_hostel_discipline_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-discipline/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My hostel discipline records */
+        get: operations["discipline_me_api_v1_hostel_discipline_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-discipline/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My wards' records */
+        get: operations["discipline_wards_api_v1_hostel_discipline_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-fee-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fee plans */
+        get: operations["fee_plans_api_v1_hostel_fee_plans_get"];
+        put?: never;
+        /** Create / update a fee plan */
+        post: operations["fee_plan_create_api_v1_hostel_fee_plans_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-fee-plans/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit a fee plan */
+        put: operations["fee_plan_update_api_v1_hostel_fee_plans__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-gate/late-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Late / absconding */
+        get: operations["late_list_api_v1_hostel_gate_late_list_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-gate/out-now": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Residents out now */
+        get: operations["out_now_api_v1_hostel_gate_out_now_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-gate/scan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Gate scan (out / in) */
+        post: operations["gate_scan_api_v1_hostel_gate_scan_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-gate/scan-batch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Offline gate scans (device times) */
+        post: operations["gate_batch_api_v1_hostel_gate_scan_batch_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Leaves (warden queue) */
+        get: operations["leaves_api_v1_hostel_leaves_get"];
+        put?: never;
+        /** Request leave / out-pass (Idempotency-Key) */
+        post: operations["leave_create_api_v1_hostel_leaves_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My leaves */
+        get: operations["leaves_me_api_v1_hostel_leaves_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My wards' leaves */
+        get: operations["leaves_wards_api_v1_hostel_leaves_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Cancel my leave */
+        delete: operations["leave_cancel_api_v1_hostel_leaves__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/{id}/consent/parent-approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Guardian approves in the app */
+        post: operations["consent_parent_api_v1_hostel_leaves__id__consent_parent_approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/{id}/consent/send-otp": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send the guardian OTP */
+        post: operations["consent_send_api_v1_hostel_leaves__id__consent_send_otp_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/{id}/consent/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify the guardian OTP */
+        post: operations["consent_verify_api_v1_hostel_leaves__id__consent_verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject (warden) */
+        post: operations["leave_decide_api_v1_hostel_leaves__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-leaves/{id}/mark-returned": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark returned manually */
+        post: operations["leave_returned_api_v1_hostel_leaves__id__mark_returned_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-roll-calls": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Roll-calls */
+        get: operations["roll_calls_api_v1_hostel_roll_calls_get"];
+        put?: never;
+        /** Start tonight's roll-call */
+        post: operations["roll_create_api_v1_hostel_roll_calls_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-roll-calls/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Roll-call report */
+        get: operations["roll_report_api_v1_hostel_roll_calls_report_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-roll-calls/{id}/entries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Mark entries (bulk) */
+        put: operations["roll_mark_api_v1_hostel_roll_calls__id__entries_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-rooms/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Room */
+        get: operations["room_get_api_v1_hostel_rooms__id__get"];
+        /** Edit a room */
+        put: operations["room_update_api_v1_hostel_rooms__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-visitors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Visitors */
+        get: operations["visitors_api_v1_hostel_visitors_get"];
+        put?: never;
+        /** Log a visitor in */
+        post: operations["visitor_in_api_v1_hostel_visitors_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-visitors/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Monthly visitor register (job → XLSX) */
+        get: operations["visitor_register_api_v1_hostel_visitors_register_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostel-visitors/{id}/out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Log a visitor out */
+        post: operations["visitor_out_api_v1_hostel_visitors__id__out_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/hostels": {
         parameters: {
             query?: never;
@@ -7653,8 +8409,131 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Hostels (stub until Phase 20 — proves the feature gate) */
-        get: operations["list_hostels_api_v1_hostels_get"];
+        /** Hostels (own / college / all) */
+        get: operations["hostels_api_v1_hostels_get"];
+        put?: never;
+        /** Create a hostel */
+        post: operations["hostel_create_api_v1_hostels_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/me/rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rules of my hostel */
+        get: operations["my_rules_api_v1_hostels_me_rules_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/reports/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Register export (job → XLSX) */
+        get: operations["reports_api_v1_hostels_reports__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hostel */
+        get: operations["hostel_get_api_v1_hostels__id__get"];
+        /** Edit a hostel */
+        put: operations["hostel_update_api_v1_hostels__id__put"];
+        post?: never;
+        /** Delete a hostel */
+        delete: operations["hostel_delete_api_v1_hostels__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/{id}/blocks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Blocks */
+        get: operations["blocks_api_v1_hostels__id__blocks_get"];
+        put?: never;
+        /** Add a block */
+        post: operations["block_create_api_v1_hostels__id__blocks_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/{id}/occupancy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Blocks → rooms → beds with residents */
+        get: operations["occupancy_api_v1_hostels__id__occupancy_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/{id}/rooms/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate rooms + beds */
+        post: operations["rooms_bulk_api_v1_hostels__id__rooms_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/hostels/{id}/rules.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hostel rules (PDF) */
+        get: operations["rules_pdf_api_v1_hostels__id__rules_pdf_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -9238,6 +10117,214 @@ export interface paths {
         get: operations["my_marks_api_v1_marks_me_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-attendance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Meal attendance */
+        get: operations["mess_attendance_api_v1_mess_attendance_get"];
+        put?: never;
+        /** Mark meals (single or bulk; qr / rfid / manual) */
+        post: operations["mess_mark_api_v1_mess_attendance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-bills": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mess bills */
+        get: operations["bills_api_v1_mess_bills_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-bills/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My mess bills */
+        get: operations["bills_me_api_v1_mess_bills_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-bills/run": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Monthly bill run (job) */
+        post: operations["bill_run_api_v1_mess_bills_run_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-bills/{id}.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mess bill PDF */
+        get: operations["bill_pdf_api_v1_mess_bills__id__pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Mess plans */
+        get: operations["mess_plans_api_v1_mess_plans_get"];
+        put?: never;
+        /** Create a mess plan */
+        post: operations["mess_plan_create_api_v1_mess_plans_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-plans/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit a mess plan */
+        put: operations["mess_plan_update_api_v1_mess_plans__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-rebates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rebate requests */
+        get: operations["rebates_api_v1_mess_rebates_get"];
+        put?: never;
+        /** Request a rebate */
+        post: operations["rebate_create_api_v1_mess_rebates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-rebates/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide a rebate */
+        post: operations["rebate_decide_api_v1_mess_rebates__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-subscriptions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Subscriptions (own, or the hostel's for the mess office) */
+        get: operations["mess_subs_api_v1_mess_subscriptions_get"];
+        put?: never;
+        /** Subscribe */
+        post: operations["mess_subscribe_api_v1_mess_subscriptions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-subscriptions/{id}/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Change plan (effective next month) */
+        post: operations["mess_change_api_v1_mess_subscriptions__id__change_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/mess-subscriptions/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close */
+        post: operations["mess_close_api_v1_mess_subscriptions__id__close_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -12866,6 +13953,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/room-change-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Room change requests */
+        get: operations["room_changes_api_v1_room_change_requests_get"];
+        put?: never;
+        /** Request a room change */
+        post: operations["room_change_create_api_v1_room_change_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/room-change-requests/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide (warden) */
+        post: operations["room_change_decide_api_v1_room_change_requests__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/rooms": {
         parameters: {
             query?: never;
@@ -13274,6 +14396,92 @@ export interface paths {
         get: operations["attendance_summary_api_v1_staff_attendance_summary_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff-quarter-allocations/{id}/vacate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Vacate a quarter */
+        post: operations["quarter_vacate_api_v1_staff_quarter_allocations__id__vacate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff-quarters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Quarters */
+        get: operations["quarters_api_v1_staff_quarters_get"];
+        put?: never;
+        /** Add a quarter */
+        post: operations["quarter_create_api_v1_staff_quarters_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff-quarters/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My quarter */
+        get: operations["quarters_me_api_v1_staff_quarters_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff-quarters/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit a quarter */
+        put: operations["quarter_update_api_v1_staff_quarters__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff-quarters/{id}/allocate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Allocate (rent deduction to payroll) */
+        post: operations["quarter_allocate_api_v1_staff_quarters__id__allocate_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -16074,6 +17282,49 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** AllotmentRunRequest */
+        AllotmentRunRequest: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Dry Run
+             * @default false
+             */
+            dry_run: boolean;
+            /** Hostel Ids */
+            hostel_ids?: string[] | null;
+        };
+        /** AllotmentRunSummary */
+        AllotmentRunSummary: {
+            /**
+             * Allotted
+             * @default 0
+             */
+            allotted: number;
+            /**
+             * By Hostel
+             * @default {}
+             */
+            by_hostel: {
+                [key: string]: number;
+            };
+            /**
+             * Considered
+             * @default 0
+             */
+            considered: number;
+            /** Dry Run */
+            dry_run: boolean;
+            /** Job Id */
+            job_id?: string | null;
+            /**
+             * Waitlisted
+             * @default 0
+             */
+            waitlisted: number;
+        };
         /** AllotmentSummary */
         AllotmentSummary: {
             /** Allotments */
@@ -17852,6 +19103,14 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** BedStatusChange */
+        BedStatusChange: {
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "vacant" | "blocked";
+        };
         /** BestOf */
         BestOf: {
             /** Group */
@@ -19096,6 +20355,15 @@ export interface components {
             /** Workflow Instance Id */
             workflow_instance_id?: string | null;
         };
+        /** CheckInRequest */
+        CheckInRequest: {
+            /** Inventory */
+            inventory?: string[];
+            /** Room Condition */
+            room_condition?: {
+                [key: string]: unknown;
+            };
+        };
         /** CheckinGeo */
         CheckinGeo: {
             /** Accuracy M */
@@ -19814,6 +21082,11 @@ export interface components {
             staff?: components["schemas"]["ConflictItem"][];
             /** Workload */
             workload?: components["schemas"]["ConflictItem"][];
+        };
+        /** ConsentOtpVerify */
+        ConsentOtpVerify: {
+            /** Otp */
+            otp: string;
         };
         /** ConsentRequest */
         ConsentRequest: {
@@ -21216,6 +22489,13 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** DamageItem */
+        DamageItem: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Item */
+            item: string;
+        };
         /** DashboardResponse */
         DashboardResponse: {
             batch: components["schemas"]["BatchRef"];
@@ -21889,6 +23169,60 @@ export interface components {
          * @enum {string}
          */
         DisbursementMode: "fee_credit" | "bank_transfer" | "external_portal";
+        /** DisciplineCreate */
+        DisciplineCreate: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "warning" | "fine" | "suspension" | "eviction";
+            /** Description */
+            description: string;
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Fine Paise */
+            fine_paise?: number | null;
+            /**
+             * Incident On
+             * Format: date
+             */
+            incident_on: string;
+        };
+        /** DisciplineOut */
+        DisciplineOut: {
+            /** Action */
+            action: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Description */
+            description: string;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /** Fine Paise */
+            fine_paise?: number | null;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Incident On
+             * Format: date
+             */
+            incident_on: string;
+            student: components["schemas"]["HostelStudentRef"];
+        };
         /** DiscountAssign */
         DiscountAssign: {
             /** Academic Year Id */
@@ -23015,6 +24349,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AllotmentRunSummary] */
+        Envelope_AllotmentRunSummary_: {
+            data?: components["schemas"]["AllotmentRunSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AllotmentSummary] */
         Envelope_AllotmentSummary_: {
             data?: components["schemas"]["AllotmentSummary"] | null;
@@ -23990,6 +25339,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DisciplineOut] */
+        Envelope_DisciplineOut_: {
+            data?: components["schemas"]["DisciplineOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DiscountAssignmentOut] */
         Envelope_DiscountAssignmentOut_: {
             data?: components["schemas"]["DiscountAssignmentOut"] | null;
@@ -24470,6 +25834,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[GateScanResponse] */
+        Envelope_GateScanResponse_: {
+            data?: components["schemas"]["GateScanResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[GradingScaleResponse] */
         Envelope_GradingScaleResponse_: {
             data?: components["schemas"]["GradingScaleResponse"] | null;
@@ -24563,6 +25942,171 @@ export interface components {
         /** Envelope[HolidayResponse] */
         Envelope_HolidayResponse_: {
             data?: components["schemas"]["HolidayResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelAllocationResponse] */
+        Envelope_HostelAllocationResponse_: {
+            data?: components["schemas"]["HostelAllocationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelApplicationResponse] */
+        Envelope_HostelApplicationResponse_: {
+            data?: components["schemas"]["HostelApplicationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelBedOut] */
+        Envelope_HostelBedOut_: {
+            data?: components["schemas"]["HostelBedOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelBlockOut] */
+        Envelope_HostelBlockOut_: {
+            data?: components["schemas"]["HostelBlockOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelComplaintOut] */
+        Envelope_HostelComplaintOut_: {
+            data?: components["schemas"]["HostelComplaintOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelFeePlanOut] */
+        Envelope_HostelFeePlanOut_: {
+            data?: components["schemas"]["HostelFeePlanOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelJobAccepted] */
+        Envelope_HostelJobAccepted_: {
+            data?: components["schemas"]["HostelJobAccepted"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelLeaveResponse] */
+        Envelope_HostelLeaveResponse_: {
+            data?: components["schemas"]["HostelLeaveResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelOut] */
+        Envelope_HostelOut_: {
+            data?: components["schemas"]["HostelOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelRoomOut] */
+        Envelope_HostelRoomOut_: {
+            data?: components["schemas"]["HostelRoomOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[HostelVisitorOut] */
+        Envelope_HostelVisitorOut_: {
+            data?: components["schemas"]["HostelVisitorOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -25115,6 +26659,51 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[MessAttendanceResult] */
+        Envelope_MessAttendanceResult_: {
+            data?: components["schemas"]["MessAttendanceResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MessPlanOut] */
+        Envelope_MessPlanOut_: {
+            data?: components["schemas"]["MessPlanOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MessSubscriptionOut] */
+        Envelope_MessSubscriptionOut_: {
+            data?: components["schemas"]["MessSubscriptionOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[MessageLogResponse] */
         Envelope_MessageLogResponse_: {
             data?: components["schemas"]["MessageLogResponse"] | null;
@@ -25314,6 +26903,21 @@ export interface components {
         /** Envelope[NumberSequenceResponse] */
         Envelope_NumberSequenceResponse_: {
             data?: components["schemas"]["NumberSequenceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OccupancyResponse] */
+        Envelope_OccupancyResponse_: {
+            data?: components["schemas"]["OccupancyResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -26046,6 +27650,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[QuarterOut] */
+        Envelope_QuarterOut_: {
+            data?: components["schemas"]["QuarterOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[QuestionImportReport] */
         Envelope_QuestionImportReport_: {
             data?: components["schemas"]["QuestionImportReport"] | null;
@@ -26154,6 +27773,21 @@ export interface components {
         /** Envelope[ReadmissionResponse] */
         Envelope_ReadmissionResponse_: {
             data?: components["schemas"]["ReadmissionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RebateOut] */
+        Envelope_RebateOut_: {
+            data?: components["schemas"]["RebateOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -26451,9 +28085,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RollCallOut] */
+        Envelope_RollCallOut_: {
+            data?: components["schemas"]["RollCallOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RolloverResponse] */
         Envelope_RolloverResponse_: {
             data?: components["schemas"]["RolloverResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RoomChangeResponse] */
+        Envelope_RoomChangeResponse_: {
+            data?: components["schemas"]["RoomChangeResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -27310,6 +28974,21 @@ export interface components {
         /** Envelope[UserRoleResponse] */
         Envelope_UserRoleResponse_: {
             data?: components["schemas"]["UserRoleResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[VacateResponse] */
+        Envelope_VacateResponse_: {
+            data?: components["schemas"]["VacateResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -28375,6 +30054,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[DisciplineOut]] */
+        Envelope_list_DisciplineOut__: {
+            /** Data */
+            data?: components["schemas"]["DisciplineOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[DiscountAssignmentOut]] */
         Envelope_list_DiscountAssignmentOut__: {
             /** Data */
@@ -28743,6 +30438,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[GateScanResponse]] */
+        Envelope_list_GateScanResponse__: {
+            /** Data */
+            data?: components["schemas"]["GateScanResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[GradeCardResponse]] */
         Envelope_list_GradeCardResponse__: {
             /** Data */
@@ -28843,6 +30554,134 @@ export interface components {
         Envelope_list_HolidayResponse__: {
             /** Data */
             data?: components["schemas"]["HolidayResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelAllocationResponse]] */
+        Envelope_list_HostelAllocationResponse__: {
+            /** Data */
+            data?: components["schemas"]["HostelAllocationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelApplicationResponse]] */
+        Envelope_list_HostelApplicationResponse__: {
+            /** Data */
+            data?: components["schemas"]["HostelApplicationResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelBlockOut]] */
+        Envelope_list_HostelBlockOut__: {
+            /** Data */
+            data?: components["schemas"]["HostelBlockOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelComplaintOut]] */
+        Envelope_list_HostelComplaintOut__: {
+            /** Data */
+            data?: components["schemas"]["HostelComplaintOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelFeePlanOut]] */
+        Envelope_list_HostelFeePlanOut__: {
+            /** Data */
+            data?: components["schemas"]["HostelFeePlanOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelLeaveResponse]] */
+        Envelope_list_HostelLeaveResponse__: {
+            /** Data */
+            data?: components["schemas"]["HostelLeaveResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelOut]] */
+        Envelope_list_HostelOut__: {
+            /** Data */
+            data?: components["schemas"]["HostelOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[HostelVisitorOut]] */
+        Envelope_list_HostelVisitorOut__: {
+            /** Data */
+            data?: components["schemas"]["HostelVisitorOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -29163,6 +31002,70 @@ export interface components {
         Envelope_list_MeritListResponse__: {
             /** Data */
             data?: components["schemas"]["MeritListResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MessAttendanceRow]] */
+        Envelope_list_MessAttendanceRow__: {
+            /** Data */
+            data?: components["schemas"]["MessAttendanceRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MessBillResponse]] */
+        Envelope_list_MessBillResponse__: {
+            /** Data */
+            data?: components["schemas"]["MessBillResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MessPlanOut]] */
+        Envelope_list_MessPlanOut__: {
+            /** Data */
+            data?: components["schemas"]["MessPlanOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MessSubscriptionOut]] */
+        Envelope_list_MessSubscriptionOut__: {
+            /** Data */
+            data?: components["schemas"]["MessSubscriptionOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -29575,6 +31478,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[QuarterOut]] */
+        Envelope_list_QuarterOut__: {
+            /** Data */
+            data?: components["schemas"]["QuarterOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[QuestionOut]] */
         Envelope_list_QuestionOut__: {
             /** Data */
@@ -29627,6 +31546,22 @@ export interface components {
         Envelope_list_ReadmissionResponse__: {
             /** Data */
             data?: components["schemas"]["ReadmissionResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RebateOut]] */
+        Envelope_list_RebateOut__: {
+            /** Data */
+            data?: components["schemas"]["RebateOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -29767,10 +31702,42 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[RollCallOut]] */
+        Envelope_list_RollCallOut__: {
+            /** Data */
+            data?: components["schemas"]["RollCallOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[RoomAvailability]] */
         Envelope_list_RoomAvailability__: {
             /** Data */
             data?: components["schemas"]["RoomAvailability"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RoomChangeResponse]] */
+        Envelope_list_RoomChangeResponse__: {
+            /** Data */
+            data?: components["schemas"]["RoomChangeResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -30772,6 +32739,13 @@ export interface components {
             scan_available: boolean;
             /** Status */
             status: string;
+        };
+        /** EvictRequest */
+        EvictRequest: {
+            /** Disciplinary Record Id */
+            disciplinary_record_id?: string | null;
+            /** Reason */
+            reason: string;
         };
         /**
          * ExamAuthority
@@ -32151,6 +34125,34 @@ export interface components {
             /** Target */
             target?: number | null;
         };
+        /** GateScanBatch */
+        GateScanBatch: {
+            /** Scans */
+            scans: components["schemas"]["GateScanRequest"][];
+        };
+        /** GateScanRequest */
+        GateScanRequest: {
+            /**
+             * Direction
+             * @enum {string}
+             */
+            direction: "out" | "in";
+            /** Qr Token */
+            qr_token: string;
+            /** Scanned At */
+            scanned_at?: string | null;
+        };
+        /** GateScanResponse */
+        GateScanResponse: {
+            /** Late Minutes */
+            late_minutes?: number | null;
+            leave?: components["schemas"]["HostelLeaveResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Result */
+            result: string;
+            student?: components["schemas"]["HostelStudentRef"] | null;
+        };
         /**
          * Gender
          * @enum {string}
@@ -32813,6 +34815,580 @@ export interface components {
             holiday_type?: components["schemas"]["HolidayType"] | null;
             /** Name */
             name?: string | null;
+        };
+        /** HostelAllocationResponse */
+        HostelAllocationResponse: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /**
+             * Bed Id
+             * Format: uuid
+             */
+            bed_id: string;
+            /** Bed Label */
+            bed_label?: string | null;
+            /** Caution Deposit Invoice Id */
+            caution_deposit_invoice_id?: string | null;
+            /** Check In At */
+            check_in_at?: string | null;
+            /** Check Out At */
+            check_out_at?: string | null;
+            /** Deposit Status */
+            deposit_status?: string | null;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /** Fee Status */
+            fee_status?: string | null;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /** Hostel */
+            hostel?: string | null;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Room Condition */
+            room_condition?: {
+                [key: string]: unknown;
+            } | null;
+            /** Room Number */
+            room_number?: string | null;
+            /** Status */
+            status: string;
+            student: components["schemas"]["HostelStudentRef"];
+            /** To On */
+            to_on?: string | null;
+        };
+        /** HostelApplicationCreate */
+        HostelApplicationCreate: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Distance Km */
+            distance_km?: number | null;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Hostel Preference */
+            hostel_preference: string[];
+            /** Room Type Pref */
+            room_type_pref?: ("single" | "double" | "triple" | "dorm") | null;
+        };
+        /** HostelApplicationResponse */
+        HostelApplicationResponse: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Allocation Id */
+            allocation_id?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Distance Km */
+            distance_km?: number | null;
+            /**
+             * Hostel Preference
+             * @default []
+             */
+            hostel_preference: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Position */
+            position?: number | null;
+            /** Priority Score */
+            priority_score?: number | null;
+            /** Room Type Pref */
+            room_type_pref?: string | null;
+            /** Status */
+            status: string;
+            student: components["schemas"]["HostelStudentRef"];
+        };
+        /** HostelBedOut */
+        HostelBedOut: {
+            /** Allocation Id */
+            allocation_id?: string | null;
+            /** Bed Label */
+            bed_label: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Resident */
+            resident?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** HostelBlockIn */
+        HostelBlockIn: {
+            /**
+             * Floors
+             * @default 1
+             */
+            floors: number;
+            /** Name */
+            name: string;
+        };
+        /** HostelBlockOut */
+        HostelBlockOut: {
+            /** Floors */
+            floors: number;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Rooms
+             * @default 0
+             */
+            rooms: number;
+        };
+        /** HostelComplaintCreate */
+        HostelComplaintCreate: {
+            /**
+             * Category
+             * @enum {string}
+             */
+            category: "electrical" | "plumbing" | "cleaning" | "wifi" | "food" | "furniture" | "other";
+            /** Description */
+            description: string;
+            /** Room Id */
+            room_id?: string | null;
+        };
+        /** HostelComplaintOut */
+        HostelComplaintOut: {
+            /** Category */
+            category: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Description */
+            description: string;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Resolved At */
+            resolved_at?: string | null;
+            /** Room Id */
+            room_id?: string | null;
+            /** Room Number */
+            room_number?: string | null;
+            /** Service Request Id */
+            service_request_id?: string | null;
+            /** Status */
+            status: string;
+            student?: components["schemas"]["HostelStudentRef"] | null;
+        };
+        /** HostelComplaintRate */
+        HostelComplaintRate: {
+            /** Comment */
+            comment?: string | null;
+            /** Rating */
+            rating: number;
+        };
+        /** HostelComplaintUpdate */
+        HostelComplaintUpdate: {
+            /** Remarks */
+            remarks?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "assigned" | "in_progress" | "resolved" | "closed";
+        };
+        /** HostelFeePlanIn */
+        HostelFeePlanIn: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /**
+             * Caution Deposit Paise
+             * @default 0
+             */
+            caution_deposit_paise: number;
+            /** Fee Per Term Paise */
+            fee_per_term_paise: number;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Mess Advance Paise
+             * @default 0
+             */
+            mess_advance_paise: number;
+            /**
+             * Room Type
+             * @enum {string}
+             */
+            room_type: "single" | "double" | "triple" | "dorm";
+        };
+        /** HostelFeePlanOut */
+        HostelFeePlanOut: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Caution Deposit Paise */
+            caution_deposit_paise: number;
+            /** Fee Per Term Paise */
+            fee_per_term_paise: number;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Mess Advance Paise */
+            mess_advance_paise: number;
+            /** Room Type */
+            room_type: string;
+        };
+        /** HostelIn */
+        HostelIn: {
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /**
+             * Hostel Type
+             * @enum {string}
+             */
+            hostel_type: "boys" | "girls" | "coed" | "pg" | "international" | "staff";
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /** Warden Staff Id */
+            warden_staff_id?: string | null;
+        };
+        /** HostelJobAccepted */
+        HostelJobAccepted: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+            /**
+             * Status
+             * @default queued
+             */
+            status: string;
+        };
+        /** HostelLeaveCreate */
+        HostelLeaveCreate: {
+            /** Destination */
+            destination?: string | null;
+            /**
+             * From At
+             * Format: date-time
+             */
+            from_at: string;
+            /**
+             * Leave Type
+             * @enum {string}
+             */
+            leave_type: "out_pass" | "day_leave" | "home_leave" | "medical";
+            /** Reason */
+            reason?: string | null;
+            /**
+             * To At
+             * Format: date-time
+             */
+            to_at: string;
+        };
+        /** HostelLeaveDecision */
+        HostelLeaveDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "approve" | "reject";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** HostelLeaveResponse */
+        HostelLeaveResponse: {
+            /** Actual Out At */
+            actual_out_at?: string | null;
+            /** Actual Return At */
+            actual_return_at?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Destination */
+            destination?: string | null;
+            /**
+             * From At
+             * Format: date-time
+             */
+            from_at: string;
+            /** Guardian Consent */
+            guardian_consent: string;
+            /** Hostel */
+            hostel?: string | null;
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Late Minutes */
+            late_minutes?: number | null;
+            /** Leave Type */
+            leave_type: string;
+            /** Qr Token */
+            qr_token?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Status */
+            status: string;
+            student: components["schemas"]["HostelStudentRef"];
+            /**
+             * To At
+             * Format: date-time
+             */
+            to_at: string;
+        };
+        /** HostelOut */
+        HostelOut: {
+            /**
+             * Allotted
+             * @default 0
+             */
+            allotted: number;
+            /**
+             * Blocks
+             * @default 0
+             */
+            blocks: number;
+            /** Capacity */
+            capacity: number;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Hostel Type */
+            hostel_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Mess Id */
+            mess_id?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Occupied
+             * @default 0
+             */
+            occupied: number;
+            /**
+             * Vacant
+             * @default 0
+             */
+            vacant: number;
+            /** Warden Name */
+            warden_name?: string | null;
+            /** Warden Staff Id */
+            warden_staff_id?: string | null;
+        };
+        /** HostelRoomIn */
+        HostelRoomIn: {
+            /** Amenities */
+            amenities?: string[] | null;
+            /** Has Ac */
+            has_ac?: boolean | null;
+            /** Room Type */
+            room_type?: ("single" | "double" | "triple" | "dorm") | null;
+            /** Status */
+            status?: ("available" | "full" | "maintenance" | "blocked") | null;
+        };
+        /** HostelRoomOut */
+        HostelRoomOut: {
+            /**
+             * Beds
+             * @default []
+             */
+            beds: components["schemas"]["HostelBedOut"][];
+            /**
+             * Block Id
+             * Format: uuid
+             */
+            block_id: string;
+            /** Capacity */
+            capacity: number;
+            /** Floor */
+            floor?: number | null;
+            /** Has Ac */
+            has_ac: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Room Number */
+            room_number: string;
+            /** Room Type */
+            room_type: string;
+            /** Status */
+            status: string;
+        };
+        /** HostelStudentRef */
+        HostelStudentRef: {
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Gender */
+            gender?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Program Code */
+            program_code?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Student Id */
+            student_id?: string | null;
+        };
+        /** HostelTransferRequest */
+        HostelTransferRequest: {
+            /**
+             * New Bed Id
+             * Format: uuid
+             */
+            new_bed_id: string;
+            /** Reason */
+            reason: string;
+        };
+        /** HostelUpdate */
+        HostelUpdate: {
+            /** Address */
+            address?: {
+                [key: string]: unknown;
+            } | null;
+            /** Hostel Type */
+            hostel_type?: ("boys" | "girls" | "coed" | "pg" | "international" | "staff") | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Mess Id */
+            mess_id?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Warden Staff Id */
+            warden_staff_id?: string | null;
+        };
+        /** HostelVisitorIn */
+        HostelVisitorIn: {
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Id Proof No */
+            id_proof_no?: string | null;
+            /** Id Proof Type */
+            id_proof_type?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Relation */
+            relation?: string | null;
+            /** Visitor Name */
+            visitor_name: string;
+        };
+        /** HostelVisitorOut */
+        HostelVisitorOut: {
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Id Proof No */
+            id_proof_no?: string | null;
+            /** Id Proof Type */
+            id_proof_type?: string | null;
+            /**
+             * In At
+             * Format: date-time
+             */
+            in_at: string;
+            /** Out At */
+            out_at?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Relation */
+            relation?: string | null;
+            student?: components["schemas"]["HostelStudentRef"] | null;
+            /** Visitor Name */
+            visitor_name: string;
         };
         /** ICalToken */
         ICalToken: {
@@ -34581,6 +37157,14 @@ export interface components {
              */
             form_id: string;
         };
+        /** ManualAllotRequest */
+        ManualAllotRequest: {
+            /**
+             * Bed Id
+             * Format: uuid
+             */
+            bed_id: string;
+        };
         /** ManualGrade */
         ManualGrade: {
             /**
@@ -34631,6 +37215,13 @@ export interface components {
              * @default 0
              */
             updated: number;
+        };
+        /** MarkReturned */
+        MarkReturned: {
+            /** Remarks */
+            remarks: string;
+            /** Returned At */
+            returned_at?: string | null;
         };
         /** MarkRowIn */
         MarkRowIn: {
@@ -35010,6 +37601,192 @@ export interface components {
             quota?: string | null;
             /** Status */
             status: string;
+        };
+        /** MessAttendanceBulk */
+        MessAttendanceBulk: {
+            /** Items */
+            items: components["schemas"]["MessAttendanceMark"][];
+        };
+        /** MessAttendanceMark */
+        MessAttendanceMark: {
+            /**
+             * Meal
+             * @enum {string}
+             */
+            meal: "breakfast" | "lunch" | "snacks" | "dinner";
+            /** On Date */
+            on_date?: string | null;
+            /** Qr */
+            qr?: string | null;
+            /**
+             * Source
+             * @default manual
+             * @enum {string}
+             */
+            source: "qr" | "rfid" | "manual";
+            /** Subscription Id */
+            subscription_id?: string | null;
+        };
+        /** MessAttendanceResult */
+        MessAttendanceResult: {
+            /** Duplicates */
+            duplicates: number;
+            /**
+             * Errors
+             * @default []
+             */
+            errors: {
+                [key: string]: unknown;
+            }[];
+            /** Recorded */
+            recorded: number;
+        };
+        /** MessAttendanceRow */
+        MessAttendanceRow: {
+            /** Meal */
+            meal: string;
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /** Source */
+            source: string;
+            /** Status */
+            status: string;
+        };
+        /** MessBillResponse */
+        MessBillResponse: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Days Billed */
+            days_billed: number;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Status */
+            invoice_status?: string | null;
+            /**
+             * Month
+             * Format: date
+             */
+            month: string;
+            /** Plan */
+            plan?: string | null;
+            /** Rebate Days */
+            rebate_days: number;
+            student?: components["schemas"]["HostelStudentRef"] | null;
+            /**
+             * Subscription Id
+             * Format: uuid
+             */
+            subscription_id: string;
+        };
+        /** MessBillRunRequest */
+        MessBillRunRequest: {
+            /** Hostel Id */
+            hostel_id?: string | null;
+            /**
+             * Month
+             * Format: date
+             */
+            month: string;
+        };
+        /** MessPlanIn */
+        MessPlanIn: {
+            /**
+             * Diet
+             * @default veg
+             * @enum {string}
+             */
+            diet: "veg" | "nonveg" | "jain" | "special";
+            /** Hostel Id */
+            hostel_id?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Menu */
+            menu?: {
+                [key: string]: unknown;
+            } | null;
+            /** Monthly Fee Paise */
+            monthly_fee_paise: number;
+            /** Name */
+            name: string;
+        };
+        /** MessPlanOut */
+        MessPlanOut: {
+            /** Diet */
+            diet: string;
+            /** Hostel Id */
+            hostel_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Menu */
+            menu?: {
+                [key: string]: unknown;
+            } | null;
+            /** Monthly Fee Paise */
+            monthly_fee_paise: number;
+            /** Name */
+            name: string;
+            /**
+             * Subscribers
+             * @default 0
+             */
+            subscribers: number;
+        };
+        /** MessSubscribe */
+        MessSubscribe: {
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Mess Plan Id
+             * Format: uuid
+             */
+            mess_plan_id: string;
+        };
+        /** MessSubscriptionOut */
+        MessSubscriptionOut: {
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Mess Plan Id
+             * Format: uuid
+             */
+            mess_plan_id: string;
+            /** Plan */
+            plan?: string | null;
+            /** Qr Token */
+            qr_token?: string | null;
+            /** Status */
+            status: string;
+            student: components["schemas"]["HostelStudentRef"];
+            /** To On */
+            to_on?: string | null;
         };
         /** MessageLogResponse */
         MessageLogResponse: {
@@ -35541,6 +38318,28 @@ export interface components {
             /** Pattern */
             pattern?: string | null;
             reset_policy?: components["schemas"]["ResetPolicy"] | null;
+        };
+        /** OccupancyBlock */
+        OccupancyBlock: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Rooms */
+            rooms: components["schemas"]["HostelRoomOut"][];
+        };
+        /** OccupancyResponse */
+        OccupancyResponse: {
+            /** Blocks */
+            blocks: components["schemas"]["OccupancyBlock"][];
+            hostel: components["schemas"]["HostelOut"];
+            /** Totals */
+            totals: {
+                [key: string]: number;
+            };
         };
         /** OdCreate */
         OdCreate: {
@@ -38254,6 +41053,76 @@ export interface components {
             /** Year */
             year?: number | null;
         };
+        /** QuarterAllocate */
+        QuarterAllocate: {
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Rent Deduction
+             * @default true
+             */
+            rent_deduction: boolean;
+            /**
+             * Staff Id
+             * Format: uuid
+             */
+            staff_id: string;
+        };
+        /** QuarterIn */
+        QuarterIn: {
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Quarter Type */
+            quarter_type?: string | null;
+            /**
+             * Rent Paise
+             * @default 0
+             */
+            rent_paise: number;
+            /** Status */
+            status?: ("vacant" | "maintenance") | null;
+            /** Unit Code */
+            unit_code: string;
+        };
+        /** QuarterOut */
+        QuarterOut: {
+            /** Allocation Id */
+            allocation_id?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Occupant */
+            occupant?: string | null;
+            /** Occupant Staff Id */
+            occupant_staff_id?: string | null;
+            /** Quarter Type */
+            quarter_type?: string | null;
+            /** Rent Deduction */
+            rent_deduction?: boolean | null;
+            /** Rent Paise */
+            rent_paise: number;
+            /** Status */
+            status: string;
+            /** Unit Code */
+            unit_code: string;
+        };
+        /** QuarterVacate */
+        QuarterVacate: {
+            /** To On */
+            to_on?: string | null;
+        };
         /** QuestionImportReport */
         QuestionImportReport: {
             /**
@@ -38667,6 +41536,63 @@ export interface components {
             /** Evaluator Staff Id */
             evaluator_staff_id?: string | null;
             external_evaluator?: components["schemas"]["ExternalEvaluator"] | null;
+        };
+        /** RebateDecision */
+        RebateDecision: {
+            /**
+             * Approve
+             * @default true
+             */
+            approve: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** RebateOut */
+        RebateOut: {
+            /** Days */
+            days: number;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Leave Id */
+            leave_id?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Status */
+            status: string;
+            student?: components["schemas"]["HostelStudentRef"] | null;
+            /**
+             * Subscription Id
+             * Format: uuid
+             */
+            subscription_id: string;
+            /**
+             * To On
+             * Format: date
+             */
+            to_on: string;
+        };
+        /** RebateRequest */
+        RebateRequest: {
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /** Reason */
+            reason: string;
+            /**
+             * To On
+             * Format: date
+             */
+            to_on: string;
         };
         /** ReceiptResponse */
         ReceiptResponse: {
@@ -39847,6 +42773,82 @@ export interface components {
              */
             version?: number | null;
         };
+        /** RollCallCreate */
+        RollCallCreate: {
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /** On Date */
+            on_date?: string | null;
+        };
+        /** RollCallEntriesUpdate */
+        RollCallEntriesUpdate: {
+            /** Entries */
+            entries: components["schemas"]["RollCallEntryMark"][];
+        };
+        /** RollCallEntryMark */
+        RollCallEntryMark: {
+            /**
+             * Allocation Id
+             * Format: uuid
+             */
+            allocation_id: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "present" | "absent" | "on_leave";
+        };
+        /** RollCallEntryOut */
+        RollCallEntryOut: {
+            /**
+             * Allocation Id
+             * Format: uuid
+             */
+            allocation_id: string;
+            /** Room Number */
+            room_number?: string | null;
+            /** Status */
+            status: string;
+            student: components["schemas"]["HostelStudentRef"];
+        };
+        /** RollCallOut */
+        RollCallOut: {
+            /**
+             * Counts
+             * @default {}
+             */
+            counts: {
+                [key: string]: number;
+            };
+            /**
+             * Entries
+             * @default []
+             */
+            entries: components["schemas"]["RollCallEntryOut"][];
+            /**
+             * Hostel Id
+             * Format: uuid
+             */
+            hostel_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /**
+             * Taken At
+             * Format: date-time
+             */
+            taken_at: string;
+        };
         /** RolloverRequest */
         RolloverRequest: {
             /**
@@ -39932,6 +42934,82 @@ export interface components {
             /** Free */
             free: boolean;
             room: components["schemas"]["RoomOut"];
+        };
+        /** RoomBulkCreate */
+        RoomBulkCreate: {
+            /**
+             * Block Id
+             * Format: uuid
+             */
+            block_id: string;
+            /** Capacity */
+            capacity?: number | null;
+            /** Floor From */
+            floor_from: number;
+            /** Floor To */
+            floor_to: number;
+            /**
+             * Has Ac
+             * @default false
+             */
+            has_ac: boolean;
+            /**
+             * Number Pattern
+             * @default {floor}{seq:02}
+             */
+            number_pattern: string;
+            /**
+             * Room Type
+             * @default double
+             * @enum {string}
+             */
+            room_type: "single" | "double" | "triple" | "dorm";
+            /** Rooms Per Floor */
+            rooms_per_floor: number;
+        };
+        /** RoomChangeCreate */
+        RoomChangeCreate: {
+            /** Reason */
+            reason: string;
+            /** Requested Bed Id */
+            requested_bed_id?: string | null;
+        };
+        /** RoomChangeDecision */
+        RoomChangeDecision: {
+            /**
+             * Approve
+             * @default true
+             */
+            approve: boolean;
+            /** Bed Id */
+            bed_id?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** RoomChangeResponse */
+        RoomChangeResponse: {
+            /**
+             * Allocation Id
+             * Format: uuid
+             */
+            allocation_id: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Reason */
+            reason?: string | null;
+            /** Requested Bed Id */
+            requested_bed_id?: string | null;
+            /** Status */
+            status: string;
+            student?: components["schemas"]["HostelStudentRef"] | null;
         };
         /** RoomIn */
         RoomIn: {
@@ -44406,6 +47484,25 @@ export interface components {
             valid_to?: string | null;
             /** Version */
             version?: number | null;
+        };
+        /** VacateRequest */
+        VacateRequest: {
+            /** Damages */
+            damages?: components["schemas"]["DamageItem"][];
+            /** Room Condition */
+            room_condition?: {
+                [key: string]: unknown;
+            };
+            /** Vacate On */
+            vacate_on?: string | null;
+        };
+        /** VacateResponse */
+        VacateResponse: {
+            allocation: components["schemas"]["HostelAllocationResponse"];
+            /** Damages Invoice Id */
+            damages_invoice_id?: string | null;
+            /** No Dues Request Id */
+            no_dues_request_id?: string | null;
         };
         /** ValidationError */
         ValidationError: {
@@ -62624,7 +65721,40 @@ export interface operations {
             };
         };
     };
-    list_hostels_api_v1_hostels_get: {
+    allocations_api_v1_hostel_allocations_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                status?: string | null;
+                department_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelAllocationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    alloc_me_api_v1_hostel_allocations_me_get: {
         parameters: {
             query?: never;
             header?: never;
@@ -62639,7 +65769,1933 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelAllocationResponse__"];
+                };
+            };
+        };
+    };
+    vacate_request_api_v1_hostel_allocations_me_vacate_request_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelAllocationResponse_"];
+                };
+            };
+        };
+    };
+    alloc_wards_api_v1_hostel_allocations_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelAllocationResponse__"];
+                };
+            };
+        };
+    };
+    alloc_get_api_v1_hostel_allocations__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelAllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_in_api_v1_hostel_allocations__id__check_in_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckInRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelAllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evict_api_v1_hostel_allocations__id__evict_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EvictRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelAllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    transfer_api_v1_hostel_allocations__id__transfer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelTransferRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelAllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vacate_api_v1_hostel_allocations__id__vacate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VacateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VacateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    applications_api_v1_hostel_applications_get: {
+        parameters: {
+            query?: {
+                year?: string | null;
+                hostel_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelApplicationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_api_v1_hostel_applications_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelApplicationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelApplicationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allot_api_v1_hostel_applications_allot_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllotmentRunRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AllotmentRunSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_applications_api_v1_hostel_applications_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelApplicationResponse__"];
+                };
+            };
+        };
+    };
+    app_cancel_api_v1_hostel_applications__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelApplicationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allot_manual_api_v1_hostel_applications__id__allot_manual_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ManualAllotRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelAllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    app_decline_api_v1_hostel_applications__id__decline_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelApplicationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bed_status_api_v1_hostel_beds__id__status_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BedStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelBedOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complaints_api_v1_hostel_complaints_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelComplaintOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complaint_create_api_v1_hostel_complaints_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelComplaintCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelComplaintOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complaint_update_api_v1_hostel_complaints__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelComplaintUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelComplaintOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    complaint_rate_api_v1_hostel_complaints__id__rate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelComplaintRate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelComplaintOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discipline_api_v1_hostel_discipline_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DisciplineOut__"];
+                };
+            };
+        };
+    };
+    discipline_create_api_v1_hostel_discipline_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisciplineCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DisciplineOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discipline_me_api_v1_hostel_discipline_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DisciplineOut__"];
+                };
+            };
+        };
+    };
+    discipline_wards_api_v1_hostel_discipline_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DisciplineOut__"];
+                };
+            };
+        };
+    };
+    fee_plans_api_v1_hostel_fee_plans_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                academic_year_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelFeePlanOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fee_plan_create_api_v1_hostel_fee_plans_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelFeePlanIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelFeePlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fee_plan_update_api_v1_hostel_fee_plans__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelFeePlanIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelFeePlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    late_list_api_v1_hostel_gate_late_list_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelLeaveResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    out_now_api_v1_hostel_gate_out_now_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelLeaveResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gate_scan_api_v1_hostel_gate_scan_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GateScanRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GateScanResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gate_batch_api_v1_hostel_gate_scan_batch_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GateScanBatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GateScanResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leaves_api_v1_hostel_leaves_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                status?: string | null;
+                date?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelLeaveResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leave_create_api_v1_hostel_leaves_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelLeaveCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelLeaveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leaves_me_api_v1_hostel_leaves_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelLeaveResponse__"];
+                };
+            };
+        };
+    };
+    leaves_wards_api_v1_hostel_leaves_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelLeaveResponse__"];
+                };
+            };
+        };
+    };
+    leave_cancel_api_v1_hostel_leaves__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelLeaveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    consent_parent_api_v1_hostel_leaves__id__consent_parent_approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelLeaveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    consent_send_api_v1_hostel_leaves__id__consent_send_otp_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    consent_verify_api_v1_hostel_leaves__id__consent_verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ConsentOtpVerify"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelLeaveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leave_decide_api_v1_hostel_leaves__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelLeaveDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelLeaveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    leave_returned_api_v1_hostel_leaves__id__mark_returned_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MarkReturned"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelLeaveResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    roll_calls_api_v1_hostel_roll_calls_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                on_date?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RollCallOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    roll_create_api_v1_hostel_roll_calls_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RollCallCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RollCallOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    roll_report_api_v1_hostel_roll_calls_report_get: {
+        parameters: {
+            query: {
+                hostel_id: string;
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
                     "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    roll_mark_api_v1_hostel_roll_calls__id__entries_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RollCallEntriesUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RollCallOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    room_get_api_v1_hostel_rooms__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelRoomOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    room_update_api_v1_hostel_rooms__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelRoomIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelRoomOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    visitors_api_v1_hostel_visitors_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                month?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelVisitorOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    visitor_in_api_v1_hostel_visitors_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelVisitorIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelVisitorOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    visitor_register_api_v1_hostel_visitors_register_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                month?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    visitor_out_api_v1_hostel_visitors__id__out_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelVisitorOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hostels_api_v1_hostels_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hostel_create_api_v1_hostels_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_rules_api_v1_hostels_me_rules_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+        };
+    };
+    reports_api_v1_hostels_reports__kind__get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hostel_get_api_v1_hostels__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hostel_update_api_v1_hostels__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hostel_delete_api_v1_hostels__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    blocks_api_v1_hostels__id__blocks_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_HostelBlockOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    block_create_api_v1_hostels__id__blocks_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HostelBlockIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelBlockOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    occupancy_api_v1_hostels__id__occupancy_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OccupancyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rooms_bulk_api_v1_hostels__id__rooms_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoomBulkCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rules_pdf_api_v1_hostels__id__rules_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -66064,6 +71120,517 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_MyMarksRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_attendance_api_v1_mess_attendance_get: {
+        parameters: {
+            query?: {
+                subscription_id?: string | null;
+                date?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessAttendanceRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_mark_api_v1_mess_attendance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessAttendanceBulk"] | components["schemas"]["MessAttendanceMark"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessAttendanceResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bills_api_v1_mess_bills_get: {
+        parameters: {
+            query?: {
+                month?: string | null;
+                hostel_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessBillResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bills_me_api_v1_mess_bills_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessBillResponse__"];
+                };
+            };
+        };
+    };
+    bill_run_api_v1_mess_bills_run_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessBillRunRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_HostelJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bill_pdf_api_v1_mess_bills__id__pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_plans_api_v1_mess_plans_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessPlanOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_plan_create_api_v1_mess_plans_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessPlanIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessPlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_plan_update_api_v1_mess_plans__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessPlanIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessPlanOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rebates_api_v1_mess_rebates_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                mine?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RebateOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rebate_create_api_v1_mess_rebates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RebateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RebateOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rebate_decide_api_v1_mess_rebates__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RebateDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RebateOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_subs_api_v1_mess_subscriptions_get: {
+        parameters: {
+            query?: {
+                hostel_id?: string | null;
+                mine?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MessSubscriptionOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_subscribe_api_v1_mess_subscriptions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessSubscribe"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessSubscriptionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_change_api_v1_mess_subscriptions__id__change_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MessSubscribe"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessSubscriptionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mess_close_api_v1_mess_subscriptions__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MessSubscriptionOut_"];
                 };
             };
             /** @description Validation Error */
@@ -74037,6 +79604,105 @@ export interface operations {
             };
         };
     };
+    room_changes_api_v1_room_change_requests_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RoomChangeResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    room_change_create_api_v1_room_change_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoomChangeCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RoomChangeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    room_change_decide_api_v1_room_change_requests__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoomChangeDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RoomChangeResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_rooms_api_v1_rooms_get: {
         parameters: {
             query?: {
@@ -75035,6 +80701,195 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_AttendanceSummaryRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quarter_vacate_api_v1_staff_quarter_allocations__id__vacate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuarterVacate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QuarterOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quarters_api_v1_staff_quarters_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_QuarterOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quarter_create_api_v1_staff_quarters_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuarterIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QuarterOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quarters_me_api_v1_staff_quarters_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_QuarterOut__"];
+                };
+            };
+        };
+    };
+    quarter_update_api_v1_staff_quarters__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuarterIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QuarterOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    quarter_allocate_api_v1_staff_quarters__id__allocate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["QuarterAllocate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QuarterOut_"];
                 };
             };
             /** @description Validation Error */

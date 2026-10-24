@@ -80,6 +80,14 @@ register_beat("library.reservation_expiry", "beat.library.reservation_expiry", c
 register_beat("library.eresource_expiry_reminders", "beat.library.eresource_expiry_reminders", crontab(hour=3, minute=45))
 register_beat("library.membership_expiry", "beat.library.membership_expiry", crontab(hour=20, minute=10))  # 01:40 IST
 
+# ---- Phase 20 hostel & mess (app/tasks/hostel.py) -------------------------------------------------------------------------------
+register_beat("hostel.roll_call_autoclose", "beat.hostel.roll_call_autoclose", crontab(hour=17, minute=45))  # 23:15 IST
+register_beat("hostel.absconding_scan", "beat.hostel.absconding_scan", crontab(minute=27))
+register_beat("hostel.allotment_lapse", "beat.hostel.allotment_lapse", crontab(hour=20, minute=25))  # 01:55 IST
+register_beat("hostel.waitlist_promote", "beat.hostel.waitlist_promote", crontab(hour=20, minute=40))  # 02:10 IST
+register_beat("mess.bill_run", "beat.mess.bill_run", crontab(day_of_month=1, hour=21, minute=0))  # 1st 02:30 IST
+register_beat("hostel.leave_reminders", "beat.hostel.leave_reminders", crontab(minute="*/30"))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

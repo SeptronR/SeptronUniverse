@@ -979,6 +979,123 @@ OBE_EVENTS: tuple[EventDef, ...] = (
         link="/admin/obe/program-attainment",
     ),
 )
+# Phase 20 — hostel applications, consent, gate, roll-call, mess, visitors, discipline
+HOSTEL_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "hostel.applied",
+        "hostel",
+        "Hostel application",
+        "Hostel application received",
+        "Your hostel application is received (priority {{ score }}).",
+        ("score",),
+        ("in_app",),
+        link="/student/hostel",
+    ),
+    EventDef(
+        "hostel.allotted",
+        "hostel",
+        "Hostel allotted",
+        "Room {{ room }} allotted",
+        "You are allotted room {{ room }}. Pay the hostel fee to confirm.",
+        ("room",),
+        ("in_app", "push", "email", "sms"),
+        link="/student/hostel",
+    ),
+    EventDef(
+        "hostel.waitlisted",
+        "hostel",
+        "Hostel waitlist",
+        "Hostel waitlist",
+        "Your hostel application is waitlisted; you will be notified when a bed frees.",
+        ("year",),
+        ("in_app", "email"),
+        link="/student/hostel",
+    ),
+    EventDef(
+        "hostel.leave_consent_otp",
+        "hostel",
+        "Leave consent",
+        "Consent code",
+        "Your ward requested hostel leave. Consent code: {{ code }}.",
+        ("code",),
+        ("sms",),
+    ),
+    EventDef(
+        "hostel.marked_out",
+        "hostel",
+        "Left hostel",
+        "{{ student }} left the hostel",
+        "{{ student }} left the hostel at {{ time }}.",
+        ("student", "time"),
+        ("in_app", "sms"),
+    ),
+    EventDef("hostel.returned", "hostel", "Returned to hostel", "Returned", "Returned to the hostel.", (), ("in_app",)),
+    EventDef(
+        "hostel.absconding",
+        "hostel",
+        "Absconding alert",
+        "{{ student }} not back",
+        "{{ student }} has not returned to {{ hostel }} (due {{ due }}).",
+        ("student", "hostel", "due"),
+        ("in_app", "push", "sms", "email"),
+    ),
+    EventDef(
+        "hostel.roll_call_absent",
+        "hostel",
+        "Roll-call absence",
+        "{{ student }} absent at roll-call",
+        "{{ student }} was absent at the night roll-call on {{ date }}.",
+        ("student", "date"),
+        ("in_app", "sms"),
+    ),
+    EventDef(
+        "mess.bill_generated",
+        "hostel",
+        "Mess bill",
+        "Mess bill {{ month }}",
+        "Your mess bill for {{ month }} is {{ amount }}.",
+        ("month", "amount"),
+        ("in_app", "email"),
+        link="/student/hostel",
+    ),
+    EventDef(
+        "hostel.visitor_logged",
+        "hostel",
+        "Visitor",
+        "Visitor: {{ visitor }}",
+        "{{ visitor }} is visiting you at the hostel.",
+        ("visitor",),
+        ("in_app", "push"),
+    ),
+    EventDef(
+        "hostel.discipline_recorded",
+        "hostel",
+        "Hostel discipline",
+        "Hostel disciplinary action",
+        "Hostel action recorded: {{ action }} — {{ reason }}.",
+        ("action", "reason"),
+        ("in_app", "email", "sms"),
+    ),
+    EventDef(
+        "hostel.complaint_updated",
+        "hostel",
+        "Hostel complaint",
+        "Complaint {{ status }}",
+        "Your {{ category }} complaint is {{ status }}.",
+        ("status", "category"),
+        ("in_app",),
+        link="/student/hostel",
+    ),
+    EventDef(
+        "hostel.vacate_requested",
+        "hostel",
+        "Vacate request",
+        "Vacate request — {{ room }}",
+        "{{ student }} asked to vacate room {{ room }}.",
+        ("student", "room"),
+        ("in_app",),
+    ),
+)
 # Phase 19 — library circulation, reservations, fines, e-resources
 LIBRARY_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1123,6 +1240,7 @@ EVENTS = (
     + OBE_EVENTS
     + DEGREE_EVENTS
     + LIBRARY_EVENTS
+    + HOSTEL_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

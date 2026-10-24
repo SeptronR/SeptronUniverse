@@ -53,6 +53,12 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call (warden, gate staff)
+  static const myHostel = '/app/hostel';
+  static const wardHostel = '/app/hostel/ward';
+  static const outPasses = '/app/hostel/out-passes';
+  static const hostelGate = '/app/hostel/gate';
+  static const rollCall = '/app/hostel/roll-call';
   // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
   static const myLibrary = '/app/library';
   static const wardLibrary = '/app/library/ward';

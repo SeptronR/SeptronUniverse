@@ -34,6 +34,7 @@ celery = Celery(
         "app.tasks.obe",
         "app.tasks.degrees",
         "app.tasks.library",
+        "app.tasks.hostel",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",

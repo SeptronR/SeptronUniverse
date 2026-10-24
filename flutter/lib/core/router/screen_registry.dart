@@ -15,6 +15,7 @@ import '../../features/results/result_screens.dart';
 import '../../features/obe/obe_screens.dart';
 import '../../features/degrees/degree_screens.dart';
 import '../../features/library/library_screens.dart';
+import '../../features/hostel/hostel_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -296,6 +297,42 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call
+    AppRoutes.myHostel: ScreenEntry(
+      route: AppRoutes.myHostel,
+      titleKey: 'hostel',
+      feature: 'hostel.core',
+      permission: 'hostel:self',
+      builder: (_, __) => const StudentHostelScreen(),
+    ),
+    AppRoutes.wardHostel: ScreenEntry(
+      route: AppRoutes.wardHostel,
+      titleKey: 'ward_hostel',
+      feature: 'hostel.core',
+      permission: 'hostel:view',
+      builder: (_, __) => const WardHostelScreen(),
+    ),
+    AppRoutes.outPasses: ScreenEntry(
+      route: AppRoutes.outPasses,
+      titleKey: 'out_passes',
+      feature: 'hostel.leave_outpass',
+      permission: 'hostel:warden',
+      builder: (_, __) => const OutPassApprovalsScreen(),
+    ),
+    AppRoutes.hostelGate: ScreenEntry(
+      route: AppRoutes.hostelGate,
+      titleKey: 'hostel_gate',
+      feature: 'hostel.gate_qr',
+      permission: 'hostel:gate',
+      builder: (_, __) => const GateScanScreen(),
+    ),
+    AppRoutes.rollCall: ScreenEntry(
+      route: AppRoutes.rollCall,
+      titleKey: 'roll_call',
+      feature: 'hostel.night_roll_call',
+      permission: 'hostel:roll_call',
+      builder: (_, __) => const RollCallScreen(),
     ),
     // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
     AppRoutes.myLibrary: ScreenEntry(

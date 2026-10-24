@@ -265,6 +265,47 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call (warden, gate staff)
+  const MoreMenuModule(
+      titleKey: 'hostel',
+      icon: Icons.bed_outlined,
+      route: AppRoutes.myHostel,
+      color: Colors.indigo,
+      permission: 'hostel:self',
+      feature: 'hostel.core',
+      roles: ['student', 'learner']),
+  const MoreMenuModule(
+      titleKey: 'ward_hostel',
+      icon: Icons.bed_outlined,
+      route: AppRoutes.wardHostel,
+      color: Colors.indigo,
+      permission: 'hostel:view',
+      feature: 'hostel.core',
+      roles: ['parent']),
+  const MoreMenuModule(
+      titleKey: 'out_passes',
+      icon: Icons.exit_to_app,
+      route: AppRoutes.outPasses,
+      color: Colors.orange,
+      permission: 'hostel:warden',
+      feature: 'hostel.leave_outpass',
+      roles: ['hostel_warden']),
+  const MoreMenuModule(
+      titleKey: 'hostel_gate',
+      icon: Icons.qr_code_scanner,
+      route: AppRoutes.hostelGate,
+      color: Colors.teal,
+      permission: 'hostel:gate',
+      feature: 'hostel.gate_qr',
+      roles: ['hostel_warden', 'hostel_gate_staff']),
+  const MoreMenuModule(
+      titleKey: 'roll_call',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.rollCall,
+      color: Colors.green,
+      permission: 'hostel:roll_call',
+      feature: 'hostel.night_roll_call',
+      roles: ['hostel_warden']),
   // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
   const MoreMenuModule(
       titleKey: 'library',

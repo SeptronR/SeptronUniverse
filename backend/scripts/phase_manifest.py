@@ -305,6 +305,28 @@ PHASES: dict[str, list[str]] = {
     ],
     # post-result (§16): reval_requests, transcripts; committees / committee_members (§30, governance UI in Phase 33)
     # and student_achievements (§27, Phase 27 module) are modelled here for the malpractice inquiry and medals
+    "20": [
+        "hostels",
+        "hostel_blocks",
+        "hostel_rooms",
+        "hostel_beds",
+        "hostel_fee_plans",
+        "hostel_applications",
+        "hostel_allocations",
+        "room_change_requests",
+        "hostel_roll_calls",
+        "hostel_roll_call_entries",
+        "mess_plans",
+        "mess_subscriptions",
+        "mess_attendance",
+        "mess_bills",
+        "hostel_visitors",
+        "hostel_leaves",
+        "hostel_complaints",
+        "hostel_disciplinary_records",
+        "staff_quarters",
+        "staff_quarter_allocations",
+    ],
     "19": [
         "book_categories",
         "books",

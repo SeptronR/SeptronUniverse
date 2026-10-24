@@ -173,6 +173,21 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 20 — hostel, mess, staff quarters
+const HostelsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.HostelsPage })));
+const HostelApplicationsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ApplicationsPage })));
+const HostelAllocationsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.AllocationsPage })));
+const RoomChangesPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.RoomChangesPage })));
+const RollCallPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.RollCallPage })));
+const MessPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.MessPage })));
+const HostelVisitorsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.VisitorsPage })));
+const HostelLeavesPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.LeavesPage })));
+const HostelComplaintsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ComplaintsPage })));
+const HostelDisciplinePage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.DisciplinePage })));
+const QuartersPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.QuartersPage })));
+const HostelReportsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.HostelReportsPage })));
+const StudentHostelPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.StudentHostelPage })));
+const ParentHostelPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ParentHostelPage })));
 // Phase 19 — library
 const CataloguePage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.CataloguePage })));
 const CirculationPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.CirculationPage })));
@@ -460,6 +475,19 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 20 — hostel (narrowed by the services: warden-owned hostels / college / all; department for HODs)
+              ['/admin/hostel/hostels', 'hostel.core', 'hostel', 'view_all', [['hostel', 'manage'], ['hostel', 'warden']], <HostelsPage key="hh" />],
+              ['/admin/hostel/applications', 'hostel.core', 'hostel', 'allot', [['hostel', 'view_all'], ['hostel', 'warden']], <HostelApplicationsPage key="ha" />],
+              ['/admin/hostel/allocations', 'hostel.core', 'hostel', 'view_all', [['hostel', 'warden'], ['hostel', 'allot'], ['hostel', 'manage']], <HostelAllocationsPage key="hl" />],
+              ['/admin/hostel/room-changes', 'hostel.room_change', 'hostel', 'warden', [['hostel', 'manage']], <RoomChangesPage key="hr" />],
+              ['/admin/hostel/roll-call', 'hostel.night_roll_call', 'hostel', 'roll_call', [['hostel', 'warden'], ['hostel', 'manage']], <RollCallPage key="hc" />],
+              ['/admin/hostel/mess', 'hostel.mess', 'hostel', 'mess_manage', [['hostel', 'warden'], ['hostel', 'manage']], <MessPage key="hm" />],
+              ['/admin/hostel/visitors', 'hostel.visitors', 'hostel', 'gate', [['hostel', 'warden'], ['hostel', 'manage'], ['hostel', 'view_all']], <HostelVisitorsPage key="hv" />],
+              ['/admin/hostel/leaves', 'hostel.leave_outpass', 'hostel', 'warden', [['hostel', 'gate'], ['hostel', 'manage'], ['hostel', 'view_all']], <HostelLeavesPage key="hp" />],
+              ['/admin/hostel/complaints', 'hostel.complaints', 'hostel', 'warden', [['hostel', 'manage'], ['hostel', 'view_all']], <HostelComplaintsPage key="hx" />],
+              ['/admin/hostel/discipline', 'hostel.discipline', 'hostel', 'discipline', [['hostel', 'warden'], ['hostel', 'manage'], ['hostel', 'view_all']], <HostelDisciplinePage key="hd" />],
+              ['/admin/hostel/quarters', 'hostel.staff_quarters', 'hostel', 'manage', [['hostel', 'view_all']], <QuartersPage key="hq" />],
+              ['/admin/hostel/reports', 'hostel.core', 'hostel', 'view_all', [['hostel', 'warden'], ['hostel', 'manage']], <HostelReportsPage key="hz" />],
               // Phase 19 — library (narrowed by the services: own / wards / department / college / all)
               ['/admin/library/catalogue', 'library.core', 'library', 'view_all', [['library', 'manage'], ['library', 'circulate']], <CataloguePage key="lc" />],
               ['/admin/library/circulation', 'library.core', 'library', 'circulate', [['library', 'manage']], <CirculationPage key="lx" />],
@@ -648,6 +676,7 @@ export const router = createBrowserRouter([
               ['courses/:offeringId/outcomes', <FeatureRoute key="so" feature="obe.attainment"><StudentOutcomesPage /></FeatureRoute>],
               ['degree', <FeatureRoute key="dg" feature="degrees.eligibility"><StudentDegreePage /></FeatureRoute>],
               ['library', <FeatureRoute key="lb" feature="library.core"><MyLibraryPage /></FeatureRoute>],
+              ['hostel', <FeatureRoute key="hs" feature="hostel.core"><StudentHostelPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -663,6 +692,7 @@ export const router = createBrowserRouter([
           { path: 'exams/:studentId', element: page(<FeatureRoute feature="exams.sessions"><ParentExamsPage /></FeatureRoute>) },
           { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
           { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
+          { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
         ],
       },
       {
