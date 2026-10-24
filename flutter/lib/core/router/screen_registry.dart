@@ -12,6 +12,10 @@ import '../../features/fees/fees_screens.dart';
 import '../../features/assessment/assessment_screens.dart';
 import '../../features/exams/exam_screens.dart';
 import '../../features/results/result_screens.dart';
+import '../../features/obe/obe_screens.dart';
+import '../../features/degrees/degree_screens.dart';
+import '../../features/library/library_screens.dart';
+import '../../features/hostel/hostel_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -293,6 +297,115 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call
+    AppRoutes.myHostel: ScreenEntry(
+      route: AppRoutes.myHostel,
+      titleKey: 'hostel',
+      feature: 'hostel.core',
+      permission: 'hostel:self',
+      builder: (_, __) => const StudentHostelScreen(),
+    ),
+    AppRoutes.wardHostel: ScreenEntry(
+      route: AppRoutes.wardHostel,
+      titleKey: 'ward_hostel',
+      feature: 'hostel.core',
+      permission: 'hostel:view',
+      builder: (_, __) => const WardHostelScreen(),
+    ),
+    AppRoutes.outPasses: ScreenEntry(
+      route: AppRoutes.outPasses,
+      titleKey: 'out_passes',
+      feature: 'hostel.leave_outpass',
+      permission: 'hostel:warden',
+      builder: (_, __) => const OutPassApprovalsScreen(),
+    ),
+    AppRoutes.hostelGate: ScreenEntry(
+      route: AppRoutes.hostelGate,
+      titleKey: 'hostel_gate',
+      feature: 'hostel.gate_qr',
+      permission: 'hostel:gate',
+      builder: (_, __) => const GateScanScreen(),
+    ),
+    AppRoutes.rollCall: ScreenEntry(
+      route: AppRoutes.rollCall,
+      titleKey: 'roll_call',
+      feature: 'hostel.night_roll_call',
+      permission: 'hostel:roll_call',
+      builder: (_, __) => const RollCallScreen(),
+    ),
+    // Phase 19 — library (members), ward library (parents), circulation scanner (librarian)
+    AppRoutes.myLibrary: ScreenEntry(
+      route: AppRoutes.myLibrary,
+      titleKey: 'library',
+      feature: 'library.core',
+      permission: 'library:self',
+      builder: (_, __) => const MyLibraryScreen(),
+    ),
+    AppRoutes.wardLibrary: ScreenEntry(
+      route: AppRoutes.wardLibrary,
+      titleKey: 'ward_library',
+      feature: 'library.core',
+      permission: 'library:self',
+      builder: (_, __) => const MyLibraryScreen(ward: true),
+    ),
+    AppRoutes.libraryCirculation: ScreenEntry(
+      route: AppRoutes.libraryCirculation,
+      titleKey: 'library_circulation',
+      feature: 'library.core',
+      permission: 'library:circulate',
+      builder: (_, __) => const LibraryCirculationScreen(),
+    ),
+    // Phase 18 — degree (students / alumni), eligibility, approvals, convocation-day scanner (registrar)
+    AppRoutes.myDegree: ScreenEntry(
+      route: AppRoutes.myDegree,
+      titleKey: 'degree',
+      feature: 'degrees.eligibility',
+      permission: 'degrees:view',
+      builder: (_, __) => const StudentDegreeScreen(),
+    ),
+    AppRoutes.degreeEligibility: ScreenEntry(
+      route: AppRoutes.degreeEligibility,
+      titleKey: 'degree_eligibility',
+      feature: 'degrees.eligibility',
+      permission: 'degrees:view_all',
+      builder: (_, __) => const DegreeEligibilityScreen(),
+    ),
+    AppRoutes.awardApprovals: ScreenEntry(
+      route: AppRoutes.awardApprovals,
+      titleKey: 'award_approvals',
+      feature: 'degrees.certificates',
+      permission: 'degrees:award',
+      builder: (_, __) => const AwardApprovalsScreen(),
+    ),
+    AppRoutes.convocationScanner: ScreenEntry(
+      route: AppRoutes.convocationScanner,
+      titleKey: 'convocation_scanner',
+      feature: 'degrees.convocation',
+      permission: 'degrees:convocation_manage',
+      builder: (_, __) => const ConvocationScannerScreen(),
+    ),
+    // Phase 17 — attainment (faculty), attainment dashboard (HOD / IQAC), CQI actions
+    AppRoutes.attainment: ScreenEntry(
+      route: AppRoutes.attainment,
+      titleKey: 'attainment',
+      feature: 'obe.attainment',
+      permission: 'obe:compute',
+      builder: (_, __) => const AttainmentOfferingsScreen(),
+    ),
+    AppRoutes.attainmentDashboard: ScreenEntry(
+      route: AppRoutes.attainmentDashboard,
+      titleKey: 'attainment_dashboard',
+      feature: 'obe.attainment',
+      permission: 'obe:view',
+      builder: (_, __) => const AttainmentDashboardScreen(),
+    ),
+    AppRoutes.cqiActions: ScreenEntry(
+      route: AppRoutes.cqiActions,
+      titleKey: 'cqi_actions',
+      feature: 'obe.cqi',
+      permission: 'obe:view',
+      builder: (_, __) => const CqiActionsScreen(),
     ),
     // Phase 15 — results (students), evaluation (evaluators), result runs (COE / exam cell)
     AppRoutes.myResults: ScreenEntry(

@@ -65,6 +65,29 @@ register_beat("malpractice.hearing_reminders", "beat.malpractice.hearing_reminde
 register_beat("withheld.auto_release", "beat.withheld.auto_release", crontab(minute=23))
 register_beat("transcripts.reminders", "beat.transcripts.reminders", crontab(hour=4, minute=0))  # 09:30 IST
 
+# ---- Phase 17 OBE attainment (app/tasks/obe.py) --------------------------------------------------------------------------------
+register_beat("cqi.due_reminders", "beat.cqi.due_reminders", crontab(day_of_week=1, hour=3, minute=20))  # Mon 08:50 IST
+register_beat("obe.coverage_digest", "beat.obe.coverage_digest", crontab(day_of_month=1, hour=3, minute=40))  # 1st 09:10
+
+# ---- Phase 18 degrees & credentials (app/tasks/degrees.py) -------------------------------------------------------------------------
+register_beat("credentials.retry_failed", "beat.credentials.retry_failed", crontab(minute=37))
+register_beat("abc.push_pending", "beat.abc.push_pending", crontab(hour=20, minute=50))  # 02:20 IST
+register_beat("convocation.reminders", "beat.convocation.reminders", crontab(hour=3, minute=30))  # 09:00 IST
+
+# ---- Phase 19 library (app/tasks/library.py) ---------------------------------------------------------------------------------------
+register_beat("library.overdue_scan", "beat.library.overdue_scan", crontab(hour=19, minute=30))  # 01:00 IST
+register_beat("library.reservation_expiry", "beat.library.reservation_expiry", crontab(minute=12))
+register_beat("library.eresource_expiry_reminders", "beat.library.eresource_expiry_reminders", crontab(hour=3, minute=45))
+register_beat("library.membership_expiry", "beat.library.membership_expiry", crontab(hour=20, minute=10))  # 01:40 IST
+
+# ---- Phase 20 hostel & mess (app/tasks/hostel.py) -------------------------------------------------------------------------------
+register_beat("hostel.roll_call_autoclose", "beat.hostel.roll_call_autoclose", crontab(hour=17, minute=45))  # 23:15 IST
+register_beat("hostel.absconding_scan", "beat.hostel.absconding_scan", crontab(minute=27))
+register_beat("hostel.allotment_lapse", "beat.hostel.allotment_lapse", crontab(hour=20, minute=25))  # 01:55 IST
+register_beat("hostel.waitlist_promote", "beat.hostel.waitlist_promote", crontab(hour=20, minute=40))  # 02:10 IST
+register_beat("mess.bill_run", "beat.mess.bill_run", crontab(day_of_month=1, hour=21, minute=0))  # 1st 02:30 IST
+register_beat("hostel.leave_reminders", "beat.hostel.leave_reminders", crontab(minute="*/30"))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

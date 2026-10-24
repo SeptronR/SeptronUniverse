@@ -121,6 +121,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Marks verification', to: '/admin/assessment/verification', icon: ClipboardCheck, module: 'marks', action: 'verify', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Marks locks', to: '/admin/assessment/locks', icon: ClipboardCheck, module: 'marks', action: 'lock', altActions: [], feature: 'assessment.marks_workflow' },
       { label: 'Eligibility', to: '/admin/attendance/eligibility', icon: ClipboardCheck, module: 'exams', action: 'eligibility', altActions: [], feature: 'attendance.eligibility_detention' },
+      // Phase 18 — degrees & convocation
+      { label: 'Degree eligibility', to: '/admin/degrees/eligibility', icon: GraduationCap, module: 'degrees', action: 'view_all', altActions: ['manage', 'award'], feature: 'degrees.eligibility' },
+      { label: 'Convocations', to: '/admin/degrees/convocations', icon: CalendarCheck, module: 'degrees', action: 'convocation_manage', altActions: ['view_all'], feature: 'degrees.convocation' },
+      { label: 'Degree awards', to: '/admin/degrees/awards', icon: ScrollText, module: 'degrees', action: 'award', altActions: ['issue', 'view_all', 'create'], feature: 'degrees.certificates' },
+      { label: 'Provisional certificates', to: '/admin/degrees/provisional', icon: ScrollText, module: 'degrees', action: 'issue', feature: 'degrees.provisional' },
+      { label: 'Digital credentials', to: '/admin/degrees/credentials', icon: ShieldCheck, module: 'degrees', action: 'issue', feature: 'degrees.digilocker_nad' },
+      { label: 'Graduation stats', to: '/admin/degrees/stats', icon: TrendingUp, module: 'degrees', action: 'view_all', feature: 'degrees.certificates' },
     ],
   },
   {
@@ -190,7 +197,35 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Workload', to: '/admin/hr/workload', icon: Gauge, module: 'faculty', action: 'workload_manage', altActions: ['view_all'], feature: 'hr.workload' },
     ],
   },
-  { title: 'CAMPUS', items: [] },
+  {
+    title: 'CAMPUS',
+    items: [
+      // Phase 19 — library
+      { label: 'Library catalogue', to: '/admin/library/catalogue', icon: BookOpen, module: 'library', action: 'view_all', altActions: ['manage', 'circulate'], feature: 'library.core' },
+      { label: 'Circulation', to: '/admin/library/circulation', icon: Repeat, module: 'library', action: 'circulate', altActions: ['manage'], feature: 'library.core' },
+      { label: 'Library issues', to: '/admin/library/issues', icon: ClipboardCheck, module: 'library', action: 'view_all', altActions: ['manage', 'circulate'], feature: 'library.core' },
+      { label: 'Reservations', to: '/admin/library/reservations', icon: Clock, module: 'library', action: 'circulate', altActions: ['manage'], feature: 'library.core' },
+      { label: 'Library fines', to: '/admin/library/fines', icon: HandCoins, module: 'library', action: 'fines', altActions: ['manage'], feature: 'library.fines' },
+      { label: 'Library members', to: '/admin/library/members', icon: UsersRound, module: 'library', action: 'view_all', altActions: ['manage'], feature: 'library.core' },
+      { label: 'E-resources', to: '/admin/library/eresources', icon: Landmark, module: 'library', action: 'manage', feature: 'library.eresources' },
+      { label: 'Inter-library loans', to: '/admin/library/ill', icon: ArrowRightLeft, module: 'library', action: 'manage', feature: 'library.inter_library_loan' },
+      { label: 'Stock verification', to: '/admin/library/stock-verification', icon: ClipboardCheck, module: 'library', action: 'manage', feature: 'library.core' },
+      { label: 'Library reports', to: '/admin/library/reports', icon: TrendingUp, module: 'library', action: 'view_all', altActions: ['manage'], feature: 'library.core' },
+      // Phase 20 — hostel, mess, staff quarters
+      { label: 'Hostels', to: '/admin/hostel/hostels', icon: Building2, module: 'hostel', action: 'view_all', altActions: ['manage', 'warden'], feature: 'hostel.core' },
+      { label: 'Hostel applications', to: '/admin/hostel/applications', icon: ClipboardCheck, module: 'hostel', action: 'allot', altActions: ['view_all', 'warden'], feature: 'hostel.core' },
+      { label: 'Hostel allocations', to: '/admin/hostel/allocations', icon: UsersRound, module: 'hostel', action: 'view_all', altActions: ['warden', 'allot', 'manage'], feature: 'hostel.core' },
+      { label: 'Room changes', to: '/admin/hostel/room-changes', icon: Repeat, module: 'hostel', action: 'warden', altActions: ['manage'], feature: 'hostel.room_change' },
+      { label: 'Night roll-call', to: '/admin/hostel/roll-call', icon: Clock, module: 'hostel', action: 'roll_call', altActions: ['warden', 'manage'], feature: 'hostel.night_roll_call' },
+      { label: 'Mess', to: '/admin/hostel/mess', icon: HandCoins, module: 'hostel', action: 'mess_manage', altActions: ['warden', 'manage'], feature: 'hostel.mess' },
+      { label: 'Visitors', to: '/admin/hostel/visitors', icon: Contact, module: 'hostel', action: 'gate', altActions: ['warden', 'manage', 'view_all'], feature: 'hostel.visitors' },
+      { label: 'Leaves & out-pass', to: '/admin/hostel/leaves', icon: CalendarCheck, module: 'hostel', action: 'warden', altActions: ['gate', 'manage', 'view_all'], feature: 'hostel.leave_outpass' },
+      { label: 'Hostel complaints', to: '/admin/hostel/complaints', icon: MessagesSquare, module: 'hostel', action: 'warden', altActions: ['manage', 'view_all'], feature: 'hostel.complaints' },
+      { label: 'Hostel discipline', to: '/admin/hostel/discipline', icon: ShieldCheck, module: 'hostel', action: 'discipline', altActions: ['warden', 'manage', 'view_all'], feature: 'hostel.discipline' },
+      { label: 'Staff quarters', to: '/admin/hostel/quarters', icon: Building, module: 'hostel', action: 'manage', altActions: ['view_all'], feature: 'hostel.staff_quarters' },
+      { label: 'Hostel reports', to: '/admin/hostel/reports', icon: TrendingUp, module: 'hostel', action: 'view_all', altActions: ['warden', 'manage'], feature: 'hostel.core' },
+    ],
+  },
   {
     title: 'FINANCE',
     items: [
@@ -217,6 +252,12 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       // Phase 13 — OBE definitions
       { label: 'OBE definitions', to: '/admin/obe/programs', icon: ScrollText, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.definitions' },
+      // Phase 17 — OBE attainment, trend, config, CQI, NBA export
+      { label: 'OBE attainment', to: '/admin/obe/program-attainment', icon: TrendingUp, module: 'obe', action: 'view', altActions: ['view_all', 'manage'], feature: 'obe.attainment' },
+      { label: 'Attainment trend', to: '/admin/obe/trend', icon: TrendingUp, module: 'obe', action: 'view', altActions: ['view_all', 'manage'], feature: 'obe.attainment' },
+      { label: 'Attainment config', to: '/admin/obe/config', icon: Settings, module: 'obe', action: 'configure', feature: 'obe.attainment' },
+      { label: 'CQI actions', to: '/admin/obe/cqi', icon: ClipboardCheck, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.cqi' },
+      { label: 'NBA export', to: '/admin/obe/exports', icon: ScrollText, module: 'obe', action: 'export', feature: 'obe.nba_export' },
     ],
   },
   {

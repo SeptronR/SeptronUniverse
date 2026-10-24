@@ -517,6 +517,8 @@ FACULTY: set[str] = (
     | P("results", "view")
     # Phase 10: faculty request substitutions for their own classes (FACULTY_TIMETABLE below)
     | P("timetable", "substitute")
+    # Phase 17: own offerings' attainment (FACULTY_OBE below)
+    | P("obe", "view", "compute")
 )
 
 # Phase 07 (Prompts/07 "Visibility rules"): registrar / institution_admin read student PII; HOD verifies the credit
@@ -558,6 +560,8 @@ STUDENT: set[str] = (
     | P("marks", "view")
     | P("exams", "self")
     | P("results", "self")
+    | P("obe", "view")
+    | P("degrees", "view")
     | P("fees", "self")
     | P("scholarships", "create", "view")
     | P("no_dues", "request")
@@ -626,12 +630,16 @@ VC_ATTENDANCE: set[str] = P("attendance", "condone")
 # department / lab no-dues and reads its department's dues; class advisors read advisees' dues; the warden, sports,
 # transport and placement offices sign their own no-dues; the accountant verifies scholarships; parents read their
 # wards' scholarships / no-dues
-REGISTRAR_FEES: set[str] = P("fees", "approve", "refund") | P("scholarships", "sanction", "view_all", "view") | P(
-    "no_dues", "approve", "view_all", "view"
+REGISTRAR_FEES: set[str] = (
+    P("fees", "approve", "refund")
+    | P("scholarships", "sanction", "view_all", "view")
+    | P("no_dues", "approve", "view_all", "view")
 )
 VC_FEES: set[str] = P("fees", "approve", "cancel_receipt") | P("scholarships", "sanction")
-HOD_FEES: set[str] = P("fees", "view_all") | P("scholarships", "approve", "view_all", "view") | P(
-    "no_dues", "approve", "view_all", "view"
+HOD_FEES: set[str] = (
+    P("fees", "view_all")
+    | P("scholarships", "approve", "view_all", "view")
+    | P("no_dues", "approve", "view_all", "view")
 )
 ADVISOR_FEES: set[str] = P("fees", "view")
 ACCOUNTANT_FEES: set[str] = P("scholarships", "verify")
@@ -642,7 +650,9 @@ PARENT_FEES: set[str] = P("scholarships", "view") | P("no_dues", "view")
 # post-lock change requests; the dean edits OBE definitions; the registrar reads marks institution-wide; parents read
 # their wards' LMS pages and projects
 EXAM_CELL_MARKS: set[str] = P("marks", "lock")
-HOD_ASSESSMENT: set[str] = P("obe", "manage", "view") | P("lms", "view_all") | P("projects", "view_all") | P("marks", "correct")
+HOD_ASSESSMENT: set[str] = (
+    P("obe", "manage", "view") | P("lms", "view_all") | P("projects", "view_all") | P("marks", "correct")
+)
 DEAN_OBE: set[str] = P("obe", "manage")
 REGISTRAR_MARKS: set[str] = P("marks", "view_all")
 PARENT_LMS: set[str] = P("lms", "view") | P("projects", "view")
@@ -658,6 +668,28 @@ HOD_RESULTS: set[str] = P("results", "view_all")
 # ``committee_members`` in the service) and the committee chair decides them
 REGISTRAR_POST_RESULT: set[str] = P("exams", "view_all") | P("results", "approve")
 COMMITTEE_EXAMS: set[str] = P("exams", "view")
+# Phase 17 (Prompts/17 visibility): faculty compute / read the attainment of their own offerings (narrowed to
+# ``course_offering_faculty`` in the service) and own CQI actions; the dean configures and computes; IQAC manages the
+# CQI register and exports NBA SAR; students read their own CO achievement only when ``obe.show_students`` is on
+FACULTY_OBE: set[str] = P("obe", "view", "compute")
+DEAN_ATTAINMENT: set[str] = P("obe", "configure", "compute", "export")
+IQAC_OBE: set[str] = P("obe", "manage", "compute", "export")
+STUDENT_OBE: set[str] = P("obe", "view")
+# Phase 18 (Prompts/18 visibility): students / parents / alumni read their own (wards') eligibility, convocation,
+# awards and credential status (narrowed in the services); the registrar overrides eligibility (degrees:manage); the
+# HOD reads its department's checks and awards
+SELF_DEGREES: set[str] = P("degrees", "view")
+REGISTRAR_DEGREES: set[str] = P("degrees", "manage", "view")
+HOD_DEGREES: set[str] = P("degrees", "view_all")
+# Phase 19 (Prompts/19 visibility): parents read their wards' library cards / issues / fines; the HOD reads its
+# department's members and overdue lists
+PARENT_LIBRARY: set[str] = P("library", "self")
+HOD_LIBRARY: set[str] = P("library", "view_all")
+# Phase 20 (Prompts/20 visibility): the registrar runs allotments / approves evictions (hostel:manage, institution);
+# the HOD reads its department's residents (view_all, department); class advisors read their advisees (view)
+REGISTRAR_HOSTEL: set[str] = P("hostel", "manage")
+HOD_HOSTEL: set[str] = P("hostel", "view_all")
+ADVISOR_HOSTEL: set[str] = P("hostel", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -704,7 +736,9 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_ATTENDANCE
     | REGISTRAR_FEES
     | REGISTRAR_MARKS
-    | REGISTRAR_POST_RESULT,
+    | REGISTRAR_POST_RESULT
+    | REGISTRAR_DEGREES
+    | REGISTRAR_HOSTEL,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -758,6 +792,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_OFFERINGS
     | P("events", "approve")
     | DEAN_OBE
+    | DEAN_ATTAINMENT
     | STAFF_SELF,
     "hod": FACULTY
     | P("students", "view_all")
@@ -790,8 +825,11 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_FEES
     | HOD_ASSESSMENT
     | HOD_EXAMS
-    | HOD_RESULTS,
-    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES,
+    | HOD_RESULTS
+    | HOD_DEGREES
+    | HOD_LIBRARY
+    | HOD_HOSTEL,
+    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
@@ -825,6 +863,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("accreditation", "manage")
     | P("surveys", "manage")
     | P("reports", "statutory", "run")
+    | IQAC_OBE
     | STAFF_SELF,
     "obe_coordinator": STAFF_SELF
     | P("obe", "manage", "configure", "compute", "export")
@@ -981,6 +1020,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("library", "self"),
     "student": STUDENT,
     "parent": COMMON
+    | SELF_DEGREES
+    | PARENT_LIBRARY
     | P("students", "view")
     | P("attendance", "view")
     | P("results", "view")
@@ -999,6 +1040,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | PARENT_LMS
     | PARENT_EXAMS,
     "alumni": COMMON
+    | SELF_DEGREES
     | P("alumni", "self")
     | P("certificates", "self")
     | P("results", "transcript", "self")
@@ -1027,6 +1069,10 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0020": frozenset(REGISTRAR_HOSTEL | HOD_HOSTEL | ADVISOR_HOSTEL),
+    "0019": frozenset(PARENT_LIBRARY | HOD_LIBRARY),
+    "0018": frozenset(SELF_DEGREES | REGISTRAR_DEGREES | HOD_DEGREES),
+    "0017": frozenset(FACULTY_OBE | DEAN_ATTAINMENT | IQAC_OBE | STUDENT_OBE),
     "0016": frozenset(REGISTRAR_POST_RESULT | COMMITTEE_EXAMS),
     "0015": frozenset(HOD_RESULTS),
     "0014": frozenset(HOD_EXAMS | FACULTY_QP | PARENT_EXAMS),

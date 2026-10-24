@@ -8,8 +8,8 @@ Phase 01: ``platform`` (public config / read-only / mobile config — public rou
 dependency), ``jobs`` {core.background_jobs}, ``search`` {search.global}, ``help`` {platform.help_center},
 ``feedback`` {platform.in_app_feedback}; ``dev`` only when ``APP_ENV=development``.
 Phase 02: ``auth`` {core.auth}, ``rbac`` (roles/users) {core.rbac}, ``features`` {core.rbac}, ``privacy``
-(consents, DSRs, entitlements, install) {core.settings}; the development-only ``module_stubs`` (``/hostels``) carries
-its own feature key and disappears with Phase 20 (Phase 07 replaced the ``/students`` stub).
+(consents, DSRs, entitlements, install) {core.settings}; the development-only ``module_stubs`` were removed by
+Phase 07 (``/students``) and Phase 20 (``/hostels`` — the real hostel router carries {hostel.core}).
 Phase 05: ``programs`` (+ batches) {academics.programs}, ``regulations`` / ``courses`` / ``grading``
 {academics.regulations}, ``curriculum`` (programme-regulations, structure; baskets add
 {academics.elective_baskets}) {academics.curriculum}, ``catalog`` (public, {academics.public_catalog} checked by
@@ -21,7 +21,7 @@ Phase 06: ``staff`` (designations, staff, records) {hr.staff}, ``leaves`` {hr.le
 Phase 07: ``students`` (master, self service, guardians, documents, undertakings, ID cards, import/export) and
 ``enrollments`` (enrolments, promotion, exit/re-entry, holds, standing, transfers) {students.core} with per-route
 sub-features, ``credit_transfers`` {academics.credit_transfer_mooc}, ``verify`` (public ID-card verification). The
-``POST /students`` development stub was removed (``module_stubs`` keeps ``/hostels`` until Phase 20).
+``POST /students`` development stub was removed.
 Phase 11: ``attendance`` (session marking, QR / geo / offline, summaries, on duty, condonation, eligibility)
 {attendance.core} with per-route sub-features (+ the token-authenticated student punch route).
 Phase 12: ``fees`` {fees.core} (heads, structures, discounts, fines, invoices, collection, online / UPI, offline
@@ -52,6 +52,7 @@ from app.api.v1.endpoints import (
     courses,
     credit_transfers,
     curriculum,
+    degrees,
     enrollments,
     exams,
     features,
@@ -59,22 +60,25 @@ from app.api.v1.endpoints import (
     fees,
     grading,
     help,
+    hostel,
     institution,
     jobs,
     leaves,
+    library,
     lms,
     no_dues,
     notifications,
+    obe_attainment,
     payroll,
     platform,
     platform_institutions,
+    post_result,
     privacy,
     programs,
     rbac,
     recruitment,
     registration,
     regulations,
-    post_result,
     results,
     scholarships,
     search,
@@ -144,6 +148,15 @@ api_router.include_router(content.materials_router, dependencies=[feature_requir
 # route carries its own results.* / students.core feature
 api_router.include_router(post_result.router)
 api_router.include_router(post_result.public_router)  # masked public rank lists (published public + setting)
+# Phase 17: OBE attainment / CQI / NBA export — each route carries its obe.* feature
+api_router.include_router(obe_attainment.router)
+# Phase 18: degrees, convocation, credentials, ABC — each route carries its degrees.* feature
+api_router.include_router(degrees.router)
+# Phase 19: library (each route carries its library.* feature) and the public OPAC
+api_router.include_router(library.router)
+api_router.include_router(library.public_router)
+# Phase 20: hostel, mess, leaves & gate, staff quarters (each route carries its hostel.* feature)
+api_router.include_router(hostel.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])
@@ -155,7 +168,6 @@ api_router.include_router(help.router, dependencies=[feature_required("platform.
 api_router.include_router(feedback.router, dependencies=[feature_required("platform.in_app_feedback")])
 
 if settings.APP_ENV == "development":
-    from app.api.v1.endpoints import dev, module_stubs
+    from app.api.v1.endpoints import dev
 
     api_router.include_router(dev.router, dependencies=[feature_required("core.background_jobs")])
-    api_router.include_router(module_stubs.router)

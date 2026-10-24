@@ -173,6 +173,52 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 20 — hostel, mess, staff quarters
+const HostelsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.HostelsPage })));
+const HostelApplicationsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ApplicationsPage })));
+const HostelAllocationsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.AllocationsPage })));
+const RoomChangesPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.RoomChangesPage })));
+const RollCallPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.RollCallPage })));
+const MessPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.MessPage })));
+const HostelVisitorsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.VisitorsPage })));
+const HostelLeavesPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.LeavesPage })));
+const HostelComplaintsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ComplaintsPage })));
+const HostelDisciplinePage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.DisciplinePage })));
+const QuartersPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.QuartersPage })));
+const HostelReportsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.HostelReportsPage })));
+const StudentHostelPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.StudentHostelPage })));
+const ParentHostelPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ParentHostelPage })));
+// Phase 19 — library
+const CataloguePage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.CataloguePage })));
+const CirculationPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.CirculationPage })));
+const LibraryIssuesPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.IssuesPage })));
+const LibraryReservationsPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.ReservationsPage })));
+const LibraryFinesPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.FinesPage })));
+const LibraryMembersPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.MembersPage })));
+const EresourcesPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.EresourcesPage })));
+const IllPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.IllPage })));
+const StockVerificationPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.StockVerificationPage })));
+const LibraryReportsPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.LibraryReportsPage })));
+const MyLibraryPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.MyLibraryPage })));
+const WardLibraryPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.WardLibraryPage })));
+const OpacPage = lazy(() => import('@/features/library/pages/LibraryPages').then((m) => ({ default: m.OpacPage })));
+// Phase 18 — degrees, convocation, digital credentials
+const DegreeEligibilityPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.DegreeEligibilityPage })));
+const ConvocationsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.ConvocationsPage })));
+const AwardsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.AwardsPage })));
+const ProvisionalPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.ProvisionalPage })));
+const CredentialsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.CredentialsPage })));
+const GraduationStatsPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.GraduationStatsPage })));
+const StudentDegreePage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.StudentDegreePage })));
+const BulkVerifyPage = lazy(() => import('@/features/degrees/pages/DegreePages').then((m) => ({ default: m.BulkVerifyPage })));
+// Phase 17 — OBE attainment, CQI, NBA export
+const ObeConfigPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.ObeConfigPage })));
+const OfferingAttainmentPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.OfferingAttainmentPage })));
+const ProgramAttainmentPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.ProgramAttainmentPage })));
+const AttainmentTrendPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.AttainmentTrendPage })));
+const CqiBoardPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.CqiBoardPage })));
+const NbaExportPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.NbaExportPage })));
+const StudentOutcomesPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.StudentOutcomesPage })));
 // Phase 14 — exam administration
 const ExamSessionsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionsPage })));
 const ExamSessionWorkspacePage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionWorkspacePage })));
@@ -244,6 +290,8 @@ export const router = createBrowserRouter([
   // Phase 06 — public careers page (no sign-in; the API checks hr.recruitment for the tenant)
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
+  { path: '/opac', element: page(<OpacPage />) },
+  { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
   { path: '/verify/:token', element: page(<VerifyPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
   { path: '/results/lookup', element: page(<PublicResultLookupPage />) },
@@ -427,6 +475,44 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 20 — hostel (narrowed by the services: warden-owned hostels / college / all; department for HODs)
+              ['/admin/hostel/hostels', 'hostel.core', 'hostel', 'view_all', [['hostel', 'manage'], ['hostel', 'warden']], <HostelsPage key="hh" />],
+              ['/admin/hostel/applications', 'hostel.core', 'hostel', 'allot', [['hostel', 'view_all'], ['hostel', 'warden']], <HostelApplicationsPage key="ha" />],
+              ['/admin/hostel/allocations', 'hostel.core', 'hostel', 'view_all', [['hostel', 'warden'], ['hostel', 'allot'], ['hostel', 'manage']], <HostelAllocationsPage key="hl" />],
+              ['/admin/hostel/room-changes', 'hostel.room_change', 'hostel', 'warden', [['hostel', 'manage']], <RoomChangesPage key="hr" />],
+              ['/admin/hostel/roll-call', 'hostel.night_roll_call', 'hostel', 'roll_call', [['hostel', 'warden'], ['hostel', 'manage']], <RollCallPage key="hc" />],
+              ['/admin/hostel/mess', 'hostel.mess', 'hostel', 'mess_manage', [['hostel', 'warden'], ['hostel', 'manage']], <MessPage key="hm" />],
+              ['/admin/hostel/visitors', 'hostel.visitors', 'hostel', 'gate', [['hostel', 'warden'], ['hostel', 'manage'], ['hostel', 'view_all']], <HostelVisitorsPage key="hv" />],
+              ['/admin/hostel/leaves', 'hostel.leave_outpass', 'hostel', 'warden', [['hostel', 'gate'], ['hostel', 'manage'], ['hostel', 'view_all']], <HostelLeavesPage key="hp" />],
+              ['/admin/hostel/complaints', 'hostel.complaints', 'hostel', 'warden', [['hostel', 'manage'], ['hostel', 'view_all']], <HostelComplaintsPage key="hx" />],
+              ['/admin/hostel/discipline', 'hostel.discipline', 'hostel', 'discipline', [['hostel', 'warden'], ['hostel', 'manage'], ['hostel', 'view_all']], <HostelDisciplinePage key="hd" />],
+              ['/admin/hostel/quarters', 'hostel.staff_quarters', 'hostel', 'manage', [['hostel', 'view_all']], <QuartersPage key="hq" />],
+              ['/admin/hostel/reports', 'hostel.core', 'hostel', 'view_all', [['hostel', 'warden'], ['hostel', 'manage']], <HostelReportsPage key="hz" />],
+              // Phase 19 — library (narrowed by the services: own / wards / department / college / all)
+              ['/admin/library/catalogue', 'library.core', 'library', 'view_all', [['library', 'manage'], ['library', 'circulate']], <CataloguePage key="lc" />],
+              ['/admin/library/circulation', 'library.core', 'library', 'circulate', [['library', 'manage']], <CirculationPage key="lx" />],
+              ['/admin/library/issues', 'library.core', 'library', 'view_all', [['library', 'manage'], ['library', 'circulate']], <LibraryIssuesPage key="li" />],
+              ['/admin/library/reservations', 'library.core', 'library', 'circulate', [['library', 'manage']], <LibraryReservationsPage key="lr" />],
+              ['/admin/library/fines', 'library.fines', 'library', 'fines', [['library', 'manage']], <LibraryFinesPage key="lf" />],
+              ['/admin/library/members', 'library.core', 'library', 'view_all', [['library', 'manage']], <LibraryMembersPage key="lm" />],
+              ['/admin/library/eresources', 'library.eresources', 'library', 'manage', [], <EresourcesPage key="le" />],
+              ['/admin/library/ill', 'library.inter_library_loan', 'library', 'manage', [], <IllPage key="ll" />],
+              ['/admin/library/stock-verification', 'library.core', 'library', 'manage', [], <StockVerificationPage key="ls" />],
+              ['/admin/library/reports', 'library.core', 'library', 'view_all', [['library', 'manage']], <LibraryReportsPage key="lp" />],
+              // Phase 18 — degrees & convocation (narrowed by the services: units / institution)
+              ['/admin/degrees/eligibility', 'degrees.eligibility', 'degrees', 'view_all', [['degrees', 'manage'], ['degrees', 'award']], <DegreeEligibilityPage key="de" />],
+              ['/admin/degrees/convocations', 'degrees.convocation', 'degrees', 'convocation_manage', [['degrees', 'view_all']], <ConvocationsPage key="dc" />],
+              ['/admin/degrees/awards', 'degrees.certificates', 'degrees', 'award', [['degrees', 'issue'], ['degrees', 'view_all'], ['degrees', 'create']], <AwardsPage key="da" />],
+              ['/admin/degrees/provisional', 'degrees.provisional', 'degrees', 'issue', [], <ProvisionalPage key="dp" />],
+              ['/admin/degrees/credentials', 'degrees.digilocker_nad', 'degrees', 'issue', [], <CredentialsPage key="dd" />],
+              ['/admin/degrees/stats', 'degrees.certificates', 'degrees', 'view_all', [], <GraduationStatsPage key="ds" />],
+              // Phase 17 — OBE attainment (narrowed by the services: own offerings / units / institution)
+              ['/admin/obe/config', 'obe.attainment', 'obe', 'configure', [['obe', 'view'], ['obe', 'view_all'], ['obe', 'manage']], <ObeConfigPage key="oc" />],
+              ['/admin/obe/program-attainment', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage']], <ProgramAttainmentPage key="op" />],
+              ['/admin/obe/offerings/:id/attainment', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage'], ['obe', 'compute']], <OfferingAttainmentPage key="oo" />],
+              ['/admin/obe/trend', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage']], <AttainmentTrendPage key="ot" />],
+              ['/admin/obe/cqi', 'obe.cqi', 'obe', 'manage', [['obe', 'view'], ['obe', 'view_all']], <CqiBoardPage key="oq" />],
+              ['/admin/obe/exports', 'obe.nba_export', 'obe', 'export', [], <NbaExportPage key="ox" />],
               // Phase 15 — result registers, analysis, rank lists, legacy import
               ['/admin/results/tabulation', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <TabulationPage key="rt" />],
               ['/admin/results/analysis', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <ResultAnalysisPage key="ra" />],
@@ -587,6 +673,10 @@ export const router = createBrowserRouter([
               ['exams', <StudentExamsPage key="ex" />],
               ['results', <StudentResultsPage key="res" />],
               ['courses/:offeringId', <StudentCoursePage key="sc" />],
+              ['courses/:offeringId/outcomes', <FeatureRoute key="so" feature="obe.attainment"><StudentOutcomesPage /></FeatureRoute>],
+              ['degree', <FeatureRoute key="dg" feature="degrees.eligibility"><StudentDegreePage /></FeatureRoute>],
+              ['library', <FeatureRoute key="lb" feature="library.core"><MyLibraryPage /></FeatureRoute>],
+              ['hostel', <FeatureRoute key="hs" feature="hostel.core"><StudentHostelPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -601,6 +691,8 @@ export const router = createBrowserRouter([
           { path: 'fees', element: page(<FeatureRoute feature="fees.core"><ParentFeesPage /></FeatureRoute>) },
           { path: 'exams/:studentId', element: page(<FeatureRoute feature="exams.sessions"><ParentExamsPage /></FeatureRoute>) },
           { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
+          { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
+          { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
         ],
       },
       {
@@ -613,6 +705,9 @@ export const router = createBrowserRouter([
           // Phase 15 — evaluator portal (dummy numbers only) and the offering result sheet
           { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
           { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
+          { path: 'library', element: page(<FeatureRoute feature="library.core"><MyLibraryPage /></FeatureRoute>) },
+          // Phase 17 — CO attainment of an own offering
+          { path: 'offerings/:id/attainment', element: page(<FeatureRoute feature="obe.attainment"><OfferingAttainmentPage /></FeatureRoute>) },
           // Phase 14 — exam duties and question-paper setting
           { path: 'duties', element: page(<FeatureRoute feature="exams.invigilation"><MyDutiesPage /></FeatureRoute>) },
           { path: 'qp', element: page(<FeatureRoute feature="exams.qp_management"><MyQpPage /></FeatureRoute>) },

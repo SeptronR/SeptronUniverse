@@ -76,8 +76,12 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("fees", "upi_vpa", "str", None),
     SettingDef("fees", "gst_enabled", "bool", False),
     # assessment (Phase 13) — marks deadline after instantiation, auto-lock after the deadline
-    SettingDef("assessment", "marks_deadline_days", "int", 14, label="Marks entry deadline (days after instantiation)", min=1),
-    SettingDef("assessment", "auto_lock_days", "int", 7, label="Auto-lock verified marks N days after the deadline", min=0),
+    SettingDef(
+        "assessment", "marks_deadline_days", "int", 14, label="Marks entry deadline (days after instantiation)", min=1
+    ),
+    SettingDef(
+        "assessment", "auto_lock_days", "int", 7, label="Auto-lock verified marks N days after the deadline", min=0
+    ),
     # fees (Phase 12) — GSTIN on taxable invoices, reminders, overdue holds, linkage due days, no-dues offices
     SettingDef("fees", "gstin", "str", None, label="GSTIN printed on taxable invoices / receipts"),
     SettingDef("fees", "reminder_days", "json", [7, 1, -7], label="Due reminders: days before (+) / after (-) due"),
@@ -114,9 +118,46 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("exams", "malpractice_appeal_days", "int", 30, label="Malpractice appeal window (days)", min=1, max=365),
     SettingDef("exams", "transcript_fees", "json", None, label="Transcript fee per copy by type (paise)"),
     SettingDef("exams", "rank_list_public", "bool", False, label="Publish masked rank lists publicly"),
+    # obe (Phase 17) — student self view of CO achievement, auto-run on result publication, strict prerequisites
+    SettingDef("obe", "show_students", "bool", False, label="Students see their own CO achievement"),
+    SettingDef("obe", "auto_run", "bool", True, label="Compute CO attainment when results are published"),
+    SettingDef("obe", "strict_prereq", "bool", False, label="Refuse attainment runs before CIA lock / publication"),
+    # degrees (Phase 18) — dues rule, award needs convocation registration
+    SettingDef("degrees", "zero_outstanding_ok", "bool", False, label="Zero outstanding fees counts as dues cleared"),
+    SettingDef("degrees", "award_requires_registration", "bool", False, label="Awards only for convocation registrants"),
+    # library (Phase 19) — member rules, blocks, holds, reservations, lost books, ILL
+    SettingDef("library", "member_rules", "json", None, label="Loan rules per member type"),
+    SettingDef("library", "block_fine_threshold_paise", "int", 50000, label="Block borrowing above this unpaid fine", min=0),
+    SettingDef("library", "block_overdue_days", "int", 30, label="Block borrowing when a book is overdue this long", min=1, max=365),
+    SettingDef("library", "hold_after_days", "int", 30, label="Place a library hold after N days overdue", min=1, max=365),
+    SettingDef("library", "hold_hours", "int", 48, label="Reservation pickup window (hours)", min=1, max=336),
+    SettingDef("library", "weekly_off", "json", ["sunday"], label="Library weekly-off days"),
+    SettingDef("library", "allow_reserve_available", "bool", False, label="Allow reserving titles with copies on the shelf"),
+    SettingDef("library", "one_copy_per_title", "bool", True, label="One copy of a title per member"),
+    SettingDef("library", "lost_replacement_pct", "int", 150, label="Lost book charge (% of price)", min=0, max=1000),
+    SettingDef("library", "found_cancels_invoice", "bool", True, label="A found lost book cancels its unpaid charge"),
+    SettingDef("library", "ill_students_allowed", "bool", False, label="Students may request inter-library loans"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),
+    # hostel (Phase 20) — consent, gate, roll-call, mess, allotment
+    SettingDef("hostel", "guardian_otp_required_for", "json", ["home_leave", "medical"], label="Leave types needing guardian OTP"),
+    SettingDef("hostel", "minor_requires_otp", "bool", True, label="Minors always need guardian consent"),
+    SettingDef("hostel", "late_grace_minutes", "int", 30, label="Late-return grace (minutes)", min=0, max=720),
+    SettingDef("hostel", "absconding_after_hours", "int", 12, label="Absconding after N hours overdue", min=1, max=168),
+    SettingDef("hostel", "rebate_min_consecutive_days", "int", 5, label="Minimum consecutive days for a mess rebate", min=1, max=60),
+    SettingDef("hostel", "rebate_requires_leave", "bool", False, label="Mess rebates need an approved hostel leave"),
+    SettingDef("hostel", "roll_call_time", "str", "21:30", label="Night roll-call time (HH:MM)"),
+    SettingDef("hostel", "outpass_auto_approve", "bool", False, label="Auto-approve out-passes without pending consent"),
+    SettingDef("hostel", "accept_days", "int", 7, label="Days to pay before an allotment lapses", min=1, max=60),
+    SettingDef("hostel", "deposit_once", "bool", True, label="Caution deposit collected once"),
+    SettingDef("hostel", "fee_before_checkin", "bool", True, label="Hostel fee must be paid before check-in"),
+    SettingDef("hostel", "room_type_fallback", "bool", True, label="Allot any room type when the preferred is full"),
+    SettingDef("hostel", "mess_billing_mode", "enum", "postpaid", False, ("postpaid", "prepaid")),
+    SettingDef("hostel", "eviction_hold_days", "int", 365, label="Hostel hold after eviction (days)", min=0, max=3650),
+    SettingDef("hostel", "girls_guardian_visitors_only", "bool", False, label="Girls hostels: guardian visitors only"),
+    SettingDef("hostel", "priority_weights", "json", None, label="Allotment priority weights"),
+    SettingDef("hostel", "application_window", "json", None, label="Application window per academic year"),
     # communication
     SettingDef("communication", "sms_sender_id", "str", None),
     SettingDef("communication", "dlt_entity_id", "str", None),
@@ -294,6 +335,12 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("fee_receipt_no", "RCP/{yyyy}/{seq:6}", 6, "yearly", "Fee receipt"),
     SequenceTemplate("fee_invoice_no", "INV/{yyyy}/{seq:6}", 6, "yearly", "Fee invoice"),
     SequenceTemplate("certificate_no", "CERT/{yyyy}/{seq:5}", 5, "yearly", "Certificate number"),
+    # Phase 18 — degree certificates and their serial numbers
+    SequenceTemplate("degree", "DEG/{yyyy}/{seq:6}", 6, "yearly", "Degree certificate number"),
+    SequenceTemplate("degree_serial", "SN{yyyy}{seq:7}", 7, "never", "Degree serial number"),
+    # Phase 19 — library accession numbers and member codes
+    SequenceTemplate("lib:acc", "ACC{seq:6}", 6, "never", "Library accession number"),
+    SequenceTemplate("lib:member", "LM{yy}{seq:5}", 5, "yearly", "Library member code"),
 )
 
 
