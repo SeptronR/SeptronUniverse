@@ -16093,6 +16093,749 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/transport/allocations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Allocations (scoped) */
+        get: operations["allocations_api_v1_transport_allocations_get"];
+        put?: never;
+        /** Allocate a person to a route / stop */
+        post: operations["allocate_api_v1_transport_allocations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/allocations/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Bulk allocation (job; partial-success report) */
+        post: operations["allocate_bulk_api_v1_transport_allocations_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/allocations/{id}/change": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Change route / stop from a date */
+        post: operations["allocation_change_api_v1_transport_allocations__id__change_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/allocations/{id}/{action}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Suspend / close / reactivate */
+        post: operations["allocation_status_api_v1_transport_allocations__id___action__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/driver/trips": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My trips (driver) */
+        get: operations["driver_trips_api_v1_transport_driver_trips_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/gps-devices": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GPS devices */
+        get: operations["devices_api_v1_transport_gps_devices_get"];
+        put?: never;
+        /** Register a GPS device (token shown once) */
+        post: operations["device_create_api_v1_transport_gps_devices_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/gps-devices/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Deactivate a device */
+        delete: operations["device_delete_api_v1_transport_gps_devices__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/gps-devices/{id}/rotate-token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rotate a device token */
+        post: operations["device_rotate_api_v1_transport_gps_devices__id__rotate_token_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/gps/device-ingest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** GPS batch from a fitted device (X-Device-Token) */
+        post: operations["gps_device_ingest_api_v1_transport_gps_device_ingest_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/gps/ingest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** GPS batch from the driver app (JWT) */
+        post: operations["gps_ingest_api_v1_transport_gps_ingest_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/live": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Live vehicle positions (scoped) */
+        get: operations["live_api_v1_transport_live_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My route, stop, times and today's trips */
+        get: operations["me_api_v1_transport_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/me/request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request an allocation / change */
+        post: operations["me_request_api_v1_transport_me_request_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/me/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My requests */
+        get: operations["me_requests_api_v1_transport_me_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/reports/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Transport report (JSON inline, XLSX job) */
+        get: operations["report_api_v1_transport_reports__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Allocation request queue */
+        get: operations["requests_queue_api_v1_transport_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/requests/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject a request */
+        post: operations["request_decide_api_v1_transport_requests__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/routes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Routes with stops */
+        get: operations["routes_api_v1_transport_routes_get"];
+        put?: never;
+        /** Create a route (+ stops) */
+        post: operations["route_create_api_v1_transport_routes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/routes/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Routes, stops and times (no vehicles) */
+        get: operations["routes_public_api_v1_transport_routes_public_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/routes/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Route */
+        get: operations["route_get_api_v1_transport_routes__id__get"];
+        /** Edit a route */
+        put: operations["route_update_api_v1_transport_routes__id__put"];
+        post?: never;
+        /** Deactivate a route */
+        delete: operations["route_delete_api_v1_transport_routes__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/routes/{id}/sheet.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Route sheet (PDF) */
+        get: operations["route_sheet_api_v1_transport_routes__id__sheet_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/routes/{id}/stops": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Stops of a route */
+        get: operations["stops_api_v1_transport_routes__id__stops_get"];
+        put?: never;
+        /** Add / insert a stop */
+        post: operations["stop_add_api_v1_transport_routes__id__stops_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/routes/{id}/stops/reorder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reorder stops (renumbers 1..n) */
+        post: operations["stops_reorder_api_v1_transport_routes__id__stops_reorder_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Transport dashboard */
+        get: operations["stats_api_v1_transport_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/stops/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit a stop */
+        put: operations["stop_update_api_v1_transport_stops__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Trips of a day */
+        get: operations["trips_api_v1_transport_trips_get"];
+        put?: never;
+        /** Ad-hoc trip */
+        post: operations["trip_create_api_v1_transport_trips_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Schedule trips for working days (job) */
+        post: operations["trips_schedule_api_v1_transport_trips_schedule_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Trip */
+        get: operations["trip_get_api_v1_transport_trips__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel a trip (notifies passengers) */
+        post: operations["trip_cancel_api_v1_transport_trips__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/end": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** End a trip (driver) */
+        post: operations["trip_end_api_v1_transport_trips__id__end_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/manifest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Passenger manifest per stop (masked phones) */
+        get: operations["trip_manifest_api_v1_transport_trips__id__manifest_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/passenger-scan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Board / alight scan (Idempotency-Key) */
+        post: operations["trip_scan_api_v1_transport_trips__id__passenger_scan_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/start": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start a trip (driver) */
+        post: operations["trip_start_api_v1_transport_trips__id__start_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/stop-event": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stop arrived / departed (driver) */
+        post: operations["trip_stop_event_api_v1_transport_trips__id__stop_event_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/trips/{id}/trace": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Trip trace (JSON or GPX) */
+        get: operations["trip_trace_api_v1_transport_trips__id__trace_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Vehicles (+ compliance chips) */
+        get: operations["vehicles_api_v1_transport_vehicles_get"];
+        put?: never;
+        /** Add a vehicle */
+        post: operations["vehicle_create_api_v1_transport_vehicles_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles/compliance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Expiring / expired vehicle documents */
+        get: operations["compliance_api_v1_transport_vehicles_compliance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Vehicle */
+        get: operations["vehicle_get_api_v1_transport_vehicles__id__get"];
+        /** Edit a vehicle */
+        put: operations["vehicle_update_api_v1_transport_vehicles__id__put"];
+        post?: never;
+        /** Delete a vehicle (no trips yet) */
+        delete: operations["vehicle_delete_api_v1_transport_vehicles__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles/{id}/costs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Cost per km / km per litre */
+        get: operations["vehicle_costs_api_v1_transport_vehicles__id__costs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles/{id}/fuel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fuel log */
+        get: operations["fuel_api_v1_transport_vehicles__id__fuel_get"];
+        put?: never;
+        /** Add a fuel entry */
+        post: operations["fuel_add_api_v1_transport_vehicles__id__fuel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles/{id}/maintenance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Maintenance log */
+        get: operations["maintenance_api_v1_transport_vehicles__id__maintenance_get"];
+        put?: never;
+        /** Add a maintenance entry */
+        post: operations["maintenance_add_api_v1_transport_vehicles__id__maintenance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/vehicles/{id}/retire": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retire a vehicle */
+        post: operations["vehicle_retire_api_v1_transport_vehicles__id__retire_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/transport/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My wards' transport */
+        get: operations["wards_api_v1_transport_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/users": {
         parameters: {
             query?: never;
@@ -17022,6 +17765,87 @@ export interface components {
              */
             notify_mentor: boolean;
         };
+        /** AllocationAction */
+        AllocationAction: {
+            /** Reason */
+            reason?: string | null;
+        };
+        /** AllocationBulk */
+        AllocationBulk: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Person Ids */
+            person_ids: string[];
+            /**
+             * Person Type
+             * @default student
+             * @enum {string}
+             */
+            person_type: "student" | "staff";
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /**
+             * Stop Id
+             * Format: uuid
+             */
+            stop_id: string;
+        };
+        /** AllocationChange */
+        AllocationChange: {
+            /**
+             * Effective On
+             * Format: date
+             */
+            effective_on: string;
+            /**
+             * New Route Id
+             * Format: uuid
+             */
+            new_route_id: string;
+            /**
+             * New Stop Id
+             * Format: uuid
+             */
+            new_stop_id: string;
+        };
+        /** AllocationCreate */
+        AllocationCreate: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Payroll Deduction
+             * @default false
+             */
+            payroll_deduction: boolean;
+            /**
+             * Person Id
+             * Format: uuid
+             */
+            person_id: string;
+            /**
+             * Person Type
+             * @default student
+             * @enum {string}
+             */
+            person_type: "student" | "staff";
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /**
+             * Stop Id
+             * Format: uuid
+             */
+            stop_id: string;
+            /** To On */
+            to_on?: string | null;
+        };
         /** AllocationIn */
         AllocationIn: {
             /** Amount Paise */
@@ -17095,6 +17919,57 @@ export interface components {
             updated_at?: string | null;
             /** Workflow Instance Id */
             workflow_instance_id?: string | null;
+        };
+        /** AllocationResponse */
+        AllocationResponse: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Department Code */
+            department_code?: string | null;
+            /**
+             * Fee Paise
+             * @default 0
+             */
+            fee_paise: number;
+            /** Fee Status */
+            fee_status?: string | null;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invoice Id */
+            invoice_id?: string | null;
+            /** Person Code */
+            person_code?: string | null;
+            /**
+             * Person Id
+             * Format: uuid
+             */
+            person_id: string;
+            /** Person Name */
+            person_name?: string | null;
+            /** Person Type */
+            person_type: string;
+            /** Route Code */
+            route_code?: string | null;
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /** Status */
+            status: string;
+            /** Stop Id */
+            stop_id?: string | null;
+            /** Stop Name */
+            stop_name?: string | null;
+            /** To On */
+            to_on?: string | null;
+            /** Warning */
+            warning?: string | null;
         };
         /** AllocationResultRow */
         AllocationResultRow: {
@@ -20946,6 +21821,20 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** ComplianceChip */
+        ComplianceChip: {
+            /** Days Left */
+            days_left?: number | null;
+            /** Document */
+            document: string;
+            /** Expiry */
+            expiry?: string | null;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "ok" | "expiring" | "expired" | "missing";
+        };
         /**
          * ComponentCategory
          * @enum {string}
@@ -24319,6 +25208,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AllocationResponse] */
+        Envelope_AllocationResponse_: {
+            data?: components["schemas"]["AllocationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AllocationSummary] */
         Envelope_AllocationSummary_: {
             data?: components["schemas"]["AllocationSummary"] | null;
@@ -25849,6 +26753,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[GpsDeviceOut] */
+        Envelope_GpsDeviceOut_: {
+            data?: components["schemas"]["GpsDeviceOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[GpsIngestResult] */
+        Envelope_GpsIngestResult_: {
+            data?: components["schemas"]["GpsIngestResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[GradingScaleResponse] */
         Envelope_GradingScaleResponse_: {
             data?: components["schemas"]["GradingScaleResponse"] | null;
@@ -26554,6 +27488,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ManifestResponse] */
+        Envelope_ManifestResponse_: {
+            data?: components["schemas"]["ManifestResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[MarkResult] */
         Envelope_MarkResult_: {
             data?: components["schemas"]["MarkResult"] | null;
@@ -26827,6 +27776,21 @@ export interface components {
         /** Envelope[MySummaryResponse] */
         Envelope_MySummaryResponse_: {
             data?: components["schemas"]["MySummaryResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MyTransportResponse] */
+        Envelope_MyTransportResponse_: {
+            data?: components["schemas"]["MyTransportResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -27128,6 +28092,21 @@ export interface components {
         /** Envelope[PaperOut] */
         Envelope_PaperOut_: {
             data?: components["schemas"]["PaperOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PassengerScanResponse] */
+        Envelope_PassengerScanResponse_: {
+            data?: components["schemas"]["PassengerScanResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -28175,6 +29154,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RouteOut] */
+        Envelope_RouteOut_: {
+            data?: components["schemas"]["RouteOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RouteStatsResponse] */
+        Envelope_RouteStatsResponse_: {
+            data?: components["schemas"]["RouteStatsResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RulesEffectiveResponse] */
         Envelope_RulesEffectiveResponse_: {
             data?: components["schemas"]["RulesEffectiveResponse"] | null;
@@ -28490,6 +29499,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[StopOut] */
+        Envelope_StopOut_: {
+            data?: components["schemas"]["StopOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[StructureResponse] */
         Envelope_StructureResponse_: {
             data?: components["schemas"]["StructureResponse"] | null;
@@ -28775,6 +29799,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[TraceResponse] */
+        Envelope_TraceResponse_: {
+            data?: components["schemas"]["TraceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[TranscriptResponse] */
         Envelope_TranscriptResponse_: {
             data?: components["schemas"]["TranscriptResponse"] | null;
@@ -28793,6 +29832,51 @@ export interface components {
         /** Envelope[TransferResponse] */
         Envelope_TransferResponse_: {
             data?: components["schemas"]["TransferResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TransportJobAccepted] */
+        Envelope_TransportJobAccepted_: {
+            data?: components["schemas"]["TransportJobAccepted"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TransportReport] */
+        Envelope_TransportReport_: {
+            data?: components["schemas"]["TransportReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TripOut] */
+        Envelope_TripOut_: {
+            data?: components["schemas"]["TripOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -29031,6 +30115,51 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[VehicleFuelOut] */
+        Envelope_VehicleFuelOut_: {
+            data?: components["schemas"]["VehicleFuelOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[VehicleMaintenanceOut] */
+        Envelope_VehicleMaintenanceOut_: {
+            data?: components["schemas"]["VehicleMaintenanceOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[VehicleOut] */
+        Envelope_VehicleOut_: {
+            data?: components["schemas"]["VehicleOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[WeeklyView] */
         Envelope_WeeklyView_: {
             data?: components["schemas"]["WeeklyView"] | null;
@@ -29226,6 +30355,22 @@ export interface components {
         Envelope_list_AcademicYearResponse__: {
             /** Data */
             data?: components["schemas"]["AcademicYearResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[AllocationResponse]] */
+        Envelope_list_AllocationResponse__: {
+            /** Data */
+            data?: components["schemas"]["AllocationResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -30454,6 +31599,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[GpsDeviceOut]] */
+        Envelope_list_GpsDeviceOut__: {
+            /** Data */
+            data?: components["schemas"]["GpsDeviceOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[GradeCardResponse]] */
         Envelope_list_GradeCardResponse__: {
             /** Data */
@@ -30934,6 +32095,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[LiveVehicle]] */
+        Envelope_list_LiveVehicle__: {
+            /** Data */
+            data?: components["schemas"]["LiveVehicle"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[LoanOut]] */
         Envelope_list_LoanOut__: {
             /** Data */
@@ -31146,6 +32323,22 @@ export interface components {
         Envelope_list_MyMarksRow__: {
             /** Data */
             data?: components["schemas"]["MyMarksRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MyTransportResponse]] */
+        Envelope_list_MyTransportResponse__: {
+            /** Data */
+            data?: components["schemas"]["MyTransportResponse"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -31434,6 +32627,22 @@ export interface components {
         Envelope_list_PublicPostingOut__: {
             /** Data */
             data?: components["schemas"]["PublicPostingOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PublicRouteOut]] */
+        Envelope_list_PublicRouteOut__: {
+            /** Data */
+            data?: components["schemas"]["PublicRouteOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -31798,6 +33007,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[RouteOut]] */
+        Envelope_list_RouteOut__: {
+            /** Data */
+            data?: components["schemas"]["RouteOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[RulesHelpItem]] */
         Envelope_list_RulesHelpItem__: {
             /** Data */
@@ -32042,6 +33267,22 @@ export interface components {
         Envelope_list_StaffResponse__: {
             /** Data */
             data?: components["schemas"]["StaffResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[StopOut]] */
+        Envelope_list_StopOut__: {
+            /** Data */
+            data?: components["schemas"]["StopOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -32358,6 +33599,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[TripOut]] */
+        Envelope_list_TripOut__: {
+            /** Data */
+            data?: components["schemas"]["TripOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[UndertakingStatus]] */
         Envelope_list_UndertakingStatus__: {
             /** Data */
@@ -32426,6 +33683,54 @@ export interface components {
         Envelope_list_ValuationAssignmentResponse__: {
             /** Data */
             data?: components["schemas"]["ValuationAssignmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[VehicleFuelOut]] */
+        Envelope_list_VehicleFuelOut__: {
+            /** Data */
+            data?: components["schemas"]["VehicleFuelOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[VehicleMaintenanceOut]] */
+        Envelope_list_VehicleMaintenanceOut__: {
+            /** Data */
+            data?: components["schemas"]["VehicleMaintenanceOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[VehicleOut]] */
+        Envelope_list_VehicleOut__: {
+            /** Data */
+            data?: components["schemas"]["VehicleOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -34180,6 +35485,84 @@ export interface components {
             lat: number;
             /** Lng */
             lng: number;
+        };
+        /** GpsBatch */
+        GpsBatch: {
+            /** Pings */
+            pings: components["schemas"]["GpsPing"][];
+            /** Trip Id */
+            trip_id?: string | null;
+        };
+        /** GpsDeviceIn */
+        GpsDeviceIn: {
+            /** Device Id */
+            device_id: string;
+            /** Vehicle Id */
+            vehicle_id?: string | null;
+        };
+        /** GpsDeviceOut */
+        GpsDeviceOut: {
+            /** Device Id */
+            device_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Last Seen At */
+            last_seen_at?: string | null;
+            /** Token */
+            token?: string | null;
+            /** Vehicle Id */
+            vehicle_id?: string | null;
+            /** Vehicle Registration */
+            vehicle_registration?: string | null;
+        };
+        /** GpsIngestResult */
+        GpsIngestResult: {
+            /**
+             * Accepted
+             * @default 0
+             */
+            accepted: number;
+            /**
+             * Alerts
+             * @default []
+             */
+            alerts: string[];
+            /**
+             * Duplicates
+             * @default 0
+             */
+            duplicates: number;
+            /**
+             * Rate Limited
+             * @default 0
+             */
+            rate_limited: number;
+            /**
+             * Stop Events
+             * @default 0
+             */
+            stop_events: number;
+        };
+        /** GpsPing */
+        GpsPing: {
+            /** Heading */
+            heading?: number | null;
+            /** Lat */
+            lat: number;
+            /** Lng */
+            lng: number;
+            /**
+             * Recorded At
+             * Format: date-time
+             */
+            recorded_at: string;
+            /** Speed Kmh */
+            speed_kmh?: number | null;
         };
         /** GradeBulk */
         GradeBulk: {
@@ -36843,6 +38226,44 @@ export interface components {
             /** Returned Today */
             returned_today: number;
         };
+        /** LiveVehicle */
+        LiveVehicle: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /**
+             * Deviation
+             * @default false
+             */
+            deviation: boolean;
+            /** Eta Min */
+            eta_min?: number | null;
+            /** Heading */
+            heading?: number | null;
+            /** Lat */
+            lat: number;
+            /** Lng */
+            lng: number;
+            /** Next Stop */
+            next_stop?: string | null;
+            /** Registration No */
+            registration_no?: string | null;
+            /** Route */
+            route?: string | null;
+            /** Route Id */
+            route_id?: string | null;
+            /** Speed */
+            speed?: number | null;
+            /** Trip Id */
+            trip_id?: string | null;
+            /**
+             * Vehicle Id
+             * Format: uuid
+             */
+            vehicle_id: string;
+        };
         /** LoanIn */
         LoanIn: {
             /** Emi Paise */
@@ -37143,6 +38564,79 @@ export interface components {
             exam_registration_item_id: string;
             /** Invigilator Report */
             invigilator_report: string;
+        };
+        /** ManifestPassenger */
+        ManifestPassenger: {
+            /**
+             * Alighted
+             * @default false
+             */
+            alighted: boolean;
+            /**
+             * Boarded
+             * @default false
+             */
+            boarded: boolean;
+            /** Name */
+            name: string;
+            /**
+             * Person Id
+             * Format: uuid
+             */
+            person_id: string;
+            /** Person Type */
+            person_type: string;
+            /** Phone */
+            phone?: string | null;
+            /**
+             * Suspended
+             * @default false
+             */
+            suspended: boolean;
+        };
+        /** ManifestResponse */
+        ManifestResponse: {
+            /**
+             * Boarded
+             * @default 0
+             */
+            boarded: number;
+            /**
+             * Stops
+             * @default []
+             */
+            stops: components["schemas"]["ManifestStop"][];
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+            /**
+             * Trip Id
+             * Format: uuid
+             */
+            trip_id: string;
+        };
+        /** ManifestStop */
+        ManifestStop: {
+            /** Arrived At */
+            arrived_at?: string | null;
+            /** Departed At */
+            departed_at?: string | null;
+            /**
+             * Passengers
+             * @default []
+             */
+            passengers: components["schemas"]["ManifestPassenger"][];
+            /** Sequence */
+            sequence: number;
+            /** Stop */
+            stop: string;
+            /**
+             * Stop Id
+             * Format: uuid
+             */
+            stop_id: string;
         };
         /** ManualAllocation */
         ManualAllocation: {
@@ -38108,6 +39602,30 @@ export interface components {
             /** Courses */
             courses: components["schemas"]["CourseResultResponse"][];
             term: components["schemas"]["TermResultResponse"];
+        };
+        /** MyTransportResponse */
+        MyTransportResponse: {
+            allocation?: components["schemas"]["AllocationResponse"] | null;
+            /** Driver Name */
+            driver_name?: string | null;
+            /** Drop Time */
+            drop_time?: string | null;
+            /**
+             * Live Available
+             * @default false
+             */
+            live_available: boolean;
+            /** Pickup Time */
+            pickup_time?: string | null;
+            route?: components["schemas"]["RouteOut"] | null;
+            stop?: components["schemas"]["StopOut"] | null;
+            /**
+             * Today Trips
+             * @default []
+             */
+            today_trips: components["schemas"]["TripBrief"][];
+            /** Vehicle */
+            vehicle?: string | null;
         };
         /** NbaExportRequest */
         NbaExportRequest: {
@@ -39356,6 +40874,48 @@ export interface components {
             ese_min_pct?: number | null;
             /** Total Min Pct */
             total_min_pct?: number | null;
+        };
+        /** PassengerScanRequest */
+        PassengerScanRequest: {
+            /**
+             * Event
+             * @default board
+             * @enum {string}
+             */
+            event: "board" | "alight";
+            /** Person Id */
+            person_id?: string | null;
+            /**
+             * Person Type
+             * @default student
+             * @enum {string}
+             */
+            person_type: "student" | "staff";
+            /** Qr */
+            qr?: string | null;
+            /** Stop Id */
+            stop_id?: string | null;
+        };
+        /** PassengerScanResponse */
+        PassengerScanResponse: {
+            /** Event */
+            event: string;
+            /**
+             * Event Id
+             * Format: uuid
+             */
+            event_id: string;
+            /**
+             * Occurred At
+             * Format: date-time
+             */
+            occurred_at: string;
+            /** Person Name */
+            person_name?: string | null;
+            /** Stop Id */
+            stop_id?: string | null;
+            /** Warning */
+            warning?: string | null;
         };
         /**
          * PaymentMode
@@ -40730,6 +42290,25 @@ export interface components {
             title: string;
             /** Vacancies */
             vacancies: number;
+        };
+        /** PublicRouteOut */
+        PublicRouteOut: {
+            /** Code */
+            code: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Stops
+             * @default []
+             */
+            stops: {
+                [key: string]: unknown;
+            }[];
         };
         /** PublicSettingsResponse */
         PublicSettingsResponse: {
@@ -43284,6 +44863,134 @@ export interface components {
             /** Reporting Deadline */
             reporting_deadline?: string | null;
         };
+        /** RouteIn */
+        RouteIn: {
+            /** Code */
+            code: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Distance Km */
+            distance_km?: number | null;
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /** Name */
+            name: string;
+            /**
+             * Stops
+             * @default []
+             */
+            stops: components["schemas"]["StopIn"][];
+            /** Vehicle Id */
+            vehicle_id?: string | null;
+        };
+        /** RouteOut */
+        RouteOut: {
+            /** Capacity */
+            capacity?: number | null;
+            /**
+             * Capacity Used
+             * @default 0
+             */
+            capacity_used: number;
+            /** Code */
+            code: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Distance Km */
+            distance_km?: number | null;
+            /** Driver Name */
+            driver_name?: string | null;
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /**
+             * Stops
+             * @default []
+             */
+            stops: components["schemas"]["StopOut"][];
+            /** Vehicle Id */
+            vehicle_id?: string | null;
+            /** Vehicle Registration */
+            vehicle_registration?: string | null;
+        };
+        /** RouteStatsResponse */
+        RouteStatsResponse: {
+            /**
+             * Compliance Alerts
+             * @default 0
+             */
+            compliance_alerts: number;
+            /** Cost Per Km */
+            cost_per_km?: number | null;
+            /**
+             * Delayed
+             * @default 0
+             */
+            delayed: number;
+            /**
+             * In Progress
+             * @default 0
+             */
+            in_progress: number;
+            /**
+             * Occupancy Pct
+             * @default 0
+             */
+            occupancy_pct: number;
+            /** On Time Pct */
+            on_time_pct?: number | null;
+            /**
+             * Routes
+             * @default 0
+             */
+            routes: number;
+            /**
+             * Staff
+             * @default 0
+             */
+            staff: number;
+            /**
+             * Students
+             * @default 0
+             */
+            students: number;
+            /**
+             * Trips Today
+             * @default 0
+             */
+            trips_today: number;
+            /**
+             * Vehicles
+             * @default 0
+             */
+            vehicles: number;
+            /**
+             * Vehicles Active
+             * @default 0
+             */
+            vehicles_active: number;
+        };
+        /** RouteUpdate */
+        RouteUpdate: {
+            /** Distance Km */
+            distance_km?: number | null;
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Name */
+            name?: string | null;
+            /** Vehicle Id */
+            vehicle_id?: string | null;
+        };
         /** RulesEffectiveResponse */
         RulesEffectiveResponse: {
             /** Overridden Keys */
@@ -44946,6 +46653,80 @@ export interface components {
             location?: string | null;
             /** Scanned Barcodes */
             scanned_barcodes?: string[];
+        };
+        /** StopEventIn */
+        StopEventIn: {
+            /** At */
+            at?: string | null;
+            /**
+             * Event
+             * @enum {string}
+             */
+            event: "arrived" | "departed";
+            /**
+             * Stop Id
+             * Format: uuid
+             */
+            stop_id: string;
+        };
+        /** StopIn */
+        StopIn: {
+            /** Drop Time */
+            drop_time?: string | null;
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /** Lat */
+            lat?: number | null;
+            /** Lng */
+            lng?: number | null;
+            /** Name */
+            name: string;
+            /** Pickup Time */
+            pickup_time?: string | null;
+            /** Sequence */
+            sequence?: number | null;
+        };
+        /** StopOut */
+        StopOut: {
+            /** Drop Time */
+            drop_time?: string | null;
+            /**
+             * Effective Fee Paise
+             * @default 0
+             */
+            effective_fee_paise: number;
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Lat */
+            lat?: number | null;
+            /** Lng */
+            lng?: number | null;
+            /** Name */
+            name: string;
+            /**
+             * Passengers
+             * @default 0
+             */
+            passengers: number;
+            /** Pickup Time */
+            pickup_time?: string | null;
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /** Sequence */
+            sequence: number;
+        };
+        /** StopsReorder */
+        StopsReorder: {
+            /** Stop Ids */
+            stop_ids: string[];
         };
         /** StructureCloneRequest */
         StructureCloneRequest: {
@@ -46820,6 +48601,43 @@ export interface components {
              */
             total_sessions: number;
         };
+        /** TracePoint */
+        TracePoint: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Lat */
+            lat: number;
+            /** Lng */
+            lng: number;
+            /** Speed */
+            speed?: number | null;
+        };
+        /** TraceResponse */
+        TraceResponse: {
+            /**
+             * Km
+             * @default 0
+             */
+            km: number;
+            /**
+             * Points
+             * @default []
+             */
+            points: components["schemas"]["TracePoint"][];
+            /**
+             * Total Points
+             * @default 0
+             */
+            total_points: number;
+            /**
+             * Trip Id
+             * Format: uuid
+             */
+            trip_id: string;
+        };
         /** TranscriptIssueRequest */
         TranscriptIssueRequest: {
             /**
@@ -47039,6 +48857,54 @@ export interface components {
          * @enum {string}
          */
         TransferType: "migration_in" | "migration_out" | "inter_college" | "program_change" | "inter_university";
+        /** TransportJobAccepted */
+        TransportJobAccepted: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+        };
+        /** TransportReport */
+        TransportReport: {
+            /**
+             * Columns
+             * @default []
+             */
+            columns: string[];
+            /** Kind */
+            kind: string;
+            /**
+             * Rows
+             * @default []
+             */
+            rows: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** TransportRequestCreate */
+        TransportRequestCreate: {
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /**
+             * Stop Id
+             * Format: uuid
+             */
+            stop_id: string;
+        };
+        /** TransportRequestDecision */
+        TransportRequestDecision: {
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "approve" | "reject";
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** TrendBatch */
         TrendBatch: {
             batch: components["schemas"]["BatchRef"];
@@ -47048,6 +48914,147 @@ export interface components {
             };
             /** Run At */
             run_at?: string | null;
+        };
+        /** TripBrief */
+        TripBrief: {
+            /** Direction */
+            direction: string;
+            /** Ended At */
+            ended_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Started At */
+            started_at?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** TripCancel */
+        TripCancel: {
+            /** Reason */
+            reason: string;
+        };
+        /** TripCreate */
+        TripCreate: {
+            /**
+             * Direction
+             * @default pickup
+             * @enum {string}
+             */
+            direction: "pickup" | "drop";
+            /** Driver Staff Id */
+            driver_staff_id?: string | null;
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /**
+             * Trip Date
+             * Format: date
+             */
+            trip_date: string;
+            /** Vehicle Id */
+            vehicle_id?: string | null;
+        };
+        /** TripEndRequest */
+        TripEndRequest: {
+            /** Odometer */
+            odometer?: number | null;
+        };
+        /** TripOut */
+        TripOut: {
+            /**
+             * Boarded
+             * @default 0
+             */
+            boarded: number;
+            /** Delay Minutes */
+            delay_minutes?: number | null;
+            /** Direction */
+            direction: string;
+            /** Driver Name */
+            driver_name?: string | null;
+            /** Driver Staff Id */
+            driver_staff_id?: string | null;
+            /** Ended At */
+            ended_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Km */
+            km?: number | null;
+            /**
+             * Manifest
+             * @default 0
+             */
+            manifest: number;
+            /** Next Stop */
+            next_stop?: string | null;
+            /**
+             * Progress Pct
+             * @default 0
+             */
+            progress_pct: number;
+            /** Route Code */
+            route_code?: string | null;
+            /**
+             * Route Id
+             * Format: uuid
+             */
+            route_id: string;
+            /** Started At */
+            started_at?: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Stops Done
+             * @default 0
+             */
+            stops_done: number;
+            /**
+             * Stops Total
+             * @default 0
+             */
+            stops_total: number;
+            /**
+             * Trip Date
+             * Format: date
+             */
+            trip_date: string;
+            /**
+             * Vehicle Id
+             * Format: uuid
+             */
+            vehicle_id: string;
+            /** Vehicle Registration */
+            vehicle_registration?: string | null;
+        };
+        /** TripScheduleRequest */
+        TripScheduleRequest: {
+            /**
+             * Date From
+             * Format: date
+             */
+            date_from: string;
+            /**
+             * Date To
+             * Format: date
+             */
+            date_to: string;
+            /** Route Ids */
+            route_ids?: string[] | null;
+        };
+        /** TripStartRequest */
+        TripStartRequest: {
+            /** Odometer */
+            odometer?: number | null;
+            /** Vehicle Id */
+            vehicle_id?: string | null;
         };
         /** UndertakingAccept */
         UndertakingAccept: {
@@ -47603,6 +49610,200 @@ export interface components {
             question_wise?: {
                 [key: string]: number | string;
             } | null;
+        };
+        /** VehicleFuelIn */
+        VehicleFuelIn: {
+            /** Cost Paise */
+            cost_paise: number;
+            /**
+             * Filled On
+             * Format: date
+             */
+            filled_on: string;
+            /** Litres */
+            litres: number;
+            /** Odometer */
+            odometer?: number | null;
+        };
+        /** VehicleFuelOut */
+        VehicleFuelOut: {
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /** Filled By */
+            filled_by?: string | null;
+            /**
+             * Filled On
+             * Format: date
+             */
+            filled_on: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Litres */
+            litres?: number | null;
+            /** Odometer */
+            odometer?: number | null;
+            /**
+             * Vehicle Id
+             * Format: uuid
+             */
+            vehicle_id: string;
+        };
+        /** VehicleIn */
+        VehicleIn: {
+            /** Capacity */
+            capacity?: number | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Driver Staff Id */
+            driver_staff_id?: string | null;
+            /** Fitness Expiry */
+            fitness_expiry?: string | null;
+            /** Insurance Expiry */
+            insurance_expiry?: string | null;
+            /** Make Model */
+            make_model?: string | null;
+            /** Permit Expiry */
+            permit_expiry?: string | null;
+            /** Puc Expiry */
+            puc_expiry?: string | null;
+            /** Registration No */
+            registration_no: string;
+            /**
+             * Vehicle Type
+             * @default bus
+             * @enum {string}
+             */
+            vehicle_type: "bus" | "minibus" | "van" | "car";
+            /** Year */
+            year?: number | null;
+        };
+        /** VehicleMaintenanceIn */
+        VehicleMaintenanceIn: {
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /** Maintenance Type */
+            maintenance_type?: string | null;
+            /** Next Due Date */
+            next_due_date?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /** Odometer */
+            odometer?: number | null;
+            /**
+             * Service Date
+             * Format: date
+             */
+            service_date: string;
+            /** Vendor */
+            vendor?: string | null;
+        };
+        /** VehicleMaintenanceOut */
+        VehicleMaintenanceOut: {
+            /** Cost Paise */
+            cost_paise?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Maintenance Type */
+            maintenance_type?: string | null;
+            /** Next Due Date */
+            next_due_date?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /** Odometer */
+            odometer?: number | null;
+            /**
+             * Service Date
+             * Format: date
+             */
+            service_date: string;
+            /**
+             * Vehicle Id
+             * Format: uuid
+             */
+            vehicle_id: string;
+            /** Vendor */
+            vendor?: string | null;
+        };
+        /** VehicleOut */
+        VehicleOut: {
+            /** Capacity */
+            capacity?: number | null;
+            /**
+             * Chips
+             * @default []
+             */
+            chips: string[];
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Compliance
+             * @default []
+             */
+            compliance: components["schemas"]["ComplianceChip"][];
+            /** Driver Name */
+            driver_name?: string | null;
+            /** Driver Staff Id */
+            driver_staff_id?: string | null;
+            /** Fitness Expiry */
+            fitness_expiry?: string | null;
+            /** Gps Device Id */
+            gps_device_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Insurance Expiry */
+            insurance_expiry?: string | null;
+            /** Make Model */
+            make_model?: string | null;
+            /** Permit Expiry */
+            permit_expiry?: string | null;
+            /** Puc Expiry */
+            puc_expiry?: string | null;
+            /** Registration No */
+            registration_no: string;
+            /** Status */
+            status: string;
+            /** Vehicle Type */
+            vehicle_type: string;
+            /** Version */
+            version: number;
+            /** Year */
+            year?: number | null;
+        };
+        /** VehicleUpdate */
+        VehicleUpdate: {
+            /** Capacity */
+            capacity?: number | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Driver Staff Id */
+            driver_staff_id?: string | null;
+            /** Fitness Expiry */
+            fitness_expiry?: string | null;
+            /** Insurance Expiry */
+            insurance_expiry?: string | null;
+            /** Make Model */
+            make_model?: string | null;
+            /** Permit Expiry */
+            permit_expiry?: string | null;
+            /** Puc Expiry */
+            puc_expiry?: string | null;
+            /** Status */
+            status?: ("active" | "maintenance") | null;
+            /** Vehicle Type */
+            vehicle_type?: ("bus" | "minibus" | "van" | "car") | null;
+            /** Version */
+            version?: number | null;
+            /** Year */
+            year?: number | null;
         };
         /** VerifyRequest */
         VerifyRequest: {
@@ -84650,6 +86851,1730 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocations_api_v1_transport_allocations_get: {
+        parameters: {
+            query?: {
+                route_id?: string | null;
+                status?: string | null;
+                person_type?: string | null;
+                department_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AllocationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocate_api_v1_transport_allocations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllocationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocate_bulk_api_v1_transport_allocations_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllocationBulk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TransportJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocation_change_api_v1_transport_allocations__id__change_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllocationChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocation_status_api_v1_transport_allocations__id___action__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                action: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AllocationAction"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    driver_trips_api_v1_transport_driver_trips_get: {
+        parameters: {
+            query?: {
+                date?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TripOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    devices_api_v1_transport_gps_devices_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GpsDeviceOut__"];
+                };
+            };
+        };
+    };
+    device_create_api_v1_transport_gps_devices_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GpsDeviceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GpsDeviceOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    device_delete_api_v1_transport_gps_devices__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    device_rotate_api_v1_transport_gps_devices__id__rotate_token_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GpsDeviceOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gps_device_ingest_api_v1_transport_gps_device_ingest_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-Device-Token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GpsBatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GpsIngestResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gps_ingest_api_v1_transport_gps_ingest_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GpsBatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GpsIngestResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    live_api_v1_transport_live_get: {
+        parameters: {
+            query?: {
+                route_id?: string | null;
+                vehicle_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LiveVehicle__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    me_api_v1_transport_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MyTransportResponse_"];
+                };
+            };
+        };
+    };
+    me_request_api_v1_transport_me_request_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransportRequestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    me_requests_api_v1_transport_me_requests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AllocationResponse__"];
+                };
+            };
+        };
+    };
+    report_api_v1_transport_reports__kind__get: {
+        parameters: {
+            query?: {
+                format?: string;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TransportReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_queue_api_v1_transport_requests_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AllocationResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_decide_api_v1_transport_requests__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransportRequestDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AllocationResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    routes_api_v1_transport_routes_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                active?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RouteOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    route_create_api_v1_transport_routes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RouteIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RouteOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    routes_public_api_v1_transport_routes_public_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PublicRouteOut__"];
+                };
+            };
+        };
+    };
+    route_get_api_v1_transport_routes__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RouteOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    route_update_api_v1_transport_routes__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RouteUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RouteOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    route_delete_api_v1_transport_routes__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    route_sheet_api_v1_transport_routes__id__sheet_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stops_api_v1_transport_routes__id__stops_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_StopOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stop_add_api_v1_transport_routes__id__stops_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StopIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StopOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stops_reorder_api_v1_transport_routes__id__stops_reorder_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StopsReorder"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_StopOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stats_api_v1_transport_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RouteStatsResponse_"];
+                };
+            };
+        };
+    };
+    stop_update_api_v1_transport_stops__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StopIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StopOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trips_api_v1_transport_trips_get: {
+        parameters: {
+            query?: {
+                date?: string | null;
+                route_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TripOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_create_api_v1_transport_trips_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TripCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TripOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trips_schedule_api_v1_transport_trips_schedule_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TripScheduleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TransportJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_get_api_v1_transport_trips__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TripOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_cancel_api_v1_transport_trips__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TripCancel"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TripOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_end_api_v1_transport_trips__id__end_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TripEndRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TripOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_manifest_api_v1_transport_trips__id__manifest_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ManifestResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_scan_api_v1_transport_trips__id__passenger_scan_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PassengerScanRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PassengerScanResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_start_api_v1_transport_trips__id__start_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TripStartRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TripOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_stop_event_api_v1_transport_trips__id__stop_event_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StopEventIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trip_trace_api_v1_transport_trips__id__trace_get: {
+        parameters: {
+            query?: {
+                format?: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TraceResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vehicles_api_v1_transport_vehicles_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_VehicleOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vehicle_create_api_v1_transport_vehicles_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VehicleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VehicleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    compliance_api_v1_transport_vehicles_compliance_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+        };
+    };
+    vehicle_get_api_v1_transport_vehicles__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VehicleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vehicle_update_api_v1_transport_vehicles__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VehicleUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VehicleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vehicle_delete_api_v1_transport_vehicles__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vehicle_costs_api_v1_transport_vehicles__id__costs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fuel_api_v1_transport_vehicles__id__fuel_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_VehicleFuelOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fuel_add_api_v1_transport_vehicles__id__fuel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VehicleFuelIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VehicleFuelOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    maintenance_api_v1_transport_vehicles__id__maintenance_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_VehicleMaintenanceOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    maintenance_add_api_v1_transport_vehicles__id__maintenance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VehicleMaintenanceIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VehicleMaintenanceOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    vehicle_retire_api_v1_transport_vehicles__id__retire_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VehicleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    wards_api_v1_transport_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MyTransportResponse__"];
                 };
             };
         };

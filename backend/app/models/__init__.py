@@ -10,8 +10,8 @@ from app.models import (  # noqa: F401
     attendance,
     communication,
     content,
-    degrees,
     curriculum,
+    degrees,
     exams,
     fees,
     hostel,
@@ -29,18 +29,19 @@ from app.models import (  # noqa: F401
     saas,
     students,
     timetable,
+    transport,
     valuation,
 )
 
 __all__ = [
     "academic",
+    "admissions",
     "assessment",
     "attendance",
-    "admissions",
     "communication",
     "content",
-    "degrees",
     "curriculum",
+    "degrees",
     "exams",
     "fees",
     "hostel",
@@ -58,5 +59,6 @@ __all__ = [
     "saas",
     "students",
     "timetable",
+    "transport",
     "valuation",
 ]

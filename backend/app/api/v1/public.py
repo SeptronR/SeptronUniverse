@@ -66,6 +66,8 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/opac/search",
     "GET /api/v1/opac/new-arrivals",
     "GET /api/v1/opac/books/{id}",
+    # Phase 21 — GPS device ingest (X-Device-Token = gps_devices.token_hash; {transport.gps_live} checked inside)
+    "POST /api/v1/transport/gps/device-ingest",
 }
 
 

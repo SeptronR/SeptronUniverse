@@ -88,6 +88,14 @@ register_beat("hostel.waitlist_promote", "beat.hostel.waitlist_promote", crontab
 register_beat("mess.bill_run", "beat.mess.bill_run", crontab(day_of_month=1, hour=21, minute=0))  # 1st 02:30 IST
 register_beat("hostel.leave_reminders", "beat.hostel.leave_reminders", crontab(minute="*/30"))
 
+# ---- Phase 21 transport (app/tasks/transport.py) ---------------------------------------------------------------------------
+register_beat("transport.document_expiry_scan", "beat.transport.document_expiry_scan", crontab(hour=1, minute=15))  # 06:45 IST
+register_beat("transport.gps_partition_maintenance", "beat.transport.gps_partition_maintenance", crontab(day_of_month=25, hour=21, minute=30))
+register_beat("transport.trip_autoclose", "beat.transport.trip_autoclose", crontab(hour=18, minute=50))  # 00:20 IST
+register_beat("transport.fee_suspension", "beat.transport.fee_suspension", crontab(hour=19, minute=5))  # 00:35 IST
+register_beat("transport.live_cache_cleanup", "beat.transport.live_cache_cleanup", crontab(minute=12))
+register_beat("transport.schedule_ahead", "beat.transport.schedule_ahead", crontab(hour=19, minute=20))  # 00:50 IST
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

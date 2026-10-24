@@ -35,6 +35,7 @@ CATEGORIES = (
     "exams",
     "hostel",
     "library",
+    "transport",
     "placement",
     "mentoring",
     "grievances",
@@ -1096,6 +1097,119 @@ HOSTEL_EVENTS: tuple[EventDef, ...] = (
         ("in_app",),
     ),
 )
+# Phase 21 — transport allocations, trips, live alerts, fleet compliance
+TRANSPORT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "transport.allocated",
+        "transport",
+        "Transport allocated",
+        "Transport: {{ route }}",
+        "You are allocated route {{ route }}, stop {{ stop }} (fee Rs {{ fee }}).",
+        ("route", "stop", "fee"),
+        ("in_app", "push", "email"),
+        link="/student/transport",
+    ),
+    EventDef(
+        "transport.bus_approaching",
+        "transport",
+        "Bus approaching",
+        "Bus near {{ stop }}",
+        "Your bus will reach {{ stop }} in about {{ minutes }} min.",
+        ("stop", "minutes"),
+        ("in_app", "push"),
+        link="/student/transport",
+    ),
+    EventDef(
+        "transport.boarded",
+        "transport",
+        "Boarded the bus",
+        "{{ student }} boarded",
+        "{{ student }} boarded the college bus at {{ at }}.",
+        ("student", "at"),
+        ("in_app", "push"),
+        link="/parent/transport",
+    ),
+    EventDef(
+        "transport.alighted",
+        "transport",
+        "Left the bus",
+        "{{ student }} alighted",
+        "{{ student }} got off the college bus at {{ at }}.",
+        ("student", "at"),
+        ("in_app", "push"),
+        link="/parent/transport",
+    ),
+    EventDef(
+        "transport.trip_delayed",
+        "transport",
+        "Bus delayed",
+        "Bus delayed — {{ route }}",
+        "The {{ route }} bus is running about {{ minutes }} min late.",
+        ("route", "minutes"),
+        ("in_app", "push"),
+        link="/student/transport",
+    ),
+    EventDef(
+        "transport.trip_cancelled",
+        "transport",
+        "Trip cancelled",
+        "No bus — {{ route }}",
+        "The {{ direction }} trip of {{ route }} on {{ date }} is cancelled: {{ reason }}.",
+        ("route", "direction", "date", "reason"),
+        ("in_app", "push", "sms"),
+        link="/student/transport",
+    ),
+    EventDef(
+        "transport.document_expiring",
+        "transport",
+        "Vehicle document expiring",
+        "{{ vehicle }}: {{ document }} expires",
+        "The {{ document }} of {{ vehicle }} expires in {{ days }} day(s).",
+        ("vehicle", "document", "days"),
+        ("in_app", "email"),
+        link="/admin/transport/fleet",
+    ),
+    EventDef(
+        "transport.route_changed",
+        "transport",
+        "Route changed",
+        "Route {{ route }} changed",
+        "Route {{ route }} has changed ({{ change }}). Check your stop and times.",
+        ("route", "change"),
+        ("in_app", "push"),
+        link="/student/transport",
+    ),
+    EventDef(
+        "transport.route_deviation",
+        "transport",
+        "Route deviation",
+        "Bus off route",
+        "A bus is about {{ metres }} m off its route (trip {{ trip_id }}).",
+        ("trip_id", "metres"),
+        ("in_app", "push"),
+        link="/admin/transport/live",
+    ),
+    EventDef(
+        "transport.suspended",
+        "transport",
+        "Transport suspended",
+        "Transport suspended",
+        "Your transport allocation is suspended ({{ reason }}).",
+        ("reason",),
+        ("in_app", "email"),
+        link="/student/transport",
+    ),
+    EventDef(
+        "transport.request_decided",
+        "transport",
+        "Transport request",
+        "Transport request {{ decision }}",
+        "Your transport request is {{ decision }}. {{ remarks }}",
+        ("decision", "remarks"),
+        ("in_app",),
+        link="/student/transport",
+    ),
+)
 # Phase 19 — library circulation, reservations, fines, e-resources
 LIBRARY_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1241,6 +1355,7 @@ EVENTS = (
     + DEGREE_EVENTS
     + LIBRARY_EVENTS
     + HOSTEL_EVENTS
+    + TRANSPORT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

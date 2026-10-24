@@ -86,6 +86,7 @@ from app.api.v1.endpoints import (
     staff_attendance,
     students,
     timetable,
+    transport,
     verify,
     workflow,
     workload,
@@ -157,6 +158,9 @@ api_router.include_router(library.router)
 api_router.include_router(library.public_router)
 # Phase 20: hostel, mess, leaves & gate, staff quarters (each route carries its hostel.* feature)
 api_router.include_router(hostel.router)
+# Phase 21: transport (each route carries its transport.* feature) and the GPS device ingest (device token)
+api_router.include_router(transport.router)
+api_router.include_router(transport.public_router)  # X-Device-Token; checks {transport.gps_live} itself
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

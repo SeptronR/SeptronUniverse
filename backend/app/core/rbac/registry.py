@@ -477,6 +477,8 @@ STAFF_SELF: set[str] = (
     | P("payroll", "self")
     | P("attendance", "staff_self")
     | P("hr", "view")
+    # Phase 21: staff passengers read their own transport allocation
+    | P("transport", "view")
     # Phase 06: staff request encashment of their own encashable leave (gated by {hr.leave_encashment})
     | P("leaves", "encash")
     | P("calendar", "view")
@@ -690,6 +692,10 @@ HOD_LIBRARY: set[str] = P("library", "view_all")
 REGISTRAR_HOSTEL: set[str] = P("hostel", "manage")
 HOD_HOSTEL: set[str] = P("hostel", "view_all")
 ADVISOR_HOSTEL: set[str] = P("hostel", "view")
+# Phase 21 (Prompts/21 visibility): HODs read their department's transport allocations (view_all, department);
+# staff passengers read their own (transport:view added to STAFF_SELF)
+HOD_TRANSPORT: set[str] = P("transport", "view_all")
+STAFF_TRANSPORT: set[str] = P("transport", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -828,7 +834,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_RESULTS
     | HOD_DEGREES
     | HOD_LIBRARY
-    | HOD_HOSTEL,
+    | HOD_HOSTEL
+    | HOD_TRANSPORT,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -1069,6 +1076,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0021": frozenset(HOD_TRANSPORT | STAFF_TRANSPORT),
     "0020": frozenset(REGISTRAR_HOSTEL | HOD_HOSTEL | ADVISOR_HOSTEL),
     "0019": frozenset(PARENT_LIBRARY | HOD_LIBRARY),
     "0018": frozenset(SELF_DEGREES | REGISTRAR_DEGREES | HOD_DEGREES),

@@ -158,6 +158,18 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("hostel", "girls_guardian_visitors_only", "bool", False, label="Girls hostels: guardian visitors only"),
     SettingDef("hostel", "priority_weights", "json", None, label="Allotment priority weights"),
     SettingDef("hostel", "application_window", "json", None, label="Application window per academic year"),
+    # transport (Phase 21)
+    SettingDef("transport", "trip_schedule", "json", {"pickup": "07:00", "drop": "16:30"}, label="Default trip times"),
+    SettingDef("transport", "gps_ping_interval_s", "int", 15, label="GPS ping interval (s)", min=5, max=300),
+    SettingDef("transport", "eta_notify_minutes", "int", 5, label="Bus-approaching alert (minutes before)", min=1, max=60),
+    SettingDef("transport", "expiry_alert_days", "int", 30, label="Vehicle document alert (days before)", min=1, max=180),
+    SettingDef("transport", "capacity_hard_limit", "bool", True, label="Refuse allocations beyond vehicle capacity"),
+    SettingDef("transport", "block_expired_vehicles", "bool", True, label="Block vehicles with expired insurance / fitness / permit"),
+    SettingDef("transport", "self_service_requests", "bool", True, label="Students / staff may request allocations"),
+    SettingDef("transport", "prorata_change", "bool", True, label="Invoice the pro-rata difference on a route change"),
+    SettingDef("transport", "fee_grace_days", "int", 15, label="Days after the due date before suspension", min=0, max=120),
+    SettingDef("transport", "notify_boarding", "bool", True, label="Notify guardians on boarding / alighting"),
+    SettingDef("transport", "working_days", "json", [0, 1, 2, 3, 4, 5], label="Trip days (Mon=0)"),
     # communication
     SettingDef("communication", "sms_sender_id", "str", None),
     SettingDef("communication", "dlt_entity_id", "str", None),
@@ -341,6 +353,8 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     # Phase 19 — library accession numbers and member codes
     SequenceTemplate("lib:acc", "ACC{seq:6}", 6, "never", "Library accession number"),
     SequenceTemplate("lib:member", "LM{yy}{seq:5}", 5, "yearly", "Library member code"),
+    # Phase 21 — trip numbers (no monthly reset policy exists: yearly)
+    SequenceTemplate("trip", "TRP{yyyy}{seq:6}", 6, "yearly", "Transport trip number"),
 )
 
 

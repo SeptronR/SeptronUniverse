@@ -53,6 +53,16 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 16 — revaluation, malpractice, transcripts (students), reval queue (COE / exam cell)
+  static const myReval = '/app/exams/reval';
+  static const myMalpractice = '/app/exams/malpractice';
+  static const myTranscripts = '/app/transcripts';
+  static const revalQueue = '/app/exams/reval-queue';
+  // Phase 21 — transport: driver trips, my / ward transport, fleet status (transport manager)
+  static const driverTrips = '/app/transport/driver';
+  static const myTransport = '/app/transport';
+  static const wardTransport = '/app/transport/ward';
+  static const fleetStatus = '/app/transport/fleet';
   // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call (warden, gate staff)
   static const myHostel = '/app/hostel';
   static const wardHostel = '/app/hostel/ward';

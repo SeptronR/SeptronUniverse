@@ -173,6 +173,31 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 16 — post-result services (web screens owed since Phase 16)
+const RevaluationAdminPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.RevaluationAdminPage })));
+const MalpracticeAdminPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.MalpracticeAdminPage })));
+const WithheldPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.WithheldPage })));
+const SupplementaryPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.SupplementaryPage })));
+const TranscriptsAdminPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.TranscriptsAdminPage })));
+const RankMedalsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.RankMedalsPage })));
+const CorrectionsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.CorrectionsPage })));
+const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.DetainedPage })));
+const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
+const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
+const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 21 — transport
+const FleetPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.FleetPage })));
+const RoutesPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.RoutesPage })));
+const TransportAllocationsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.AllocationsPage })));
+const TripsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.TripsPage })));
+const LiveMapPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.LiveMapPage })));
+const GpsDevicesPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.DevicesPage })));
+const TransportReportsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.TransportReportsPage })));
+const TransportSettingsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.TransportSettingsPage })));
+const MyTransportPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.MyTransportPage })));
+const ParentTransportPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.ParentTransportPage })));
+const StaffTransportPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.StaffTransportPage })));
+const DriverPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.DriverPage })));
 // Phase 20 — hostel, mess, staff quarters
 const HostelsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.HostelsPage })));
 const HostelApplicationsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ApplicationsPage })));
@@ -475,6 +500,26 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 16 — post-result services
+              ['/admin/exams/revaluation', 'results.revaluation', 'exams', 'reval', [['exams', 'view_all'], ['exams', 'manage']], <RevaluationAdminPage key="pr1" />],
+              ['/admin/exams/malpractice', 'results.malpractice', 'exams', 'malpractice', [['exams', 'view_all'], ['exams', 'manage']], <MalpracticeAdminPage key="pr2" />],
+              ['/admin/exams/supplementary', 'results.supplementary', 'exams', 'manage', [], <SupplementaryPage key="pr3" />],
+              ['/admin/results/withheld', 'results.processing', 'results', 'approve', [['results', 'manage'], ['results', 'view_all']], <WithheldPage key="pr4" />],
+              ['/admin/results/transcripts', 'results.transcripts', 'results', 'transcript', [['results', 'manage']], <TranscriptsAdminPage key="pr5" />],
+              ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
+              ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
+              ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 21 — transport (narrowed by the services: college / driver-owned / all; department for HODs)
+              ['/admin/transport/fleet', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <FleetPage key="tf" />],
+              ['/admin/transport/routes', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <RoutesPage key="tr" />],
+              ['/admin/transport/allocations', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TransportAllocationsPage key="ta" />],
+              ['/admin/transport/trips', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TripsPage key="tt" />],
+              ['/admin/transport/live', 'transport.gps_live', 'transport', 'view_all', [['transport', 'manage']], <LiveMapPage key="tl" />],
+              ['/admin/transport/devices', 'transport.gps_live', 'transport', 'manage', [], <GpsDevicesPage key="td" />],
+              ['/admin/transport/reports', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TransportReportsPage key="tz" />],
+              ['/admin/transport/settings', 'transport.core', 'transport', 'manage', [], <TransportSettingsPage key="ts" />],
+              ['/staff/transport', 'transport.core', 'transport', 'view', [['transport', 'manage']], <StaffTransportPage key="tsm" />],
+              ['/driver', 'transport.core', 'transport', 'driver', [['transport', 'manage']], <DriverPage key="tdr" />],
               // Phase 20 — hostel (narrowed by the services: warden-owned hostels / college / all; department for HODs)
               ['/admin/hostel/hostels', 'hostel.core', 'hostel', 'view_all', [['hostel', 'manage'], ['hostel', 'warden']], <HostelsPage key="hh" />],
               ['/admin/hostel/applications', 'hostel.core', 'hostel', 'allot', [['hostel', 'view_all'], ['hostel', 'warden']], <HostelApplicationsPage key="ha" />],
@@ -677,6 +722,10 @@ export const router = createBrowserRouter([
               ['degree', <FeatureRoute key="dg" feature="degrees.eligibility"><StudentDegreePage /></FeatureRoute>],
               ['library', <FeatureRoute key="lb" feature="library.core"><MyLibraryPage /></FeatureRoute>],
               ['hostel', <FeatureRoute key="hs" feature="hostel.core"><StudentHostelPage /></FeatureRoute>],
+              ['exams/reval', <FeatureRoute key="srv" feature="results.revaluation"><StudentRevalPage /></FeatureRoute>],
+              ['exams/malpractice', <FeatureRoute key="smp" feature="results.malpractice"><StudentMalpracticePage /></FeatureRoute>],
+              ['transcripts', <FeatureRoute key="str" feature="results.transcripts"><StudentTranscriptsPage /></FeatureRoute>],
+              ['transport', <FeatureRoute key="tp" feature="transport.core"><MyTransportPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -693,6 +742,7 @@ export const router = createBrowserRouter([
           { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
           { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
           { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
+          { path: 'transport', element: page(<FeatureRoute feature="transport.core"><ParentTransportPage /></FeatureRoute>) },
         ],
       },
       {
