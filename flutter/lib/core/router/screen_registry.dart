@@ -12,6 +12,7 @@ import '../../features/fees/fees_screens.dart';
 import '../../features/assessment/assessment_screens.dart';
 import '../../features/exams/exam_screens.dart';
 import '../../features/results/result_screens.dart';
+import '../../features/obe/obe_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -293,6 +294,28 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 17 — attainment (faculty), attainment dashboard (HOD / IQAC), CQI actions
+    AppRoutes.attainment: ScreenEntry(
+      route: AppRoutes.attainment,
+      titleKey: 'attainment',
+      feature: 'obe.attainment',
+      permission: 'obe:compute',
+      builder: (_, __) => const AttainmentOfferingsScreen(),
+    ),
+    AppRoutes.attainmentDashboard: ScreenEntry(
+      route: AppRoutes.attainmentDashboard,
+      titleKey: 'attainment_dashboard',
+      feature: 'obe.attainment',
+      permission: 'obe:view',
+      builder: (_, __) => const AttainmentDashboardScreen(),
+    ),
+    AppRoutes.cqiActions: ScreenEntry(
+      route: AppRoutes.cqiActions,
+      titleKey: 'cqi_actions',
+      feature: 'obe.cqi',
+      permission: 'obe:view',
+      builder: (_, __) => const CqiActionsScreen(),
     ),
     // Phase 15 — results (students), evaluation (evaluators), result runs (COE / exam cell)
     AppRoutes.myResults: ScreenEntry(

@@ -42,8 +42,13 @@ def strip_comments(sql: str) -> str:
 
 
 def split_top_level(body: str) -> list[str]:
-    parts, depth, buf = [], 0, []
+    parts, depth, buf, quoted = [], 0, [], False
     for ch in body:
+        if ch == "'":
+            quoted = not quoted  # string literals (JSONB defaults) may hold commas
+        if quoted:
+            buf.append(ch)
+            continue
         if ch == "(":
             depth += 1
         elif ch == ")":

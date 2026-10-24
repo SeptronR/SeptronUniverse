@@ -47,6 +47,7 @@ DEMO_USERS: list[tuple[str, str, str, str, str, int | None]] = [
     ("gate.h1", "Hostel Gate Staff (H1)", "hostel_gate_staff", "self", "staff", None),
     ("librarian", "Librarian", "librarian", "institution", "staff", None),
     ("iqac", "IQAC Coordinator", "iqac_coordinator", "institution", "staff", None),
+    ("obe", "OBE Coordinator", "obe_coordinator", "institution", "staff", None),
     ("college.admin.b", "College Admin (B)", "college_admin", "college:B", "staff", None),
     ("student.1", "Student One", "student", "self", "student", None),
     ("parent.1", "Parent One", "parent", "self", "guardian", None),

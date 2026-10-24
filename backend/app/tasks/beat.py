@@ -65,6 +65,10 @@ register_beat("malpractice.hearing_reminders", "beat.malpractice.hearing_reminde
 register_beat("withheld.auto_release", "beat.withheld.auto_release", crontab(minute=23))
 register_beat("transcripts.reminders", "beat.transcripts.reminders", crontab(hour=4, minute=0))  # 09:30 IST
 
+# ---- Phase 17 OBE attainment (app/tasks/obe.py) --------------------------------------------------------------------------------
+register_beat("cqi.due_reminders", "beat.cqi.due_reminders", crontab(day_of_week=1, hour=3, minute=20))  # Mon 08:50 IST
+register_beat("obe.coverage_digest", "beat.obe.coverage_digest", crontab(day_of_month=1, hour=3, minute=40))  # 1st 09:10
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

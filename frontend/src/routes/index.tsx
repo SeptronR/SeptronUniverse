@@ -173,6 +173,14 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 17 — OBE attainment, CQI, NBA export
+const ObeConfigPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.ObeConfigPage })));
+const OfferingAttainmentPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.OfferingAttainmentPage })));
+const ProgramAttainmentPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.ProgramAttainmentPage })));
+const AttainmentTrendPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.AttainmentTrendPage })));
+const CqiBoardPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.CqiBoardPage })));
+const NbaExportPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.NbaExportPage })));
+const StudentOutcomesPage = lazy(() => import('@/features/obe/pages/ObePages').then((m) => ({ default: m.StudentOutcomesPage })));
 // Phase 14 — exam administration
 const ExamSessionsPage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionsPage })));
 const ExamSessionWorkspacePage = lazy(() => import('@/features/exams/pages/ExamPages').then((m) => ({ default: m.ExamSessionWorkspacePage })));
@@ -427,6 +435,13 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 17 — OBE attainment (narrowed by the services: own offerings / units / institution)
+              ['/admin/obe/config', 'obe.attainment', 'obe', 'configure', [['obe', 'view'], ['obe', 'view_all'], ['obe', 'manage']], <ObeConfigPage key="oc" />],
+              ['/admin/obe/program-attainment', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage']], <ProgramAttainmentPage key="op" />],
+              ['/admin/obe/offerings/:id/attainment', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage'], ['obe', 'compute']], <OfferingAttainmentPage key="oo" />],
+              ['/admin/obe/trend', 'obe.attainment', 'obe', 'view', [['obe', 'view_all'], ['obe', 'manage']], <AttainmentTrendPage key="ot" />],
+              ['/admin/obe/cqi', 'obe.cqi', 'obe', 'manage', [['obe', 'view'], ['obe', 'view_all']], <CqiBoardPage key="oq" />],
+              ['/admin/obe/exports', 'obe.nba_export', 'obe', 'export', [], <NbaExportPage key="ox" />],
               // Phase 15 — result registers, analysis, rank lists, legacy import
               ['/admin/results/tabulation', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <TabulationPage key="rt" />],
               ['/admin/results/analysis', 'results.rank_lists', 'results', 'view_all', [['results', 'manage']], <ResultAnalysisPage key="ra" />],
@@ -587,6 +602,7 @@ export const router = createBrowserRouter([
               ['exams', <StudentExamsPage key="ex" />],
               ['results', <StudentResultsPage key="res" />],
               ['courses/:offeringId', <StudentCoursePage key="sc" />],
+              ['courses/:offeringId/outcomes', <FeatureRoute key="so" feature="obe.attainment"><StudentOutcomesPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -613,6 +629,8 @@ export const router = createBrowserRouter([
           // Phase 15 — evaluator portal (dummy numbers only) and the offering result sheet
           { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
           { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
+          // Phase 17 — CO attainment of an own offering
+          { path: 'offerings/:id/attainment', element: page(<FeatureRoute feature="obe.attainment"><OfferingAttainmentPage /></FeatureRoute>) },
           // Phase 14 — exam duties and question-paper setting
           { path: 'duties', element: page(<FeatureRoute feature="exams.invigilation"><MyDutiesPage /></FeatureRoute>) },
           { path: 'qp', element: page(<FeatureRoute feature="exams.qp_management"><MyQpPage /></FeatureRoute>) },

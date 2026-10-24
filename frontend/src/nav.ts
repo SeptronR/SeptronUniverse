@@ -217,6 +217,12 @@ export const NAV_GROUPS: NavGroup[] = [
     items: [
       // Phase 13 — OBE definitions
       { label: 'OBE definitions', to: '/admin/obe/programs', icon: ScrollText, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.definitions' },
+      // Phase 17 — OBE attainment, trend, config, CQI, NBA export
+      { label: 'OBE attainment', to: '/admin/obe/program-attainment', icon: TrendingUp, module: 'obe', action: 'view', altActions: ['view_all', 'manage'], feature: 'obe.attainment' },
+      { label: 'Attainment trend', to: '/admin/obe/trend', icon: TrendingUp, module: 'obe', action: 'view', altActions: ['view_all', 'manage'], feature: 'obe.attainment' },
+      { label: 'Attainment config', to: '/admin/obe/config', icon: Settings, module: 'obe', action: 'configure', feature: 'obe.attainment' },
+      { label: 'CQI actions', to: '/admin/obe/cqi', icon: ClipboardCheck, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.cqi' },
+      { label: 'NBA export', to: '/admin/obe/exports', icon: ScrollText, module: 'obe', action: 'export', feature: 'obe.nba_export' },
     ],
   },
   {

@@ -53,6 +53,10 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 17 — OBE attainment (faculty), dashboard (HOD / IQAC), CQI actions
+  static const attainment = '/app/attainment';
+  static const attainmentDashboard = '/app/attainment/dashboard';
+  static const cqiActions = '/app/cqi';
   // Phase 15 — results, evaluation, result runs
   static const myResults = '/app/results';
   static const evaluation = '/app/evaluation';

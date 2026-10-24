@@ -5127,6 +5127,254 @@
         "title": "AssignmentOut",
         "type": "object"
       },
+      "AttainmentConfigIn": {
+        "additionalProperties": false,
+        "properties": {
+          "cia_weight_in_direct": {
+            "default": 30,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Cia Weight In Direct",
+            "type": "integer"
+          },
+          "co_target_level": {
+            "default": 2.0,
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Co Target Level",
+            "type": "number"
+          },
+          "credit_weighted_po": {
+            "default": false,
+            "title": "Credit Weighted Po",
+            "type": "boolean"
+          },
+          "direct_weight": {
+            "default": 80,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Direct Weight",
+            "type": "integer"
+          },
+          "ese_apportion_strategy": {
+            "default": "question_wise",
+            "enum": [
+              "question_wise",
+              "qp_pattern",
+              "uniform"
+            ],
+            "title": "Ese Apportion Strategy",
+            "type": "string"
+          },
+          "ese_weight_in_direct": {
+            "default": 70,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Ese Weight In Direct",
+            "type": "integer"
+          },
+          "indirect_weight": {
+            "default": 20,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Indirect Weight",
+            "type": "integer"
+          },
+          "levels": {
+            "items": {
+              "$ref": "#/components/schemas/LevelBand"
+            },
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Levels",
+            "type": "array"
+          },
+          "po_target_level": {
+            "default": 2.0,
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Po Target Level",
+            "type": "number"
+          },
+          "scope_id": {
+            "format": "uuid",
+            "title": "Scope Id",
+            "type": "string"
+          },
+          "scope_type": {
+            "enum": [
+              "regulation",
+              "program"
+            ],
+            "title": "Scope Type",
+            "type": "string"
+          },
+          "survey_thresholds": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SurveyThreshold"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Survey Thresholds"
+          },
+          "target_marks_pct": {
+            "default": 60,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Target Marks Pct",
+            "type": "number"
+          },
+          "target_student_pct": {
+            "default": 60,
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Target Student Pct",
+            "type": "number"
+          }
+        },
+        "required": [
+          "scope_type",
+          "scope_id",
+          "levels"
+        ],
+        "title": "AttainmentConfigIn",
+        "type": "object"
+      },
+      "AttainmentConfigOut": {
+        "properties": {
+          "cia_weight_in_direct": {
+            "title": "Cia Weight In Direct",
+            "type": "integer"
+          },
+          "co_target_level": {
+            "title": "Co Target Level",
+            "type": "number"
+          },
+          "credit_weighted_po": {
+            "title": "Credit Weighted Po",
+            "type": "boolean"
+          },
+          "direct_weight": {
+            "title": "Direct Weight",
+            "type": "integer"
+          },
+          "ese_apportion_strategy": {
+            "title": "Ese Apportion Strategy",
+            "type": "string"
+          },
+          "ese_weight_in_direct": {
+            "title": "Ese Weight In Direct",
+            "type": "integer"
+          },
+          "history": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "History",
+            "type": "array"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "indirect_weight": {
+            "title": "Indirect Weight",
+            "type": "integer"
+          },
+          "levels": {
+            "items": {
+              "$ref": "#/components/schemas/LevelBand"
+            },
+            "title": "Levels",
+            "type": "array"
+          },
+          "po_target_level": {
+            "title": "Po Target Level",
+            "type": "number"
+          },
+          "scope_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Id"
+          },
+          "scope_type": {
+            "title": "Scope Type",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "survey_thresholds": {
+            "items": {
+              "$ref": "#/components/schemas/SurveyThreshold"
+            },
+            "title": "Survey Thresholds",
+            "type": "array"
+          },
+          "target_marks_pct": {
+            "title": "Target Marks Pct",
+            "type": "number"
+          },
+          "target_student_pct": {
+            "title": "Target Student Pct",
+            "type": "number"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "required": [
+          "scope_type",
+          "source",
+          "target_student_pct",
+          "target_marks_pct",
+          "levels",
+          "direct_weight",
+          "indirect_weight",
+          "cia_weight_in_direct",
+          "ese_weight_in_direct",
+          "co_target_level",
+          "po_target_level",
+          "ese_apportion_strategy",
+          "credit_weighted_po",
+          "survey_thresholds"
+        ],
+        "title": "AttainmentConfigOut",
+        "type": "object"
+      },
       "AttemptOut": {
         "properties": {
           "answers": {
@@ -6340,6 +6588,42 @@
         "title": "BatchCreate",
         "type": "object"
       },
+      "BatchRef": {
+        "properties": {
+          "admission_year": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Admission Year"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "BatchRef",
+        "type": "object"
+      },
       "BatchResponse": {
         "properties": {
           "admission_year": {
@@ -6864,6 +7148,20 @@
           "file"
         ],
         "title": "Body_condonation_document_api_v1_condonations__id__documents_post",
+        "type": "object"
+      },
+      "Body_cqi_evidence_api_v1_cqi_actions__id__evidence_post": {
+        "properties": {
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_cqi_evidence_api_v1_cqi_actions__id__evidence_post",
         "type": "object"
       },
       "Body_import_applicants_api_v1_admissions_applicants_import_post": {
@@ -9604,6 +9902,46 @@
         "title": "ClassSessionResponse",
         "type": "object"
       },
+      "CoAttainmentResponse": {
+        "properties": {
+          "cos": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CoRow"
+            },
+            "title": "Cos",
+            "type": "array"
+          },
+          "offering": {
+            "$ref": "#/components/schemas/OfferingRef"
+          },
+          "prerequisites": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Prerequisites"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "run": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "offering"
+        ],
+        "title": "CoAttainmentResponse",
+        "type": "object"
+      },
       "CoIn": {
         "properties": {
           "bloom_level": {
@@ -9725,6 +10063,56 @@
         "title": "CoPoCell",
         "type": "object"
       },
+      "CoPoHeatmap": {
+        "properties": {
+          "cells": {
+            "items": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "title": "Cells",
+            "type": "array"
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Columns",
+            "type": "array"
+          },
+          "row_ids": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Row Ids",
+            "type": "array"
+          },
+          "rows": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "rows",
+          "columns",
+          "cells"
+        ],
+        "title": "CoPoHeatmap",
+        "type": "object"
+      },
       "CoPoMatrixReplace": {
         "properties": {
           "cells": {
@@ -9755,6 +10143,179 @@
           "outcomes"
         ],
         "title": "CoReplace",
+        "type": "object"
+      },
+      "CoRow": {
+        "properties": {
+          "breakdown": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Breakdown",
+            "type": "array"
+          },
+          "cia_level": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cia Level"
+          },
+          "co": {
+            "title": "Co",
+            "type": "string"
+          },
+          "co_id": {
+            "format": "uuid",
+            "title": "Co Id",
+            "type": "string"
+          },
+          "direct_level": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direct Level"
+          },
+          "direct_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direct Pct"
+          },
+          "ese_level": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ese Level"
+          },
+          "final_level": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Level"
+          },
+          "gap": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap"
+          },
+          "indirect_level": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indirect Level"
+          },
+          "statement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Statement"
+          },
+          "students_above_target": {
+            "title": "Students Above Target",
+            "type": "integer"
+          },
+          "students_assessed": {
+            "title": "Students Assessed",
+            "type": "integer"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          }
+        },
+        "required": [
+          "co_id",
+          "co",
+          "students_assessed",
+          "students_above_target"
+        ],
+        "title": "CoRow",
+        "type": "object"
+      },
+      "CoRunRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "include_indirect": {
+            "default": true,
+            "title": "Include Indirect",
+            "type": "boolean"
+          },
+          "offering_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Offering Id"
+          },
+          "survey_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Survey Id"
+          }
+        },
+        "title": "CoRunRequest",
         "type": "object"
       },
       "CodeBundleResponse": {
@@ -12782,6 +13343,374 @@
         "title": "CourseUpdate",
         "type": "object"
       },
+      "CqiActionIn": {
+        "additionalProperties": false,
+        "properties": {
+          "action_text": {
+            "maxLength": 4000,
+            "minLength": 3,
+            "title": "Action Text",
+            "type": "string"
+          },
+          "due_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due On"
+          },
+          "gap": {
+            "anyOf": [
+              {
+                "maximum": 3.0,
+                "minimum": -3.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap"
+          },
+          "outcome_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome Id"
+          },
+          "owner_staff_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Staff Id"
+          },
+          "scope_id": {
+            "format": "uuid",
+            "title": "Scope Id",
+            "type": "string"
+          },
+          "scope_type": {
+            "enum": [
+              "offering",
+              "course",
+              "program"
+            ],
+            "title": "Scope Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scope_type",
+          "scope_id",
+          "action_text"
+        ],
+        "title": "CqiActionIn",
+        "type": "object"
+      },
+      "CqiActionOut": {
+        "properties": {
+          "action_text": {
+            "title": "Action Text",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "due_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due On"
+          },
+          "evidence_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Url"
+          },
+          "gap": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap"
+          },
+          "gap_after": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap After"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome"
+          },
+          "outcome_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome Id"
+          },
+          "overdue": {
+            "default": false,
+            "title": "Overdue",
+            "type": "boolean"
+          },
+          "owner_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Name"
+          },
+          "owner_staff_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Staff Id"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "scope_id": {
+            "format": "uuid",
+            "title": "Scope Id",
+            "type": "string"
+          },
+          "scope_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope Label"
+          },
+          "scope_type": {
+            "title": "Scope Type",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "scope_type",
+          "scope_id",
+          "action_text",
+          "status",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "CqiActionOut",
+        "type": "object"
+      },
+      "CqiActionUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "action_text": {
+            "anyOf": [
+              {
+                "maxLength": 4000,
+                "minLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action Text"
+          },
+          "due_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due On"
+          },
+          "evidence_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Url"
+          },
+          "owner_staff_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Staff Id"
+          }
+        },
+        "title": "CqiActionUpdate",
+        "type": "object"
+      },
+      "CqiStatusChange": {
+        "additionalProperties": false,
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "evidence_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evidence Url"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "in_progress",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status"
+        ],
+        "title": "CqiStatusChange",
+        "type": "object"
+      },
+      "CqiVerify": {
+        "additionalProperties": false,
+        "properties": {
+          "approve": {
+            "default": true,
+            "title": "Approve",
+            "type": "boolean"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
+        },
+        "title": "CqiVerify",
+        "type": "object"
+      },
       "CredentialSheetRequest": {
         "properties": {
           "audience": {
@@ -14378,6 +15307,81 @@
           }
         },
         "title": "CycleUpdate",
+        "type": "object"
+      },
+      "DashboardResponse": {
+        "properties": {
+          "batch": {
+            "$ref": "#/components/schemas/BatchRef"
+          },
+          "coverage_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage Pct"
+          },
+          "cqi": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "default": {},
+            "title": "Cqi",
+            "type": "object"
+          },
+          "direct_vs_indirect": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Direct Vs Indirect",
+            "type": "array"
+          },
+          "gaps": {
+            "items": {
+              "$ref": "#/components/schemas/GapListRow"
+            },
+            "title": "Gaps",
+            "type": "array"
+          },
+          "heatmap": {
+            "$ref": "#/components/schemas/CoPoHeatmap"
+          },
+          "program": {
+            "$ref": "#/components/schemas/ProgramRef"
+          },
+          "radar": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Radar",
+            "type": "array"
+          },
+          "run": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "program",
+          "batch",
+          "radar",
+          "heatmap",
+          "gaps",
+          "direct_vs_indirect"
+        ],
+        "title": "DashboardResponse",
         "type": "object"
       },
       "DataSubjectRequestCreate": {
@@ -19179,6 +20183,43 @@
         "title": "Envelope[AssignmentOut]",
         "type": "object"
       },
+      "Envelope_AttainmentConfigOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AttainmentConfigOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AttainmentConfigOut]",
+        "type": "object"
+      },
       "Envelope_AttendanceDeviceOut_": {
         "properties": {
           "data": {
@@ -19771,6 +20812,80 @@
         "title": "Envelope[ClassSessionResponse]",
         "type": "object"
       },
+      "Envelope_CoAttainmentResponse_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CoAttainmentResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CoAttainmentResponse]",
+        "type": "object"
+      },
+      "Envelope_CoPoHeatmap_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CoPoHeatmap"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CoPoHeatmap]",
+        "type": "object"
+      },
       "Envelope_CodeBundleResponse_": {
         "properties": {
           "data": {
@@ -20178,6 +21293,43 @@
         "title": "Envelope[CourseResponse]",
         "type": "object"
       },
+      "Envelope_CqiActionOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CqiActionOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CqiActionOut]",
+        "type": "object"
+      },
       "Envelope_CredentialSheetResponse_": {
         "properties": {
           "data": {
@@ -20324,6 +21476,43 @@
           }
         },
         "title": "Envelope[CycleResponse]",
+        "type": "object"
+      },
+      "Envelope_DashboardResponse_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DashboardResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DashboardResponse]",
         "type": "object"
       },
       "Envelope_DataSubjectRequestResponse_": {
@@ -21251,6 +22440,43 @@
         "title": "Envelope[ExamSessionResponse]",
         "type": "object"
       },
+      "Envelope_ExportJob_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExportJob"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ExportJob]",
+        "type": "object"
+      },
       "Envelope_FacultyProfileOut_": {
         "properties": {
           "data": {
@@ -22026,6 +23252,43 @@
           }
         },
         "title": "Envelope[ImportResult]",
+        "type": "object"
+      },
+      "Envelope_IndirectSurveySummary_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IndirectSurveySummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[IndirectSurveySummary]",
         "type": "object"
       },
       "Envelope_InstallResponse_": {
@@ -24131,6 +25394,43 @@
         "title": "Envelope[PlatformInstitutionResponse]",
         "type": "object"
       },
+      "Envelope_PoAttainmentResponse_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PoAttainmentResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[PoAttainmentResponse]",
+        "type": "object"
+      },
       "Envelope_PostOut_": {
         "properties": {
           "data": {
@@ -24203,6 +25503,43 @@
           }
         },
         "title": "Envelope[PreferenceResponse]",
+        "type": "object"
+      },
+      "Envelope_ProgramAttainmentTrend_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProgramAttainmentTrend"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ProgramAttainmentTrend]",
         "type": "object"
       },
       "Envelope_ProgramOutcomes_": {
@@ -26203,43 +27540,6 @@
         "title": "Envelope[RulesEffectiveResponse]",
         "type": "object"
       },
-      "Envelope_RunResponse_": {
-        "properties": {
-          "data": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/RunResponse"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "message": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Message"
-          },
-          "meta": {
-            "additionalProperties": true,
-            "title": "Meta",
-            "type": "object"
-          },
-          "success": {
-            "default": true,
-            "title": "Success",
-            "type": "boolean"
-          }
-        },
-        "title": "Envelope[RunResponse]",
-        "type": "object"
-      },
       "Envelope_SalaryStructureOut_": {
         "properties": {
           "data": {
@@ -27052,6 +28352,43 @@
           }
         },
         "title": "Envelope[StructureValidationResponse]",
+        "type": "object"
+      },
+      "Envelope_StudentCoAchievement_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StudentCoAchievement"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[StudentCoAchievement]",
         "type": "object"
       },
       "Envelope_StudentCreateResult_": {
@@ -29158,6 +30495,47 @@
         "title": "Envelope[list[AssignmentOut]]",
         "type": "object"
       },
+      "Envelope_list_AttainmentConfigOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AttainmentConfigOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[AttainmentConfigOut]]",
+        "type": "object"
+      },
       "Envelope_list_AttemptOut__": {
         "properties": {
           "data": {
@@ -29935,6 +31313,47 @@
           }
         },
         "title": "Envelope[list[CourseResultResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_CqiActionOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/CqiActionOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[CqiActionOut]]",
         "type": "object"
       },
       "Envelope_list_CreditTransferResponse__": {
@@ -31206,6 +32625,47 @@
           }
         },
         "title": "Envelope[list[FineConfigOut]]",
+        "type": "object"
+      },
+      "Envelope_list_GapListRow__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/GapListRow"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[GapListRow]]",
         "type": "object"
       },
       "Envelope_list_GradeCardResponse__": {
@@ -33797,7 +35257,7 @@
             "anyOf": [
               {
                 "items": {
-                  "$ref": "#/components/schemas/RunResponse"
+                  "$ref": "#/components/schemas/app__schemas__results__RunResponse"
                 },
                 "type": "array"
               },
@@ -33830,6 +35290,47 @@
           }
         },
         "title": "Envelope[list[RunResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_RunSummary__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/RunSummary"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[RunSummary]]",
         "type": "object"
       },
       "Envelope_list_SalaryStructureOut__": {
@@ -34404,6 +35905,47 @@
           }
         },
         "title": "Envelope[list[StudentAttendanceSummary]]",
+        "type": "object"
+      },
+      "Envelope_list_StudentCoAchievement__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/StudentCoAchievement"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[StudentCoAchievement]]",
         "type": "object"
       },
       "Envelope_list_StudentHistoryRow__": {
@@ -37214,6 +38756,59 @@
         "title": "ExitRequest",
         "type": "object"
       },
+      "ExportJob": {
+        "properties": {
+          "file_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Url"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "progress": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id",
+          "status"
+        ],
+        "title": "ExportJob",
+        "type": "object"
+      },
       "ExternalEvaluator": {
         "additionalProperties": false,
         "properties": {
@@ -39822,6 +41417,96 @@
         "title": "Form16Data",
         "type": "object"
       },
+      "GapListRow": {
+        "properties": {
+          "co_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Co Id"
+          },
+          "final": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final"
+          },
+          "gap": {
+            "title": "Gap",
+            "type": "number"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "open_actions": {
+            "default": 0,
+            "title": "Open Actions",
+            "type": "integer"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "outcome_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcome Id"
+          },
+          "scope": {
+            "title": "Scope",
+            "type": "string"
+          },
+          "scope_id": {
+            "format": "uuid",
+            "title": "Scope Id",
+            "type": "string"
+          },
+          "suggested_action": {
+            "title": "Suggested Action",
+            "type": "string"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          }
+        },
+        "required": [
+          "scope",
+          "scope_id",
+          "label",
+          "outcome",
+          "gap",
+          "suggested_action"
+        ],
+        "title": "GapListRow",
+        "type": "object"
+      },
       "Gender": {
         "enum": [
           "M",
@@ -42119,6 +43804,49 @@
           "step_id"
         ],
         "title": "InboxItem",
+        "type": "object"
+      },
+      "IndirectSurveySummary": {
+        "properties": {
+          "levels": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "default": {},
+            "title": "Levels",
+            "type": "object"
+          },
+          "mean_by_co": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "default": {},
+            "title": "Mean By Co",
+            "type": "object"
+          },
+          "mean_by_outcome": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "default": {},
+            "title": "Mean By Outcome",
+            "type": "object"
+          },
+          "responses": {
+            "title": "Responses",
+            "type": "integer"
+          },
+          "survey": {
+            "additionalProperties": true,
+            "title": "Survey",
+            "type": "object"
+          }
+        },
+        "required": [
+          "survey",
+          "responses"
+        ],
+        "title": "IndirectSurveySummary",
         "type": "object"
       },
       "InquiryUpdate": {
@@ -45275,6 +47003,24 @@
         "title": "LessonPlanReplace",
         "type": "object"
       },
+      "LevelBand": {
+        "properties": {
+          "level": {
+            "title": "Level",
+            "type": "integer"
+          },
+          "min_pct": {
+            "title": "Min Pct",
+            "type": "number"
+          }
+        },
+        "required": [
+          "level",
+          "min_pct"
+        ],
+        "title": "LevelBand",
+        "type": "object"
+      },
       "LoanIn": {
         "additionalProperties": false,
         "properties": {
@@ -48190,6 +49936,36 @@
         "title": "MyTerm",
         "type": "object"
       },
+      "NbaExportRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "format": "uuid",
+            "title": "Batch Id",
+            "type": "string"
+          },
+          "format": {
+            "default": "xlsx",
+            "enum": [
+              "xlsx",
+              "docx"
+            ],
+            "title": "Format",
+            "type": "string"
+          },
+          "program_id": {
+            "format": "uuid",
+            "title": "Program Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "program_id",
+          "batch_id"
+        ],
+        "title": "NbaExportRequest",
+        "type": "object"
+      },
       "NoDuesCreate": {
         "properties": {
           "enrollment_id": {
@@ -49591,6 +51367,71 @@
           "offering"
         ],
         "title": "OfferingFacultyResult",
+        "type": "object"
+      },
+      "OfferingRef": {
+        "properties": {
+          "course_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Course Code"
+          },
+          "course_id": {
+            "format": "uuid",
+            "title": "Course Id",
+            "type": "string"
+          },
+          "course_title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Course Title"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "section_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Code"
+          },
+          "term_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Term Id"
+          }
+        },
+        "required": [
+          "id",
+          "course_id"
+        ],
+        "title": "OfferingRef",
         "type": "object"
       },
       "OfferingResponse": {
@@ -52118,6 +53959,44 @@
         "title": "PeoPoMatrix",
         "type": "object"
       },
+      "PeoRow": {
+        "properties": {
+          "level": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Level"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "outcome_id": {
+            "format": "uuid",
+            "title": "Outcome Id",
+            "type": "string"
+          },
+          "via": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Via",
+            "type": "array"
+          }
+        },
+        "required": [
+          "outcome_id",
+          "outcome"
+        ],
+        "title": "PeoRow",
+        "type": "object"
+      },
       "PermissionCatalogue": {
         "properties": {
           "modules": {
@@ -52379,6 +54258,212 @@
           }
         },
         "title": "PlatformInstitutionUpdate",
+        "type": "object"
+      },
+      "PoAttainmentResponse": {
+        "properties": {
+          "batch": {
+            "$ref": "#/components/schemas/BatchRef"
+          },
+          "coverage_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage Pct"
+          },
+          "outcomes": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PoRow"
+            },
+            "title": "Outcomes",
+            "type": "array"
+          },
+          "peos": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PeoRow"
+            },
+            "title": "Peos",
+            "type": "array"
+          },
+          "program": {
+            "$ref": "#/components/schemas/ProgramRef"
+          },
+          "run": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RunSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "program",
+          "batch"
+        ],
+        "title": "PoAttainmentResponse",
+        "type": "object"
+      },
+      "PoRow": {
+        "properties": {
+          "breakdown": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Breakdown",
+            "type": "array"
+          },
+          "contributing_courses": {
+            "title": "Contributing Courses",
+            "type": "integer"
+          },
+          "direct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Direct"
+          },
+          "final": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final"
+          },
+          "gap": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gap"
+          },
+          "indirect": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Indirect"
+          },
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "outcome_id": {
+            "format": "uuid",
+            "title": "Outcome Id",
+            "type": "string"
+          },
+          "outcome_type": {
+            "title": "Outcome Type",
+            "type": "string"
+          },
+          "statement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Statement"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          }
+        },
+        "required": [
+          "outcome_id",
+          "outcome",
+          "outcome_type",
+          "contributing_courses"
+        ],
+        "title": "PoRow",
+        "type": "object"
+      },
+      "PoRunRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Id"
+          },
+          "include_indirect": {
+            "default": true,
+            "title": "Include Indirect",
+            "type": "boolean"
+          },
+          "program_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Program Id"
+          },
+          "term_upto": {
+            "anyOf": [
+              {
+                "maximum": 20.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Term Upto"
+          }
+        },
+        "title": "PoRunRequest",
         "type": "object"
       },
       "PostIn": {
@@ -52849,6 +54934,70 @@
         "title": "PrerequisiteSet",
         "type": "object"
       },
+      "Prerequisites": {
+        "properties": {
+          "cia_locked": {
+            "title": "Cia Locked",
+            "type": "boolean"
+          },
+          "cia_pending": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Cia Pending",
+            "type": "array"
+          },
+          "has_ese": {
+            "title": "Has Ese",
+            "type": "boolean"
+          },
+          "results_published": {
+            "title": "Results Published",
+            "type": "boolean"
+          },
+          "survey_present": {
+            "title": "Survey Present",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "cia_locked",
+          "has_ese",
+          "results_published",
+          "survey_present"
+        ],
+        "title": "Prerequisites",
+        "type": "object"
+      },
+      "ProgramAttainmentTrend": {
+        "properties": {
+          "batches": {
+            "items": {
+              "$ref": "#/components/schemas/TrendBatch"
+            },
+            "title": "Batches",
+            "type": "array"
+          },
+          "outcomes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Outcomes",
+            "type": "array"
+          },
+          "program": {
+            "$ref": "#/components/schemas/ProgramRef"
+          }
+        },
+        "required": [
+          "program",
+          "outcomes",
+          "batches"
+        ],
+        "title": "ProgramAttainmentTrend",
+        "type": "object"
+      },
       "ProgramCreate": {
         "properties": {
           "approving_body": {
@@ -53076,6 +55225,42 @@
           "program_id"
         ],
         "title": "ProgramOutcomes",
+        "type": "object"
+      },
+      "ProgramRef": {
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "ProgramRef",
         "type": "object"
       },
       "ProgramRegulationCreate": {
@@ -61933,207 +64118,6 @@
         "title": "RunCreateRequest",
         "type": "object"
       },
-      "RunResponse": {
-        "properties": {
-          "anomalies_count": {
-            "default": 0,
-            "title": "Anomalies Count",
-            "type": "integer"
-          },
-          "approval_resolution_id": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Approval Resolution Id"
-          },
-          "approved_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Approved At"
-          },
-          "approved_by": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Approved By"
-          },
-          "checksum": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Checksum"
-          },
-          "config_snapshot": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Config Snapshot"
-          },
-          "created_at": {
-            "format": "date-time",
-            "title": "Created At",
-            "type": "string"
-          },
-          "exam_session_id": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Exam Session Id"
-          },
-          "id": {
-            "format": "uuid",
-            "title": "Id",
-            "type": "string"
-          },
-          "job_id": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Job Id"
-          },
-          "published_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Published At"
-          },
-          "run_type": {
-            "title": "Run Type",
-            "type": "string"
-          },
-          "scope": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Scope"
-          },
-          "session_name": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Session Name"
-          },
-          "stats": {
-            "anyOf": [
-              {
-                "additionalProperties": true,
-                "type": "object"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Stats"
-          },
-          "status": {
-            "title": "Status",
-            "type": "string"
-          },
-          "triggered_by": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Triggered By"
-          },
-          "verified_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Verified At"
-          },
-          "verified_by": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Verified By"
-          }
-        },
-        "required": [
-          "id",
-          "run_type",
-          "status",
-          "created_at"
-        ],
-        "title": "RunResponse",
-        "type": "object"
-      },
       "RunScope": {
         "additionalProperties": false,
         "properties": {
@@ -62208,6 +64192,63 @@
           }
         },
         "title": "RunScope",
+        "type": "object"
+      },
+      "RunSummary": {
+        "properties": {
+          "config_snapshot": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Config Snapshot"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "run_at": {
+            "format": "date-time",
+            "title": "Run At",
+            "type": "string"
+          },
+          "run_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run By"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "warnings": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "run_at"
+        ],
+        "title": "RunSummary",
         "type": "object"
       },
       "SalaryStructureIn": {
@@ -67699,6 +69740,106 @@
         "title": "StudentBankDetails",
         "type": "object"
       },
+      "StudentCoAchievement": {
+        "properties": {
+          "cos": {
+            "items": {
+              "$ref": "#/components/schemas/StudentCoItem"
+            },
+            "title": "Cos",
+            "type": "array"
+          },
+          "offering": {
+            "$ref": "#/components/schemas/OfferingRef"
+          },
+          "registration_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registration Number"
+          },
+          "student_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Name"
+          },
+          "student_program_enrollment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Program Enrollment Id"
+          }
+        },
+        "required": [
+          "offering",
+          "cos"
+        ],
+        "title": "StudentCoAchievement",
+        "type": "object"
+      },
+      "StudentCoItem": {
+        "properties": {
+          "above_target": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Above Target"
+          },
+          "co": {
+            "title": "Co",
+            "type": "string"
+          },
+          "marks_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Marks Pct"
+          },
+          "statement": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Statement"
+          }
+        },
+        "required": [
+          "co"
+        ],
+        "title": "StudentCoItem",
+        "type": "object"
+      },
       "StudentCreate": {
         "additionalProperties": false,
         "description": "``student_service.create`` input — the registrar's wizard, bulk import and (Phase 08) admissions.",
@@ -71105,6 +73246,26 @@
         "title": "SupplementaryPreview",
         "type": "object"
       },
+      "SurveyThreshold": {
+        "properties": {
+          "level": {
+            "maximum": 3.0,
+            "minimum": 1.0,
+            "title": "Level",
+            "type": "integer"
+          },
+          "min_mean": {
+            "title": "Min Mean",
+            "type": "number"
+          }
+        },
+        "required": [
+          "level",
+          "min_mean"
+        ],
+        "title": "SurveyThreshold",
+        "type": "object"
+      },
       "SuspendRequest": {
         "properties": {
           "reason": {
@@ -73539,6 +75700,45 @@
         ],
         "title": "TransferType",
         "type": "string"
+      },
+      "TrendBatch": {
+        "properties": {
+          "batch": {
+            "$ref": "#/components/schemas/BatchRef"
+          },
+          "outcomes": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Outcomes",
+            "type": "object"
+          },
+          "run_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run At"
+          }
+        },
+        "required": [
+          "batch",
+          "outcomes"
+        ],
+        "title": "TrendBatch",
+        "type": "object"
       },
       "UndertakingAccept": {
         "additionalProperties": false,
@@ -76940,6 +79140,80 @@
         "title": "Envelope[ReconcileSummary]",
         "type": "object"
       },
+      "app__schemas__common__Envelope_RunResponse___1": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__schemas__obe_attainment__RunResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[RunResponse]",
+        "type": "object"
+      },
+      "app__schemas__common__Envelope_RunResponse___2": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__schemas__results__RunResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[RunResponse]",
+        "type": "object"
+      },
       "app__schemas__fees__ReconcileSummary": {
         "properties": {
           "auto_matched": {
@@ -76964,6 +79238,86 @@
           }
         },
         "title": "ReconcileSummary",
+        "type": "object"
+      },
+      "app__schemas__obe_attainment__RunResponse": {
+        "properties": {
+          "computed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Computed At"
+          },
+          "config_snapshot": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Config Snapshot"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "scope_id": {
+            "format": "uuid",
+            "title": "Scope Id",
+            "type": "string"
+          },
+          "scope_type": {
+            "title": "Scope Type",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "warnings": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "scope_type",
+          "scope_id",
+          "status"
+        ],
+        "title": "RunResponse",
         "type": "object"
       },
       "app__schemas__results__PublishRequest": {
@@ -76996,6 +79350,207 @@
           }
         },
         "title": "PublishRequest",
+        "type": "object"
+      },
+      "app__schemas__results__RunResponse": {
+        "properties": {
+          "anomalies_count": {
+            "default": 0,
+            "title": "Anomalies Count",
+            "type": "integer"
+          },
+          "approval_resolution_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approval Resolution Id"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved At"
+          },
+          "approved_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved By"
+          },
+          "checksum": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checksum"
+          },
+          "config_snapshot": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Config Snapshot"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "exam_session_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exam Session Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "run_type": {
+            "title": "Run Type",
+            "type": "string"
+          },
+          "scope": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scope"
+          },
+          "session_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Session Name"
+          },
+          "stats": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Stats"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "triggered_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Triggered By"
+          },
+          "verified_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified At"
+          },
+          "verified_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verified By"
+          }
+        },
+        "required": [
+          "id",
+          "run_type",
+          "status",
+          "created_at"
+        ],
+        "title": "RunResponse",
         "type": "object"
       },
       "app__schemas__students__DocumentVerifyRequest": {
@@ -84076,6 +86631,234 @@
         "summary": "Submit (late flagged; penalty applied on grading)",
         "tags": [
           "lms"
+        ]
+      }
+    },
+    "/api/v1/attainment-configs": {
+      "get": {
+        "operationId": "config_list_api_v1_attainment_configs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "scope_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_AttainmentConfigOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Configs (optionally of one scope)",
+        "tags": [
+          "obe-attainment"
+        ]
+      },
+      "put": {
+        "operationId": "config_put_api_v1_attainment_configs_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttainmentConfigIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AttainmentConfigOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create / update the config of a regulation or programme",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/attainment-configs/effective": {
+      "get": {
+        "operationId": "config_effective_api_v1_attainment_configs_effective_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "program_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Program Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Batch Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AttainmentConfigOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Effective config of a programme (programme → regulation → platform)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/attainment/me": {
+      "get": {
+        "operationId": "attainment_me_api_v1_attainment_me_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offering_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Offering Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_StudentCoAchievement_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My CO achievement in an offering (setting obe.show_students)",
+        "tags": [
+          "obe-attainment"
         ]
       }
     },
@@ -91243,6 +94026,280 @@
         ]
       }
     },
+    "/api/v1/course-offerings/{id}/attainment": {
+      "get": {
+        "operationId": "co_get_api_v1_course_offerings__id__attainment_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "run_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CoAttainmentResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "CO attainment (latest computed run, or ?run_id=)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/course-offerings/{id}/attainment/compute": {
+      "post": {
+        "operationId": "co_compute_api_v1_course_offerings__id__attainment_compute_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/CoRunRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Compute CO attainment (job)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/course-offerings/{id}/attainment/heatmap": {
+      "get": {
+        "operationId": "co_heatmap_api_v1_course_offerings__id__attainment_heatmap_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CoPoHeatmap_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "CO × assessment level heatmap",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/course-offerings/{id}/attainment/runs": {
+      "get": {
+        "operationId": "co_runs_api_v1_course_offerings__id__attainment_runs_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_RunSummary__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run history",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/course-offerings/{id}/attainment/students": {
+      "get": {
+        "operationId": "co_students_api_v1_course_offerings__id__attainment_students_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_StudentCoAchievement__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Per-student CO achievement",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
     "/api/v1/course-offerings/{id}/cia/consolidate": {
       "get": {
         "operationId": "get_cia_api_v1_course_offerings__id__cia_consolidate_get",
@@ -93352,6 +96409,442 @@
         "summary": "Add a syllabus topic",
         "tags": [
           "question-bank"
+        ]
+      }
+    },
+    "/api/v1/cqi-actions": {
+      "get": {
+        "operationId": "cqi_list_api_v1_cqi_actions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "owner_staff_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Owner Staff Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "mine",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Mine",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_CqiActionOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "CQI actions",
+        "tags": [
+          "obe-attainment"
+        ]
+      },
+      "post": {
+        "operationId": "cqi_create_api_v1_cqi_actions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CqiActionIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CqiActionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create a CQI action",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/cqi-actions/{id}": {
+      "get": {
+        "operationId": "cqi_get_api_v1_cqi_actions__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CqiActionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "CQI action",
+        "tags": [
+          "obe-attainment"
+        ]
+      },
+      "put": {
+        "operationId": "cqi_update_api_v1_cqi_actions__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CqiActionUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CqiActionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a CQI action",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/cqi-actions/{id}/evidence": {
+      "post": {
+        "operationId": "cqi_evidence_api_v1_cqi_actions__id__evidence_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_cqi_evidence_api_v1_cqi_actions__id__evidence_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CqiActionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Upload evidence (photo / PDF, ≤ 10 MB)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/cqi-actions/{id}/status": {
+      "post": {
+        "operationId": "cqi_status_api_v1_cqi_actions__id__status_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CqiStatusChange"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CqiActionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Move a CQI action",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/cqi-actions/{id}/verify": {
+      "post": {
+        "operationId": "cqi_verify_api_v1_cqi_actions__id__verify_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CqiVerify"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CqiActionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Verify a done action",
+        "tags": [
+          "obe-attainment"
         ]
       }
     },
@@ -109399,6 +112892,329 @@
         ]
       }
     },
+    "/api/v1/obe/dashboard": {
+      "get": {
+        "operationId": "dashboard_api_v1_obe_dashboard_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "program_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Program Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DashboardResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Radar, heatmap, gaps, coverage (HOD / IQAC)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/obe/export/nba-sar": {
+      "post": {
+        "operationId": "nba_export_api_v1_obe_export_nba_sar_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NbaExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExportJob_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Generate the NBA SAR Criterion 3 export (job)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/obe/exports/{job_id}": {
+      "get": {
+        "operationId": "nba_export_get_api_v1_obe_exports__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExportJob_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export status / download",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/obe/gaps": {
+      "get": {
+        "operationId": "gaps_api_v1_obe_gaps_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "program_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Program Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Batch Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "threshold",
+            "required": false,
+            "schema": {
+              "default": 0.0,
+              "title": "Threshold",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_GapListRow__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "CO / PO gaps above a threshold with suggested actions",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/obe/indirect/summary": {
+      "get": {
+        "operationId": "indirect_summary_api_v1_obe_indirect_summary_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "survey_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Survey Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IndirectSurveySummary_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Survey means by CO / outcome",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/obe/recompute-term": {
+      "post": {
+        "operationId": "recompute_term_api_v1_obe_recompute_term_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "term_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Term Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExportJob_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Recompute every offering of a term, then the batches' PO runs (job)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
     "/api/v1/offering-assessments": {
       "get": {
         "operationId": "assessment_queue_api_v1_offering_assessments_get",
@@ -112736,6 +116552,245 @@
         "summary": "Update a programme",
         "tags": [
           "academics"
+        ]
+      }
+    },
+    "/api/v1/programs/{id}/attainment": {
+      "get": {
+        "operationId": "po_get_api_v1_programs__id__attainment_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PoAttainmentResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "PO / PSO attainment of a batch (+ derived PEO)",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/programs/{id}/attainment/heatmap": {
+      "get": {
+        "operationId": "po_heatmap_api_v1_programs__id__attainment_heatmap_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CoPoHeatmap_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Course × PO contribution heatmap",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/programs/{id}/attainment/trend": {
+      "get": {
+        "operationId": "po_trend_api_v1_programs__id__attainment_trend_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ProgramAttainmentTrend_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "PO / PSO final levels across batches",
+        "tags": [
+          "obe-attainment"
+        ]
+      }
+    },
+    "/api/v1/programs/{id}/batches/{bid}/attainment/compute": {
+      "post": {
+        "operationId": "po_compute_api_v1_programs__id__batches__bid__attainment_compute_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "bid",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Bid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/PoRunRequest"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___1"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Compute PO / PSO attainment for a batch (job)",
+        "tags": [
+          "obe-attainment"
         ]
       }
     },
@@ -118630,7 +122685,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_RunResponse_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___2"
                 }
               }
             },
@@ -118752,7 +122807,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_RunResponse_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___2"
                 }
               }
             },
@@ -118902,7 +122957,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_RunResponse_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___2"
                 }
               }
             },
@@ -118960,7 +123015,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_RunResponse_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___2"
                 }
               }
             },
@@ -119156,7 +123211,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_RunResponse_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_RunResponse___2"
                 }
               }
             },

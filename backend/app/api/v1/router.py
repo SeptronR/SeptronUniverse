@@ -65,16 +65,17 @@ from app.api.v1.endpoints import (
     lms,
     no_dues,
     notifications,
+    obe_attainment,
     payroll,
     platform,
     platform_institutions,
+    post_result,
     privacy,
     programs,
     rbac,
     recruitment,
     registration,
     regulations,
-    post_result,
     results,
     scholarships,
     search,
@@ -144,6 +145,8 @@ api_router.include_router(content.materials_router, dependencies=[feature_requir
 # route carries its own results.* / students.core feature
 api_router.include_router(post_result.router)
 api_router.include_router(post_result.public_router)  # masked public rank lists (published public + setting)
+# Phase 17: OBE attainment / CQI / NBA export — each route carries its obe.* feature
+api_router.include_router(obe_attainment.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

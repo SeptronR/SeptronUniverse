@@ -305,6 +305,15 @@ PHASES: dict[str, list[str]] = {
     ],
     # post-result (§16): reval_requests, transcripts; committees / committee_members (§30, governance UI in Phase 33)
     # and student_achievements (§27, Phase 27 module) are modelled here for the malpractice inquiry and medals
+    "17": [
+        "attainment_configs",
+        "attainment_runs",
+        "co_attainments",
+        "po_attainments",
+        "cqi_actions",
+        "feedback_surveys",
+        "feedback_responses",
+    ],
     "16": [
         "reval_requests",
         "transcripts",

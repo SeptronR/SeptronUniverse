@@ -926,6 +926,59 @@ POST_RESULT_EVENTS: tuple[EventDef, ...] = (
         link="/student/transcripts",
     ),
 )
+# Phase 17 — attainment gaps, CQI assignments / reminders / verification, monthly coverage digest
+OBE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "obe.gap_detected",
+        "academics",
+        "Attainment gap detected",
+        "Attainment gaps: {{ scope }}",
+        "{{ count }} outcome(s) of {{ scope }} are below target. Review the gap list and plan CQI actions.",
+        ("scope", "count"),
+        ("in_app", "email"),
+        link="/admin/obe/program-attainment",
+    ),
+    EventDef(
+        "cqi.action_assigned",
+        "academics",
+        "CQI action assigned",
+        "CQI action for {{ scope }}",
+        "You own a CQI action for {{ scope }} (due {{ due }}): {{ action }}",
+        ("scope", "due", "action"),
+        ("in_app", "email"),
+        link="/admin/obe/cqi",
+    ),
+    EventDef(
+        "cqi.due_reminder",
+        "academics",
+        "CQI action due",
+        "CQI action due {{ due }}",
+        "Your CQI action for {{ scope }} is due {{ due }}: {{ action }}",
+        ("scope", "due", "action"),
+        ("in_app", "email"),
+        link="/admin/obe/cqi",
+    ),
+    EventDef(
+        "cqi.action_verified",
+        "academics",
+        "CQI action verified",
+        "CQI action verified",
+        "Your CQI action for {{ scope }} was verified: {{ action }}",
+        ("scope", "due", "action"),
+        ("in_app",),
+        link="/admin/obe/cqi",
+    ),
+    EventDef(
+        "obe.coverage_digest",
+        "academics",
+        "OBE coverage digest",
+        "OBE monthly digest",
+        "Last 30 days: {{ co_runs }} CO run(s), {{ po_runs }} PO run(s); {{ open_actions }} CQI action(s) open.",
+        ("co_runs", "po_runs", "open_actions"),
+        ("in_app", "email"),
+        link="/admin/obe/program-attainment",
+    ),
+)
 # Phase 13 — marks deadlines, LMS publication / announcements
 ASSESSMENT_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -971,6 +1024,7 @@ EVENTS = (
     + EXAM_EVENTS
     + RESULT_EVENTS
     + POST_RESULT_EVENTS
+    + OBE_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

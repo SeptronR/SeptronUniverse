@@ -76,8 +76,12 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("fees", "upi_vpa", "str", None),
     SettingDef("fees", "gst_enabled", "bool", False),
     # assessment (Phase 13) — marks deadline after instantiation, auto-lock after the deadline
-    SettingDef("assessment", "marks_deadline_days", "int", 14, label="Marks entry deadline (days after instantiation)", min=1),
-    SettingDef("assessment", "auto_lock_days", "int", 7, label="Auto-lock verified marks N days after the deadline", min=0),
+    SettingDef(
+        "assessment", "marks_deadline_days", "int", 14, label="Marks entry deadline (days after instantiation)", min=1
+    ),
+    SettingDef(
+        "assessment", "auto_lock_days", "int", 7, label="Auto-lock verified marks N days after the deadline", min=0
+    ),
     # fees (Phase 12) — GSTIN on taxable invoices, reminders, overdue holds, linkage due days, no-dues offices
     SettingDef("fees", "gstin", "str", None, label="GSTIN printed on taxable invoices / receipts"),
     SettingDef("fees", "reminder_days", "json", [7, 1, -7], label="Due reminders: days before (+) / after (-) due"),
@@ -114,6 +118,10 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("exams", "malpractice_appeal_days", "int", 30, label="Malpractice appeal window (days)", min=1, max=365),
     SettingDef("exams", "transcript_fees", "json", None, label="Transcript fee per copy by type (paise)"),
     SettingDef("exams", "rank_list_public", "bool", False, label="Publish masked rank lists publicly"),
+    # obe (Phase 17) — student self view of CO achievement, auto-run on result publication, strict prerequisites
+    SettingDef("obe", "show_students", "bool", False, label="Students see their own CO achievement"),
+    SettingDef("obe", "auto_run", "bool", True, label="Compute CO attainment when results are published"),
+    SettingDef("obe", "strict_prereq", "bool", False, label="Refuse attainment runs before CIA lock / publication"),
     # hostel
     SettingDef("hostel", "guardian_otp_required_for_home_leave", "bool", True),
     SettingDef("hostel", "late_return_grace_minutes", "int", 15, min=0, max=720),

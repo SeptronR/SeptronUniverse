@@ -1772,6 +1772,58 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/attainment-configs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Configs (optionally of one scope) */
+        get: operations["config_list_api_v1_attainment_configs_get"];
+        /** Create / update the config of a regulation or programme */
+        put: operations["config_put_api_v1_attainment_configs_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/attainment-configs/effective": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Effective config of a programme (programme → regulation → platform) */
+        get: operations["config_effective_api_v1_attainment_configs_effective_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/attainment/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My CO achievement in an offering (setting obe.show_students) */
+        get: operations["attainment_me_api_v1_attainment_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/attendance-devices": {
         parameters: {
             query?: never;
@@ -3498,6 +3550,91 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/course-offerings/{id}/attainment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** CO attainment (latest computed run, or ?run_id=) */
+        get: operations["co_get_api_v1_course_offerings__id__attainment_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/course-offerings/{id}/attainment/compute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Compute CO attainment (job) */
+        post: operations["co_compute_api_v1_course_offerings__id__attainment_compute_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/course-offerings/{id}/attainment/heatmap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** CO × assessment level heatmap */
+        get: operations["co_heatmap_api_v1_course_offerings__id__attainment_heatmap_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/course-offerings/{id}/attainment/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Run history */
+        get: operations["co_runs_api_v1_course_offerings__id__attainment_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/course-offerings/{id}/attainment/students": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Per-student CO achievement */
+        get: operations["co_students_api_v1_course_offerings__id__attainment_students_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/course-offerings/{id}/cia/consolidate": {
         parameters: {
             query?: never;
@@ -3929,6 +4066,93 @@ export interface paths {
         put?: never;
         /** Add a syllabus topic */
         post: operations["add_topic_api_v1_courses__id__syllabus_topics_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cqi-actions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** CQI actions */
+        get: operations["cqi_list_api_v1_cqi_actions_get"];
+        put?: never;
+        /** Create a CQI action */
+        post: operations["cqi_create_api_v1_cqi_actions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cqi-actions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** CQI action */
+        get: operations["cqi_get_api_v1_cqi_actions__id__get"];
+        /** Edit a CQI action */
+        put: operations["cqi_update_api_v1_cqi_actions__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cqi-actions/{id}/evidence": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload evidence (photo / PDF, ≤ 10 MB) */
+        post: operations["cqi_evidence_api_v1_cqi_actions__id__evidence_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cqi-actions/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Move a CQI action */
+        post: operations["cqi_status_api_v1_cqi_actions__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cqi-actions/{id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify a done action */
+        post: operations["cqi_verify_api_v1_cqi_actions__id__verify_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -8028,6 +8252,108 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/obe/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Radar, heatmap, gaps, coverage (HOD / IQAC) */
+        get: operations["dashboard_api_v1_obe_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/obe/export/nba-sar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate the NBA SAR Criterion 3 export (job) */
+        post: operations["nba_export_api_v1_obe_export_nba_sar_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/obe/exports/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export status / download */
+        get: operations["nba_export_get_api_v1_obe_exports__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/obe/gaps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** CO / PO gaps above a threshold with suggested actions */
+        get: operations["gaps_api_v1_obe_gaps_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/obe/indirect/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Survey means by CO / outcome */
+        get: operations["indirect_summary_api_v1_obe_indirect_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/obe/recompute-term": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Recompute every offering of a term, then the batches' PO runs (job) */
+        post: operations["recompute_term_api_v1_obe_recompute_term_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/offering-assessments": {
         parameters: {
             query?: never;
@@ -8783,6 +9109,74 @@ export interface paths {
         post?: never;
         /** Delete a programme (soft) */
         delete: operations["delete_program_api_v1_programs__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{id}/attainment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** PO / PSO attainment of a batch (+ derived PEO) */
+        get: operations["po_get_api_v1_programs__id__attainment_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{id}/attainment/heatmap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Course × PO contribution heatmap */
+        get: operations["po_heatmap_api_v1_programs__id__attainment_heatmap_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{id}/attainment/trend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** PO / PSO final levels across batches */
+        get: operations["po_trend_api_v1_programs__id__attainment_trend_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/programs/{id}/batches/{bid}/attainment/compute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Compute PO / PSO attainment for a batch (job) */
+        post: operations["po_compute_api_v1_programs__id__batches__bid__attainment_compute_post"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -15307,6 +15701,118 @@ export interface components {
             /** Title */
             title: string;
         };
+        /** AttainmentConfigIn */
+        AttainmentConfigIn: {
+            /**
+             * Cia Weight In Direct
+             * @default 30
+             */
+            cia_weight_in_direct: number;
+            /**
+             * Co Target Level
+             * @default 2
+             */
+            co_target_level: number;
+            /**
+             * Credit Weighted Po
+             * @default false
+             */
+            credit_weighted_po: boolean;
+            /**
+             * Direct Weight
+             * @default 80
+             */
+            direct_weight: number;
+            /**
+             * Ese Apportion Strategy
+             * @default question_wise
+             * @enum {string}
+             */
+            ese_apportion_strategy: "question_wise" | "qp_pattern" | "uniform";
+            /**
+             * Ese Weight In Direct
+             * @default 70
+             */
+            ese_weight_in_direct: number;
+            /**
+             * Indirect Weight
+             * @default 20
+             */
+            indirect_weight: number;
+            /** Levels */
+            levels: components["schemas"]["LevelBand"][];
+            /**
+             * Po Target Level
+             * @default 2
+             */
+            po_target_level: number;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            /**
+             * Scope Type
+             * @enum {string}
+             */
+            scope_type: "regulation" | "program";
+            /** Survey Thresholds */
+            survey_thresholds?: components["schemas"]["SurveyThreshold"][] | null;
+            /**
+             * Target Marks Pct
+             * @default 60
+             */
+            target_marks_pct: number;
+            /**
+             * Target Student Pct
+             * @default 60
+             */
+            target_student_pct: number;
+        };
+        /** AttainmentConfigOut */
+        AttainmentConfigOut: {
+            /** Cia Weight In Direct */
+            cia_weight_in_direct: number;
+            /** Co Target Level */
+            co_target_level: number;
+            /** Credit Weighted Po */
+            credit_weighted_po: boolean;
+            /** Direct Weight */
+            direct_weight: number;
+            /** Ese Apportion Strategy */
+            ese_apportion_strategy: string;
+            /** Ese Weight In Direct */
+            ese_weight_in_direct: number;
+            /**
+             * History
+             * @default []
+             */
+            history: {
+                [key: string]: unknown;
+            }[];
+            /** Id */
+            id?: string | null;
+            /** Indirect Weight */
+            indirect_weight: number;
+            /** Levels */
+            levels: components["schemas"]["LevelBand"][];
+            /** Po Target Level */
+            po_target_level: number;
+            /** Scope Id */
+            scope_id?: string | null;
+            /** Scope Type */
+            scope_type: string;
+            /** Source */
+            source: string;
+            /** Survey Thresholds */
+            survey_thresholds: components["schemas"]["SurveyThreshold"][];
+            /** Target Marks Pct */
+            target_marks_pct: number;
+            /** Target Student Pct */
+            target_student_pct: number;
+            /** Updated At */
+            updated_at?: string | null;
+        };
         /** AttemptOut */
         AttemptOut: {
             /** Answers */
@@ -15704,6 +16210,18 @@ export interface components {
             /** Sections */
             sections?: components["schemas"]["BatchSectionIn"][] | null;
         };
+        /** BatchRef */
+        BatchRef: {
+            /** Admission Year */
+            admission_year?: number | null;
+            /** Code */
+            code?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
         /** BatchResponse */
         BatchResponse: {
             /** Admission Year */
@@ -15876,6 +16394,11 @@ export interface components {
         };
         /** Body_condonation_document_api_v1_condonations__id__documents_post */
         Body_condonation_document_api_v1_condonations__id__documents_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_cqi_evidence_api_v1_cqi_actions__id__evidence_post */
+        Body_cqi_evidence_api_v1_cqi_actions__id__evidence_post: {
             /** File */
             file: string;
         };
@@ -16931,6 +17454,17 @@ export interface components {
             /** Topic */
             topic?: string | null;
         };
+        /** CoAttainmentResponse */
+        CoAttainmentResponse: {
+            /**
+             * Cos
+             * @default []
+             */
+            cos: components["schemas"]["CoRow"][];
+            offering: components["schemas"]["OfferingRef"];
+            prerequisites?: components["schemas"]["Prerequisites"] | null;
+            run?: components["schemas"]["RunSummary"] | null;
+        };
         /** CoIn */
         CoIn: {
             /** Bloom Level */
@@ -16983,6 +17517,20 @@ export interface components {
              */
             outcome_id: string;
         };
+        /** CoPoHeatmap */
+        CoPoHeatmap: {
+            /** Cells */
+            cells: (number | null)[][];
+            /** Columns */
+            columns: string[];
+            /**
+             * Row Ids
+             * @default []
+             */
+            row_ids: string[];
+            /** Rows */
+            rows: string[];
+        };
         /** CoPoMatrixReplace */
         CoPoMatrixReplace: {
             /** Cells */
@@ -16992,6 +17540,57 @@ export interface components {
         CoReplace: {
             /** Outcomes */
             outcomes: components["schemas"]["CoIn"][];
+        };
+        /** CoRow */
+        CoRow: {
+            /**
+             * Breakdown
+             * @default []
+             */
+            breakdown: {
+                [key: string]: unknown;
+            }[];
+            /** Cia Level */
+            cia_level?: number | null;
+            /** Co */
+            co: string;
+            /**
+             * Co Id
+             * Format: uuid
+             */
+            co_id: string;
+            /** Direct Level */
+            direct_level?: number | null;
+            /** Direct Pct */
+            direct_pct?: number | null;
+            /** Ese Level */
+            ese_level?: number | null;
+            /** Final Level */
+            final_level?: number | null;
+            /** Gap */
+            gap?: number | null;
+            /** Indirect Level */
+            indirect_level?: number | null;
+            /** Statement */
+            statement?: string | null;
+            /** Students Above Target */
+            students_above_target: number;
+            /** Students Assessed */
+            students_assessed: number;
+            /** Target */
+            target?: number | null;
+        };
+        /** CoRunRequest */
+        CoRunRequest: {
+            /**
+             * Include Indirect
+             * @default true
+             */
+            include_indirect: boolean;
+            /** Offering Id */
+            offering_id?: string | null;
+            /** Survey Id */
+            survey_id?: string | null;
         };
         /** CodeBundleResponse */
         CodeBundleResponse: {
@@ -17905,6 +18504,116 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** CqiActionIn */
+        CqiActionIn: {
+            /** Action Text */
+            action_text: string;
+            /** Due On */
+            due_on?: string | null;
+            /** Gap */
+            gap?: number | null;
+            /** Outcome Id */
+            outcome_id?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            /**
+             * Scope Type
+             * @enum {string}
+             */
+            scope_type: "offering" | "course" | "program";
+        };
+        /** CqiActionOut */
+        CqiActionOut: {
+            /** Action Text */
+            action_text: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Due On */
+            due_on?: string | null;
+            /** Evidence Url */
+            evidence_url?: string | null;
+            /** Gap */
+            gap?: number | null;
+            /** Gap After */
+            gap_after?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Outcome */
+            outcome?: string | null;
+            /** Outcome Id */
+            outcome_id?: string | null;
+            /**
+             * Overdue
+             * @default false
+             */
+            overdue: boolean;
+            /** Owner Name */
+            owner_name?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Reviewed By */
+            reviewed_by?: string | null;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            /** Scope Label */
+            scope_label?: string | null;
+            /** Scope Type */
+            scope_type: string;
+            /** Status */
+            status: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** CqiActionUpdate */
+        CqiActionUpdate: {
+            /** Action Text */
+            action_text?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /** Evidence Url */
+            evidence_url?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+        };
+        /** CqiStatusChange */
+        CqiStatusChange: {
+            /** Comment */
+            comment?: string | null;
+            /** Evidence Url */
+            evidence_url?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "in_progress" | "done";
+        };
+        /** CqiVerify */
+        CqiVerify: {
+            /**
+             * Approve
+             * @default true
+             */
+            approve: boolean;
+            /** Comment */
+            comment?: string | null;
+        };
         /** CredentialSheetRequest */
         CredentialSheetRequest: {
             /**
@@ -18402,6 +19111,32 @@ export interface components {
             required_documents?: components["schemas"]["RequiredDocument"][] | null;
             /** Version */
             version?: number | null;
+        };
+        /** DashboardResponse */
+        DashboardResponse: {
+            batch: components["schemas"]["BatchRef"];
+            /** Coverage Pct */
+            coverage_pct?: number | null;
+            /**
+             * Cqi
+             * @default {}
+             */
+            cqi: {
+                [key: string]: number;
+            };
+            /** Direct Vs Indirect */
+            direct_vs_indirect: {
+                [key: string]: unknown;
+            }[];
+            /** Gaps */
+            gaps: components["schemas"]["GapListRow"][];
+            heatmap: components["schemas"]["CoPoHeatmap"];
+            program: components["schemas"]["ProgramRef"];
+            /** Radar */
+            radar: {
+                [key: string]: unknown;
+            }[];
+            run?: components["schemas"]["RunSummary"] | null;
         };
         /** DataSubjectRequestCreate */
         DataSubjectRequestCreate: {
@@ -20103,6 +20838,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AttainmentConfigOut] */
+        Envelope_AttainmentConfigOut_: {
+            data?: components["schemas"]["AttainmentConfigOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AttendanceDeviceOut] */
         Envelope_AttendanceDeviceOut_: {
             data?: components["schemas"]["AttendanceDeviceOut"] | null;
@@ -20343,6 +21093,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CoAttainmentResponse] */
+        Envelope_CoAttainmentResponse_: {
+            data?: components["schemas"]["CoAttainmentResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CoPoHeatmap] */
+        Envelope_CoPoHeatmap_: {
+            data?: components["schemas"]["CoPoHeatmap"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CodeBundleResponse] */
         Envelope_CodeBundleResponse_: {
             data?: components["schemas"]["CodeBundleResponse"] | null;
@@ -20508,6 +21288,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CqiActionOut] */
+        Envelope_CqiActionOut_: {
+            data?: components["schemas"]["CqiActionOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CredentialSheetResponse] */
         Envelope_CredentialSheetResponse_: {
             data?: components["schemas"]["CredentialSheetResponse"] | null;
@@ -20556,6 +21351,21 @@ export interface components {
         /** Envelope[CycleResponse] */
         Envelope_CycleResponse_: {
             data?: components["schemas"]["CycleResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DashboardResponse] */
+        Envelope_DashboardResponse_: {
+            data?: components["schemas"]["DashboardResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -20943,6 +21753,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ExportJob] */
+        Envelope_ExportJob_: {
+            data?: components["schemas"]["ExportJob"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[FacultyProfileOut] */
         Envelope_FacultyProfileOut_: {
             data?: components["schemas"]["FacultyProfileOut"] | null;
@@ -21246,6 +22071,21 @@ export interface components {
         /** Envelope[ImportResult] */
         Envelope_ImportResult_: {
             data?: components["schemas"]["ImportResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[IndirectSurveySummary] */
+        Envelope_IndirectSurveySummary_: {
+            data?: components["schemas"]["IndirectSurveySummary"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22114,6 +22954,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PoAttainmentResponse] */
+        Envelope_PoAttainmentResponse_: {
+            data?: components["schemas"]["PoAttainmentResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PostOut] */
         Envelope_PostOut_: {
             data?: components["schemas"]["PostOut"] | null;
@@ -22132,6 +22987,21 @@ export interface components {
         /** Envelope[PreferenceResponse] */
         Envelope_PreferenceResponse_: {
             data?: components["schemas"]["PreferenceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ProgramAttainmentTrend] */
+        Envelope_ProgramAttainmentTrend_: {
+            data?: components["schemas"]["ProgramAttainmentTrend"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -22954,21 +23824,6 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[RunResponse] */
-        Envelope_RunResponse_: {
-            data?: components["schemas"]["RunResponse"] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
         /** Envelope[SalaryStructureOut] */
         Envelope_SalaryStructureOut_: {
             data?: components["schemas"]["SalaryStructureOut"] | null;
@@ -23287,6 +24142,21 @@ export interface components {
         /** Envelope[StructureValidationResponse] */
         Envelope_StructureValidationResponse_: {
             data?: components["schemas"]["StructureValidationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[StudentCoAchievement] */
+        Envelope_StudentCoAchievement_: {
+            data?: components["schemas"]["StudentCoAchievement"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -24147,6 +25017,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[AttainmentConfigOut]] */
+        Envelope_list_AttainmentConfigOut__: {
+            /** Data */
+            data?: components["schemas"]["AttainmentConfigOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[AttemptOut]] */
         Envelope_list_AttemptOut__: {
             /** Data */
@@ -24439,6 +25325,22 @@ export interface components {
         Envelope_list_CourseResultResponse__: {
             /** Data */
             data?: components["schemas"]["CourseResultResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CqiActionOut]] */
+        Envelope_list_CqiActionOut__: {
+            /** Data */
+            data?: components["schemas"]["CqiActionOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -24935,6 +25837,22 @@ export interface components {
         Envelope_list_FineConfigOut__: {
             /** Data */
             data?: components["schemas"]["FineConfigOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[GapListRow]] */
+        Envelope_list_GapListRow__: {
+            /** Data */
+            data?: components["schemas"]["GapListRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -25958,7 +26876,23 @@ export interface components {
         /** Envelope[list[RunResponse]] */
         Envelope_list_RunResponse__: {
             /** Data */
-            data?: components["schemas"]["RunResponse"][] | null;
+            data?: components["schemas"]["app__schemas__results__RunResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RunSummary]] */
+        Envelope_list_RunSummary__: {
+            /** Data */
+            data?: components["schemas"]["RunSummary"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -26183,6 +27117,22 @@ export interface components {
         Envelope_list_StudentAttendanceSummary__: {
             /** Data */
             data?: components["schemas"]["StudentAttendanceSummary"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[StudentCoAchievement]] */
+        Envelope_list_StudentCoAchievement__: {
+            /** Data */
+            data?: components["schemas"]["StudentCoAchievement"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -27166,6 +28116,24 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** ExportJob */
+        ExportJob: {
+            /** File Url */
+            file_url?: string | null;
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+            /** Progress */
+            progress?: number | null;
+            /** Result */
+            result?: {
+                [key: string]: unknown;
+            } | null;
+            /** Status */
+            status: string;
+        };
         /** ExternalEvaluator */
         ExternalEvaluator: {
             /** Email */
@@ -28083,6 +29051,37 @@ export interface components {
             /** Tds Deducted Paise */
             tds_deducted_paise: number;
         };
+        /** GapListRow */
+        GapListRow: {
+            /** Co Id */
+            co_id?: string | null;
+            /** Final */
+            final?: number | null;
+            /** Gap */
+            gap: number;
+            /** Label */
+            label: string;
+            /**
+             * Open Actions
+             * @default 0
+             */
+            open_actions: number;
+            /** Outcome */
+            outcome: string;
+            /** Outcome Id */
+            outcome_id?: string | null;
+            /** Scope */
+            scope: string;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            /** Suggested Action */
+            suggested_action: string;
+            /** Target */
+            target?: number | null;
+        };
         /**
          * Gender
          * @enum {string}
@@ -28828,6 +29827,36 @@ export interface components {
              * @enum {string}
              */
             via: "direct" | "role" | "delegation" | "escalation";
+        };
+        /** IndirectSurveySummary */
+        IndirectSurveySummary: {
+            /**
+             * Levels
+             * @default {}
+             */
+            levels: {
+                [key: string]: number;
+            };
+            /**
+             * Mean By Co
+             * @default {}
+             */
+            mean_by_co: {
+                [key: string]: number;
+            };
+            /**
+             * Mean By Outcome
+             * @default {}
+             */
+            mean_by_outcome: {
+                [key: string]: number;
+            };
+            /** Responses */
+            responses: number;
+            /** Survey */
+            survey: {
+                [key: string]: unknown;
+            };
         };
         /** InquiryUpdate */
         InquiryUpdate: {
@@ -29847,6 +30876,13 @@ export interface components {
         LessonPlanReplace: {
             /** Items */
             items: components["schemas"]["LessonPlanIn"][];
+        };
+        /** LevelBand */
+        LevelBand: {
+            /** Level */
+            level: number;
+            /** Min Pct */
+            min_pct: number;
         };
         /** LoanIn */
         LoanIn: {
@@ -30913,6 +31949,25 @@ export interface components {
             courses: components["schemas"]["CourseResultResponse"][];
             term: components["schemas"]["TermResultResponse"];
         };
+        /** NbaExportRequest */
+        NbaExportRequest: {
+            /**
+             * Batch Id
+             * Format: uuid
+             */
+            batch_id: string;
+            /**
+             * Format
+             * @default xlsx
+             * @enum {string}
+             */
+            format: "xlsx" | "docx";
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+        };
         /** NoDuesCreate */
         NoDuesCreate: {
             /** Enrollment Id */
@@ -31402,6 +32457,27 @@ export interface components {
             warnings?: {
                 [key: string]: unknown;
             }[];
+        };
+        /** OfferingRef */
+        OfferingRef: {
+            /** Course Code */
+            course_code?: string | null;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Course Title */
+            course_title?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Section Code */
+            section_code?: string | null;
+            /** Term Id */
+            term_id?: string | null;
         };
         /** OfferingResponse */
         OfferingResponse: {
@@ -32261,6 +33337,23 @@ export interface components {
             /** Cells */
             cells: components["schemas"]["PeoPoCell"][];
         };
+        /** PeoRow */
+        PeoRow: {
+            /** Level */
+            level?: number | null;
+            /** Outcome */
+            outcome: string;
+            /**
+             * Outcome Id
+             * Format: uuid
+             */
+            outcome_id: string;
+            /**
+             * Via
+             * @default []
+             */
+            via: string[];
+        };
         /** PermissionCatalogue */
         PermissionCatalogue: {
             /** Modules */
@@ -32348,6 +33441,71 @@ export interface components {
             status?: ("pending" | "active" | "archived") | null;
             /** Version */
             version?: number | null;
+        };
+        /** PoAttainmentResponse */
+        PoAttainmentResponse: {
+            batch: components["schemas"]["BatchRef"];
+            /** Coverage Pct */
+            coverage_pct?: number | null;
+            /**
+             * Outcomes
+             * @default []
+             */
+            outcomes: components["schemas"]["PoRow"][];
+            /**
+             * Peos
+             * @default []
+             */
+            peos: components["schemas"]["PeoRow"][];
+            program: components["schemas"]["ProgramRef"];
+            run?: components["schemas"]["RunSummary"] | null;
+        };
+        /** PoRow */
+        PoRow: {
+            /**
+             * Breakdown
+             * @default []
+             */
+            breakdown: {
+                [key: string]: unknown;
+            }[];
+            /** Contributing Courses */
+            contributing_courses: number;
+            /** Direct */
+            direct?: number | null;
+            /** Final */
+            final?: number | null;
+            /** Gap */
+            gap?: number | null;
+            /** Indirect */
+            indirect?: number | null;
+            /** Outcome */
+            outcome: string;
+            /**
+             * Outcome Id
+             * Format: uuid
+             */
+            outcome_id: string;
+            /** Outcome Type */
+            outcome_type: string;
+            /** Statement */
+            statement?: string | null;
+            /** Target */
+            target?: number | null;
+        };
+        /** PoRunRequest */
+        PoRunRequest: {
+            /** Batch Id */
+            batch_id?: string | null;
+            /**
+             * Include Indirect
+             * @default true
+             */
+            include_indirect: boolean;
+            /** Program Id */
+            program_id?: string | null;
+            /** Term Upto */
+            term_upto?: number | null;
         };
         /** PostIn */
         PostIn: {
@@ -32521,6 +33679,30 @@ export interface components {
             /** Items */
             items: components["schemas"]["PrerequisiteIn"][];
         };
+        /** Prerequisites */
+        Prerequisites: {
+            /** Cia Locked */
+            cia_locked: boolean;
+            /**
+             * Cia Pending
+             * @default []
+             */
+            cia_pending: string[];
+            /** Has Ese */
+            has_ese: boolean;
+            /** Results Published */
+            results_published: boolean;
+            /** Survey Present */
+            survey_present: boolean;
+        };
+        /** ProgramAttainmentTrend */
+        ProgramAttainmentTrend: {
+            /** Batches */
+            batches: components["schemas"]["TrendBatch"][];
+            /** Outcomes */
+            outcomes: string[];
+            program: components["schemas"]["ProgramRef"];
+        };
         /** ProgramCreate */
         ProgramCreate: {
             /** Approving Body */
@@ -32595,6 +33777,18 @@ export interface components {
              * Format: uuid
              */
             program_id: string;
+        };
+        /** ProgramRef */
+        ProgramRef: {
+            /** Code */
+            code?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name?: string | null;
         };
         /** ProgramRegulationCreate */
         ProgramRegulationCreate: {
@@ -35561,62 +36755,6 @@ export interface components {
             run_type: "provisional" | "final" | "revaluation" | "supplementary_merge" | "correction";
             scope?: components["schemas"]["RunScope"];
         };
-        /** RunResponse */
-        RunResponse: {
-            /**
-             * Anomalies Count
-             * @default 0
-             */
-            anomalies_count: number;
-            /** Approval Resolution Id */
-            approval_resolution_id?: string | null;
-            /** Approved At */
-            approved_at?: string | null;
-            /** Approved By */
-            approved_by?: string | null;
-            /** Checksum */
-            checksum?: string | null;
-            /** Config Snapshot */
-            config_snapshot?: {
-                [key: string]: unknown;
-            } | null;
-            /**
-             * Created At
-             * Format: date-time
-             */
-            created_at: string;
-            /** Exam Session Id */
-            exam_session_id?: string | null;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Job Id */
-            job_id?: string | null;
-            /** Published At */
-            published_at?: string | null;
-            /** Run Type */
-            run_type: string;
-            /** Scope */
-            scope?: {
-                [key: string]: unknown;
-            } | null;
-            /** Session Name */
-            session_name?: string | null;
-            /** Stats */
-            stats?: {
-                [key: string]: unknown;
-            } | null;
-            /** Status */
-            status: string;
-            /** Triggered By */
-            triggered_by?: string | null;
-            /** Verified At */
-            verified_at?: string | null;
-            /** Verified By */
-            verified_by?: string | null;
-        };
         /** RunScope */
         RunScope: {
             /**
@@ -35659,6 +36797,32 @@ export interface components {
              * @default []
              */
             program_ids: string[];
+        };
+        /** RunSummary */
+        RunSummary: {
+            /** Config Snapshot */
+            config_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Run At
+             * Format: date-time
+             */
+            run_at: string;
+            /** Run By */
+            run_by?: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Warnings
+             * @default []
+             */
+            warnings: string[];
         };
         /** SalaryStructureIn */
         SalaryStructureIn: {
@@ -37435,6 +38599,29 @@ export interface components {
             /** Ifsc */
             ifsc: string;
         };
+        /** StudentCoAchievement */
+        StudentCoAchievement: {
+            /** Cos */
+            cos: components["schemas"]["StudentCoItem"][];
+            offering: components["schemas"]["OfferingRef"];
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+            /** Student Program Enrollment Id */
+            student_program_enrollment_id?: string | null;
+        };
+        /** StudentCoItem */
+        StudentCoItem: {
+            /** Above Target */
+            above_target?: boolean | null;
+            /** Co */
+            co: string;
+            /** Marks Pct */
+            marks_pct?: number | null;
+            /** Statement */
+            statement?: string | null;
+        };
         /**
          * StudentCreate
          * @description ``student_service.create`` input — the registrar's wizard, bulk import and (Phase 08) admissions.
@@ -38443,6 +39630,13 @@ export interface components {
             /** Students */
             students: number;
         };
+        /** SurveyThreshold */
+        SurveyThreshold: {
+            /** Level */
+            level: number;
+            /** Min Mean */
+            min_mean: number;
+        };
         /** SuspendRequest */
         SuspendRequest: {
             /** Reason */
@@ -39249,6 +40443,16 @@ export interface components {
          * @enum {string}
          */
         TransferType: "migration_in" | "migration_out" | "inter_college" | "program_change" | "inter_university";
+        /** TrendBatch */
+        TrendBatch: {
+            batch: components["schemas"]["BatchRef"];
+            /** Outcomes */
+            outcomes: {
+                [key: string]: number | null;
+            };
+            /** Run At */
+            run_at?: string | null;
+        };
         /** UndertakingAccept */
         UndertakingAccept: {
             /**
@@ -40437,6 +41641,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RunResponse] */
+        app__schemas__common__Envelope_RunResponse___1: {
+            data?: components["schemas"]["app__schemas__obe_attainment__RunResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RunResponse] */
+        app__schemas__common__Envelope_RunResponse___2: {
+            data?: components["schemas"]["app__schemas__results__RunResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** ReconcileSummary */
         app__schemas__fees__ReconcileSummary: {
             /**
@@ -40460,6 +41694,33 @@ export interface components {
              */
             unmatched: number;
         };
+        /** RunResponse */
+        app__schemas__obe_attainment__RunResponse: {
+            /** Computed At */
+            computed_at?: string | null;
+            /** Config Snapshot */
+            config_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            /** Job Id */
+            job_id?: string | null;
+            /** Run Id */
+            run_id?: string | null;
+            /**
+             * Scope Id
+             * Format: uuid
+             */
+            scope_id: string;
+            /** Scope Type */
+            scope_type: string;
+            /** Status */
+            status: string;
+            /**
+             * Warnings
+             * @default []
+             */
+            warnings: string[];
+        };
         /** PublishRequest */
         app__schemas__results__PublishRequest: {
             /**
@@ -40479,6 +41740,62 @@ export interface components {
              * @default []
              */
             withhold_ids: string[];
+        };
+        /** RunResponse */
+        app__schemas__results__RunResponse: {
+            /**
+             * Anomalies Count
+             * @default 0
+             */
+            anomalies_count: number;
+            /** Approval Resolution Id */
+            approval_resolution_id?: string | null;
+            /** Approved At */
+            approved_at?: string | null;
+            /** Approved By */
+            approved_by?: string | null;
+            /** Checksum */
+            checksum?: string | null;
+            /** Config Snapshot */
+            config_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Exam Session Id */
+            exam_session_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Job Id */
+            job_id?: string | null;
+            /** Published At */
+            published_at?: string | null;
+            /** Run Type */
+            run_type: string;
+            /** Scope */
+            scope?: {
+                [key: string]: unknown;
+            } | null;
+            /** Session Name */
+            session_name?: string | null;
+            /** Stats */
+            stats?: {
+                [key: string]: unknown;
+            } | null;
+            /** Status */
+            status: string;
+            /** Triggered By */
+            triggered_by?: string | null;
+            /** Verified At */
+            verified_at?: string | null;
+            /** Verified By */
+            verified_by?: string | null;
         };
         /** DocumentVerifyRequest */
         app__schemas__students__DocumentVerifyRequest: {
@@ -44394,6 +45711,134 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_SubmissionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    config_list_api_v1_attainment_configs_get: {
+        parameters: {
+            query?: {
+                scope_type?: string | null;
+                scope_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AttainmentConfigOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    config_put_api_v1_attainment_configs_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AttainmentConfigIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AttainmentConfigOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    config_effective_api_v1_attainment_configs_effective_get: {
+        parameters: {
+            query: {
+                program_id: string;
+                batch_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AttainmentConfigOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attainment_me_api_v1_attainment_me_get: {
+        parameters: {
+            query: {
+                offering_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StudentCoAchievement_"];
                 };
             };
             /** @description Validation Error */
@@ -48422,6 +49867,167 @@ export interface operations {
             };
         };
     };
+    co_get_api_v1_course_offerings__id__attainment_get: {
+        parameters: {
+            query?: {
+                run_id?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CoAttainmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    co_compute_api_v1_course_offerings__id__attainment_compute_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CoRunRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    co_heatmap_api_v1_course_offerings__id__attainment_heatmap_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CoPoHeatmap_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    co_runs_api_v1_course_offerings__id__attainment_runs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RunSummary__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    co_students_api_v1_course_offerings__id__attainment_students_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_StudentCoAchievement__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_cia_api_v1_course_offerings__id__cia_consolidate_get: {
         parameters: {
             query?: never;
@@ -49636,6 +51242,245 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_SyllabusTopicOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_list_api_v1_cqi_actions_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                owner_staff_id?: string | null;
+                scope_type?: string | null;
+                scope_id?: string | null;
+                mine?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CqiActionOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_create_api_v1_cqi_actions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CqiActionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CqiActionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_get_api_v1_cqi_actions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CqiActionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_update_api_v1_cqi_actions__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CqiActionUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CqiActionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_evidence_api_v1_cqi_actions__id__evidence_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_cqi_evidence_api_v1_cqi_actions__id__evidence_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CqiActionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_status_api_v1_cqi_actions__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CqiStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CqiActionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cqi_verify_api_v1_cqi_actions__id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CqiVerify"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CqiActionOut_"];
                 };
             };
             /** @description Validation Error */
@@ -58750,6 +60595,197 @@ export interface operations {
             };
         };
     };
+    dashboard_api_v1_obe_dashboard_get: {
+        parameters: {
+            query: {
+                program_id: string;
+                batch_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    nba_export_api_v1_obe_export_nba_sar_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NbaExportRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExportJob_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    nba_export_get_api_v1_obe_exports__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExportJob_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gaps_api_v1_obe_gaps_get: {
+        parameters: {
+            query: {
+                program_id: string;
+                batch_id?: string | null;
+                threshold?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GapListRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    indirect_summary_api_v1_obe_indirect_summary_get: {
+        parameters: {
+            query: {
+                survey_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IndirectSurveySummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recompute_term_api_v1_obe_recompute_term_post: {
+        parameters: {
+            query: {
+                term_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExportJob_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     assessment_queue_api_v1_offering_assessments_get: {
         parameters: {
             query?: {
@@ -60559,6 +62595,139 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    po_get_api_v1_programs__id__attainment_get: {
+        parameters: {
+            query: {
+                batch_id: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PoAttainmentResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    po_heatmap_api_v1_programs__id__attainment_heatmap_get: {
+        parameters: {
+            query: {
+                batch_id: string;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CoPoHeatmap_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    po_trend_api_v1_programs__id__attainment_trend_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramAttainmentTrend_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    po_compute_api_v1_programs__id__batches__bid__attainment_compute_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                bid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PoRunRequest"] | null;
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___1"];
                 };
             };
             /** @description Validation Error */
@@ -63958,7 +66127,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___2"];
                 };
             };
             /** @description Validation Error */
@@ -64026,7 +66195,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___2"];
                 };
             };
             /** @description Validation Error */
@@ -64123,7 +66292,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___2"];
                 };
             };
             /** @description Validation Error */
@@ -64158,7 +66327,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___2"];
                 };
             };
             /** @description Validation Error */
@@ -64231,7 +66400,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_RunResponse_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_RunResponse___2"];
                 };
             };
             /** @description Validation Error */

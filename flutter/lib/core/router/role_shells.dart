@@ -265,6 +265,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'attendance:condone',
       feature: 'attendance.condonation',
       roles: ['hod']),
+  // Phase 17 — attainment (faculty), attainment dashboard + CQI (HOD / IQAC / OBE coordinator / dean)
+  const MoreMenuModule(
+      titleKey: 'attainment',
+      icon: Icons.insights_outlined,
+      route: AppRoutes.attainment,
+      color: Colors.deepPurple,
+      permission: 'obe:compute',
+      feature: 'obe.attainment',
+      roles: ['faculty', 'hod', 'class_advisor', 'guest_faculty']),
+  const MoreMenuModule(
+      titleKey: 'attainment_dashboard',
+      icon: Icons.radar_outlined,
+      route: AppRoutes.attainmentDashboard,
+      color: Colors.indigo,
+      permission: 'obe:view',
+      feature: 'obe.attainment',
+      roles: ['hod', 'dean', 'iqac_coordinator', 'obe_coordinator']),
+  const MoreMenuModule(
+      titleKey: 'cqi_actions',
+      icon: Icons.task_alt_outlined,
+      route: AppRoutes.cqiActions,
+      color: Colors.teal,
+      permission: 'obe:view',
+      feature: 'obe.cqi',
+      roles: ['faculty', 'hod', 'dean', 'iqac_coordinator', 'obe_coordinator']),
   // Phase 15 — results (students), evaluation (faculty / external examiners), result runs (exam cell / COE)
   const MoreMenuModule(
       titleKey: 'results',
