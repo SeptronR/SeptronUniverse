@@ -181,6 +181,14 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("inventory", "bill_variance_pct", "int", 2, label="Three-way match tolerance (%)", min=0, max=100),
     SettingDef("inventory", "tds_threshold_paise", "int", 3000000, label="TDS above (paise)", min=0),
     SettingDef("inventory", "tds_rates", "json", {"company": 2.0, "individual": 1.0, "firm": 1.0, "government": 0.0}, label="TDS % by supplier type"),
+    # accounting & budget (Phase 23)
+    SettingDef("accounting", "financial_year_start_month", "int", 4, label="Financial year starts (month)", min=1, max=12),
+    SettingDef("accounting", "expense_approval_threshold_paise", "int", 5000000, label="Expense amount needing the workflow (paise)", min=0),
+    SettingDef("accounting", "document_required_paise", "int", 1000000, label="Attachment required above (paise)", min=0),
+    SettingDef("accounting", "budget_hard_stop", "bool", True, label="Refuse expenses beyond the budget"),
+    SettingDef("accounting", "gst_number", "str", None, label="GSTIN of the institution"),
+    SettingDef("accounting", "tally_company_name", "str", None, label="Tally company name"),
+    SettingDef("accounting", "mappings", "json", None, label="Ledger account mappings"),
     # communication
     SettingDef("communication", "sms_sender_id", "str", None),
     SettingDef("communication", "dlt_entity_id", "str", None),

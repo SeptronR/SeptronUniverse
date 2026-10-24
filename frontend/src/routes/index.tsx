@@ -185,6 +185,21 @@ const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultP
 const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
 const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
 const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 23 — accounting & budget
+const AccountingDashboardPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.AccountingDashboardPage })));
+const AcctChartPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ChartPage })));
+const AcctLedgerPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.LedgerPage })));
+const AcctIncomePage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.IncomePage })));
+const AcctExpensesPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ExpensesPage })));
+const AcctBudgetsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.BudgetsPage })));
+const AcctMyBudgetPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.MyBudgetPage })));
+const AcctGrantsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.GrantsPage })));
+const AcctReconciliationPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ReconciliationPage })));
+const AcctGstPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.GstPage })));
+const AcctExportsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ExportsPage })));
+const AcctStatementsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.StatementsPage })));
+const AcctPeriodsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.PeriodsPage })));
+const AcctFacultyGrantsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.FacultyGrantsPage })));
 // Phase 22 — inventory, procurement, assets, bills, supplier portal
 const InvItemsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.ItemsPage })));
 const InvStoresPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.StoresPage })));
@@ -527,6 +542,20 @@ export const router = createBrowserRouter([
               ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
               ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
               ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 23 — accounting & budget (narrowed by the services: own / department / PI / college / all)
+              ['/admin/accounting/dashboard', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AccountingDashboardPage key="ad" />],
+              ['/admin/accounting/chart', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AcctChartPage key="ach" />],
+              ['/admin/accounting/ledger', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AcctLedgerPage key="al" />],
+              ['/admin/accounting/income', 'accounting.core', 'accounting', 'post', [['accounting', 'view_all'], ['accounting', 'manage']], <AcctIncomePage key="ai" />],
+              ['/admin/accounting/expenses', 'accounting.core', 'accounting', 'post', [['accounting', 'view_all'], ['accounting', 'approve'], ['accounting', 'view']], <AcctExpensesPage key="ae" />],
+              ['/admin/accounting/budgets/me', 'accounting.budgets', 'accounting', 'view', [['accounting', 'post']], <AcctMyBudgetPage key="abm" />],
+              ['/admin/accounting/budgets', 'accounting.budgets', 'accounting', 'view_all', [['accounting', 'manage'], ['accounting', 'approve']], <AcctBudgetsPage key="ab" />],
+              ['/admin/accounting/grants', 'accounting.grants_ledger', 'accounting', 'view_all', [['accounting', 'manage'], ['research', 'view_all']], <AcctGrantsPage key="ag" />],
+              ['/admin/accounting/reconciliation', 'accounting.core', 'accounting', 'reconcile', [['accounting', 'view_all']], <AcctReconciliationPage key="ar" />],
+              ['/admin/accounting/gst', 'accounting.gst_reports', 'accounting', 'view_all', [['accounting', 'manage']], <AcctGstPage key="agst" />],
+              ['/admin/accounting/exports', 'accounting.tally_export', 'accounting', 'export', [['accounting', 'view_all']], <AcctExportsPage key="aex" />],
+              ['/admin/accounting/statements', 'accounting.core', 'accounting', 'view_all', [['reports', 'export']], <AcctStatementsPage key="ast" />],
+              ['/admin/accounting/periods', 'accounting.core', 'accounting', 'manage', [], <AcctPeriodsPage key="ap" />],
               // Phase 22 — inventory & procurement (narrowed by the services: own / custodian / store keeper / department / college / all)
               ['/admin/inventory/items', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'issue'], ['inventory', 'receive']], <InvItemsPage key="ii" />],
               ['/admin/inventory/stores', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'issue'], ['inventory', 'receive'], ['inventory', 'approve_indent']], <InvStoresPage key="is" />],
@@ -788,6 +817,7 @@ export const router = createBrowserRouter([
           { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
           { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
           { path: 'library', element: page(<FeatureRoute feature="library.core"><MyLibraryPage /></FeatureRoute>) },
+          { path: 'grants', element: page(<FeatureRoute feature="accounting.grants_ledger"><AcctFacultyGrantsPage /></FeatureRoute>) },
           // Phase 17 — CO attainment of an own offering
           { path: 'offerings/:id/attainment', element: page(<FeatureRoute feature="obe.attainment"><OfferingAttainmentPage /></FeatureRoute>) },
           // Phase 14 — exam duties and question-paper setting

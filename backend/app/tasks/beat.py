@@ -104,6 +104,11 @@ register_beat("inventory.bill_due_reminders", "beat.inventory.bill_due_reminders
 register_beat("inventory.audit_due", "beat.inventory.audit_due", crontab(day_of_month=1, hour=3, minute=0))
 register_beat("inventory.warranty_expiry", "beat.inventory.warranty_expiry", crontab(day_of_week=1, hour=3, minute=15))
 
+# ---- Phase 23 accounting (app/tasks/accounting.py) --------------------------------------------------------------------------------
+register_beat("accounting.budget_threshold_scan", "beat.accounting.budget_threshold_scan", crontab(hour=2, minute=30))  # 08:00 IST
+register_beat("accounting.reconciliation_reminder", "beat.accounting.reconciliation_reminder", crontab(day_of_month=3, hour=3, minute=30))
+register_beat("accounting.posting_gap_check", "beat.accounting.posting_gap_check", crontab(hour=19, minute=40))  # 01:10 IST
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

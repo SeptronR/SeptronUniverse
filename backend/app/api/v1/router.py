@@ -40,6 +40,7 @@ from fastapi import APIRouter
 import app.features  # noqa: F401  (registers every feature key before routers cite them)
 from app.api.v1.endpoints import (
     academic_sessions,
+    accounting,
     admissions,
     announcements,
     appraisals,
@@ -167,6 +168,8 @@ api_router.include_router(transport.public_router)  # X-Device-Token; checks {tr
 api_router.include_router(inventory.router)
 api_router.include_router(inventory.vendor_router)
 api_router.include_router(inventory.public_router)
+# Phase 23: accounting, budgets, grants, reconciliation, GST, exports, statements (each route carries its accounting.* feature)
+api_router.include_router(accounting.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

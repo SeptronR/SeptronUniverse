@@ -295,7 +295,7 @@ class IndentService(InventoryBase):
             )
             await self._emit(
                 "budget.commit_requested",
-                {"budget_head_id": str(r.budget_head_id), "amount_paise": r.estimated_paise, "indent_id": str(r.id)},
+                {"budget_head_id": str(r.budget_head_id), "amount_paise": r.estimated_paise, "indent_id": str(r.id), "applied": True},
                 ENTITY,
                 r.id,
             )
@@ -312,7 +312,7 @@ class IndentService(InventoryBase):
             )
             await self._emit(
                 "budget.commit_released",
-                {"budget_head_id": str(r.budget_head_id), "amount_paise": amt, "indent_id": str(r.id)},
+                {"budget_head_id": str(r.budget_head_id), "amount_paise": amt, "indent_id": str(r.id), "applied": True},
                 ENTITY,
                 r.id,
             )

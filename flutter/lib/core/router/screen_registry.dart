@@ -18,6 +18,7 @@ import '../../features/library/library_screens.dart';
 import '../../features/hostel/hostel_screens.dart';
 import '../../features/transport/transport_screens.dart';
 import '../../features/inventory/inventory_screens.dart';
+import '../../features/accounting/accounting_screens.dart';
 import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
@@ -329,6 +330,28 @@ class ScreenRegistry {
       feature: 'results.revaluation',
       permission: 'exams:reval',
       builder: (_, __) => const RevalQueueScreen(),
+    ),
+    // Phase 23 — accounting
+    AppRoutes.accountingHome: ScreenEntry(
+      route: AppRoutes.accountingHome,
+      titleKey: 'accounting',
+      feature: 'accounting.core',
+      permission: 'accounting:view_all',
+      builder: (_, __) => const AccountingHomeScreen(),
+    ),
+    AppRoutes.departmentBudget: ScreenEntry(
+      route: AppRoutes.departmentBudget,
+      titleKey: 'budget',
+      feature: 'accounting.budgets',
+      permission: 'accounting:view',
+      builder: (_, __) => const DepartmentBudgetScreen(),
+    ),
+    AppRoutes.myGrants: ScreenEntry(
+      route: AppRoutes.myGrants,
+      titleKey: 'grants',
+      feature: 'accounting.grants_ledger',
+      permission: 'accounting:view',
+      builder: (_, __) => const MyGrantsScreen(),
     ),
     // Phase 22 — inventory
     AppRoutes.stockLookup: ScreenEntry(

@@ -518,6 +518,8 @@ FACULTY: set[str] = (
     | P("registration", "view")
     | P("faculty", "view", "research")
     | P("inventory", "indent", "view")
+    # Phase 23: principal investigators read their own grant ledgers
+    | P("accounting", "view")
     | P("clubs", "view")
     | P("results", "view")
     # Phase 10: faculty request substitutions for their own classes (FACULTY_TIMETABLE below)
@@ -706,6 +708,14 @@ INVENTORY_MANAGER_OPS: set[str] = P("inventory", "receive", "issue", "asset_audi
 ACCOUNTANT_PROCUREMENT: set[str] = P("procurement", "po_approve")
 VC_PROCUREMENT: set[str] = P("procurement", "po_approve", "bill_approve")
 VENDOR_PORTAL: set[str] = P("procurement", "quote") | P("inventory", "view")
+# Phase 23 (Prompts/23 visibility): HODs record / read their department's expenses and budgets; faculty read their own
+# grant ledgers (PI); the accountant posts, reconciles, approves (below the threshold) and exports; the vice-chancellor
+# approves above it; IQAC reads aggregates
+HOD_ACCOUNTING: set[str] = P("accounting", "view", "post")
+FACULTY_ACCOUNTING: set[str] = P("accounting", "view")
+ACCOUNTANT_ACCOUNTING: set[str] = P("accounting", "post", "reconcile", "approve", "export", "view_all")
+VC_ACCOUNTING: set[str] = P("accounting", "approve")
+IQAC_ACCOUNTING: set[str] = P("accounting", "view_all")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -713,6 +723,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "institution_admin": _INSTITUTION_ADMIN,
     "vice_chancellor": ALL("view", "view_all")
     | VC_PROCUREMENT
+    | VC_ACCOUNTING
     | P("leaves", "approve")
     | P("regulations", "approve")
     | P("degrees", "award")
@@ -846,7 +857,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_DEGREES
     | HOD_LIBRARY
     | HOD_HOSTEL
-    | HOD_TRANSPORT,
+    | HOD_TRANSPORT
+    | HOD_ACCOUNTING,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -878,6 +890,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("faculty", "view_all", "research")
     | P("reports", "run", "view"),
     "iqac_coordinator": ALL("view", "view_all")
+    | IQAC_ACCOUNTING
     | P("accreditation", "manage")
     | P("surveys", "manage")
     | P("reports", "statutory", "run")
@@ -908,6 +921,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("accounting", "manage")
     | P("procurement", "bill_approve", "view_all")
     | ACCOUNTANT_PROCUREMENT
+    | ACCOUNTANT_ACCOUNTING
     | P("library", "fines", "view_all")
     | P("hr", "view_all")
     | P("leaves", "view_all")
@@ -1091,6 +1105,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0023": frozenset(HOD_ACCOUNTING | FACULTY_ACCOUNTING | ACCOUNTANT_ACCOUNTING | VC_ACCOUNTING | IQAC_ACCOUNTING),
     "0022": frozenset(STORE_KEEPER | INVENTORY_MANAGER_OPS | ACCOUNTANT_PROCUREMENT | VC_PROCUREMENT | VENDOR_PORTAL),
     "0021": frozenset(HOD_TRANSPORT | STAFF_TRANSPORT),
     "0020": frozenset(REGISTRAR_HOSTEL | HOD_HOSTEL | ADVISOR_HOSTEL),

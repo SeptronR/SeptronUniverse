@@ -1098,6 +1098,49 @@ HOSTEL_EVENTS: tuple[EventDef, ...] = (
         ("in_app",),
     ),
 )
+# Phase 23 — accounting & budget
+ACCOUNTING_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "accounting.expense_status",
+        "fees",
+        "Expense status",
+        "Expense Rs {{ amount }}: {{ status }}",
+        "Your expense of Rs {{ amount }} ({{ payee }}) is {{ status }}.",
+        ("amount", "status", "payee"),
+        ("in_app", "email"),
+        link="/admin/accounting/expenses",
+    ),
+    EventDef(
+        "accounting.budget_threshold",
+        "fees",
+        "Budget threshold",
+        "Budget {{ head }} at {{ pct }}%",
+        "Budget head {{ head }} has reached {{ pct }}% of its allocation.",
+        ("head", "pct"),
+        ("in_app", "email"),
+        link="/admin/accounting/budgets",
+    ),
+    EventDef(
+        "accounting.reconciliation_pending",
+        "fees",
+        "Reconciliation pending",
+        "{{ count }} reconciliation item(s) pending",
+        "{{ count }} bank reconciliation / posting item(s) need attention.",
+        ("count",),
+        ("in_app",),
+        link="/admin/accounting/reconciliation",
+    ),
+    EventDef(
+        "accounting.export_ready",
+        "fees",
+        "Export ready",
+        "{{ target }} export ready",
+        "Your {{ target }} export with {{ count }} voucher(s) is ready to download.",
+        ("target", "count"),
+        ("in_app",),
+        link="/admin/accounting/exports",
+    ),
+)
 # Phase 22 — inventory, procurement, assets, bills, supplier portal
 INVENTORY_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1481,6 +1524,7 @@ EVENTS = (
     + HOSTEL_EVENTS
     + TRANSPORT_EVENTS
     + INVENTORY_EVENTS
+    + ACCOUNTING_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

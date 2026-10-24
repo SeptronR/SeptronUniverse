@@ -298,6 +298,31 @@ final List<MoreMenuModule> moreMenuModules = [
       permission: 'exams:reval',
       feature: 'results.revaluation',
       roles: ['controller_of_examinations', 'exam_cell']),
+  // Phase 23 — accounting (accountant), department budget (HOD), grants (PI)
+  const MoreMenuModule(
+      titleKey: 'accounting',
+      icon: Icons.account_balance_outlined,
+      route: AppRoutes.accountingHome,
+      color: Colors.green,
+      permission: 'accounting:view_all',
+      feature: 'accounting.core',
+      roles: ['accountant', 'vice_chancellor', 'institution_admin']),
+  const MoreMenuModule(
+      titleKey: 'budget',
+      icon: Icons.pie_chart_outline,
+      route: AppRoutes.departmentBudget,
+      color: Colors.green,
+      permission: 'accounting:view',
+      feature: 'accounting.budgets',
+      roles: ['hod']),
+  const MoreMenuModule(
+      titleKey: 'grants',
+      icon: Icons.science_outlined,
+      route: AppRoutes.myGrants,
+      color: Colors.indigo,
+      permission: 'accounting:view',
+      feature: 'accounting.grants_ledger',
+      roles: ['faculty', 'hod', 'research_guide']),
   // Phase 22 — store keeper stock / receive, staff indents / assets, asset audit scanner
   const MoreMenuModule(
       titleKey: 'stock',

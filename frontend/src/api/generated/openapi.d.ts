@@ -654,6 +654,903 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/accounting/accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ledger accounts (flat) */
+        get: operations["accounts_api_v1_accounting_accounts_get"];
+        put?: never;
+        /** Add a ledger account */
+        post: operations["account_create_api_v1_accounting_accounts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/accounts/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import the IN template or a CSV chart */
+        post: operations["accounts_import_api_v1_accounting_accounts_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/accounts/tree": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Chart of accounts with period balances */
+        get: operations["accounts_tree_api_v1_accounting_accounts_tree_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/accounts/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ledger account */
+        get: operations["account_get_api_v1_accounting_accounts__id__get"];
+        /** Edit / deactivate a ledger account */
+        put: operations["account_update_api_v1_accounting_accounts__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/attachments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload a bill / voucher / receipt (returns the stored key) */
+        post: operations["attachment_api_v1_accounting_attachments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Budget heads (scoped) */
+        get: operations["budgets_api_v1_accounting_budgets_get"];
+        put?: never;
+        /** Create a budget head (draft) */
+        post: operations["budget_create_api_v1_accounting_budgets_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Bulk allocate (draft heads) */
+        post: operations["budgets_bulk_api_v1_accounting_budgets_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Budget heads of my department */
+        get: operations["budgets_me_api_v1_accounting_budgets_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit every draft head of a year (workflow) */
+        post: operations["budgets_submit_all_api_v1_accounting_budgets_submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/transfer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Transfer allocation between heads */
+        post: operations["budgets_transfer_api_v1_accounting_budgets_transfer_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/utilisation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Utilisation by department */
+        get: operations["budgets_utilisation_api_v1_accounting_budgets_utilisation_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Budget head */
+        get: operations["budget_get_api_v1_accounting_budgets__id__get"];
+        /** Edit a budget head */
+        put: operations["budget_update_api_v1_accounting_budgets__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve a head directly */
+        post: operations["budget_approve_api_v1_accounting_budgets__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/{id}/freeze": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Freeze a head */
+        post: operations["budget_freeze_api_v1_accounting_budgets__id__freeze_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/{id}/revise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revise the allocation */
+        post: operations["budget_revise_api_v1_accounting_budgets__id__revise_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/budgets/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit a head (workflow) */
+        post: operations["budget_submit_api_v1_accounting_budgets__id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Finance dashboard */
+        get: operations["dashboard_api_v1_accounting_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/expenses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Expenses (ScopeTabs) */
+        get: operations["expenses_api_v1_accounting_expenses_get"];
+        put?: never;
+        /** Record an expense */
+        post: operations["expense_create_api_v1_accounting_expenses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/expenses/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Expense */
+        get: operations["expense_get_api_v1_accounting_expenses__id__get"];
+        /** Edit a recorded expense */
+        put: operations["expense_update_api_v1_accounting_expenses__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/expenses/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject (below the threshold) */
+        post: operations["expense_decide_api_v1_accounting_expenses__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/expenses/{id}/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark an approved expense paid */
+        post: operations["expense_pay_api_v1_accounting_expenses__id__pay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/expenses/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit for approval (workflow above the threshold) */
+        post: operations["expense_submit_api_v1_accounting_expenses__id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/exports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Voucher exports */
+        get: operations["exports_api_v1_accounting_exports_get"];
+        put?: never;
+        /** Export vouchers (Tally XML / Zoho CSV / CSV; job) */
+        post: operations["export_create_api_v1_accounting_exports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/exports/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export (signed URL when ready) */
+        get: operations["export_get_api_v1_accounting_exports__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Grant ledgers (own / all) */
+        get: operations["grants_api_v1_accounting_grants_get"];
+        put?: never;
+        /** Create a grant ledger */
+        post: operations["grant_create_api_v1_accounting_grants_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Grant ledger */
+        get: operations["grant_get_api_v1_accounting_grants__id__get"];
+        /** Edit a grant ledger */
+        put: operations["grant_update_api_v1_accounting_grants__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close a grant (unspent → refund) */
+        post: operations["grant_close_api_v1_accounting_grants__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}/expenses": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a grant expense (PI / accounts) */
+        post: operations["grant_expense_api_v1_accounting_grants__id__expenses_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}/reallocate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reallocate between grant heads */
+        post: operations["grant_reallocate_api_v1_accounting_grants__id__reallocate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}/receipts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a grant instalment */
+        post: operations["grant_receipt_api_v1_accounting_grants__id__receipts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}/soe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Statement of expenditure */
+        get: operations["grant_soe_api_v1_accounting_grants__id__soe_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/grants/{id}/uc.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Utilisation certificate (PDF) */
+        get: operations["grant_uc_api_v1_accounting_grants__id__uc_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/gst/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GST CSV (job) */
+        get: operations["gst_export_api_v1_accounting_gst_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/gst/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** GST summary for a month (YYYY-MM) */
+        get: operations["gst_summary_api_v1_accounting_gst_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/income": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Income records */
+        get: operations["incomes_api_v1_accounting_income_get"];
+        put?: never;
+        /** Record income */
+        post: operations["income_create_api_v1_accounting_income_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/income/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Income record */
+        get: operations["income_get_api_v1_accounting_income__id__get"];
+        /** Edit a manual income record */
+        put: operations["income_update_api_v1_accounting_income__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/income/{id}/reverse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reverse an income record */
+        post: operations["income_reverse_api_v1_accounting_income__id__reverse_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/ledger/{account_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Account ledger with source links */
+        get: operations["ledger_api_v1_accounting_ledger__account_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/mappings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Account mappings (fee heads, system keys, inventory categories) */
+        get: operations["mappings_api_v1_accounting_mappings_get"];
+        /** Update account mappings */
+        put: operations["mappings_put_api_v1_accounting_mappings_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/periods/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close the books up to a date */
+        post: operations["period_close_api_v1_accounting_periods_close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/postings/gaps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Sources without postings */
+        get: operations["postings_gaps_api_v1_accounting_postings_gaps_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/postings/replay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rebuild automatic postings for a period (job) */
+        post: operations["postings_replay_api_v1_accounting_postings_replay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Bank reconciliations */
+        get: operations["recons_api_v1_accounting_reconciliations_get"];
+        put?: never;
+        /** Open a reconciliation (+ statement rows) */
+        post: operations["recon_create_api_v1_accounting_reconciliations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Reconciliation */
+        get: operations["recon_get_api_v1_accounting_reconciliations__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations/{id}/add-record": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Turn a row into a bank charge / interest record */
+        post: operations["recon_add_api_v1_accounting_reconciliations__id__add_record_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close a reconciliation */
+        post: operations["recon_close_api_v1_accounting_reconciliations__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations/{id}/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import statement rows (CSV) and auto-match */
+        post: operations["recon_import_api_v1_accounting_reconciliations__id__import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations/{id}/match": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Match / explain a row */
+        post: operations["recon_match_api_v1_accounting_reconciliations__id__match_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/reconciliations/{id}/unmatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Undo a match */
+        post: operations["recon_unmatch_api_v1_accounting_reconciliations__id__unmatch_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/statements/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Receipts & payments / income & expenditure / balance summary */
+        get: operations["statement_api_v1_accounting_statements__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/trial-balance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Trial balance */
+        get: operations["trial_balance_api_v1_accounting_trial_balance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/accounting/years/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Financial / academic year close (job) */
+        post: operations["year_close_api_v1_accounting_years_close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admissions/applicants": {
         parameters: {
             query?: never;
@@ -18891,6 +19788,113 @@ export interface components {
              */
             format: "tally_xml" | "csv";
         };
+        /** AcctAccountIn */
+        AcctAccountIn: {
+            /** Account Type */
+            account_type?: ("income" | "expense" | "asset" | "liability" | "equity") | null;
+            /** Code */
+            code: string;
+            /** External Ref */
+            external_ref?: string | null;
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: string | null;
+        };
+        /** AcctAccountOut */
+        AcctAccountOut: {
+            /** Account Type */
+            account_type: string;
+            /**
+             * Balance Paise
+             * @default 0
+             */
+            balance_paise: number;
+            /**
+             * Children
+             * @default []
+             */
+            children: components["schemas"]["AcctAccountOut"][];
+            /** Code */
+            code: string;
+            /**
+             * Credit Paise
+             * @default 0
+             */
+            credit_paise: number;
+            /**
+             * Debit Paise
+             * @default 0
+             */
+            debit_paise: number;
+            /** External Ref */
+            external_ref?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            /** Parent Id */
+            parent_id?: string | null;
+        };
+        /** AcctAccountUpdate */
+        AcctAccountUpdate: {
+            /** External Ref */
+            external_ref?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Name */
+            name?: string | null;
+            /** Parent Id */
+            parent_id?: string | null;
+        };
+        /** AcctDashboard */
+        AcctDashboard: {
+            /** Bank Paise */
+            bank_paise: number;
+            /** Budget Alerts */
+            budget_alerts: {
+                [key: string]: unknown;
+            }[];
+            /** Cash Paise */
+            cash_paise: number;
+            /** Expense Month Paise */
+            expense_month_paise: number;
+            /** Income Month Paise */
+            income_month_paise: number;
+            /** Open Reconciliations */
+            open_reconciliations: number;
+            /** Pending Expenses */
+            pending_expenses: number;
+            /** Posting Gaps */
+            posting_gaps: number;
+            /** Receivables Paise */
+            receivables_paise: number;
+        };
+        /** AcctJobAccepted */
+        AcctJobAccepted: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+        };
+        /** AcctMappings */
+        AcctMappings: {
+            /** Mappings */
+            mappings: {
+                [key: string]: unknown;
+            };
+        };
+        /** AcctReverse */
+        AcctReverse: {
+            /** Reason */
+            reason: string;
+        };
         /** AckStats */
         AckStats: {
             /** Acknowledged */
@@ -21568,6 +22572,11 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_attachment_api_v1_accounting_attachments_post */
+        Body_attachment_api_v1_accounting_attachments_post: {
+            /** File */
+            file: string;
+        };
         /** Body_bulk_import_api_v1_students_bulk_import_post */
         Body_bulk_import_api_v1_students_bulk_import_post: {
             /** File */
@@ -22004,6 +23013,100 @@ export interface components {
             ok: boolean;
             /** Required */
             required: number;
+        };
+        /** BudgetBulkAllocate */
+        BudgetBulkAllocate: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Rows */
+            rows: components["schemas"]["BudgetHeadIn"][];
+        };
+        /** BudgetHeadIn */
+        BudgetHeadIn: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Allocated Paise */
+            allocated_paise: number;
+            /** College Id */
+            college_id?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Name */
+            name: string;
+        };
+        /** BudgetHeadOut */
+        BudgetHeadOut: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Allocated Paise */
+            allocated_paise: number;
+            /** Available Paise */
+            available_paise: number;
+            /** College Id */
+            college_id?: string | null;
+            /** Committed Paise */
+            committed_paise: number;
+            /** Department Code */
+            department_code?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Name */
+            name: string;
+            /** Pct */
+            pct: number;
+            /** Status */
+            status: string;
+            /** Utilised Paise */
+            utilised_paise: number;
+        };
+        /** BudgetHeadUpdate */
+        BudgetHeadUpdate: {
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Name */
+            name?: string | null;
+        };
+        /** BudgetRevise */
+        BudgetRevise: {
+            /** Allocated Paise */
+            allocated_paise: number;
+            /** Reason */
+            reason: string;
+        };
+        /** BudgetTransfer */
+        BudgetTransfer: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * From Head Id
+             * Format: uuid
+             */
+            from_head_id: string;
+            /** Reason */
+            reason: string;
+            /**
+             * To Head Id
+             * Format: uuid
+             */
+            to_head_id: string;
         };
         /** BuildingIn */
         BuildingIn: {
@@ -22743,6 +23846,19 @@ export interface components {
             target_type: string;
             /** Workflow Instance Id */
             workflow_instance_id?: string | null;
+        };
+        /** ChartImport */
+        ChartImport: {
+            /**
+             * Csv
+             * @description code,name,type,parent_code
+             */
+            csv?: string | null;
+            /**
+             * Template
+             * @default IN
+             */
+            template: "IN" | null;
         };
         /** CheckInRequest */
         CheckInRequest: {
@@ -26703,6 +27819,51 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AcctAccountOut] */
+        Envelope_AcctAccountOut_: {
+            data?: components["schemas"]["AcctAccountOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AcctDashboard] */
+        Envelope_AcctDashboard_: {
+            data?: components["schemas"]["AcctDashboard"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AcctJobAccepted] */
+        Envelope_AcctJobAccepted_: {
+            data?: components["schemas"]["AcctJobAccepted"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AckStats] */
         Envelope_AckStats_: {
             data?: components["schemas"]["AckStats"] | null;
@@ -27186,6 +28347,21 @@ export interface components {
         /** Envelope[BookReturnResponse] */
         Envelope_BookReturnResponse_: {
             data?: components["schemas"]["BookReturnResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[BudgetHeadOut] */
+        Envelope_BudgetHeadOut_: {
+            data?: components["schemas"]["BudgetHeadOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -28203,9 +29379,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ExpenseRecordOut] */
+        Envelope_ExpenseRecordOut_: {
+            data?: components["schemas"]["ExpenseRecordOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ExportJob] */
         Envelope_ExportJob_: {
             data?: components["schemas"]["ExportJob"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExportOut] */
+        Envelope_ExportOut_: {
+            data?: components["schemas"]["ExportOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -28458,9 +29664,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[GrantLedgerOut] */
+        Envelope_GrantLedgerOut_: {
+            data?: components["schemas"]["GrantLedgerOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[GrnResponse] */
         Envelope_GrnResponse_: {
             data?: components["schemas"]["GrnResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[GstReportOut] */
+        Envelope_GstReportOut_: {
+            data?: components["schemas"]["GstReportOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -28761,6 +29997,21 @@ export interface components {
         /** Envelope[ImportResult] */
         Envelope_ImportResult_: {
             data?: components["schemas"]["ImportResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[IncomeRecordOut] */
+        Envelope_IncomeRecordOut_: {
+            data?: components["schemas"]["IncomeRecordOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -30574,6 +31825,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ReconciliationOut] */
+        Envelope_ReconciliationOut_: {
+            data?: components["schemas"]["ReconciliationOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RecoveryCodesResponse] */
         Envelope_RecoveryCodesResponse_: {
             data?: components["schemas"]["RecoveryCodesResponse"] | null;
@@ -31249,6 +32515,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[StatementOut] */
+        Envelope_StatementOut_: {
+            data?: components["schemas"]["StatementOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[StatusChangeResult] */
         Envelope_StatusChangeResult_: {
             data?: components["schemas"]["StatusChangeResult"] | null;
@@ -31672,6 +32953,21 @@ export interface components {
         /** Envelope[TransportReport] */
         Envelope_TransportReport_: {
             data?: components["schemas"]["TransportReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TrialBalanceOut] */
+        Envelope_TrialBalanceOut_: {
+            data?: components["schemas"]["TrialBalanceOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -32192,6 +33488,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[AcctAccountOut]] */
+        Envelope_list_AcctAccountOut__: {
+            /** Data */
+            data?: components["schemas"]["AcctAccountOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[AllocationResponse]] */
         Envelope_list_AllocationResponse__: {
             /** Data */
@@ -32564,6 +33876,22 @@ export interface components {
         Envelope_list_BookResponse__: {
             /** Data */
             data?: components["schemas"]["BookResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[BudgetHeadOut]] */
+        Envelope_list_BudgetHeadOut__: {
+            /** Data */
+            data?: components["schemas"]["BudgetHeadOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -33328,6 +34656,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ExpenseRecordOut]] */
+        Envelope_list_ExpenseRecordOut__: {
+            /** Data */
+            data?: components["schemas"]["ExpenseRecordOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExportOut]] */
+        Envelope_list_ExportOut__: {
+            /** Data */
+            data?: components["schemas"]["ExportOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[FacultyResponse]] */
         Envelope_list_FacultyResponse__: {
             /** Data */
@@ -33492,6 +34852,22 @@ export interface components {
         Envelope_list_GradingScaleResponse__: {
             /** Data */
             data?: components["schemas"]["GradingScaleResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[GrantLedgerOut]] */
+        Envelope_list_GrantLedgerOut__: {
+            /** Data */
+            data?: components["schemas"]["GrantLedgerOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -33744,6 +35120,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[IncomeRecordOut]] */
+        Envelope_list_IncomeRecordOut__: {
+            /** Data */
+            data?: components["schemas"]["IncomeRecordOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[IndentResponse]] */
         Envelope_list_IndentResponse__: {
             /** Data */
@@ -33924,6 +35316,22 @@ export interface components {
         Envelope_list_LedgerAccountOut__: {
             /** Data */
             data?: components["schemas"]["LedgerAccountOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[LedgerLine]] */
+        Envelope_list_LedgerLine__: {
+            /** Data */
+            data?: components["schemas"]["LedgerLine"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -34740,6 +36148,22 @@ export interface components {
         Envelope_list_ReconcileRowOut__: {
             /** Data */
             data?: components["schemas"]["ReconcileRowOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ReconciliationOut]] */
+        Envelope_list_ReconciliationOut__: {
+            /** Data */
+            data?: components["schemas"]["ReconciliationOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -36474,6 +37898,128 @@ export interface components {
             /** Reason */
             reason?: string | null;
         };
+        /** ExpenseDecision */
+        ExpenseDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "approve" | "reject";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** ExpensePay */
+        ExpensePay: {
+            /**
+             * Mode
+             * @default neft
+             * @enum {string}
+             */
+            mode: "cash" | "bank" | "cheque" | "upi" | "neft";
+            /**
+             * Paid On
+             * Format: date
+             */
+            paid_on: string;
+            /** Reference */
+            reference: string;
+        };
+        /** ExpenseRecordIn */
+        ExpenseRecordIn: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Budget Head Id */
+            budget_head_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Description */
+            description: string;
+            /** Document Url */
+            document_url?: string | null;
+            /** Gst Input Paise */
+            gst_input_paise?: number | null;
+            /**
+             * Ledger Account Id
+             * Format: uuid
+             */
+            ledger_account_id: string;
+            /** Payee */
+            payee: string;
+            /** Reference No */
+            reference_no?: string | null;
+            /**
+             * Spent On
+             * Format: date
+             */
+            spent_on: string;
+            /** Vendor Bill Id */
+            vendor_bill_id?: string | null;
+        };
+        /** ExpenseRecordOut */
+        ExpenseRecordOut: {
+            /** Account */
+            account?: string | null;
+            /** Amount Paise */
+            amount_paise: number;
+            /** Budget Head */
+            budget_head?: string | null;
+            /** Budget Head Id */
+            budget_head_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Department Code */
+            department_code?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Document Url */
+            document_url?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Ledger Account Id
+             * Format: uuid
+             */
+            ledger_account_id: string;
+            /** Payee */
+            payee?: string | null;
+            /** Reference No */
+            reference_no?: string | null;
+            /** Source Type */
+            source_type?: string | null;
+            /**
+             * Spent On
+             * Format: date
+             */
+            spent_on: string;
+            /** Status */
+            status: string;
+            /** Vendor Bill Id */
+            vendor_bill_id?: string | null;
+            /** Warning */
+            warning?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** ExpenseRecordUpdate */
+        ExpenseRecordUpdate: {
+            /** Budget Head Id */
+            budget_head_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Document Url */
+            document_url?: string | null;
+            /** Payee */
+            payee?: string | null;
+            /** Reference No */
+            reference_no?: string | null;
+        };
         /** ExportJob */
         ExportJob: {
             /** File Url */
@@ -36491,6 +38037,69 @@ export interface components {
             } | null;
             /** Status */
             status: string;
+        };
+        /** ExportOut */
+        ExportOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** File Url */
+            file_url?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Job Id */
+            job_id?: string | null;
+            /**
+             * Period From
+             * Format: date
+             */
+            period_from: string;
+            /**
+             * Period To
+             * Format: date
+             */
+            period_to: string;
+            /** Status */
+            status: string;
+            /** Target */
+            target: string;
+        };
+        /** ExportRequest */
+        ExportRequest: {
+            /**
+             * Include Exported
+             * @default false
+             */
+            include_exported: boolean;
+            /**
+             * Period From
+             * Format: date
+             */
+            period_from: string;
+            /**
+             * Period To
+             * Format: date
+             */
+            period_to: string;
+            /**
+             * Target
+             * @default tally
+             * @enum {string}
+             */
+            target: "tally" | "zoho" | "csv";
+            /**
+             * Voucher Types
+             * @default [
+             *       "receipt",
+             *       "payment"
+             *     ]
+             */
+            voucher_types: ("receipt" | "payment" | "journal")[];
         };
         /** ExternalEvaluator */
         ExternalEvaluator: {
@@ -37787,6 +39396,111 @@ export interface components {
             /** On Time Pct */
             on_time_pct?: number | null;
         };
+        /** GrantClose */
+        GrantClose: {
+            /** Remark */
+            remark?: string | null;
+        };
+        /** GrantExpense */
+        GrantExpense: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Description */
+            description: string;
+            /** Document Url */
+            document_url?: string | null;
+            /** Head */
+            head: string;
+            /** Payee */
+            payee?: string | null;
+            /**
+             * Spent On
+             * Format: date
+             */
+            spent_on: string;
+        };
+        /** GrantHeadIn */
+        GrantHeadIn: {
+            /** Allocated Paise */
+            allocated_paise: number;
+            /** Name */
+            name: string;
+        };
+        /** GrantLedgerIn */
+        GrantLedgerIn: {
+            /** Budget Heads */
+            budget_heads: components["schemas"]["GrantHeadIn"][];
+            /** Funding Agency */
+            funding_agency?: string | null;
+            /** Name */
+            name: string;
+            /** Pi Staff Id */
+            pi_staff_id?: string | null;
+            /**
+             * Reallocation Allowed
+             * @default true
+             */
+            reallocation_allowed: boolean;
+            /** Research Project Id */
+            research_project_id?: string | null;
+            /** Sanctioned Paise */
+            sanctioned_paise: number;
+        };
+        /** GrantLedgerOut */
+        GrantLedgerOut: {
+            /** Balance Paise */
+            balance_paise: number;
+            /** Budget Heads */
+            budget_heads: {
+                [key: string]: unknown;
+            }[];
+            /** Funding Agency */
+            funding_agency?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Pi Name */
+            pi_name?: string | null;
+            /** Pi Staff Id */
+            pi_staff_id?: string | null;
+            /** Received Paise */
+            received_paise: number;
+            /** Research Project Id */
+            research_project_id?: string | null;
+            /** Sanctioned Paise */
+            sanctioned_paise: number;
+            /** Status */
+            status: string;
+            /** Utilised Paise */
+            utilised_paise: number;
+        };
+        /** GrantReallocate */
+        GrantReallocate: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** From Head */
+            from_head: string;
+            /** Remark */
+            remark: string;
+            /** To Head */
+            to_head: string;
+        };
+        /** GrantReceipt */
+        GrantReceipt: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Received On
+             * Format: date
+             */
+            received_on: string;
+            /** Reference */
+            reference?: string | null;
+        };
         /** GrnCreate */
         GrnCreate: {
             /** Invoice No */
@@ -37871,6 +39585,25 @@ export interface components {
              * Format: uuid
              */
             store_id: string;
+        };
+        /** GstReportOut */
+        GstReportOut: {
+            /** Input Tax */
+            input_tax: {
+                [key: string]: unknown;
+            }[];
+            /** Input Total Paise */
+            input_total_paise: number;
+            /** Net Paise */
+            net_paise: number;
+            /** Output Tax */
+            output_tax: {
+                [key: string]: unknown;
+            }[];
+            /** Output Total Paise */
+            output_total_paise: number;
+            /** Period */
+            period: string;
         };
         /** GuardianIn */
         GuardianIn: {
@@ -39009,6 +40742,84 @@ export interface components {
              * @enum {string}
              */
             via: "direct" | "role" | "delegation" | "escalation";
+        };
+        /** IncomeRecordIn */
+        IncomeRecordIn: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** College Id */
+            college_id?: string | null;
+            /** Description */
+            description: string;
+            /**
+             * Ledger Account Id
+             * Format: uuid
+             */
+            ledger_account_id: string;
+            /**
+             * Payment Mode
+             * @default bank
+             */
+            payment_mode: ("cash" | "bank" | "cheque" | "upi" | "neft" | "in_kind") | null;
+            /**
+             * Received On
+             * Format: date
+             */
+            received_on: string;
+            /** Reference No */
+            reference_no?: string | null;
+            /** Source Id */
+            source_id?: string | null;
+            /** Source Type */
+            source_type?: string | null;
+        };
+        /** IncomeRecordOut */
+        IncomeRecordOut: {
+            /** Account */
+            account?: string | null;
+            /** Amount Paise */
+            amount_paise: number;
+            /** College Id */
+            college_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Ledger Account Id
+             * Format: uuid
+             */
+            ledger_account_id: string;
+            /** Payment Mode */
+            payment_mode?: string | null;
+            /**
+             * Received On
+             * Format: date
+             */
+            received_on: string;
+            /** Recorded By */
+            recorded_by?: string | null;
+            /** Reference No */
+            reference_no?: string | null;
+            /**
+             * Reversed
+             * @default false
+             */
+            reversed: boolean;
+            /** Source Id */
+            source_id?: string | null;
+            /** Source Type */
+            source_type?: string | null;
+        };
+        /** IncomeRecordUpdate */
+        IncomeRecordUpdate: {
+            /** Description */
+            description?: string | null;
+            /** Reference No */
+            reference_no?: string | null;
         };
         /** IndentCreate */
         IndentCreate: {
@@ -40292,6 +42103,43 @@ export interface components {
             name: string;
             /** Parent Id */
             parent_id?: string | null;
+        };
+        /** LedgerLine */
+        LedgerLine: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Balance Paise
+             * @default 0
+             */
+            balance_paise: number;
+            /** Credit Paise */
+            credit_paise: number;
+            /** Debit Paise */
+            debit_paise: number;
+            /** Description */
+            description?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "income" | "expense";
+            /**
+             * On
+             * Format: date
+             */
+            on: string;
+            /** Reference No */
+            reference_no?: string | null;
+            /** Source Id */
+            source_id?: string | null;
+            /** Source Type */
+            source_type?: string | null;
         };
         /** LegacyImportResponse */
         LegacyImportResponse: {
@@ -43562,6 +45410,14 @@ export interface components {
              */
             via: string[];
         };
+        /** PeriodClose */
+        PeriodClose: {
+            /**
+             * Upto Date
+             * Format: date
+             */
+            upto_date: string;
+        };
         /** PermissionCatalogue */
         PermissionCatalogue: {
             /** Modules */
@@ -45807,6 +47663,54 @@ export interface components {
             /** Receipt Numbers */
             receipt_numbers?: string[];
         };
+        /** ReconAddRecord */
+        ReconAddRecord: {
+            /** Item Id */
+            item_id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "bank_charge" | "interest";
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+        };
+        /** ReconImport */
+        ReconImport: {
+            /**
+             * Csv
+             * @description date,description,reference,amount (rupees; negative = debit)
+             */
+            csv: string;
+        };
+        /** ReconItem */
+        ReconItem: {
+            /** Id */
+            id: string;
+            /** Matched Id */
+            matched_id?: string | null;
+            /** Matched Type */
+            matched_type?: string | null;
+            /** Remark */
+            remark?: string | null;
+            /** Row */
+            row: {
+                [key: string]: unknown;
+            };
+            /** Status */
+            status: string;
+        };
+        /** ReconMatch */
+        ReconMatch: {
+            /** Item Id */
+            item_id: string;
+            /** Matched Id */
+            matched_id?: string | null;
+            /** Matched Type */
+            matched_type?: ("fee_payment" | "income" | "expense") | null;
+            /** Unexplained Remark */
+            unexplained_remark?: string | null;
+        };
         /** ReconcileMatch */
         ReconcileMatch: {
             /** Invoice Id */
@@ -45869,6 +47773,58 @@ export interface components {
             file_url?: string | null;
             /** Rows */
             rows?: components["schemas"]["ReconcileRowIn"][] | null;
+        };
+        /** ReconciliationCreate */
+        ReconciliationCreate: {
+            /** Bank Account */
+            bank_account: string;
+            /** Statement Balance Paise */
+            statement_balance_paise: number;
+            /**
+             * Statement Date
+             * Format: date
+             */
+            statement_date: string;
+            /**
+             * Statement Rows
+             * @default []
+             */
+            statement_rows: components["schemas"]["StatementRow"][];
+        };
+        /** ReconciliationOut */
+        ReconciliationOut: {
+            /** Bank Account */
+            bank_account: string;
+            /** Difference Paise */
+            difference_paise: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Items */
+            items: components["schemas"]["ReconItem"][];
+            /** Ledger Balance Paise */
+            ledger_balance_paise: number;
+            /**
+             * Matched
+             * @default 0
+             */
+            matched: number;
+            /** Statement Balance Paise */
+            statement_balance_paise: number;
+            /**
+             * Statement Date
+             * Format: date
+             */
+            statement_date: string;
+            /** Status */
+            status: string;
+            /**
+             * Unmatched
+             * @default 0
+             */
+            unmatched: number;
         };
         /** RecoveryCodesResponse */
         RecoveryCodesResponse: {
@@ -49212,6 +51168,48 @@ export interface components {
             /** Label */
             label: string;
         };
+        /** StatementOut */
+        StatementOut: {
+            /** College Id */
+            college_id?: string | null;
+            /** Kind */
+            kind: string;
+            /**
+             * Period From
+             * Format: date
+             */
+            period_from: string;
+            /**
+             * Period To
+             * Format: date
+             */
+            period_to: string;
+            /** Sections */
+            sections: {
+                [key: string]: unknown;
+            }[];
+            /** Totals */
+            totals: {
+                [key: string]: number;
+            };
+        };
+        /** StatementRow */
+        StatementRow: {
+            /**
+             * Amount Paise
+             * @description + credit (money in), − debit (money out)
+             */
+            amount_paise: number;
+            /**
+             * Date
+             * Format: date
+             */
+            date: string;
+            /** Description */
+            description: string;
+            /** Reference */
+            reference?: string | null;
+        };
         /** StatusChangeRequest */
         StatusChangeRequest: {
             /** Effective Date */
@@ -51899,6 +53897,42 @@ export interface components {
             /** Run At */
             run_at?: string | null;
         };
+        /** TrialBalanceOut */
+        TrialBalanceOut: {
+            /** Balanced */
+            balanced: boolean;
+            /**
+             * Period From
+             * Format: date
+             */
+            period_from: string;
+            /**
+             * Period To
+             * Format: date
+             */
+            period_to: string;
+            /** Rows */
+            rows: components["schemas"]["TrialBalanceRow"][];
+            /** Total Credit Paise */
+            total_credit_paise: number;
+            /** Total Debit Paise */
+            total_debit_paise: number;
+        };
+        /** TrialBalanceRow */
+        TrialBalanceRow: {
+            /** Account Id */
+            account_id?: string | null;
+            /** Account Type */
+            account_type: string;
+            /** Code */
+            code: string;
+            /** Credit Paise */
+            credit_paise: number;
+            /** Debit Paise */
+            debit_paise: number;
+            /** Name */
+            name: string;
+        };
         /** TripBrief */
         TripBrief: {
             /** Direction */
@@ -53521,6 +55555,20 @@ export interface components {
              */
             store_id: string;
         };
+        /** YearClose */
+        YearClose: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /**
+             * Carry Forward
+             * @default none
+             * @enum {string}
+             */
+            carry_forward: "none" | "unspent";
+        };
         /**
          * EntryType
          * @enum {string}
@@ -55107,6 +57155,2058 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_AcademicYearResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accounts_api_v1_accounting_accounts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AcctAccountOut__"];
+                };
+            };
+        };
+    };
+    account_create_api_v1_accounting_accounts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcctAccountIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctAccountOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accounts_import_api_v1_accounting_accounts_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChartImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__int__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accounts_tree_api_v1_accounting_accounts_tree_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AcctAccountOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    account_get_api_v1_accounting_accounts__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctAccountOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    account_update_api_v1_accounting_accounts__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcctAccountUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctAccountOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attachment_api_v1_accounting_attachments_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_attachment_api_v1_accounting_attachments_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budgets_api_v1_accounting_budgets_get: {
+        parameters: {
+            query?: {
+                year?: string | null;
+                college_id?: string | null;
+                department_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BudgetHeadOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_create_api_v1_accounting_budgets_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BudgetHeadIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BudgetHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budgets_bulk_api_v1_accounting_budgets_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BudgetBulkAllocate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budgets_me_api_v1_accounting_budgets_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BudgetHeadOut__"];
+                };
+            };
+        };
+    };
+    budgets_submit_all_api_v1_accounting_budgets_submit_post: {
+        parameters: {
+            query?: {
+                year?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BudgetHeadOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budgets_transfer_api_v1_accounting_budgets_transfer_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BudgetTransfer"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BudgetHeadOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budgets_utilisation_api_v1_accounting_budgets_utilisation_get: {
+        parameters: {
+            query?: {
+                year?: string | null;
+                college_id?: string | null;
+                department_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_get_api_v1_accounting_budgets__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BudgetHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_update_api_v1_accounting_budgets__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BudgetHeadUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BudgetHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_approve_api_v1_accounting_budgets__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BudgetHeadOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_freeze_api_v1_accounting_budgets__id__freeze_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BudgetHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_revise_api_v1_accounting_budgets__id__revise_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BudgetRevise"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_BudgetHeadOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    budget_submit_api_v1_accounting_budgets__id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_BudgetHeadOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_api_v1_accounting_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctDashboard_"];
+                };
+            };
+        };
+    };
+    expenses_api_v1_accounting_expenses_get: {
+        parameters: {
+            query?: {
+                department_id?: string | null;
+                status?: string | null;
+                budget_head_id?: string | null;
+                scope?: string | null;
+                manual_only?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExpenseRecordOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    expense_create_api_v1_accounting_expenses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpenseRecordIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExpenseRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    expense_get_api_v1_accounting_expenses__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExpenseRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    expense_update_api_v1_accounting_expenses__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpenseRecordUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExpenseRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    expense_decide_api_v1_accounting_expenses__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpenseDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExpenseRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    expense_pay_api_v1_accounting_expenses__id__pay_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpensePay"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExpenseRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    expense_submit_api_v1_accounting_expenses__id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExpenseRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    exports_api_v1_accounting_exports_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExportOut__"];
+                };
+            };
+        };
+    };
+    export_create_api_v1_accounting_exports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExportRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_get_api_v1_accounting_exports__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grants_api_v1_accounting_grants_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GrantLedgerOut__"];
+                };
+            };
+        };
+    };
+    grant_create_api_v1_accounting_grants_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GrantLedgerIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_get_api_v1_accounting_grants__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_update_api_v1_accounting_grants__id__put: {
+        parameters: {
+            query?: {
+                name?: string | null;
+                funding_agency?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_close_api_v1_accounting_grants__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GrantClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_expense_api_v1_accounting_grants__id__expenses_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GrantExpense"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_reallocate_api_v1_accounting_grants__id__reallocate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GrantReallocate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_receipt_api_v1_accounting_grants__id__receipts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GrantReceipt"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GrantLedgerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_soe_api_v1_accounting_grants__id__soe_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    grant_uc_api_v1_accounting_grants__id__uc_pdf_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gst_export_api_v1_accounting_gst_export_get: {
+        parameters: {
+            query: {
+                period: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    gst_summary_api_v1_accounting_gst_summary_get: {
+        parameters: {
+            query: {
+                period: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GstReportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    incomes_api_v1_accounting_income_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+                source_type?: string | null;
+                account_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_IncomeRecordOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    income_create_api_v1_accounting_income_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IncomeRecordIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IncomeRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    income_get_api_v1_accounting_income__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IncomeRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    income_update_api_v1_accounting_income__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IncomeRecordUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IncomeRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    income_reverse_api_v1_accounting_income__id__reverse_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcctReverse"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IncomeRecordOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ledger_api_v1_accounting_ledger__account_id__get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path: {
+                account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LedgerLine__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mappings_api_v1_accounting_mappings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+        };
+    };
+    mappings_put_api_v1_accounting_mappings_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcctMappings"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    period_close_api_v1_accounting_periods_close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PeriodClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    postings_gaps_api_v1_accounting_postings_gaps_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+        };
+    };
+    postings_replay_api_v1_accounting_postings_replay_post: {
+        parameters: {
+            query: {
+                from: string;
+                to: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctJobAccepted_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recons_api_v1_accounting_reconciliations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ReconciliationOut__"];
+                };
+            };
+        };
+    };
+    recon_create_api_v1_accounting_reconciliations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconciliationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recon_get_api_v1_accounting_reconciliations__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recon_add_api_v1_accounting_reconciliations__id__add_record_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconAddRecord"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recon_close_api_v1_accounting_reconciliations__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recon_import_api_v1_accounting_reconciliations__id__import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recon_match_api_v1_accounting_reconciliations__id__match_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconMatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recon_unmatch_api_v1_accounting_reconciliations__id__unmatch_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReconMatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ReconciliationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    statement_api_v1_accounting_statements__kind__get: {
+        parameters: {
+            query: {
+                from: string;
+                to: string;
+                college_id?: string | null;
+                format?: string;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_StatementOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    trial_balance_api_v1_accounting_trial_balance_get: {
+        parameters: {
+            query: {
+                from: string;
+                to: string;
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TrialBalanceOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    year_close_api_v1_accounting_years_close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YearClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AcctJobAccepted_"];
                 };
             };
             /** @description Validation Error */

@@ -1018,8 +1018,22 @@ async def accounting_export(
     principal: Principal = Depends(EXPORT),
     db: AsyncSession = Depends(get_db),
 ) -> JSONResponse:
+    from app.core.features import is_enabled
     from app.core.jobs import enqueue
 
+    if await is_enabled(principal.institution_id, "accounting.core"):
+        # Phase 23: the accounting module owns voucher exports (same job id format)
+        from app.schemas.accounting import ExportRequest
+        from app.services.accounting.finance_service import FinanceService
+
+        e = await FinanceService(db, principal, request).request_export(
+            ExportRequest(
+                target="tally" if body.format == "tally_xml" else "csv",
+                period_from=body.date_from,
+                period_to=body.date_to,
+            )
+        )
+        return _queued({"job_id": str(e.job_id), "export_id": str(e.id)}, "Accounting export queued")
     job = await enqueue(db, principal, "fees.accounting_export", body.model_dump(mode="json"))
     return _queued({"job_id": str(job.id)}, "Accounting export queued")
 

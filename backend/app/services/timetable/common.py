@@ -26,7 +26,7 @@ from app.repositories.room_repository import BuildingRepository, RoomRepository
 from app.repositories.slot_repository import SlotRepository
 from app.repositories.substitution_repository import SubstitutionRepository, leave_of, strip_tag
 from app.repositories.timetable_repository import TimetableRepository
-from app.schemas.timetable import EntryOut, ClassSessionResponse, SubstitutionResponse
+from app.schemas.timetable import ClassSessionResponse, EntryOut, SubstitutionResponse
 from app.services.academics.context import writable_department_ids
 from app.services.registration.common import RegistrationBase, rule
 

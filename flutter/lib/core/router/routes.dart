@@ -58,6 +58,10 @@ class AppRoutes {
   static const myMalpractice = '/app/exams/malpractice';
   static const myTranscripts = '/app/transcripts';
   static const revalQueue = '/app/exams/reval-queue';
+  // Phase 23 — accounting (accountant), department budget (HOD), grants (PI)
+  static const accountingHome = '/app/accounting';
+  static const departmentBudget = '/app/accounting/budget';
+  static const myGrants = '/app/accounting/grants';
   // Phase 22 — stock / receive goods (store keeper), indents / my assets (staff), audit scanner
   static const stockLookup = '/app/inventory/stock';
   static const grnReceive = '/app/inventory/receive';

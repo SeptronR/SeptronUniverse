@@ -813,6 +813,308 @@
         "title": "AccountingExportRequest",
         "type": "object"
       },
+      "AcctAccountIn": {
+        "additionalProperties": false,
+        "properties": {
+          "account_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "income",
+                  "expense",
+                  "asset",
+                  "liability",
+                  "equity"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Account Type"
+          },
+          "code": {
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Code",
+            "type": "string"
+          },
+          "external_ref": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Ref"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "parent_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Id"
+          }
+        },
+        "required": [
+          "code",
+          "name"
+        ],
+        "title": "AcctAccountIn",
+        "type": "object"
+      },
+      "AcctAccountOut": {
+        "properties": {
+          "account_type": {
+            "title": "Account Type",
+            "type": "string"
+          },
+          "balance_paise": {
+            "default": 0,
+            "title": "Balance Paise",
+            "type": "integer"
+          },
+          "children": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/AcctAccountOut"
+            },
+            "title": "Children",
+            "type": "array"
+          },
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "credit_paise": {
+            "default": 0,
+            "title": "Credit Paise",
+            "type": "integer"
+          },
+          "debit_paise": {
+            "default": 0,
+            "title": "Debit Paise",
+            "type": "integer"
+          },
+          "external_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Ref"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "parent_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Id"
+          }
+        },
+        "required": [
+          "id",
+          "code",
+          "name",
+          "account_type",
+          "is_active"
+        ],
+        "title": "AcctAccountOut",
+        "type": "object"
+      },
+      "AcctAccountUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "external_ref": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "External Ref"
+          },
+          "is_active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Active"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "parent_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Id"
+          }
+        },
+        "title": "AcctAccountUpdate",
+        "type": "object"
+      },
+      "AcctDashboard": {
+        "properties": {
+          "bank_paise": {
+            "title": "Bank Paise",
+            "type": "integer"
+          },
+          "budget_alerts": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Budget Alerts",
+            "type": "array"
+          },
+          "cash_paise": {
+            "title": "Cash Paise",
+            "type": "integer"
+          },
+          "expense_month_paise": {
+            "title": "Expense Month Paise",
+            "type": "integer"
+          },
+          "income_month_paise": {
+            "title": "Income Month Paise",
+            "type": "integer"
+          },
+          "open_reconciliations": {
+            "title": "Open Reconciliations",
+            "type": "integer"
+          },
+          "pending_expenses": {
+            "title": "Pending Expenses",
+            "type": "integer"
+          },
+          "posting_gaps": {
+            "title": "Posting Gaps",
+            "type": "integer"
+          },
+          "receivables_paise": {
+            "title": "Receivables Paise",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "cash_paise",
+          "bank_paise",
+          "receivables_paise",
+          "income_month_paise",
+          "expense_month_paise",
+          "pending_expenses",
+          "budget_alerts",
+          "open_reconciliations",
+          "posting_gaps"
+        ],
+        "title": "AcctDashboard",
+        "type": "object"
+      },
+      "AcctJobAccepted": {
+        "properties": {
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "title": "AcctJobAccepted",
+        "type": "object"
+      },
+      "AcctMappings": {
+        "additionalProperties": false,
+        "properties": {
+          "mappings": {
+            "additionalProperties": true,
+            "title": "Mappings",
+            "type": "object"
+          }
+        },
+        "required": [
+          "mappings"
+        ],
+        "title": "AcctMappings",
+        "type": "object"
+      },
+      "AcctReverse": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "AcctReverse",
+        "type": "object"
+      },
       "AckStats": {
         "properties": {
           "acknowledged": {
@@ -9073,6 +9375,20 @@
         "title": "Body_attach_certificate_api_v1_credit_transfers__id__certificate_post",
         "type": "object"
       },
+      "Body_attachment_api_v1_accounting_attachments_post": {
+        "properties": {
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_attachment_api_v1_accounting_attachments_post",
+        "type": "object"
+      },
       "Body_bulk_import_api_v1_students_bulk_import_post": {
         "properties": {
           "file": {
@@ -10494,6 +10810,285 @@
           "ok"
         ],
         "title": "BucketRow",
+        "type": "object"
+      },
+      "BudgetBulkAllocate": {
+        "additionalProperties": false,
+        "properties": {
+          "academic_year_id": {
+            "format": "uuid",
+            "title": "Academic Year Id",
+            "type": "string"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/BudgetHeadIn"
+            },
+            "maxItems": 500,
+            "minItems": 1,
+            "title": "Rows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "academic_year_id",
+          "rows"
+        ],
+        "title": "BudgetBulkAllocate",
+        "type": "object"
+      },
+      "BudgetHeadIn": {
+        "additionalProperties": false,
+        "properties": {
+          "academic_year_id": {
+            "format": "uuid",
+            "title": "Academic Year Id",
+            "type": "string"
+          },
+          "allocated_paise": {
+            "minimum": 0.0,
+            "title": "Allocated Paise",
+            "type": "integer"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Id"
+          },
+          "ledger_account_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ledger Account Id"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "academic_year_id",
+          "name",
+          "allocated_paise"
+        ],
+        "title": "BudgetHeadIn",
+        "type": "object"
+      },
+      "BudgetHeadOut": {
+        "properties": {
+          "academic_year_id": {
+            "format": "uuid",
+            "title": "Academic Year Id",
+            "type": "string"
+          },
+          "allocated_paise": {
+            "title": "Allocated Paise",
+            "type": "integer"
+          },
+          "available_paise": {
+            "title": "Available Paise",
+            "type": "integer"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "committed_paise": {
+            "title": "Committed Paise",
+            "type": "integer"
+          },
+          "department_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Code"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "ledger_account_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ledger Account Id"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "pct": {
+            "title": "Pct",
+            "type": "number"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "utilised_paise": {
+            "title": "Utilised Paise",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "academic_year_id",
+          "name",
+          "allocated_paise",
+          "utilised_paise",
+          "committed_paise",
+          "available_paise",
+          "pct",
+          "status"
+        ],
+        "title": "BudgetHeadOut",
+        "type": "object"
+      },
+      "BudgetHeadUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "ledger_account_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ledger Account Id"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "title": "BudgetHeadUpdate",
+        "type": "object"
+      },
+      "BudgetRevise": {
+        "additionalProperties": false,
+        "properties": {
+          "allocated_paise": {
+            "minimum": 0.0,
+            "title": "Allocated Paise",
+            "type": "integer"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "allocated_paise",
+          "reason"
+        ],
+        "title": "BudgetRevise",
+        "type": "object"
+      },
+      "BudgetTransfer": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "from_head_id": {
+            "format": "uuid",
+            "title": "From Head Id",
+            "type": "string"
+          },
+          "reason": {
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "to_head_id": {
+            "format": "uuid",
+            "title": "To Head Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_head_id",
+          "to_head_id",
+          "amount_paise",
+          "reason"
+        ],
+        "title": "BudgetTransfer",
         "type": "object"
       },
       "BuildingIn": {
@@ -12378,6 +12973,39 @@
           "created_at"
         ],
         "title": "ChangeRequestOut",
+        "type": "object"
+      },
+      "ChartImport": {
+        "additionalProperties": false,
+        "properties": {
+          "csv": {
+            "anyOf": [
+              {
+                "maxLength": 500000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "code,name,type,parent_code",
+            "title": "Csv"
+          },
+          "template": {
+            "anyOf": [
+              {
+                "const": "IN",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "IN",
+            "title": "Template"
+          }
+        },
+        "title": "ChartImport",
         "type": "object"
       },
       "CheckInRequest": {
@@ -24491,6 +25119,117 @@
         "title": "Envelope[AcademicYearResponse]",
         "type": "object"
       },
+      "Envelope_AcctAccountOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AcctAccountOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AcctAccountOut]",
+        "type": "object"
+      },
+      "Envelope_AcctDashboard_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AcctDashboard"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AcctDashboard]",
+        "type": "object"
+      },
+      "Envelope_AcctJobAccepted_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AcctJobAccepted"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AcctJobAccepted]",
+        "type": "object"
+      },
       "Envelope_AckStats_": {
         "properties": {
           "data": {
@@ -25710,6 +26449,43 @@
           }
         },
         "title": "Envelope[BookReturnResponse]",
+        "type": "object"
+      },
+      "Envelope_BudgetHeadOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BudgetHeadOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[BudgetHeadOut]",
         "type": "object"
       },
       "Envelope_BuildingOut_": {
@@ -28191,6 +28967,43 @@
         "title": "Envelope[ExamSessionResponse]",
         "type": "object"
       },
+      "Envelope_ExpenseRecordOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExpenseRecordOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ExpenseRecordOut]",
+        "type": "object"
+      },
       "Envelope_ExportJob_": {
         "properties": {
           "data": {
@@ -28226,6 +29039,43 @@
           }
         },
         "title": "Envelope[ExportJob]",
+        "type": "object"
+      },
+      "Envelope_ExportOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExportOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ExportOut]",
         "type": "object"
       },
       "Envelope_FacultyProfileOut_": {
@@ -28820,6 +29670,43 @@
         "title": "Envelope[GraduationStatsResponse]",
         "type": "object"
       },
+      "Envelope_GrantLedgerOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GrantLedgerOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[GrantLedgerOut]",
+        "type": "object"
+      },
       "Envelope_GrnResponse_": {
         "properties": {
           "data": {
@@ -28855,6 +29742,43 @@
           }
         },
         "title": "Envelope[GrnResponse]",
+        "type": "object"
+      },
+      "Envelope_GstReportOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/GstReportOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[GstReportOut]",
         "type": "object"
       },
       "Envelope_HallTicketVerifyResponse_": {
@@ -29595,6 +30519,43 @@
           }
         },
         "title": "Envelope[ImportResult]",
+        "type": "object"
+      },
+      "Envelope_IncomeRecordOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IncomeRecordOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[IncomeRecordOut]",
         "type": "object"
       },
       "Envelope_IndentResponse_": {
@@ -34031,6 +34992,43 @@
         "title": "Envelope[ReconcileRowOut]",
         "type": "object"
       },
+      "Envelope_ReconciliationOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReconciliationOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ReconciliationOut]",
+        "type": "object"
+      },
       "Envelope_RecoveryCodesResponse_": {
         "properties": {
           "data": {
@@ -35696,6 +36694,43 @@
         "title": "Envelope[StandingResponse]",
         "type": "object"
       },
+      "Envelope_StatementOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StatementOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[StatementOut]",
+        "type": "object"
+      },
       "Envelope_StatusChangeResult_": {
         "properties": {
           "data": {
@@ -36767,6 +37802,43 @@
           }
         },
         "title": "Envelope[TransportReport]",
+        "type": "object"
+      },
+      "Envelope_TrialBalanceOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TrialBalanceOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[TrialBalanceOut]",
         "type": "object"
       },
       "Envelope_TripOut_": {
@@ -38022,6 +39094,47 @@
         "title": "Envelope[list[AcademicYearResponse]]",
         "type": "object"
       },
+      "Envelope_list_AcctAccountOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/AcctAccountOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[AcctAccountOut]]",
+        "type": "object"
+      },
       "Envelope_list_AllocationResponse__": {
         "properties": {
           "data": {
@@ -39004,6 +40117,47 @@
           }
         },
         "title": "Envelope[list[BookResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_BudgetHeadOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/BudgetHeadOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[BudgetHeadOut]]",
         "type": "object"
       },
       "Envelope_list_BuildingOut__": {
@@ -40933,6 +42087,88 @@
         "title": "Envelope[list[ExamSessionResponse]]",
         "type": "object"
       },
+      "Envelope_list_ExpenseRecordOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ExpenseRecordOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[ExpenseRecordOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ExportOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ExportOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[ExportOut]]",
+        "type": "object"
+      },
       "Envelope_list_FacultyResponse__": {
         "properties": {
           "data": {
@@ -41382,6 +42618,47 @@
           }
         },
         "title": "Envelope[list[GradingScaleResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_GrantLedgerOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/GrantLedgerOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[GrantLedgerOut]]",
         "type": "object"
       },
       "Envelope_list_GrnResponse__": {
@@ -41999,6 +43276,47 @@
         "title": "Envelope[list[InboxItem]]",
         "type": "object"
       },
+      "Envelope_list_IncomeRecordOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/IncomeRecordOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[IncomeRecordOut]]",
+        "type": "object"
+      },
       "Envelope_list_IndentResponse__": {
         "properties": {
           "data": {
@@ -42489,6 +43807,47 @@
           }
         },
         "title": "Envelope[list[LedgerAccountOut]]",
+        "type": "object"
+      },
+      "Envelope_list_LedgerLine__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/LedgerLine"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[LedgerLine]]",
         "type": "object"
       },
       "Envelope_list_LessonPlanOut__": {
@@ -44580,6 +45939,47 @@
           }
         },
         "title": "Envelope[list[ReconcileRowOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ReconciliationOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ReconciliationOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[ReconciliationOut]]",
         "type": "object"
       },
       "Envelope_list_RefundResponse__": {
@@ -49343,6 +50743,457 @@
         "title": "ExitRequest",
         "type": "object"
       },
+      "ExpenseDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "approve",
+              "reject"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "ExpenseDecision",
+        "type": "object"
+      },
+      "ExpensePay": {
+        "additionalProperties": false,
+        "properties": {
+          "mode": {
+            "default": "neft",
+            "enum": [
+              "cash",
+              "bank",
+              "cheque",
+              "upi",
+              "neft"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "paid_on": {
+            "format": "date",
+            "title": "Paid On",
+            "type": "string"
+          },
+          "reference": {
+            "maxLength": 80,
+            "minLength": 2,
+            "title": "Reference",
+            "type": "string"
+          }
+        },
+        "required": [
+          "paid_on",
+          "reference"
+        ],
+        "title": "ExpensePay",
+        "type": "object"
+      },
+      "ExpenseRecordIn": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "budget_head_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Head Id"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Id"
+          },
+          "description": {
+            "maxLength": 255,
+            "minLength": 2,
+            "title": "Description",
+            "type": "string"
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url"
+          },
+          "gst_input_paise": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gst Input Paise"
+          },
+          "ledger_account_id": {
+            "format": "uuid",
+            "title": "Ledger Account Id",
+            "type": "string"
+          },
+          "payee": {
+            "maxLength": 200,
+            "minLength": 2,
+            "title": "Payee",
+            "type": "string"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          },
+          "spent_on": {
+            "format": "date",
+            "title": "Spent On",
+            "type": "string"
+          },
+          "vendor_bill_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vendor Bill Id"
+          }
+        },
+        "required": [
+          "ledger_account_id",
+          "amount_paise",
+          "spent_on",
+          "payee",
+          "description"
+        ],
+        "title": "ExpenseRecordIn",
+        "type": "object"
+      },
+      "ExpenseRecordOut": {
+        "properties": {
+          "account": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Account"
+          },
+          "amount_paise": {
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "budget_head": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Head"
+          },
+          "budget_head_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Head Id"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "department_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Code"
+          },
+          "department_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Department Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "ledger_account_id": {
+            "format": "uuid",
+            "title": "Ledger Account Id",
+            "type": "string"
+          },
+          "payee": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payee"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          },
+          "source_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Type"
+          },
+          "spent_on": {
+            "format": "date",
+            "title": "Spent On",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "vendor_bill_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vendor Bill Id"
+          },
+          "warning": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warning"
+          },
+          "workflow_instance_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workflow Instance Id"
+          }
+        },
+        "required": [
+          "id",
+          "ledger_account_id",
+          "amount_paise",
+          "spent_on",
+          "status"
+        ],
+        "title": "ExpenseRecordOut",
+        "type": "object"
+      },
+      "ExpenseRecordUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "budget_head_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Head Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url"
+          },
+          "payee": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payee"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          }
+        },
+        "title": "ExpenseRecordUpdate",
+        "type": "object"
+      },
       "ExportJob": {
         "properties": {
           "file_url": {
@@ -49394,6 +51245,123 @@
           "status"
         ],
         "title": "ExportJob",
+        "type": "object"
+      },
+      "ExportOut": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "file_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File Url"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "period_from": {
+            "format": "date",
+            "title": "Period From",
+            "type": "string"
+          },
+          "period_to": {
+            "format": "date",
+            "title": "Period To",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "target": {
+            "title": "Target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "target",
+          "period_from",
+          "period_to",
+          "status",
+          "created_at"
+        ],
+        "title": "ExportOut",
+        "type": "object"
+      },
+      "ExportRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "include_exported": {
+            "default": false,
+            "title": "Include Exported",
+            "type": "boolean"
+          },
+          "period_from": {
+            "format": "date",
+            "title": "Period From",
+            "type": "string"
+          },
+          "period_to": {
+            "format": "date",
+            "title": "Period To",
+            "type": "string"
+          },
+          "target": {
+            "default": "tally",
+            "enum": [
+              "tally",
+              "zoho",
+              "csv"
+            ],
+            "title": "Target",
+            "type": "string"
+          },
+          "voucher_types": {
+            "default": [
+              "receipt",
+              "payment"
+            ],
+            "items": {
+              "enum": [
+                "receipt",
+                "payment",
+                "journal"
+              ],
+              "type": "string"
+            },
+            "title": "Voucher Types",
+            "type": "array"
+          }
+        },
+        "required": [
+          "period_from",
+          "period_to"
+        ],
+        "title": "ExportRequest",
         "type": "object"
       },
       "ExternalEvaluator": {
@@ -53134,6 +55102,342 @@
         "title": "GraduationStatsResponse",
         "type": "object"
       },
+      "GrantClose": {
+        "additionalProperties": false,
+        "properties": {
+          "remark": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remark"
+          }
+        },
+        "title": "GrantClose",
+        "type": "object"
+      },
+      "GrantExpense": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "description": {
+            "maxLength": 255,
+            "minLength": 2,
+            "title": "Description",
+            "type": "string"
+          },
+          "document_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url"
+          },
+          "head": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Head",
+            "type": "string"
+          },
+          "payee": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payee"
+          },
+          "spent_on": {
+            "format": "date",
+            "title": "Spent On",
+            "type": "string"
+          }
+        },
+        "required": [
+          "head",
+          "amount_paise",
+          "spent_on",
+          "description"
+        ],
+        "title": "GrantExpense",
+        "type": "object"
+      },
+      "GrantHeadIn": {
+        "additionalProperties": false,
+        "properties": {
+          "allocated_paise": {
+            "minimum": 0.0,
+            "title": "Allocated Paise",
+            "type": "integer"
+          },
+          "name": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "allocated_paise"
+        ],
+        "title": "GrantHeadIn",
+        "type": "object"
+      },
+      "GrantLedgerIn": {
+        "additionalProperties": false,
+        "properties": {
+          "budget_heads": {
+            "items": {
+              "$ref": "#/components/schemas/GrantHeadIn"
+            },
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Budget Heads",
+            "type": "array"
+          },
+          "funding_agency": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Funding Agency"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "pi_staff_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Staff Id"
+          },
+          "reallocation_allowed": {
+            "default": true,
+            "title": "Reallocation Allowed",
+            "type": "boolean"
+          },
+          "research_project_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Research Project Id"
+          },
+          "sanctioned_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Sanctioned Paise",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "sanctioned_paise",
+          "budget_heads"
+        ],
+        "title": "GrantLedgerIn",
+        "type": "object"
+      },
+      "GrantLedgerOut": {
+        "properties": {
+          "balance_paise": {
+            "title": "Balance Paise",
+            "type": "integer"
+          },
+          "budget_heads": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Budget Heads",
+            "type": "array"
+          },
+          "funding_agency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Funding Agency"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "pi_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Name"
+          },
+          "pi_staff_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pi Staff Id"
+          },
+          "received_paise": {
+            "title": "Received Paise",
+            "type": "integer"
+          },
+          "research_project_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Research Project Id"
+          },
+          "sanctioned_paise": {
+            "title": "Sanctioned Paise",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "utilised_paise": {
+            "title": "Utilised Paise",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "sanctioned_paise",
+          "received_paise",
+          "utilised_paise",
+          "balance_paise",
+          "budget_heads",
+          "status"
+        ],
+        "title": "GrantLedgerOut",
+        "type": "object"
+      },
+      "GrantReallocate": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "from_head": {
+            "title": "From Head",
+            "type": "string"
+          },
+          "remark": {
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Remark",
+            "type": "string"
+          },
+          "to_head": {
+            "title": "To Head",
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_head",
+          "to_head",
+          "amount_paise",
+          "remark"
+        ],
+        "title": "GrantReallocate",
+        "type": "object"
+      },
+      "GrantReceipt": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "received_on": {
+            "format": "date",
+            "title": "Received On",
+            "type": "string"
+          },
+          "reference": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference"
+          }
+        },
+        "required": [
+          "amount_paise",
+          "received_on"
+        ],
+        "title": "GrantReceipt",
+        "type": "object"
+      },
       "GrnCreate": {
         "additionalProperties": false,
         "properties": {
@@ -53330,6 +55634,52 @@
           "items"
         ],
         "title": "GrnResponse",
+        "type": "object"
+      },
+      "GstReportOut": {
+        "properties": {
+          "input_tax": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Input Tax",
+            "type": "array"
+          },
+          "input_total_paise": {
+            "title": "Input Total Paise",
+            "type": "integer"
+          },
+          "net_paise": {
+            "title": "Net Paise",
+            "type": "integer"
+          },
+          "output_tax": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Output Tax",
+            "type": "array"
+          },
+          "output_total_paise": {
+            "title": "Output Total Paise",
+            "type": "integer"
+          },
+          "period": {
+            "title": "Period",
+            "type": "string"
+          }
+        },
+        "required": [
+          "period",
+          "output_tax",
+          "input_tax",
+          "output_total_paise",
+          "input_total_paise",
+          "net_paise"
+        ],
+        "title": "GstReportOut",
         "type": "object"
       },
       "GuardianIn": {
@@ -56684,6 +59034,267 @@
           "step_id"
         ],
         "title": "InboxItem",
+        "type": "object"
+      },
+      "IncomeRecordIn": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "description": {
+            "maxLength": 255,
+            "minLength": 2,
+            "title": "Description",
+            "type": "string"
+          },
+          "ledger_account_id": {
+            "format": "uuid",
+            "title": "Ledger Account Id",
+            "type": "string"
+          },
+          "payment_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "cash",
+                  "bank",
+                  "cheque",
+                  "upi",
+                  "neft",
+                  "in_kind"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": "bank",
+            "title": "Payment Mode"
+          },
+          "received_on": {
+            "format": "date",
+            "title": "Received On",
+            "type": "string"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "source_type": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Type"
+          }
+        },
+        "required": [
+          "ledger_account_id",
+          "amount_paise",
+          "received_on",
+          "description"
+        ],
+        "title": "IncomeRecordIn",
+        "type": "object"
+      },
+      "IncomeRecordOut": {
+        "properties": {
+          "account": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Account"
+          },
+          "amount_paise": {
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "ledger_account_id": {
+            "format": "uuid",
+            "title": "Ledger Account Id",
+            "type": "string"
+          },
+          "payment_mode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payment Mode"
+          },
+          "received_on": {
+            "format": "date",
+            "title": "Received On",
+            "type": "string"
+          },
+          "recorded_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recorded By"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          },
+          "reversed": {
+            "default": false,
+            "title": "Reversed",
+            "type": "boolean"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "source_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Type"
+          }
+        },
+        "required": [
+          "id",
+          "ledger_account_id",
+          "amount_paise",
+          "received_on"
+        ],
+        "title": "IncomeRecordOut",
+        "type": "object"
+      },
+      "IncomeRecordUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "anyOf": [
+              {
+                "maxLength": 255,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          }
+        },
+        "title": "IncomeRecordUpdate",
         "type": "object"
       },
       "IndentCreate": {
@@ -60681,6 +63292,100 @@
           "account_type"
         ],
         "title": "LedgerAccountOut",
+        "type": "object"
+      },
+      "LedgerLine": {
+        "properties": {
+          "amount_paise": {
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "balance_paise": {
+            "default": 0,
+            "title": "Balance Paise",
+            "type": "integer"
+          },
+          "credit_paise": {
+            "title": "Credit Paise",
+            "type": "integer"
+          },
+          "debit_paise": {
+            "title": "Debit Paise",
+            "type": "integer"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "income",
+              "expense"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "on": {
+            "format": "date",
+            "title": "On",
+            "type": "string"
+          },
+          "reference_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference No"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "source_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Type"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "on",
+          "amount_paise",
+          "debit_paise",
+          "credit_paise"
+        ],
+        "title": "LedgerLine",
         "type": "object"
       },
       "LegacyImportResponse": {
@@ -69835,6 +72540,21 @@
         "title": "PeoRow",
         "type": "object"
       },
+      "PeriodClose": {
+        "additionalProperties": false,
+        "properties": {
+          "upto_date": {
+            "format": "date",
+            "title": "Upto Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "upto_date"
+        ],
+        "title": "PeriodClose",
+        "type": "object"
+      },
       "PermissionCatalogue": {
         "properties": {
           "modules": {
@@ -76452,6 +79172,170 @@
         "title": "ReceiptResponse",
         "type": "object"
       },
+      "ReconAddRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "item_id": {
+            "title": "Item Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "bank_charge",
+              "interest"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "ledger_account_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ledger Account Id"
+          }
+        },
+        "required": [
+          "item_id",
+          "kind"
+        ],
+        "title": "ReconAddRecord",
+        "type": "object"
+      },
+      "ReconImport": {
+        "additionalProperties": false,
+        "properties": {
+          "csv": {
+            "description": "date,description,reference,amount (rupees; negative = debit)",
+            "maxLength": 2000000,
+            "minLength": 5,
+            "title": "Csv",
+            "type": "string"
+          }
+        },
+        "required": [
+          "csv"
+        ],
+        "title": "ReconImport",
+        "type": "object"
+      },
+      "ReconItem": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "matched_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Id"
+          },
+          "matched_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Type"
+          },
+          "remark": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remark"
+          },
+          "row": {
+            "additionalProperties": true,
+            "title": "Row",
+            "type": "object"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "row",
+          "status"
+        ],
+        "title": "ReconItem",
+        "type": "object"
+      },
+      "ReconMatch": {
+        "additionalProperties": false,
+        "properties": {
+          "item_id": {
+            "title": "Item Id",
+            "type": "string"
+          },
+          "matched_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Id"
+          },
+          "matched_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "fee_payment",
+                  "income",
+                  "expense"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Matched Type"
+          },
+          "unexplained_remark": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unexplained Remark"
+          }
+        },
+        "required": [
+          "item_id"
+        ],
+        "title": "ReconMatch",
+        "type": "object"
+      },
       "ReconcileMatch": {
         "properties": {
           "invoice_id": {
@@ -76690,6 +79574,104 @@
           }
         },
         "title": "ReconcileUpload",
+        "type": "object"
+      },
+      "ReconciliationCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "bank_account": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Bank Account",
+            "type": "string"
+          },
+          "statement_balance_paise": {
+            "title": "Statement Balance Paise",
+            "type": "integer"
+          },
+          "statement_date": {
+            "format": "date",
+            "title": "Statement Date",
+            "type": "string"
+          },
+          "statement_rows": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/StatementRow"
+            },
+            "title": "Statement Rows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "bank_account",
+          "statement_date",
+          "statement_balance_paise"
+        ],
+        "title": "ReconciliationCreate",
+        "type": "object"
+      },
+      "ReconciliationOut": {
+        "properties": {
+          "bank_account": {
+            "title": "Bank Account",
+            "type": "string"
+          },
+          "difference_paise": {
+            "title": "Difference Paise",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ReconItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "ledger_balance_paise": {
+            "title": "Ledger Balance Paise",
+            "type": "integer"
+          },
+          "matched": {
+            "default": 0,
+            "title": "Matched",
+            "type": "integer"
+          },
+          "statement_balance_paise": {
+            "title": "Statement Balance Paise",
+            "type": "integer"
+          },
+          "statement_date": {
+            "format": "date",
+            "title": "Statement Date",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "unmatched": {
+            "default": 0,
+            "title": "Unmatched",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "bank_account",
+          "statement_date",
+          "statement_balance_paise",
+          "ledger_balance_paise",
+          "difference_paise",
+          "items",
+          "status"
+        ],
+        "title": "ReconciliationOut",
         "type": "object"
       },
       "RecoveryCodesResponse": {
@@ -86613,6 +89595,99 @@
         "title": "StatBucket",
         "type": "object"
       },
+      "StatementOut": {
+        "properties": {
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "period_from": {
+            "format": "date",
+            "title": "Period From",
+            "type": "string"
+          },
+          "period_to": {
+            "format": "date",
+            "title": "Period To",
+            "type": "string"
+          },
+          "sections": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Sections",
+            "type": "array"
+          },
+          "totals": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Totals",
+            "type": "object"
+          }
+        },
+        "required": [
+          "kind",
+          "period_from",
+          "period_to",
+          "sections",
+          "totals"
+        ],
+        "title": "StatementOut",
+        "type": "object"
+      },
+      "StatementRow": {
+        "additionalProperties": false,
+        "properties": {
+          "amount_paise": {
+            "description": "+ credit (money in), − debit (money out)",
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "description": {
+            "maxLength": 255,
+            "title": "Description",
+            "type": "string"
+          },
+          "reference": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reference"
+          }
+        },
+        "required": [
+          "date",
+          "description",
+          "amount_paise"
+        ],
+        "title": "StatementRow",
+        "type": "object"
+      },
       "StatusChangeRequest": {
         "additionalProperties": false,
         "properties": {
@@ -95039,6 +98114,94 @@
         "title": "TrendBatch",
         "type": "object"
       },
+      "TrialBalanceOut": {
+        "properties": {
+          "balanced": {
+            "title": "Balanced",
+            "type": "boolean"
+          },
+          "period_from": {
+            "format": "date",
+            "title": "Period From",
+            "type": "string"
+          },
+          "period_to": {
+            "format": "date",
+            "title": "Period To",
+            "type": "string"
+          },
+          "rows": {
+            "items": {
+              "$ref": "#/components/schemas/TrialBalanceRow"
+            },
+            "title": "Rows",
+            "type": "array"
+          },
+          "total_credit_paise": {
+            "title": "Total Credit Paise",
+            "type": "integer"
+          },
+          "total_debit_paise": {
+            "title": "Total Debit Paise",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "period_from",
+          "period_to",
+          "rows",
+          "total_debit_paise",
+          "total_credit_paise",
+          "balanced"
+        ],
+        "title": "TrialBalanceOut",
+        "type": "object"
+      },
+      "TrialBalanceRow": {
+        "properties": {
+          "account_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Account Id"
+          },
+          "account_type": {
+            "title": "Account Type",
+            "type": "string"
+          },
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "credit_paise": {
+            "title": "Credit Paise",
+            "type": "integer"
+          },
+          "debit_paise": {
+            "title": "Debit Paise",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "account_type",
+          "debit_paise",
+          "credit_paise"
+        ],
+        "title": "TrialBalanceRow",
+        "type": "object"
+      },
       "TripBrief": {
         "properties": {
           "direction": {
@@ -99901,6 +103064,30 @@
         "title": "WriteOffRequest",
         "type": "object"
       },
+      "YearClose": {
+        "additionalProperties": false,
+        "properties": {
+          "academic_year_id": {
+            "format": "uuid",
+            "title": "Academic Year Id",
+            "type": "string"
+          },
+          "carry_forward": {
+            "default": "none",
+            "enum": [
+              "none",
+              "unspent"
+            ],
+            "title": "Carry Forward",
+            "type": "string"
+          }
+        },
+        "required": [
+          "academic_year_id"
+        ],
+        "title": "YearClose",
+        "type": "object"
+      },
       "app__enums__academics__EntryType": {
         "enum": [
           "regular",
@@ -102815,6 +106002,3525 @@
         "summary": "Unlock the year",
         "tags": [
           "academic-sessions"
+        ]
+      }
+    },
+    "/api/v1/accounting/accounts": {
+      "get": {
+        "operationId": "accounts_api_v1_accounting_accounts_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_AcctAccountOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ledger accounts (flat)",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "account_create_api_v1_accounting_accounts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcctAccountIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctAccountOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add a ledger account",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/accounts/import": {
+      "post": {
+        "operationId": "accounts_import_api_v1_accounting_accounts_import_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChartImport"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__int__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Import the IN template or a CSV chart",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/accounts/tree": {
+      "get": {
+        "operationId": "accounts_tree_api_v1_accounting_accounts_tree_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_AcctAccountOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Chart of accounts with period balances",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/accounts/{id}": {
+      "get": {
+        "operationId": "account_get_api_v1_accounting_accounts__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctAccountOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ledger account",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "put": {
+        "operationId": "account_update_api_v1_accounting_accounts__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcctAccountUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctAccountOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit / deactivate a ledger account",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/attachments": {
+      "post": {
+        "operationId": "attachment_api_v1_accounting_attachments_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_attachment_api_v1_accounting_attachments_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Upload a bill / voucher / receipt (returns the stored key)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets": {
+      "get": {
+        "operationId": "budgets_api_v1_accounting_budgets_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Year"
+            }
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "College Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "department_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Department Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BudgetHeadOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Budget heads (scoped)",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "budget_create_api_v1_accounting_budgets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetHeadIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BudgetHeadOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create a budget head (draft)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/bulk": {
+      "post": {
+        "operationId": "budgets_bulk_api_v1_accounting_budgets_bulk_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetBulkAllocate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bulk allocate (draft heads)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/me": {
+      "get": {
+        "operationId": "budgets_me_api_v1_accounting_budgets_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BudgetHeadOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Budget heads of my department",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/submit": {
+      "post": {
+        "operationId": "budgets_submit_all_api_v1_accounting_budgets_submit_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Year"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BudgetHeadOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit every draft head of a year (workflow)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/transfer": {
+      "post": {
+        "operationId": "budgets_transfer_api_v1_accounting_budgets_transfer_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetTransfer"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BudgetHeadOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Transfer allocation between heads",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/utilisation": {
+      "get": {
+        "operationId": "budgets_utilisation_api_v1_accounting_budgets_utilisation_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Year"
+            }
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "College Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "department_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Department Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Utilisation by department",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/{id}": {
+      "get": {
+        "operationId": "budget_get_api_v1_accounting_budgets__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BudgetHeadOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Budget head",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "put": {
+        "operationId": "budget_update_api_v1_accounting_budgets__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetHeadUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BudgetHeadOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a budget head",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/{id}/approve": {
+      "post": {
+        "operationId": "budget_approve_api_v1_accounting_budgets__id__approve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BudgetHeadOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Approve a head directly",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/{id}/freeze": {
+      "post": {
+        "operationId": "budget_freeze_api_v1_accounting_budgets__id__freeze_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BudgetHeadOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Freeze a head",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/{id}/revise": {
+      "post": {
+        "operationId": "budget_revise_api_v1_accounting_budgets__id__revise_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BudgetRevise"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BudgetHeadOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Revise the allocation",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/budgets/{id}/submit": {
+      "post": {
+        "operationId": "budget_submit_api_v1_accounting_budgets__id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BudgetHeadOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit a head (workflow)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/dashboard": {
+      "get": {
+        "operationId": "dashboard_api_v1_accounting_dashboard_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctDashboard_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Finance dashboard",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/expenses": {
+      "get": {
+        "operationId": "expenses_api_v1_accounting_expenses_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "department_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Department Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "budget_head_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Budget Head Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(self|department|college|all)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope"
+            }
+          },
+          {
+            "in": "query",
+            "name": "manual_only",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Manual Only",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ExpenseRecordOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Expenses (ScopeTabs)",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "expense_create_api_v1_accounting_expenses_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExpenseRecordIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExpenseRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record an expense",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/expenses/{id}": {
+      "get": {
+        "operationId": "expense_get_api_v1_accounting_expenses__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExpenseRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Expense",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "put": {
+        "operationId": "expense_update_api_v1_accounting_expenses__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExpenseRecordUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExpenseRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a recorded expense",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/expenses/{id}/decide": {
+      "post": {
+        "operationId": "expense_decide_api_v1_accounting_expenses__id__decide_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExpenseDecision"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExpenseRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Approve / reject (below the threshold)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/expenses/{id}/pay": {
+      "post": {
+        "operationId": "expense_pay_api_v1_accounting_expenses__id__pay_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExpensePay"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExpenseRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mark an approved expense paid",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/expenses/{id}/submit": {
+      "post": {
+        "operationId": "expense_submit_api_v1_accounting_expenses__id__submit_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExpenseRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Submit for approval (workflow above the threshold)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/exports": {
+      "get": {
+        "operationId": "exports_api_v1_accounting_exports_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ExportOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Voucher exports",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "export_create_api_v1_accounting_exports_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExportOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export vouchers (Tally XML / Zoho CSV / CSV; job)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/exports/{id}": {
+      "get": {
+        "operationId": "export_get_api_v1_accounting_exports__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ExportOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export (signed URL when ready)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants": {
+      "get": {
+        "operationId": "grants_api_v1_accounting_grants_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_GrantLedgerOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Grant ledgers (own / all)",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "grant_create_api_v1_accounting_grants_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantLedgerIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create a grant ledger",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}": {
+      "get": {
+        "operationId": "grant_get_api_v1_accounting_grants__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Grant ledger",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "put": {
+        "operationId": "grant_update_api_v1_accounting_grants__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Name"
+            }
+          },
+          {
+            "in": "query",
+            "name": "funding_agency",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Funding Agency"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a grant ledger",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}/close": {
+      "post": {
+        "operationId": "grant_close_api_v1_accounting_grants__id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantClose"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close a grant (unspent → refund)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}/expenses": {
+      "post": {
+        "operationId": "grant_expense_api_v1_accounting_grants__id__expenses_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantExpense"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record a grant expense (PI / accounts)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}/reallocate": {
+      "post": {
+        "operationId": "grant_reallocate_api_v1_accounting_grants__id__reallocate_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantReallocate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reallocate between grant heads",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}/receipts": {
+      "post": {
+        "operationId": "grant_receipt_api_v1_accounting_grants__id__receipts_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GrantReceipt"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GrantLedgerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record a grant instalment",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}/soe": {
+      "get": {
+        "operationId": "grant_soe_api_v1_accounting_grants__id__soe_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Statement of expenditure",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/grants/{id}/uc.pdf": {
+      "get": {
+        "operationId": "grant_uc_api_v1_accounting_grants__id__uc_pdf_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Utilisation certificate (PDF)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/gst/export": {
+      "get": {
+        "operationId": "gst_export_api_v1_accounting_gst_export_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "period",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}$",
+              "title": "Period",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctJobAccepted_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "GST CSV (job)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/gst/summary": {
+      "get": {
+        "operationId": "gst_summary_api_v1_accounting_gst_summary_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "period",
+            "required": true,
+            "schema": {
+              "pattern": "^\\d{4}-\\d{2}$",
+              "title": "Period",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_GstReportOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "GST summary for a month (YYYY-MM)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/income": {
+      "get": {
+        "operationId": "incomes_api_v1_accounting_income_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "source_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "account_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Account Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_IncomeRecordOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Income records",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "income_create_api_v1_accounting_income_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncomeRecordIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IncomeRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record income",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/income/{id}": {
+      "get": {
+        "operationId": "income_get_api_v1_accounting_income__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IncomeRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Income record",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "put": {
+        "operationId": "income_update_api_v1_accounting_income__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncomeRecordUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IncomeRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a manual income record",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/income/{id}/reverse": {
+      "post": {
+        "operationId": "income_reverse_api_v1_accounting_income__id__reverse_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcctReverse"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IncomeRecordOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reverse an income record",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/ledger/{account_id}": {
+      "get": {
+        "operationId": "ledger_api_v1_accounting_ledger__account_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "account_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Account Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_LedgerLine__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Account ledger with source links",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/mappings": {
+      "get": {
+        "operationId": "mappings_api_v1_accounting_mappings_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Account mappings (fee heads, system keys, inventory categories)",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "put": {
+        "operationId": "mappings_put_api_v1_accounting_mappings_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcctMappings"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update account mappings",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/periods/close": {
+      "post": {
+        "operationId": "period_close_api_v1_accounting_periods_close_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeriodClose"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close the books up to a date",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/postings/gaps": {
+      "get": {
+        "operationId": "postings_gaps_api_v1_accounting_postings_gaps_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Sources without postings",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/postings/replay": {
+      "post": {
+        "operationId": "postings_replay_api_v1_accounting_postings_replay_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "From",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "To",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctJobAccepted_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Rebuild automatic postings for a period (job)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations": {
+      "get": {
+        "operationId": "recons_api_v1_accounting_reconciliations_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ReconciliationOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bank reconciliations",
+        "tags": [
+          "accounting"
+        ]
+      },
+      "post": {
+        "operationId": "recon_create_api_v1_accounting_reconciliations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconciliationCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Open a reconciliation (+ statement rows)",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations/{id}": {
+      "get": {
+        "operationId": "recon_get_api_v1_accounting_reconciliations__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reconciliation",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations/{id}/add-record": {
+      "post": {
+        "operationId": "recon_add_api_v1_accounting_reconciliations__id__add_record_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconAddRecord"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Turn a row into a bank charge / interest record",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations/{id}/close": {
+      "post": {
+        "operationId": "recon_close_api_v1_accounting_reconciliations__id__close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close a reconciliation",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations/{id}/import": {
+      "post": {
+        "operationId": "recon_import_api_v1_accounting_reconciliations__id__import_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconImport"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Import statement rows (CSV) and auto-match",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations/{id}/match": {
+      "post": {
+        "operationId": "recon_match_api_v1_accounting_reconciliations__id__match_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconMatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Match / explain a row",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/reconciliations/{id}/unmatch": {
+      "post": {
+        "operationId": "recon_unmatch_api_v1_accounting_reconciliations__id__unmatch_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReconMatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ReconciliationOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Undo a match",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/statements/{kind}": {
+      "get": {
+        "operationId": "statement_api_v1_accounting_statements__kind__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "title": "Kind",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "From",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "To",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "College Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "format",
+            "required": false,
+            "schema": {
+              "default": "json",
+              "pattern": "^(json|pdf|xlsx)$",
+              "title": "Format",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_StatementOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Receipts & payments / income & expenditure / balance summary",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/trial-balance": {
+      "get": {
+        "operationId": "trial_balance_api_v1_accounting_trial_balance_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "From",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": true,
+            "schema": {
+              "format": "date",
+              "title": "To",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "College Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_TrialBalanceOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Trial balance",
+        "tags": [
+          "accounting"
+        ]
+      }
+    },
+    "/api/v1/accounting/years/close": {
+      "post": {
+        "operationId": "year_close_api_v1_accounting_years_close_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/YearClose"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AcctJobAccepted_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Financial / academic year close (job)",
+        "tags": [
+          "accounting"
         ]
       }
     },
