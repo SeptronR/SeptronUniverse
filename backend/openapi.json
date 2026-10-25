@@ -1115,6 +1115,31 @@
         "title": "AcctReverse",
         "type": "object"
       },
+      "AckReminderRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "channels": {
+            "default": [
+              "in_app",
+              "push"
+            ],
+            "items": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email",
+                "push",
+                "in_app"
+              ],
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          }
+        },
+        "title": "AckReminderRequest",
+        "type": "object"
+      },
       "AckStats": {
         "properties": {
           "acknowledged": {
@@ -1352,6 +1377,20 @@
           }
         },
         "title": "AlertConfig",
+        "type": "object"
+      },
+      "AllClear": {
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "default": "All clear — normal activities resume.",
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "title": "AllClear",
         "type": "object"
       },
       "AllocationAction": {
@@ -2571,6 +2610,58 @@
         ],
         "title": "AmountType",
         "type": "string"
+      },
+      "AnnouncementAnalytics": {
+        "properties": {
+          "acknowledged": {
+            "title": "Acknowledged",
+            "type": "integer"
+          },
+          "announcement_id": {
+            "format": "uuid",
+            "title": "Announcement Id",
+            "type": "string"
+          },
+          "audience": {
+            "title": "Audience",
+            "type": "integer"
+          },
+          "funnel": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Funnel",
+            "type": "array"
+          },
+          "pending": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Pending",
+            "type": "array"
+          },
+          "read": {
+            "title": "Read",
+            "type": "integer"
+          },
+          "requires_ack": {
+            "title": "Requires Ack",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "announcement_id",
+          "audience",
+          "read",
+          "acknowledged",
+          "requires_ack",
+          "funnel"
+        ],
+        "title": "AnnouncementAnalytics",
+        "type": "object"
       },
       "AnnouncementCreate": {
         "properties": {
@@ -6961,6 +7052,173 @@
         "title": "AssignmentOut",
         "type": "object"
       },
+      "AssistantChatRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Context",
+            "type": "object"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "message": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "AssistantChatRequest",
+        "type": "object"
+      },
+      "AssistantChatResponse": {
+        "properties": {
+          "citations": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "conversation_id": {
+            "format": "uuid",
+            "title": "Conversation Id",
+            "type": "string"
+          },
+          "links": {
+            "default": [],
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "title": "Links",
+            "type": "array"
+          },
+          "reply": {
+            "title": "Reply",
+            "type": "string"
+          },
+          "tool_calls": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Tool Calls",
+            "type": "array"
+          }
+        },
+        "required": [
+          "conversation_id",
+          "reply"
+        ],
+        "title": "AssistantChatResponse",
+        "type": "object"
+      },
+      "AssistantConfig": {
+        "additionalProperties": false,
+        "properties": {
+          "allow_pii_to_provider": {
+            "default": false,
+            "title": "Allow Pii To Provider",
+            "type": "boolean"
+          },
+          "allowed_roles": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Allowed Roles",
+            "type": "array"
+          },
+          "max_tokens": {
+            "default": 800,
+            "maximum": 8000.0,
+            "minimum": 64.0,
+            "title": "Max Tokens",
+            "type": "integer"
+          },
+          "opt_in_required": {
+            "default": true,
+            "title": "Opt In Required",
+            "type": "boolean"
+          },
+          "provider": {
+            "default": "mock",
+            "enum": [
+              "mock",
+              "groq",
+              "openai",
+              "azure",
+              "ollama"
+            ],
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "title": "AssistantConfig",
+        "type": "object"
+      },
+      "AssistantMe": {
+        "properties": {
+          "allowed": {
+            "title": "Allowed",
+            "type": "boolean"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "opted_in": {
+            "title": "Opted In",
+            "type": "boolean"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "enabled",
+          "opted_in",
+          "allowed",
+          "provider"
+        ],
+        "title": "AssistantMe",
+        "type": "object"
+      },
+      "AssistantOptIn": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "title": "Accepted",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "accepted"
+        ],
+        "title": "AssistantOptIn",
+        "type": "object"
+      },
       "AttainmentConfigIn": {
         "additionalProperties": false,
         "properties": {
@@ -7497,6 +7755,34 @@
           "is_active"
         ],
         "title": "AttendanceDeviceOut",
+        "type": "object"
+      },
+      "AttendanceRule": {
+        "additionalProperties": false,
+        "properties": {
+          "below_pct": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Below Pct",
+            "type": "number"
+          },
+          "term_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Term Id"
+          }
+        },
+        "required": [
+          "below_pct"
+        ],
+        "title": "AttendanceRule",
         "type": "object"
       },
       "AttendanceSource": {
@@ -10763,6 +11049,197 @@
         "title": "BookUpdate",
         "type": "object"
       },
+      "BotFlowDefinition": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "default": true,
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "key": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "maxLength": 60,
+            "minLength": 2,
+            "title": "Label",
+            "type": "string"
+          },
+          "requires_auth": {
+            "default": true,
+            "title": "Requires Auth",
+            "type": "boolean"
+          },
+          "roles": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Roles",
+            "type": "array"
+          },
+          "trigger_words": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Trigger Words",
+            "type": "array"
+          }
+        },
+        "required": [
+          "key",
+          "label"
+        ],
+        "title": "BotFlowDefinition",
+        "type": "object"
+      },
+      "BotFlowsPut": {
+        "additionalProperties": false,
+        "properties": {
+          "flows": {
+            "items": {
+              "$ref": "#/components/schemas/BotFlowDefinition"
+            },
+            "title": "Flows",
+            "type": "array"
+          },
+          "greeting": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Greeting"
+          }
+        },
+        "required": [
+          "flows"
+        ],
+        "title": "BotFlowsPut",
+        "type": "object"
+      },
+      "BotSessionOut": {
+        "properties": {
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "flow_key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flow Key"
+          },
+          "handoff": {
+            "default": false,
+            "title": "Handoff",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "last_activity_at": {
+            "format": "date-time",
+            "title": "Last Activity At",
+            "type": "string"
+          },
+          "messages": {
+            "default": [],
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Messages",
+            "type": "array"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          }
+        },
+        "required": [
+          "id",
+          "channel",
+          "last_activity_at"
+        ],
+        "title": "BotSessionOut",
+        "type": "object"
+      },
+      "BotTestRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "as_user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As User Id"
+          },
+          "message": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "BotTestRequest",
+        "type": "object"
+      },
       "BounceRequest": {
         "properties": {
           "bank_charges_paise": {
@@ -12006,6 +12483,610 @@
         ],
         "title": "CalcType",
         "type": "string"
+      },
+      "CampaignAction": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "submit",
+              "approve",
+              "reject",
+              "schedule",
+              "send_now",
+              "cancel",
+              "pause",
+              "resume",
+              "retry_failed"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "CampaignAction",
+        "type": "object"
+      },
+      "CampaignBody": {
+        "additionalProperties": false,
+        "properties": {
+          "email_html": {
+            "anyOf": [
+              {
+                "maxLength": 200000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Html"
+          },
+          "email_subject": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email Subject"
+          },
+          "in_app": {
+            "anyOf": [
+              {
+                "maxLength": 4000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "In App"
+          },
+          "push_body": {
+            "anyOf": [
+              {
+                "maxLength": 240,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Push Body"
+          },
+          "push_title": {
+            "anyOf": [
+              {
+                "maxLength": 65,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Push Title"
+          },
+          "sms": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sms"
+          },
+          "sms_dlt_template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sms Dlt Template Id"
+          },
+          "whatsapp_template": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Whatsapp Template"
+          },
+          "whatsapp_text": {
+            "anyOf": [
+              {
+                "maxLength": 4000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Whatsapp Text"
+          }
+        },
+        "title": "CampaignBody",
+        "type": "object"
+      },
+      "CampaignCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "audience_rules": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SegmentRules"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "body_override": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CampaignBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "category": {
+            "default": "academic",
+            "enum": [
+              "transactional",
+              "marketing",
+              "academic",
+              "emergency"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "channels": {
+            "items": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email",
+                "push",
+                "in_app"
+              ],
+              "type": "string"
+            },
+            "minItems": 1,
+            "title": "Channels",
+            "type": "array"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "respect_quiet_hours": {
+            "default": true,
+            "title": "Respect Quiet Hours",
+            "type": "boolean"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "segment_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Segment Id"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "variables": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Variables",
+            "type": "object"
+          }
+        },
+        "required": [
+          "name",
+          "channels"
+        ],
+        "title": "CampaignCreate",
+        "type": "object"
+      },
+      "CampaignReport": {
+        "properties": {
+          "by_channel": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            "title": "By Channel",
+            "type": "object"
+          },
+          "campaign_id": {
+            "format": "uuid",
+            "title": "Campaign Id",
+            "type": "string"
+          },
+          "cost_paise": {
+            "title": "Cost Paise",
+            "type": "integer"
+          },
+          "deferred": {
+            "title": "Deferred",
+            "type": "integer"
+          },
+          "delivered": {
+            "title": "Delivered",
+            "type": "integer"
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "integer"
+          },
+          "failures_by_reason": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Failures By Reason",
+            "type": "object"
+          },
+          "queued": {
+            "title": "Queued",
+            "type": "integer"
+          },
+          "read": {
+            "title": "Read",
+            "type": "integer"
+          },
+          "sent": {
+            "title": "Sent",
+            "type": "integer"
+          },
+          "timeline": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Timeline",
+            "type": "array"
+          }
+        },
+        "required": [
+          "campaign_id",
+          "sent",
+          "delivered",
+          "failed",
+          "read",
+          "queued",
+          "deferred",
+          "cost_paise",
+          "by_channel",
+          "failures_by_reason",
+          "timeline"
+        ],
+        "title": "CampaignReport",
+        "type": "object"
+      },
+      "CampaignResponse": {
+        "properties": {
+          "approval": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Approval",
+            "type": "object"
+          },
+          "audience_rules": {
+            "additionalProperties": true,
+            "title": "Audience Rules",
+            "type": "object"
+          },
+          "body": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Body",
+            "type": "object"
+          },
+          "channels": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "compliance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ComplianceResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cost_estimate_paise": {
+            "default": 0,
+            "title": "Cost Estimate Paise",
+            "type": "integer"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "created_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created By"
+          },
+          "failed_count": {
+            "title": "Failed Count",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_emergency": {
+            "title": "Is Emergency",
+            "type": "boolean"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "sent_count": {
+            "title": "Sent Count",
+            "type": "integer"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "total_recipients": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Recipients"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "channels",
+          "audience_rules",
+          "status",
+          "is_emergency",
+          "sent_count",
+          "failed_count",
+          "created_at"
+        ],
+        "title": "CampaignResponse",
+        "type": "object"
+      },
+      "CampaignUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "audience_rules": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SegmentRules"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "body_override": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CampaignBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "channels": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "sms",
+                    "whatsapp",
+                    "email",
+                    "push",
+                    "in_app"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channels"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "respect_quiet_hours": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Respect Quiet Hours"
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "variables": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables"
+          }
+        },
+        "title": "CampaignUpdate",
+        "type": "object"
       },
       "CancelReceiptRequest": {
         "properties": {
@@ -14878,6 +15959,20 @@
         "title": "CollegeUpdate",
         "type": "object"
       },
+      "CommsJobAccepted": {
+        "properties": {
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "job_id"
+        ],
+        "title": "CommsJobAccepted",
+        "type": "object"
+      },
       "ComparativeStatement": {
         "properties": {
           "indent_id": {
@@ -14975,6 +16070,35 @@
           "state"
         ],
         "title": "ComplianceChip",
+        "type": "object"
+      },
+      "ComplianceResult": {
+        "properties": {
+          "errors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Errors",
+            "type": "array"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          },
+          "warnings": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "ok",
+          "errors"
+        ],
+        "title": "ComplianceResult",
         "type": "object"
       },
       "ComponentCategory": {
@@ -20989,6 +22113,67 @@
         "title": "DeliverRequest",
         "type": "object"
       },
+      "DeliveryAnalyticsOut": {
+        "properties": {
+          "by_channel": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            "title": "By Channel",
+            "type": "object"
+          },
+          "by_day": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "By Day",
+            "type": "array"
+          },
+          "cost_paise": {
+            "title": "Cost Paise",
+            "type": "integer"
+          },
+          "failures_by_reason": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Failures By Reason",
+            "type": "object"
+          },
+          "period_from": {
+            "format": "date-time",
+            "title": "Period From",
+            "type": "string"
+          },
+          "period_to": {
+            "format": "date-time",
+            "title": "Period To",
+            "type": "string"
+          },
+          "totals": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Totals",
+            "type": "object"
+          }
+        },
+        "required": [
+          "period_from",
+          "period_to",
+          "totals",
+          "by_channel",
+          "by_day",
+          "failures_by_reason",
+          "cost_paise"
+        ],
+        "title": "DeliveryAnalyticsOut",
+        "type": "object"
+      },
       "DeliveryMode": {
         "enum": [
           "offline",
@@ -22708,6 +23893,24 @@
         "title": "DuesResponse",
         "type": "object"
       },
+      "DuesRule": {
+        "additionalProperties": false,
+        "properties": {
+          "min_paise": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Min Paise",
+            "type": "integer"
+          },
+          "overdue_only": {
+            "default": false,
+            "title": "Overdue Only",
+            "type": "boolean"
+          }
+        },
+        "title": "DuesRule",
+        "type": "object"
+      },
       "DummyScript": {
         "properties": {
           "dummy_number": {
@@ -23557,6 +24760,135 @@
         "title": "EligibilityRunSummary",
         "type": "object"
       },
+      "EmergencyBroadcast": {
+        "additionalProperties": false,
+        "properties": {
+          "alert_type": {
+            "default": "security",
+            "enum": [
+              "sos",
+              "fire",
+              "medical",
+              "security",
+              "weather",
+              "other"
+            ],
+            "title": "Alert Type",
+            "type": "string"
+          },
+          "audience": {
+            "default": "all",
+            "enum": [
+              "all",
+              "college",
+              "hostel",
+              "custom"
+            ],
+            "title": "Audience",
+            "type": "string"
+          },
+          "channels": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "sms",
+                    "whatsapp",
+                    "email",
+                    "push",
+                    "in_app"
+                  ],
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channels"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "confirm": {
+            "description": "type BROADCAST to confirm",
+            "title": "Confirm",
+            "type": "string"
+          },
+          "custom_user_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Custom User Ids",
+            "type": "array"
+          },
+          "drill": {
+            "default": false,
+            "title": "Drill",
+            "type": "boolean"
+          },
+          "emergency_alert_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Emergency Alert Id"
+          },
+          "hostel_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hostel Id"
+          },
+          "incident_ref": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Incident Ref"
+          },
+          "message": {
+            "maxLength": 1000,
+            "minLength": 5,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message",
+          "confirm"
+        ],
+        "title": "EmergencyBroadcast",
+        "type": "object"
+      },
       "EmergencyContact": {
         "additionalProperties": false,
         "properties": {
@@ -23589,6 +24921,98 @@
           "phone"
         ],
         "title": "EmergencyContact",
+        "type": "object"
+      },
+      "EmergencyLog": {
+        "properties": {
+          "alert_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Type"
+          },
+          "all_clear_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "All Clear At"
+          },
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "campaign_id": {
+            "format": "uuid",
+            "title": "Campaign Id",
+            "type": "string"
+          },
+          "drill": {
+            "title": "Drill",
+            "type": "boolean"
+          },
+          "incident_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Incident Ref"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "raised_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raised By"
+          },
+          "recipients": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipients"
+          },
+          "sent": {
+            "title": "Sent",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "campaign_id",
+          "message",
+          "at",
+          "sent",
+          "drill"
+        ],
+        "title": "EmergencyLog",
         "type": "object"
       },
       "EmploymentType": {
@@ -25600,6 +27024,43 @@
         "title": "Envelope[AllotmentSummary]",
         "type": "object"
       },
+      "Envelope_AnnouncementAnalytics_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnnouncementAnalytics"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AnnouncementAnalytics]",
+        "type": "object"
+      },
       "Envelope_AnnouncementOut_": {
         "properties": {
           "data": {
@@ -26005,6 +27466,80 @@
           }
         },
         "title": "Envelope[AssignmentOut]",
+        "type": "object"
+      },
+      "Envelope_AssistantChatResponse_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AssistantChatResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AssistantChatResponse]",
+        "type": "object"
+      },
+      "Envelope_AssistantMe_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AssistantMe"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[AssistantMe]",
         "type": "object"
       },
       "Envelope_AttainmentConfigOut_": {
@@ -26451,6 +27986,43 @@
         "title": "Envelope[BookReturnResponse]",
         "type": "object"
       },
+      "Envelope_BotSessionOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BotSessionOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[BotSessionOut]",
+        "type": "object"
+      },
       "Envelope_BudgetHeadOut_": {
         "properties": {
           "data": {
@@ -26671,6 +28243,80 @@
           }
         },
         "title": "Envelope[BundleResponse]",
+        "type": "object"
+      },
+      "Envelope_CampaignReport_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CampaignReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CampaignReport]",
+        "type": "object"
+      },
+      "Envelope_CampaignResponse_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CampaignResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CampaignResponse]",
         "type": "object"
       },
       "Envelope_CasApplicationOut_": {
@@ -27080,6 +28726,43 @@
         "title": "Envelope[CollegeResponse]",
         "type": "object"
       },
+      "Envelope_CommsJobAccepted_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CommsJobAccepted"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CommsJobAccepted]",
+        "type": "object"
+      },
       "Envelope_ComparativeStatement_": {
         "properties": {
           "data": {
@@ -27115,6 +28798,43 @@
           }
         },
         "title": "Envelope[ComparativeStatement]",
+        "type": "object"
+      },
+      "Envelope_ComplianceResult_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ComplianceResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ComplianceResult]",
         "type": "object"
       },
       "Envelope_CondonationResponse_": {
@@ -28040,6 +29760,43 @@
           }
         },
         "title": "Envelope[DelegationResponse]",
+        "type": "object"
+      },
+      "Envelope_DeliveryAnalyticsOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DeliveryAnalyticsOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DeliveryAnalyticsOut]",
         "type": "object"
       },
       "Envelope_DepartmentResponse_": {
@@ -36028,6 +37785,43 @@
         "title": "Envelope[SalaryStructureOut]",
         "type": "object"
       },
+      "Envelope_SavedSegmentOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SavedSegmentOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[SavedSegmentOut]",
+        "type": "object"
+      },
       "Envelope_ScholarshipApplicationOut_": {
         "properties": {
           "data": {
@@ -36359,6 +38153,43 @@
           }
         },
         "title": "Envelope[SectionFeed]",
+        "type": "object"
+      },
+      "Envelope_SegmentPreview_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SegmentPreview"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[SegmentPreview]",
         "type": "object"
       },
       "Envelope_SendMessageResponse_": {
@@ -40119,6 +41950,47 @@
         "title": "Envelope[list[BookResponse]]",
         "type": "object"
       },
+      "Envelope_list_BotSessionOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/BotSessionOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[BotSessionOut]]",
+        "type": "object"
+      },
       "Envelope_list_BudgetHeadOut__": {
         "properties": {
           "data": {
@@ -40240,6 +42112,47 @@
           }
         },
         "title": "Envelope[list[BundleResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_CampaignResponse__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/CampaignResponse"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[CampaignResponse]]",
         "type": "object"
       },
       "Envelope_list_CasApplicationOut__": {
@@ -41716,6 +43629,47 @@
           }
         },
         "title": "Envelope[list[EligibilityRow]]",
+        "type": "object"
+      },
+      "Envelope_list_EmergencyLog__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/EmergencyLog"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[EmergencyLog]]",
         "type": "object"
       },
       "Envelope_list_EnquiryResponse__": {
@@ -44670,6 +46624,47 @@
         "title": "Envelope[list[MyMarksRow]]",
         "type": "object"
       },
+      "Envelope_list_MyMessageOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/MyMessageOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[MyMessageOut]]",
+        "type": "object"
+      },
       "Envelope_list_MyTransportResponse__": {
         "properties": {
           "data": {
@@ -45406,6 +47401,47 @@
           }
         },
         "title": "Envelope[list[ProjectOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ProviderHealthOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ProviderHealthOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[ProviderHealthOut]]",
         "type": "object"
       },
       "Envelope_list_ProvisionalResponse__": {
@@ -46720,6 +48756,47 @@
         "title": "Envelope[list[SalaryStructureOut]]",
         "type": "object"
       },
+      "Envelope_list_SavedSegmentOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SavedSegmentOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[SavedSegmentOut]]",
+        "type": "object"
+      },
       "Envelope_list_ScholarshipApplicationOut__": {
         "properties": {
           "data": {
@@ -47046,6 +49123,47 @@
           }
         },
         "title": "Envelope[list[SettingsCategoryResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_SimulatorInboxOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SimulatorInboxOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[SimulatorInboxOut]]",
         "type": "object"
       },
       "Envelope_list_SlotOut__": {
@@ -67911,6 +70029,69 @@
         "title": "MyMarksRow",
         "type": "object"
       },
+      "MyMessageOut": {
+        "properties": {
+          "body_preview": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body Preview"
+          },
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "event_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Type"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          }
+        },
+        "required": [
+          "id",
+          "channel",
+          "status",
+          "created_at"
+        ],
+        "title": "MyMessageOut",
+        "type": "object"
+      },
       "MyResultsResponse": {
         "properties": {
           "cgpa": {
@@ -75359,6 +77540,42 @@
           "name"
         ],
         "title": "PromotionRow",
+        "type": "object"
+      },
+      "ProviderHealthOut": {
+        "properties": {
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "last_errors": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Last Errors",
+            "type": "array"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          }
+        },
+        "required": [
+          "channel",
+          "provider",
+          "ok",
+          "detail"
+        ],
+        "title": "ProviderHealthOut",
         "type": "object"
       },
       "ProviderTestRequest": {
@@ -85243,6 +87460,85 @@
         "title": "SalaryStructureOut",
         "type": "object"
       },
+      "SavedSegmentIn": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/SegmentRules"
+          },
+          "shared": {
+            "default": false,
+            "title": "Shared",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name",
+          "rules"
+        ],
+        "title": "SavedSegmentIn",
+        "type": "object"
+      },
+      "SavedSegmentOut": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner User Id"
+          },
+          "rules": {
+            "additionalProperties": true,
+            "title": "Rules",
+            "type": "object"
+          },
+          "shared": {
+            "title": "Shared",
+            "type": "boolean"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "rules",
+          "shared"
+        ],
+        "title": "SavedSegmentOut",
+        "type": "object"
+      },
       "ScaleType": {
         "enum": [
           "absolute",
@@ -86569,6 +88865,205 @@
         "title": "SectionFeed",
         "type": "object"
       },
+      "SegmentCondition": {
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Field",
+            "type": "string"
+          },
+          "op": {
+            "enum": [
+              "eq",
+              "in",
+              "between",
+              "gte",
+              "lte",
+              "is_null"
+            ],
+            "title": "Op",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value"
+          }
+        },
+        "required": [
+          "field",
+          "op"
+        ],
+        "title": "SegmentCondition",
+        "type": "object"
+      },
+      "SegmentPreview": {
+        "properties": {
+          "by_channel_reachable": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "By Channel Reachable",
+            "type": "object"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "sample": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Sample",
+            "type": "array"
+          }
+        },
+        "required": [
+          "count",
+          "by_channel_reachable",
+          "sample"
+        ],
+        "title": "SegmentPreview",
+        "type": "object"
+      },
+      "SegmentRules": {
+        "additionalProperties": false,
+        "properties": {
+          "all": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SegmentCondition"
+            },
+            "title": "All",
+            "type": "array"
+          },
+          "any": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SegmentCondition"
+            },
+            "title": "Any",
+            "type": "array"
+          },
+          "attendance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AttendanceRule"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "batch_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Batch Ids",
+            "type": "array"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "custom_user_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Custom User Ids",
+            "type": "array"
+          },
+          "department_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Department Ids",
+            "type": "array"
+          },
+          "dues": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DuesRule"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "hostel_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Hostel Ids",
+            "type": "array"
+          },
+          "notify_guardians": {
+            "default": false,
+            "title": "Notify Guardians",
+            "type": "boolean"
+          },
+          "person_types": {
+            "default": [
+              "student"
+            ],
+            "items": {
+              "enum": [
+                "student",
+                "guardian",
+                "staff"
+              ],
+              "type": "string"
+            },
+            "title": "Person Types",
+            "type": "array"
+          },
+          "program_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Program Ids",
+            "type": "array"
+          },
+          "roles": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Roles",
+            "type": "array"
+          },
+          "route_ids": {
+            "default": [],
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Route Ids",
+            "type": "array"
+          }
+        },
+        "title": "SegmentRules",
+        "type": "object"
+      },
       "SelfCheckinRequest": {
         "additionalProperties": false,
         "properties": {
@@ -87438,6 +89933,134 @@
           "status"
         ],
         "title": "SignoffRequest",
+        "type": "object"
+      },
+      "SimInbound": {
+        "additionalProperties": false,
+        "properties": {
+          "phone": {
+            "maxLength": 20,
+            "minLength": 6,
+            "title": "Phone",
+            "type": "string"
+          },
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          },
+          "wa_message_id": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wa Message Id"
+          }
+        },
+        "required": [
+          "phone",
+          "text"
+        ],
+        "title": "SimInbound",
+        "type": "object"
+      },
+      "SimProviderEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "message_log_id": {
+            "format": "uuid",
+            "title": "Message Log Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "delivered",
+              "read",
+              "failed",
+              "bounced"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message_log_id",
+          "status"
+        ],
+        "title": "SimProviderEvent",
+        "type": "object"
+      },
+      "SimulatorInboxOut": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "recipient": {
+            "title": "Recipient",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          }
+        },
+        "required": [
+          "id",
+          "channel",
+          "recipient",
+          "status",
+          "at"
+        ],
+        "title": "SimulatorInboxOut",
         "type": "object"
       },
       "SlotGroupReplace": {
@@ -114459,6 +117082,270 @@
         ]
       }
     },
+    "/api/v1/assistant/admin/config": {
+      "put": {
+        "operationId": "assistant_config_api_v1_assistant_admin_config_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssistantConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Assistant configuration",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/assistant/admin/usage": {
+      "get": {
+        "operationId": "assistant_usage_api_v1_assistant_admin_usage_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Assistant usage by month",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/assistant/chat": {
+      "post": {
+        "operationId": "assistant_chat_api_v1_assistant_chat_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssistantChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AssistantChatResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask the assistant (read-only tools under your permissions)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/assistant/conversations": {
+      "get": {
+        "operationId": "assistant_conversations_api_v1_assistant_conversations_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My assistant conversations",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/assistant/conversations/{id}": {
+      "delete": {
+        "operationId": "assistant_delete_api_v1_assistant_conversations__id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete a conversation",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/assistant/me": {
+      "get": {
+        "operationId": "assistant_me_api_v1_assistant_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AssistantMe_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Assistant availability and opt-in",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/assistant/opt-in": {
+      "post": {
+        "operationId": "assistant_opt_in_api_v1_assistant_opt_in_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssistantOptIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AssistantMe_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Opt in / out of the assistant",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
     "/api/v1/attainment-configs": {
       "get": {
         "operationId": "config_list_api_v1_attainment_configs_get",
@@ -119244,6 +122131,1753 @@
         "summary": "Update a college (college scope)",
         "tags": [
           "institution"
+        ]
+      }
+    },
+    "/api/v1/comms/analytics/delivery": {
+      "get": {
+        "operationId": "delivery_api_v1_comms_analytics_delivery_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "template_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "event_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Event Type"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DeliveryAnalyticsOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delivery analytics",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/analytics/export": {
+      "get": {
+        "operationId": "analytics_export_api_v1_comms_analytics_export_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CommsJobAccepted_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delivery analytics CSV (job)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/analytics/providers": {
+      "get": {
+        "operationId": "providers_api_v1_comms_analytics_providers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ProviderHealthOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Provider health",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/announcements/{id}/analytics": {
+      "get": {
+        "operationId": "ann_analytics_api_v1_comms_announcements__id__analytics_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_AnnouncementAnalytics_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Read / acknowledgement funnel",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/announcements/{id}/pending": {
+      "get": {
+        "operationId": "ann_pending_api_v1_comms_announcements__id__pending_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Who has not read / acknowledged (scoped)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/announcements/{id}/remind": {
+      "post": {
+        "operationId": "ann_remind_api_v1_comms_announcements__id__remind_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AckReminderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reminder campaign to the pending audience",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/bot/flows": {
+      "get": {
+        "operationId": "bot_flows_api_v1_comms_bot_flows_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bot menu flows",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "put": {
+        "operationId": "bot_flows_put_api_v1_comms_bot_flows_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BotFlowsPut"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit bot flows",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/bot/flows/{key}/test": {
+      "post": {
+        "operationId": "bot_test_api_v1_comms_bot_flows__key__test_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BotTestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Test console (runs a message through the bot)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/bot/me/sessions": {
+      "get": {
+        "operationId": "bot_me_api_v1_comms_bot_me_sessions_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BotSessionOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My bot conversations",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/bot/sessions": {
+      "get": {
+        "operationId": "bot_sessions_api_v1_comms_bot_sessions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_BotSessionOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bot sessions (masked)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/bot/sessions/{id}": {
+      "get": {
+        "operationId": "bot_session_api_v1_comms_bot_sessions__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BotSessionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bot session (masked)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/bot/sessions/{id}/handoff-close": {
+      "post": {
+        "operationId": "bot_handoff_close_api_v1_comms_bot_sessions__id__handoff_close_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_BotSessionOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close a hand-off",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/campaigns": {
+      "get": {
+        "operationId": "campaigns_api_v1_comms_campaigns_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(self|department|college|all)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_CampaignResponse__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Campaigns (ScopeTabs)",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "post": {
+        "operationId": "campaign_create_api_v1_comms_campaigns_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create a campaign (draft)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/campaigns/{id}": {
+      "get": {
+        "operationId": "campaign_get_api_v1_comms_campaigns__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Campaign (+ compliance)",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "put": {
+        "operationId": "campaign_update_api_v1_comms_campaigns__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a draft campaign",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/campaigns/{id}/action": {
+      "post": {
+        "operationId": "campaign_action_api_v1_comms_campaigns__id__action_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CampaignAction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "submit | approve | reject | schedule | send_now | cancel | pause | resume | retry_failed (Idempotency-Key)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/campaigns/{id}/compliance-check": {
+      "post": {
+        "operationId": "campaign_compliance_api_v1_comms_campaigns__id__compliance_check_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ComplianceResult_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "DLT / WhatsApp / content compliance",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/campaigns/{id}/recipients": {
+      "get": {
+        "operationId": "campaign_recipients_api_v1_comms_campaigns__id__recipients_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Recipients by status (masked)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/campaigns/{id}/report": {
+      "get": {
+        "operationId": "campaign_report_api_v1_comms_campaigns__id__report_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignReport_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Campaign report",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/emergency/broadcast": {
+      "post": {
+        "operationId": "emergency_broadcast_api_v1_comms_emergency_broadcast_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmergencyBroadcast"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Emergency broadcast (type BROADCAST to confirm)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/emergency/log": {
+      "get": {
+        "operationId": "emergency_log_api_v1_comms_emergency_log_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_EmergencyLog__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Emergency incident log",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/emergency/{id}/all-clear": {
+      "post": {
+        "operationId": "emergency_all_clear_api_v1_comms_emergency__id__all_clear_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AllClear"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CampaignResponse_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "All-clear follow-up",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/me/messages": {
+      "get": {
+        "operationId": "my_messages_api_v1_comms_me_messages_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_MyMessageOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My messages (all channels)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/segments": {
+      "get": {
+        "operationId": "segments_api_v1_comms_segments_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_SavedSegmentOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Saved segments",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "post": {
+        "operationId": "segment_save_api_v1_comms_segments_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedSegmentIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_SavedSegmentOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save a segment",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/segments/fields": {
+      "get": {
+        "operationId": "segment_fields_api_v1_comms_segments_fields_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Segment field catalogue",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/segments/preview": {
+      "post": {
+        "operationId": "segment_preview_api_v1_comms_segments_preview_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SegmentRules"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_SegmentPreview_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Preview a segment (count, reachability, sample)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/segments/{id}": {
+      "delete": {
+        "operationId": "segment_delete_api_v1_comms_segments__id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete a saved segment",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "put": {
+        "operationId": "segment_update_api_v1_comms_segments__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SavedSegmentIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_SavedSegmentOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a saved segment",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/simulator/inbound-whatsapp": {
+      "post": {
+        "operationId": "sim_inbound_api_v1_comms_simulator_inbound_whatsapp_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimInbound"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Inject an inbound WhatsApp message",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/simulator/inbox": {
+      "delete": {
+        "operationId": "sim_clear_api_v1_comms_simulator_inbox_delete",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Clear the simulator inbox",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "get": {
+        "operationId": "sim_inbox_api_v1_comms_simulator_inbox_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "channel",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Channel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_SimulatorInboxOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Simulator inbox (mock provider sends)",
+        "tags": [
+          "communication-advanced"
+        ]
+      }
+    },
+    "/api/v1/comms/simulator/provider-event": {
+      "post": {
+        "operationId": "sim_event_api_v1_comms_simulator_provider_event_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimProviderEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Simulate a provider delivery / read / failure",
+        "tags": [
+          "communication-advanced"
         ]
       }
     },
@@ -179902,6 +184536,86 @@
         "summary": "Gateway webhook (signature verified; tenant from ?institution=)",
         "tags": [
           "public"
+        ]
+      }
+    },
+    "/api/v1/webhooks/whatsapp/{connection_id}": {
+      "get": {
+        "operationId": "wa_verify_api_v1_webhooks_whatsapp__connection_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Connection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "WhatsApp webhook verification (hub.challenge)",
+        "tags": [
+          "communication-advanced"
+        ]
+      },
+      "post": {
+        "operationId": "wa_inbound_api_v1_webhooks_whatsapp__connection_id__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "connection_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Connection Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "WhatsApp inbound messages (signed)",
+        "tags": [
+          "communication-advanced"
         ]
       }
     },

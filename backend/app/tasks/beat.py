@@ -109,6 +109,13 @@ register_beat("accounting.budget_threshold_scan", "beat.accounting.budget_thresh
 register_beat("accounting.reconciliation_reminder", "beat.accounting.reconciliation_reminder", crontab(day_of_month=3, hour=3, minute=30))
 register_beat("accounting.posting_gap_check", "beat.accounting.posting_gap_check", crontab(hour=19, minute=40))  # 01:10 IST
 
+# ---- Phase 24 communication advanced (app/tasks/comms_advanced.py) -----------------------------------------------------------
+register_beat("campaign.scheduler", "beat.campaign.scheduler", crontab(minute="*"))
+register_beat("campaign.deferred_quiet_hours_flush", "beat.campaign.deferred_flush", crontab(minute="*/5"))
+register_beat("bot.session_expiry", "beat.bot.session_expiry", crontab(minute=7))
+register_beat("assistant.conversation_retention", "beat.assistant.conversation_retention", crontab(hour=20, minute=55))  # 02:25 IST
+register_beat("comms.provider_health_probe", "beat.comms.provider_health_probe", crontab(minute="*/5"))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

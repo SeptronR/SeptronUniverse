@@ -236,6 +236,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Rank lists & medals', to: '/admin/results/medals', icon: GraduationCap, module: 'results', action: 'view_all', altActions: ['approve', 'manage'], feature: 'results.rank_lists' },
       { label: 'Result corrections', to: '/admin/results/corrections', icon: CheckSquare, module: 'results', action: 'verify', altActions: ['manage'], feature: 'results.processing' },
       { label: 'Detained & readmission', to: '/admin/students/detained', icon: UserRound, module: 'students', action: 'view_all', altActions: ['manage'], feature: 'results.processing' },
+      // Phase 24 — communication advanced
+      { label: 'Campaigns', to: '/admin/comms/campaigns', icon: Radio, module: 'communication', action: 'bulk', altActions: ['send', 'approve', 'manage'], feature: 'comms.bulk_campaigns' },
+      { label: 'Audience segments', to: '/admin/comms/segments', icon: UserRound, module: 'communication', action: 'bulk', altActions: ['send', 'manage'], feature: 'comms.bulk_campaigns' },
+      { label: 'Emergency broadcast', to: '/admin/comms/emergency', icon: Activity, module: 'communication', action: 'emergency', altActions: ['manage'], feature: 'comms.emergency_broadcast' },
+      { label: 'WhatsApp bot', to: '/admin/comms/bot', icon: Repeat, module: 'communication', action: 'template_manage', altActions: ['bulk', 'manage'], feature: 'comms.whatsapp_bot' },
+      { label: 'Delivery analytics', to: '/admin/comms/analytics', icon: TrendingUp, module: 'communication', action: 'bulk', altActions: ['approve', 'manage'], feature: 'comms.bulk_campaigns' },
+      { label: 'Message simulator', to: '/admin/comms/simulator', icon: Radio, module: 'communication', action: 'manage', altActions: ['bulk'], feature: 'comms.bulk_campaigns' },
       // Phase 23 — accounting & budget
       { label: 'Finance dashboard', to: '/admin/accounting/dashboard', icon: LayoutDashboard, module: 'accounting', action: 'view_all', altActions: ['manage'], feature: 'accounting.core' },
       { label: 'Chart of accounts', to: '/admin/accounting/chart', icon: GitBranch, module: 'accounting', action: 'view_all', altActions: ['manage'], feature: 'accounting.core' },

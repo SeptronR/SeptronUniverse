@@ -70,6 +70,9 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/transport/gps/device-ingest",
     # Phase 22 — supplier self-registration (tenant by institution slug; rate-limited + captcha; {inventory.vendor_portal} inside)
     "POST /api/v1/vendor/register",
+    # Phase 24 — WhatsApp webhook (verify token on GET; X-Hub-Signature-256 on POST; {comms.whatsapp_bot} inside)
+    "GET /api/v1/webhooks/whatsapp/{connection_id}",
+    "POST /api/v1/webhooks/whatsapp/{connection_id}",
 }
 
 

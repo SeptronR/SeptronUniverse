@@ -185,6 +185,15 @@ const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultP
 const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
 const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
 const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 24 — communication advanced
+const CommsSegmentsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.SegmentsPage })));
+const CommsCampaignsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.CampaignsPage })));
+const CommsEmergencyPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.EmergencyPage })));
+const CommsBotPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.BotPage })));
+const CommsAssistantPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.AssistantPage })));
+const CommsSimulatorPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.SimulatorPage })));
+const CommsAnalyticsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.DeliveryAnalyticsPage })));
+const CommsMyMessagesPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.MyMessagesPage })));
 // Phase 23 — accounting & budget
 const AccountingDashboardPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.AccountingDashboardPage })));
 const AcctChartPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ChartPage })));
@@ -542,6 +551,13 @@ export const router = createBrowserRouter([
               ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
               ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
               ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 24 — communication advanced (audience narrowed by the services: department / college / all)
+              ['/admin/comms/campaigns', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'send'], ['communication', 'approve'], ['communication', 'manage']], <CommsCampaignsPage key="cc" />],
+              ['/admin/comms/segments', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'send'], ['communication', 'manage']], <CommsSegmentsPage key="cs" />],
+              ['/admin/comms/emergency', 'comms.emergency_broadcast', 'communication', 'emergency', [['communication', 'manage']], <CommsEmergencyPage key="ce" />],
+              ['/admin/comms/bot', 'comms.whatsapp_bot', 'communication', 'template_manage', [['communication', 'bulk'], ['communication', 'manage']], <CommsBotPage key="cb" />],
+              ['/admin/comms/simulator', 'comms.bulk_campaigns', 'communication', 'manage', [['communication', 'bulk']], <CommsSimulatorPage key="csim" />],
+              ['/admin/comms/analytics', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'approve'], ['communication', 'manage']], <CommsAnalyticsPage key="ca" />],
               // Phase 23 — accounting & budget (narrowed by the services: own / department / PI / college / all)
               ['/admin/accounting/dashboard', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AccountingDashboardPage key="ad" />],
               ['/admin/accounting/chart', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AcctChartPage key="ach" />],
@@ -667,6 +683,8 @@ export const router = createBrowserRouter([
           })),
           // Phase 04 — communication core & approvals (self-service pages need no module permission)
           { path: '/notifications', element: page(<NotificationsPage />) },
+          { path: '/me/messages', element: page(<CommsMyMessagesPage />) },
+          { path: '/assistant', element: page(<CommsAssistantPage />) },
           {
             path: '/profile/notifications',
             element: page(

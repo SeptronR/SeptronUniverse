@@ -189,6 +189,14 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("accounting", "gst_number", "str", None, label="GSTIN of the institution"),
     SettingDef("accounting", "tally_company_name", "str", None, label="Tally company name"),
     SettingDef("accounting", "mappings", "json", None, label="Ledger account mappings"),
+    # communication advanced (Phase 24)
+    SettingDef("comms", "throttle_per_minute", "json", {"sms": 600, "whatsapp": 300, "email": 1200, "push": 5000}, label="Throttle per channel per minute"),
+    SettingDef("comms", "campaign_approval_threshold_recipients", "int", 2000, label="Campaigns above N recipients need approval", min=1),
+    SettingDef("comms", "quiet_hours_default", "json", {"from": "21:00", "to": "07:00"}, label="Default quiet hours"),
+    SettingDef("comms", "assistant", "json", {"provider": "mock", "opt_in_required": True, "allowed_roles": [], "allow_pii_to_provider": False, "max_tokens": 800}, label="AI assistant"),
+    SettingDef("comms", "bot_flows", "json", None, label="WhatsApp bot flows (override)"),
+    SettingDef("comms", "segments", "json", [], label="Saved audience segments"),
+    SettingDef("comms", "credits", "json", None, label="Message credits {sms, whatsapp} (absent = unmetered)"),
     # communication
     SettingDef("communication", "sms_sender_id", "str", None),
     SettingDef("communication", "dlt_entity_id", "str", None),

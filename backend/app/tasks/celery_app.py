@@ -38,6 +38,7 @@ celery = Celery(
         "app.tasks.transport",
         "app.tasks.inventory",
         "app.tasks.accounting",
+        "app.tasks.comms_advanced",
         "app.tasks.notifications",
         "app.tasks.documents",
         "app.tasks.reports",

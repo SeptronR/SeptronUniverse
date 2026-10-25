@@ -1098,6 +1098,59 @@ HOSTEL_EVENTS: tuple[EventDef, ...] = (
         ("in_app",),
     ),
 )
+# Phase 24 — campaigns, reminders, emergency broadcast, assistant, bot hand-off
+COMMS_ADVANCED_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "campaign.completed",
+        "announcements",
+        "Campaign completed",
+        "Campaign {{ campaign }} completed",
+        "{{ campaign }}: {{ sent }} sent, {{ failed }} failed.",
+        ("campaign", "sent", "failed"),
+        ("in_app", "email"),
+        link="/admin/communication/campaigns",
+    ),
+    EventDef(
+        "announcement.ack_reminder",
+        "announcements",
+        "Acknowledgement reminder",
+        "Reminder: {{ title }}",
+        "Please read and acknowledge: {{ title }}.",
+        ("title",),
+        ("in_app", "push"),
+        link="/announcements",
+    ),
+    EventDef(
+        "emergency.broadcast",
+        "emergency",
+        "Emergency broadcast",
+        "Emergency alert",
+        "{{ message }}",
+        ("message",),
+        ("in_app", "push", "sms"),
+        link="/announcements",
+    ),
+    EventDef(
+        "assistant.opt_in",
+        "security",
+        "Assistant opt-in",
+        "AI assistant enabled",
+        "You opted in to the AI assistant. You can opt out any time in your profile.",
+        (),
+        ("in_app",),
+        link="/me",
+    ),
+    EventDef(
+        "communication.bot_handoff",
+        "announcements",
+        "WhatsApp hand-off",
+        "WhatsApp: {{ kind }} from {{ phone }}",
+        "{{ phone }}: {{ text }}",
+        ("phone", "text", "kind"),
+        ("in_app",),
+        link="/admin/communication/bot",
+    ),
+)
 # Phase 23 — accounting & budget
 ACCOUNTING_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1525,6 +1578,7 @@ EVENTS = (
     + TRANSPORT_EVENTS
     + INVENTORY_EVENTS
     + ACCOUNTING_EVENTS
+    + COMMS_ADVANCED_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

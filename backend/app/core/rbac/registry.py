@@ -716,6 +716,11 @@ FACULTY_ACCOUNTING: set[str] = P("accounting", "view")
 ACCOUNTANT_ACCOUNTING: set[str] = P("accounting", "post", "reconcile", "approve", "export", "view_all")
 VC_ACCOUNTING: set[str] = P("accounting", "approve")
 IQAC_ACCOUNTING: set[str] = P("accounting", "view_all")
+# Phase 24 (Prompts/24 visibility): the registrar runs campaigns, approves large ones and may broadcast emergencies; the
+# vice-chancellor approves and broadcasts; HODs send department campaigns (in-app / e-mail / push)
+REGISTRAR_COMMS: set[str] = P("communication", "bulk", "approve", "emergency", "view_all", "template_manage")
+VC_COMMS: set[str] = P("communication", "approve", "emergency")
+HOD_COMMS: set[str] = P("communication", "send")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -724,6 +729,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "vice_chancellor": ALL("view", "view_all")
     | VC_PROCUREMENT
     | VC_ACCOUNTING
+    | VC_COMMS
     | P("leaves", "approve")
     | P("regulations", "approve")
     | P("degrees", "award")
@@ -766,7 +772,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_MARKS
     | REGISTRAR_POST_RESULT
     | REGISTRAR_DEGREES
-    | REGISTRAR_HOSTEL,
+    | REGISTRAR_HOSTEL
+    | REGISTRAR_COMMS,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -858,7 +865,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_LIBRARY
     | HOD_HOSTEL
     | HOD_TRANSPORT
-    | HOD_ACCOUNTING,
+    | HOD_ACCOUNTING
+    | HOD_COMMS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -1105,6 +1113,7 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0024": frozenset(REGISTRAR_COMMS | VC_COMMS | HOD_COMMS),
     "0023": frozenset(HOD_ACCOUNTING | FACULTY_ACCOUNTING | ACCOUNTANT_ACCOUNTING | VC_ACCOUNTING | IQAC_ACCOUNTING),
     "0022": frozenset(STORE_KEEPER | INVENTORY_MANAGER_OPS | ACCOUNTANT_PROCUREMENT | VC_PROCUREMENT | VENDOR_PORTAL),
     "0021": frozenset(HOD_TRANSPORT | STAFF_TRANSPORT),
