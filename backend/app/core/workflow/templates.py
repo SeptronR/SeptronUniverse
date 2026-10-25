@@ -283,6 +283,25 @@ HOSTEL_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         ],
     },
 )
+# Phase 22: vendor bills above ``inventory.bill_approval_threshold_paise`` (the inventory manager verifies before)
+INVENTORY_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "procurement.bill",
+        "module": "procurement",
+        "name": "Vendor bill approval",
+        "steps": _chain("accountant", "vice_chancellor"),
+    },
+)
+# Phase 23: manual expenses above ``accounting.expense_approval_threshold_paise`` and budget allocations
+ACCOUNTING_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {"key": "accounting.expense", "module": "accounting", "name": "Expense approval", "steps": _chain("accountant", "vice_chancellor")},
+    {
+        "key": "accounting.budget_allocation",
+        "module": "accounting",
+        "name": "Budget allocation",
+        "steps": _chain("accountant", "vice_chancellor"),
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -293,9 +312,11 @@ WORKFLOW_TEMPLATES = (
     + FEE_WORKFLOW_TEMPLATES
     + POST_RESULT_WORKFLOW_TEMPLATES
     + HOSTEL_WORKFLOW_TEMPLATES
+    + INVENTORY_WORKFLOW_TEMPLATES
+    + ACCOUNTING_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 35, (
+assert len(WORKFLOW_TEMPLATES) == 38, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2"
 )

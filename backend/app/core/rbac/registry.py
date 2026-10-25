@@ -3,7 +3,7 @@
 * ``PERMISSIONS`` mirrors ``Database_Schema.sql`` §36.1 exactly (modules × standard actions + bespoke actions); the
   Phase 02 seed revision and ``seed_platform.py`` upsert it (``ON CONFLICT DO NOTHING``) and the in-process
   verification asserts the two sets are identical.
-* ``ROLE_META`` mirrors §36.2 (name, slug, is_system, default scope, portal) for the 51 platform role templates.
+* ``ROLE_META`` mirrors §36.2 (name, slug, is_system, default scope, portal) for the 53 platform role templates (Phase 22 added ``vendor`` and ``store_keeper``).
 * ``ROLE_TEMPLATES`` encodes docs/Roles_and_Permissions.md §3 as flat ``module:action`` grants per slug; every string
   is validated against the catalogue at import time. ``module:manage`` is the wildcard ``Principal.has()`` honours —
   except ``view_pii``, which must always be granted explicitly (docs/Authorization_and_Visibility.md §1).
@@ -377,6 +377,9 @@ ROLE_META: tuple[RoleMeta, ...] = tuple(
         ("Parent", "parent", "self", "parent"),
         ("Alumni", "alumni", "self", "alumni"),
         ("Applicant", "applicant", "self", "applicant"),
+        # Phase 22 — supplier portal user and store keeper (stores owned through stores.keeper_staff_id)
+        ("Vendor", "vendor", "self", "vendor"),
+        ("Store Keeper", "store_keeper", "self", "admin"),
     )
 )
 ROLE_SLUGS: tuple[str, ...] = tuple(r.slug for r in ROLE_META)
@@ -477,6 +480,8 @@ STAFF_SELF: set[str] = (
     | P("payroll", "self")
     | P("attendance", "staff_self")
     | P("hr", "view")
+    # Phase 21: staff passengers read their own transport allocation
+    | P("transport", "view")
     # Phase 06: staff request encashment of their own encashable leave (gated by {hr.leave_encashment})
     | P("leaves", "encash")
     | P("calendar", "view")
@@ -513,6 +518,8 @@ FACULTY: set[str] = (
     | P("registration", "view")
     | P("faculty", "view", "research")
     | P("inventory", "indent", "view")
+    # Phase 23: principal investigators read their own grant ledgers
+    | P("accounting", "view")
     | P("clubs", "view")
     | P("results", "view")
     # Phase 10: faculty request substitutions for their own classes (FACULTY_TIMETABLE below)
@@ -690,12 +697,39 @@ HOD_LIBRARY: set[str] = P("library", "view_all")
 REGISTRAR_HOSTEL: set[str] = P("hostel", "manage")
 HOD_HOSTEL: set[str] = P("hostel", "view_all")
 ADVISOR_HOSTEL: set[str] = P("hostel", "view")
+# Phase 21 (Prompts/21 visibility): HODs read their department's transport allocations (view_all, department);
+# staff passengers read their own (transport:view added to STAFF_SELF)
+HOD_TRANSPORT: set[str] = P("transport", "view_all")
+STAFF_TRANSPORT: set[str] = P("transport", "view")
+# Phase 22 (Prompts/22 visibility): store keepers move stock in the stores they keep; the inventory manager also
+# receives / issues / audits; the accountant and the vice-chancellor approve POs (threshold workflow) and bills
+STORE_KEEPER: set[str] = P("inventory", "receive", "issue", "view", "indent")
+INVENTORY_MANAGER_OPS: set[str] = P("inventory", "receive", "issue", "asset_audit", "view_all", "view_pii")
+ACCOUNTANT_PROCUREMENT: set[str] = P("procurement", "po_approve")
+VC_PROCUREMENT: set[str] = P("procurement", "po_approve", "bill_approve")
+VENDOR_PORTAL: set[str] = P("procurement", "quote") | P("inventory", "view")
+# Phase 23 (Prompts/23 visibility): HODs record / read their department's expenses and budgets; faculty read their own
+# grant ledgers (PI); the accountant posts, reconciles, approves (below the threshold) and exports; the vice-chancellor
+# approves above it; IQAC reads aggregates
+HOD_ACCOUNTING: set[str] = P("accounting", "view", "post")
+FACULTY_ACCOUNTING: set[str] = P("accounting", "view")
+ACCOUNTANT_ACCOUNTING: set[str] = P("accounting", "post", "reconcile", "approve", "export", "view_all")
+VC_ACCOUNTING: set[str] = P("accounting", "approve")
+IQAC_ACCOUNTING: set[str] = P("accounting", "view_all")
+# Phase 24 (Prompts/24 visibility): the registrar runs campaigns, approves large ones and may broadcast emergencies; the
+# vice-chancellor approves and broadcasts; HODs send department campaigns (in-app / e-mail / push)
+REGISTRAR_COMMS: set[str] = P("communication", "bulk", "approve", "emergency", "view_all", "template_manage")
+VC_COMMS: set[str] = P("communication", "approve", "emergency")
+HOD_COMMS: set[str] = P("communication", "send")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
     "support_agent": ALL("view", "view_all") | P("users", "impersonate") | COMMON,
     "institution_admin": _INSTITUTION_ADMIN,
     "vice_chancellor": ALL("view", "view_all")
+    | VC_PROCUREMENT
+    | VC_ACCOUNTING
+    | VC_COMMS
     | P("leaves", "approve")
     | P("regulations", "approve")
     | P("degrees", "award")
@@ -738,7 +772,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_MARKS
     | REGISTRAR_POST_RESULT
     | REGISTRAR_DEGREES
-    | REGISTRAR_HOSTEL,
+    | REGISTRAR_HOSTEL
+    | REGISTRAR_COMMS,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -828,7 +863,10 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_RESULTS
     | HOD_DEGREES
     | HOD_LIBRARY
-    | HOD_HOSTEL,
+    | HOD_HOSTEL
+    | HOD_TRANSPORT
+    | HOD_ACCOUNTING
+    | HOD_COMMS,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -860,6 +898,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("faculty", "view_all", "research")
     | P("reports", "run", "view"),
     "iqac_coordinator": ALL("view", "view_all")
+    | IQAC_ACCOUNTING
     | P("accreditation", "manage")
     | P("surveys", "manage")
     | P("reports", "statutory", "run")
@@ -889,6 +928,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("payroll", "manage")
     | P("accounting", "manage")
     | P("procurement", "bill_approve", "view_all")
+    | ACCOUNTANT_PROCUREMENT
+    | ACCOUNTANT_ACCOUNTING
     | P("library", "fines", "view_all")
     | P("hr", "view_all")
     | P("leaves", "view_all")
@@ -952,6 +993,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | OFFICE_NO_DUES,
     "inventory_manager": STAFF_SELF
     | P("inventory", "manage")
+    | INVENTORY_MANAGER_OPS
     | P("procurement", "quote", "po_approve", "view_all", "create", "update")
     | P("accounting", "view")
     | P("reports", "run", "view"),
@@ -1006,6 +1048,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     # reads every HR register (Prompts/06 visibility table)
     "auditor": ALL("view", "view_all") | P("reports", "run") | AUDITOR_HR | COMMON,
     "recruiter": COMMON | P("placement", "recruiter", "view"),
+    "vendor": COMMON | VENDOR_PORTAL,
+    "store_keeper": STAFF_SELF | STORE_KEEPER,
     "learner": COMMON
     | P("students", "self")
     | P("registration", "self")
@@ -1052,7 +1096,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
 }
 
 # ---- import-time invariants ------------------------------------------------------------------------------------
-assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 51 role templates"
+assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
     _unknown = {g for g in _grants if g != "*:*" and g not in PERMISSIONS}
     assert not _unknown, f"role template {_slug} cites unknown permissions: {sorted(_unknown)}"
@@ -1069,6 +1113,10 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0024": frozenset(REGISTRAR_COMMS | VC_COMMS | HOD_COMMS),
+    "0023": frozenset(HOD_ACCOUNTING | FACULTY_ACCOUNTING | ACCOUNTANT_ACCOUNTING | VC_ACCOUNTING | IQAC_ACCOUNTING),
+    "0022": frozenset(STORE_KEEPER | INVENTORY_MANAGER_OPS | ACCOUNTANT_PROCUREMENT | VC_PROCUREMENT | VENDOR_PORTAL),
+    "0021": frozenset(HOD_TRANSPORT | STAFF_TRANSPORT),
     "0020": frozenset(REGISTRAR_HOSTEL | HOD_HOSTEL | ADVISOR_HOSTEL),
     "0019": frozenset(PARENT_LIBRARY | HOD_LIBRARY),
     "0018": frozenset(SELF_DEGREES | REGISTRAR_DEGREES | HOD_DEGREES),

@@ -173,6 +173,72 @@ const ResultAnalysisPage = lazy(() => import('@/features/results/pages/ResultPag
 const RankListPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.RankListPage })));
 const LegacyImportPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.LegacyImportPage })));
 const PublicResultLookupPage = lazy(() => import('@/features/results/pages/ResultPages').then((m) => ({ default: m.PublicResultLookupPage })));
+// Phase 16 — post-result services (web screens owed since Phase 16)
+const RevaluationAdminPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.RevaluationAdminPage })));
+const MalpracticeAdminPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.MalpracticeAdminPage })));
+const WithheldPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.WithheldPage })));
+const SupplementaryPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.SupplementaryPage })));
+const TranscriptsAdminPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.TranscriptsAdminPage })));
+const RankMedalsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.RankMedalsPage })));
+const CorrectionsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.CorrectionsPage })));
+const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.DetainedPage })));
+const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
+const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
+const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 24 — communication advanced
+const CommsSegmentsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.SegmentsPage })));
+const CommsCampaignsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.CampaignsPage })));
+const CommsEmergencyPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.EmergencyPage })));
+const CommsBotPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.BotPage })));
+const CommsAssistantPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.AssistantPage })));
+const CommsSimulatorPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.SimulatorPage })));
+const CommsAnalyticsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.DeliveryAnalyticsPage })));
+const CommsMyMessagesPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.MyMessagesPage })));
+// Phase 23 — accounting & budget
+const AccountingDashboardPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.AccountingDashboardPage })));
+const AcctChartPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ChartPage })));
+const AcctLedgerPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.LedgerPage })));
+const AcctIncomePage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.IncomePage })));
+const AcctExpensesPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ExpensesPage })));
+const AcctBudgetsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.BudgetsPage })));
+const AcctMyBudgetPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.MyBudgetPage })));
+const AcctGrantsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.GrantsPage })));
+const AcctReconciliationPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ReconciliationPage })));
+const AcctGstPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.GstPage })));
+const AcctExportsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.ExportsPage })));
+const AcctStatementsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.StatementsPage })));
+const AcctPeriodsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.PeriodsPage })));
+const AcctFacultyGrantsPage = lazy(() => import('@/features/accounting/pages/AccountingPages').then((m) => ({ default: m.FacultyGrantsPage })));
+// Phase 22 — inventory, procurement, assets, bills, supplier portal
+const InvItemsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.ItemsPage })));
+const InvStoresPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.StoresPage })));
+const InvSuppliersPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.SuppliersPage })));
+const InvIndentsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.IndentsPage })));
+const InvQuotationsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.QuotationsPage })));
+const InvPurchaseOrdersPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.PurchaseOrdersPage })));
+const InvGoodsReceiptsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.GoodsReceiptsPage })));
+const InvAssetsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.AssetsPage })));
+const InvAuditsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.AuditsPage })));
+const InvBillsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.BillsPage })));
+const InvVendorStorePage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.VendorStorePage })));
+const InventoryReportsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.InventoryReportsPage })));
+const InventorySettingsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.InventorySettingsPage })));
+const StaffIndentsPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.StaffIndentsPage })));
+const VendorHomePage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.VendorHomePage })));
+const VendorRegisterPage = lazy(() => import('@/features/inventory/pages/InventoryPages').then((m) => ({ default: m.VendorRegisterPage })));
+// Phase 21 — transport
+const FleetPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.FleetPage })));
+const RoutesPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.RoutesPage })));
+const TransportAllocationsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.AllocationsPage })));
+const TripsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.TripsPage })));
+const LiveMapPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.LiveMapPage })));
+const GpsDevicesPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.DevicesPage })));
+const TransportReportsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.TransportReportsPage })));
+const TransportSettingsPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.TransportSettingsPage })));
+const MyTransportPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.MyTransportPage })));
+const ParentTransportPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.ParentTransportPage })));
+const StaffTransportPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.StaffTransportPage })));
+const DriverPage = lazy(() => import('@/features/transport/pages/TransportPages').then((m) => ({ default: m.DriverPage })));
 // Phase 20 — hostel, mess, staff quarters
 const HostelsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.HostelsPage })));
 const HostelApplicationsPage = lazy(() => import('@/features/hostel/pages/HostelPages').then((m) => ({ default: m.ApplicationsPage })));
@@ -291,6 +357,7 @@ export const router = createBrowserRouter([
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
   { path: '/opac', element: page(<OpacPage />) },
+  { path: '/vendor/register', element: page(<VendorRegisterPage />) },
   { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
   { path: '/verify/:token', element: page(<VerifyPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
@@ -475,6 +542,61 @@ export const router = createBrowserRouter([
               ['/admin/attendance/condonations', 'attendance.condonation', 'attendance', 'condone', [['attendance', 'view_all'], ['attendance', 'view']], <CondonationsPage key="ac" />],
               ['/admin/attendance/eligibility', 'attendance.eligibility_detention', 'exams', 'eligibility', [['attendance', 'view_all'], ['fees', 'view_all']], <EligibilityPage key="ae" />],
               ['/admin/attendance', 'attendance.core', 'attendance', 'view_all', [['attendance', 'view'], ['attendance', 'edit_finalized']], <AdminAttendancePage key="aa" />],
+              // Phase 16 — post-result services
+              ['/admin/exams/revaluation', 'results.revaluation', 'exams', 'reval', [['exams', 'view_all'], ['exams', 'manage']], <RevaluationAdminPage key="pr1" />],
+              ['/admin/exams/malpractice', 'results.malpractice', 'exams', 'malpractice', [['exams', 'view_all'], ['exams', 'manage']], <MalpracticeAdminPage key="pr2" />],
+              ['/admin/exams/supplementary', 'results.supplementary', 'exams', 'manage', [], <SupplementaryPage key="pr3" />],
+              ['/admin/results/withheld', 'results.processing', 'results', 'approve', [['results', 'manage'], ['results', 'view_all']], <WithheldPage key="pr4" />],
+              ['/admin/results/transcripts', 'results.transcripts', 'results', 'transcript', [['results', 'manage']], <TranscriptsAdminPage key="pr5" />],
+              ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
+              ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
+              ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 24 — communication advanced (audience narrowed by the services: department / college / all)
+              ['/admin/comms/campaigns', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'send'], ['communication', 'approve'], ['communication', 'manage']], <CommsCampaignsPage key="cc" />],
+              ['/admin/comms/segments', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'send'], ['communication', 'manage']], <CommsSegmentsPage key="cs" />],
+              ['/admin/comms/emergency', 'comms.emergency_broadcast', 'communication', 'emergency', [['communication', 'manage']], <CommsEmergencyPage key="ce" />],
+              ['/admin/comms/bot', 'comms.whatsapp_bot', 'communication', 'template_manage', [['communication', 'bulk'], ['communication', 'manage']], <CommsBotPage key="cb" />],
+              ['/admin/comms/simulator', 'comms.bulk_campaigns', 'communication', 'manage', [['communication', 'bulk']], <CommsSimulatorPage key="csim" />],
+              ['/admin/comms/analytics', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'approve'], ['communication', 'manage']], <CommsAnalyticsPage key="ca" />],
+              // Phase 23 — accounting & budget (narrowed by the services: own / department / PI / college / all)
+              ['/admin/accounting/dashboard', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AccountingDashboardPage key="ad" />],
+              ['/admin/accounting/chart', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AcctChartPage key="ach" />],
+              ['/admin/accounting/ledger', 'accounting.core', 'accounting', 'view_all', [['accounting', 'manage']], <AcctLedgerPage key="al" />],
+              ['/admin/accounting/income', 'accounting.core', 'accounting', 'post', [['accounting', 'view_all'], ['accounting', 'manage']], <AcctIncomePage key="ai" />],
+              ['/admin/accounting/expenses', 'accounting.core', 'accounting', 'post', [['accounting', 'view_all'], ['accounting', 'approve'], ['accounting', 'view']], <AcctExpensesPage key="ae" />],
+              ['/admin/accounting/budgets/me', 'accounting.budgets', 'accounting', 'view', [['accounting', 'post']], <AcctMyBudgetPage key="abm" />],
+              ['/admin/accounting/budgets', 'accounting.budgets', 'accounting', 'view_all', [['accounting', 'manage'], ['accounting', 'approve']], <AcctBudgetsPage key="ab" />],
+              ['/admin/accounting/grants', 'accounting.grants_ledger', 'accounting', 'view_all', [['accounting', 'manage'], ['research', 'view_all']], <AcctGrantsPage key="ag" />],
+              ['/admin/accounting/reconciliation', 'accounting.core', 'accounting', 'reconcile', [['accounting', 'view_all']], <AcctReconciliationPage key="ar" />],
+              ['/admin/accounting/gst', 'accounting.gst_reports', 'accounting', 'view_all', [['accounting', 'manage']], <AcctGstPage key="agst" />],
+              ['/admin/accounting/exports', 'accounting.tally_export', 'accounting', 'export', [['accounting', 'view_all']], <AcctExportsPage key="aex" />],
+              ['/admin/accounting/statements', 'accounting.core', 'accounting', 'view_all', [['reports', 'export']], <AcctStatementsPage key="ast" />],
+              ['/admin/accounting/periods', 'accounting.core', 'accounting', 'manage', [], <AcctPeriodsPage key="ap" />],
+              // Phase 22 — inventory & procurement (narrowed by the services: own / custodian / store keeper / department / college / all)
+              ['/admin/inventory/items', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'issue'], ['inventory', 'receive']], <InvItemsPage key="ii" />],
+              ['/admin/inventory/stores', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'issue'], ['inventory', 'receive'], ['inventory', 'approve_indent']], <InvStoresPage key="is" />],
+              ['/admin/inventory/suppliers', 'inventory.core', 'inventory', 'manage', [['procurement', 'view_all'], ['procurement', 'quote']], <InvSuppliersPage key="isu" />],
+              ['/admin/inventory/indents', 'inventory.procurement', 'inventory', 'view_all', [['inventory', 'indent'], ['inventory', 'approve_indent'], ['inventory', 'issue'], ['inventory', 'manage']], <InvIndentsPage key="iin" />],
+              ['/admin/inventory/quotations', 'inventory.procurement', 'procurement', 'quote', [['procurement', 'manage'], ['inventory', 'manage']], <InvQuotationsPage key="iq" />],
+              ['/admin/inventory/purchase-orders', 'inventory.procurement', 'procurement', 'view_all', [['procurement', 'po_approve'], ['procurement', 'create'], ['inventory', 'manage']], <InvPurchaseOrdersPage key="ipo" />],
+              ['/admin/inventory/goods-receipts', 'inventory.procurement', 'inventory', 'receive', [['inventory', 'view_all'], ['inventory', 'manage']], <InvGoodsReceiptsPage key="igr" />],
+              ['/admin/inventory/assets', 'inventory.assets', 'inventory', 'view_all', [['inventory', 'manage'], ['inventory', 'asset_audit'], ['inventory', 'approve_indent']], <InvAssetsPage key="ia" />],
+              ['/admin/inventory/audits', 'inventory.assets', 'inventory', 'asset_audit', [['inventory', 'manage'], ['inventory', 'view_all']], <InvAuditsPage key="iau" />],
+              ['/admin/inventory/bills', 'inventory.bills', 'procurement', 'bill_approve', [['inventory', 'manage'], ['inventory', 'view_all'], ['accounting', 'view']], <InvBillsPage key="ib" />],
+              ['/admin/inventory/vendor-store', 'inventory.vendor_store', 'inventory', 'issue', [['inventory', 'manage']], <InvVendorStorePage key="ivs" />],
+              ['/admin/inventory/reports', 'inventory.core', 'inventory', 'view_all', [['inventory', 'manage'], ['reports', 'export']], <InventoryReportsPage key="ir" />],
+              ['/admin/inventory/settings', 'inventory.core', 'inventory', 'manage', [], <InventorySettingsPage key="ist" />],
+              ['/staff/indents', 'inventory.procurement', 'inventory', 'indent', [['inventory', 'view']], <StaffIndentsPage key="sin" />],
+              // Phase 21 — transport (narrowed by the services: college / driver-owned / all; department for HODs)
+              ['/admin/transport/fleet', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <FleetPage key="tf" />],
+              ['/admin/transport/routes', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <RoutesPage key="tr" />],
+              ['/admin/transport/allocations', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TransportAllocationsPage key="ta" />],
+              ['/admin/transport/trips', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TripsPage key="tt" />],
+              ['/admin/transport/live', 'transport.gps_live', 'transport', 'view_all', [['transport', 'manage']], <LiveMapPage key="tl" />],
+              ['/admin/transport/devices', 'transport.gps_live', 'transport', 'manage', [], <GpsDevicesPage key="td" />],
+              ['/admin/transport/reports', 'transport.core', 'transport', 'view_all', [['transport', 'manage']], <TransportReportsPage key="tz" />],
+              ['/admin/transport/settings', 'transport.core', 'transport', 'manage', [], <TransportSettingsPage key="ts" />],
+              ['/staff/transport', 'transport.core', 'transport', 'view', [['transport', 'manage']], <StaffTransportPage key="tsm" />],
               // Phase 20 — hostel (narrowed by the services: warden-owned hostels / college / all; department for HODs)
               ['/admin/hostel/hostels', 'hostel.core', 'hostel', 'view_all', [['hostel', 'manage'], ['hostel', 'warden']], <HostelsPage key="hh" />],
               ['/admin/hostel/applications', 'hostel.core', 'hostel', 'allot', [['hostel', 'view_all'], ['hostel', 'warden']], <HostelApplicationsPage key="ha" />],
@@ -561,6 +683,8 @@ export const router = createBrowserRouter([
           })),
           // Phase 04 — communication core & approvals (self-service pages need no module permission)
           { path: '/notifications', element: page(<NotificationsPage />) },
+          { path: '/me/messages', element: page(<CommsMyMessagesPage />) },
+          { path: '/assistant', element: page(<CommsAssistantPage />) },
           {
             path: '/profile/notifications',
             element: page(
@@ -677,6 +801,10 @@ export const router = createBrowserRouter([
               ['degree', <FeatureRoute key="dg" feature="degrees.eligibility"><StudentDegreePage /></FeatureRoute>],
               ['library', <FeatureRoute key="lb" feature="library.core"><MyLibraryPage /></FeatureRoute>],
               ['hostel', <FeatureRoute key="hs" feature="hostel.core"><StudentHostelPage /></FeatureRoute>],
+              ['exams/reval', <FeatureRoute key="srv" feature="results.revaluation"><StudentRevalPage /></FeatureRoute>],
+              ['exams/malpractice', <FeatureRoute key="smp" feature="results.malpractice"><StudentMalpracticePage /></FeatureRoute>],
+              ['transcripts', <FeatureRoute key="str" feature="results.transcripts"><StudentTranscriptsPage /></FeatureRoute>],
+              ['transport', <FeatureRoute key="tp" feature="transport.core"><MyTransportPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -693,6 +821,7 @@ export const router = createBrowserRouter([
           { path: 'results/:studentId', element: page(<FeatureRoute feature="results.publication_portal"><ParentResultsPage /></FeatureRoute>) },
           { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
           { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
+          { path: 'transport', element: page(<FeatureRoute feature="transport.core"><ParentTransportPage /></FeatureRoute>) },
         ],
       },
       {
@@ -706,6 +835,7 @@ export const router = createBrowserRouter([
           { path: 'evaluation', element: page(<FeatureRoute feature="exams.coding_dummy"><EvaluatorPortalPage /></FeatureRoute>) },
           { path: 'offerings/:id/results', element: page(<FeatureRoute feature="results.publication_portal"><OfferingResultsPage /></FeatureRoute>) },
           { path: 'library', element: page(<FeatureRoute feature="library.core"><MyLibraryPage /></FeatureRoute>) },
+          { path: 'grants', element: page(<FeatureRoute feature="accounting.grants_ledger"><AcctFacultyGrantsPage /></FeatureRoute>) },
           // Phase 17 — CO attainment of an own offering
           { path: 'offerings/:id/attainment', element: page(<FeatureRoute feature="obe.attainment"><OfferingAttainmentPage /></FeatureRoute>) },
           // Phase 14 — exam duties and question-paper setting
@@ -740,7 +870,12 @@ export const router = createBrowserRouter([
       {
         path: '/driver',
         element: <PortalRoute roles={['driver']} title="Driver" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        children: [{ index: true, element: page(<FeatureRoute feature="transport.core"><DriverPage /></FeatureRoute>) }],
+      },
+      {
+        path: '/vendor',
+        element: <PortalRoute roles={['vendor']} title="Supplier" />,
+        children: [{ index: true, element: page(<FeatureRoute feature="inventory.vendor_portal"><VendorHomePage /></FeatureRoute>) }],
       },
       {
         path: '/evaluator',

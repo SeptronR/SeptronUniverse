@@ -30,7 +30,13 @@ from app.models.registration import CourseRegistration, CourseRegistrationItem
 from app.models.students import Student, StudentProgramEnrollment
 from app.models.timetable import ClassSession, TimetableEntry
 from app.repositories.timetable_scope import session_visibility
-from app.schemas.timetable import ExtraSessionCreate, SessionCancel, SessionReschedule, ClassSessionResponse, SessionUpdate
+from app.schemas.timetable import (
+    ClassSessionResponse,
+    ExtraSessionCreate,
+    SessionCancel,
+    SessionReschedule,
+    SessionUpdate,
+)
 from app.services.students.common import snap
 from app.services.timetable.common import TT, TimetableBase, rule
 from app.utils.pagination import PageParams

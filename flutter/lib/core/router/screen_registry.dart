@@ -16,6 +16,10 @@ import '../../features/obe/obe_screens.dart';
 import '../../features/degrees/degree_screens.dart';
 import '../../features/library/library_screens.dart';
 import '../../features/hostel/hostel_screens.dart';
+import '../../features/transport/transport_screens.dart';
+import '../../features/inventory/inventory_screens.dart';
+import '../../features/accounting/accounting_screens.dart';
+import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
@@ -297,6 +301,122 @@ class ScreenRegistry {
       feature: 'attendance.condonation',
       permission: 'attendance:condone',
       builder: (_, __) => const CondonationRecommendScreen(),
+    ),
+    // Phase 16 — revaluation, malpractice, transcripts, reval queue
+    AppRoutes.myReval: ScreenEntry(
+      route: AppRoutes.myReval,
+      titleKey: 'revaluation',
+      feature: 'results.revaluation',
+      permission: 'exams:self',
+      builder: (_, __) => const RevalScreen(),
+    ),
+    AppRoutes.myMalpractice: ScreenEntry(
+      route: AppRoutes.myMalpractice,
+      titleKey: 'malpractice',
+      feature: 'results.malpractice',
+      permission: 'exams:self',
+      builder: (_, __) => const MyMalpracticeScreen(),
+    ),
+    AppRoutes.myTranscripts: ScreenEntry(
+      route: AppRoutes.myTranscripts,
+      titleKey: 'transcripts',
+      feature: 'results.transcripts',
+      permission: 'results:self',
+      builder: (_, __) => const MyTranscriptsScreen(),
+    ),
+    AppRoutes.revalQueue: ScreenEntry(
+      route: AppRoutes.revalQueue,
+      titleKey: 'reval_queue',
+      feature: 'results.revaluation',
+      permission: 'exams:reval',
+      builder: (_, __) => const RevalQueueScreen(),
+    ),
+    // Phase 23 — accounting
+    AppRoutes.accountingHome: ScreenEntry(
+      route: AppRoutes.accountingHome,
+      titleKey: 'accounting',
+      feature: 'accounting.core',
+      permission: 'accounting:view_all',
+      builder: (_, __) => const AccountingHomeScreen(),
+    ),
+    AppRoutes.departmentBudget: ScreenEntry(
+      route: AppRoutes.departmentBudget,
+      titleKey: 'budget',
+      feature: 'accounting.budgets',
+      permission: 'accounting:view',
+      builder: (_, __) => const DepartmentBudgetScreen(),
+    ),
+    AppRoutes.myGrants: ScreenEntry(
+      route: AppRoutes.myGrants,
+      titleKey: 'grants',
+      feature: 'accounting.grants_ledger',
+      permission: 'accounting:view',
+      builder: (_, __) => const MyGrantsScreen(),
+    ),
+    // Phase 22 — inventory
+    AppRoutes.stockLookup: ScreenEntry(
+      route: AppRoutes.stockLookup,
+      titleKey: 'stock',
+      feature: 'inventory.core',
+      permission: 'inventory:issue',
+      builder: (_, __) => const StockLookupScreen(),
+    ),
+    AppRoutes.grnReceive: ScreenEntry(
+      route: AppRoutes.grnReceive,
+      titleKey: 'receive_goods',
+      feature: 'inventory.procurement',
+      permission: 'inventory:receive',
+      builder: (_, __) => const GrnReceiveScreen(),
+    ),
+    AppRoutes.myIndents: ScreenEntry(
+      route: AppRoutes.myIndents,
+      titleKey: 'indents',
+      feature: 'inventory.procurement',
+      permission: 'inventory:indent',
+      builder: (_, __) => const MyIndentsScreen(),
+    ),
+    AppRoutes.myAssets: ScreenEntry(
+      route: AppRoutes.myAssets,
+      titleKey: 'my_assets',
+      feature: 'inventory.assets',
+      permission: 'inventory:view',
+      builder: (_, __) => const MyAssetsScreen(),
+    ),
+    AppRoutes.assetAudit: ScreenEntry(
+      route: AppRoutes.assetAudit,
+      titleKey: 'asset_audit',
+      feature: 'inventory.assets',
+      permission: 'inventory:asset_audit',
+      builder: (_, __) => const AssetAuditScanScreen(),
+    ),
+    // Phase 21 — transport: driver trips, my / ward transport, fleet status
+    AppRoutes.driverTrips: ScreenEntry(
+      route: AppRoutes.driverTrips,
+      titleKey: 'driver_trips',
+      feature: 'transport.core',
+      permission: 'transport:driver',
+      builder: (_, __) => const DriverTripsScreen(),
+    ),
+    AppRoutes.myTransport: ScreenEntry(
+      route: AppRoutes.myTransport,
+      titleKey: 'transport',
+      feature: 'transport.core',
+      permission: 'transport:view',
+      builder: (_, __) => const MyTransportScreen(),
+    ),
+    AppRoutes.wardTransport: ScreenEntry(
+      route: AppRoutes.wardTransport,
+      titleKey: 'ward_transport',
+      feature: 'transport.core',
+      permission: 'transport:view',
+      builder: (_, __) => const WardTransportScreen(),
+    ),
+    AppRoutes.fleetStatus: ScreenEntry(
+      route: AppRoutes.fleetStatus,
+      titleKey: 'fleet',
+      feature: 'transport.core',
+      permission: 'transport:manage',
+      builder: (_, __) => const FleetStatusScreen(),
     ),
     // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call
     AppRoutes.myHostel: ScreenEntry(

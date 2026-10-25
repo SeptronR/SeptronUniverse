@@ -53,6 +53,26 @@ class AppRoutes {
   static const facultyMarks = '/app/marks';
   // Phase 14 — student exams, faculty duties, invigilator hall attendance
   static const myExams = '/app/exams';
+  // Phase 16 — revaluation, malpractice, transcripts (students), reval queue (COE / exam cell)
+  static const myReval = '/app/exams/reval';
+  static const myMalpractice = '/app/exams/malpractice';
+  static const myTranscripts = '/app/transcripts';
+  static const revalQueue = '/app/exams/reval-queue';
+  // Phase 23 — accounting (accountant), department budget (HOD), grants (PI)
+  static const accountingHome = '/app/accounting';
+  static const departmentBudget = '/app/accounting/budget';
+  static const myGrants = '/app/accounting/grants';
+  // Phase 22 — stock / receive goods (store keeper), indents / my assets (staff), audit scanner
+  static const stockLookup = '/app/inventory/stock';
+  static const grnReceive = '/app/inventory/receive';
+  static const myIndents = '/app/inventory/indents';
+  static const myAssets = '/app/inventory/assets';
+  static const assetAudit = '/app/inventory/audit';
+  // Phase 21 — transport: driver trips, my / ward transport, fleet status (transport manager)
+  static const driverTrips = '/app/transport/driver';
+  static const myTransport = '/app/transport';
+  static const wardTransport = '/app/transport/ward';
+  static const fleetStatus = '/app/transport/fleet';
   // Phase 20 — hostel (students), ward hostel (parents), out-passes / gate / roll-call (warden, gate staff)
   static const myHostel = '/app/hostel';
   static const wardHostel = '/app/hostel/ward';

@@ -7,7 +7,7 @@ error. On connect the hub loads the principal, subscribes the socket to its chan
 
 Channels (allow-list derived from the principal, never from the client alone):
 * ``notifications:{user}``, ``jobs:{user}`` — always;
-* ``fleet:{institution}`` — ``transport:view``; ``dashboard:{institution}`` — ``dashboard:view``;
+* ``fleet:{institution}`` — ``transport:view_all|manage|driver`` (passengers poll the scoped ``/transport/live``); ``dashboard:{institution}`` — ``dashboard:view``;
 * ``exam-board:{session}`` — on request (``{"subscribe": "exam-board:<uuid>"}``) when the principal has ``exams:view``;
   requests for channels outside the allow-list are answered with ``{"type":"denied"}`` and ignored.
 Redis pub/sub makes fan-out multi-worker safe; the tray/notification stores fall back to polling when disconnected.
@@ -46,7 +46,7 @@ class WebSocketHub:
         channels = {f"notifications:{claims['sub']}", f"jobs:{claims['sub']}"}
         inst = claims.get("inst") or (str(principal.institution_id) if principal and principal.institution_id else None)
         if inst and principal is not None:
-            if principal.has("transport", "view"):
+            if any(principal.has("transport", a) for a in ("view_all", "manage", "driver")):
                 channels.add(f"fleet:{inst}")
             if principal.has("dashboard", "view"):
                 channels.add(f"dashboard:{inst}")

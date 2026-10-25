@@ -149,8 +149,8 @@ async def run() -> int:  # noqa: C901 - one linear walk through §02.11
                 await db.execute(text("SELECT count(*) FROM roles WHERE institution_id = :i"), {"i": inst_id})
             ).scalar_one()
         check(perms == len(PERMISSIONS) == 916, f"permission catalogue seeded ({perms} = registry)")
-        check(templates == 51, f"{templates} platform role templates")
-        check(inst_roles == 49, f"demo institution holds {inst_roles} roles (51 templates minus the 2 platform roles)")
+        check(templates == 53, f"{templates} platform role templates")
+        check(inst_roles == 51, f"demo institution holds {inst_roles} roles (53 templates minus the 2 platform roles)")
 
         print("1. student login")
         r = await login("student.1", password_of("student"))

@@ -40,6 +40,7 @@ from fastapi import APIRouter
 import app.features  # noqa: F401  (registers every feature key before routers cite them)
 from app.api.v1.endpoints import (
     academic_sessions,
+    accounting,
     admissions,
     announcements,
     appraisals,
@@ -47,6 +48,7 @@ from app.api.v1.endpoints import (
     attendance,
     auth,
     catalog,
+    comms_advanced,
     communication,
     content,
     courses,
@@ -62,6 +64,7 @@ from app.api.v1.endpoints import (
     help,
     hostel,
     institution,
+    inventory,
     jobs,
     leaves,
     library,
@@ -86,6 +89,7 @@ from app.api.v1.endpoints import (
     staff_attendance,
     students,
     timetable,
+    transport,
     verify,
     workflow,
     workload,
@@ -157,6 +161,20 @@ api_router.include_router(library.router)
 api_router.include_router(library.public_router)
 # Phase 20: hostel, mess, leaves & gate, staff quarters (each route carries its hostel.* feature)
 api_router.include_router(hostel.router)
+# Phase 21: transport (each route carries its transport.* feature) and the GPS device ingest (device token)
+api_router.include_router(transport.router)
+api_router.include_router(transport.public_router)  # X-Device-Token; checks {transport.gps_live} itself
+# Phase 22: inventory, procurement, assets, bills (each route carries its inventory.* feature), the vendor portal
+# and the public supplier self-registration (rate-limited + captcha; checks {inventory.vendor_portal} itself)
+api_router.include_router(inventory.router)
+api_router.include_router(inventory.vendor_router)
+api_router.include_router(inventory.public_router)
+# Phase 23: accounting, budgets, grants, reconciliation, GST, exports, statements (each route carries its accounting.* feature)
+api_router.include_router(accounting.router)
+# Phase 24: segments, campaigns, emergency broadcast, WhatsApp bot, AI assistant, simulator, analytics (per-route comms.*
+# features) and the public WhatsApp webhook (verify token / signature; checks {comms.whatsapp_bot} itself)
+api_router.include_router(comms_advanced.router)
+api_router.include_router(comms_advanced.public_router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])
