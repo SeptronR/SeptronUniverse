@@ -189,6 +189,16 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Surveys', to: '/admin/surveys', icon: ClipboardCheck, module: 'surveys', action: 'manage', altActions: ['view_all', 'analyse'], feature: 'surveys.core' },
       { label: 'Clubs & activities', to: '/admin/clubs', icon: UsersRound, module: 'clubs', action: 'view_all', altActions: ['verify_hours', 'manage'], feature: 'clubs.core' },
       { label: 'Committees', to: '/admin/governance/committees', icon: Landmark, module: 'governance', action: 'committees', altActions: ['manage', 'view'], feature: 'governance.committees' },
+      // Phase 28 — placement, internships, training
+      { label: 'Companies', to: '/admin/placement/companies', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage', 'drive_manage'], feature: 'placement.core' },
+      { label: 'Policies', to: '/admin/placement/policies', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage'], feature: 'placement.core' },
+      { label: 'Drives', to: '/admin/placement/drives', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage', 'drive_manage'], feature: 'placement.core' },
+      { label: 'Offers', to: '/admin/placement/offers', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage', 'offer_manage'], feature: 'placement.core' },
+      { label: 'Profiles', to: '/admin/placement/profiles', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage'], feature: 'placement.core' },
+      { label: 'Blacklist', to: '/admin/placement/blacklist', icon: Ban, module: 'placement', action: 'manage', altActions: [], feature: 'placement.core' },
+      { label: 'Internships', to: '/admin/placement/internships', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage', 'evaluate'], feature: 'placement.internships' },
+      { label: 'Training', to: '/admin/placement/training', icon: Briefcase, module: 'placement', action: 'manage', altActions: ['view_all'], feature: 'placement.training' },
+      { label: 'Placement stats', to: '/admin/placement/stats', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage'], feature: 'placement.core' },
     ],
   },
   {

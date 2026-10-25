@@ -419,6 +419,35 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 28 — placement (student / parent / officer / internship faculty)
+  const MoreMenuModule(
+      titleKey: 'placement',
+      icon: Icons.work_outline,
+      route: AppRoutes.placement,
+      color: Colors.indigo,
+      permission: 'placement:self',
+      feature: 'placement.core'),
+  const MoreMenuModule(
+      titleKey: 'ward_placement',
+      icon: Icons.work_history_outlined,
+      route: AppRoutes.wardPlacement,
+      color: Colors.indigo,
+      permission: 'placement:wards',
+      feature: 'placement.core'),
+  const MoreMenuModule(
+      titleKey: 'placement_drives',
+      icon: Icons.business_center_outlined,
+      route: AppRoutes.placementDrives,
+      color: Colors.indigo,
+      permission: 'placement:drive_manage',
+      feature: 'placement.core'),
+  const MoreMenuModule(
+      titleKey: 'internship_evaluation',
+      icon: Icons.assignment_turned_in_outlined,
+      route: AppRoutes.internshipEvaluation,
+      color: Colors.indigo,
+      permission: 'placement:evaluate',
+      feature: 'placement.internships'),
   // Phase 26 — documents, ward documents, certificate queue, verify
   const MoreMenuModule(
       titleKey: 'documents',

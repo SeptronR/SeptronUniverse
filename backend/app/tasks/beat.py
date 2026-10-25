@@ -146,6 +146,13 @@ register_beat("surveys.reminders", "beat.surveys.reminders", crontab(hour=3, min
 register_beat("surveys.auto_close", "beat.surveys.auto_close", crontab(minute=40))
 register_beat("discipline.appeal_window", "beat.discipline.appeal_window", crontab(hour=20, minute=20))
 
+# ---- Phase 28 placement / training (app/tasks/placement.py) ------------------------------------------------------------------
+register_beat("placement.deadline_close", "beat.placement.deadline_close", crontab(minute=5))
+register_beat("placement.joining_followup", "beat.placement.joining_followup", crontab(day_of_week=1, hour=3, minute=15))
+register_beat("placement.offer_reminders", "beat.placement.offer_reminders", crontab(hour=3, minute=45))  # 09:15 IST
+register_beat("placement.blacklist_expiry", "beat.placement.blacklist_expiry", crontab(hour=20, minute=30))
+register_beat("training.session_reminders", "beat.training.session_reminders", crontab(hour=2, minute=30))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

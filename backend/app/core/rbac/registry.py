@@ -249,6 +249,9 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     ("placement", "override_eligibility", "Override eligibility"),
     ("placement", "offer_manage", "Manage offers"),
     ("placement", "recruiter", "Recruiter portal"),
+    # Phase 28: guardians read their ward's drives / offers; internship course faculty evaluate assigned internships
+    ("placement", "wards", "Wards placement"),
+    ("placement", "evaluate", "Evaluate internships"),
     ("alumni", "self", "Own alumni profile"),
     ("alumni", "verify", "Verify alumni"),
     ("alumni", "campaign", "Campaigns"),
@@ -479,6 +482,8 @@ ADMISSIONS_STAFF_READ: set[str] = P("admissions", "view")  # Phase 08 — see HO
 # Phase 27: staff read own / committee grievances and own cases; committee members decide (services narrow rows)
 STAFF_SUPPORT: set[str] = P("grievances", "view") | P("discipline", "view")
 COMMITTEE_SUPPORT: set[str] = P("discipline", "decide")
+# Phase 28: internship course faculty evaluate the internships mapped to their offerings
+FACULTY_PLACEMENT: set[str] = P("placement", "evaluate")
 STAFF_SELF: set[str] = (
     COMMON
     | P("leaves", "self", "create", "view")
@@ -533,6 +538,7 @@ FACULTY: set[str] = (
     | P("events", "organise")
     | P("clubs", "view")
     | COMMITTEE_SUPPORT
+    | FACULTY_PLACEMENT
     | P("results", "view")
     # Phase 10: faculty request substitutions for their own classes (FACULTY_TIMETABLE below)
     | P("timetable", "substitute")
@@ -788,6 +794,17 @@ REGISTRAR_SUPPORT: set[str] = (
     | P("governance", "committees")
 )
 VC_SUPPORT: set[str] = P("discipline", "appeal")
+# Phase 28 (Prompts/28 "Visibility rules"): the placement officer runs drives / overrides / offers / blacklist and reads
+# academics; HODs and class advisors read department drives, applications, offers, profiles and evaluate department
+# internships; internship course faculty evaluate the internships mapped to their offerings; guardians read the ward's
+# drives / offers; the registrar and accountant read aggregates (training vendor costs)
+PLACEMENT_OFFICER: set[str] = P(
+    "placement", "drive_manage", "override_eligibility", "offer_manage", "view_all", "export"
+)
+HOD_PLACEMENT: set[str] = P("placement", "view_all", "evaluate")
+PARENT_PLACEMENT: set[str] = P("placement", "wards")
+READ_PLACEMENT: set[str] = P("placement", "view_all")
+ACCOUNTANT_PLACEMENT: set[str] = P("placement", "view")
 GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
 PARENT_SUPPORT: set[str] = P("clubs", "view")
 
@@ -812,6 +829,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | STAFF_SELF,
     "registrar": STAFF_SELF
     | REGISTRAR_SUPPORT
+    | READ_PLACEMENT
     | REGISTRAR_DOCUMENTS
     | P("students", "manage", "view_pii")
     | P("admissions", "manage")
@@ -906,6 +924,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | STAFF_SELF,
     "hod": FACULTY
     | HOD_SUPPORT
+    | HOD_PLACEMENT
     | HOD_DOCUMENTS
     | P("students", "view_all")
     | P("hr", "view_all")
@@ -947,6 +966,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_FACILITIES,
     "class_advisor": FACULTY
     | HOD_DOCUMENTS
+    | HOD_PLACEMENT
     | P("registration", "approve")
     | P("attendance", "view")
     | ADVISOR_FEES
@@ -1005,6 +1025,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("reports", "run", "view")
     | P("communication", "send"),
     "accountant": STAFF_SELF
+    | ACCOUNTANT_PLACEMENT
     | P("fees", "manage")
     | ACCOUNTANT_FACILITIES
     | P("scholarships", "disburse", "view_all", "view")
@@ -1040,6 +1061,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("communication", "send"),
     "placement_officer": STAFF_SELF
     | P("placement", "manage")
+    | PLACEMENT_OFFICER
     | P("students", "view_all")
     | P("results", "view_all")
     | P("attendance", "view_all")
@@ -1159,6 +1181,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "student": STUDENT,
     "parent": COMMON
     | PARENT_SUPPORT
+    | PARENT_PLACEMENT
     | PARENT_DOCUMENTS
     | SELF_DEGREES
     | PARENT_LIBRARY
@@ -1202,6 +1225,9 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0028": frozenset(
+        PLACEMENT_OFFICER | HOD_PLACEMENT | FACULTY_PLACEMENT | PARENT_PLACEMENT | READ_PLACEMENT | ACCOUNTANT_PLACEMENT
+    ),
     "0027": frozenset(
         STAFF_SUPPORT
         | COMMITTEE_SUPPORT

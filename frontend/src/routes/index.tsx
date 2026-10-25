@@ -206,6 +206,23 @@ const SsStudentClubsPage = lazy(() => import('@/features/student_support/pages/S
 const SsStudentMentorPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentMentorPage })));
 const SsParentSupportPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.ParentSupportPage })));
 const SsCommitteesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.CommitteesStubPage })));
+// Phase 28 — placement, internships, training, recruiter portal
+const PlCompaniesPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.CompaniesPage })));
+const PlCompanyPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.CompanyPage })));
+const PlPoliciesPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.PoliciesPage })));
+const PlDrivesPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.DrivesPage })));
+const PlDrivePage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.DrivePage })));
+const PlOffersPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.OffersPage })));
+const PlProfilesPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.ProfilesPage })));
+const PlBlacklistPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.BlacklistPage })));
+const PlInternshipsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.InternshipsPage })));
+const PlTrainingPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.TrainingPage })));
+const PlStatsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.StatsPage })));
+const PlStudentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.StudentPlacementPage })));
+const PlParentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.ParentPlacementPage })));
+const PlFacultyInternshipsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.FacultyInternshipsPage })));
+const PlRecruiterDrivesPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.RecruiterDrivesPage })));
+const PlRecruiterDrivePage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.RecruiterDrivePage })));
 // Phase 26 — document templates, certificates & requests
 const DocTemplatesPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.TemplatesPage })));
 const DocIssuedPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.IssuedRegisterPage })));
@@ -609,6 +626,18 @@ export const router = createBrowserRouter([
               ['/admin/surveys/:id', 'surveys.core', 'surveys', 'manage', [['surveys', 'view_all'], ['surveys', 'analyse']], <SsSurveyDetailPage key="sssd" />],
               ['/admin/clubs', 'clubs.core', 'clubs', 'view_all', [['clubs', 'verify_hours'], ['clubs', 'manage']], <SsClubsAdminPage key="ssc" />],
               ['/admin/governance/committees', 'governance.committees', 'governance', 'committees', [['governance', 'manage'], ['governance', 'view']], <SsCommitteesPage key="ssgc" />],
+              // Phase 28 — placement (eligibility, policy, consent and scopes in the services)
+              ['/admin/placement/companies', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlCompaniesPage key="plc" />],
+              ['/admin/placement/companies/:id', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlCompanyPage key="plcd" />],
+              ['/admin/placement/policies', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlPoliciesPage key="plp" />],
+              ['/admin/placement/drives', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlDrivesPage key="pld" />],
+              ['/admin/placement/drives/:id', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlDrivePage key="pldd" />],
+              ['/admin/placement/offers', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlOffersPage key="plo" />],
+              ['/admin/placement/profiles', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlProfilesPage key="plpr" />],
+              ['/admin/placement/blacklist', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlBlacklistPage key="plb" />],
+              ['/admin/placement/stats', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlStatsPage key="pls" />],
+              ['/admin/placement/internships', 'placement.internships', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'evaluate']], <PlInternshipsPage key="pli" />],
+              ['/admin/placement/training', 'placement.training', 'placement', 'manage', [['placement', 'view_all']], <PlTrainingPage key="plt" />],
               ['/admin/documents/templates', 'documents.templates', 'templates', 'view', [['templates', 'manage'], ['certificates', 'issue']], <DocTemplatesPage key="dt" />],
               ['/admin/documents/issued', 'documents.templates', 'certificates', 'view_all', [['certificates', 'issue'], ['certificates', 'manage']], <DocIssuedPage key="di" />],
               ['/admin/documents/bulk', 'documents.bulk_generation', 'certificates', 'issue', [['certificates', 'manage']], <DocBulkPage key="db" />],
@@ -891,6 +920,7 @@ export const router = createBrowserRouter([
               ['discipline', <FeatureRoute key="ssd" feature="discipline.core"><SsStudentDisciplinePage /></FeatureRoute>],
               ['surveys', <FeatureRoute key="sss" feature="surveys.core"><SsMySurveysPage /></FeatureRoute>],
               ['clubs', <FeatureRoute key="ssc" feature="clubs.core"><SsStudentClubsPage /></FeatureRoute>],
+              ['placement', <FeatureRoute key="pls" feature="placement.core"><PlStudentPlacementPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -910,6 +940,7 @@ export const router = createBrowserRouter([
           { path: 'transport', element: page(<FeatureRoute feature="transport.core"><ParentTransportPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><WardDocumentsPage /></FeatureRoute>) },
           { path: 'support', element: page(<FeatureRoute feature="mentoring.core"><SsParentSupportPage /></FeatureRoute>) },
+          { path: 'placement', element: page(<FeatureRoute feature="placement.core"><PlParentPlacementPage /></FeatureRoute>) },
         ],
       },
       {
@@ -943,6 +974,7 @@ export const router = createBrowserRouter([
           { path: 'mentees', element: page(<FeatureRoute feature="mentoring.core"><SsMenteesPage /></FeatureRoute>) },
           { path: 'mentees/:enrollmentId', element: page(<FeatureRoute feature="mentoring.core"><SsMentee360Page /></FeatureRoute>) },
           { path: 'surveys', element: page(<FeatureRoute feature="surveys.core"><SsFacultySurveysPage /></FeatureRoute>) },
+          { path: 'internships', element: page(<FeatureRoute feature="placement.internships"><PlFacultyInternshipsPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
@@ -985,7 +1017,12 @@ export const router = createBrowserRouter([
       {
         path: '/recruiter',
         element: <PortalRoute roles={['recruiter']} title="Recruiter" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        // Phase 28 — recruiter portal {placement.recruiter_portal}: own company drives, consented applicants, rounds, offers
+        children: [
+          { index: true, element: page(<FeatureRoute feature="placement.recruiter_portal"><PlRecruiterDrivesPage /></FeatureRoute>) },
+          { path: 'drives', element: page(<FeatureRoute feature="placement.recruiter_portal"><PlRecruiterDrivesPage /></FeatureRoute>) },
+          { path: 'drives/:id', element: page(<FeatureRoute feature="placement.recruiter_portal"><PlRecruiterDrivePage /></FeatureRoute>) },
+        ],
       },
       {
         path: '/apply',

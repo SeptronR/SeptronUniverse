@@ -1984,6 +1984,90 @@ SUPPORT_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 28 - placement, internships & training (placement.drive_published / placement.offer_received are Phase 04)
+PLACEMENT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "placement.shortlisted",
+        "placement",
+        "Shortlisted",
+        "Shortlisted: {{ company }}",
+        "You are shortlisted for {{ company }} ({{ drive }}).",
+        ("company", "drive"),
+        ("in_app", "push", "email"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "placement.round_scheduled",
+        "placement",
+        "Placement round scheduled",
+        "{{ company }}: {{ round }}",
+        "{{ round }} for {{ company }} is scheduled at {{ at }} ({{ venue }}).",
+        ("company", "round", "at", "venue"),
+        ("in_app", "push"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "placement.round_result",
+        "placement",
+        "Placement round result",
+        "{{ company }}: {{ round }}",
+        "Your {{ round }} result for {{ company }}: {{ status }}.",
+        ("company", "round", "status"),
+        ("in_app", "push"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "placement.offer_reminder",
+        "placement",
+        "Offer decision pending",
+        "Offer from {{ company }} awaits your decision",
+        "Please accept or decline the offer from {{ company }}.",
+        ("company",),
+        ("in_app", "push", "email"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "placement.blacklisted",
+        "placement",
+        "Placement blacklist",
+        "Placement eligibility suspended",
+        "You are blacklisted from placements: {{ reason }}.",
+        ("reason",),
+        ("in_app", "email"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "internship.noc_ready",
+        "placement",
+        "Internship NOC ready",
+        "NOC ready for {{ company }}",
+        "Your internship NOC for {{ company }} is ready to download.",
+        ("company",),
+        ("in_app", "email"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "training.session_reminder",
+        "placement",
+        "Training session",
+        "{{ title }} today",
+        "{{ title }}: {{ topic }} at {{ at }}.",
+        ("title", "topic", "at"),
+        ("in_app", "push"),
+        link="/student/placement",
+    ),
+    EventDef(
+        "recruiter.invited",
+        "placement",
+        "Recruiter invitation",
+        "Recruiter access for {{ company }}",
+        "You are invited to the recruiter portal of {{ institution }} for {{ company }}. Sign in as {{ username }} and set a password.",
+        ("company", "institution", "username"),
+        ("email",),
+        link="/recruiter",
+    ),
+)
+
 EVENTS = (
     EVENTS
     + STUDENT_EVENTS
@@ -2007,6 +2091,7 @@ EVENTS = (
     + FACILITIES_EVENTS
     + DOCUMENT_EVENTS
     + SUPPORT_EVENTS
+    + PLACEMENT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

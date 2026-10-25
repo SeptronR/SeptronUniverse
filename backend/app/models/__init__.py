@@ -32,6 +32,7 @@ from app.models import (  # noqa: F401
     obe,
     obe_attainment,
     offerings,
+    placement,
     platform,
     post_result,
     projects,
@@ -46,6 +47,7 @@ from app.models import (  # noqa: F401
 
 __all__ = [
     "accounting",
+    "placement",
     "clubs",
     "discipline",
     "grievances",

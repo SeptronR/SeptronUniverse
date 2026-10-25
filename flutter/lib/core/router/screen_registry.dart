@@ -27,6 +27,7 @@ import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
+import '../../features/placement/placement_screens.dart';
 import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
@@ -461,6 +462,35 @@ class ScreenRegistry {
       feature: 'mentoring.core',
       permission: 'mentoring:wards',
       builder: (_, __) => const ParentSupportScreen(),
+    ),
+    // Phase 28 — placement
+    AppRoutes.placement: ScreenEntry(
+      route: AppRoutes.placement,
+      titleKey: 'placement',
+      feature: 'placement.core',
+      permission: 'placement:self',
+      builder: (_, __) => const StudentPlacementScreen(),
+    ),
+    AppRoutes.wardPlacement: ScreenEntry(
+      route: AppRoutes.wardPlacement,
+      titleKey: 'ward_placement',
+      feature: 'placement.core',
+      permission: 'placement:wards',
+      builder: (_, __) => const ParentPlacementScreen(),
+    ),
+    AppRoutes.placementDrives: ScreenEntry(
+      route: AppRoutes.placementDrives,
+      titleKey: 'placement_drives',
+      feature: 'placement.core',
+      permission: 'placement:drive_manage',
+      builder: (_, __) => const PlacementOfficerScreen(),
+    ),
+    AppRoutes.internshipEvaluation: ScreenEntry(
+      route: AppRoutes.internshipEvaluation,
+      titleKey: 'internship_evaluation',
+      feature: 'placement.internships',
+      permission: 'placement:evaluate',
+      builder: (_, __) => const InternshipEvaluationScreen(),
     ),
     // Phase 26 — documents
     AppRoutes.myDocuments: ScreenEntry(
