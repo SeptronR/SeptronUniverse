@@ -743,7 +743,9 @@ REGISTRAR_FACILITIES: set[str] = (
 )
 VC_FACILITIES: set[str] = P("events", "approve", "certify") | P("facilities", "approve_booking")
 FACULTY_EVENTS: set[str] = P("events", "organise")
-ESTATE_FACILITIES: set[str] = P("facilities", "approve_booking", "service_assign", "view_all") | P("calendar", "view_all")
+ESTATE_FACILITIES: set[str] = P("facilities", "approve_booking", "service_assign", "view_all") | P(
+    "calendar", "view_all"
+)
 SECURITY_FACILITIES: set[str] = P("facilities", "view_all", "service_assign")
 MEDICAL_HEALTH: set[str] = P("health", "record", "view_all") | P("facilities", "counsel")
 SPORTS_FACILITIES: set[str] = P("sports", "view_all")
@@ -751,6 +753,15 @@ ACCOUNTANT_FACILITIES: set[str] = P("events", "view_all")
 STAFF_CAMPUS: set[str] = P("health", "view") | P("sports", "view")
 PARENT_FACILITIES: set[str] = P("calendar", "view") | P("events", "view") | P("facilities", "view")
 CANTEEN_POS: set[str] = P("facilities", "view")
+# Phase 26 — document templates, issued register, certificate requests (per-type limits applied in the services)
+REGISTRAR_DOCUMENTS: set[str] = P("certificates", "request_approve", "view_all") | P("templates", "manage")
+HR_DOCUMENTS: set[str] = P("certificates", "request_approve", "issue", "view_all") | P("templates", "view", "manage")
+COE_DOCUMENTS: set[str] = P("certificates", "request_approve", "issue", "view_all") | P(
+    "templates", "view", "manage", "render"
+)
+HOD_DOCUMENTS: set[str] = P("certificates", "view_all")
+OFFICE_DOCUMENTS: set[str] = P("certificates", "issue", "view_all") | P("templates", "view", "render")
+PARENT_DOCUMENTS: set[str] = P("certificates", "self")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -771,6 +782,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | VC_FEES
     | STAFF_SELF,
     "registrar": STAFF_SELF
+    | REGISTRAR_DOCUMENTS
     | P("students", "manage", "view_pii")
     | P("admissions", "manage")
     | ADMISSIONS_PII
@@ -807,6 +819,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_COMMS
     | REGISTRAR_FACILITIES,
     "controller_of_examinations": STAFF_SELF
+    | COE_DOCUMENTS
     | P("exams", "manage")
     | P("results", "manage")
     | P("marks", "lock", "correct", "view_all")
@@ -862,6 +875,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_ATTAINMENT
     | STAFF_SELF,
     "hod": FACULTY
+    | HOD_DOCUMENTS
     | P("students", "view_all")
     | P("hr", "view_all")
     | P("leaves", "approve", "view_all")
@@ -900,7 +914,12 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_ACCOUNTING
     | HOD_COMMS
     | HOD_FACILITIES,
-    "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
+    "class_advisor": FACULTY
+    | HOD_DOCUMENTS
+    | P("registration", "approve")
+    | P("attendance", "view")
+    | ADVISOR_FEES
+    | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
@@ -976,6 +995,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("reports", "run", "view")
     | ACCOUNTANT_FEES,
     "hr_officer": STAFF_SELF
+    | HR_DOCUMENTS
     | P("hr", "manage", "view_pii")
     | P("recruitment", "manage")
     | P("leaves", "manage")
@@ -1067,7 +1087,11 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | COMMITTEE_EXAMS,
     "legal_officer": STAFF_SELF | P("legal", "manage") | P("efile", "manage") | P("rti", "view"),
     "pio": STAFF_SELF | P("rti", "manage") | P("efile", "view"),
-    "receptionist": STAFF_SELF | P("admissions", "create", "view") | P("facilities", "manage") | P("students", "view"),
+    "receptionist": STAFF_SELF
+    | OFFICE_DOCUMENTS
+    | P("admissions", "create", "view")
+    | P("facilities", "manage")
+    | P("students", "view"),
     "driver": COMMON
     | P("transport", "driver", "view")
     | P("payroll", "self")
@@ -1101,6 +1125,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("library", "self"),
     "student": STUDENT,
     "parent": COMMON
+    | PARENT_DOCUMENTS
     | SELF_DEGREES
     | PARENT_LIBRARY
     | PARENT_FACILITIES
@@ -1143,6 +1168,9 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0026": frozenset(
+        REGISTRAR_DOCUMENTS | HR_DOCUMENTS | COE_DOCUMENTS | HOD_DOCUMENTS | OFFICE_DOCUMENTS | PARENT_DOCUMENTS
+    ),
     "0003": frozenset({"institutions:view"}),
     "0005": frozenset(ACADEMIC_READ | REGISTRAR_ACADEMICS | HOD_ACADEMICS | DEAN_ACADEMICS),
     "0006": frozenset(P("leaves", "encash") | DEAN_HR | AUDITOR_HR),

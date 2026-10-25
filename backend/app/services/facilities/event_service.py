@@ -10,8 +10,9 @@
    capacity with waitlist (``external.waitlisted``), fee through ``InvoiceService.create_invoice``
    (``source_type='event_registration'``; students and staff — external fees are collected at the venue), QR token.
 3. **Attendance / certificates** — attendance by QR (organiser) or list; the ``event.certificates`` job numbers a
-   certificate for each attended registrant (``certificate_document_id``, ``certificate_no`` sequence) rendered from
-   the platform ``event_certificate`` template with a signed verification link until the Phase 26 renderer lands.
+   certificate for each attended registrant through the Phase 26 renderer (``documents.render('event_certificate',
+   'event_registration', id)``, number from the ``certificate_no`` sequence) and links ``certificate_document_id``;
+   the PDF route serves the issued document and its QR resolves at the unified ``/verify/{token}``.
 4. **Report** — participants, external count, spend (expenses whose ``reference_no`` is the event id + manual spend),
    images, outcomes, ``naac_criterion``; completion emits ``event.completed`` and ``accreditation.evidence_suggested``.
 
@@ -779,15 +780,22 @@ class EventService(FacilitiesBase):
         if only_attended:
             stmt = stmt.where(EventRegistration.attended.is_(True))
         rows = (await self.db.execute(stmt)).scalars().all()
+        from app.services.documents.render_service import RenderService
+
+        renderer = RenderService(self.db, self.principal, self.request, self.inst)
         for r in rows:
-            cert_id = uuid.uuid4()
+            # Phase 26: the register issues the certificate (number from the ``certificate_no`` sequence, kept in
+            # ``external`` for the Phase 25 views); ``certificate_document_id`` links the issued document
             no = await self.sequence("certificate_no", "CERT")
+            res = await renderer.render("event_certificate", "event_registration", r.id, document_number=no)
             ext = dict(r.external or {})
-            ext["certificate_no"], ext["certificate_id"] = no, str(cert_id)
+            ext["certificate_no"], ext["certificate_id"] = res.document_number, str(res.issued_document_id)
+            ext["certificate_token"] = res.verification_token
             r.external = ext
+            r.certificate_document_id = res.issued_document_id
             await self._emit(
                 "event.certificate_issued",
-                {"event_id": str(e.id), "registration_id": str(r.id), "document_id": str(cert_id)},
+                {"event_id": str(e.id), "registration_id": str(r.id), "document_id": str(res.issued_document_id)},
                 "event",
                 e.id,
             )
@@ -819,13 +827,25 @@ class EventService(FacilitiesBase):
             pass
         if not mine and not await self._is_manager(e) and not self.can("events", "certify"):
             raise not_found("Certificate")
+        if r.certificate_document_id is not None:
+            # Phase 26: the issued document's stored PDF (QR → unified ``/verify/{token}``)
+            from app.models.documents import IssuedDocument
+            from app.services.documents.render_service import RenderService
+
+            doc = (
+                await self.db.execute(select(IssuedDocument).where(IssuedDocument.id == r.certificate_document_id))
+            ).scalar_one_or_none()
+            if doc is not None:
+                return await RenderService(self.db, self.principal, self.request, self.inst).original_pdf(doc)
         name = (
             (await self.person_names([(r.person_type, r.person_id)])).get(r.person_id)
             if r.person_id
             else (r.external or {}).get("name")
         )
         token = sign_payload({"t": "event_cert", "r": str(r.id), "i": str(self.inst)}, 3650 * 86400)
-        verify = f"/api/v1/verify/event-certificate?token={token}"
+        # legacy (pre-back-fill) certificates: the unified verification page resolves the register token once
+        # ``documents.backfill_register`` has run; until then the signed token is printed
+        verify = f"/verify/{(r.external or {}).get('certificate_token') or token}"
         inst = await self.institution()
         html = EVENT_CERTIFICATE_HTML
         ctx = {

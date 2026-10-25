@@ -10002,6 +10002,20 @@
         "title": "Body_upload_my_document_api_v1_applicants_me_documents_post",
         "type": "object"
       },
+      "Body_verify_hash_api_v1_verify_hash_post": {
+        "properties": {
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file"
+        ],
+        "title": "Body_verify_hash_api_v1_verify_hash_post",
+        "type": "object"
+      },
       "BookCategoryIn": {
         "additionalProperties": false,
         "properties": {
@@ -14486,6 +14500,529 @@
           "fee_preview"
         ],
         "title": "CatalogResponse",
+        "type": "object"
+      },
+      "CertReqCollected": {
+        "additionalProperties": false,
+        "properties": {
+          "collected_by": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Collected By",
+            "type": "string"
+          },
+          "signature_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signature Url"
+          }
+        },
+        "required": [
+          "collected_by"
+        ],
+        "title": "CertReqCollected",
+        "type": "object"
+      },
+      "CertReqCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "copies": {
+            "default": 1,
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Copies",
+            "type": "integer"
+          },
+          "delivery": {
+            "default": "digital",
+            "enum": [
+              "digital",
+              "pickup",
+              "post"
+            ],
+            "title": "Delivery",
+            "type": "string"
+          },
+          "person_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "ward student id when a guardian requests on behalf",
+            "title": "Person Id"
+          },
+          "person_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "student",
+                  "staff",
+                  "alumni"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Type"
+          },
+          "purpose": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purpose"
+          },
+          "registration_number": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "alumni identity check",
+            "title": "Registration Number"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "template_type"
+        ],
+        "title": "CertReqCreate",
+        "type": "object"
+      },
+      "CertReqDecision": {
+        "additionalProperties": false,
+        "properties": {
+          "action": {
+            "enum": [
+              "approve",
+              "reject",
+              "recommend"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "remarks": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remarks"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "CertReqDecision",
+        "type": "object"
+      },
+      "CertReqGenerate": {
+        "additionalProperties": false,
+        "properties": {
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          }
+        },
+        "title": "CertReqGenerate",
+        "type": "object"
+      },
+      "CertReqIssue": {
+        "additionalProperties": false,
+        "properties": {
+          "courier_ref": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Courier Ref"
+          },
+          "delivery_note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Delivery Note"
+          },
+          "pickup_on": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "pickup slot (ISO date / datetime)",
+            "title": "Pickup On"
+          }
+        },
+        "title": "CertReqIssue",
+        "type": "object"
+      },
+      "CertReqOut": {
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "checks": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checks"
+          },
+          "copies": {
+            "title": "Copies",
+            "type": "integer"
+          },
+          "courier_ref": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Courier Ref"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "delivery": {
+            "title": "Delivery",
+            "type": "string"
+          },
+          "document_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Number"
+          },
+          "fee_invoice_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fee Invoice Id"
+          },
+          "fee_paise": {
+            "default": 0,
+            "title": "Fee Paise",
+            "type": "integer"
+          },
+          "fee_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fee Status"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "issued_document_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued Document Id"
+          },
+          "person_id": {
+            "format": "uuid",
+            "title": "Person Id",
+            "type": "string"
+          },
+          "person_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Name"
+          },
+          "person_type": {
+            "title": "Person Type",
+            "type": "string"
+          },
+          "pickup": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pickup"
+          },
+          "purpose": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purpose"
+          },
+          "requester_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Requester Name"
+          },
+          "requester_user_id": {
+            "format": "uuid",
+            "title": "Requester User Id",
+            "type": "string"
+          },
+          "sla_breached": {
+            "default": false,
+            "title": "Sla Breached",
+            "type": "boolean"
+          },
+          "sla_due_on": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sla Due On"
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "finer state: awaiting_no_dues | blocked | pickup_ready | collected …",
+            "title": "Stage"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          },
+          "timeline": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Timeline",
+            "type": "array"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "workflow": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workflow"
+          }
+        },
+        "required": [
+          "id",
+          "requester_user_id",
+          "person_type",
+          "person_id",
+          "template_type",
+          "copies",
+          "delivery",
+          "status",
+          "created_at"
+        ],
+        "title": "CertReqOut",
+        "type": "object"
+      },
+      "CertReqTypeOut": {
+        "properties": {
+          "allowed": {
+            "default": true,
+            "title": "Allowed",
+            "type": "boolean"
+          },
+          "approver": {
+            "title": "Approver",
+            "type": "string"
+          },
+          "copies_fee_paise": {
+            "title": "Copies Fee Paise",
+            "type": "integer"
+          },
+          "fee_paise": {
+            "title": "Fee Paise",
+            "type": "integer"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "requires_no_dues": {
+            "default": false,
+            "title": "Requires No Dues",
+            "type": "boolean"
+          },
+          "sla_days": {
+            "title": "Sla Days",
+            "type": "integer"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "template_type",
+          "label",
+          "fee_paise",
+          "copies_fee_paise",
+          "sla_days",
+          "approver"
+        ],
+        "title": "CertReqTypeOut",
         "type": "object"
       },
       "ChallengePanelRequest": {
@@ -24671,6 +25208,1598 @@
         "title": "DltTemplateResponse",
         "type": "object"
       },
+      "DocBulkGenerateRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "print_order": {
+            "default": "roll",
+            "enum": [
+              "roll",
+              "serial",
+              "name"
+            ],
+            "title": "Print Order",
+            "type": "string"
+          },
+          "register": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "serial register (statutory book)",
+            "title": "Register"
+          },
+          "scope": {
+            "$ref": "#/components/schemas/DocBulkScope"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          },
+          "variables_override": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables Override"
+          },
+          "zip": {
+            "default": true,
+            "title": "Zip",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "template_type",
+          "scope"
+        ],
+        "title": "DocBulkGenerateRequest",
+        "type": "object"
+      },
+      "DocBulkJobOut": {
+        "properties": {
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "progress": {
+            "default": 0,
+            "title": "Progress",
+            "type": "integer"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "zip_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Zip Url"
+          }
+        },
+        "required": [
+          "job_id",
+          "status"
+        ],
+        "title": "DocBulkJobOut",
+        "type": "object"
+      },
+      "DocBulkScope": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Id"
+          },
+          "enrollment_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enrollment Ids"
+          },
+          "section_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section Id"
+          },
+          "staff_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Staff Ids"
+          }
+        },
+        "title": "DocBulkScope",
+        "type": "object"
+      },
+      "DocHashVerifyOut": {
+        "properties": {
+          "document_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Number"
+          },
+          "hint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hint"
+          },
+          "institution": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Institution"
+          },
+          "revoked": {
+            "default": false,
+            "title": "Revoked",
+            "type": "boolean"
+          },
+          "template_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Type"
+          },
+          "valid": {
+            "title": "Valid",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "valid"
+        ],
+        "title": "DocHashVerifyOut",
+        "type": "object"
+      },
+      "DocLintIssue": {
+        "properties": {
+          "level": {
+            "enum": [
+              "error",
+              "warning"
+            ],
+            "title": "Level",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "variable": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variable"
+          }
+        },
+        "required": [
+          "level",
+          "message"
+        ],
+        "title": "DocLintIssue",
+        "type": "object"
+      },
+      "DocReconcileOut": {
+        "properties": {
+          "gaps": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Gaps",
+            "type": "array"
+          },
+          "issued": {
+            "title": "Issued",
+            "type": "integer"
+          },
+          "issued_without_serial": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Issued Without Serial",
+            "type": "array"
+          },
+          "register": {
+            "title": "Register",
+            "type": "string"
+          },
+          "reserved": {
+            "title": "Reserved",
+            "type": "integer"
+          },
+          "used": {
+            "title": "Used",
+            "type": "integer"
+          },
+          "used_without_document": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Used Without Document",
+            "type": "array"
+          },
+          "void": {
+            "title": "Void",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "register",
+          "issued",
+          "used",
+          "reserved",
+          "void",
+          "issued_without_serial",
+          "used_without_document",
+          "gaps"
+        ],
+        "title": "DocReconcileOut",
+        "type": "object"
+      },
+      "DocReissueRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "variables_override": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables Override"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "DocReissueRequest",
+        "type": "object"
+      },
+      "DocRenderRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "allow_multiple": {
+            "default": false,
+            "title": "Allow Multiple",
+            "type": "boolean"
+          },
+          "document_number": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "explicit number (e.g. degree certificates)",
+            "title": "Document Number"
+          },
+          "entity_id": {
+            "format": "uuid",
+            "title": "Entity Id",
+            "type": "string"
+          },
+          "entity_type": {
+            "title": "Entity Type",
+            "type": "string"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "register": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "serial register (statutory book)",
+            "title": "Register"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          },
+          "variables_override": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables Override"
+          },
+          "watermark": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Watermark"
+          }
+        },
+        "required": [
+          "template_type",
+          "entity_type",
+          "entity_id"
+        ],
+        "title": "DocRenderRequest",
+        "type": "object"
+      },
+      "DocRenderResult": {
+        "properties": {
+          "content_hash": {
+            "title": "Content Hash",
+            "type": "string"
+          },
+          "document_number": {
+            "title": "Document Number",
+            "type": "string"
+          },
+          "issued_document_id": {
+            "format": "uuid",
+            "title": "Issued Document Id",
+            "type": "string"
+          },
+          "pdf_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Url"
+          },
+          "reused": {
+            "default": false,
+            "title": "Reused",
+            "type": "boolean"
+          },
+          "serial_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serial No"
+          },
+          "verification_token": {
+            "title": "Verification Token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issued_document_id",
+          "document_number",
+          "verification_token",
+          "content_hash"
+        ],
+        "title": "DocRenderResult",
+        "type": "object"
+      },
+      "DocRevokeRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "DocRevokeRequest",
+        "type": "object"
+      },
+      "DocSerialRegisterOut": {
+        "properties": {
+          "book": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Book"
+          },
+          "next": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next"
+          },
+          "register": {
+            "title": "Register",
+            "type": "string"
+          },
+          "reserved": {
+            "default": 0,
+            "title": "Reserved",
+            "type": "integer"
+          },
+          "used": {
+            "default": 0,
+            "title": "Used",
+            "type": "integer"
+          },
+          "void": {
+            "default": 0,
+            "title": "Void",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "register"
+        ],
+        "title": "DocSerialRegisterOut",
+        "type": "object"
+      },
+      "DocSerialReserve": {
+        "additionalProperties": false,
+        "properties": {
+          "count": {
+            "default": 1,
+            "maximum": 500.0,
+            "minimum": 1.0,
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "title": "DocSerialReserve",
+        "type": "object"
+      },
+      "DocSerialRow": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "document_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Number"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "issued_document_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued Document Id"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "register": {
+            "title": "Register",
+            "type": "string"
+          },
+          "serial_no": {
+            "title": "Serial No",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "register",
+          "serial_no",
+          "status",
+          "created_at"
+        ],
+        "title": "DocSerialRow",
+        "type": "object"
+      },
+      "DocSerialVoid": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "maxLength": 500,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "serial_no": {
+            "maxLength": 40,
+            "title": "Serial No",
+            "type": "string"
+          }
+        },
+        "required": [
+          "serial_no",
+          "reason"
+        ],
+        "title": "DocSerialVoid",
+        "type": "object"
+      },
+      "DocSettingsOut": {
+        "properties": {
+          "allow_parent_requests": {
+            "default": false,
+            "title": "Allow Parent Requests",
+            "type": "boolean"
+          },
+          "college_overrides": {
+            "default": false,
+            "title": "College Overrides",
+            "type": "boolean"
+          },
+          "preview_retention_days": {
+            "default": 1,
+            "title": "Preview Retention Days",
+            "type": "integer"
+          },
+          "request_rules": {
+            "additionalProperties": true,
+            "title": "Request Rules",
+            "type": "object"
+          },
+          "signatories": {
+            "additionalProperties": true,
+            "title": "Signatories",
+            "type": "object"
+          },
+          "signed_link_ttl_minutes": {
+            "default": 15,
+            "title": "Signed Link Ttl Minutes",
+            "type": "integer"
+          },
+          "verify_shows_pdf": {
+            "default": false,
+            "title": "Verify Shows Pdf",
+            "type": "boolean"
+          },
+          "watermark": {
+            "additionalProperties": true,
+            "title": "Watermark",
+            "type": "object"
+          }
+        },
+        "required": [
+          "request_rules",
+          "signatories",
+          "watermark"
+        ],
+        "title": "DocSettingsOut",
+        "type": "object"
+      },
+      "DocSignedLinkOut": {
+        "properties": {
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "watermarked": {
+            "default": true,
+            "title": "Watermarked",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "url",
+          "expires_at"
+        ],
+        "title": "DocSignedLinkOut",
+        "type": "object"
+      },
+      "DocSignedLinkRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "purpose": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purpose"
+          },
+          "single_use": {
+            "default": false,
+            "title": "Single Use",
+            "type": "boolean"
+          },
+          "ttl_minutes": {
+            "anyOf": [
+              {
+                "maximum": 1440.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ttl Minutes"
+          },
+          "watermark_text": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Watermark Text"
+          }
+        },
+        "title": "DocSignedLinkRequest",
+        "type": "object"
+      },
+      "DocTemplateIn": {
+        "additionalProperties": false,
+        "properties": {
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "college override (when the institution permits)",
+            "title": "College Id"
+          },
+          "css": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Css"
+          },
+          "from_template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "clone this template (platform default or override)",
+            "title": "From Template Id"
+          },
+          "html_template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Html Template"
+          },
+          "is_bilingual": {
+            "default": false,
+            "title": "Is Bilingual",
+            "type": "boolean"
+          },
+          "is_default": {
+            "default": false,
+            "title": "Is Default",
+            "type": "boolean"
+          },
+          "layout": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "{blocks: [DocLayoutBlock], ...}",
+            "title": "Layout"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "page_size": {
+            "default": "A4",
+            "enum": [
+              "A4",
+              "A5",
+              "Letter",
+              "ID_CR80",
+              "custom"
+            ],
+            "title": "Page Size",
+            "type": "string"
+          },
+          "secondary_language": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secondary Language"
+          },
+          "template_type": {
+            "maxLength": 40,
+            "minLength": 2,
+            "title": "Template Type",
+            "type": "string"
+          },
+          "variables": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables"
+          }
+        },
+        "required": [
+          "template_type",
+          "name"
+        ],
+        "title": "DocTemplateIn",
+        "type": "object"
+      },
+      "DocTemplateLint": {
+        "properties": {
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/DocLintIssue"
+            },
+            "title": "Issues",
+            "type": "array"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ok"
+        ],
+        "title": "DocTemplateLint",
+        "type": "object"
+      },
+      "DocTemplateOut": {
+        "properties": {
+          "change_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Change Note"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "created_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "css": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Css"
+          },
+          "html_template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Html Template"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "institution_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Institution Id"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "is_bilingual": {
+            "title": "Is Bilingual",
+            "type": "boolean"
+          },
+          "is_default": {
+            "title": "Is Default",
+            "type": "boolean"
+          },
+          "layout": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Layout"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "string"
+          },
+          "secondary_language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secondary Language"
+          },
+          "source": {
+            "enum": [
+              "platform",
+              "institution"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "default": "published",
+            "enum": [
+              "draft",
+              "published"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          },
+          "updated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated At"
+          },
+          "variables": {
+            "anyOf": [
+              {},
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "template_type",
+          "name",
+          "page_size",
+          "is_bilingual",
+          "is_default",
+          "is_active",
+          "version",
+          "source"
+        ],
+        "title": "DocTemplateOut",
+        "type": "object"
+      },
+      "DocTemplatePreview": {
+        "additionalProperties": false,
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocTemplateUpdate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "format": {
+            "default": "pdf",
+            "enum": [
+              "pdf",
+              "html"
+            ],
+            "title": "Format",
+            "type": "string"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "sample_entity_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Entity Id"
+          },
+          "sample_entity_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sample Entity Type"
+          },
+          "variables": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variables"
+          }
+        },
+        "title": "DocTemplatePreview",
+        "type": "object"
+      },
+      "DocTemplatePublish": {
+        "additionalProperties": false,
+        "properties": {
+          "change_note": {
+            "maxLength": 500,
+            "minLength": 2,
+            "title": "Change Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "change_note"
+        ],
+        "title": "DocTemplatePublish",
+        "type": "object"
+      },
+      "DocTemplateUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "css": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Css"
+          },
+          "html_template": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Html Template"
+          },
+          "is_bilingual": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Bilingual"
+          },
+          "is_default": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Is Default"
+          },
+          "layout": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Layout"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "page_size": {
+            "anyOf": [
+              {
+                "enum": [
+                  "A4",
+                  "A5",
+                  "Letter",
+                  "ID_CR80",
+                  "custom"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Size"
+          },
+          "secondary_language": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Secondary Language"
+          }
+        },
+        "title": "DocTemplateUpdate",
+        "type": "object"
+      },
+      "DocTemplateUsage": {
+        "properties": {
+          "by_entity_type": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "By Entity Type",
+            "type": "object"
+          },
+          "flows": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flows",
+            "type": "array"
+          },
+          "issued_count": {
+            "title": "Issued Count",
+            "type": "integer"
+          },
+          "last_issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Issued At"
+          },
+          "template_id": {
+            "format": "uuid",
+            "title": "Template Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "template_id",
+          "issued_count",
+          "by_entity_type",
+          "flows"
+        ],
+        "title": "DocTemplateUsage",
+        "type": "object"
+      },
+      "DocVariable": {
+        "properties": {
+          "example": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Example"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "source"
+        ],
+        "title": "DocVariable",
+        "type": "object"
+      },
+      "DocVariablesCatalogue": {
+        "properties": {
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          },
+          "variables": {
+            "items": {
+              "$ref": "#/components/schemas/DocVariable"
+            },
+            "title": "Variables",
+            "type": "array"
+          }
+        },
+        "required": [
+          "template_type",
+          "variables"
+        ],
+        "title": "DocVariablesCatalogue",
+        "type": "object"
+      },
+      "DocVerifyOut": {
+        "properties": {
+          "content_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Content Hash"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details"
+          },
+          "document_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Number"
+          },
+          "holder_masked": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Holder Masked"
+          },
+          "institution": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Institution"
+          },
+          "issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued At"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "pdf_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Url"
+          },
+          "revoke_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revoke Reason"
+          },
+          "revoked": {
+            "default": false,
+            "title": "Revoked",
+            "type": "boolean"
+          },
+          "superseded_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superseded By"
+          },
+          "template_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Type"
+          },
+          "valid": {
+            "title": "Valid",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "valid"
+        ],
+        "title": "DocVerifyOut",
+        "type": "object"
+      },
       "DocumentOut": {
         "properties": {
           "doc_type": {
@@ -24762,6 +26891,64 @@
           "uploaded_at"
         ],
         "title": "DocumentOut",
+        "type": "object"
+      },
+      "DocumentStatsOut": {
+        "properties": {
+          "fee_revenue_paise": {
+            "default": 0,
+            "title": "Fee Revenue Paise",
+            "type": "integer"
+          },
+          "issued_by_month": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Issued By Month",
+            "type": "object"
+          },
+          "issued_by_type": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Issued By Type",
+            "type": "object"
+          },
+          "pending_pickups": {
+            "default": 0,
+            "title": "Pending Pickups",
+            "type": "integer"
+          },
+          "requests_by_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Requests By Status",
+            "type": "object"
+          },
+          "revoked": {
+            "title": "Revoked",
+            "type": "integer"
+          },
+          "sla_compliance_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sla Compliance Pct"
+          }
+        },
+        "required": [
+          "issued_by_type",
+          "issued_by_month",
+          "revoked",
+          "requests_by_status"
+        ],
+        "title": "DocumentStatsOut",
         "type": "object"
       },
       "DuesResponse": {
@@ -29507,6 +31694,43 @@
         "title": "Envelope[CatalogResponse]",
         "type": "object"
       },
+      "Envelope_CertReqOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CertReqOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[CertReqOut]",
+        "type": "object"
+      },
       "Envelope_ChangeRequestOut_": {
         "properties": {
           "data": {
@@ -31283,6 +33507,413 @@
         "title": "Envelope[DltTemplateResponse]",
         "type": "object"
       },
+      "Envelope_DocBulkJobOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocBulkJobOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocBulkJobOut]",
+        "type": "object"
+      },
+      "Envelope_DocHashVerifyOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocHashVerifyOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocHashVerifyOut]",
+        "type": "object"
+      },
+      "Envelope_DocReconcileOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocReconcileOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocReconcileOut]",
+        "type": "object"
+      },
+      "Envelope_DocRenderResult_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocRenderResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocRenderResult]",
+        "type": "object"
+      },
+      "Envelope_DocSerialRow_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocSerialRow"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocSerialRow]",
+        "type": "object"
+      },
+      "Envelope_DocSettingsOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocSettingsOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocSettingsOut]",
+        "type": "object"
+      },
+      "Envelope_DocSignedLinkOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocSignedLinkOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocSignedLinkOut]",
+        "type": "object"
+      },
+      "Envelope_DocTemplateLint_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocTemplateLint"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocTemplateLint]",
+        "type": "object"
+      },
+      "Envelope_DocTemplateOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocTemplateOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocTemplateOut]",
+        "type": "object"
+      },
+      "Envelope_DocTemplateUsage_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocTemplateUsage"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocTemplateUsage]",
+        "type": "object"
+      },
+      "Envelope_DocVariablesCatalogue_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocVariablesCatalogue"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocVariablesCatalogue]",
+        "type": "object"
+      },
       "Envelope_DocumentOut_": {
         "properties": {
           "data": {
@@ -31318,6 +33949,43 @@
           }
         },
         "title": "Envelope[DocumentOut]",
+        "type": "object"
+      },
+      "Envelope_DocumentStatsOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocumentStatsOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DocumentStatsOut]",
         "type": "object"
       },
       "Envelope_DuesResponse_": {
@@ -34574,6 +37242,43 @@
           }
         },
         "title": "Envelope[InvoiceResponse]",
+        "type": "object"
+      },
+      "Envelope_IssuedDocumentOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IssuedDocumentOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[IssuedDocumentOut]",
         "type": "object"
       },
       "Envelope_ItemOut_": {
@@ -41859,10 +44564,13 @@
         "title": "Envelope[Union[ChoiceFormResponse, NoneType]]",
         "type": "object"
       },
-      "Envelope_Union_DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__": {
+      "Envelope_Union_DocVerifyOut__DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__": {
         "properties": {
           "data": {
             "anyOf": [
+              {
+                "$ref": "#/components/schemas/DocVerifyOut"
+              },
               {
                 "$ref": "#/components/schemas/DegreeVerifyResponse"
               },
@@ -41903,7 +44611,7 @@
             "type": "boolean"
           }
         },
-        "title": "Envelope[Union[DegreeVerifyResponse, VerifyResponse, ResultVerifyResponse, TranscriptVerifyResponse]]",
+        "title": "Envelope[Union[DocVerifyOut, DegreeVerifyResponse, VerifyResponse, ResultVerifyResponse, TranscriptVerifyResponse]]",
         "type": "object"
       },
       "Envelope_Union_FacultyProfileOut__NoneType__": {
@@ -44506,6 +47214,88 @@
         "title": "Envelope[list[CasApplicationOut]]",
         "type": "object"
       },
+      "Envelope_list_CertReqOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/CertReqOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[CertReqOut]]",
+        "type": "object"
+      },
+      "Envelope_list_CertReqTypeOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/CertReqTypeOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[CertReqTypeOut]]",
+        "type": "object"
+      },
       "Envelope_list_ChangeRequestOut__": {
         "properties": {
           "data": {
@@ -45816,6 +48606,129 @@
           }
         },
         "title": "Envelope[list[DltTemplateResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_DocSerialRegisterOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/DocSerialRegisterOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[DocSerialRegisterOut]]",
+        "type": "object"
+      },
+      "Envelope_list_DocSerialRow__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/DocSerialRow"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[DocSerialRow]]",
+        "type": "object"
+      },
+      "Envelope_list_DocTemplateOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/DocTemplateOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[DocTemplateOut]]",
         "type": "object"
       },
       "Envelope_list_DocumentOut__": {
@@ -48194,6 +51107,47 @@
           }
         },
         "title": "Envelope[list[InvoiceResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_IssuedDocumentOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/IssuedDocumentOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[IssuedDocumentOut]]",
         "type": "object"
       },
       "Envelope_list_ItemOut__": {
@@ -70305,6 +73259,261 @@
           }
         },
         "title": "IssueRequest",
+        "type": "object"
+      },
+      "IssuedDocumentOut": {
+        "properties": {
+          "content_hash": {
+            "title": "Content Hash",
+            "type": "string"
+          },
+          "document_number": {
+            "title": "Document Number",
+            "type": "string"
+          },
+          "download_log": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Download Log"
+          },
+          "downloads": {
+            "default": 0,
+            "title": "Downloads",
+            "type": "integer"
+          },
+          "entity_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Id"
+          },
+          "entity_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Type"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "issued_at": {
+            "format": "date-time",
+            "title": "Issued At",
+            "type": "string"
+          },
+          "issued_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued By"
+          },
+          "issued_by_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued By Name"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "person_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Id"
+          },
+          "person_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Name"
+          },
+          "person_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Type"
+          },
+          "revoke_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revoke Reason"
+          },
+          "revoked": {
+            "default": false,
+            "title": "Revoked",
+            "type": "boolean"
+          },
+          "revoked_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revoked At"
+          },
+          "serial_no": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serial No"
+          },
+          "superseded_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Superseded By"
+          },
+          "supersedes": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supersedes"
+          },
+          "template_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Id"
+          },
+          "template_type": {
+            "title": "Template Type",
+            "type": "string"
+          },
+          "template_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Version"
+          },
+          "verification_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verification Token"
+          },
+          "watermark_text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Watermark Text"
+          }
+        },
+        "required": [
+          "id",
+          "template_type",
+          "document_number",
+          "content_hash",
+          "issued_at"
+        ],
+        "title": "IssuedDocumentOut",
         "type": "object"
       },
       "ItemDecision": {
@@ -129594,6 +132803,571 @@
         ]
       }
     },
+    "/api/v1/certificate-requests": {
+      "get": {
+        "operationId": "requests_list_api_v1_certificate_requests_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "template_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "person_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Person Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "department_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Department Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_CertReqOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Request queue (ScopeTabs)",
+        "tags": [
+          "documents"
+        ]
+      },
+      "post": {
+        "operationId": "requests_create_api_v1_certificate_requests_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertReqCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Request a certificate (Idempotency-Key)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/me": {
+      "get": {
+        "operationId": "requests_me_api_v1_certificate_requests_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_CertReqOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My requests",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/types": {
+      "get": {
+        "operationId": "requests_types_api_v1_certificate_requests_types_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_CertReqTypeOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Requestable types with fees (for the caller)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/wards": {
+      "get": {
+        "operationId": "requests_wards_api_v1_certificate_requests_wards_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_CertReqOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ward requests",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/{id}": {
+      "delete": {
+        "operationId": "requests_cancel_api_v1_certificate_requests__id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel before approval",
+        "tags": [
+          "documents"
+        ]
+      },
+      "get": {
+        "operationId": "requests_get_api_v1_certificate_requests__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Request",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/{id}/collected": {
+      "post": {
+        "operationId": "requests_collected_api_v1_certificate_requests__id__collected_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertReqCollected"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Pickup collected (signature)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/{id}/decide": {
+      "post": {
+        "operationId": "requests_decide_api_v1_certificate_requests__id__decide_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertReqDecision"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Approve / reject / recommend",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/{id}/generate": {
+      "post": {
+        "operationId": "requests_generate_api_v1_certificate_requests__id__generate_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertReqGenerate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Generate the document",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/certificate-requests/{id}/issue": {
+      "post": {
+        "operationId": "requests_issue_api_v1_certificate_requests__id__issue_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CertReqIssue"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_CertReqOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Issue (digital / pickup notice / post)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
     "/api/v1/cia/{id}/approve": {
       "post": {
         "operationId": "approve_cia_api_v1_cia__id__approve_post",
@@ -141923,6 +145697,1671 @@
         "summary": "Register a push token",
         "tags": [
           "notifications"
+        ]
+      }
+    },
+    "/api/v1/documents/bulk": {
+      "post": {
+        "operationId": "bulk_create_api_v1_documents_bulk_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocBulkGenerateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bulk generation job",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/bulk/{job_id}": {
+      "get": {
+        "operationId": "bulk_get_api_v1_documents_bulk__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocBulkJobOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Bulk job progress / report",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/bulk/{job_id}/zip": {
+      "get": {
+        "operationId": "bulk_zip_api_v1_documents_bulk__job_id__zip_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "ZIP of the job's PDFs (signed redirect)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/download/{signed}": {
+      "get": {
+        "operationId": "documents_download_api_v1_documents_download__signed__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "signed",
+            "required": true,
+            "schema": {
+              "title": "Signed",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Download through a signed link (bound to the user)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/issued": {
+      "get": {
+        "operationId": "issued_list_api_v1_documents_issued_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "template_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "person_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Person Id"
+            }
+          },
+          {
+            "in": "query",
+            "name": "entity_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Entity Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Date To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "revoked",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Revoked"
+            }
+          },
+          {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Scope"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 200,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_IssuedDocumentOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Issued documents (ScopeTabs)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/issued/{id}": {
+      "get": {
+        "operationId": "issued_get_api_v1_documents_issued__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IssuedDocumentOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Issued document",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/issued/{id}/reissue": {
+      "post": {
+        "operationId": "issued_reissue_api_v1_documents_issued__id__reissue_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocReissueRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocRenderResult_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reissue (revokes the old document; new one supersedes it)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/issued/{id}/revoke": {
+      "post": {
+        "operationId": "issued_revoke_api_v1_documents_issued__id__revoke_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocRevokeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_IssuedDocumentOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Revoke (registrar)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/issued/{id}/signed-link": {
+      "get": {
+        "operationId": "issued_signed_link_get_api_v1_documents_issued__id__signed_link_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocSignedLinkOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Signed link with defaults (15 min)",
+        "tags": [
+          "documents"
+        ]
+      },
+      "post": {
+        "operationId": "issued_signed_link_api_v1_documents_issued__id__signed_link_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocSignedLinkRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocSignedLinkOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Time-limited signed download link (watermarked)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/me": {
+      "get": {
+        "operationId": "documents_me_api_v1_documents_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_IssuedDocumentOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My documents",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers": {
+      "get": {
+        "operationId": "registers_list_api_v1_documents_registers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_DocSerialRegisterOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Serial registers",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers/{register}": {
+      "get": {
+        "operationId": "registers_rows_api_v1_documents_registers__register__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "register",
+            "required": true,
+            "schema": {
+              "title": "Register",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_DocSerialRow__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Serials of a register",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers/{register}/book": {
+      "put": {
+        "operationId": "registers_book_api_v1_documents_registers__register__book_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "register",
+            "required": true,
+            "schema": {
+              "title": "Register",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Physical book mapping (book no. / pages)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers/{register}/export": {
+      "get": {
+        "operationId": "registers_export_api_v1_documents_registers__register__export_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "register",
+            "required": true,
+            "schema": {
+              "title": "Register",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export job (CSV)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers/{register}/reconcile": {
+      "get": {
+        "operationId": "registers_reconcile_api_v1_documents_registers__register__reconcile_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "register",
+            "required": true,
+            "schema": {
+              "title": "Register",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocReconcileOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reconciliation (issued vs serials)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers/{register}/reserve": {
+      "post": {
+        "operationId": "registers_reserve_api_v1_documents_registers__register__reserve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "register",
+            "required": true,
+            "schema": {
+              "title": "Register",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocSerialReserve"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_DocSerialRow__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reserve serials",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/registers/{register}/void": {
+      "post": {
+        "operationId": "registers_void_api_v1_documents_registers__register__void_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "register",
+            "required": true,
+            "schema": {
+              "title": "Register",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocSerialVoid"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocSerialRow_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Void a serial (reason)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/render": {
+      "post": {
+        "operationId": "documents_render_api_v1_documents_render_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocRenderRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocRenderResult_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Render and register a document (Idempotency-Key)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/settings": {
+      "get": {
+        "operationId": "documents_settings_api_v1_documents_settings_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocSettingsOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Document settings",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/stats": {
+      "get": {
+        "operationId": "documents_stats_api_v1_documents_stats_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocumentStatsOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Document statistics",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates": {
+      "get": {
+        "operationId": "templates_list_api_v1_documents_templates_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "template_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Template Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "source",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Source"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_DocTemplateOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Templates (platform defaults + institution overrides, latest version)",
+        "tags": [
+          "documents"
+        ]
+      },
+      "post": {
+        "operationId": "templates_create_api_v1_documents_templates_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocTemplateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocTemplateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "New template / clone (draft)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/variables/{template_type}": {
+      "get": {
+        "operationId": "templates_variables_api_v1_documents_templates_variables__template_type__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template_type",
+            "required": true,
+            "schema": {
+              "title": "Template Type",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocVariablesCatalogue_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Variables catalogue of a template type",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/{id}": {
+      "get": {
+        "operationId": "templates_get_api_v1_documents_templates__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocTemplateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Template",
+        "tags": [
+          "documents"
+        ]
+      },
+      "put": {
+        "operationId": "templates_update_api_v1_documents_templates__id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocTemplateUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocTemplateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit a template (a published version starts the next draft)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/{id}/lint": {
+      "get": {
+        "operationId": "templates_lint_api_v1_documents_templates__id__lint_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocTemplateLint_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Lint (unknown variables, unsupported CSS)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/{id}/preview": {
+      "post": {
+        "operationId": "templates_preview_api_v1_documents_templates__id__preview_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocTemplatePreview"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Preview PDF / HTML (PREVIEW watermark)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/{id}/publish": {
+      "post": {
+        "operationId": "templates_publish_api_v1_documents_templates__id__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocTemplatePublish"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocTemplateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Publish (lint errors → 422)",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/{id}/usage": {
+      "get": {
+        "operationId": "templates_usage_api_v1_documents_templates__id__usage_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocTemplateUsage_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Template usage",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/templates/{id}/versions": {
+      "get": {
+        "operationId": "templates_versions_api_v1_documents_templates__id__versions_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_DocTemplateOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Versions of the template family",
+        "tags": [
+          "documents"
+        ]
+      }
+    },
+    "/api/v1/documents/wards": {
+      "get": {
+        "operationId": "documents_wards_api_v1_documents_wards_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_IssuedDocumentOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Documents of my wards",
+        "tags": [
+          "documents"
         ]
       }
     },
@@ -197906,6 +203345,47 @@
         ]
       }
     },
+    "/api/v1/verify/hash": {
+      "post": {
+        "operationId": "verify_hash_api_v1_verify_hash_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_verify_hash_api_v1_verify_hash_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DocHashVerifyOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Verify an uploaded PDF by its SHA-256 (public)",
+        "tags": [
+          "public"
+        ]
+      }
+    },
     "/api/v1/verify/{token}": {
       "get": {
         "operationId": "verify_api_v1_verify__token__get",
@@ -197925,7 +203405,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_Union_DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__"
+                  "$ref": "#/components/schemas/Envelope_Union_DocVerifyOut__DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__"
                 }
               }
             },
@@ -197942,7 +203422,7 @@
             "description": "Validation Error"
           }
         },
-        "summary": "Verify a degree / provisional / grade card / transcript / ID card QR token (public)",
+        "summary": "Verify any issued document's QR token (unified register; public)",
         "tags": [
           "public"
         ]

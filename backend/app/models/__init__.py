@@ -15,6 +15,7 @@ from app.models import (  # noqa: F401
     content,
     curriculum,
     degrees,
+    documents,
     events,
     exams,
     facilities,
@@ -42,6 +43,7 @@ from app.models import (  # noqa: F401
 __all__ = [
     "accounting",
     "calendar",
+    "documents",
     "events",
     "facilities",
     "academic",
