@@ -72,6 +72,7 @@ from app.api.v1.endpoints import (
     help,
     hostel,
     institution,
+    internships,
     inventory,
     jobs,
     leaves,
@@ -82,12 +83,14 @@ from app.api.v1.endpoints import (
     notifications,
     obe_attainment,
     payroll,
+    placement,
     platform,
     platform_institutions,
     post_result,
     privacy,
     programs,
     rbac,
+    recruiter,
     recruitment,
     registration,
     regulations,
@@ -99,6 +102,7 @@ from app.api.v1.endpoints import (
     students,
     surveys,
     timetable,
+    training,
     transport,
     verify,
     workflow,
@@ -206,6 +210,14 @@ api_router.include_router(discipline.router)
 api_router.include_router(surveys.public_router)
 api_router.include_router(surveys.router)
 api_router.include_router(clubs.router)
+# Phase 28: placement (companies / policies / drives / applications / rounds / offers / profiles / blacklist / stats —
+# {placement.core}), internships {placement.internships}, training {placement.training} and the recruiter portal
+# {placement.recruiter_portal}; ``/placement/drives/open`` and ``/placement/offers/me|wards|pending`` are declared before
+# the ``/{id}`` routes of the same prefix
+api_router.include_router(placement.router)
+api_router.include_router(internships.router)
+api_router.include_router(training.router)
+api_router.include_router(recruiter.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

@@ -13013,6 +13013,110 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/internships": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Internships (ScopeTabs) */
+        get: operations["internships_api_v1_internships_get"];
+        put?: never;
+        /** Record an internship */
+        post: operations["create_api_v1_internships_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/internships/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My / ward internships */
+        get: operations["mine_api_v1_internships_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/internships/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Internship */
+        get: operations["get_api_v1_internships__id__get"];
+        /** Update internship */
+        put: operations["update_api_v1_internships__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/internships/{id}/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Evaluate (rubric → marks) */
+        post: operations["evaluate_api_v1_internships__id__evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/internships/{id}/noc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request / issue the NOC letter */
+        post: operations["noc_api_v1_internships__id__noc_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/internships/{id}/ppo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Pre-placement offer from the internship */
+        post: operations["ppo_api_v1_internships__id__ppo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/inventory/asset-audits": {
         parameters: {
             query?: never;
@@ -17128,6 +17232,780 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/placement/applications/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My applications */
+        get: operations["my_applications_api_v1_placement_applications_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/applications/override-eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Override eligibility (reason, audited) */
+        post: operations["override_api_v1_placement_applications_override_eligibility_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/applications/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ward applications */
+        get: operations["ward_applications_api_v1_placement_applications_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/applications/{id}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw (before shortlist) */
+        post: operations["withdraw_api_v1_placement_applications__id__withdraw_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/blacklist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Blacklist */
+        get: operations["blacklist_api_v1_placement_blacklist_get"];
+        put?: never;
+        /** Blacklist a student */
+        post: operations["add_blacklist_api_v1_placement_blacklist_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/blacklist/{enrollment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Lift a blacklist (audited) */
+        delete: operations["remove_blacklist_api_v1_placement_blacklist__enrollment_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/companies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Companies */
+        get: operations["companies_api_v1_placement_companies_get"];
+        put?: never;
+        /** Create company */
+        post: operations["create_company_api_v1_placement_companies_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/companies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Company page (history) */
+        get: operations["company_api_v1_placement_companies__id__get"];
+        /** Update company */
+        put: operations["update_company_api_v1_placement_companies__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/companies/{id}/blacklist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Blacklist / restore a company */
+        post: operations["blacklist_company_api_v1_placement_companies__id__blacklist_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/companies/{id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Company feedback */
+        get: operations["company_feedback_api_v1_placement_companies__id__feedback_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/companies/{id}/recruiters/invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Invite a recruiter user */
+        post: operations["invite_recruiter_api_v1_placement_companies__id__recruiters_invite_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Drives */
+        get: operations["drives_api_v1_placement_drives_get"];
+        put?: never;
+        /** Create drive (draft) */
+        post: operations["create_drive_api_v1_placement_drives_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/open": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Open drives with my eligibility and reasons */
+        get: operations["open_drives_api_v1_placement_drives_open_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Drive */
+        get: operations["drive_api_v1_placement_drives__id__get"];
+        /** Update drive */
+        put: operations["update_drive_api_v1_placement_drives__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/action": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish / close / start / complete / cancel */
+        post: operations["drive_action_api_v1_placement_drives__id__action_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/applications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Drive applications (ScopeTabs) */
+        get: operations["drive_applications_api_v1_placement_drives__id__applications_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/apply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Apply (Idempotency-Key) */
+        post: operations["apply_api_v1_placement_drives__id__apply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/eligibility-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Eligibility preview (counts, reasons) */
+        get: operations["eligibility_preview_api_v1_placement_drives__id__eligibility_preview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/eligible-list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Eligible list (export) */
+        get: operations["eligible_list_api_v1_placement_drives__id__eligible_list_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Company feedback on a drive */
+        post: operations["drive_feedback_api_v1_placement_drives__id__feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/funnel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Funnel by round */
+        get: operations["funnel_api_v1_placement_drives__id__funnel_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/re-evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Re-evaluate eligibility (results republished) */
+        post: operations["re_evaluate_api_v1_placement_drives__id__re_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/rounds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rounds */
+        get: operations["rounds_api_v1_placement_drives__id__rounds_get"];
+        put?: never;
+        /** Add round */
+        post: operations["add_round_api_v1_placement_drives__id__rounds_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/drives/{id}/shortlist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Shortlist (bulk, partial report) */
+        post: operations["shortlist_api_v1_placement_drives__id__shortlist_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Offers (ScopeTabs) */
+        get: operations["offers_api_v1_placement_offers_get"];
+        put?: never;
+        /** Create offer */
+        post: operations["create_offer_api_v1_placement_offers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My offers */
+        get: operations["my_offers_api_v1_placement_offers_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/pending": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Recruiter-submitted offers awaiting confirmation */
+        get: operations["pending_offers_api_v1_placement_offers_pending_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/pending/{application_id}/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Confirm a recruiter-submitted offer */
+        post: operations["confirm_pending_api_v1_placement_offers_pending__application_id__confirm_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ward offers */
+        get: operations["ward_offers_api_v1_placement_offers_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Offer */
+        get: operations["offer_api_v1_placement_offers__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/{id}/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept / decline (policy enforced) */
+        post: operations["offer_decision_api_v1_placement_offers__id__decision_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/offers/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Joined / not joined / revoked */
+        post: operations["offer_status_api_v1_placement_offers__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Placement policies */
+        get: operations["policies_api_v1_placement_policies_get"];
+        put?: never;
+        /** Create policy */
+        post: operations["create_policy_api_v1_placement_policies_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/policies/effective": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Effective policy for a batch / programme */
+        get: operations["effective_policy_api_v1_placement_policies_effective_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/policies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update policy */
+        put: operations["update_policy_api_v1_placement_policies__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/profile/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My placement profile */
+        get: operations["my_profile_api_v1_placement_profile_me_get"];
+        /** Update my profile (academics read-only) */
+        put: operations["update_my_profile_api_v1_placement_profile_me_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/profile/me/opt-out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Opt out / back in */
+        post: operations["opt_out_api_v1_placement_profile_me_opt_out_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/profile/me/resume/render": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Render my resume (PDF via documents) */
+        post: operations["render_resume_api_v1_placement_profile_me_resume_render_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/profiles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Profiles (ScopeTabs) */
+        get: operations["profiles_api_v1_placement_profiles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/profiles/{enrollment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Profile */
+        get: operations["profile_api_v1_placement_profiles__enrollment_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/reports/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Drives / offers / internships / training report (?format=xlsx — job) */
+        get: operations["report_api_v1_placement_reports__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/rounds/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update round */
+        put: operations["update_round_api_v1_placement_rounds__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/rounds/{id}/results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Round results (bulk) */
+        post: operations["round_results_api_v1_placement_rounds__id__results_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Placement statistics (NAAC / NIRF) */
+        get: operations["stats_api_v1_placement_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/placement/stats/nirf-sheet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** NIRF placement sheet (job) */
+        get: operations["nirf_sheet_api_v1_placement_stats_nirf_sheet_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/platform/features/matrix": {
         parameters: {
             query?: never;
@@ -18257,6 +19135,160 @@ export interface paths {
         put?: never;
         /** Reject */
         post: operations["readmission_reject_api_v1_readmissions__id__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My company drives */
+        get: operations["drives_api_v1_recruiter_drives_get"];
+        put?: never;
+        /** Post a drive (draft until published) */
+        post: operations["create_drive_api_v1_recruiter_drives_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Edit a draft drive */
+        put: operations["update_drive_api_v1_recruiter_drives__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives/{id}/applicants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Applicants (consented fields only) */
+        get: operations["applicants_api_v1_recruiter_drives__id__applicants_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives/{id}/feedback": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Feedback */
+        post: operations["feedback_api_v1_recruiter_drives__id__feedback_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives/{id}/offers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit an offer (pending officer confirmation) */
+        post: operations["submit_offer_api_v1_recruiter_drives__id__offers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives/{id}/rounds": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Schedule a round */
+        post: operations["add_round_api_v1_recruiter_drives__id__rounds_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/drives/{id}/shortlist.xlsx": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Shortlist (watermarked, audited) */
+        get: operations["shortlist_xlsx_api_v1_recruiter_drives__id__shortlist_xlsx_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My companies */
+        get: operations["me_api_v1_recruiter_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recruiter/rounds/{id}/results": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload round results */
+        post: operations["round_results_api_v1_recruiter_rounds__id__results_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -22198,6 +23230,92 @@ export interface paths {
         put?: never;
         /** Publish (+ generate sessions) */
         post: operations["publish_api_v1_timetables__id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/training/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My training */
+        get: operations["mine_api_v1_training_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/training/programs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Training programmes */
+        get: operations["programs_api_v1_training_programs_get"];
+        put?: never;
+        /** Create programme */
+        post: operations["create_api_v1_training_programs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/training/programs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update programme */
+        put: operations["update_api_v1_training_programs__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/training/programs/{id}/attendance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Attendance (bulk) */
+        post: operations["attendance_api_v1_training_programs__id__attendance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/training/programs/{id}/scores": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Scores (bulk) */
+        post: operations["scores_api_v1_training_programs__id__scores_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -37871,6 +38989,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[InternshipOut] */
+        Envelope_InternshipOut_: {
+            data?: components["schemas"]["InternshipOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[InvCategoryOut] */
         Envelope_InvCategoryOut_: {
             data?: components["schemas"]["InvCategoryOut"] | null;
@@ -39072,6 +40205,246 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PlcApplicationOut] */
+        Envelope_PlcApplicationOut_: {
+            data?: components["schemas"]["PlcApplicationOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcBlacklistOut] */
+        Envelope_PlcBlacklistOut_: {
+            data?: components["schemas"]["PlcBlacklistOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcBulkReport] */
+        Envelope_PlcBulkReport_: {
+            data?: components["schemas"]["PlcBulkReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcCompanyOut] */
+        Envelope_PlcCompanyOut_: {
+            data?: components["schemas"]["PlcCompanyOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcDriveOut] */
+        Envelope_PlcDriveOut_: {
+            data?: components["schemas"]["PlcDriveOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcEligibilityPreview] */
+        Envelope_PlcEligibilityPreview_: {
+            data?: components["schemas"]["PlcEligibilityPreview"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcFeedbackOut] */
+        Envelope_PlcFeedbackOut_: {
+            data?: components["schemas"]["PlcFeedbackOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcFunnel] */
+        Envelope_PlcFunnel_: {
+            data?: components["schemas"]["PlcFunnel"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcJobOut] */
+        Envelope_PlcJobOut_: {
+            data?: components["schemas"]["PlcJobOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcOfferOut] */
+        Envelope_PlcOfferOut_: {
+            data?: components["schemas"]["PlcOfferOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcPendingOffer] */
+        Envelope_PlcPendingOffer_: {
+            data?: components["schemas"]["PlcPendingOffer"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcPolicyOut] */
+        Envelope_PlcPolicyOut_: {
+            data?: components["schemas"]["PlcPolicyOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcProfileOut] */
+        Envelope_PlcProfileOut_: {
+            data?: components["schemas"]["PlcProfileOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcRecruiterInviteOut] */
+        Envelope_PlcRecruiterInviteOut_: {
+            data?: components["schemas"]["PlcRecruiterInviteOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcRoundOut] */
+        Envelope_PlcRoundOut_: {
+            data?: components["schemas"]["PlcRoundOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PlcStats] */
+        Envelope_PlcStats_: {
+            data?: components["schemas"]["PlcStats"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PoAttainmentResponse] */
         Envelope_PoAttainmentResponse_: {
             data?: components["schemas"]["PoAttainmentResponse"] | null;
@@ -39720,6 +41093,21 @@ export interface components {
         /** Envelope[RecoveryCodesResponse] */
         Envelope_RecoveryCodesResponse_: {
             data?: components["schemas"]["RecoveryCodesResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RecruiterMe] */
+        Envelope_RecruiterMe_: {
+            data?: components["schemas"]["RecruiterMe"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -41100,6 +42488,21 @@ export interface components {
         /** Envelope[TripOut] */
         Envelope_TripOut_: {
             data?: components["schemas"]["TripOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[TrnProgramOut] */
+        Envelope_TrnProgramOut_: {
+            data?: components["schemas"]["TrnProgramOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -43937,6 +45340,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[InternshipOut]] */
+        Envelope_list_InternshipOut__: {
+            /** Data */
+            data?: components["schemas"]["InternshipOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[InvCategoryOut]] */
         Envelope_list_InvCategoryOut__: {
             /** Data */
@@ -44753,6 +46172,166 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[PlcApplicationOut]] */
+        Envelope_list_PlcApplicationOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcApplicationOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcBlacklistOut]] */
+        Envelope_list_PlcBlacklistOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcBlacklistOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcCompanyOut]] */
+        Envelope_list_PlcCompanyOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcCompanyOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcDriveOut]] */
+        Envelope_list_PlcDriveOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcDriveOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcFeedbackOut]] */
+        Envelope_list_PlcFeedbackOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcFeedbackOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcOfferOut]] */
+        Envelope_list_PlcOfferOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcOfferOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcPendingOffer]] */
+        Envelope_list_PlcPendingOffer__: {
+            /** Data */
+            data?: components["schemas"]["PlcPendingOffer"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcPolicyOut]] */
+        Envelope_list_PlcPolicyOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcPolicyOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcProfileOut]] */
+        Envelope_list_PlcProfileOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcProfileOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PlcRoundOut]] */
+        Envelope_list_PlcRoundOut__: {
+            /** Data */
+            data?: components["schemas"]["PlcRoundOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[PoResponse]] */
         Envelope_list_PoResponse__: {
             /** Data */
@@ -45061,6 +46640,22 @@ export interface components {
         Envelope_list_ReconciliationOut__: {
             /** Data */
             data?: components["schemas"]["ReconciliationOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RecruiterApplicantOut]] */
+        Envelope_list_RecruiterApplicantOut__: {
+            /** Data */
+            data?: components["schemas"]["RecruiterApplicantOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -46101,6 +47696,38 @@ export interface components {
         Envelope_list_TripOut__: {
             /** Data */
             data?: components["schemas"]["TripOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[TrnMyRow]] */
+        Envelope_list_TrnMyRow__: {
+            /** Data */
+            data?: components["schemas"]["TrnMyRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[TrnProgramOut]] */
+        Envelope_list_TrnProgramOut__: {
+            /** Data */
+            data?: components["schemas"]["TrnProgramOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -52072,6 +53699,132 @@ export interface components {
             /** Valid To */
             valid_to?: string | null;
         };
+        /** InternshipEvaluation */
+        InternshipEvaluation: {
+            /** Certificate Url */
+            certificate_url?: string | null;
+            /** Marks */
+            marks: number | string;
+            /**
+             * Max Marks
+             * @default 100
+             */
+            max_marks: number | string;
+            /** Remarks */
+            remarks?: string | null;
+            /** Rubric Scores */
+            rubric_scores?: {
+                [key: string]: number;
+            };
+        };
+        /** InternshipIn */
+        InternshipIn: {
+            /** Certificate Url */
+            certificate_url?: string | null;
+            /** Company Id */
+            company_id?: string | null;
+            /** Company Name */
+            company_name?: string | null;
+            /** Credits Course Id */
+            credits_course_id?: string | null;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /** Mentor */
+            mentor?: string | null;
+            /** Role */
+            role?: string | null;
+            /**
+             * Status
+             * @default ongoing
+             * @enum {string}
+             */
+            status: "planned" | "ongoing" | "completed" | "cancelled";
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** To On */
+            to_on?: string | null;
+        };
+        /** InternshipNocRequest */
+        InternshipNocRequest: {
+            /** Addressed To */
+            addressed_to?: string | null;
+            /** Purpose */
+            purpose?: string | null;
+        };
+        /** InternshipOut */
+        InternshipOut: {
+            /** Certificate Url */
+            certificate_url?: string | null;
+            /** Company Id */
+            company_id?: string | null;
+            /** Company Name */
+            company_name?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Credits Course Id */
+            credits_course_id?: string | null;
+            /** Department Code */
+            department_code?: string | null;
+            /** Evaluation */
+            evaluation?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Mentor */
+            mentor?: string | null;
+            /** Noc Document Id */
+            noc_document_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Role */
+            role?: string | null;
+            /** Status */
+            status: string;
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** To On */
+            to_on?: string | null;
+            /** Weeks */
+            weeks?: number | null;
+        };
+        /** InternshipUpdate */
+        InternshipUpdate: {
+            /** Certificate Url */
+            certificate_url?: string | null;
+            /** Credits Course Id */
+            credits_course_id?: string | null;
+            /** Mentor */
+            mentor?: string | null;
+            /** Role */
+            role?: string | null;
+            /** Status */
+            status?: ("planned" | "ongoing" | "completed" | "cancelled") | null;
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** To On */
+            to_on?: string | null;
+        };
         /** InvCategoryIn */
         InvCategoryIn: {
             /**
@@ -56950,6 +58703,1099 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** PlcApplicationOut */
+        PlcApplicationOut: {
+            /** Applied At */
+            applied_at?: string | null;
+            /** Company Name */
+            company_name?: string | null;
+            /** Department Code */
+            department_code?: string | null;
+            /**
+             * Drive Id
+             * Format: uuid
+             */
+            drive_id: string;
+            /** Drive Title */
+            drive_title?: string | null;
+            /** Eligibility Snapshot */
+            eligibility_snapshot?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Eligible
+             * @default true
+             */
+            is_eligible: boolean;
+            /** Offer */
+            offer?: {
+                [key: string]: unknown;
+            } | null;
+            /** Override Reason */
+            override_reason?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Resume Url */
+            resume_url?: string | null;
+            /** Rounds */
+            rounds?: {
+                [key: string]: unknown;
+            }[];
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+        };
+        /** PlcApplyRequest */
+        PlcApplyRequest: {
+            /** Resume Url */
+            resume_url?: string | null;
+        };
+        /** PlcBlacklistOut */
+        PlcBlacklistOut: {
+            /** At */
+            at?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Source */
+            source?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** Until */
+            until?: string | null;
+        };
+        /** PlcBlacklistRequest */
+        PlcBlacklistRequest: {
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /**
+             * Open Discipline Case
+             * @default false
+             */
+            open_discipline_case: boolean;
+            /** Reason */
+            reason: string;
+            /** Until */
+            until?: string | null;
+        };
+        /** PlcBulkReport */
+        PlcBulkReport: {
+            /** Blacklisted */
+            blacklisted?: string[];
+            /** Failed */
+            failed?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Processed
+             * @default 0
+             */
+            processed: number;
+            /**
+             * Succeeded
+             * @default 0
+             */
+            succeeded: number;
+        };
+        /** PlcCompanyBlacklist */
+        PlcCompanyBlacklist: {
+            /**
+             * Blacklisted
+             * @default true
+             */
+            blacklisted: boolean;
+            /** Reason */
+            reason: string;
+        };
+        /** PlcCompanyIn */
+        PlcCompanyIn: {
+            /** Contacts */
+            contacts?: components["schemas"]["PlcContact"][];
+            /** Hq City */
+            hq_city?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Mou Id */
+            mou_id?: string | null;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes?: string | null;
+            /** Sector */
+            sector?: string | null;
+            /** Tier */
+            tier?: ("dream" | "super_dream" | "core" | "mass") | null;
+            /** Website */
+            website?: string | null;
+        };
+        /** PlcCompanyOut */
+        PlcCompanyOut: {
+            /** Contacts */
+            contacts?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Drives
+             * @default 0
+             */
+            drives: number;
+            /** Feedback Avg */
+            feedback_avg?: number | null;
+            /**
+             * Hires
+             * @default 0
+             */
+            hires: number;
+            /** History */
+            history?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Hq City */
+            hq_city?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /**
+             * Is Blacklisted
+             * @default false
+             */
+            is_blacklisted: boolean;
+            /** Logo Url */
+            logo_url?: string | null;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes?: string | null;
+            /** Recruiter User Ids */
+            recruiter_user_ids?: string[];
+            /** Sector */
+            sector?: string | null;
+            /** Tier */
+            tier?: string | null;
+            /** Website */
+            website?: string | null;
+        };
+        /** PlcContact */
+        PlcContact: {
+            /** Designation */
+            designation?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name: string;
+            /** Phone */
+            phone?: string | null;
+        };
+        /** PlcDriveAction */
+        PlcDriveAction: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "publish" | "close" | "start" | "complete" | "cancel";
+            /** Reason */
+            reason?: string | null;
+        };
+        /** PlcDriveCreate */
+        PlcDriveCreate: {
+            /** Bond */
+            bond?: {
+                [key: string]: unknown;
+            } | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Company Id
+             * Format: uuid
+             */
+            company_id: string;
+            /** Ctc Max Paise */
+            ctc_max_paise?: number | null;
+            /** Ctc Min Paise */
+            ctc_min_paise?: number | null;
+            /** Drive On */
+            drive_on?: string | null;
+            eligibility_rules?: components["schemas"]["PlcEligibilityRules"];
+            /** Jd Url */
+            jd_url?: string | null;
+            /** Job Role */
+            job_role?: string | null;
+            /**
+             * Job Type
+             * @default full_time
+             * @enum {string}
+             */
+            job_type: "full_time" | "internship" | "intern_ppo" | "part_time";
+            /** Locations */
+            locations?: string[];
+            /**
+             * Mode
+             * @default on_campus
+             * @enum {string}
+             */
+            mode: "on_campus" | "off_campus" | "virtual" | "pooled";
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Registration Deadline */
+            registration_deadline?: string | null;
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** Title */
+            title: string;
+        };
+        /** PlcDriveOut */
+        PlcDriveOut: {
+            /**
+             * Applications
+             * @default 0
+             */
+            applications: number;
+            /** Bond */
+            bond?: {
+                [key: string]: unknown;
+            } | null;
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Company Id
+             * Format: uuid
+             */
+            company_id: string;
+            /** Company Name */
+            company_name?: string | null;
+            /** Company Tier */
+            company_tier?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Ctc Max Paise */
+            ctc_max_paise?: number | null;
+            /** Ctc Min Paise */
+            ctc_min_paise?: number | null;
+            /** Drive On */
+            drive_on?: string | null;
+            /** Eligibility Rules */
+            eligibility_rules?: {
+                [key: string]: unknown;
+            };
+            /** Funnel */
+            funnel?: {
+                [key: string]: unknown;
+            }[] | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Jd Url */
+            jd_url?: string | null;
+            /** Job Role */
+            job_role?: string | null;
+            /** Job Type */
+            job_type: string;
+            /** Locations */
+            locations?: string[];
+            /** Mode */
+            mode: string;
+            /** My Application Id */
+            my_application_id?: string | null;
+            /** My Application Status */
+            my_application_status?: string | null;
+            my_eligibility?: components["schemas"]["PlcEligibilitySnapshot"] | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Registration Deadline */
+            registration_deadline?: string | null;
+            /** Status */
+            status: string;
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** Title */
+            title: string;
+        };
+        /** PlcDriveUpdate */
+        PlcDriveUpdate: {
+            /** Bond */
+            bond?: {
+                [key: string]: unknown;
+            } | null;
+            /** Ctc Max Paise */
+            ctc_max_paise?: number | null;
+            /** Ctc Min Paise */
+            ctc_min_paise?: number | null;
+            /** Drive On */
+            drive_on?: string | null;
+            eligibility_rules?: components["schemas"]["PlcEligibilityRules"] | null;
+            /** Jd Url */
+            jd_url?: string | null;
+            /** Job Role */
+            job_role?: string | null;
+            /** Job Type */
+            job_type?: ("full_time" | "internship" | "intern_ppo" | "part_time") | null;
+            /** Locations */
+            locations?: string[] | null;
+            /** Mode */
+            mode?: ("on_campus" | "off_campus" | "virtual" | "pooled") | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Registration Deadline */
+            registration_deadline?: string | null;
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** Title */
+            title?: string | null;
+        };
+        /** PlcEligibilityPreview */
+        PlcEligibilityPreview: {
+            /**
+             * Eligible Count
+             * @default 0
+             */
+            eligible_count: number;
+            /** Ineligible By Reason */
+            ineligible_by_reason?: {
+                [key: string]: number;
+            };
+            /** Sample */
+            sample?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+        };
+        /** PlcEligibilityRules */
+        PlcEligibilityRules: {
+            /** Allowed If Already Placed */
+            allowed_if_already_placed?: boolean | null;
+            /** Batches */
+            batches?: string[];
+            /** Colleges */
+            colleges?: string[];
+            /** Max Active Backlogs */
+            max_active_backlogs?: number | null;
+            /** Max Gap Years */
+            max_gap_years?: number | null;
+            /** Max History Backlogs */
+            max_history_backlogs?: number | null;
+            /** Min 10Th Pct */
+            min_10th_pct?: number | null;
+            /** Min 12Th Pct */
+            min_12th_pct?: number | null;
+            /** Min Attendance Pct */
+            min_attendance_pct?: number | null;
+            /** Min Cgpa */
+            min_cgpa?: number | null;
+            /** Programs */
+            programs?: string[];
+            /** Skills Any */
+            skills_any?: string[];
+        };
+        /** PlcEligibilitySnapshot */
+        PlcEligibilitySnapshot: {
+            /**
+             * Active Backlogs
+             * @default 0
+             */
+            active_backlogs: number;
+            /** Attendance Pct */
+            attendance_pct?: number | null;
+            /** Cgpa */
+            cgpa?: number | null;
+            /** Evaluated At */
+            evaluated_at?: string | null;
+            /** Gap Years */
+            gap_years?: number | null;
+            /**
+             * History Backlogs
+             * @default 0
+             */
+            history_backlogs: number;
+            /**
+             * Is Eligible
+             * @default false
+             */
+            is_eligible: boolean;
+            /** Pct 10 */
+            pct_10?: number | null;
+            /** Pct 12 */
+            pct_12?: number | null;
+            /**
+             * Pct Verified
+             * @default true
+             */
+            pct_verified: boolean;
+            /**
+             * Placed Status
+             * @default unplaced
+             */
+            placed_status: string;
+            /** Reasons */
+            reasons?: string[];
+        };
+        /** PlcFeedbackIn */
+        PlcFeedbackIn: {
+            /** Ratings */
+            ratings?: {
+                [key: string]: number;
+            };
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** PlcFeedbackOut */
+        PlcFeedbackOut: {
+            /**
+             * Drive Id
+             * Format: uuid
+             */
+            drive_id: string;
+            /** Drive Title */
+            drive_title?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Ratings */
+            ratings?: {
+                [key: string]: unknown;
+            };
+            /** Remarks */
+            remarks?: string | null;
+            /** Submitted At */
+            submitted_at?: string | null;
+            /** Submitted By */
+            submitted_by?: string | null;
+        };
+        /** PlcFunnel */
+        PlcFunnel: {
+            /**
+             * Accepted
+             * @default 0
+             */
+            accepted: number;
+            /**
+             * Applied
+             * @default 0
+             */
+            applied: number;
+            /**
+             * Drive Id
+             * Format: uuid
+             */
+            drive_id: string;
+            /**
+             * Offers
+             * @default 0
+             */
+            offers: number;
+            /** Rounds */
+            rounds?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Selected
+             * @default 0
+             */
+            selected: number;
+            /**
+             * Shortlisted
+             * @default 0
+             */
+            shortlisted: number;
+        };
+        /** PlcHigherStudies */
+        PlcHigherStudies: {
+            /** Country */
+            country?: string | null;
+            /** Exam */
+            exam?: string | null;
+            /** Institution */
+            institution?: string | null;
+            /** Program */
+            program?: string | null;
+            /** Score */
+            score?: string | null;
+        };
+        /** PlcJobOut */
+        PlcJobOut: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+            /**
+             * Status
+             * @default queued
+             */
+            status: string;
+        };
+        /** PlcOfferCreate */
+        PlcOfferCreate: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /** Ctc Breakup */
+            ctc_breakup?: {
+                [key: string]: unknown;
+            } | null;
+            /** Ctc Paise */
+            ctc_paise: number;
+            /**
+             * Is Ppo
+             * @default false
+             */
+            is_ppo: boolean;
+            /** Joining On */
+            joining_on?: string | null;
+            /** Location */
+            location?: string | null;
+            /** Offer Letter Url */
+            offer_letter_url?: string | null;
+            /** Offered On */
+            offered_on?: string | null;
+            /** Role */
+            role?: string | null;
+        };
+        /** PlcOfferDecision */
+        PlcOfferDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "accept" | "decline";
+            /** Reason */
+            reason?: string | null;
+        };
+        /** PlcOfferOut */
+        PlcOfferOut: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /**
+             * Company Id
+             * Format: uuid
+             */
+            company_id: string;
+            /** Company Name */
+            company_name?: string | null;
+            /** Company Tier */
+            company_tier?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Ctc Breakup */
+            ctc_breakup?: {
+                [key: string]: unknown;
+            } | null;
+            /** Ctc Paise */
+            ctc_paise: number;
+            /** Document Id */
+            document_id?: string | null;
+            /** Drive Id */
+            drive_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Dream
+             * @default false
+             */
+            is_dream: boolean;
+            /**
+             * Is Ppo
+             * @default false
+             */
+            is_ppo: boolean;
+            /** Joining On */
+            joining_on?: string | null;
+            /** Location */
+            location?: string | null;
+            /** Offer Letter Url */
+            offer_letter_url?: string | null;
+            /** Offered On */
+            offered_on?: string | null;
+            /** Policy Warning */
+            policy_warning?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Role */
+            role?: string | null;
+            /** Status */
+            status: string;
+            /** Student Name */
+            student_name?: string | null;
+            /** Student Program Enrollment Id */
+            student_program_enrollment_id?: string | null;
+        };
+        /** PlcOfferStatusUpdate */
+        PlcOfferStatusUpdate: {
+            /** Reason */
+            reason?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "joined" | "not_joined" | "revoked";
+        };
+        /** PlcOptOut */
+        PlcOptOut: {
+            higher_studies?: components["schemas"]["PlcHigherStudies"] | null;
+            /**
+             * Opt Out
+             * @default true
+             */
+            opt_out: boolean;
+            /** Reason */
+            reason?: ("higher_studies" | "entrepreneurship" | "family_business" | "govt_exams" | "other") | null;
+        };
+        /** PlcOverrideEligibility */
+        PlcOverrideEligibility: {
+            /** Application Id */
+            application_id?: string | null;
+            /** Drive Id */
+            drive_id?: string | null;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Reason */
+            reason: string;
+        };
+        /** PlcPendingOffer */
+        PlcPendingOffer: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /**
+             * Drive Id
+             * Format: uuid
+             */
+            drive_id: string;
+            /** Offer */
+            offer?: {
+                [key: string]: unknown;
+            };
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Student Name */
+            student_name?: string | null;
+            /** Submitted At */
+            submitted_at?: string | null;
+            /** Submitted By */
+            submitted_by?: string | null;
+        };
+        /** PlcPolicyIn */
+        PlcPolicyIn: {
+            /**
+             * Allow Upgrade If Dream
+             * @default true
+             */
+            allow_upgrade_if_dream: boolean;
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Dream Ctc Threshold Paise */
+            dream_ctc_threshold_paise?: number | null;
+            /**
+             * Max Offers
+             * @default 1
+             */
+            max_offers: number;
+            /**
+             * Opt Out Allowed
+             * @default true
+             */
+            opt_out_allowed: boolean;
+            /** Program Id */
+            program_id?: string | null;
+            /** Rules */
+            rules?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** PlcPolicyOut */
+        PlcPolicyOut: {
+            /**
+             * Allow Upgrade If Dream
+             * @default true
+             */
+            allow_upgrade_if_dream: boolean;
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Dream Ctc Threshold Paise */
+            dream_ctc_threshold_paise?: number | null;
+            /** Id */
+            id?: string | null;
+            /**
+             * Max Offers
+             * @default 1
+             */
+            max_offers: number;
+            /**
+             * Opt Out Allowed
+             * @default true
+             */
+            opt_out_allowed: boolean;
+            /** Program Id */
+            program_id?: string | null;
+            /** Rules */
+            rules?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Source
+             * @default policy
+             */
+            source: string;
+        };
+        /** PlcProfileIn */
+        PlcProfileIn: {
+            /** Consent Share Profile */
+            consent_share_profile?: boolean | null;
+            /** Pct 10 */
+            pct_10?: number | null;
+            /** Pct 12 */
+            pct_12?: number | null;
+            /** Resume Json */
+            resume_json?: {
+                [key: string]: unknown;
+            } | null;
+            /** Resume Url */
+            resume_url?: string | null;
+            /** Skills */
+            skills?: string[] | null;
+            /** Year 12 */
+            year_12?: number | null;
+        };
+        /** PlcProfileOut */
+        PlcProfileOut: {
+            /** Academics */
+            academics?: {
+                [key: string]: unknown;
+            };
+            /** Achievements */
+            achievements?: {
+                [key: string]: unknown;
+            }[];
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Blacklist Reason */
+            blacklist_reason?: string | null;
+            /** Blacklist Until */
+            blacklist_until?: string | null;
+            /**
+             * Completeness
+             * @default 0
+             */
+            completeness: number;
+            /**
+             * Consent Share Profile
+             * @default true
+             */
+            consent_share_profile: boolean;
+            /** Department Code */
+            department_code?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Higher Studies */
+            higher_studies?: {
+                [key: string]: unknown;
+            } | null;
+            /** Id */
+            id?: string | null;
+            /** Internships */
+            internships?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Is Blacklisted
+             * @default false
+             */
+            is_blacklisted: boolean;
+            /**
+             * Is Opted Out
+             * @default false
+             */
+            is_opted_out: boolean;
+            /** Opt Out Reason */
+            opt_out_reason?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /**
+             * Placement Status
+             * @default unplaced
+             */
+            placement_status: string;
+            /** Program Id */
+            program_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Resume Json */
+            resume_json?: {
+                [key: string]: unknown;
+            } | null;
+            /** Resume Url */
+            resume_url?: string | null;
+            /** Skills */
+            skills?: string[];
+            /** Student Name */
+            student_name?: string | null;
+            /**
+             * Student Program Enrollment Id
+             * Format: uuid
+             */
+            student_program_enrollment_id: string;
+            /** Training */
+            training?: {
+                [key: string]: unknown;
+            };
+        };
+        /** PlcRecruiterInvite */
+        PlcRecruiterInvite: {
+            /** Email */
+            email: string;
+            /** Name */
+            name: string;
+            /** Phone */
+            phone?: string | null;
+        };
+        /** PlcRecruiterInviteOut */
+        PlcRecruiterInviteOut: {
+            /**
+             * Company Id
+             * Format: uuid
+             */
+            company_id: string;
+            /** Created */
+            created: boolean;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+            /** Username */
+            username: string;
+        };
+        /** PlcResumeRender */
+        PlcResumeRender: {
+            /**
+             * Template Key
+             * @default resume_classic
+             * @enum {string}
+             */
+            template_key: "resume_classic" | "resume_modern" | "resume_compact";
+        };
+        /** PlcRoundIn */
+        PlcRoundIn: {
+            /** Name */
+            name: string;
+            /** Round No */
+            round_no: number;
+            /**
+             * Round Type
+             * @enum {string}
+             */
+            round_type: "pre_placement_talk" | "aptitude" | "coding" | "gd" | "technical" | "hr" | "final";
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Venue */
+            venue?: string | null;
+        };
+        /** PlcRoundOut */
+        PlcRoundOut: {
+            /**
+             * Drive Id
+             * Format: uuid
+             */
+            drive_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Results */
+            results?: {
+                [key: string]: number;
+            };
+            /** Round No */
+            round_no: number;
+            /** Round Type */
+            round_type: string;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Venue */
+            venue?: string | null;
+        };
+        /** PlcRoundResultRow */
+        PlcRoundResultRow: {
+            /** Application Id */
+            application_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /** Score */
+            score?: number | string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "cleared" | "not_cleared" | "absent" | "pending";
+        };
+        /** PlcRoundResultsBulk */
+        PlcRoundResultsBulk: {
+            /**
+             * Final
+             * @default false
+             */
+            final: boolean;
+            /** Rows */
+            rows: components["schemas"]["PlcRoundResultRow"][];
+        };
+        /** PlcRoundUpdate */
+        PlcRoundUpdate: {
+            /** Name */
+            name?: string | null;
+            /** Round Type */
+            round_type?: ("pre_placement_talk" | "aptitude" | "coding" | "gd" | "technical" | "hr" | "final") | null;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Venue */
+            venue?: string | null;
+        };
+        /** PlcShortlistBulk */
+        PlcShortlistBulk: {
+            /** Rows */
+            rows: components["schemas"]["PlcShortlistRow"][];
+        };
+        /** PlcShortlistRow */
+        PlcShortlistRow: {
+            /** Application Id */
+            application_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+        };
+        /** PlcStats */
+        PlcStats: {
+            /** Avg Ctc Paise */
+            avg_ctc_paise?: number | null;
+            /** Batch Id */
+            batch_id?: string | null;
+            /** By Company */
+            by_company?: {
+                [key: string]: unknown;
+            }[];
+            /** By Program */
+            by_program?: {
+                [key: string]: unknown;
+            }[];
+            /** By Tier */
+            by_tier?: {
+                [key: string]: unknown;
+            }[];
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Eligible
+             * @default 0
+             */
+            eligible: number;
+            /**
+             * Higher Studies
+             * @default 0
+             */
+            higher_studies: number;
+            /**
+             * Higher Studies Pct
+             * @default 0
+             */
+            higher_studies_pct: number;
+            /** Highest Ctc Paise */
+            highest_ctc_paise?: number | null;
+            /**
+             * Internships Pct
+             * @default 0
+             */
+            internships_pct: number;
+            /** Median Ctc Paise */
+            median_ctc_paise?: number | null;
+            /**
+             * Multiple
+             * @default 0
+             */
+            multiple: number;
+            /** Nirf Rows */
+            nirf_rows?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Offers
+             * @default 0
+             */
+            offers: number;
+            /**
+             * Opted Out
+             * @default 0
+             */
+            opted_out: number;
+            /**
+             * Placed
+             * @default 0
+             */
+            placed: number;
+            /**
+             * Placed Pct
+             * @default 0
+             */
+            placed_pct: number;
+            /**
+             * Ppo
+             * @default 0
+             */
+            ppo: number;
+            /** Program Id */
+            program_id?: string | null;
+        };
         /** PoAction */
         PoAction: {
             /** Email */
@@ -59290,6 +62136,98 @@ export interface components {
         RecoveryCodesResponse: {
             /** Recovery Codes */
             recovery_codes: string[];
+        };
+        /** RecruiterApplicantOut */
+        RecruiterApplicantOut: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /** Fields */
+            fields?: {
+                [key: string]: unknown;
+            };
+            /** Rounds */
+            rounds?: {
+                [key: string]: unknown;
+            }[];
+            /** Status */
+            status: string;
+        };
+        /** RecruiterDriveIn */
+        RecruiterDriveIn: {
+            /** Bond */
+            bond?: {
+                [key: string]: unknown;
+            } | null;
+            /** Company Id */
+            company_id?: string | null;
+            /** Ctc Max Paise */
+            ctc_max_paise?: number | null;
+            /** Ctc Min Paise */
+            ctc_min_paise?: number | null;
+            /** Drive On */
+            drive_on?: string | null;
+            eligibility_rules?: components["schemas"]["PlcEligibilityRules"];
+            /** Jd Url */
+            jd_url?: string | null;
+            /** Job Role */
+            job_role?: string | null;
+            /**
+             * Job Type
+             * @default full_time
+             * @enum {string}
+             */
+            job_type: "full_time" | "internship" | "intern_ppo" | "part_time";
+            /** Locations */
+            locations?: string[];
+            /**
+             * Mode
+             * @default on_campus
+             * @enum {string}
+             */
+            mode: "on_campus" | "off_campus" | "virtual" | "pooled";
+            /** Registration Deadline */
+            registration_deadline?: string | null;
+            /** Stipend Paise */
+            stipend_paise?: number | null;
+            /** Title */
+            title: string;
+        };
+        /** RecruiterMe */
+        RecruiterMe: {
+            /** Companies */
+            companies?: components["schemas"]["PlcCompanyOut"][];
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /** RecruiterOfferIn */
+        RecruiterOfferIn: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /** Ctc Breakup */
+            ctc_breakup?: {
+                [key: string]: unknown;
+            } | null;
+            /** Ctc Paise */
+            ctc_paise: number;
+            /** Joining On */
+            joining_on?: string | null;
+            /** Location */
+            location?: string | null;
+            /** Offer Letter Url */
+            offer_letter_url?: string | null;
+            /** Offered On */
+            offered_on?: string | null;
+            /** Role */
+            role?: string | null;
         };
         /** ReentryRequest */
         ReentryRequest: {
@@ -66482,6 +69420,145 @@ export interface components {
             odometer?: number | null;
             /** Vehicle Id */
             vehicle_id?: string | null;
+        };
+        /** TrnAttendanceBulk */
+        TrnAttendanceBulk: {
+            /** Rows */
+            rows: components["schemas"]["TrnAttendanceRow"][];
+        };
+        /** TrnAttendanceRow */
+        TrnAttendanceRow: {
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Sessions Attended */
+            sessions_attended: number;
+        };
+        /** TrnMyRow */
+        TrnMyRow: {
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /** Score */
+            score?: number | null;
+            /** Sessions */
+            sessions?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Sessions Attended
+             * @default 0
+             */
+            sessions_attended: number;
+            /** Title */
+            title: string;
+            /** To On */
+            to_on?: string | null;
+            /** Training Type */
+            training_type: string;
+        };
+        /** TrnProgramIn */
+        TrnProgramIn: {
+            /** Batches */
+            batches?: string[];
+            /** From On */
+            from_on?: string | null;
+            /** Sessions */
+            sessions?: components["schemas"]["TrnSession"][];
+            /** Title */
+            title: string;
+            /** To On */
+            to_on?: string | null;
+            /** Trainer */
+            trainer?: string | null;
+            /**
+             * Training Type
+             * @enum {string}
+             */
+            training_type: "aptitude" | "soft_skills" | "technical" | "mock_interview";
+            /** Vendor Cost Paise */
+            vendor_cost_paise?: number | null;
+        };
+        /** TrnProgramOut */
+        TrnProgramOut: {
+            /** Avg Score */
+            avg_score?: number | null;
+            /** Batches */
+            batches?: string[];
+            /** Created At */
+            created_at?: string | null;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Participants
+             * @default 0
+             */
+            participants: number;
+            /** Sessions */
+            sessions?: {
+                [key: string]: unknown;
+            }[];
+            /** Title */
+            title: string;
+            /** To On */
+            to_on?: string | null;
+            /** Trainer */
+            trainer?: string | null;
+            /** Training Type */
+            training_type: string;
+            /** Vendor Cost Paise */
+            vendor_cost_paise?: number | null;
+        };
+        /** TrnProgramUpdate */
+        TrnProgramUpdate: {
+            /** Batches */
+            batches?: string[] | null;
+            /** From On */
+            from_on?: string | null;
+            /** Sessions */
+            sessions?: components["schemas"]["TrnSession"][] | null;
+            /** Title */
+            title?: string | null;
+            /** To On */
+            to_on?: string | null;
+            /** Trainer */
+            trainer?: string | null;
+            /** Vendor Cost Paise */
+            vendor_cost_paise?: number | null;
+        };
+        /** TrnScoreRow */
+        TrnScoreRow: {
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Score */
+            score: number | string;
+        };
+        /** TrnScoresBulk */
+        TrnScoresBulk: {
+            /** Rows */
+            rows: components["schemas"]["TrnScoreRow"][];
+        };
+        /** TrnSession */
+        TrnSession: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** Topic */
+            topic: string;
         };
         /** UndertakingAccept */
         UndertakingAccept: {
@@ -97261,6 +100338,263 @@ export interface operations {
             };
         };
     };
+    internships_api_v1_internships_get: {
+        parameters: {
+            query?: {
+                department_id?: string | null;
+                status?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InternshipOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_api_v1_internships_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InternshipIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InternshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mine_api_v1_internships_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InternshipOut__"];
+                };
+            };
+        };
+    };
+    get_api_v1_internships__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InternshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_api_v1_internships__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InternshipUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InternshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_api_v1_internships__id__evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InternshipEvaluation"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InternshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    noc_api_v1_internships__id__noc_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InternshipNocRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InternshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ppo_api_v1_internships__id__ppo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcOfferCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcOfferOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     audit_cycles_api_v1_inventory_asset_audits_get: {
         parameters: {
             query?: never;
@@ -106466,6 +109800,1678 @@ export interface operations {
             };
         };
     };
+    my_applications_api_v1_placement_applications_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcApplicationOut__"];
+                };
+            };
+        };
+    };
+    override_api_v1_placement_applications_override_eligibility_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcOverrideEligibility"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ward_applications_api_v1_placement_applications_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcApplicationOut__"];
+                };
+            };
+        };
+    };
+    withdraw_api_v1_placement_applications__id__withdraw_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    blacklist_api_v1_placement_blacklist_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcBlacklistOut__"];
+                };
+            };
+        };
+    };
+    add_blacklist_api_v1_placement_blacklist_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcBlacklistRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBlacklistOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_blacklist_api_v1_placement_blacklist__enrollment_id__delete: {
+        parameters: {
+            query?: {
+                reason?: string | null;
+            };
+            header?: never;
+            path: {
+                enrollment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBlacklistOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    companies_api_v1_placement_companies_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                tier?: string | null;
+                blacklisted?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcCompanyOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_company_api_v1_placement_companies_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcCompanyIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcCompanyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    company_api_v1_placement_companies__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcCompanyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_company_api_v1_placement_companies__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcCompanyIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcCompanyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    blacklist_company_api_v1_placement_companies__id__blacklist_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcCompanyBlacklist"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcCompanyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    company_feedback_api_v1_placement_companies__id__feedback_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcFeedbackOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    invite_recruiter_api_v1_placement_companies__id__recruiters_invite_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcRecruiterInvite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcRecruiterInviteOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    drives_api_v1_placement_drives_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                company_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcDriveOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_drive_api_v1_placement_drives_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcDriveCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcDriveOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_drives_api_v1_placement_drives_open_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcDriveOut__"];
+                };
+            };
+        };
+    };
+    drive_api_v1_placement_drives__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcDriveOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_drive_api_v1_placement_drives__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcDriveUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcDriveOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    drive_action_api_v1_placement_drives__id__action_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcDriveAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcDriveOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    drive_applications_api_v1_placement_drives__id__applications_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                round?: string | null;
+                department_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcApplicationOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    apply_api_v1_placement_drives__id__apply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcApplyRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eligibility_preview_api_v1_placement_drives__id__eligibility_preview_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcEligibilityPreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eligible_list_api_v1_placement_drives__id__eligible_list_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    drive_feedback_api_v1_placement_drives__id__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcFeedbackIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcFeedbackOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    funnel_api_v1_placement_drives__id__funnel_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcFunnel_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    re_evaluate_api_v1_placement_drives__id__re_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBulkReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rounds_api_v1_placement_drives__id__rounds_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcRoundOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_round_api_v1_placement_drives__id__rounds_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcRoundIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcRoundOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    shortlist_api_v1_placement_drives__id__shortlist_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcShortlistBulk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBulkReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    offers_api_v1_placement_offers_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                drive_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcOfferOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_offer_api_v1_placement_offers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcOfferCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcOfferOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_offers_api_v1_placement_offers_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcOfferOut__"];
+                };
+            };
+        };
+    };
+    pending_offers_api_v1_placement_offers_pending_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcPendingOffer__"];
+                };
+            };
+        };
+    };
+    confirm_pending_api_v1_placement_offers_pending__application_id__confirm_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                application_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcOfferOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ward_offers_api_v1_placement_offers_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcOfferOut__"];
+                };
+            };
+        };
+    };
+    offer_api_v1_placement_offers__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcOfferOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    offer_decision_api_v1_placement_offers__id__decision_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcOfferDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcOfferOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    offer_status_api_v1_placement_offers__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcOfferStatusUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcOfferOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    policies_api_v1_placement_policies_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcPolicyOut__"];
+                };
+            };
+        };
+    };
+    create_policy_api_v1_placement_policies_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcPolicyIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcPolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    effective_policy_api_v1_placement_policies_effective_get: {
+        parameters: {
+            query?: {
+                batch_id?: string | null;
+                program_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcPolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_policy_api_v1_placement_policies__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcPolicyIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcPolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_profile_api_v1_placement_profile_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcProfileOut_"];
+                };
+            };
+        };
+    };
+    update_my_profile_api_v1_placement_profile_me_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcProfileIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcProfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    opt_out_api_v1_placement_profile_me_opt_out_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcOptOut"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcProfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    render_resume_api_v1_placement_profile_me_resume_render_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcResumeRender"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    profiles_api_v1_placement_profiles_get: {
+        parameters: {
+            query?: {
+                batch_id?: string | null;
+                status?: string | null;
+                department_id?: string | null;
+                scope?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcProfileOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    profile_api_v1_placement_profiles__enrollment_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcProfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    report_api_v1_placement_reports__kind__get: {
+        parameters: {
+            query?: {
+                format?: string;
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_round_api_v1_placement_rounds__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcRoundUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcRoundOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    round_results_api_v1_placement_rounds__id__results_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcRoundResultsBulk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBulkReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stats_api_v1_placement_stats_get: {
+        parameters: {
+            query?: {
+                batch_id?: string | null;
+                program_id?: string | null;
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcStats_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    nirf_sheet_api_v1_placement_stats_nirf_sheet_get: {
+        parameters: {
+            query?: {
+                year?: number | null;
+                batch_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     feature_matrix_api_v1_platform_features_matrix_get: {
         parameters: {
             query?: never;
@@ -109032,6 +114038,316 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_ReadmissionResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    drives_api_v1_recruiter_drives_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PlcDriveOut__"];
+                };
+            };
+        };
+    };
+    create_drive_api_v1_recruiter_drives_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecruiterDriveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcDriveOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_drive_api_v1_recruiter_drives__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecruiterDriveIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcDriveOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    applicants_api_v1_recruiter_drives__id__applicants_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RecruiterApplicantOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    feedback_api_v1_recruiter_drives__id__feedback_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcFeedbackIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcFeedbackOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_offer_api_v1_recruiter_drives__id__offers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecruiterOfferIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcPendingOffer_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_round_api_v1_recruiter_drives__id__rounds_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcRoundIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcRoundOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    shortlist_xlsx_api_v1_recruiter_drives__id__shortlist_xlsx_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    me_api_v1_recruiter_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RecruiterMe_"];
+                };
+            };
+        };
+    };
+    round_results_api_v1_recruiter_rounds__id__results_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlcRoundResultsBulk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBulkReport_"];
                 };
             };
             /** @description Validation Error */
@@ -117966,6 +123282,184 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_PublishSummary_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mine_api_v1_training_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TrnMyRow__"];
+                };
+            };
+        };
+    };
+    programs_api_v1_training_programs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_TrnProgramOut__"];
+                };
+            };
+        };
+    };
+    create_api_v1_training_programs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrnProgramIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TrnProgramOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_api_v1_training_programs__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrnProgramUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_TrnProgramOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attendance_api_v1_training_programs__id__attendance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrnAttendanceBulk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBulkReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scores_api_v1_training_programs__id__scores_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TrnScoresBulk"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PlcBulkReport_"];
                 };
             };
             /** @description Validation Error */

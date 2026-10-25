@@ -329,6 +329,21 @@ PHASES: dict[str, list[str]] = {
         "committee_members",
         "student_achievements",
     ],
+    # placement, internships & training (section 27)
+    "28": [
+        "companies",
+        "placement_drives",
+        "drive_rounds",
+        "drive_applications",
+        "drive_round_results",
+        "placement_offers",
+        "placement_policies",
+        "student_placement_profiles",
+        "internships",
+        "training_programs",
+        "training_attendance",
+        "company_feedback",
+    ],
     "26": ["document_templates", "certificate_requests", "issued_documents", "document_serials"],
     "25": [
         "calendar_events",

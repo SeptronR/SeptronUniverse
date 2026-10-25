@@ -78,6 +78,11 @@ class AppRoutes {
   static const clubs = '/app/clubs';
   static const hoursVerification = '/app/hours-verification';
   static const parentSupport = '/app/parent-support';
+  // Phase 28 — placement, internships, training
+  static const placement = '/app/placement';
+  static const wardPlacement = '/app/ward-placement';
+  static const placementDrives = '/app/placement-drives';
+  static const internshipEvaluation = '/app/internship-evaluation';
   // Phase 26 — documents, certificate queue, verify
   static const myDocuments = '/app/documents';
   static const wardDocuments = '/app/ward-documents';

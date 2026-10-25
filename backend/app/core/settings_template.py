@@ -208,6 +208,14 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("surveys", "publish_summary", "bool", False, label="Publish survey summaries to students"),
     SettingDef("surveys", "actions", "json", None, label="Action taken on feedback (when OBE is off)"),
     SettingDef("clubs", "hours_to_credits", "json", [], label="Activity hours to credit mapping [{course_id, min_hours, activity_types?}]"),
+    # placement, internships & training (Phase 28)
+    SettingDef("placement", "eligibility_defaults", "json", {"min_cgpa": 6.0, "max_active_backlogs": 0, "max_history_backlogs": 2, "min_10th_pct": 60, "min_12th_pct": 60, "max_gap_years": 1, "allowed_if_already_placed": False}, label="Default drive eligibility rules"),
+    SettingDef("placement", "policy_defaults", "json", {"max_offers": 1, "dream_ctc_threshold_paise": 100000000, "allow_upgrade_if_dream": True, "opt_out_allowed": True}, label="Default placement policy"),
+    SettingDef("placement", "consented_fields", "json", ["name", "program", "cgpa", "backlogs", "resume", "skills", "achievements", "email", "phone"], label="Profile fields recruiters may see (with student consent)"),
+    SettingDef("placement", "blacklist_rules", "json", {"no_show_after_shortlist": 2, "offer_decline_after_accept": 1}, label="Automatic blacklist rules"),
+    SettingDef("placement", "internship_min_weeks", "int", 4, label="Minimum internship weeks for credit mapping", min=1, max=52),
+    SettingDef("placement", "nirf_median_basis", "str", "accepted_offers", choices=("accepted_offers", "all_offers", "joined"), label="NIRF median salary basis"),
+    SettingDef("placement", "reevaluate_on_results", "bool", False, label="Re-evaluate open drive applications when results are republished"),
     # document templates & certificate requests (Phase 26)
     SettingDef("documents", "signatories", "json", {"registrar": {"name": "Registrar", "designation": "Registrar", "signature_url": None}, "principal": {"name": "Principal", "designation": "Principal", "signature_url": None}, "coe": {"name": "Controller of Examinations", "designation": "Controller of Examinations", "signature_url": None}}, label="Signatories (name, designation, signature image)"),
     SettingDef("documents", "request_rules", "json", {}, label="Certificate request rules per type (overrides of the shipped defaults)"),
