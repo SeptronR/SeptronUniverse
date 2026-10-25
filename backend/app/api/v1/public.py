@@ -73,6 +73,13 @@ PUBLIC_ROUTES: set[str] = {
     # Phase 24 — WhatsApp webhook (verify token on GET; X-Hub-Signature-256 on POST; {comms.whatsapp_bot} inside)
     "GET /api/v1/webhooks/whatsapp/{connection_id}",
     "POST /api/v1/webhooks/whatsapp/{connection_id}",
+    # Phase 25 — iCal feeds ({calendar.ical} / {calendar.personal_feed} inside) and the website events list / external
+    # registration (tenant by institution slug; rate-limited; {events.core} inside)
+    "GET /api/v1/calendar/feed/{token}.ics",
+    "GET /api/v1/calendar/ical/institution.ics",
+    "GET /api/v1/calendar/ical/college/{college_id}.ics",
+    "GET /api/v1/events/public",
+    "POST /api/v1/events/public/{id}/register",
 }
 
 

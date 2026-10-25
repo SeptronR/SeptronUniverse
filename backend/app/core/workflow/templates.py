@@ -302,6 +302,19 @@ ACCOUNTING_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "steps": _chain("accountant", "vice_chancellor"),
     },
 )
+# Phase 25: equipment bookings (custodian named in the start context → estate officer) and event budgets (accountant)
+FACILITIES_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "facilities.equipment_booking",
+        "module": "facilities",
+        "name": "Equipment booking",
+        "steps": [
+            {"order": 1, "approver": {"type": "scope_rule", "value": "context.custodian_user_id"}, "mode": "sequential", "sla_hours": 24},
+            _role("estate_officer", 2, 24),
+        ],
+    },
+    {"key": "event.budget", "module": "events", "name": "Event budget", "steps": _chain("accountant", sla=48, escalate=None)},
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -314,9 +327,10 @@ WORKFLOW_TEMPLATES = (
     + HOSTEL_WORKFLOW_TEMPLATES
     + INVENTORY_WORKFLOW_TEMPLATES
     + ACCOUNTING_WORKFLOW_TEMPLATES
+    + FACILITIES_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 38, (
+assert len(WORKFLOW_TEMPLATES) == 40, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2"
 )

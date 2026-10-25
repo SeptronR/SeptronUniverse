@@ -242,6 +242,8 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     ("facilities", "approve_booking", "Approve bookings"),
     ("facilities", "service_assign", "Assign service requests"),
     ("health", "record", "Health records"),
+    # Phase 25: counsellors publish slots and keep encrypted session notes (Prompts/25 visibility table)
+    ("facilities", "counsel", "Counselling appointments"),
     ("placement", "self", "Own placement"),
     ("placement", "drive_manage", "Manage drives"),
     ("placement", "override_eligibility", "Override eligibility"),
@@ -490,6 +492,9 @@ STAFF_SELF: set[str] = (
     | P("certificates", "self")
     | P("grievances", "create")
     | P("facilities", "book", "view")
+    # Phase 25: own health visits / counselling bookings and sports participation
+    | P("health", "view")
+    | P("sports", "view")
     | P("surveys", "respond")
     | P("library", "self")
     | P("timetable", "view")
@@ -520,6 +525,8 @@ FACULTY: set[str] = (
     | P("inventory", "indent", "view")
     # Phase 23: principal investigators read their own grant ledgers
     | P("accounting", "view")
+    # Phase 25: faculty organise their own events (FACULTY_EVENTS)
+    | P("events", "organise")
     | P("clubs", "view")
     | P("results", "view")
     # Phase 10: faculty request substitutions for their own classes (FACULTY_TIMETABLE below)
@@ -721,6 +728,29 @@ IQAC_ACCOUNTING: set[str] = P("accounting", "view_all")
 REGISTRAR_COMMS: set[str] = P("communication", "bulk", "approve", "emergency", "view_all", "template_manage")
 VC_COMMS: set[str] = P("communication", "approve", "emergency")
 HOD_COMMS: set[str] = P("communication", "send")
+# Phase 25 (Prompts/25 "Visibility rules"): HODs approve step 1 of their department's events and read department
+# bookings / tickets; the registrar manages the calendar, approves events and runs the estate; the estate officer
+# approves bookings and assigns tickets; security reads every gate / SOS record; the medical officer records
+# confidential visits; the sports officer reads all participation; faculty organise their own events; the accountant
+# reads event fees / budgets; staff and parents use the self-service wellness, sports and wallet screens
+HOD_FACILITIES: set[str] = P("events", "approve", "view_all") | P("facilities", "view_all") | P("calendar", "view_all")
+REGISTRAR_FACILITIES: set[str] = (
+    P("calendar", "manage", "view_all")
+    | P("events", "manage", "approve", "view_all", "certify", "organise")
+    | P("facilities", "manage", "view_all", "approve_booking", "service_assign")
+    | P("sports", "view_all")
+    | P("health", "view_all")
+)
+VC_FACILITIES: set[str] = P("events", "approve", "certify") | P("facilities", "approve_booking")
+FACULTY_EVENTS: set[str] = P("events", "organise")
+ESTATE_FACILITIES: set[str] = P("facilities", "approve_booking", "service_assign", "view_all") | P("calendar", "view_all")
+SECURITY_FACILITIES: set[str] = P("facilities", "view_all", "service_assign")
+MEDICAL_HEALTH: set[str] = P("health", "record", "view_all") | P("facilities", "counsel")
+SPORTS_FACILITIES: set[str] = P("sports", "view_all")
+ACCOUNTANT_FACILITIES: set[str] = P("events", "view_all")
+STAFF_CAMPUS: set[str] = P("health", "view") | P("sports", "view")
+PARENT_FACILITIES: set[str] = P("calendar", "view") | P("events", "view") | P("facilities", "view")
+CANTEEN_POS: set[str] = P("facilities", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -730,6 +760,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | VC_PROCUREMENT
     | VC_ACCOUNTING
     | VC_COMMS
+    | VC_FACILITIES
     | P("leaves", "approve")
     | P("regulations", "approve")
     | P("degrees", "award")
@@ -773,7 +804,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_POST_RESULT
     | REGISTRAR_DEGREES
     | REGISTRAR_HOSTEL
-    | REGISTRAR_COMMS,
+    | REGISTRAR_COMMS
+    | REGISTRAR_FACILITIES,
     "controller_of_examinations": STAFF_SELF
     | P("exams", "manage")
     | P("results", "manage")
@@ -866,7 +898,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | HOD_HOSTEL
     | HOD_TRANSPORT
     | HOD_ACCOUNTING
-    | HOD_COMMS,
+    | HOD_COMMS
+    | HOD_FACILITIES,
     "class_advisor": FACULTY | P("registration", "approve") | P("attendance", "view") | ADVISOR_FEES | ADVISOR_HOSTEL,
     "faculty": FACULTY,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
@@ -923,6 +956,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("communication", "send"),
     "accountant": STAFF_SELF
     | P("fees", "manage")
+    | ACCOUNTANT_FACILITIES
     | P("scholarships", "disburse", "view_all", "view")
     | P("no_dues", "approve", "view_all")
     | P("payroll", "manage")
@@ -999,19 +1033,22 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("reports", "run", "view"),
     "estate_officer": STAFF_SELF
     | P("facilities", "manage")
+    | ESTATE_FACILITIES
     | P("timetable", "view_all")
     | ESTATE_TIMETABLE
     | P("inventory", "indent", "view")
     | P("reports", "run", "view"),
     "security_officer": STAFF_SELF
     | P("facilities", "manage")
+    | SECURITY_FACILITIES
     | P("communication", "emergency", "send")
     | P("hostel", "view")
     | P("students", "view")
     | P("users", "view_all"),
-    "medical_officer": STAFF_SELF | P("health", "manage") | P("students", "view"),
+    "medical_officer": STAFF_SELF | P("health", "manage") | MEDICAL_HEALTH | P("students", "view"),
     "sports_officer": STAFF_SELF
     | P("sports", "manage")
+    | SPORTS_FACILITIES
     | P("clubs", "verify_hours", "view")
     | P("events", "organise")
     | P("students", "view_all")
@@ -1048,7 +1085,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     # reads every HR register (Prompts/06 visibility table)
     "auditor": ALL("view", "view_all") | P("reports", "run") | AUDITOR_HR | COMMON,
     "recruiter": COMMON | P("placement", "recruiter", "view"),
-    "vendor": COMMON | VENDOR_PORTAL,
+    "vendor": COMMON | VENDOR_PORTAL | CANTEEN_POS,
     "store_keeper": STAFF_SELF | STORE_KEEPER,
     "learner": COMMON
     | P("students", "self")
@@ -1066,6 +1103,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "parent": COMMON
     | SELF_DEGREES
     | PARENT_LIBRARY
+    | PARENT_FACILITIES
     | P("students", "view")
     | P("attendance", "view")
     | P("results", "view")
@@ -1113,6 +1151,20 @@ BACKFILL_GRANTS: dict[str, frozenset[str]] = {
     "0009": frozenset(REGISTRAR_REGISTRATION | DEAN_OFFERINGS),
     "0010": frozenset(REGISTRAR_TIMETABLE | HOD_TIMETABLE | ESTATE_TIMETABLE | FACULTY_TIMETABLE),
     "0011": frozenset(REGISTRAR_ATTENDANCE | HOD_ATTENDANCE | COE_ATTENDANCE | VC_ATTENDANCE),
+    "0025": frozenset(
+        HOD_FACILITIES
+        | REGISTRAR_FACILITIES
+        | VC_FACILITIES
+        | FACULTY_EVENTS
+        | ESTATE_FACILITIES
+        | SECURITY_FACILITIES
+        | MEDICAL_HEALTH
+        | SPORTS_FACILITIES
+        | ACCOUNTANT_FACILITIES
+        | STAFF_CAMPUS
+        | PARENT_FACILITIES
+        | CANTEEN_POS
+    ),
     "0024": frozenset(REGISTRAR_COMMS | VC_COMMS | HOD_COMMS),
     "0023": frozenset(HOD_ACCOUNTING | FACULTY_ACCOUNTING | ACCOUNTANT_ACCOUNTING | VC_ACCOUNTING | IQAC_ACCOUNTING),
     "0022": frozenset(STORE_KEEPER | INVENTORY_MANAGER_OPS | ACCOUNTANT_PROCUREMENT | VC_PROCUREMENT | VENDOR_PORTAL),

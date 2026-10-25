@@ -189,6 +189,24 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("accounting", "gst_number", "str", None, label="GSTIN of the institution"),
     SettingDef("accounting", "tally_company_name", "str", None, label="Tally company name"),
     SettingDef("accounting", "mappings", "json", None, label="Ledger account mappings"),
+    # calendar, events & facilities (Phase 25)
+    SettingDef("facilities", "sla_hours", "json", {"electrical": 24, "plumbing": 24, "it": 8, "network": 4, "furniture": 72, "cleaning": 12, "civil": 168, "security": 2, "asset": 48, "other": 48}, label="Service desk SLA hours by category"),
+    SettingDef("facilities", "routing", "json", {"it": "it_cell", "network": "it_cell", "security": "security_officer"}, label="Ticket auto-routing (category → role or user id)"),
+    SettingDef("facilities", "booking_lead_hours", "int", 24, label="Room booking lead time (hours)", min=0, max=720),
+    SettingDef("facilities", "auto_approve_roles", "json", ["hod", "dean"], label="Roles whose bookings are auto-approved"),
+    SettingDef("facilities", "visitor_pass_validity_hours", "int", 8, label="Visitor pass validity (hours)", min=1, max=168),
+    SettingDef("facilities", "visitor_blacklist", "json", [], label="Blacklisted visitor phones"),
+    SettingDef("facilities", "visitor_pii_retention_days", "int", 90, label="Visitor PII retention (days)", min=1),
+    SettingDef("facilities", "sos_responders", "json", {"security": ["security_officer"], "medical": ["medical_officer", "security_officer"], "fire": ["security_officer", "estate_officer"], "sos": ["security_officer"]}, label="SOS responders by alert type (roles or user ids)"),
+    SettingDef("facilities", "sos_escalate_minutes", "int", 3, label="SOS escalation interval (minutes)", min=1, max=60),
+    SettingDef("facilities", "sos_rate_limit", "json", {"count": 3, "minutes": 10}, label="SOS rate limit per user"),
+    SettingDef("facilities", "lost_found_retention_days", "int", 90, label="Lost & found retention (days)", min=1),
+    SettingDef("facilities", "health_summary_consent", "bool", False, label="HOD / warden see visit summaries with consent"),
+    SettingDef("facilities", "auto_close_days", "int", 3, label="Auto-close resolved tickets after (days)", min=1, max=60),
+    SettingDef("facilities", "reopen_days", "int", 7, label="Reopen allowed within (days)", min=1, max=60),
+    SettingDef("wallet", "max_balance_paise", "int", 500000, label="Wallet maximum balance (paise)", min=0),
+    SettingDef("wallet", "topup_min_paise", "int", 5000, label="Wallet minimum top-up (paise)", min=0),
+    SettingDef("wallet", "daily_spend_cap_paise", "int", None, label="Daily spend cap for minors (paise)"),
     # communication advanced (Phase 24)
     SettingDef("comms", "throttle_per_minute", "json", {"sms": 600, "whatsapp": 300, "email": 1200, "push": 5000}, label="Throttle per channel per minute"),
     SettingDef("comms", "campaign_approval_threshold_recipients", "int", 2000, label="Campaigns above N recipients need approval", min=1),
@@ -388,6 +406,9 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("grn", "GRN/{yyyy}/{seq:5}", 5, "yearly", "Goods receipt number"),
     SequenceTemplate("asset", "AST{seq:6}", 6, "never", "Asset tag"),
     SequenceTemplate("item", "ITM{seq:5}", 5, "never", "Item code"),
+    # Phase 25 — service desk tickets and visitor passes
+    SequenceTemplate("sr", "SR/{yyyy}/{seq:5}", 5, "yearly", "Service request number"),
+    SequenceTemplate("visitor", "VP{yy}{seq:6}", 6, "yearly", "Visitor pass code"),
 )
 
 

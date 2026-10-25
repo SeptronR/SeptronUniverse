@@ -58,6 +58,19 @@ class AppRoutes {
   static const myMalpractice = '/app/exams/malpractice';
   static const myTranscripts = '/app/transcripts';
   static const revalQueue = '/app/exams/reval-queue';
+  // Phase 25 — SOS, responder, events, service requests, wellness, wallet, gate scan
+  static const sos = '/app/sos';
+  static const sosResponder = '/app/sos/responder';
+  static const campusEvents = '/app/events';
+  static const serviceRequests = '/app/service-requests';
+  static const wellness = '/app/wellness';
+  static const wallet = '/app/wallet';
+  static const gateScan = '/app/gate-scan';
+  // Phase 24 — campaigns (communication officer), emergency broadcast, assistant, my messages
+  static const campaigns = '/app/comms/campaigns';
+  static const emergencyBroadcast = '/app/comms/emergency';
+  static const assistant = '/app/assistant';
+  static const myMessages = '/app/comms/messages';
   // Phase 23 — accounting (accountant), department budget (HOD), grants (PI)
   static const accountingHome = '/app/accounting';
   static const departmentBudget = '/app/accounting/budget';

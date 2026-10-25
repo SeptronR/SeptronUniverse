@@ -116,6 +116,20 @@ register_beat("bot.session_expiry", "beat.bot.session_expiry", crontab(minute=7)
 register_beat("assistant.conversation_retention", "beat.assistant.conversation_retention", crontab(hour=20, minute=55))  # 02:25 IST
 register_beat("comms.provider_health_probe", "beat.comms.provider_health_probe", crontab(minute="*/5"))
 
+# ---- Phase 25 calendar / events / facilities (app/tasks/facilities.py) ------------------------------------------------------
+register_beat("calendar.reminders", "beat.calendar.reminders", crontab(minute="*/15"))
+register_beat("event.reminders", "beat.event.reminders", crontab(hour=3, minute=0))
+register_beat("service_desk.sla_scan", "beat.service_desk.sla_scan", crontab(minute="*/10"))
+register_beat("service_desk.auto_close", "beat.service_desk.auto_close", crontab(hour=20, minute=0))
+register_beat("amc.expiry_scan", "beat.amc.expiry_scan", crontab(hour=3, minute=20))
+register_beat("visitor.expire_passes", "beat.visitor.expire_passes", crontab(minute=5))
+register_beat("visitor.pii_purge", "beat.visitor.pii_purge", crontab(hour=20, minute=30))
+register_beat("emergency.escalation", "beat.emergency.escalation", crontab())
+register_beat("equipment.overdue_scan", "beat.equipment.overdue_scan", crontab(hour=3, minute=40))
+register_beat("insurance.expiry_scan", "beat.insurance.expiry_scan", crontab(day_of_week=1, hour=3, minute=50))
+register_beat("counselling.no_show_mark", "beat.counselling.no_show_mark", crontab(minute=25))
+register_beat("wallet.limits_reset", "beat.wallet.limits_reset", crontab(hour=18, minute=35))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 
