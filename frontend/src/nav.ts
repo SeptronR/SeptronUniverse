@@ -179,6 +179,19 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
+    title: 'STUDENT SUPPORT',
+    items: [
+      // Phase 27 — mentoring, early warning, grievances, discipline, surveys, clubs, committees (stub)
+      { label: 'Mentoring', to: '/admin/mentoring', icon: Users, module: 'mentoring', action: 'view_all', altActions: ['manage'], feature: 'mentoring.core' },
+      { label: 'Early warning', to: '/admin/risk', icon: Activity, module: 'mentoring', action: 'view_all', altActions: ['manage'], feature: 'mentoring.early_warning' },
+      { label: 'Grievances', to: '/admin/grievances', icon: LifeBuoy, module: 'grievances', action: 'view_all', altActions: ['triage', 'view', 'manage'], feature: 'grievances.core' },
+      { label: 'Discipline', to: '/admin/discipline', icon: ShieldCheck, module: 'discipline', action: 'view_all', altActions: ['manage', 'decide'], feature: 'discipline.core' },
+      { label: 'Surveys', to: '/admin/surveys', icon: ClipboardCheck, module: 'surveys', action: 'manage', altActions: ['view_all', 'analyse'], feature: 'surveys.core' },
+      { label: 'Clubs & activities', to: '/admin/clubs', icon: UsersRound, module: 'clubs', action: 'view_all', altActions: ['verify_hours', 'manage'], feature: 'clubs.core' },
+      { label: 'Committees', to: '/admin/governance/committees', icon: Landmark, module: 'governance', action: 'committees', altActions: ['manage', 'view'], feature: 'governance.committees' },
+    ],
+  },
+  {
     title: 'PEOPLE',
     items: [
       // Phase 06 — staff, leaves, attendance, payroll, recruitment, appraisal & CAS, workload

@@ -476,6 +476,9 @@ ACADEMIC_READ: set[str] = (
 )
 ADMISSIONS_STAFF_READ: set[str] = P("admissions", "view")  # Phase 08 — see HOD_ADMISSIONS below
 # staff self-service — always present where it makes sense (docs/Authorization_and_Visibility.md §4)
+# Phase 27: staff read own / committee grievances and own cases; committee members decide (services narrow rows)
+STAFF_SUPPORT: set[str] = P("grievances", "view") | P("discipline", "view")
+COMMITTEE_SUPPORT: set[str] = P("discipline", "decide")
 STAFF_SELF: set[str] = (
     COMMON
     | P("leaves", "self", "create", "view")
@@ -491,6 +494,7 @@ STAFF_SELF: set[str] = (
     | P("events", "view")
     | P("certificates", "self")
     | P("grievances", "create")
+    | STAFF_SUPPORT
     | P("facilities", "book", "view")
     # Phase 25: own health visits / counselling bookings and sports participation
     | P("health", "view")
@@ -528,6 +532,7 @@ FACULTY: set[str] = (
     # Phase 25: faculty organise their own events (FACULTY_EVENTS)
     | P("events", "organise")
     | P("clubs", "view")
+    | COMMITTEE_SUPPORT
     | P("results", "view")
     # Phase 10: faculty request substitutions for their own classes (FACULTY_TIMETABLE below)
     | P("timetable", "substitute")
@@ -762,6 +767,29 @@ COE_DOCUMENTS: set[str] = P("certificates", "request_approve", "issue", "view_al
 HOD_DOCUMENTS: set[str] = P("certificates", "view_all")
 OFFICE_DOCUMENTS: set[str] = P("certificates", "issue", "view_all") | P("templates", "view", "render")
 PARENT_DOCUMENTS: set[str] = P("certificates", "self")
+# Phase 27 (Prompts/27 "Visibility rules"): staff read their own / committee grievances and their own disciplinary cases
+# (rows narrowed by committee membership / assignee / subject in the services); faculty and committee secretaries
+# decide the cases of committees they sit on; HODs read department mentoring / grievances (non-confidential) /
+# discipline / survey results / clubs; the registrar reads the student-support registers; the principal decides
+# appeals; grievance officers constitute grievance committees; parents read clubs / hours / achievements
+HOD_SUPPORT: set[str] = (
+    P("mentoring", "view_all")
+    | P("grievances", "view_all")
+    | P("discipline", "view_all")
+    | P("surveys", "view_all", "analyse")
+    | P("clubs", "view_all")
+)
+REGISTRAR_SUPPORT: set[str] = (
+    P("mentoring", "view_all")
+    | P("grievances", "view_all")
+    | P("discipline", "view_all", "appeal")
+    | P("surveys", "view_all")
+    | P("clubs", "view_all", "manage")
+    | P("governance", "committees")
+)
+VC_SUPPORT: set[str] = P("discipline", "appeal")
+GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
+PARENT_SUPPORT: set[str] = P("clubs", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
@@ -772,6 +800,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | VC_ACCOUNTING
     | VC_COMMS
     | VC_FACILITIES
+    | VC_SUPPORT
     | P("leaves", "approve")
     | P("regulations", "approve")
     | P("degrees", "award")
@@ -782,6 +811,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | VC_FEES
     | STAFF_SELF,
     "registrar": STAFF_SELF
+    | REGISTRAR_SUPPORT
     | REGISTRAR_DOCUMENTS
     | P("students", "manage", "view_pii")
     | P("admissions", "manage")
@@ -875,6 +905,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_ATTAINMENT
     | STAFF_SELF,
     "hod": FACULTY
+    | HOD_SUPPORT
     | HOD_DOCUMENTS
     | P("students", "view_all")
     | P("hr", "view_all")
@@ -1074,6 +1105,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("students", "view_all")
     | OFFICE_NO_DUES,
     "grievance_officer": STAFF_SELF
+    | GRIEVANCE_OFFICER_SUPPORT
     | P("grievances", "triage", "resolve", "escalate", "committee", "view_all", "update", "view")
     | P("students", "view")
     | P("communication", "send"),
@@ -1083,6 +1115,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("hostel", "view")
     | COMMITTEE_EXAMS,
     "committee_secretary": STAFF_SELF
+    | COMMITTEE_SUPPORT
     | P("governance", "committees", "minutes", "resolutions", "view", "create", "update")
     | COMMITTEE_EXAMS,
     "legal_officer": STAFF_SELF | P("legal", "manage") | P("efile", "manage") | P("rti", "view"),
@@ -1125,6 +1158,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("library", "self"),
     "student": STUDENT,
     "parent": COMMON
+    | PARENT_SUPPORT
     | PARENT_DOCUMENTS
     | SELF_DEGREES
     | PARENT_LIBRARY
@@ -1168,6 +1202,15 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0027": frozenset(
+        STAFF_SUPPORT
+        | COMMITTEE_SUPPORT
+        | HOD_SUPPORT
+        | REGISTRAR_SUPPORT
+        | VC_SUPPORT
+        | GRIEVANCE_OFFICER_SUPPORT
+        | PARENT_SUPPORT
+    ),
     "0026": frozenset(
         REGISTRAR_DOCUMENTS | HR_DOCUMENTS | COE_DOCUMENTS | HOD_DOCUMENTS | OFFICE_DOCUMENTS | PARENT_DOCUMENTS
     ),

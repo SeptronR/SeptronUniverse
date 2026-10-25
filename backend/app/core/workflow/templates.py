@@ -315,6 +315,12 @@ FACILITIES_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
     },
     {"key": "event.budget", "module": "events", "name": "Event budget", "steps": _chain("accountant", sla=48, escalate=None)},
 )
+# Phase 27: committee decisions with suspension / expulsion go to the principal (the committee chair decides through the
+# case API - ``context.chair_user_id`` records who); appeals are decided by the principal
+SUPPORT_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {"key": "discipline.case", "module": "discipline", "name": "Disciplinary decision", "steps": _chain("vice_chancellor", sla=72)},
+    {"key": "discipline.appeal", "module": "discipline", "name": "Disciplinary appeal", "steps": _chain("vice_chancellor", sla=168)},
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -328,9 +334,10 @@ WORKFLOW_TEMPLATES = (
     + INVENTORY_WORKFLOW_TEMPLATES
     + ACCOUNTING_WORKFLOW_TEMPLATES
     + FACILITIES_WORKFLOW_TEMPLATES
+    + SUPPORT_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 40, (
+assert len(WORKFLOW_TEMPLATES) == 42, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2"
 )

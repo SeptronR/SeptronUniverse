@@ -42,6 +42,7 @@ celery = Celery(
         "app.tasks.comms_advanced",
         "app.tasks.notifications",
         "app.tasks.documents",
+        "app.tasks.student_support",
         "app.tasks.reports",
         "app.tasks.integrations",
     ],

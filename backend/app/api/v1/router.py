@@ -50,6 +50,7 @@ from app.api.v1.endpoints import (
     calendar,
     campus,
     catalog,
+    clubs,
     comms_advanced,
     communication,
     content,
@@ -57,6 +58,7 @@ from app.api.v1.endpoints import (
     credit_transfers,
     curriculum,
     degrees,
+    discipline,
     documents,
     enrollments,
     events,
@@ -66,6 +68,7 @@ from app.api.v1.endpoints import (
     feedback,
     fees,
     grading,
+    grievances,
     help,
     hostel,
     institution,
@@ -74,6 +77,7 @@ from app.api.v1.endpoints import (
     leaves,
     library,
     lms,
+    mentoring,
     no_dues,
     notifications,
     obe_attainment,
@@ -93,6 +97,7 @@ from app.api.v1.endpoints import (
     staff,
     staff_attendance,
     students,
+    surveys,
     timetable,
     transport,
     verify,
@@ -191,6 +196,16 @@ api_router.include_router(facilities.router)
 # Phase 26: document templates / renderer / issued register / signed downloads / bulk / serial registers /
 # certificate requests ({documents.*} per route); public verification stays in ``verify``
 api_router.include_router(documents.router)
+# Phase 27: mentoring + risk, grievances (public anonymous form / tracking registered before ``/grievances/{id}``),
+# discipline, surveys (+ public alumni / employer links), clubs / activity hours / achievements, the committees stub
+# and student-support stats — each route carries its mentoring.* / grievances.* / discipline.* / surveys.* / clubs.*
+api_router.include_router(mentoring.router)
+api_router.include_router(grievances.public_router)
+api_router.include_router(grievances.router)
+api_router.include_router(discipline.router)
+api_router.include_router(surveys.public_router)
+api_router.include_router(surveys.router)
+api_router.include_router(clubs.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
