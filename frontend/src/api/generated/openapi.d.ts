@@ -3959,6 +3959,161 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/certificate-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Request queue (ScopeTabs) */
+        get: operations["requests_list_api_v1_certificate_requests_get"];
+        put?: never;
+        /** Request a certificate (Idempotency-Key) */
+        post: operations["requests_create_api_v1_certificate_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My requests */
+        get: operations["requests_me_api_v1_certificate_requests_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requestable types with fees (for the caller) */
+        get: operations["requests_types_api_v1_certificate_requests_types_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ward requests */
+        get: operations["requests_wards_api_v1_certificate_requests_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Request */
+        get: operations["requests_get_api_v1_certificate_requests__id__get"];
+        put?: never;
+        post?: never;
+        /** Cancel before approval */
+        delete: operations["requests_cancel_api_v1_certificate_requests__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/{id}/collected": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Pickup collected (signature) */
+        post: operations["requests_collected_api_v1_certificate_requests__id__collected_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject / recommend */
+        post: operations["requests_decide_api_v1_certificate_requests__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/{id}/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Generate the document */
+        post: operations["requests_generate_api_v1_certificate_requests__id__generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/certificate-requests/{id}/issue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Issue (digital / pickup notice / post) */
+        post: operations["requests_issue_api_v1_certificate_requests__id__issue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/cia/{id}/approve": {
         parameters: {
             query?: never;
@@ -6943,6 +7098,502 @@ export interface paths {
         post: operations["register_device_api_v1_devices_post"];
         /** Unregister a push token */
         delete: operations["unregister_device_api_v1_devices_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Bulk generation job */
+        post: operations["bulk_create_api_v1_documents_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/bulk/{job_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Bulk job progress / report */
+        get: operations["bulk_get_api_v1_documents_bulk__job_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/bulk/{job_id}/zip": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** ZIP of the job's PDFs (signed redirect) */
+        get: operations["bulk_zip_api_v1_documents_bulk__job_id__zip_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/download/{signed}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Download through a signed link (bound to the user) */
+        get: operations["documents_download_api_v1_documents_download__signed__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/issued": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Issued documents (ScopeTabs) */
+        get: operations["issued_list_api_v1_documents_issued_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/issued/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Issued document */
+        get: operations["issued_get_api_v1_documents_issued__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/issued/{id}/reissue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reissue (revokes the old document; new one supersedes it) */
+        post: operations["issued_reissue_api_v1_documents_issued__id__reissue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/issued/{id}/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Revoke (registrar) */
+        post: operations["issued_revoke_api_v1_documents_issued__id__revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/issued/{id}/signed-link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Signed link with defaults (15 min) */
+        get: operations["issued_signed_link_get_api_v1_documents_issued__id__signed_link_get"];
+        put?: never;
+        /** Time-limited signed download link (watermarked) */
+        post: operations["issued_signed_link_api_v1_documents_issued__id__signed_link_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My documents */
+        get: operations["documents_me_api_v1_documents_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Serial registers */
+        get: operations["registers_list_api_v1_documents_registers_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers/{register}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Serials of a register */
+        get: operations["registers_rows_api_v1_documents_registers__register__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers/{register}/book": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Physical book mapping (book no. / pages) */
+        put: operations["registers_book_api_v1_documents_registers__register__book_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers/{register}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export job (CSV) */
+        get: operations["registers_export_api_v1_documents_registers__register__export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers/{register}/reconcile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Reconciliation (issued vs serials) */
+        get: operations["registers_reconcile_api_v1_documents_registers__register__reconcile_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers/{register}/reserve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reserve serials */
+        post: operations["registers_reserve_api_v1_documents_registers__register__reserve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/registers/{register}/void": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Void a serial (reason) */
+        post: operations["registers_void_api_v1_documents_registers__register__void_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/render": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Render and register a document (Idempotency-Key) */
+        post: operations["documents_render_api_v1_documents_render_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Document settings */
+        get: operations["documents_settings_api_v1_documents_settings_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Document statistics */
+        get: operations["documents_stats_api_v1_documents_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Templates (platform defaults + institution overrides, latest version) */
+        get: operations["templates_list_api_v1_documents_templates_get"];
+        put?: never;
+        /** New template / clone (draft) */
+        post: operations["templates_create_api_v1_documents_templates_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/variables/{template_type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Variables catalogue of a template type */
+        get: operations["templates_variables_api_v1_documents_templates_variables__template_type__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Template */
+        get: operations["templates_get_api_v1_documents_templates__id__get"];
+        /** Edit a template (a published version starts the next draft) */
+        put: operations["templates_update_api_v1_documents_templates__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/{id}/lint": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Lint (unknown variables, unsupported CSS) */
+        get: operations["templates_lint_api_v1_documents_templates__id__lint_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/{id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Preview PDF / HTML (PREVIEW watermark) */
+        post: operations["templates_preview_api_v1_documents_templates__id__preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish (lint errors → 422) */
+        post: operations["templates_publish_api_v1_documents_templates__id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/{id}/usage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Template usage */
+        get: operations["templates_usage_api_v1_documents_templates__id__usage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/templates/{id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Versions of the template family */
+        get: operations["templates_versions_api_v1_documents_templates__id__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/documents/wards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Documents of my wards */
+        get: operations["documents_wards_api_v1_documents_wards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -21384,6 +22035,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/verify/hash": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify an uploaded PDF by its SHA-256 (public) */
+        post: operations["verify_hash_api_v1_verify_hash_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/verify/{token}": {
         parameters: {
             query?: never;
@@ -21391,7 +22059,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Verify a degree / provisional / grade card / transcript / ID card QR token (public) */
+        /** Verify any issued document's QR token (unified register; public) */
         get: operations["verify_api_v1_verify__token__get"];
         put?: never;
         post?: never;
@@ -25187,6 +25855,11 @@ export interface components {
             /** File */
             file: string;
         };
+        /** Body_verify_hash_api_v1_verify_hash_post */
+        Body_verify_hash_api_v1_verify_hash_post: {
+            /** File */
+            file: string;
+        };
         /** BookCategoryIn */
         BookCategoryIn: {
             /** Ddc Code */
@@ -26748,6 +27421,185 @@ export interface components {
             window?: components["schemas"]["WindowResponse"] | null;
             /** Windows */
             windows?: components["schemas"]["WindowResponse"][];
+        };
+        /** CertReqCollected */
+        CertReqCollected: {
+            /** Collected By */
+            collected_by: string;
+            /** Signature Url */
+            signature_url?: string | null;
+        };
+        /** CertReqCreate */
+        CertReqCreate: {
+            /** Address */
+            address?: string | null;
+            /**
+             * Copies
+             * @default 1
+             */
+            copies: number;
+            /**
+             * Delivery
+             * @default digital
+             * @enum {string}
+             */
+            delivery: "digital" | "pickup" | "post";
+            /**
+             * Person Id
+             * @description ward student id when a guardian requests on behalf
+             */
+            person_id?: string | null;
+            /** Person Type */
+            person_type?: ("student" | "staff" | "alumni") | null;
+            /** Purpose */
+            purpose?: string | null;
+            /**
+             * Registration Number
+             * @description alumni identity check
+             */
+            registration_number?: string | null;
+            /** Template Type */
+            template_type: string;
+        };
+        /** CertReqDecision */
+        CertReqDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "approve" | "reject" | "recommend";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** CertReqGenerate */
+        CertReqGenerate: {
+            /** Template Id */
+            template_id?: string | null;
+        };
+        /** CertReqIssue */
+        CertReqIssue: {
+            /** Courier Ref */
+            courier_ref?: string | null;
+            /** Delivery Note */
+            delivery_note?: string | null;
+            /**
+             * Pickup On
+             * @description pickup slot (ISO date / datetime)
+             */
+            pickup_on?: string | null;
+        };
+        /** CertReqOut */
+        CertReqOut: {
+            /** Address */
+            address?: string | null;
+            /** Checks */
+            checks?: {
+                [key: string]: unknown;
+            } | null;
+            /** Copies */
+            copies: number;
+            /** Courier Ref */
+            courier_ref?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Delivery */
+            delivery: string;
+            /** Document Number */
+            document_number?: string | null;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /**
+             * Fee Paise
+             * @default 0
+             */
+            fee_paise: number;
+            /** Fee Status */
+            fee_status?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Issued Document Id */
+            issued_document_id?: string | null;
+            /**
+             * Person Id
+             * Format: uuid
+             */
+            person_id: string;
+            /** Person Name */
+            person_name?: string | null;
+            /** Person Type */
+            person_type: string;
+            /** Pickup */
+            pickup?: {
+                [key: string]: unknown;
+            } | null;
+            /** Purpose */
+            purpose?: string | null;
+            /** Requester Name */
+            requester_name?: string | null;
+            /**
+             * Requester User Id
+             * Format: uuid
+             */
+            requester_user_id: string;
+            /**
+             * Sla Breached
+             * @default false
+             */
+            sla_breached: boolean;
+            /** Sla Due On */
+            sla_due_on?: string | null;
+            /**
+             * Stage
+             * @description finer state: awaiting_no_dues | blocked | pickup_ready | collected …
+             */
+            stage?: string | null;
+            /** Status */
+            status: string;
+            /** Template Type */
+            template_type: string;
+            /** Timeline */
+            timeline?: {
+                [key: string]: unknown;
+            }[];
+            /** Updated At */
+            updated_at?: string | null;
+            /** Workflow */
+            workflow?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** CertReqTypeOut */
+        CertReqTypeOut: {
+            /**
+             * Allowed
+             * @default true
+             */
+            allowed: boolean;
+            /** Approver */
+            approver: string;
+            /** Copies Fee Paise */
+            copies_fee_paise: number;
+            /** Fee Paise */
+            fee_paise: number;
+            /** Label */
+            label: string;
+            /** Reason */
+            reason?: string | null;
+            /**
+             * Requires No Dues
+             * @default false
+             */
+            requires_no_dues: boolean;
+            /** Sla Days */
+            sla_days: number;
+            /** Template Type */
+            template_type: string;
         };
         /** ChallengePanelRequest */
         ChallengePanelRequest: {
@@ -30092,6 +30944,554 @@ export interface components {
             /** Template Text */
             template_text: string;
         };
+        /** DocBulkGenerateRequest */
+        DocBulkGenerateRequest: {
+            /**
+             * Print Order
+             * @default roll
+             * @enum {string}
+             */
+            print_order: "roll" | "serial" | "name";
+            /**
+             * Register
+             * @description serial register (statutory book)
+             */
+            register?: string | null;
+            scope: components["schemas"]["DocBulkScope"];
+            /** Template Id */
+            template_id?: string | null;
+            /** Template Type */
+            template_type: string;
+            /** Variables Override */
+            variables_override?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Zip
+             * @default true
+             */
+            zip: boolean;
+        };
+        /** DocBulkJobOut */
+        DocBulkJobOut: {
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+            /** Message */
+            message?: string | null;
+            /**
+             * Progress
+             * @default 0
+             */
+            progress: number;
+            /** Result */
+            result?: {
+                [key: string]: unknown;
+            } | null;
+            /** Status */
+            status: string;
+            /** Zip Url */
+            zip_url?: string | null;
+        };
+        /** DocBulkScope */
+        DocBulkScope: {
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Enrollment Ids */
+            enrollment_ids?: string[] | null;
+            /** Section Id */
+            section_id?: string | null;
+            /** Staff Ids */
+            staff_ids?: string[] | null;
+        };
+        /** DocHashVerifyOut */
+        DocHashVerifyOut: {
+            /** Document Number */
+            document_number?: string | null;
+            /** Hint */
+            hint?: string | null;
+            /** Institution */
+            institution?: string | null;
+            /**
+             * Revoked
+             * @default false
+             */
+            revoked: boolean;
+            /** Template Type */
+            template_type?: string | null;
+            /** Valid */
+            valid: boolean;
+        };
+        /** DocLintIssue */
+        DocLintIssue: {
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "error" | "warning";
+            /** Message */
+            message: string;
+            /** Variable */
+            variable?: string | null;
+        };
+        /** DocReconcileOut */
+        DocReconcileOut: {
+            /** Gaps */
+            gaps: string[];
+            /** Issued */
+            issued: number;
+            /** Issued Without Serial */
+            issued_without_serial: string[];
+            /** Register */
+            register: string;
+            /** Reserved */
+            reserved: number;
+            /** Used */
+            used: number;
+            /** Used Without Document */
+            used_without_document: string[];
+            /** Void */
+            void: number;
+        };
+        /** DocReissueRequest */
+        DocReissueRequest: {
+            /** Reason */
+            reason: string;
+            /** Variables Override */
+            variables_override?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** DocRenderRequest */
+        DocRenderRequest: {
+            /**
+             * Allow Multiple
+             * @default false
+             */
+            allow_multiple: boolean;
+            /**
+             * Document Number
+             * @description explicit number (e.g. degree certificates)
+             */
+            document_number?: string | null;
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Language */
+            language?: string | null;
+            /**
+             * Register
+             * @description serial register (statutory book)
+             */
+            register?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+            /** Template Type */
+            template_type: string;
+            /** Variables Override */
+            variables_override?: {
+                [key: string]: unknown;
+            } | null;
+            /** Watermark */
+            watermark?: string | null;
+        };
+        /** DocRenderResult */
+        DocRenderResult: {
+            /** Content Hash */
+            content_hash: string;
+            /** Document Number */
+            document_number: string;
+            /**
+             * Issued Document Id
+             * Format: uuid
+             */
+            issued_document_id: string;
+            /** Pdf Url */
+            pdf_url?: string | null;
+            /**
+             * Reused
+             * @default false
+             */
+            reused: boolean;
+            /** Serial No */
+            serial_no?: string | null;
+            /** Verification Token */
+            verification_token: string;
+        };
+        /** DocRevokeRequest */
+        DocRevokeRequest: {
+            /** Reason */
+            reason: string;
+        };
+        /** DocSerialRegisterOut */
+        DocSerialRegisterOut: {
+            /** Book */
+            book?: {
+                [key: string]: unknown;
+            } | null;
+            /** Next */
+            next?: string | null;
+            /** Register */
+            register: string;
+            /**
+             * Reserved
+             * @default 0
+             */
+            reserved: number;
+            /**
+             * Used
+             * @default 0
+             */
+            used: number;
+            /**
+             * Void
+             * @default 0
+             */
+            void: number;
+        };
+        /** DocSerialReserve */
+        DocSerialReserve: {
+            /**
+             * Count
+             * @default 1
+             */
+            count: number;
+        };
+        /** DocSerialRow */
+        DocSerialRow: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Document Number */
+            document_number?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Issued Document Id */
+            issued_document_id?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /** Register */
+            register: string;
+            /** Serial No */
+            serial_no: string;
+            /** Status */
+            status: string;
+        };
+        /** DocSerialVoid */
+        DocSerialVoid: {
+            /** Reason */
+            reason: string;
+            /** Serial No */
+            serial_no: string;
+        };
+        /** DocSettingsOut */
+        DocSettingsOut: {
+            /**
+             * Allow Parent Requests
+             * @default false
+             */
+            allow_parent_requests: boolean;
+            /**
+             * College Overrides
+             * @default false
+             */
+            college_overrides: boolean;
+            /**
+             * Preview Retention Days
+             * @default 1
+             */
+            preview_retention_days: number;
+            /** Request Rules */
+            request_rules: {
+                [key: string]: unknown;
+            };
+            /** Signatories */
+            signatories: {
+                [key: string]: unknown;
+            };
+            /**
+             * Signed Link Ttl Minutes
+             * @default 15
+             */
+            signed_link_ttl_minutes: number;
+            /**
+             * Verify Shows Pdf
+             * @default false
+             */
+            verify_shows_pdf: boolean;
+            /** Watermark */
+            watermark: {
+                [key: string]: unknown;
+            };
+        };
+        /** DocSignedLinkOut */
+        DocSignedLinkOut: {
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
+            /** Url */
+            url: string;
+            /**
+             * Watermarked
+             * @default true
+             */
+            watermarked: boolean;
+        };
+        /** DocSignedLinkRequest */
+        DocSignedLinkRequest: {
+            /** Purpose */
+            purpose?: string | null;
+            /**
+             * Single Use
+             * @default false
+             */
+            single_use: boolean;
+            /** Ttl Minutes */
+            ttl_minutes?: number | null;
+            /** Watermark Text */
+            watermark_text?: string | null;
+        };
+        /** DocTemplateIn */
+        DocTemplateIn: {
+            /**
+             * College Id
+             * @description college override (when the institution permits)
+             */
+            college_id?: string | null;
+            /** Css */
+            css?: string | null;
+            /**
+             * From Template Id
+             * @description clone this template (platform default or override)
+             */
+            from_template_id?: string | null;
+            /** Html Template */
+            html_template?: string | null;
+            /**
+             * Is Bilingual
+             * @default false
+             */
+            is_bilingual: boolean;
+            /**
+             * Is Default
+             * @default false
+             */
+            is_default: boolean;
+            /**
+             * Layout
+             * @description {blocks: [DocLayoutBlock], ...}
+             */
+            layout?: {
+                [key: string]: unknown;
+            } | null;
+            /** Name */
+            name: string;
+            /**
+             * Page Size
+             * @default A4
+             * @enum {string}
+             */
+            page_size: "A4" | "A5" | "Letter" | "ID_CR80" | "custom";
+            /** Secondary Language */
+            secondary_language?: string | null;
+            /** Template Type */
+            template_type: string;
+            /** Variables */
+            variables?: {
+                [key: string]: unknown;
+            }[] | null;
+        };
+        /** DocTemplateLint */
+        DocTemplateLint: {
+            /** Issues */
+            issues?: components["schemas"]["DocLintIssue"][];
+            /** Ok */
+            ok: boolean;
+        };
+        /** DocTemplateOut */
+        DocTemplateOut: {
+            /** Change Note */
+            change_note?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Css */
+            css?: string | null;
+            /** Html Template */
+            html_template?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Institution Id */
+            institution_id?: string | null;
+            /** Is Active */
+            is_active: boolean;
+            /** Is Bilingual */
+            is_bilingual: boolean;
+            /** Is Default */
+            is_default: boolean;
+            /** Layout */
+            layout?: {
+                [key: string]: unknown;
+            } | null;
+            /** Name */
+            name: string;
+            /** Page Size */
+            page_size: string;
+            /** Secondary Language */
+            secondary_language?: string | null;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "platform" | "institution";
+            /**
+             * Status
+             * @default published
+             * @enum {string}
+             */
+            status: "draft" | "published";
+            /** Template Type */
+            template_type: string;
+            /** Updated At */
+            updated_at?: string | null;
+            /** Variables */
+            variables?: unknown | null;
+            /** Version */
+            version: number;
+        };
+        /** DocTemplatePreview */
+        DocTemplatePreview: {
+            draft?: components["schemas"]["DocTemplateUpdate"] | null;
+            /**
+             * Format
+             * @default pdf
+             * @enum {string}
+             */
+            format: "pdf" | "html";
+            /** Language */
+            language?: string | null;
+            /** Sample Entity Id */
+            sample_entity_id?: string | null;
+            /** Sample Entity Type */
+            sample_entity_type?: string | null;
+            /** Variables */
+            variables?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** DocTemplatePublish */
+        DocTemplatePublish: {
+            /** Change Note */
+            change_note: string;
+        };
+        /** DocTemplateUpdate */
+        DocTemplateUpdate: {
+            /** Css */
+            css?: string | null;
+            /** Html Template */
+            html_template?: string | null;
+            /** Is Bilingual */
+            is_bilingual?: boolean | null;
+            /** Is Default */
+            is_default?: boolean | null;
+            /** Layout */
+            layout?: {
+                [key: string]: unknown;
+            } | null;
+            /** Name */
+            name?: string | null;
+            /** Page Size */
+            page_size?: ("A4" | "A5" | "Letter" | "ID_CR80" | "custom") | null;
+            /** Secondary Language */
+            secondary_language?: string | null;
+        };
+        /** DocTemplateUsage */
+        DocTemplateUsage: {
+            /** By Entity Type */
+            by_entity_type: {
+                [key: string]: number;
+            };
+            /** Flows */
+            flows: string[];
+            /** Issued Count */
+            issued_count: number;
+            /** Last Issued At */
+            last_issued_at?: string | null;
+            /**
+             * Template Id
+             * Format: uuid
+             */
+            template_id: string;
+        };
+        /** DocVariable */
+        DocVariable: {
+            /** Example */
+            example?: string | null;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /** Source */
+            source: string;
+        };
+        /** DocVariablesCatalogue */
+        DocVariablesCatalogue: {
+            /** Template Type */
+            template_type: string;
+            /** Variables */
+            variables: components["schemas"]["DocVariable"][];
+        };
+        /** DocVerifyOut */
+        DocVerifyOut: {
+            /** Content Hash */
+            content_hash?: string | null;
+            /** Details */
+            details?: {
+                [key: string]: unknown;
+            } | null;
+            /** Document Number */
+            document_number?: string | null;
+            /** Holder Masked */
+            holder_masked?: string | null;
+            /** Institution */
+            institution?: string | null;
+            /** Issued At */
+            issued_at?: string | null;
+            /** Message */
+            message?: string | null;
+            /** Pdf Url */
+            pdf_url?: string | null;
+            /** Revoke Reason */
+            revoke_reason?: string | null;
+            /**
+             * Revoked
+             * @default false
+             */
+            revoked: boolean;
+            /** Superseded By */
+            superseded_by?: string | null;
+            /** Template Type */
+            template_type?: string | null;
+            /** Valid */
+            valid: boolean;
+        };
         /** DocumentOut */
         DocumentOut: {
             /** Doc Type */
@@ -30131,6 +31531,35 @@ export interface components {
             verified_at?: string | null;
             /** Verified By */
             verified_by?: string | null;
+        };
+        /** DocumentStatsOut */
+        DocumentStatsOut: {
+            /**
+             * Fee Revenue Paise
+             * @default 0
+             */
+            fee_revenue_paise: number;
+            /** Issued By Month */
+            issued_by_month: {
+                [key: string]: number;
+            };
+            /** Issued By Type */
+            issued_by_type: {
+                [key: string]: number;
+            };
+            /**
+             * Pending Pickups
+             * @default 0
+             */
+            pending_pickups: number;
+            /** Requests By Status */
+            requests_by_status: {
+                [key: string]: number;
+            };
+            /** Revoked */
+            revoked: number;
+            /** Sla Compliance Pct */
+            sla_compliance_pct?: number | null;
         };
         /** DuesResponse */
         DuesResponse: {
@@ -31864,6 +33293,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CertReqOut] */
+        Envelope_CertReqOut_: {
+            data?: components["schemas"]["CertReqOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ChangeRequestOut] */
         Envelope_ChangeRequestOut_: {
             data?: components["schemas"]["ChangeRequestOut"] | null;
@@ -32584,9 +34028,189 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DocBulkJobOut] */
+        Envelope_DocBulkJobOut_: {
+            data?: components["schemas"]["DocBulkJobOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocHashVerifyOut] */
+        Envelope_DocHashVerifyOut_: {
+            data?: components["schemas"]["DocHashVerifyOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocReconcileOut] */
+        Envelope_DocReconcileOut_: {
+            data?: components["schemas"]["DocReconcileOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocRenderResult] */
+        Envelope_DocRenderResult_: {
+            data?: components["schemas"]["DocRenderResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocSerialRow] */
+        Envelope_DocSerialRow_: {
+            data?: components["schemas"]["DocSerialRow"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocSettingsOut] */
+        Envelope_DocSettingsOut_: {
+            data?: components["schemas"]["DocSettingsOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocSignedLinkOut] */
+        Envelope_DocSignedLinkOut_: {
+            data?: components["schemas"]["DocSignedLinkOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocTemplateLint] */
+        Envelope_DocTemplateLint_: {
+            data?: components["schemas"]["DocTemplateLint"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocTemplateOut] */
+        Envelope_DocTemplateOut_: {
+            data?: components["schemas"]["DocTemplateOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocTemplateUsage] */
+        Envelope_DocTemplateUsage_: {
+            data?: components["schemas"]["DocTemplateUsage"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocVariablesCatalogue] */
+        Envelope_DocVariablesCatalogue_: {
+            data?: components["schemas"]["DocVariablesCatalogue"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DocumentOut] */
         Envelope_DocumentOut_: {
             data?: components["schemas"]["DocumentOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocumentStatsOut] */
+        Envelope_DocumentStatsOut_: {
+            data?: components["schemas"]["DocumentStatsOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -33907,6 +35531,21 @@ export interface components {
         /** Envelope[InvoiceResponse] */
         Envelope_InvoiceResponse_: {
             data?: components["schemas"]["InvoiceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[IssuedDocumentOut] */
+        Envelope_IssuedDocumentOut_: {
+            data?: components["schemas"]["IssuedDocumentOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -36875,10 +38514,10 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[Union[DegreeVerifyResponse, VerifyResponse, ResultVerifyResponse, TranscriptVerifyResponse]] */
-        Envelope_Union_DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__: {
+        /** Envelope[Union[DocVerifyOut, DegreeVerifyResponse, VerifyResponse, ResultVerifyResponse, TranscriptVerifyResponse]] */
+        Envelope_Union_DocVerifyOut__DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__: {
             /** Data */
-            data?: components["schemas"]["DegreeVerifyResponse"] | components["schemas"]["VerifyResponse"] | components["schemas"]["ResultVerifyResponse"] | components["schemas"]["TranscriptVerifyResponse"] | null;
+            data?: components["schemas"]["DocVerifyOut"] | components["schemas"]["DegreeVerifyResponse"] | components["schemas"]["VerifyResponse"] | components["schemas"]["ResultVerifyResponse"] | components["schemas"]["TranscriptVerifyResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -37927,6 +39566,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[CertReqOut]] */
+        Envelope_list_CertReqOut__: {
+            /** Data */
+            data?: components["schemas"]["CertReqOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CertReqTypeOut]] */
+        Envelope_list_CertReqTypeOut__: {
+            /** Data */
+            data?: components["schemas"]["CertReqTypeOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ChangeRequestOut]] */
         Envelope_list_ChangeRequestOut__: {
             /** Data */
@@ -38427,6 +40098,54 @@ export interface components {
         Envelope_list_DltTemplateResponse__: {
             /** Data */
             data?: components["schemas"]["DltTemplateResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DocSerialRegisterOut]] */
+        Envelope_list_DocSerialRegisterOut__: {
+            /** Data */
+            data?: components["schemas"]["DocSerialRegisterOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DocSerialRow]] */
+        Envelope_list_DocSerialRow__: {
+            /** Data */
+            data?: components["schemas"]["DocSerialRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DocTemplateOut]] */
+        Envelope_list_DocTemplateOut__: {
+            /** Data */
+            data?: components["schemas"]["DocTemplateOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -39355,6 +41074,22 @@ export interface components {
         Envelope_list_InvoiceResponse__: {
             /** Data */
             data?: components["schemas"]["InvoiceResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[IssuedDocumentOut]] */
+        Envelope_list_IssuedDocumentOut__: {
+            /** Data */
+            data?: components["schemas"]["IssuedDocumentOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -47121,6 +48856,73 @@ export interface components {
              * @default false
              */
             esign: boolean;
+        };
+        /** IssuedDocumentOut */
+        IssuedDocumentOut: {
+            /** Content Hash */
+            content_hash: string;
+            /** Document Number */
+            document_number: string;
+            /** Download Log */
+            download_log?: {
+                [key: string]: unknown;
+            }[] | null;
+            /**
+             * Downloads
+             * @default 0
+             */
+            downloads: number;
+            /** Entity Id */
+            entity_id?: string | null;
+            /** Entity Type */
+            entity_type?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Issued At
+             * Format: date-time
+             */
+            issued_at: string;
+            /** Issued By */
+            issued_by?: string | null;
+            /** Issued By Name */
+            issued_by_name?: string | null;
+            /** Job Id */
+            job_id?: string | null;
+            /** Person Id */
+            person_id?: string | null;
+            /** Person Name */
+            person_name?: string | null;
+            /** Person Type */
+            person_type?: string | null;
+            /** Revoke Reason */
+            revoke_reason?: string | null;
+            /**
+             * Revoked
+             * @default false
+             */
+            revoked: boolean;
+            /** Revoked At */
+            revoked_at?: string | null;
+            /** Serial No */
+            serial_no?: string | null;
+            /** Superseded By */
+            superseded_by?: string | null;
+            /** Supersedes */
+            supersedes?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+            /** Template Type */
+            template_type: string;
+            /** Template Version */
+            template_version?: number | null;
+            /** Verification Token */
+            verification_token?: string | null;
+            /** Watermark Text */
+            watermark_text?: string | null;
         };
         /** ItemDecision */
         ItemDecision: {
@@ -70775,6 +72577,336 @@ export interface operations {
             };
         };
     };
+    requests_list_api_v1_certificate_requests_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                template_type?: string | null;
+                person_type?: string | null;
+                department_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CertReqOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_create_api_v1_certificate_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CertReqCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_me_api_v1_certificate_requests_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CertReqOut__"];
+                };
+            };
+        };
+    };
+    requests_types_api_v1_certificate_requests_types_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CertReqTypeOut__"];
+                };
+            };
+        };
+    };
+    requests_wards_api_v1_certificate_requests_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CertReqOut__"];
+                };
+            };
+        };
+    };
+    requests_get_api_v1_certificate_requests__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_cancel_api_v1_certificate_requests__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_collected_api_v1_certificate_requests__id__collected_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CertReqCollected"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_decide_api_v1_certificate_requests__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CertReqDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_generate_api_v1_certificate_requests__id__generate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CertReqGenerate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_issue_api_v1_certificate_requests__id__issue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["CertReqIssue"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CertReqOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     approve_cia_api_v1_cia__id__approve_post: {
         parameters: {
             query?: never;
@@ -77801,6 +79933,999 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_create_api_v1_documents_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocBulkGenerateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_get_api_v1_documents_bulk__job_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocBulkJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_zip_api_v1_documents_bulk__job_id__zip_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                job_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documents_download_api_v1_documents_download__signed__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                signed: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issued_list_api_v1_documents_issued_get: {
+        parameters: {
+            query?: {
+                template_type?: string | null;
+                person_id?: string | null;
+                entity_type?: string | null;
+                date_from?: string | null;
+                date_to?: string | null;
+                revoked?: boolean | null;
+                scope?: string | null;
+                q?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_IssuedDocumentOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issued_get_api_v1_documents_issued__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IssuedDocumentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issued_reissue_api_v1_documents_issued__id__reissue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocReissueRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocRenderResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issued_revoke_api_v1_documents_issued__id__revoke_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocRevokeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_IssuedDocumentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issued_signed_link_get_api_v1_documents_issued__id__signed_link_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocSignedLinkOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    issued_signed_link_api_v1_documents_issued__id__signed_link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DocSignedLinkRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocSignedLinkOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documents_me_api_v1_documents_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_IssuedDocumentOut__"];
+                };
+            };
+        };
+    };
+    registers_list_api_v1_documents_registers_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DocSerialRegisterOut__"];
+                };
+            };
+        };
+    };
+    registers_rows_api_v1_documents_registers__register__get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path: {
+                register: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DocSerialRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registers_book_api_v1_documents_registers__register__book_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                register: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    [key: string]: unknown;
+                };
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registers_export_api_v1_documents_registers__register__export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                register: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registers_reconcile_api_v1_documents_registers__register__reconcile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                register: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocReconcileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registers_reserve_api_v1_documents_registers__register__reserve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                register: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocSerialReserve"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DocSerialRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    registers_void_api_v1_documents_registers__register__void_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                register: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocSerialVoid"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocSerialRow_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documents_render_api_v1_documents_render_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocRenderRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocRenderResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documents_settings_api_v1_documents_settings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocSettingsOut_"];
+                };
+            };
+        };
+    };
+    documents_stats_api_v1_documents_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocumentStatsOut_"];
+                };
+            };
+        };
+    };
+    templates_list_api_v1_documents_templates_get: {
+        parameters: {
+            query?: {
+                template_type?: string | null;
+                source?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DocTemplateOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_create_api_v1_documents_templates_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocTemplateIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocTemplateOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_variables_api_v1_documents_templates_variables__template_type__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                template_type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocVariablesCatalogue_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_get_api_v1_documents_templates__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocTemplateOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_update_api_v1_documents_templates__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocTemplateUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocTemplateOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_lint_api_v1_documents_templates__id__lint_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocTemplateLint_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_preview_api_v1_documents_templates__id__preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["DocTemplatePreview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_publish_api_v1_documents_templates__id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocTemplatePublish"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocTemplateOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_usage_api_v1_documents_templates__id__usage_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocTemplateUsage_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    templates_versions_api_v1_documents_templates__id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DocTemplateOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    documents_wards_api_v1_documents_wards_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_IssuedDocumentOut__"];
                 };
             };
         };
@@ -109968,6 +113093,39 @@ export interface operations {
             };
         };
     };
+    verify_hash_api_v1_verify_hash_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_verify_hash_api_v1_verify_hash_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocHashVerifyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     verify_api_v1_verify__token__get: {
         parameters: {
             query?: never;
@@ -109985,7 +113143,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_Union_DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__"];
+                    "application/json": components["schemas"]["Envelope_Union_DocVerifyOut__DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__"];
                 };
             };
             /** @description Validation Error */

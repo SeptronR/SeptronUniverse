@@ -57,6 +57,7 @@ from app.api.v1.endpoints import (
     credit_transfers,
     curriculum,
     degrees,
+    documents,
     enrollments,
     events,
     exams,
@@ -187,6 +188,9 @@ api_router.include_router(calendar.public_router)
 api_router.include_router(events.router)
 api_router.include_router(events.public_router)
 api_router.include_router(facilities.router)
+# Phase 26: document templates / renderer / issued register / signed downloads / bulk / serial registers /
+# certificate requests ({documents.*} per route); public verification stays in ``verify``
+api_router.include_router(documents.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

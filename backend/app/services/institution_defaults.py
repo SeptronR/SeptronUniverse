@@ -464,3 +464,44 @@ def seed_admission_form_template(conn: Connection) -> None:
     """``platform_settings['admission_form_template']`` — the default ``form_config`` / required documents by level
     a new admission cycle starts from (Prompts/08 §08.2)."""
     _put_platform_setting(conn, "admission_form_template", ADMISSION_FORM_TEMPLATE)
+
+
+def seed_document_templates(conn: Connection) -> int:
+    """Phase 26 platform ``document_templates`` (``institution_id`` NULL): one default per ``template_type`` (layout
+    blocks + compiled HTML + CSS + variables catalogue), IN-pack bilingual variants (``secondary_language='hi'``) and
+    staff / scholar ID-card variants. Existing platform rows of a type / variant are left untouched."""
+    from app.services.documents.defaults import platform_defaults
+
+    created = 0
+    for d in platform_defaults():
+        variant = (d["layout"] or {}).get("variant")
+        exists = conn.execute(
+            text(
+                "SELECT 1 FROM document_templates WHERE institution_id IS NULL AND template_type = :t "
+                "AND is_bilingual = :b AND COALESCE(layout->>'variant', '') = :v"
+            ),
+            {"t": d["template_type"], "b": d["is_bilingual"], "v": variant or ""},
+        ).first()
+        if exists is not None:
+            continue
+        conn.execute(
+            text(
+                "INSERT INTO document_templates (institution_id, template_type, name, layout, html_template, css, "
+                "page_size, is_bilingual, secondary_language, variables, is_default, version, is_active) VALUES "
+                "(NULL, :t, :n, CAST(:l AS jsonb), :h, :c, :p, :b, :s, CAST(:v AS jsonb), :d, 1, TRUE)"
+            ),
+            {
+                "t": d["template_type"],
+                "n": d["name"],
+                "l": json.dumps(d["layout"]),
+                "h": d["html_template"],
+                "c": d["css"],
+                "p": d["page_size"],
+                "b": d["is_bilingual"],
+                "s": d["secondary_language"],
+                "v": json.dumps(d["variables"]),
+                "d": not d["is_bilingual"] and variant in (None, "student"),
+            },
+        )
+        created += 1
+    return created

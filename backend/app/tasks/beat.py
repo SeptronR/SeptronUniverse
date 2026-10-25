@@ -130,6 +130,12 @@ register_beat("insurance.expiry_scan", "beat.insurance.expiry_scan", crontab(day
 register_beat("counselling.no_show_mark", "beat.counselling.no_show_mark", crontab(minute=25))
 register_beat("wallet.limits_reset", "beat.wallet.limits_reset", crontab(hour=18, minute=35))
 
+# ---- Phase 26 documents (app/tasks/documents.py) ---------------------------------------------------------------------------
+register_beat("documents.request_sla_scan", "beat.documents.request_sla_scan", crontab(hour=3, minute=10))
+register_beat("documents.pickup_reminders", "beat.documents.pickup_reminders", crontab(day_of_week=1, hour=4, minute=0))
+register_beat("documents.signed_link_cleanup", "beat.documents.signed_link_cleanup", crontab(minute=17))
+register_beat("documents.preview_cleanup", "beat.documents.preview_cleanup", crontab(hour=20, minute=45))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

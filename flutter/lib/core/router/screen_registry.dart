@@ -20,6 +20,7 @@ import '../../features/transport/transport_screens.dart';
 import '../../features/inventory/inventory_screens.dart';
 import '../../features/accounting/accounting_screens.dart';
 import '../../features/communication/comms_screens.dart';
+import '../../features/documents/documents_screens.dart';
 import '../../features/facilities/facilities_screens.dart';
 import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
@@ -382,6 +383,33 @@ class ScreenRegistry {
       feature: 'facilities.visitor_gate',
       permission: 'facilities:manage',
       builder: (_, __) => const VisitorGateScanScreen(),
+    ),
+    // Phase 26 — documents
+    AppRoutes.myDocuments: ScreenEntry(
+      route: AppRoutes.myDocuments,
+      titleKey: 'documents',
+      feature: 'documents.templates',
+      permission: 'certificates:self',
+      builder: (_, __) => const MyDocumentsScreen(),
+    ),
+    AppRoutes.wardDocuments: ScreenEntry(
+      route: AppRoutes.wardDocuments,
+      titleKey: 'ward_documents',
+      feature: 'documents.templates',
+      permission: 'certificates:self',
+      builder: (_, __) => const WardDocumentsScreen(),
+    ),
+    AppRoutes.certificateQueue: ScreenEntry(
+      route: AppRoutes.certificateQueue,
+      titleKey: 'certificate_queue',
+      feature: 'documents.certificate_requests',
+      permission: 'certificates:issue|certificates:request_approve',
+      builder: (_, __) => const CertificateQueueScreen(),
+    ),
+    AppRoutes.verifyDocument: ScreenEntry(
+      route: AppRoutes.verifyDocument,
+      titleKey: 'verify_document',
+      builder: (_, __) => const DocumentVerifyScreen(),
     ),
     // Phase 24 — communication advanced
     AppRoutes.campaigns: ScreenEntry(

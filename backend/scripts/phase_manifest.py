@@ -306,6 +306,8 @@ PHASES: dict[str, list[str]] = {
     # post-result (§16): reval_requests, transcripts; committees / committee_members (§30, governance UI in Phase 33)
     # and student_achievements (§27, Phase 27 module) are modelled here for the malpractice inquiry and medals
     "24": ["bulk_campaigns"],
+    # documents (§25): templates, requests, issued register, serial registers
+    "26": ["document_templates", "certificate_requests", "issued_documents", "document_serials"],
     "25": [
         "calendar_events",
         "calendar_feed_tokens",

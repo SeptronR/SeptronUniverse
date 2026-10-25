@@ -236,6 +236,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Rank lists & medals', to: '/admin/results/medals', icon: GraduationCap, module: 'results', action: 'view_all', altActions: ['approve', 'manage'], feature: 'results.rank_lists' },
       { label: 'Result corrections', to: '/admin/results/corrections', icon: CheckSquare, module: 'results', action: 'verify', altActions: ['manage'], feature: 'results.processing' },
       { label: 'Detained & readmission', to: '/admin/students/detained', icon: UserRound, module: 'students', action: 'view_all', altActions: ['manage'], feature: 'results.processing' },
+      // Phase 26 — ADMINISTRATION › Documents
+      { label: 'Document templates', to: '/admin/documents/templates', icon: ScrollText, module: 'templates', action: 'view', altActions: ['manage'], feature: 'documents.templates' },
+      { label: 'Issued register', to: '/admin/documents/issued', icon: ScrollText, module: 'certificates', action: 'view_all', altActions: ['issue', 'manage'], feature: 'documents.templates' },
+      { label: 'Bulk generation', to: '/admin/documents/bulk', icon: ScrollText, module: 'certificates', action: 'issue', altActions: ['manage'], feature: 'documents.bulk_generation' },
+      { label: 'Serial registers', to: '/admin/documents/registers', icon: ScrollText, module: 'certificates', action: 'issue', altActions: ['view_all', 'manage'], feature: 'documents.serial_registers' },
+      { label: 'Certificate requests', to: '/admin/documents/requests', icon: ScrollText, module: 'certificates', action: 'request_approve', altActions: ['issue', 'view_all', 'manage'], feature: 'documents.certificate_requests' },
+      { label: 'Document settings', to: '/admin/documents/settings', icon: ScrollText, module: 'templates', action: 'manage', feature: 'documents.templates' },
       // Phase 25 — campus: calendar, events, facilities, security, wellness, sports, wallet
       { label: 'Calendar', to: '/calendar', icon: CalendarCheck, module: 'calendar', action: 'view', altActions: ['manage'], feature: 'calendar.core' },
       { label: 'Events', to: '/admin/events', icon: CalendarCheck, module: 'events', action: 'view_all', altActions: ['organise', 'approve', 'manage'], feature: 'events.core' },

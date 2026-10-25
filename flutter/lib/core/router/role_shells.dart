@@ -348,6 +348,27 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.blueGrey,
       permission: 'facilities:manage',
       feature: 'facilities.visitor_gate'),
+  // Phase 26 — documents, ward documents, certificate queue, verify
+  const MoreMenuModule(
+      titleKey: 'documents',
+      icon: Icons.description_outlined,
+      route: AppRoutes.myDocuments,
+      color: Colors.indigo,
+      permission: 'certificates:self',
+      feature: 'documents.templates'),
+  const MoreMenuModule(
+      titleKey: 'certificate_queue',
+      icon: Icons.assignment_turned_in_outlined,
+      route: AppRoutes.certificateQueue,
+      color: Colors.indigo,
+      permission: 'certificates:issue|certificates:request_approve',
+      feature: 'documents.certificate_requests'),
+  const MoreMenuModule(
+      titleKey: 'verify_document',
+      icon: Icons.qr_code_2,
+      route: AppRoutes.verifyDocument,
+      color: Colors.blueGrey,
+      permission: null),
   // Phase 24 — campaigns, emergency broadcast (security officer), assistant, my messages
   const MoreMenuModule(
       titleKey: 'campaigns',

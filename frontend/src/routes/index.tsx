@@ -99,7 +99,6 @@ const UndertakingGate = lazy(() =>
   import('@/features/students/pages/StudentPortal').then((m) => ({ default: m.UndertakingGate })),
 );
 const ParentHomePage = lazy(() => import('@/features/students/pages/ParentPortal'));
-const VerifyPage = lazy(() => import('@/features/students/pages/VerifyPage'));
 // Phase 09 — offerings & registration
 const OfferingsPage = lazy(() => import('@/features/registration/pages/OfferingsPage'));
 const OfferingRosterPage = lazy(() =>
@@ -185,6 +184,17 @@ const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultP
 const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
 const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
 const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 26 — document templates, certificates & requests
+const DocTemplatesPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.TemplatesPage })));
+const DocIssuedPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.IssuedRegisterPage })));
+const DocBulkPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.BulkGenerationPage })));
+const DocRegistersPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.SerialRegistersPage })));
+const DocRequestsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.RequestsQueuePage })));
+const DocSettingsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.DocumentSettingsPage })));
+const MyDocumentsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.MyDocumentsPage })));
+const WardDocumentsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.WardDocumentsPage })));
+const DocVerifyPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.DocVerifyPage })));
+const VerifyLandingPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.VerifyLandingPage })));
 // Phase 25 — calendar, events & facilities
 const FacCalendarPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.CalendarPage })));
 const FacEventsPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.EventsPage })));
@@ -368,7 +378,9 @@ export const router = createBrowserRouter([
   { path: '/opac', element: page(<OpacPage />) },
   { path: '/vendor/register', element: page(<VendorRegisterPage />) },
   { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
-  { path: '/verify/:token', element: page(<VerifyPage />) },
+  { path: '/verify', element: page(<VerifyLandingPage />) },
+  // Phase 26 — unified verification over the issued-document register (all types)
+  { path: '/verify/:token', element: page(<DocVerifyPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
   { path: '/results/lookup', element: page(<PublicResultLookupPage />) },
   // Phase 08 — public admissions: cycles, masked merit lists and the application wizard (account step needs no
@@ -560,6 +572,13 @@ export const router = createBrowserRouter([
               ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
               ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
               ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 26 — documents (role type limits and scopes in the services)
+              ['/admin/documents/templates', 'documents.templates', 'templates', 'view', [['templates', 'manage'], ['certificates', 'issue']], <DocTemplatesPage key="dt" />],
+              ['/admin/documents/issued', 'documents.templates', 'certificates', 'view_all', [['certificates', 'issue'], ['certificates', 'manage']], <DocIssuedPage key="di" />],
+              ['/admin/documents/bulk', 'documents.bulk_generation', 'certificates', 'issue', [['certificates', 'manage']], <DocBulkPage key="db" />],
+              ['/admin/documents/registers', 'documents.serial_registers', 'certificates', 'issue', [['certificates', 'view_all'], ['templates', 'manage']], <DocRegistersPage key="dr" />],
+              ['/admin/documents/requests', 'documents.certificate_requests', 'certificates', 'request_approve', [['certificates', 'issue'], ['certificates', 'view_all'], ['certificates', 'manage']], <DocRequestsPage key="dq" />],
+              ['/admin/documents/settings', 'documents.templates', 'templates', 'manage', [['certificates', 'manage']], <DocSettingsPage key="ds" />],
               // Phase 25 — calendar, events & facilities (narrowed by the services: self / department / college / all)
               ['/admin/events', 'events.core', 'events', 'view_all', [['events', 'organise'], ['events', 'approve'], ['events', 'manage']], <FacEventsPage key="fev" />],
               ['/admin/facilities/bookings', 'facilities.room_booking', 'facilities', 'approve_booking', [['facilities', 'view_all'], ['facilities', 'manage']], <FacBookingsPage key="fbk" />],
@@ -700,6 +719,8 @@ export const router = createBrowserRouter([
           { path: '/notifications', element: page(<NotificationsPage />) },
           { path: '/me/messages', element: page(<CommsMyMessagesPage />) },
           { path: '/assistant', element: page(<CommsAssistantPage />) },
+          // Phase 26 — staff documents (experience / service / NOC requests)
+          { path: '/staff/documents', element: page(<MyDocumentsPage />) },
           // Phase 25 — self-service campus pages (the API scopes every list to the caller)
           { path: '/calendar', element: page(<FacCalendarPage />) },
           { path: '/events', element: page(<FacEventsPage />) },
@@ -828,6 +849,7 @@ export const router = createBrowserRouter([
               ['exams/malpractice', <FeatureRoute key="smp" feature="results.malpractice"><StudentMalpracticePage /></FeatureRoute>],
               ['transcripts', <FeatureRoute key="str" feature="results.transcripts"><StudentTranscriptsPage /></FeatureRoute>],
               ['transport', <FeatureRoute key="tp" feature="transport.core"><MyTransportPage /></FeatureRoute>],
+              ['documents', <FeatureRoute key="doc" feature="documents.templates"><MyDocumentsPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -845,6 +867,7 @@ export const router = createBrowserRouter([
           { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
           { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
           { path: 'transport', element: page(<FeatureRoute feature="transport.core"><ParentTransportPage /></FeatureRoute>) },
+          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><WardDocumentsPage /></FeatureRoute>) },
         ],
       },
       {
@@ -875,12 +898,16 @@ export const router = createBrowserRouter([
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><FacultyAttendancePage /></FeatureRoute>) },
           { path: 'attendance/summary', element: page(<FeatureRoute feature="attendance.core"><FacultySummaryPage /></FeatureRoute>) },
+          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
       {
         path: '/alumni',
         element: <PortalRoute roles={['alumni']} title="Alumni" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        children: [
+          { index: true, element: page(<PortalHomePage />) },
+          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
+        ],
       },
       {
         path: '/warden',

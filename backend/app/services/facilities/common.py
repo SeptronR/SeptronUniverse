@@ -94,6 +94,7 @@ def visibility_scopes(p: Any, module: str) -> list[str]:
 class FacilitiesBase(StudentServiceBase):
     audit_module = "facilities"
     module = "facilities"
+    meta_category = META
 
     # ---- permissions --------------------------------------------------------------------------------------------------
     def require(self, *specs: str) -> None:
@@ -248,7 +249,7 @@ class FacilitiesBase(StudentServiceBase):
                 select(InstitutionSetting).where(
                     InstitutionSetting.institution_id == self.inst,
                     InstitutionSetting.college_id.is_(None),
-                    InstitutionSetting.category == META,
+                    InstitutionSetting.category == self.meta_category,
                     InstitutionSetting.key == f"{kind}:{rid}",
                 )
             )
@@ -265,7 +266,7 @@ class FacilitiesBase(StudentServiceBase):
                 InstitutionSetting(
                     institution_id=self.inst,
                     college_id=None,
-                    category=META,
+                    category=self.meta_category,
                     key=f"{kind}:{rid}",
                     value=value,
                     value_type="json",
@@ -278,7 +279,7 @@ class FacilitiesBase(StudentServiceBase):
 
     async def metas(self, kind: str, ids: list[Any] | None = None) -> dict[str, dict[str, Any]]:
         stmt = select(InstitutionSetting.key, InstitutionSetting.value).where(
-            InstitutionSetting.institution_id == self.inst, InstitutionSetting.category == META
+            InstitutionSetting.institution_id == self.inst, InstitutionSetting.category == self.meta_category
         )
         if ids is not None:
             if not ids:

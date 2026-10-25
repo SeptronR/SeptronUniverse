@@ -1098,6 +1098,85 @@ HOSTEL_EVENTS: tuple[EventDef, ...] = (
         ("in_app",),
     ),
 )
+# Phase 26 — document requests, issue / revoke, pickup
+DOCUMENT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "documents.request_received",
+        "approvals",
+        "Certificate request received",
+        "Certificate request: {{ type }}",
+        "A request for {{ type }} was received and is awaiting processing.",
+        ("type",),
+        ("in_app", "email"),
+        link="/student/documents",
+    ),
+    EventDef(
+        "documents.fee_pending",
+        "fees",
+        "Certificate fee pending",
+        "Pay the fee for your {{ type }}",
+        "Your {{ type }} request needs a fee of Rs {{ amount }} before it is processed.",
+        ("type", "amount"),
+        ("in_app", "email", "sms"),
+        link="/student/fees",
+    ),
+    EventDef(
+        "documents.approved",
+        "announcements",
+        "Certificate request approved",
+        "{{ type }} approved",
+        "Your {{ type }} request was approved and is being prepared.",
+        ("type",),
+        ("in_app", "push"),
+    ),
+    EventDef(
+        "documents.ready",
+        "announcements",
+        "Certificate ready",
+        "{{ type }} is ready",
+        "Your {{ type }} is ready ({{ delivery }}). Download it from My documents.",
+        ("type", "delivery", "request_id"),
+        ("in_app", "email", "push"),
+        link="/student/documents",
+    ),
+    EventDef(
+        "documents.rejected",
+        "announcements",
+        "Certificate request rejected",
+        "{{ type }} request rejected",
+        "Your {{ type }} request was rejected: {{ reason }}.",
+        ("type", "reason"),
+        ("in_app", "email"),
+    ),
+    EventDef(
+        "documents.issued",
+        "announcements",
+        "Document issued",
+        "Document {{ document_number }} issued",
+        "Document {{ document_number }} was issued to you.",
+        ("document_number",),
+        ("in_app",),
+        link="/student/documents",
+    ),
+    EventDef(
+        "documents.revoked",
+        "announcements",
+        "Document revoked",
+        "Document {{ document_number }} revoked",
+        "Document {{ document_number }} was revoked: {{ reason }}.",
+        ("document_number", "reason"),
+        ("in_app", "email"),
+    ),
+    EventDef(
+        "documents.pickup_ready",
+        "announcements",
+        "Certificate ready for pickup",
+        "{{ type }} ready for pickup",
+        "Collect your {{ type }} from the office on {{ on }} with your ID card.",
+        ("type", "on"),
+        ("in_app", "sms", "push"),
+    ),
+)
 # Phase 25 — calendar, events, bookings, service desk, visitors, SOS, wellness, sports, wallet
 FACILITIES_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -1763,6 +1842,7 @@ EVENTS = (
     + ACCOUNTING_EVENTS
     + COMMS_ADVANCED_EVENTS
     + FACILITIES_EVENTS
+    + DOCUMENT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

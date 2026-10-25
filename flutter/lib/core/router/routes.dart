@@ -66,6 +66,11 @@ class AppRoutes {
   static const wellness = '/app/wellness';
   static const wallet = '/app/wallet';
   static const gateScan = '/app/gate-scan';
+  // Phase 26 — documents, certificate queue, verify
+  static const myDocuments = '/app/documents';
+  static const wardDocuments = '/app/ward-documents';
+  static const certificateQueue = '/app/certificate-queue';
+  static const verifyDocument = '/app/verify';
   // Phase 24 — campaigns (communication officer), emergency broadcast, assistant, my messages
   static const campaigns = '/app/comms/campaigns';
   static const emergencyBroadcast = '/app/comms/emergency';
