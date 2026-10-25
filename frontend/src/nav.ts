@@ -236,6 +236,15 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Rank lists & medals', to: '/admin/results/medals', icon: GraduationCap, module: 'results', action: 'view_all', altActions: ['approve', 'manage'], feature: 'results.rank_lists' },
       { label: 'Result corrections', to: '/admin/results/corrections', icon: CheckSquare, module: 'results', action: 'verify', altActions: ['manage'], feature: 'results.processing' },
       { label: 'Detained & readmission', to: '/admin/students/detained', icon: UserRound, module: 'students', action: 'view_all', altActions: ['manage'], feature: 'results.processing' },
+      // Phase 25 — campus: calendar, events, facilities, security, wellness, sports, wallet
+      { label: 'Calendar', to: '/calendar', icon: CalendarCheck, module: 'calendar', action: 'view', altActions: ['manage'], feature: 'calendar.core' },
+      { label: 'Events', to: '/admin/events', icon: CalendarCheck, module: 'events', action: 'view_all', altActions: ['organise', 'approve', 'manage'], feature: 'events.core' },
+      { label: 'Bookings', to: '/admin/facilities/bookings', icon: MapPin, module: 'facilities', action: 'approve_booking', altActions: ['view_all', 'manage'], feature: 'facilities.room_booking' },
+      { label: 'Service desk', to: '/admin/facilities/service-desk', icon: Repeat, module: 'facilities', action: 'service_assign', altActions: ['view_all', 'manage'], feature: 'facilities.service_desk' },
+      { label: 'Security', to: '/admin/security', icon: Activity, module: 'facilities', action: 'manage', altActions: ['view_all'], feature: 'facilities.visitor_gate' },
+      { label: 'Wellness', to: '/wellness', icon: Activity, module: 'health', action: 'view', altActions: ['record', 'view_all'], feature: 'facilities.health_centre' },
+      { label: 'Sports', to: '/admin/sports', icon: TrendingUp, module: 'sports', action: 'manage', altActions: ['view_all'], feature: 'facilities.sports' },
+      { label: 'Canteen & wallet', to: '/wallet', icon: Banknote, module: 'facilities', action: 'view', altActions: ['manage'], feature: 'facilities.canteen_wallet' },
       // Phase 24 — communication advanced
       { label: 'Campaigns', to: '/admin/comms/campaigns', icon: Radio, module: 'communication', action: 'bulk', altActions: ['send', 'approve', 'manage'], feature: 'comms.bulk_campaigns' },
       { label: 'Audience segments', to: '/admin/comms/segments', icon: UserRound, module: 'communication', action: 'bulk', altActions: ['send', 'manage'], feature: 'comms.bulk_campaigns' },

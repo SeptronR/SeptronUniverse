@@ -185,6 +185,15 @@ const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultP
 const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
 const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
 const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 25 — calendar, events & facilities
+const FacCalendarPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.CalendarPage })));
+const FacEventsPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.EventsPage })));
+const FacBookingsPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.BookingsPage })));
+const FacServiceDeskPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.ServiceDeskPage })));
+const FacSecurityPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.SecurityPage })));
+const FacWellnessPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.WellnessPage })));
+const FacSportsPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.SportsPage })));
+const FacWalletPage = lazy(() => import('@/features/facilities/pages/FacilitiesPages').then((m) => ({ default: m.WalletPage })));
 // Phase 24 — communication advanced
 const CommsSegmentsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.SegmentsPage })));
 const CommsCampaignsPage = lazy(() => import('@/features/comms_advanced/pages/CommsAdvancedPages').then((m) => ({ default: m.CampaignsPage })));
@@ -551,6 +560,12 @@ export const router = createBrowserRouter([
               ['/admin/results/medals', 'results.rank_lists', 'results', 'view_all', [['results', 'approve'], ['results', 'manage']], <RankMedalsPage key="pr6" />],
               ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
               ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
+              // Phase 25 — calendar, events & facilities (narrowed by the services: self / department / college / all)
+              ['/admin/events', 'events.core', 'events', 'view_all', [['events', 'organise'], ['events', 'approve'], ['events', 'manage']], <FacEventsPage key="fev" />],
+              ['/admin/facilities/bookings', 'facilities.room_booking', 'facilities', 'approve_booking', [['facilities', 'view_all'], ['facilities', 'manage']], <FacBookingsPage key="fbk" />],
+              ['/admin/facilities/service-desk', 'facilities.service_desk', 'facilities', 'service_assign', [['facilities', 'view_all'], ['facilities', 'manage']], <FacServiceDeskPage key="fsd" />],
+              ['/admin/security', 'facilities.visitor_gate', 'facilities', 'manage', [['facilities', 'view_all']], <FacSecurityPage key="fse" />],
+              ['/admin/sports', 'facilities.sports', 'sports', 'manage', [['sports', 'view_all']], <FacSportsPage key="fsp" />],
               // Phase 24 — communication advanced (audience narrowed by the services: department / college / all)
               ['/admin/comms/campaigns', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'send'], ['communication', 'approve'], ['communication', 'manage']], <CommsCampaignsPage key="cc" />],
               ['/admin/comms/segments', 'comms.bulk_campaigns', 'communication', 'bulk', [['communication', 'send'], ['communication', 'manage']], <CommsSegmentsPage key="cs" />],
@@ -685,6 +700,14 @@ export const router = createBrowserRouter([
           { path: '/notifications', element: page(<NotificationsPage />) },
           { path: '/me/messages', element: page(<CommsMyMessagesPage />) },
           { path: '/assistant', element: page(<CommsAssistantPage />) },
+          // Phase 25 — self-service campus pages (the API scopes every list to the caller)
+          { path: '/calendar', element: page(<FacCalendarPage />) },
+          { path: '/events', element: page(<FacEventsPage />) },
+          { path: '/facilities/bookings', element: page(<FacBookingsPage />) },
+          { path: '/requests', element: page(<FacServiceDeskPage />) },
+          { path: '/wellness', element: page(<FacWellnessPage />) },
+          { path: '/sports', element: page(<FacSportsPage />) },
+          { path: '/wallet', element: page(<FacWalletPage />) },
           {
             path: '/profile/notifications',
             element: page(

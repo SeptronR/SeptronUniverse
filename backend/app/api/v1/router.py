@@ -47,6 +47,8 @@ from app.api.v1.endpoints import (
     assessment,
     attendance,
     auth,
+    calendar,
+    campus,
     catalog,
     comms_advanced,
     communication,
@@ -56,7 +58,9 @@ from app.api.v1.endpoints import (
     curriculum,
     degrees,
     enrollments,
+    events,
     exams,
+    facilities,
     features,
     feedback,
     fees,
@@ -175,6 +179,15 @@ api_router.include_router(accounting.router)
 # features) and the public WhatsApp webhook (verify token / signature; checks {comms.whatsapp_bot} itself)
 api_router.include_router(comms_advanced.router)
 api_router.include_router(comms_advanced.public_router)
+# Phase 25: calendar (+ public institution / college / personal .ics), events (+ public list / external registration),
+# facilities (bookings, service desk, AMC, lost & found, visitors, reports) and campus services (SOS, health,
+# counselling, sports, wallet) — each route carries its calendar.* / events.* / facilities.* feature
+api_router.include_router(calendar.router)
+api_router.include_router(calendar.public_router)
+api_router.include_router(events.router)
+api_router.include_router(events.public_router)
+api_router.include_router(facilities.router)
+api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
 api_router.include_router(results.router, dependencies=[feature_required("exams.sessions")])

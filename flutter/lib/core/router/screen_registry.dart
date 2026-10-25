@@ -19,6 +19,8 @@ import '../../features/hostel/hostel_screens.dart';
 import '../../features/transport/transport_screens.dart';
 import '../../features/inventory/inventory_screens.dart';
 import '../../features/accounting/accounting_screens.dart';
+import '../../features/communication/comms_screens.dart';
+import '../../features/facilities/facilities_screens.dart';
 import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
@@ -330,6 +332,84 @@ class ScreenRegistry {
       feature: 'results.revaluation',
       permission: 'exams:reval',
       builder: (_, __) => const RevalQueueScreen(),
+    ),
+    // Phase 25 — calendar, events & facilities
+    AppRoutes.sos: ScreenEntry(
+      route: AppRoutes.sos,
+      titleKey: 'sos',
+      feature: 'facilities.emergency_sos',
+      permission: 'facilities:view|facilities:book',
+      builder: (_, __) => const SosScreen(),
+    ),
+    AppRoutes.sosResponder: ScreenEntry(
+      route: AppRoutes.sosResponder,
+      titleKey: 'sos_responder',
+      feature: 'facilities.emergency_sos',
+      permission: 'facilities:manage',
+      builder: (_, __) => const SosResponderScreen(),
+    ),
+    AppRoutes.campusEvents: ScreenEntry(
+      route: AppRoutes.campusEvents,
+      titleKey: 'events',
+      feature: 'events.core',
+      permission: 'events:view|events:organise',
+      builder: (_, __) => const CampusEventsScreen(),
+    ),
+    AppRoutes.serviceRequests: ScreenEntry(
+      route: AppRoutes.serviceRequests,
+      titleKey: 'service_requests',
+      feature: 'facilities.service_desk',
+      permission: 'facilities:view|facilities:book',
+      builder: (_, __) => const ServiceRequestsScreen(),
+    ),
+    AppRoutes.wellness: ScreenEntry(
+      route: AppRoutes.wellness,
+      titleKey: 'wellness',
+      feature: 'facilities.counselling_appointments',
+      permission: 'facilities:view|facilities:book',
+      builder: (_, __) => const WellnessScreen(),
+    ),
+    AppRoutes.wallet: ScreenEntry(
+      route: AppRoutes.wallet,
+      titleKey: 'wallet',
+      feature: 'facilities.canteen_wallet',
+      permission: 'facilities:view',
+      builder: (_, __) => const WalletScreen(),
+    ),
+    AppRoutes.gateScan: ScreenEntry(
+      route: AppRoutes.gateScan,
+      titleKey: 'gate_scan',
+      feature: 'facilities.visitor_gate',
+      permission: 'facilities:manage',
+      builder: (_, __) => const VisitorGateScanScreen(),
+    ),
+    // Phase 24 — communication advanced
+    AppRoutes.campaigns: ScreenEntry(
+      route: AppRoutes.campaigns,
+      titleKey: 'campaigns',
+      feature: 'comms.bulk_campaigns',
+      permission: 'communication:bulk|communication:approve|communication:view_all',
+      builder: (_, __) => const CampaignsScreen(),
+    ),
+    AppRoutes.emergencyBroadcast: ScreenEntry(
+      route: AppRoutes.emergencyBroadcast,
+      titleKey: 'emergency_broadcast',
+      feature: 'comms.emergency_broadcast',
+      permission: 'communication:emergency',
+      builder: (_, __) => const EmergencyBroadcastScreen(),
+    ),
+    AppRoutes.assistant: ScreenEntry(
+      route: AppRoutes.assistant,
+      titleKey: 'assistant',
+      feature: 'comms.ai_assistant',
+      builder: (_, __) => const AssistantScreen(),
+    ),
+    AppRoutes.myMessages: ScreenEntry(
+      route: AppRoutes.myMessages,
+      titleKey: 'my_messages',
+      feature: 'comms.announcements',
+      permission: 'communication:view|communication:send|communication:bulk',
+      builder: (_, __) => const MyMessagesScreen(),
     ),
     // Phase 23 — accounting
     AppRoutes.accountingHome: ScreenEntry(
