@@ -66,6 +66,18 @@ class AppRoutes {
   static const wellness = '/app/wellness';
   static const wallet = '/app/wallet';
   static const gateScan = '/app/gate-scan';
+  // Phase 27 — mentoring, early warning, grievances, discipline, surveys, clubs
+  static const mentees = '/app/mentees';
+  static const mentorSlots = '/app/mentor-slots';
+  static const highRisk = '/app/high-risk';
+  static const myMentor = '/app/my-mentor';
+  static const grievances = '/app/grievances';
+  static const grievanceBoard = '/app/grievance-board';
+  static const disciplineNotices = '/app/discipline';
+  static const surveys = '/app/surveys';
+  static const clubs = '/app/clubs';
+  static const hoursVerification = '/app/hours-verification';
+  static const parentSupport = '/app/parent-support';
   // Phase 26 — documents, certificate queue, verify
   static const myDocuments = '/app/documents';
   static const wardDocuments = '/app/ward-documents';

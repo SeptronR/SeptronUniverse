@@ -136,6 +136,16 @@ register_beat("documents.pickup_reminders", "beat.documents.pickup_reminders", c
 register_beat("documents.signed_link_cleanup", "beat.documents.signed_link_cleanup", crontab(minute=17))
 register_beat("documents.preview_cleanup", "beat.documents.preview_cleanup", crontab(hour=20, minute=45))
 
+# ---- Phase 27 mentoring / grievances / discipline / surveys (app/tasks/student_support.py) --------------------------------
+register_beat("mentoring.follow_up_reminders", "beat.mentoring.follow_up_reminders", crontab(hour=2, minute=45))  # 08:15 IST
+register_beat("mentoring.min_sessions_check", "beat.mentoring.min_sessions_check", crontab(day_of_month=1, hour=3, minute=0))
+register_beat("risk.compute_weekly", "beat.risk.compute_weekly", crontab(day_of_week=0, hour=20, minute=15))
+register_beat("grievances.sla_scan", "beat.grievances.sla_scan", crontab(minute=35))
+register_beat("grievances.auto_close", "beat.grievances.auto_close", crontab(hour=20, minute=10))
+register_beat("surveys.reminders", "beat.surveys.reminders", crontab(hour=3, minute=30))
+register_beat("surveys.auto_close", "beat.surveys.auto_close", crontab(minute=40))
+register_beat("discipline.appeal_window", "beat.discipline.appeal_window", crontab(hour=20, minute=20))
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

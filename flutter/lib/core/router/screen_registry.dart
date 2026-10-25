@@ -21,6 +21,7 @@ import '../../features/inventory/inventory_screens.dart';
 import '../../features/accounting/accounting_screens.dart';
 import '../../features/communication/comms_screens.dart';
 import '../../features/documents/documents_screens.dart';
+import '../../features/student_support/support_screens.dart';
 import '../../features/facilities/facilities_screens.dart';
 import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
@@ -383,6 +384,83 @@ class ScreenRegistry {
       feature: 'facilities.visitor_gate',
       permission: 'facilities:manage',
       builder: (_, __) => const VisitorGateScanScreen(),
+    ),
+    // Phase 27 — student support
+    AppRoutes.mentees: ScreenEntry(
+      route: AppRoutes.mentees,
+      titleKey: 'mentees',
+      feature: 'mentoring.core',
+      permission: 'mentoring:manage',
+      builder: (_, __) => const MenteesScreen(),
+    ),
+    AppRoutes.mentorSlots: ScreenEntry(
+      route: AppRoutes.mentorSlots,
+      titleKey: 'mentor_slots',
+      feature: 'mentoring.appointment_slots',
+      permission: 'mentoring:manage',
+      builder: (_, __) => const MentorSlotsScreen(),
+    ),
+    AppRoutes.highRisk: ScreenEntry(
+      route: AppRoutes.highRisk,
+      titleKey: 'high_risk',
+      feature: 'mentoring.early_warning',
+      permission: 'mentoring:view_all',
+      builder: (_, __) => const HighRiskScreen(),
+    ),
+    AppRoutes.myMentor: ScreenEntry(
+      route: AppRoutes.myMentor,
+      titleKey: 'my_mentor',
+      feature: 'mentoring.core',
+      permission: 'mentoring:self',
+      builder: (_, __) => const MyMentorScreen(),
+    ),
+    AppRoutes.grievances: ScreenEntry(
+      route: AppRoutes.grievances,
+      titleKey: 'grievances',
+      feature: 'grievances.core',
+      permission: 'grievances:create',
+      builder: (_, __) => const GrievancesScreen(),
+    ),
+    AppRoutes.grievanceBoard: ScreenEntry(
+      route: AppRoutes.grievanceBoard,
+      titleKey: 'grievance_board',
+      feature: 'grievances.core',
+      permission: 'grievances:triage',
+      builder: (_, __) => const GrievanceBoardScreen(),
+    ),
+    AppRoutes.disciplineNotices: ScreenEntry(
+      route: AppRoutes.disciplineNotices,
+      titleKey: 'discipline_notices',
+      feature: 'discipline.core',
+      builder: (_, __) => const DisciplineNoticesScreen(),
+    ),
+    AppRoutes.surveys: ScreenEntry(
+      route: AppRoutes.surveys,
+      titleKey: 'surveys',
+      feature: 'surveys.core',
+      permission: 'surveys:respond',
+      builder: (_, __) => const SurveysScreen(),
+    ),
+    AppRoutes.clubs: ScreenEntry(
+      route: AppRoutes.clubs,
+      titleKey: 'clubs',
+      feature: 'clubs.core',
+      permission: 'clubs:view',
+      builder: (_, __) => const ClubsScreen(),
+    ),
+    AppRoutes.hoursVerification: ScreenEntry(
+      route: AppRoutes.hoursVerification,
+      titleKey: 'hours_verification',
+      feature: 'clubs.core',
+      permission: 'clubs:verify_hours',
+      builder: (_, __) => const HoursVerificationScreen(),
+    ),
+    AppRoutes.parentSupport: ScreenEntry(
+      route: AppRoutes.parentSupport,
+      titleKey: 'parent_support',
+      feature: 'mentoring.core',
+      permission: 'mentoring:wards',
+      builder: (_, __) => const ParentSupportScreen(),
     ),
     // Phase 26 — documents
     AppRoutes.myDocuments: ScreenEntry(

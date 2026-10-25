@@ -184,6 +184,28 @@ const DetainedPage = lazy(() => import('@/features/post_result/pages/PostResultP
 const StudentRevalPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentRevalPage })));
 const StudentMalpracticePage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentMalpracticePage })));
 const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/PostResultPages').then((m) => ({ default: m.StudentTranscriptsPage })));
+// Phase 27 — mentoring, early warning, grievances, discipline, surveys, clubs, committees stub
+const SsMentoringAdminPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.MentoringAdminPage })));
+const SsMenteesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.MenteesPage })));
+const SsMentee360Page = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.Mentee360Page })));
+const SsRiskPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.RiskPage })));
+const SsGrievancesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievancesAdminPage })));
+const SsGrievanceTicketPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievanceTicketPage })));
+const SsStudentGrievancesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentGrievancesPage })));
+const SsPublicGrievancePage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.PublicGrievancePage })));
+const SsGrievanceTrackPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievanceTrackPage })));
+const SsDisciplinePage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.DisciplinePage })));
+const SsDisciplineCasePage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.DisciplineCasePage })));
+const SsStudentDisciplinePage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentDisciplinePage })));
+const SsSurveysAdminPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.SurveysAdminPage })));
+const SsSurveyDetailPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.SurveyDetailPage })));
+const SsMySurveysPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.MySurveysPage })));
+const SsFacultySurveysPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.FacultySurveysPage })));
+const SsClubsAdminPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.ClubsAdminPage })));
+const SsStudentClubsPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentClubsPage })));
+const SsStudentMentorPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentMentorPage })));
+const SsParentSupportPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.ParentSupportPage })));
+const SsCommitteesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.CommitteesStubPage })));
 // Phase 26 — document templates, certificates & requests
 const DocTemplatesPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.TemplatesPage })));
 const DocIssuedPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.IssuedRegisterPage })));
@@ -378,6 +400,9 @@ export const router = createBrowserRouter([
   { path: '/opac', element: page(<OpacPage />) },
   { path: '/vendor/register', element: page(<VendorRegisterPage />) },
   { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
+  // Phase 27 — public anonymous grievance form and tracking (tenant from ?institution=)
+  { path: '/grievance', element: page(<SsPublicGrievancePage />) },
+  { path: '/grievance/track', element: page(<SsGrievanceTrackPage />) },
   { path: '/verify', element: page(<VerifyLandingPage />) },
   // Phase 26 — unified verification over the issued-document register (all types)
   { path: '/verify/:token', element: page(<DocVerifyPage />) },
@@ -573,6 +598,17 @@ export const router = createBrowserRouter([
               ['/admin/results/corrections', 'results.processing', 'results', 'verify', [['marks', 'correct'], ['results', 'manage']], <CorrectionsPage key="pr7" />],
               ['/admin/students/detained', 'results.processing', 'students', 'view_all', [['students', 'manage']], <DetainedPage key="pr8" />],
               // Phase 26 — documents (role type limits and scopes in the services)
+              // Phase 27 — student support (ownership / confidentiality / scopes in the services)
+              ['/admin/mentoring', 'mentoring.core', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsMentoringAdminPage key="ssm" />],
+              ['/admin/risk', 'mentoring.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsRiskPage key="ssr" />],
+              ['/admin/grievances', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievancesPage key="ssg" />],
+              ['/admin/grievances/:id', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievanceTicketPage key="ssgt" />],
+              ['/admin/discipline', 'discipline.core', 'discipline', 'view_all', [['discipline', 'manage'], ['discipline', 'decide'], ['discipline', 'view']], <SsDisciplinePage key="ssd" />],
+              ['/admin/discipline/:id', 'discipline.core', 'discipline', 'view_all', [['discipline', 'manage'], ['discipline', 'decide'], ['discipline', 'view']], <SsDisciplineCasePage key="ssdc" />],
+              ['/admin/surveys', 'surveys.core', 'surveys', 'manage', [['surveys', 'view_all'], ['surveys', 'analyse']], <SsSurveysAdminPage key="sss" />],
+              ['/admin/surveys/:id', 'surveys.core', 'surveys', 'manage', [['surveys', 'view_all'], ['surveys', 'analyse']], <SsSurveyDetailPage key="sssd" />],
+              ['/admin/clubs', 'clubs.core', 'clubs', 'view_all', [['clubs', 'verify_hours'], ['clubs', 'manage']], <SsClubsAdminPage key="ssc" />],
+              ['/admin/governance/committees', 'governance.committees', 'governance', 'committees', [['governance', 'manage'], ['governance', 'view']], <SsCommitteesPage key="ssgc" />],
               ['/admin/documents/templates', 'documents.templates', 'templates', 'view', [['templates', 'manage'], ['certificates', 'issue']], <DocTemplatesPage key="dt" />],
               ['/admin/documents/issued', 'documents.templates', 'certificates', 'view_all', [['certificates', 'issue'], ['certificates', 'manage']], <DocIssuedPage key="di" />],
               ['/admin/documents/bulk', 'documents.bulk_generation', 'certificates', 'issue', [['certificates', 'manage']], <DocBulkPage key="db" />],
@@ -850,6 +886,11 @@ export const router = createBrowserRouter([
               ['transcripts', <FeatureRoute key="str" feature="results.transcripts"><StudentTranscriptsPage /></FeatureRoute>],
               ['transport', <FeatureRoute key="tp" feature="transport.core"><MyTransportPage /></FeatureRoute>],
               ['documents', <FeatureRoute key="doc" feature="documents.templates"><MyDocumentsPage /></FeatureRoute>],
+              ['mentor', <FeatureRoute key="ssm" feature="mentoring.core"><SsStudentMentorPage /></FeatureRoute>],
+              ['grievances', <FeatureRoute key="ssg" feature="grievances.core"><SsStudentGrievancesPage /></FeatureRoute>],
+              ['discipline', <FeatureRoute key="ssd" feature="discipline.core"><SsStudentDisciplinePage /></FeatureRoute>],
+              ['surveys', <FeatureRoute key="sss" feature="surveys.core"><SsMySurveysPage /></FeatureRoute>],
+              ['clubs', <FeatureRoute key="ssc" feature="clubs.core"><SsStudentClubsPage /></FeatureRoute>],
             ] as const
           ).map(([path, node]) => ({ path, element: page(<UndertakingGate>{node}</UndertakingGate>) })),
         ],
@@ -868,6 +909,7 @@ export const router = createBrowserRouter([
           { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
           { path: 'transport', element: page(<FeatureRoute feature="transport.core"><ParentTransportPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><WardDocumentsPage /></FeatureRoute>) },
+          { path: 'support', element: page(<FeatureRoute feature="mentoring.core"><SsParentSupportPage /></FeatureRoute>) },
         ],
       },
       {
@@ -898,6 +940,9 @@ export const router = createBrowserRouter([
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><FacultyAttendancePage /></FeatureRoute>) },
           { path: 'attendance/summary', element: page(<FeatureRoute feature="attendance.core"><FacultySummaryPage /></FeatureRoute>) },
+          { path: 'mentees', element: page(<FeatureRoute feature="mentoring.core"><SsMenteesPage /></FeatureRoute>) },
+          { path: 'mentees/:enrollmentId', element: page(<FeatureRoute feature="mentoring.core"><SsMentee360Page /></FeatureRoute>) },
+          { path: 'surveys', element: page(<FeatureRoute feature="surveys.core"><SsFacultySurveysPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
