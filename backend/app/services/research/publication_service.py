@@ -59,7 +59,14 @@ def _similar(a: str, b: str) -> float:
 class PublicationService(ResearchBase):
     # ---- reads ----------------------------------------------------------------------------------------------------------
     async def predicate(self, scope: str | None = None) -> Any:
-        return await self.owned_predicate(Publication.staff_id, scope=scope, json_col=Publication.authors)
+        extra = (
+            await self.scholar_ownership(Publication.scholar_id, Publication.authors)
+            if scope in (None, "self", "mine", "own")
+            else []
+        )
+        return await self.owned_predicate(
+            Publication.staff_id, scope=scope, json_col=Publication.authors, extra_self=extra
+        )
 
     async def row(self, pid: uuid.UUID, *, lock: bool = False, visible: bool = True) -> Publication:
         stmt = select(Publication).where(Publication.id == pid, Publication.institution_id == self.inst)

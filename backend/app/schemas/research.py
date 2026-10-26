@@ -418,6 +418,7 @@ class EthicsApplication(_Strict):
     category: EthicsCategory = EthicsCategory.EXPEDITED
     project_id: uuid.UUID | None = None
     reviewer_staff_id: uuid.UUID | None = None
+    scholar_id: uuid.UUID | None = None  # Phase 31: PhD work of a research scholar
 
 
 class EthicsReview(_Strict):
@@ -444,6 +445,7 @@ class EthicsApplicationOut(BaseModel):
     pi_name: str | None = None
     submitted_on: date | None = None
     category: str | None = None
+    scholar_id: uuid.UUID | None = None
     decision: str | None = None
     status: str = "under_review"
     approval_no: str | None = None

@@ -217,6 +217,24 @@ register_beat(
     crontab(day_of_month=1, hour=3, minute=15),
 )
 
+# ---- Phase 31 PhD & research scholars (app/tasks/phd.py) ----------------------------------------------------------------------
+register_beat(
+    "phd.progress_due_reminders", "beat.phd.progress_due_reminders", crontab(day_of_week=1, hour=3, minute=20)
+)  # Mon 08:50 IST
+register_beat("phd.duration_scan", "beat.phd.duration_scan", crontab(day_of_week=1, hour=3, minute=40))  # Mon 09:10 IST
+register_beat(
+    "phd.examiner_report_reminders", "beat.phd.examiner_report_reminders", crontab(day_of_week=2, hour=3, minute=20)
+)  # Tue 08:50 IST
+register_beat(
+    "phd.etd_deadline_reminders", "beat.phd.etd_deadline_reminders", crontab(day_of_week=3, hour=3, minute=20)
+)  # Wed 08:50 IST
+register_beat(
+    "phd.fellowship_upgrade_check", "beat.phd.fellowship_upgrade_check", crontab(day_of_month=2, hour=2, minute=40)
+)
+register_beat(
+    "phd.coursework_deadline_scan", "beat.phd.coursework_deadline_scan", crontab(day_of_month=3, hour=2, minute=40)
+)
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

@@ -248,6 +248,24 @@ const RsStartupsPage = lazy(() => import('@/features/research/pages/ResearchPage
 const RsApiScorePage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.ApiScorePage })));
 const RsStatsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.StatsPage })));
 const RsFacultyResearchPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.FacultyResearchPage })));
+// Phase 31 — PhD & research scholars
+const PhdScholarsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdScholarsPage })));
+const PhdScholarPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdScholarPage })));
+const PhdGuidesPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdGuidesPage })));
+const PhdFellowshipsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdFellowshipsPage })));
+const PhdRequestsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdRequestsPage })));
+const PhdThesisQueuePage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdThesisQueuePage })));
+const PhdExaminersPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdExaminersPage })));
+const PhdVivaPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdVivaPage })));
+const PhdAwardsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdAwardsPage })));
+const PhdStatsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdStatsPage })));
+const PhdScholarHomePage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ScholarHomePage })));
+const PhdScholarProgressPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ScholarProgressPage })));
+const PhdScholarThesisPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ScholarThesisPage })));
+const PhdScholarFellowshipPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ScholarFellowshipPage })));
+const PhdScholarRequestsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ScholarRequestsPage })));
+const PhdScholarCourseworkPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ScholarCourseworkPage })));
+const PhdExaminerTokenPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.ExaminerTokenPage })));
 const PlStudentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.StudentPlacementPage })));
 const PlParentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.ParentPlacementPage })));
 const PlFacultyInternshipsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.FacultyInternshipsPage })));
@@ -456,6 +474,8 @@ export const router = createBrowserRouter([
   { path: '/verify', element: page(<VerifyLandingPage />) },
   // Phase 26 — unified verification over the issued-document register (all types)
   { path: '/verify/:token', element: page(<DocVerifyPage />) },
+  // Phase 31 — external examiner invitation / report (unguessable token; tenant by ?institution=<slug>)
+  { path: '/examiner/respond/:token', element: page(<PhdExaminerTokenPage />) },
   // Phase 15 — public result lookup (reg. no + DOB; the API checks the setting / audience)
   { path: '/results/lookup', element: page(<PublicResultLookupPage />) },
   // Phase 08 — public admissions: cycles, masked merit lists and the application wizard (account step needs no
@@ -679,6 +699,17 @@ export const router = createBrowserRouter([
               ['/admin/alumni/jobs', 'alumni.jobs_board', 'alumni', 'manage', [['alumni', 'view_all'], ['placement', 'manage']], <AlJobsAdminPage key="alj" />],
               ['/admin/alumni/fundraising', 'alumni.fundraising', 'fundraising', 'manage', [['alumni', 'campaign'], ['fundraising', 'receipt'], ['fundraising', 'view_all']], <AlFundraisingPage key="alf" />],
               ['/admin/alumni/stats', 'alumni.core', 'alumni', 'view_all', [['alumni', 'manage']], <AlStatsPage key="als" />],
+              // Phase 31 — PhD & research scholars (self / guide / DC / unit / all narrowed by the services)
+              ['/admin/phd/scholars', 'phd.core', 'phd', 'view', [['phd', 'view_all'], ['phd', 'manage'], ['phd', 'guide'], ['phd', 'dc']], <PhdScholarsPage key="phs" />],
+              ['/admin/phd/scholars/:id', 'phd.core', 'phd', 'view', [['phd', 'view_all'], ['phd', 'manage'], ['phd', 'guide'], ['phd', 'dc']], <PhdScholarPage key="phsd" />],
+              ['/admin/phd/guides', 'phd.core', 'phd', 'view_all', [['phd', 'manage'], ['phd', 'dc']], <PhdGuidesPage key="phg" />],
+              ['/admin/phd/fellowships', 'phd.fellowships', 'phd', 'fellowship', [['phd', 'manage'], ['accounting', 'view_all']], <PhdFellowshipsPage key="phf" />],
+              ['/admin/phd/requests', 'phd.extensions_guide_change', 'phd', 'manage', [['phd', 'approve'], ['phd', 'view_all']], <PhdRequestsPage key="phr" />],
+              ['/admin/phd/thesis', 'phd.thesis_plagiarism', 'phd', 'manage', [['phd', 'view_all'], ['phd', 'dc']], <PhdThesisQueuePage key="pht" />],
+              ['/admin/phd/examiners', 'phd.external_examiners', 'phd', 'examine', [['phd', 'manage'], ['phd', 'approve']], <PhdExaminersPage key="phx" />],
+              ['/admin/phd/viva', 'phd.viva', 'phd', 'examine', [['phd', 'manage'], ['phd', 'view_all']], <PhdVivaPage key="phv" />],
+              ['/admin/phd/awards', 'phd.core', 'phd', 'manage', [['phd', 'etd'], ['phd', 'view_all']], <PhdAwardsPage key="pha" />],
+              ['/admin/phd/stats', 'phd.core', 'phd', 'view_all', [['phd', 'manage'], ['reports', 'statutory']], <PhdStatsPage key="phst" />],
               // Phase 30 — research & faculty development (ownership, scopes, locks and workflows in the services)
               ['/admin/research/publications', 'research.publications', 'research', 'view', [['research', 'view_all'], ['research', 'manage']], <RsPublicationsPage key="rsp" />],
               ['/admin/research/verification', 'research.publications', 'research', 'verify', [['research', 'manage']], <RsPublicationsPage key="rsv" verification />],
@@ -1035,6 +1066,9 @@ export const router = createBrowserRouter([
           // Phase 30 — my research (profile, publications, patents, projects PI dashboard, incentives, FDP, API score)
           { path: 'research', element: page(<FeatureRoute feature="research.publications"><RsFacultyResearchPage /></FeatureRoute>) },
           { path: 'research/projects/:id', element: page(<FeatureRoute feature="research.projects_grants"><RsProjectPage /></FeatureRoute>) },
+          // Phase 31 — guide portal: own scholars (reviews, DC, panel proposal, request recommendations)
+          { path: 'scholars', element: page(<FeatureRoute feature="phd.core"><PhdScholarsPage portal /></FeatureRoute>) },
+          { path: 'scholars/:id', element: page(<FeatureRoute feature="phd.core"><PhdScholarPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
@@ -1078,7 +1112,17 @@ export const router = createBrowserRouter([
       {
         path: '/scholar',
         element: <PortalRoute roles={['research_scholar']} title="Scholar" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        // Phase 31 — scholar portal {phd.scholar_portal}: dashboard, coursework, progress & DC, thesis & viva, fellowship, requests
+        children: [
+          { index: true, element: page(<FeatureRoute feature="phd.scholar_portal"><PhdScholarHomePage /></FeatureRoute>) },
+          { path: 'coursework', element: page(<FeatureRoute feature="phd.coursework"><PhdScholarCourseworkPage /></FeatureRoute>) },
+          { path: 'progress', element: page(<FeatureRoute feature="phd.progress_reports"><PhdScholarProgressPage /></FeatureRoute>) },
+          { path: 'dc', element: page(<FeatureRoute feature="phd.dc_meetings"><PhdScholarProgressPage /></FeatureRoute>) },
+          { path: 'thesis', element: page(<FeatureRoute feature="phd.thesis_plagiarism"><PhdScholarThesisPage /></FeatureRoute>) },
+          { path: 'fellowship', element: page(<FeatureRoute feature="phd.fellowships"><PhdScholarFellowshipPage /></FeatureRoute>) },
+          { path: 'requests', element: page(<FeatureRoute feature="phd.extensions_guide_change"><PhdScholarRequestsPage /></FeatureRoute>) },
+          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
+        ],
       },
       {
         path: '/recruiter',

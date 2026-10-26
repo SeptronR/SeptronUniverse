@@ -32,6 +32,11 @@ class TemplateType(StrEnum):
     # Phase 29: donation 80G receipt (bilingual variant) and the alumni membership card
     DONATION_RECEIPT_80G = "donation_receipt_80g"
     ALUMNI_MEMBERSHIP_CARD = "alumni_membership_card"
+    # Phase 31: PhD registration letter, synopsis acknowledgement, provisional PhD certificate, examiner invitation
+    PHD_REGISTRATION_LETTER = "phd_registration_letter"
+    PHD_SYNOPSIS_ACK = "phd_synopsis_ack"
+    PHD_PROVISIONAL_CERTIFICATE = "phd_provisional_certificate"
+    EXAMINER_INVITATION = "examiner_invitation"
     CUSTOM = "custom"
 
 

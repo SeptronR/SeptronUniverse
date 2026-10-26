@@ -65,6 +65,10 @@ TITLES: dict[str, str] = {
     "offer_letter": "Offer Letter",
     "donation_receipt_80g": "Donation Receipt (Section 80G)",
     "alumni_membership_card": "Alumni Membership Card",
+    "phd_registration_letter": "PhD Registration Letter",
+    "phd_synopsis_ack": "Acknowledgement of Synopsis Submission",
+    "phd_provisional_certificate": "Provisional Certificate (Doctor of Philosophy)",
+    "examiner_invitation": "Invitation to Examine a PhD Thesis",
     "custom": "Certificate",
 }
 
@@ -119,6 +123,19 @@ BODIES: dict[str, str] = {
     "{{ g80.valid_to }}.",
     "alumni_membership_card": "{{ alumni.name }}<br>{{ alumni.program }} · {{ alumni.batch }}<br>Member No. "
     "{{ alumni.member_no }}",
+    "phd_registration_letter": f"This is to certify that {_S} is registered for the Doctor of Philosophy programme "
+    "({{ scholar.mode }}) in {{ enrolment.department }} with effect from {{ scholar.registration_date }} under the guidance "
+    "of {{ scholar.guide }}{% if scholar.co_guide %} and {{ scholar.co_guide }}{% endif %}. Area of research: "
+    "{{ scholar.research_area }}. The thesis is to be submitted on or before {{ scholar.max_duration_end }}.",
+    "phd_synopsis_ack": f"Received the synopsis “{{{{ thesis.title }}}}” of {_S}, research scholar in "
+    "{{ enrolment.department }}, on {{ thesis.submitted_on }}. Similarity index: {{ thesis.similarity }} %.",
+    "phd_provisional_certificate": f"This is to certify that {_S} has been found qualified for the award of the "
+    "degree of Doctor of Philosophy in {{ enrolment.department }} for the thesis entitled “{{ thesis.title }}” under "
+    "the guidance of {{ scholar.guide }}. The degree will be conferred at the next convocation. Date of award: "
+    "{{ award.date }}.",
+    "examiner_invitation": "Dear {{ examiner.name }} ({{ examiner.affiliation }}), you are invited to evaluate the PhD "
+    "thesis entitled “{{ thesis.title }}” submitted in {{ enrolment.department }}. Kindly respond within "
+    "{{ examiner.due_days }} days using the link sent by email.",
     "custom": "{{ body }}",
     "id_card": "{{ student.name }}<br>{{ student.registration_number }}<br>{{ enrolment.program }}",
 }
@@ -142,6 +159,10 @@ SIGNERS: dict[str, list[str]] = {
     "noc": ["principal"],
     "donation_receipt_80g": ["principal"],
     "alumni_membership_card": ["registrar"],
+    "phd_registration_letter": ["registrar"],
+    "phd_synopsis_ack": ["registrar"],
+    "phd_provisional_certificate": ["coe", "registrar"],
+    "examiner_invitation": ["coe"],
 }
 
 

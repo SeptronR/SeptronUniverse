@@ -3,7 +3,8 @@ incentives, MoUs / collaborations / incubation, API score, profile & stats) — 
 lookups, department predicates, committee membership, the ``institution_settings`` side store, ScopeTabs).
 
 **Visibility** (Prompts/30 "Visibility rules" / §30.5): *self* through the staff row of the caller
-(``staff_id = principal.staff_id``), an author tag (``publications.authors[].staff_id``) or ``scholar_id``; ownership
+(``staff_id = principal.staff_id``), an author tag (``publications.authors[].staff_id``) or ``scholar_id`` (Phase 31:
+the caller's ``research_scholars`` row, an author tag ``scholar_id``, and guides / co-guides over their scholars); ownership
 for projects (``pi_staff_id`` / ``co_pi[].staff_id``), MoUs (``coordinator_staff_id``) and ethics applications
 (committee membership through ``committee_members`` of the bound Phase 33 committee, or ``ethics_committees.members``);
 department scope through ``staff.department_id`` (HOD holding ``research:view_all`` / ``verify`` at department
@@ -184,6 +185,38 @@ class ResearchBase(SupportBase):
         if sub is not None:
             parts.append(staff_col.in_(sub))
         return or_(*parts) if parts else false()
+
+    async def scholar_ownership(self, scholar_col: Any, json_col: Any = None) -> list[Any]:
+        """Phase 31 scholar ownership: the caller's own scholar row (``scholar_id`` / an author tag ``scholar_id``) and,
+        for guides / co-guides, their scholars' records."""
+        from app.models.phd import ResearchScholar
+        from app.models.students import Student, StudentProgramEnrollment
+
+        parts: list[Any] = []
+        if self.actor_id is not None:
+            mine = (
+                select(ResearchScholar.id)
+                .join(
+                    StudentProgramEnrollment,
+                    StudentProgramEnrollment.id == ResearchScholar.student_program_enrollment_id,
+                )
+                .join(Student, Student.id == StudentProgramEnrollment.student_id)
+                .where(Student.user_id == self.actor_id)
+            )
+            parts.append(scholar_col.in_(mine))
+            if json_col is not None:
+                for (sid,) in (await self.db.execute(mine)).all():
+                    parts.append(json_col.contains([{"scholar_id": str(sid)}]))
+        staff = await self.my_staff_id()
+        if staff is not None:
+            parts.append(
+                scholar_col.in_(
+                    select(ResearchScholar.id).where(
+                        or_(ResearchScholar.guide_staff_id == staff, ResearchScholar.co_guide_staff_id == staff)
+                    )
+                )
+            )
+        return parts
 
     async def is_mine(self, staff_id: uuid.UUID | None, tags: list[dict[str, Any]] | None = None) -> bool:
         mine = await self.my_staff_id()

@@ -29,6 +29,7 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
+import '../../features/phd/phd_screens.dart';
 import '../../features/research/research_screens.dart';
 import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
@@ -486,6 +487,28 @@ class ScreenRegistry {
       feature: 'research.publications',
       permission: 'research:incentives',
       builder: (_, __) => const ResearchApprovalsScreen(),
+    ),
+    // Phase 31 — PhD
+    AppRoutes.scholarHub: ScreenEntry(
+      route: AppRoutes.scholarHub,
+      titleKey: 'my_phd',
+      feature: 'phd.scholar_portal',
+      permission: 'phd:self',
+      builder: (_, __) => const ScholarHubScreen(),
+    ),
+    AppRoutes.guideScholars: ScreenEntry(
+      route: AppRoutes.guideScholars,
+      titleKey: 'my_scholars',
+      feature: 'phd.core',
+      permission: 'phd:guide',
+      builder: (_, __) => const GuideScholarsScreen(),
+    ),
+    AppRoutes.phdApprovals: ScreenEntry(
+      route: AppRoutes.phdApprovals,
+      titleKey: 'phd_approvals',
+      feature: 'phd.core',
+      permission: 'phd:manage',
+      builder: (_, __) => const PhdApprovalsScreen(),
     ),
     // Phase 29 — alumni
     AppRoutes.alumniHub: ScreenEntry(

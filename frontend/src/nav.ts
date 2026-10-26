@@ -371,6 +371,16 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Incubation', to: '/admin/research/startups', icon: Rocket, module: 'research', action: 'incubation', altActions: ['view_all', 'manage'], feature: 'research.incubation' },
       { label: 'API score', to: '/admin/research/api-score', icon: TrendingUp, module: 'research', action: 'manage', altActions: ['view_all'], feature: 'research.api_score' },
       { label: 'Research stats', to: '/admin/research/stats', icon: TrendingUp, module: 'research', action: 'view_all', feature: 'research.publications' },
+      // Phase 31 — PhD & research scholars
+      { label: 'PhD scholars', to: '/admin/phd/scholars', icon: GraduationCap, module: 'phd', action: 'view', altActions: ['view_all', 'manage', 'guide', 'dc'], feature: 'phd.core' },
+      { label: 'PhD guides', to: '/admin/phd/guides', icon: Users, module: 'phd', action: 'view_all', altActions: ['manage', 'dc'], feature: 'phd.core' },
+      { label: 'Fellowships', to: '/admin/phd/fellowships', icon: HandCoins, module: 'phd', action: 'fellowship', altActions: ['manage'], feature: 'phd.fellowships' },
+      { label: 'Scholar requests', to: '/admin/phd/requests', icon: ClipboardCheck, module: 'phd', action: 'manage', altActions: ['approve', 'view_all'], feature: 'phd.extensions_guide_change' },
+      { label: 'Thesis & plagiarism', to: '/admin/phd/thesis', icon: ScrollText, module: 'phd', action: 'manage', altActions: ['view_all', 'dc'], feature: 'phd.thesis_plagiarism' },
+      { label: 'Examiners', to: '/admin/phd/examiners', icon: ShieldCheck, module: 'phd', action: 'examine', altActions: ['manage', 'approve'], feature: 'phd.external_examiners' },
+      { label: 'Viva-voce', to: '/admin/phd/viva', icon: CalendarCheck, module: 'phd', action: 'examine', altActions: ['manage', 'view_all'], feature: 'phd.viva' },
+      { label: 'Awards & ETD', to: '/admin/phd/awards', icon: Award, module: 'phd', action: 'manage', altActions: ['etd', 'view_all'], feature: 'phd.core' },
+      { label: 'PhD stats', to: '/admin/phd/stats', icon: TrendingUp, module: 'phd', action: 'view_all', altActions: ['manage'], feature: 'phd.core' },
     ],
   },
   {

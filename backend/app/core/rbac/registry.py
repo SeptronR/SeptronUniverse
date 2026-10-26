@@ -821,6 +821,14 @@ READ_ALUMNI: set[str] = P("alumni", "view_all") | P("fundraising", "view_all")
 RESEARCH_CELL: set[str] = P("research", "verify", "view_all", "export", "ethics", "incentives", "mous", "incubation")
 HOD_RESEARCH: set[str] = P("research", "verify", "view_all")
 READ_RESEARCH: set[str] = P("research", "view_all")
+# Phase 31 (Prompts/31 "Visibility rules"): guides are faculty (own scholars through guide / co-guide / DC membership);
+# HODs / deans read their units' scholars and approve request / panel steps; the research cell runs fellowships,
+# examinations and ETD; the CoE records examiner remuneration / viva results; the accountant pays disbursements
+FACULTY_PHD: set[str] = P("phd", "guide", "view")
+HOD_PHD: set[str] = P("phd", "dc", "view_all", "approve")
+RESEARCH_CELL_PHD: set[str] = P("phd", "fellowship", "examine", "etd", "view_all", "export", "approve")
+COE_PHD: set[str] = P("phd", "examine", "view")
+ACCOUNTANT_PHD: set[str] = P("phd", "fellowship", "view")
 GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
 PARENT_SUPPORT: set[str] = P("clubs", "view")
 
@@ -884,6 +892,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_COMMS
     | REGISTRAR_FACILITIES,
     "controller_of_examinations": STAFF_SELF
+    | COE_PHD
     | COE_DOCUMENTS
     | P("exams", "manage")
     | P("results", "manage")
@@ -929,6 +938,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | EXAM_CELL_MARKS,
     "exam_decoder": STAFF_SELF | P("exams", "decode", "view"),
     "dean": ALL("view", "view_all")
+    | HOD_PHD
     | P("leaves", "approve")
     | P("regulations", "approve")
     | DEAN_ACADEMICS
@@ -940,6 +950,8 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_ATTAINMENT
     | STAFF_SELF,
     "hod": FACULTY
+    | FACULTY_PHD
+    | HOD_PHD
     | HOD_RESEARCH
     | HOD_SUPPORT
     | HOD_PLACEMENT
@@ -990,7 +1002,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("attendance", "view")
     | ADVISOR_FEES
     | ADVISOR_HOSTEL,
-    "faculty": FACULTY,
+    "faculty": FACULTY | FACULTY_PHD,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
     "invigilator": COMMON
@@ -1015,6 +1027,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "research_cell": STAFF_SELF
     | P("research", "manage")
     | RESEARCH_CELL
+    | RESEARCH_CELL_PHD
     | P("phd", "manage")
     | P("accounting", "view_all")
     | P("hr", "view_all")
@@ -1046,6 +1059,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("reports", "run", "view")
     | P("communication", "send"),
     "accountant": STAFF_SELF
+    | ACCOUNTANT_PHD
     | ACCOUNTANT_PLACEMENT
     | P("fees", "manage")
     | ACCOUNTANT_FACILITIES
@@ -1247,6 +1261,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0031": frozenset(FACULTY_PHD | HOD_PHD | RESEARCH_CELL_PHD | COE_PHD | ACCOUNTANT_PHD),
     "0030": frozenset(RESEARCH_CELL | HOD_RESEARCH | READ_RESEARCH),
     "0029": frozenset(ALUMNI_COORDINATOR | HOD_ALUMNI | READ_ALUMNI),
     "0028": frozenset(

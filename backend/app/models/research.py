@@ -2,7 +2,7 @@
 
 DDL facts: ``publications.authors`` is the JSON author list (``[{name, staff_id?, scholar_id?, is_corresponding}]``) —
 co-authors inside the institution share one row and each tagged author sees it as their own; ``publications.scholar_id``
-has no FK until Phase 31 models ``research_scholars``. ``research_projects.grant_ledger_id`` points at the Phase 23
+references ``research_scholars`` (Phase 31). ``research_projects.grant_ledger_id`` points at the Phase 23
 ``grant_ledgers`` row created by the ``research.project_sanctioned`` consumer (``grant_ledgers.research_project_id``
 points back without an FK). ``ethics_approvals`` doubles as the application (``decision`` NULL while under review).
 Facts without a column (publication verification level / remarks / import source, project reports / staff / expense
@@ -52,7 +52,7 @@ class Publication(UUIDPrimaryKeyMixin, TenantMixin, Base):
     __mapper_args__ = _EAGER
 
     staff_id: Mapped[uuid.UUID | None] = _fk("staff.id")
-    scholar_id: Mapped[uuid.UUID | None] = _uuid()
+    scholar_id: Mapped[uuid.UUID | None] = _fk("research_scholars.id", "SET NULL")
     pub_type: Mapped[str] = mapped_column(String(20), nullable=False)
     title: Mapped[str] = mapped_column(String(500), nullable=False)
     venue: Mapped[str | None] = mapped_column(String(300))
