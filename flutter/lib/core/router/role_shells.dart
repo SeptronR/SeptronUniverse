@@ -419,6 +419,21 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 32 — IQAC (coordinator) and department quality (HOD / faculty: metrics, responses, evidence, findings)
+  const MoreMenuModule(
+      titleKey: 'iqac',
+      icon: Icons.verified_outlined,
+      route: AppRoutes.iqacHub,
+      color: Colors.indigo,
+      permission: 'accreditation:manage',
+      feature: 'accreditation.aishe'),
+  const MoreMenuModule(
+      titleKey: 'department_quality',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.departmentQuality,
+      color: Colors.indigo,
+      permission: 'accreditation:evidence',
+      feature: 'accreditation.aishe'),
   // Phase 31 — My PhD (scholars), my scholars (guides), PhD approvals (research cell)
   const MoreMenuModule(
       titleKey: 'my_phd',

@@ -394,6 +394,17 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Attainment config', to: '/admin/obe/config', icon: Settings, module: 'obe', action: 'configure', feature: 'obe.attainment' },
       { label: 'CQI actions', to: '/admin/obe/cqi', icon: ClipboardCheck, module: 'obe', action: 'manage', altActions: ['view', 'view_all'], feature: 'obe.cqi' },
       { label: 'NBA export', to: '/admin/obe/exports', icon: ScrollText, module: 'obe', action: 'export', feature: 'obe.nba_export' },
+      // Phase 32 — IQAC (accreditation & compliance)
+      { label: 'IQAC dashboard', to: '/iqac/dashboard', icon: Gauge, module: 'accreditation', action: 'view_all', altActions: ['manage'], feature: 'accreditation.aishe' },
+      { label: 'Frameworks', to: '/iqac/frameworks', icon: ScrollText, module: 'accreditation', action: 'view', altActions: ['view_all', 'manage'], feature: 'accreditation.aishe' },
+      { label: 'Metrics', to: '/iqac/metrics', icon: TrendingUp, module: 'accreditation', action: 'view', altActions: ['view_all', 'manage'], feature: 'accreditation.aishe' },
+      { label: 'Evidence', to: '/iqac/evidence', icon: ClipboardCheck, module: 'accreditation', action: 'evidence', altActions: ['view_all', 'manage'], feature: 'accreditation.evidence_repo' },
+      { label: 'Accreditation cycles', to: '/iqac/cycles', icon: CalendarCheck, module: 'accreditation', action: 'view', altActions: ['view_all', 'manage'], feature: 'accreditation.iqac_cycles' },
+      { label: 'Submissions', to: '/iqac/submissions', icon: ScrollText, module: 'accreditation', action: 'submit', altActions: ['view_all', 'manage'], feature: 'accreditation.aishe' },
+      { label: 'Audit registers', to: '/iqac/audits', icon: ShieldCheck, module: 'accreditation', action: 'view_all', altActions: ['manage'], feature: 'accreditation.audit_registers' },
+      { label: 'Consistency', to: '/iqac/consistency', icon: Activity, module: 'accreditation', action: 'view_all', altActions: ['manage'], feature: 'accreditation.aishe' },
+      { label: 'Disclosures', to: '/iqac/disclosures', icon: Award, module: 'accreditation', action: 'view_all', altActions: ['manage'], feature: 'accreditation.aishe' },
+      { label: 'Department quality', to: '/hod/quality', icon: Gauge, module: 'accreditation', action: 'override', feature: 'accreditation.aishe' },
     ],
   },
   {

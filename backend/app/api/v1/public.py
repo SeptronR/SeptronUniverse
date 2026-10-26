@@ -101,6 +101,8 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/phd/examiners/respond/{token}",
     "POST /api/v1/phd/examiners/respond/{token}/report",
     "POST /api/v1/webhooks/plagiarism/{connection_id}",
+    # Phase 32 — mandatory disclosures website feed (tenant by institution slug; aggregates only; {accreditation.aishe} inside)
+    "GET /api/v1/accreditation/disclosures/public",
 }
 
 

@@ -29,6 +29,7 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
+import '../../features/iqac/iqac_screens.dart';
 import '../../features/phd/phd_screens.dart';
 import '../../features/research/research_screens.dart';
 import '../../features/students/students_screens.dart';
@@ -487,6 +488,21 @@ class ScreenRegistry {
       feature: 'research.publications',
       permission: 'research:incentives',
       builder: (_, __) => const ResearchApprovalsScreen(),
+    ),
+    // Phase 32 — IQAC
+    AppRoutes.iqacHub: ScreenEntry(
+      route: AppRoutes.iqacHub,
+      titleKey: 'iqac',
+      feature: 'accreditation.aishe',
+      permission: 'accreditation:manage',
+      builder: (_, __) => const IqacHubScreen(),
+    ),
+    AppRoutes.departmentQuality: ScreenEntry(
+      route: AppRoutes.departmentQuality,
+      titleKey: 'department_quality',
+      feature: 'accreditation.aishe',
+      permission: 'accreditation:evidence',
+      builder: (_, __) => const IqacHubScreen(department: true),
     ),
     // Phase 31 — PhD
     AppRoutes.scholarHub: ScreenEntry(

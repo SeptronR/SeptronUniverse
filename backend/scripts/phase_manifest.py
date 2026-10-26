@@ -344,6 +344,18 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # accreditation & compliance / IQAC (section 29)
+    "32": [
+        "accreditation_frameworks",
+        "framework_criteria",
+        "metric_definitions",
+        "metric_values",
+        "evidence_documents",
+        "accreditation_cycles",
+        "criterion_responses",
+        "compliance_submissions",
+        "audit_registers",
+    ],
     # PhD & research-scholar management (section 28)
     "31": [
         "research_scholars",

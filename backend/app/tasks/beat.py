@@ -235,6 +235,29 @@ register_beat(
     "phd.coursework_deadline_scan", "beat.phd.coursework_deadline_scan", crontab(day_of_month=3, hour=2, minute=40)
 )
 
+# ---- Phase 32 accreditation & compliance (app/tasks/accreditation.py) ------------------------------------------------------------
+register_beat(
+    "accreditation.compute_weekly", "beat.accreditation.compute_weekly", crontab(day_of_week=0, hour=20, minute=30)
+)  # Mon 02:00 IST
+register_beat(
+    "accreditation.submission_due_reminders",
+    "beat.accreditation.submission_due_reminders",
+    crontab(day_of_week=1, hour=4, minute=0),
+)  # Mon 09:30 IST
+register_beat(
+    "accreditation.response_due_reminders", "beat.accreditation.response_due_reminders", crontab(hour=3, minute=10)
+)  # daily 08:40 IST
+register_beat(
+    "accreditation.audit_finding_reminders",
+    "beat.accreditation.audit_finding_reminders",
+    crontab(day_of_week=2, hour=4, minute=0),
+)  # Tue 09:30 IST
+register_beat(
+    "accreditation.evidence_retention",
+    "beat.accreditation.evidence_retention",
+    crontab(day_of_month=5, hour=21, minute=0),
+)
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

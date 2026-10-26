@@ -248,6 +248,19 @@ const RsStartupsPage = lazy(() => import('@/features/research/pages/ResearchPage
 const RsApiScorePage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.ApiScorePage })));
 const RsStatsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.StatsPage })));
 const RsFacultyResearchPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.FacultyResearchPage })));
+// Phase 32 — accreditation & compliance (IQAC)
+const IqacDashboardPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacDashboardPage })));
+const IqacFrameworksPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacFrameworksPage })));
+const IqacMetricsPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacMetricsPage })));
+const IqacEvidencePage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacEvidencePage })));
+const IqacCyclesPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacCyclesPage })));
+const IqacCyclePage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacCyclePage })));
+const IqacSubmissionsPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacSubmissionsPage })));
+const IqacAuditsPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacAuditsPage })));
+const IqacConsistencyPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacConsistencyPage })));
+const IqacDisclosuresPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacDisclosuresPage })));
+const HodQualityPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.HodQualityPage })));
+const FacultyAccreditationPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.FacultyAccreditationPage })));
 // Phase 31 — PhD & research scholars
 const PhdScholarsPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdScholarsPage })));
 const PhdScholarPage = lazy(() => import('@/features/phd/pages/PhdPages').then((m) => ({ default: m.PhdScholarPage })));
@@ -699,6 +712,18 @@ export const router = createBrowserRouter([
               ['/admin/alumni/jobs', 'alumni.jobs_board', 'alumni', 'manage', [['alumni', 'view_all'], ['placement', 'manage']], <AlJobsAdminPage key="alj" />],
               ['/admin/alumni/fundraising', 'alumni.fundraising', 'fundraising', 'manage', [['alumni', 'campaign'], ['fundraising', 'receipt'], ['fundraising', 'view_all']], <AlFundraisingPage key="alf" />],
               ['/admin/alumni/stats', 'alumni.core', 'alumni', 'view_all', [['alumni', 'manage']], <AlStatsPage key="als" />],
+              // Phase 32 — accreditation & compliance / IQAC (department / college / all and ownership narrowed by the services)
+              ['/iqac/dashboard', 'accreditation.aishe', 'accreditation', 'view_all', [['accreditation', 'manage']], <IqacDashboardPage key="iqd" />],
+              ['/iqac/frameworks', 'accreditation.aishe', 'accreditation', 'view', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacFrameworksPage key="iqf" />],
+              ['/iqac/metrics', 'accreditation.aishe', 'accreditation', 'view', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacMetricsPage key="iqm" />],
+              ['/iqac/evidence', 'accreditation.evidence_repo', 'accreditation', 'evidence', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacEvidencePage key="iqe" />],
+              ['/iqac/cycles', 'accreditation.iqac_cycles', 'accreditation', 'view', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacCyclesPage key="iqc" />],
+              ['/iqac/cycles/:id', 'accreditation.iqac_cycles', 'accreditation', 'view', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacCyclePage key="iqcd" />],
+              ['/iqac/submissions', 'accreditation.aishe', 'accreditation', 'submit', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacSubmissionsPage key="iqs" />],
+              ['/iqac/audits', 'accreditation.audit_registers', 'accreditation', 'view', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacAuditsPage key="iqa" />],
+              ['/iqac/consistency', 'accreditation.aishe', 'accreditation', 'view_all', [['accreditation', 'manage']], <IqacConsistencyPage key="iqk" />],
+              ['/iqac/disclosures', 'accreditation.aishe', 'accreditation', 'view', [['accreditation', 'view_all'], ['accreditation', 'manage']], <IqacDisclosuresPage key="iqdi" />],
+              ['/hod/quality', 'accreditation.aishe', 'accreditation', 'override', [['accreditation', 'manage']], <HodQualityPage key="hq" />],
               // Phase 31 — PhD & research scholars (self / guide / DC / unit / all narrowed by the services)
               ['/admin/phd/scholars', 'phd.core', 'phd', 'view', [['phd', 'view_all'], ['phd', 'manage'], ['phd', 'guide'], ['phd', 'dc']], <PhdScholarsPage key="phs" />],
               ['/admin/phd/scholars/:id', 'phd.core', 'phd', 'view', [['phd', 'view_all'], ['phd', 'manage'], ['phd', 'guide'], ['phd', 'dc']], <PhdScholarPage key="phsd" />],
@@ -1068,6 +1093,8 @@ export const router = createBrowserRouter([
           { path: 'research/projects/:id', element: page(<FeatureRoute feature="research.projects_grants"><RsProjectPage /></FeatureRoute>) },
           // Phase 31 — guide portal: own scholars (reviews, DC, panel proposal, request recommendations)
           { path: 'scholars', element: page(<FeatureRoute feature="phd.core"><PhdScholarsPage portal /></FeatureRoute>) },
+          // Phase 32 — assigned criterion responses and own evidence
+          { path: 'accreditation', element: page(<FeatureRoute feature="accreditation.iqac_cycles"><FacultyAccreditationPage /></FeatureRoute>) },
           { path: 'scholars/:id', element: page(<FeatureRoute feature="phd.core"><PhdScholarPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],

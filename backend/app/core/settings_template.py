@@ -10,6 +10,7 @@ types are ``str | int | bool | list | json | enum`` (``enum`` carries ``choices`
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from app.enums.accreditation import DEFAULT_DISCLOSURE_ITEMS
 from app.enums.phd import DEFAULT_PHD_RULES
 from app.enums.research import DEFAULT_API_SCHEME, DEFAULT_INCENTIVE_SLABS
 
@@ -252,6 +253,13 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("phd", "panel_vc_approval", "bool", False, label="Examiner panels also need the Vice-Chancellor's approval"),
     SettingDef("phd", "thesis_fee_invoice", "bool", False, label="Raise a thesis submission fee invoice"),
     SettingDef("phd", "fellowship_payment_route", "str", "payout", choices=("payout", "payroll"), label="Fellowship payment route (Phase 23 payout / Phase 06 payroll)"),
+    # accreditation & compliance / IQAC (Phase 32)
+    SettingDef("accreditation", "period_type_default", "str", "academic_year", choices=("academic_year", "calendar_year", "financial_year", "five_year"), label="Default metric period type"),
+    SettingDef("accreditation", "compute_schedule", "str", "weekly", choices=("weekly", "manual"), label="Metric compute schedule"),
+    SettingDef("accreditation", "override_requires_verification", "bool", True, label="Metric overrides need verification (principal / IQAC)"),
+    SettingDef("accreditation", "evidence_max_mb", "int", 25, label="Evidence upload size limit (MB)", min=1, max=500),
+    SettingDef("accreditation", "disclosure_items", "json", DEFAULT_DISCLOSURE_ITEMS, label="Mandatory disclosure items (website feed)"),
+    SettingDef("accreditation", "custom_criteria", "json", {}, label="Custom criterion sub-items per framework"),
     # document templates & certificate requests (Phase 26)
     SettingDef("documents", "signatories", "json", {"registrar": {"name": "Registrar", "designation": "Registrar", "signature_url": None}, "principal": {"name": "Principal", "designation": "Principal", "signature_url": None}, "coe": {"name": "Controller of Examinations", "designation": "Controller of Examinations", "signature_url": None}}, label="Signatories (name, designation, signature image)"),
     SettingDef("documents", "request_rules", "json", {}, label="Certificate request rules per type (overrides of the shipped defaults)"),
