@@ -29,6 +29,9 @@ class TemplateType(StrEnum):
     MEDICAL_CERTIFICATE = "medical_certificate"
     FEE_STRUCTURE_LETTER = "fee_structure_letter"
     OFFER_LETTER = "offer_letter"
+    # Phase 29: donation 80G receipt (bilingual variant) and the alumni membership card
+    DONATION_RECEIPT_80G = "donation_receipt_80g"
+    ALUMNI_MEMBERSHIP_CARD = "alumni_membership_card"
     CUSTOM = "custom"
 
 
@@ -72,7 +75,7 @@ STAFF_TYPES: frozenset[str] = frozenset({"experience", "service", "noc"})
 SENSITIVE_TYPES: frozenset[str] = frozenset({"transcript", "grade_card"})
 # several live documents per entity are normal for these (copies)
 MULTI_TYPES: frozenset[str] = frozenset({"bonafide", "receipt", "custom", "noc", "internship_noc"})
-BILINGUAL_TYPES: tuple[str, ...] = ("bonafide", "degree", "provisional", "tc")
+BILINGUAL_TYPES: tuple[str, ...] = ("bonafide", "degree", "provisional", "tc", "donation_receipt_80g")
 
 PERSON_TYPES: tuple[str, ...] = ("student", "staff", "alumni")
 

@@ -199,6 +199,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Internships', to: '/admin/placement/internships', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage', 'evaluate'], feature: 'placement.internships' },
       { label: 'Training', to: '/admin/placement/training', icon: Briefcase, module: 'placement', action: 'manage', altActions: ['view_all'], feature: 'placement.training' },
       { label: 'Placement stats', to: '/admin/placement/stats', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage'], feature: 'placement.core' },
+      // Phase 29 — Alumni (profiles, directory, events, jobs, fundraising, stats)
+      { label: 'Alumni profiles', to: '/admin/alumni/profiles', icon: GraduationCap, module: 'alumni', action: 'view_all', altActions: ['manage', 'verify'], feature: 'alumni.core' },
+      { label: 'Alumni directory', to: '/admin/alumni/directory', icon: GraduationCap, module: 'alumni', action: 'view_all', altActions: ['manage'], feature: 'alumni.portal' },
+      { label: 'Alumni events', to: '/admin/alumni/events', icon: GraduationCap, module: 'alumni', action: 'manage', altActions: ['view_all'], feature: 'alumni.core' },
+      { label: 'Alumni jobs', to: '/admin/alumni/jobs', icon: GraduationCap, module: 'alumni', action: 'manage', altActions: ['view_all'], feature: 'alumni.jobs_board' },
+      { label: 'Fundraising', to: '/admin/alumni/fundraising', icon: HandCoins, module: 'fundraising', action: 'manage', altActions: ['receipt', 'view_all'], feature: 'alumni.fundraising' },
+      { label: 'Alumni stats', to: '/admin/alumni/stats', icon: GraduationCap, module: 'alumni', action: 'view_all', altActions: ['manage'], feature: 'alumni.core' },
     ],
   },
   {

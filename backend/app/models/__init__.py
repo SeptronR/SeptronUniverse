@@ -7,6 +7,7 @@ from app.models import (  # noqa: F401
     academic,
     accounting,
     admissions,
+    alumni,
     assessment,
     attendance,
     calendar,
@@ -47,6 +48,7 @@ from app.models import (  # noqa: F401
 
 __all__ = [
     "accounting",
+    "alumni",
     "placement",
     "clubs",
     "discipline",

@@ -99,6 +99,12 @@ class RequestService(DocumentsBase):
             return None
         return (await self.db.execute(select(Student).where(Student.id == sid))).scalar_one_or_none()
 
+    async def alumni_verified(self) -> None:
+        """Phase 29 requests bridge: an unverified alumni profile is refused (403 ``VERIFICATION_REQUIRED``)."""
+        from app.services.alumni.stats_service import RequestsBridge
+
+        await RequestsBridge(self.db, self.principal, self.request, self.inst).require_verified_alumni()
+
     async def resolve_person(self, body: CertReqCreate, rl: dict[str, Any]) -> tuple[str, uuid.UUID, str | None]:
         """``(person_type, person_id, on_behalf)``."""
         if body.person_id is not None:
@@ -118,6 +124,7 @@ class RequestService(DocumentsBase):
                 or body.registration_number.strip().upper() != (st.registration_number or "").upper()
             ):
                 raise forbidden("Registration number does not match your alumni record")
+            await self.alumni_verified()
             return "alumni", st.id, None
         if body.person_type in (None, "student"):
             st = await self.my_student()
@@ -130,6 +137,7 @@ class RequestService(DocumentsBase):
             return "staff", sf.id, None
         st = await self.alumni_student()
         if st is not None:
+            await self.alumni_verified()
             return "alumni", st.id, None
         raise rule("Your account is not linked to a student, staff or alumni record", "NO_PERSON")
 

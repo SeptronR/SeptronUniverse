@@ -42,6 +42,7 @@ from app.api.v1.endpoints import (
     academic_sessions,
     accounting,
     admissions,
+    alumni,
     announcements,
     appraisals,
     assessment,
@@ -67,6 +68,7 @@ from app.api.v1.endpoints import (
     features,
     feedback,
     fees,
+    fundraising,
     grading,
     grievances,
     help,
@@ -218,6 +220,12 @@ api_router.include_router(placement.router)
 api_router.include_router(internships.router)
 api_router.include_router(training.router)
 api_router.include_router(recruiter.router)
+# Phase 29: alumni (profiles / directory / events / jobs / stats — {alumni.core|portal|jobs_board}) and fundraising
+# ({alumni.fundraising}, 80G {alumni.donations_80g}); claim / public campaigns / website donations are public
+api_router.include_router(alumni.public_router)
+api_router.include_router(alumni.router)
+api_router.include_router(fundraising.public_router)
+api_router.include_router(fundraising.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

@@ -44,6 +44,7 @@ celery = Celery(
         "app.tasks.documents",
         "app.tasks.student_support",
         "app.tasks.placement",
+        "app.tasks.alumni",
         "app.tasks.reports",
         "app.tasks.integrations",
     ],

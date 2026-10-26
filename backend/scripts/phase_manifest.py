@@ -344,6 +344,15 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # alumni, endowments & fundraising (section 27)
+    "29": [
+        "alumni_profiles",
+        "alumni_employment_history",
+        "alumni_events",
+        "alumni_jobs",
+        "fundraising_campaigns",
+        "donations",
+    ],
     "26": ["document_templates", "certificate_requests", "issued_documents", "document_serials"],
     "25": [
         "calendar_events",

@@ -218,6 +218,21 @@ const PlBlacklistPage = lazy(() => import('@/features/placement/pages/PlacementP
 const PlInternshipsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.InternshipsPage })));
 const PlTrainingPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.TrainingPage })));
 const PlStatsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.StatsPage })));
+// Phase 29 — alumni, endowments & fundraising
+const AlProfilesPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.ProfilesPage })));
+const AlProfilePage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.ProfilePage })));
+const AlDirectoryPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.DirectoryPage })));
+const AlEventsPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.EventsPage })));
+const AlJobsAdminPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.JobsAdminPage })));
+const AlFundraisingPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.FundraisingPage })));
+const AlStatsPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.StatsPage })));
+const AlHomePage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniHomePage })));
+const AlProfileSelfPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniProfileSelfPage })));
+const AlEventsPortalPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniEventsPortalPage })));
+const AlJobsPortalPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniJobsPortalPage })));
+const AlGivePage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniGivePage })));
+const AlClaimPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniClaimPage })));
+const AlPublicCampaignsPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.PublicCampaignsPage })));
 const PlStudentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.StudentPlacementPage })));
 const PlParentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.ParentPlacementPage })));
 const PlFacultyInternshipsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.FacultyInternshipsPage })));
@@ -415,6 +430,9 @@ export const router = createBrowserRouter([
   { path: '/careers', element: page(<CareersPage />) },
   // Phase 07 — public ID card / document verification (QR target)
   { path: '/opac', element: page(<OpacPage />) },
+  // Phase 29 — public alumni claim and the website campaigns / donation form (tenant by ?institution=<slug>)
+  { path: '/alumni-claim', element: page(<AlClaimPage />) },
+  { path: '/give', element: page(<AlPublicCampaignsPage />) },
   { path: '/vendor/register', element: page(<VendorRegisterPage />) },
   { path: '/verify/bulk', element: page(<BulkVerifyPage />) },
   // Phase 27 — public anonymous grievance form and tracking (tenant from ?institution=)
@@ -638,6 +656,14 @@ export const router = createBrowserRouter([
               ['/admin/placement/stats', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlStatsPage key="pls" />],
               ['/admin/placement/internships', 'placement.internships', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'evaluate']], <PlInternshipsPage key="pli" />],
               ['/admin/placement/training', 'placement.training', 'placement', 'manage', [['placement', 'view_all']], <PlTrainingPage key="plt" />],
+              // Phase 29 — alumni & fundraising (consent projection, verification and scopes in the services)
+              ['/admin/alumni/profiles', 'alumni.core', 'alumni', 'view_all', [['alumni', 'manage'], ['alumni', 'verify']], <AlProfilesPage key="alp" />],
+              ['/admin/alumni/profiles/:id', 'alumni.core', 'alumni', 'view_all', [['alumni', 'manage'], ['alumni', 'verify']], <AlProfilePage key="alpd" />],
+              ['/admin/alumni/directory', 'alumni.portal', 'alumni', 'view_all', [['alumni', 'manage'], ['placement', 'manage']], <AlDirectoryPage key="ald" />],
+              ['/admin/alumni/events', 'alumni.core', 'alumni', 'manage', [['alumni', 'view_all']], <AlEventsPage key="ale" />],
+              ['/admin/alumni/jobs', 'alumni.jobs_board', 'alumni', 'manage', [['alumni', 'view_all'], ['placement', 'manage']], <AlJobsAdminPage key="alj" />],
+              ['/admin/alumni/fundraising', 'alumni.fundraising', 'fundraising', 'manage', [['alumni', 'campaign'], ['fundraising', 'receipt'], ['fundraising', 'view_all']], <AlFundraisingPage key="alf" />],
+              ['/admin/alumni/stats', 'alumni.core', 'alumni', 'view_all', [['alumni', 'manage']], <AlStatsPage key="als" />],
               ['/admin/documents/templates', 'documents.templates', 'templates', 'view', [['templates', 'manage'], ['certificates', 'issue']], <DocTemplatesPage key="dt" />],
               ['/admin/documents/issued', 'documents.templates', 'certificates', 'view_all', [['certificates', 'issue'], ['certificates', 'manage']], <DocIssuedPage key="di" />],
               ['/admin/documents/bulk', 'documents.bulk_generation', 'certificates', 'issue', [['certificates', 'manage']], <DocBulkPage key="db" />],
@@ -982,7 +1008,13 @@ export const router = createBrowserRouter([
         path: '/alumni',
         element: <PortalRoute roles={['alumni']} title="Alumni" />,
         children: [
-          { index: true, element: page(<PortalHomePage />) },
+          // Phase 29 — alumni portal {alumni.portal}: home, profile & privacy, directory, events, jobs, give
+          { index: true, element: page(<FeatureRoute feature="alumni.portal"><AlHomePage /></FeatureRoute>) },
+          { path: 'profile', element: page(<FeatureRoute feature="alumni.portal"><AlProfileSelfPage /></FeatureRoute>) },
+          { path: 'directory', element: page(<FeatureRoute feature="alumni.portal"><AlDirectoryPage portal /></FeatureRoute>) },
+          { path: 'events', element: page(<FeatureRoute feature="alumni.core"><AlEventsPortalPage /></FeatureRoute>) },
+          { path: 'jobs', element: page(<FeatureRoute feature="alumni.jobs_board"><AlJobsPortalPage /></FeatureRoute>) },
+          { path: 'give', element: page(<FeatureRoute feature="alumni.fundraising"><AlGivePage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },

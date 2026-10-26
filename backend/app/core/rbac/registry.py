@@ -805,6 +805,14 @@ HOD_PLACEMENT: set[str] = P("placement", "view_all", "evaluate")
 PARENT_PLACEMENT: set[str] = P("placement", "wards")
 READ_PLACEMENT: set[str] = P("placement", "view_all")
 ACCOUNTANT_PLACEMENT: set[str] = P("placement", "view")
+# Phase 29 (Prompts/29 "Visibility rules"): the alumni coordinator verifies / merges / exports profiles, runs campaigns
+# and issues 80G receipts; HODs read department alumni (consented), the registrar / principal-level readers aggregates;
+# the accountant records offline donations and keeps the 80G register (fundraising:receipt)
+ALUMNI_COORDINATOR: set[str] = P("alumni", "verify", "campaign", "view_all", "export") | P(
+    "fundraising", "receipt", "view_all", "export"
+)
+HOD_ALUMNI: set[str] = P("alumni", "view_all")
+READ_ALUMNI: set[str] = P("alumni", "view_all") | P("fundraising", "view_all")
 GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
 PARENT_SUPPORT: set[str] = P("clubs", "view")
 
@@ -830,6 +838,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "registrar": STAFF_SELF
     | REGISTRAR_SUPPORT
     | READ_PLACEMENT
+    | READ_ALUMNI
     | REGISTRAR_DOCUMENTS
     | P("students", "manage", "view_pii")
     | P("admissions", "manage")
@@ -925,6 +934,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "hod": FACULTY
     | HOD_SUPPORT
     | HOD_PLACEMENT
+    | HOD_ALUMNI
     | HOD_DOCUMENTS
     | P("students", "view_all")
     | P("hr", "view_all")
@@ -1072,6 +1082,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | OFFICE_NO_DUES,
     "alumni_coordinator": STAFF_SELF
     | P("alumni", "manage")
+    | ALUMNI_COORDINATOR
     | P("fundraising", "manage")
     | P("events", "organise")
     | P("communication", "send", "bulk")
@@ -1225,6 +1236,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0029": frozenset(ALUMNI_COORDINATOR | HOD_ALUMNI | READ_ALUMNI),
     "0028": frozenset(
         PLACEMENT_OFFICER | HOD_PLACEMENT | FACULTY_PLACEMENT | PARENT_PLACEMENT | READ_PLACEMENT | ACCOUNTANT_PLACEMENT
     ),

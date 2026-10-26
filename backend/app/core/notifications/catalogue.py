@@ -2068,6 +2068,219 @@ PLACEMENT_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 29 - alumni, endowments & fundraising
+ALUMNI_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "alumni.profile_created",
+        "placement",
+        "Alumni profile created",
+        "Welcome to the {{ institution }} alumni network",
+        "Congratulations, graduate! Your alumni profile is ready — keep it updated to stay connected.",
+        ("institution",),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/profile",
+    ),
+    EventDef(
+        "alumni.claim_link",
+        "placement",
+        "Claim your alumni profile",
+        "Claim your {{ institution }} alumni profile",
+        "Claim your alumni profile with registration number {{ registration_number }}: {{ link }}",
+        (
+            "institution",
+            "registration_number",
+            "link",
+        ),
+        (
+            "email",
+            "sms",
+        ),
+        link="/alumni/claim",
+    ),
+    EventDef(
+        "alumni.claim_otp",
+        "placement",
+        "Alumni claim code",
+        "Your alumni claim code",
+        "Your code to claim the alumni profile is {{ code }} (valid {{ minutes }} minutes).",
+        (
+            "code",
+            "minutes",
+        ),
+        (
+            "email",
+            "sms",
+        ),
+    ),
+    EventDef(
+        "alumni.verified",
+        "placement",
+        "Alumni profile verified",
+        "Your alumni profile is verified",
+        "Your alumni profile is verified — the directory, jobs board and requests are now open to you.",
+        (),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/profile",
+    ),
+    EventDef(
+        "alumni.contact_request",
+        "placement",
+        "Alumni contact request",
+        "{{ sender }} wants to connect",
+        "{{ sender }} ({{ sender_batch }}) sent you a message: {{ message }}",
+        (
+            "sender",
+            "sender_batch",
+            "message",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/directory",
+    ),
+    EventDef(
+        "alumni.event_invite",
+        "placement",
+        "Alumni event invitation",
+        "You are invited: {{ title }}",
+        "Join us for {{ title }} on {{ held_on }} at {{ venue }}.",
+        (
+            "title",
+            "held_on",
+            "venue",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/events",
+    ),
+    EventDef(
+        "alumni.job_approved",
+        "placement",
+        "Alumni job approved",
+        "Your job post is live: {{ title }}",
+        "Your job post {{ title }} was approved and is visible on the alumni jobs board.",
+        ("title",),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/jobs",
+    ),
+    EventDef(
+        "alumni.job_rejected",
+        "placement",
+        "Alumni job rejected",
+        "Job post not approved: {{ title }}",
+        "Your job post {{ title }} was not approved: {{ reason }}.",
+        (
+            "title",
+            "reason",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/jobs",
+    ),
+    EventDef(
+        "donation.thank_you",
+        "placement",
+        "Donation thank-you",
+        "Thank you for your gift",
+        "Thank you for donating Rs. {{ amount }} to {{ campaign }}.",
+        (
+            "amount",
+            "campaign",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/give",
+    ),
+    EventDef(
+        "donation.receipt_ready",
+        "placement",
+        "Donation receipt ready",
+        "Your donation receipt {{ receipt_no }}",
+        "Your 80G receipt {{ receipt_no }} for Rs. {{ amount }} is ready to download.",
+        (
+            "receipt_no",
+            "amount",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/give",
+    ),
+    EventDef(
+        "campaign.milestone",
+        "placement",
+        "Campaign milestone",
+        "{{ campaign }} reached {{ pct }}%",
+        "{{ campaign }} has raised Rs. {{ raised }} — {{ pct }}% of the goal.",
+        (
+            "campaign",
+            "pct",
+            "raised",
+        ),
+        ("in_app",),
+        link="/admin/alumni/fundraising",
+    ),
+    EventDef(
+        "alumni.survey_invite",
+        "placement",
+        "Alumni survey",
+        "Tell us how we did: {{ title }}",
+        "Please take the alumni survey {{ title }}: {{ link }}",
+        (
+            "title",
+            "link",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni",
+    ),
+    EventDef(
+        "alumni.profile_update_reminder",
+        "placement",
+        "Update your alumni profile",
+        "Update your alumni profile",
+        "Help us stay in touch — update your alumni profile: {{ link }}",
+        ("link",),
+        ("email",),
+        link="/alumni/profile",
+    ),
+    EventDef(
+        "alumni.pledge_reminder",
+        "placement",
+        "Pledge reminder",
+        "Your pledge to {{ campaign }}",
+        "A reminder of your pledge of Rs. {{ amount }} to {{ campaign }}.",
+        (
+            "amount",
+            "campaign",
+        ),
+        (
+            "in_app",
+            "email",
+        ),
+        link="/alumni/give",
+    ),
+)
+
 EVENTS = (
     EVENTS
     + STUDENT_EVENTS
@@ -2092,6 +2305,7 @@ EVENTS = (
     + DOCUMENT_EVENTS
     + SUPPORT_EVENTS
     + PLACEMENT_EVENTS
+    + ALUMNI_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

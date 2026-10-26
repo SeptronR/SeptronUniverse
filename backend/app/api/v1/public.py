@@ -89,6 +89,12 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/calendar/ical/college/{college_id}.ics",
     "GET /api/v1/events/public",
     "POST /api/v1/events/public/{id}/register",
+    # Phase 29 — alumni claim + OTP (tenant by institution slug; rate-limited + captcha; no enumeration) and the website
+    # campaigns / donation form ({alumni.fundraising} inside; captcha; Idempotency-Key)
+    "POST /api/v1/alumni/claim",
+    "POST /api/v1/alumni/claim/verify",
+    "GET /api/v1/fundraising/campaigns/public",
+    "POST /api/v1/fundraising/donate/public",
 }
 
 

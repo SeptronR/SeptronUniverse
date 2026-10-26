@@ -27,6 +27,7 @@ import '../../features/results/post_result_screens.dart';
 import '../../features/timetable/timetable_screens.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
+import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
 import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
@@ -462,6 +463,21 @@ class ScreenRegistry {
       feature: 'mentoring.core',
       permission: 'mentoring:wards',
       builder: (_, __) => const ParentSupportScreen(),
+    ),
+    // Phase 29 — alumni
+    AppRoutes.alumniHub: ScreenEntry(
+      route: AppRoutes.alumniHub,
+      titleKey: 'alumni',
+      feature: 'alumni.portal',
+      permission: 'alumni:self',
+      builder: (_, __) => const AlumniHubScreen(),
+    ),
+    AppRoutes.alumniOffice: ScreenEntry(
+      route: AppRoutes.alumniOffice,
+      titleKey: 'alumni_office',
+      feature: 'alumni.core',
+      permission: 'alumni:verify',
+      builder: (_, __) => const AlumniCoordinatorScreen(),
     ),
     // Phase 28 — placement
     AppRoutes.placement: ScreenEntry(
