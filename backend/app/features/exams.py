@@ -1,7 +1,7 @@
-"""Feature keys registered by Phase 14 (docs/Feature_Flags.md exams group, exam administration half, plus
-``affiliation.exam_centres``). Valuation / results keys (``exams.coding_dummy``, ``exams.double_valuation``,
-``exams.onscreen_valuation``, ``exams.moderation``, ``exams.grace``, ``exams.relative_grading``,
-``exams.script_custody``) belong to Phase 15."""
+"""Feature keys registered by Phase 14 (docs/Feature_Flags.md exams group, exam administration half;
+``affiliation.exam_centres`` moved to ``app/features/affiliation.py`` in Phase 34). Valuation / results keys
+(``exams.coding_dummy``, ``exams.double_valuation``, ``exams.onscreen_valuation``, ``exams.moderation``, ``exams.grace``,
+``exams.relative_grading``, ``exams.script_custody``) belong to Phase 15."""
 
 from app.core.features import register_feature
 
@@ -107,15 +107,6 @@ _KEYS: tuple[tuple[str, str, str, str, bool, str, tuple[str, ...]], ...] = (
         True,
         "standard",
         ("hr.payroll",),
-    ),
-    (
-        "affiliation",
-        "affiliation.exam_centres",
-        "Exam centres",
-        "centres per session",
-        False,
-        "university",
-        ("exams.sessions",),
     ),
 )
 

@@ -8,6 +8,7 @@ from app.models import (  # noqa: F401
     accounting,
     accreditation,
     admissions,
+    affiliation,
     alumni,
     assessment,
     attendance,
@@ -51,6 +52,7 @@ from app.models import (  # noqa: F401
 )
 
 __all__ = [
+    "affiliation",
     "accounting",
     "alumni",
     "placement",

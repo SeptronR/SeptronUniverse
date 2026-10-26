@@ -18,6 +18,7 @@ _SOURCES = {
     "placement": "placement.stats_published",
     "alumni": "alumni.stats_published",
     "library": "metrics.publish",
+    "affiliation": "metrics.publish",
 }
 
 

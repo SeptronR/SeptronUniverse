@@ -32,6 +32,7 @@ from sqlalchemy.dialects.postgresql import INET, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.session import Base
+from app.models.affiliation import ExamCentre  # noqa: F401  (Phase 34 owns exam_centres; re-exported)
 from app.models.base import TenantMixin, UUIDPrimaryKeyMixin
 from app.models.registration import _fk, _now, _updated
 
@@ -212,19 +213,6 @@ class QuestionPaperPrintLog(UUIDPrimaryKeyMixin, TenantMixin, Base):
     copies: Mapped[int] = mapped_column(SmallInteger, nullable=False)
     watermark_text: Mapped[str | None] = mapped_column(String(120))
     ip: Mapped[str | None] = mapped_column(INET)
-
-
-class ExamCentre(UUIDPrimaryKeyMixin, TenantMixin, Base):
-    __tablename__ = "exam_centres"
-    __table_args__ = (UniqueConstraint("exam_session_id", "centre_code"),)
-
-    exam_session_id: Mapped[uuid.UUID] = _fk("exam_sessions.id", "CASCADE", nullable=False)
-    college_id: Mapped[uuid.UUID] = _fk("colleges.id", nullable=False)
-    centre_code: Mapped[str] = mapped_column(String(20), nullable=False)
-    chief_superintendent_staff_id: Mapped[uuid.UUID | None] = _fk("staff.id")
-    capacity: Mapped[int | None] = mapped_column(SmallInteger)
-    assigned_colleges: Mapped[list[str] | None] = mapped_column(JSONB)
-    created_at: Mapped[datetime] = _now()
 
 
 class MalpracticeCase(UUIDPrimaryKeyMixin, TenantMixin, Base):

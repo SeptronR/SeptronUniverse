@@ -419,6 +419,35 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 34 — affiliation (college admin / principal), exam centre (coordinator), affiliation office, inspections
+  const MoreMenuModule(
+      titleKey: 'affiliation',
+      icon: Icons.apartment_outlined,
+      route: AppRoutes.collegeAffiliation,
+      color: Colors.brown,
+      permission: 'affiliation:apply',
+      feature: 'affiliation.core'),
+  const MoreMenuModule(
+      titleKey: 'exam_centre',
+      icon: Icons.meeting_room_outlined,
+      route: AppRoutes.examCentreDesk,
+      color: Colors.brown,
+      permission: 'affiliation:submit',
+      feature: 'affiliation.exam_centres'),
+  const MoreMenuModule(
+      titleKey: 'affiliation_office',
+      icon: Icons.domain_verification_outlined,
+      route: AppRoutes.affiliationOffice,
+      color: Colors.brown,
+      permission: 'affiliation:view_all',
+      feature: 'affiliation.core'),
+  const MoreMenuModule(
+      titleKey: 'inspections',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.myInspections,
+      color: Colors.brown,
+      permission: 'affiliation:inspect',
+      feature: 'affiliation.inspections'),
   // Phase 33 — governance (staff: meetings / ATRs / e-file / policy acks), committee desk (secretary), approvals
   const MoreMenuModule(
       titleKey: 'governance',

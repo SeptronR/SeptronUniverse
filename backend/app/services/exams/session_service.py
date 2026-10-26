@@ -27,7 +27,7 @@ from sqlalchemy import func, or_, select
 from app.core.errors import APIError, ErrorCode
 from app.enums.exams import SESSION_FLOW
 from app.models.curriculum import Course
-from app.models.exams import CalendarEvent, ExamCentre, ExamPaper, ExamRegistration, ExamRegistrationItem, ExamSession
+from app.models.exams import CalendarEvent, ExamPaper, ExamRegistration, ExamRegistrationItem, ExamSession
 from app.models.offerings import CourseOffering
 from app.models.platform import AuditLog, Holiday
 from app.models.registration import CourseRegistration, CourseRegistrationItem, StudentArrear
@@ -656,40 +656,23 @@ class ExamSessionService(ExamBase):
         out.append("END:VCALENDAR")
         return "\r\n".join(out) + "\r\n"
 
-    # ---- centres ---------------------------------------------------------------------------------------------------------
+    # ---- centres (Phase 34 owns exam_centres: these Phase 14 routes delegate to the affiliation exam-centre service) ----
     async def centres(self, sid: uuid.UUID) -> list[ExamCentreOut]:
+        from app.services.affiliation.exam_centre_service import ExamCentreService
+
         s = await self.session(sid)
-        return [
-            ExamCentreOut.model_validate(c)
-            for c in (
-                await self.db.execute(
-                    select(ExamCentre).where(ExamCentre.exam_session_id == s.id).order_by(ExamCentre.centre_code)
-                )
-            ).scalars()
-        ]
+        rows = await ExamCentreService(self.db, self.principal, self.request, self.inst).list_centres(s.id)
+        return [ExamCentreOut.model_validate(r.model_dump()) for r in rows]
 
     async def save_centre(
         self, sid: uuid.UUID | None, body: ExamCentreIn, cid: uuid.UUID | None = None
     ) -> ExamCentreOut:
-        data = {**body.model_dump(), "assigned_colleges": [str(x) for x in body.assigned_colleges]}
-        if cid:
-            c = (
-                await self.db.execute(
-                    select(ExamCentre)
-                    .where(ExamCentre.id == cid, ExamCentre.institution_id == self.inst)
-                    .with_for_update()
-                )
-            ).scalar_one_or_none()
-            if c is None:
-                raise APIError(404, ErrorCode.NOT_FOUND, "Centre not found")
-            await self.session(c.exam_session_id, write=True)
-            for k, v in data.items():
-                setattr(c, k, v)
-        else:
-            s = await self.session(sid, write=True)  # type: ignore[arg-type]
-            if s.college_id is not None:
-                raise rule("Centres belong to central (university) sessions", "NOT_CENTRAL", 422)
-            c = ExamCentre(institution_id=self.inst, exam_session_id=s.id, **data)
-            self.db.add(c)
-        await self.db.flush()
-        return ExamCentreOut.model_validate(c)
+        from app.schemas.affiliation import ExamCentreIn as AffiliationCentreIn
+        from app.services.affiliation.exam_centre_service import ExamCentreService
+
+        if sid is not None:
+            await self.session(sid, write=True)
+        out = await ExamCentreService(self.db, self.principal, self.request, self.inst).save(
+            AffiliationCentreIn(exam_session_id=sid, **body.model_dump()), cid
+        )
+        return ExamCentreOut.model_validate(out.model_dump())

@@ -221,6 +221,20 @@ class ResultRunService(ResultBase):
             scope["college_ids"] = wanted
         if body.run_type in ("correction", "revaluation") and not scope["enrollment_ids"]:
             raise APIError(422, ErrorCode.VALIDATION, "Correction / revaluation runs name the affected enrolments")
+        # Phase 34: central sessions skip colleges whose required data submissions are not accepted / locked
+        from app.services.affiliation.gates import session_gating
+
+        gating = await session_gating(self.db, self.inst, s)
+        gated = {str(cid): g for cid, g in gating.items() if g["status"] == "gated"}
+        if gated:
+            wanted_ids = scope["college_ids"] or [str(cid) for cid, g in gating.items() if g["status"] != "gated"]
+            scope["college_ids"] = [c for c in wanted_ids if c not in gated] or [str(uuid.uuid4())]
+            await self._emit(
+                "affiliation.results_gated",
+                {"session_id": str(s.id), "colleges": {k: v["missing"] for k, v in gated.items()}},
+                "exam_session",
+                s.id,
+            )
         busy = (
             await self.db.execute(
                 select(func.count())
@@ -281,6 +295,7 @@ class ResultRunService(ResultBase):
                 "abc_apaar": await is_enabled(self.inst, "academics.abc_apaar"),
             },
             "taken_at": now_utc().isoformat(),
+            "college_gating": {str(cid): {"status": g["status"], "missing": g["missing"]} for cid, g in gating.items()},
         }
         r = ResultProcessingRun(
             institution_id=self.inst,

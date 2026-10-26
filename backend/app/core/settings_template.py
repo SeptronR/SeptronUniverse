@@ -11,6 +11,7 @@ from dataclasses import asdict, dataclass, field
 from typing import Any
 
 from app.enums.accreditation import DEFAULT_DISCLOSURE_ITEMS
+from app.enums.affiliation import DEFAULT_CHECKLISTS, DEFAULT_SUBMISSION_WINDOWS, DEFAULT_VALIDATION_RULES
 from app.enums.phd import DEFAULT_PHD_RULES
 from app.enums.research import DEFAULT_API_SCHEME, DEFAULT_INCENTIVE_SLABS
 
@@ -271,6 +272,17 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("efile", "pendency_sla_days", "int", 7, label="e-File pendency SLA with one holder (days)", min=1, max=90),
     SettingDef("legal", "hearing_reminder_days", "json", [7, 1], label="Hearing reminder offsets (days before)"),
     SettingDef("policies", "ack_required_categories", "json", ["conduct", "it", "posh"], label="Policy categories that need acknowledgement"),
+    # affiliation management (Phase 34; university tenants)
+    SettingDef("affiliation", "document_checklists", "json", DEFAULT_CHECKLISTS, label="Document checklist per application type"),
+    SettingDef("affiliation", "inspection_required_years", "int", 3, label="Renewal / extension: inspect when the last inspection is older than (years)", min=0, max=10),
+    SettingDef("affiliation", "deficiency_compliance_days", "int", 30, label="Deficiency compliance period (days)", min=1, max=180),
+    SettingDef("affiliation", "order_validity_years", "json", {"provisional": 1, "permanent": 5}, label="Order validity per approval status (years)"),
+    SettingDef("affiliation", "submission_windows", "json", DEFAULT_SUBMISSION_WINDOWS, label="College data submission due dates (anchor+Nd)"),
+    SettingDef("affiliation", "submission_validation_rules", "json", DEFAULT_VALIDATION_RULES, label="Submission validation rules"),
+    SettingDef("affiliation", "results_require_accepted", "json", ["cia_marks", "attendance_eligibility", "practical_marks", "exam_registrations"], label="Submission types that gate central result processing"),
+    SettingDef("affiliation", "centre_capacity_buffer_pct", "int", 10, label="Exam centre capacity buffer (%)", min=0, max=50),
+    SettingDef("affiliation", "expiry_reminder_days", "int", 90, label="Programme approval expiry reminder (days before valid_to)", min=7, max=365),
+    SettingDef("affiliation", "appeal_as_extension", "bool", True, label="Review / appeal requests are filed as extension applications"),
     # document templates & certificate requests (Phase 26)
     SettingDef("documents", "signatories", "json", {"registrar": {"name": "Registrar", "designation": "Registrar", "signature_url": None}, "principal": {"name": "Principal", "designation": "Principal", "signature_url": None}, "coe": {"name": "Controller of Examinations", "designation": "Controller of Examinations", "signature_url": None}}, label="Signatories (name, designation, signature image)"),
     SettingDef("documents", "request_rules", "json", {}, label="Certificate request rules per type (overrides of the shipped defaults)"),
@@ -505,6 +517,9 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("rti", "RTI/{yyyy}/{seq:4}", 4, "yearly", "RTI request number"),
     SequenceTemplate("efile", "EF/{yyyy}/{seq:5}", 5, "yearly", "e-File number"),
     SequenceTemplate("legal", "LC/{yyyy}/{seq:4}", 4, "yearly", "Legal case register number"),
+    # Phase 34 - affiliation applications and orders
+    SequenceTemplate("affil", "AFF/{yyyy}/{seq:4}", 4, "yearly", "Affiliation application number"),
+    SequenceTemplate("order", "AO/{yyyy}/{seq:4}", 4, "yearly", "Affiliation order number"),
     SequenceTemplate("doc:id_card", "ID/{yyyy}/{seq:5}", 5, "yearly", "Document number (id_card)"),
     SequenceTemplate("doc:bonafide", "BON/{yyyy}/{seq:5}", 5, "yearly", "Document number (bonafide)"),
     SequenceTemplate("doc:character", "CHR/{yyyy}/{seq:5}", 5, "yearly", "Document number (character)"),
@@ -540,6 +555,10 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("doc:resolution_extract", "RES/{yyyy}/{seq:5}", 5, "yearly", "Document number (resolution_extract)"),
     SequenceTemplate("doc:rti_response", "RTIR/{yyyy}/{seq:5}", 5, "yearly", "Document number (rti_response)"),
     SequenceTemplate("doc:office_order", "OO/{yyyy}/{seq:5}", 5, "yearly", "Document number (office_order)"),
+    SequenceTemplate("doc:affiliation_order", "AFO/{yyyy}/{seq:5}", 5, "yearly", "Document number (affiliation_order)"),
+    SequenceTemplate("doc:inspection_report", "INR/{yyyy}/{seq:5}", 5, "yearly", "Document number (inspection_report)"),
+    SequenceTemplate("doc:deficiency_notice", "DFN/{yyyy}/{seq:5}", 5, "yearly", "Document number (deficiency_notice)"),
+    SequenceTemplate("doc:centre_appointment", "CAP/{yyyy}/{seq:5}", 5, "yearly", "Document number (centre_appointment)"),
     SequenceTemplate("serial:degree", "DSR{seq:6}", 6, "never", "Serial register (degree)"),
     SequenceTemplate("serial:provisional", "PSR{seq:6}", 6, "never", "Serial register (provisional)"),
     SequenceTemplate("serial:transcript", "TSR{seq:6}", 6, "never", "Serial register (transcript)"),

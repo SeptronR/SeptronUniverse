@@ -29,6 +29,7 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
+import '../../features/affiliation/affiliation_screens.dart';
 import '../../features/governance/governance_screens.dart';
 import '../../features/iqac/iqac_screens.dart';
 import '../../features/phd/phd_screens.dart';
@@ -504,6 +505,35 @@ class ScreenRegistry {
       feature: 'accreditation.aishe',
       permission: 'accreditation:evidence',
       builder: (_, __) => const IqacHubScreen(department: true),
+    ),
+    // Phase 34 — affiliation
+    AppRoutes.collegeAffiliation: ScreenEntry(
+      route: AppRoutes.collegeAffiliation,
+      titleKey: 'affiliation',
+      feature: 'affiliation.core',
+      permission: 'affiliation:apply',
+      builder: (_, __) => const CollegeAffiliationScreen(),
+    ),
+    AppRoutes.examCentreDesk: ScreenEntry(
+      route: AppRoutes.examCentreDesk,
+      titleKey: 'exam_centre',
+      feature: 'affiliation.exam_centres',
+      permission: 'affiliation:submit',
+      builder: (_, __) => const ExamCentreCoordinatorScreen(),
+    ),
+    AppRoutes.affiliationOffice: ScreenEntry(
+      route: AppRoutes.affiliationOffice,
+      titleKey: 'affiliation_office',
+      feature: 'affiliation.core',
+      permission: 'affiliation:view_all',
+      builder: (_, __) => const AffiliationOfficeScreen(),
+    ),
+    AppRoutes.myInspections: ScreenEntry(
+      route: AppRoutes.myInspections,
+      titleKey: 'inspections',
+      feature: 'affiliation.inspections',
+      permission: 'affiliation:inspect',
+      builder: (_, __) => const InspectorScreen(),
     ),
     // Phase 33 — governance
     AppRoutes.governanceHub: ScreenEntry(

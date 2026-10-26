@@ -423,6 +423,30 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   {
+    title: 'UNIVERSITY',
+    items: [
+      // Phase 34 — affiliation office (university tenants; college / inspector portals below)
+      { label: 'Affiliation portfolio', to: '/university/affiliation/portfolio', icon: Gauge, module: 'affiliation', action: 'view_all', altActions: ['manage'], feature: 'affiliation.core' },
+      { label: 'Colleges', to: '/university/affiliation/colleges', icon: Building2, module: 'affiliation', action: 'view_all', altActions: ['manage'], feature: 'affiliation.core' },
+      { label: 'Applications', to: '/university/affiliation/applications', icon: ClipboardCheck, module: 'affiliation', action: 'manage', altActions: ['view_all', 'decide'], feature: 'affiliation.core' },
+      { label: 'Programme approvals', to: '/university/affiliation/program-approvals', icon: ScrollText, module: 'affiliation', action: 'manage', altActions: ['view_all', 'decide'], feature: 'affiliation.core' },
+      { label: 'Fee schedules', to: '/university/affiliation/fee-schedules', icon: Banknote, module: 'affiliation', action: 'manage', altActions: ['view_all'], feature: 'affiliation.fees' },
+      { label: 'Submissions', to: '/university/affiliation/submissions', icon: CheckSquare, module: 'affiliation', action: 'verify_submission', altActions: ['manage', 'view_all'], feature: 'affiliation.data_submissions' },
+      { label: 'Exam centres', to: '/university/affiliation/exam-centres', icon: MapPin, module: 'exams', action: 'configure', altActions: ['manage'], feature: 'affiliation.exam_centres' },
+      { label: 'Returns', to: '/university/affiliation/returns', icon: Award, module: 'affiliation', action: 'view_all', altActions: ['manage'], feature: 'affiliation.core' },
+      { label: 'My inspections', to: '/inspections/me', icon: ClipboardCheck, module: 'affiliation', action: 'inspect', feature: 'affiliation.inspections' },
+    ],
+  },
+  {
+    title: 'COLLEGE',
+    items: [
+      // Phase 34 — college side of affiliation (college scope)
+      { label: 'Affiliation', to: '/college/affiliation', icon: Landmark, module: 'affiliation', action: 'apply', altActions: ['view'], feature: 'affiliation.core' },
+      { label: 'Submissions', to: '/college/submissions', icon: CheckSquare, module: 'affiliation', action: 'submit', feature: 'affiliation.data_submissions' },
+      { label: 'Exam centre', to: '/college/exam-centre', icon: MapPin, module: 'affiliation', action: 'submit', altActions: ['view'], feature: 'affiliation.exam_centres' },
+    ],
+  },
+  {
     title: 'COMMUNICATION',
     items: [
       // Phase 04 — communication core
