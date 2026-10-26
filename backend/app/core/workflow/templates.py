@@ -362,6 +362,54 @@ RESEARCH_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         ],
     },
 )
+# Phase 31: examiner panel (the guide's proposal is the start → dean approves → VC only when ``vc_approval`` is set
+# from ``phd.panel_vc_approval``), DC approval of a thesis (the DC members named in the start context approve in
+# parallel — empty member slots are skipped — then the convenor) and the award (research cell → dean → academic council
+# resolution only when ``governance.minutes`` is on)
+PHD_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "phd.examiner_panel",
+        "module": "phd",
+        "name": "PhD examiner panel",
+        "steps": [
+            _role("dean", 1, 72, escalate="vice_chancellor"),
+            {**_role("vice_chancellor", 2, 72), "skip_unless": "vc_approval"},
+        ],
+    },
+    {
+        "key": "phd.thesis_dc_approval",
+        "module": "phd",
+        "name": "Thesis DC approval",
+        "steps": [
+            *(
+                {
+                    "order": 1,
+                    "approver": {"type": "scope_rule", "value": f"context.dc_member_{i}"},
+                    "mode": "parallel",
+                    "sla_hours": 168,
+                    "skip_unless": f"dc_member_{i}",
+                }
+                for i in range(1, 7)
+            ),
+            {
+                "order": 2,
+                "approver": {"type": "scope_rule", "value": "context.convenor"},
+                "mode": "sequential",
+                "sla_hours": 72,
+            },
+        ],
+    },
+    {
+        "key": "phd.award",
+        "module": "phd",
+        "name": "PhD award",
+        "steps": [
+            _role("research_cell", 1, 72, escalate="vice_chancellor"),
+            _role("dean", 2, 72, escalate="vice_chancellor"),
+            {**_role("vice_chancellor", 3, 168), "skip_unless": "council_resolution"},
+        ],
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -377,9 +425,10 @@ WORKFLOW_TEMPLATES = (
     + FACILITIES_WORKFLOW_TEMPLATES
     + SUPPORT_WORKFLOW_TEMPLATES
     + RESEARCH_WORKFLOW_TEMPLATES
+    + PHD_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 46, (
+assert len(WORKFLOW_TEMPLATES) == 49, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3"
 )

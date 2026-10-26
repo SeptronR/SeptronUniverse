@@ -46,6 +46,7 @@ celery = Celery(
         "app.tasks.placement",
         "app.tasks.alumni",
         "app.tasks.research",
+        "app.tasks.phd",
         "app.tasks.reports",
         "app.tasks.integrations",
     ],

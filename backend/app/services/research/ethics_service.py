@@ -7,7 +7,8 @@ under review (category exempt / expedited / full review, protocol document, link
 (inbox or ``/review``) and the chair's decision (``/decide``: approved with ``approval_no`` and validity, revise,
 rejected; conditions) follow. Amendments, renewals (new validity) and adverse events are appended to the side store.
 Committee members own the applications of their committees; another committee's application answers 404. Approvals
-link to projects (Phase 30) and PhD work (Phase 31); ``project_service`` refuses to start a project of a listed ethics
+link to projects (Phase 30) and PhD work (Phase 31 — ``scholar_id`` in the side store, also set from the scholar
+record); ``project_service`` refuses to start a project of a listed ethics
 category without a valid approval.
 """
 
@@ -214,6 +215,7 @@ class EthicsService(ResearchBase):
                     pi_name=staff_name(staff.get(r.pi_staff_id)) if r.pi_staff_id else None,
                     submitted_on=r.submitted_on,
                     category=m.get("category"),
+                    scholar_id=uuid.UUID(m["scholar_id"]) if m.get("scholar_id") else None,
                     decision=r.decision,
                     status=status,
                     approval_no=r.approval_no,
@@ -275,6 +277,7 @@ class EthicsService(ResearchBase):
         m: dict[str, Any] = {
             "category": body.category.value,
             "project_id": str(body.project_id) if body.project_id else None,
+            "scholar_id": str(body.scholar_id) if body.scholar_id else None,
         }
         if body.category.value != "exempt" and reviewer and chair:
             try:

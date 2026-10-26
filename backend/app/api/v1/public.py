@@ -95,6 +95,12 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/alumni/claim/verify",
     "GET /api/v1/fundraising/campaigns/public",
     "POST /api/v1/fundraising/donate/public",
+    # Phase 31 — external examiner token pages (tenant by institution slug; unguessable token; {phd.external_examiners}
+    # inside) and the plagiarism adapter callback (signature verified for live providers; {phd.thesis_plagiarism} inside)
+    "GET /api/v1/phd/examiners/respond/{token}",
+    "POST /api/v1/phd/examiners/respond/{token}",
+    "POST /api/v1/phd/examiners/respond/{token}/report",
+    "POST /api/v1/webhooks/plagiarism/{connection_id}",
 }
 
 

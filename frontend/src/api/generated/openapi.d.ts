@@ -17971,6 +17971,1176 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/phd/awards": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** PhD awards (Phase 18) */
+        get: operations["awards_api_v1_phd_awards_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/awards/etd-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Awards with ETD status */
+        get: operations["etd_status_api_v1_phd_awards_etd_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/dc-meetings/{mid}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Convenor approves the minutes */
+        post: operations["meeting_approve_api_v1_phd_dc_meetings__mid__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/dc-meetings/{mid}/minutes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Minutes, attendance and recommendations */
+        put: operations["meeting_minutes_api_v1_phd_dc_meetings__mid__minutes_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/disbursements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Disbursements (month / status) */
+        get: operations["disbursements_api_v1_phd_disbursements_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/disbursements/pay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Payment batch (payout / payroll) for approved rows */
+        post: operations["pay_disbursements_api_v1_phd_disbursements_pay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/disbursements/{did}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve */
+        post: operations["approve_disbursement_api_v1_phd_disbursements__did__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/disbursements/{did}/contingency": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Contingency claim with bills */
+        post: operations["contingency_api_v1_phd_disbursements__did__contingency_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/disbursements/{did}/hold": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Hold */
+        post: operations["hold_disbursement_api_v1_phd_disbursements__did__hold_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/disbursements/{did}/release": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Release a hold (arrears on the next run) */
+        post: operations["release_disbursement_api_v1_phd_disbursements__did__release_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/etd/{eid}/embargo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Embargo request / decision (approve set) */
+        post: operations["etd_embargo_api_v1_phd_etd__eid__embargo_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/etd/{eid}/retry": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retry a failed upload */
+        post: operations["etd_retry_api_v1_phd_etd__eid__retry_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Invitations / reports tracker */
+        get: operations["examiner_tracker_api_v1_phd_examiners_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/respond/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Examiner invitation (token page) */
+        get: operations["examiner_token_view_api_v1_phd_examiners_respond__token__get"];
+        put?: never;
+        /** Accept / decline (token) */
+        post: operations["examiner_token_respond_api_v1_phd_examiners_respond__token__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/respond/{token}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Upload the report (token) */
+        post: operations["examiner_token_report_api_v1_phd_examiners_respond__token__report_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/{eid}/dispatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Dispatch the thesis (signed, watermarked link) */
+        post: operations["dispatch_api_v1_phd_examiners__eid__dispatch_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/{eid}/invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Invite (tokenised link) */
+        post: operations["invite_api_v1_phd_examiners__eid__invite_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/{eid}/remuneration": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Remuneration line */
+        post: operations["remuneration_api_v1_phd_examiners__eid__remuneration_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/{eid}/replace": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Replace a declined examiner */
+        post: operations["replace_examiner_api_v1_phd_examiners__eid__replace_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/examiners/{eid}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record an examiner report */
+        post: operations["examiner_report_api_v1_phd_examiners__eid__report_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/fellowships/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My disbursements */
+        get: operations["fellowships_me_api_v1_phd_fellowships_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/fellowships/run": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Monthly disbursement run (job; ?inline=true runs at once) */
+        post: operations["fellowship_run_api_v1_phd_fellowships_run_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/fellowships/{fid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a fellowship */
+        put: operations["update_fellowship_api_v1_phd_fellowships__fid__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/guides/load": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Guide load by cadre */
+        get: operations["guide_load_api_v1_phd_guides_load_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My scholar record (360) */
+        get: operations["me_api_v1_phd_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/me/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Scholar dashboard (status, deadlines, duration meter) */
+        get: operations["me_dashboard_api_v1_phd_me_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/progress-reports/compliance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Report compliance (due / submitted / overdue, unsatisfactory streak) */
+        get: operations["compliance_api_v1_phd_progress_reports_compliance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/progress-reports/{rid}/dc-review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** DC rating (two consecutive unsatisfactory → cancellation review) */
+        post: operations["dc_review_api_v1_phd_progress_reports__rid__dc_review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/progress-reports/{rid}/guide-review": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Guide review */
+        post: operations["guide_review_api_v1_phd_progress_reports__rid__guide_review_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/reports/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Reports (scholars / fellowships / awards / ugc_return / examiners) — xlsx job; ?inline=true downloads */
+        get: operations["reports_api_v1_phd_reports__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requests queue */
+        get: operations["requests_queue_api_v1_phd_requests_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/requests/{rid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Request */
+        get: operations["get_request_api_v1_phd_requests__rid__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/requests/{rid}/cancellation-decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancellation review decision (warning | discontinue) */
+        post: operations["cancellation_decision_api_v1_phd_requests__rid__cancellation_decision_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/requests/{rid}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Research cell desk decision (closes the workflow) */
+        post: operations["decide_request_api_v1_phd_requests__rid__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/requests/{rid}/guide-noc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Old guide's NOC (change of guide) */
+        post: operations["guide_noc_api_v1_phd_requests__rid__guide_noc_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Scholars (ScopeTabs Own | Department | All; scholars use /phd/me) */
+        get: operations["scholars_api_v1_phd_scholars_get"];
+        put?: never;
+        /** Create a scholar (guide load check → 409 GUIDE_LOAD_EXCEEDED) */
+        post: operations["create_scholar_api_v1_phd_scholars_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Scholar 360 */
+        get: operations["scholar_api_v1_phd_scholars__sid__get"];
+        /** Update a scholar */
+        put: operations["update_scholar_api_v1_phd_scholars__sid__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/coursework": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Coursework status (credits earned / methodology from results) */
+        get: operations["coursework_api_v1_phd_scholars__sid__coursework_get"];
+        /** Plan coursework (research methodology mandatory) */
+        put: operations["plan_coursework_api_v1_phd_scholars__sid__coursework_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/coursework/complete": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Complete coursework → registered (registration_date, max_duration_end) */
+        post: operations["coursework_complete_api_v1_phd_scholars__sid__coursework_complete_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/coursework/exemption": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Request a coursework exemption (phd.request) */
+        post: operations["coursework_exemption_api_v1_phd_scholars__sid__coursework_exemption_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/dc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Doctoral committee */
+        get: operations["dc_api_v1_phd_scholars__sid__dc_get"];
+        put?: never;
+        /** Constitute the DC (guide convenor, ≥ 1 external) */
+        post: operations["constitute_dc_api_v1_phd_scholars__sid__dc_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/dc-meetings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** DC meetings */
+        get: operations["dc_meetings_api_v1_phd_scholars__sid__dc_meetings_get"];
+        put?: never;
+        /** Schedule a DC meeting (409 DUPLICATE_MEETING) */
+        post: operations["schedule_meeting_api_v1_phd_scholars__sid__dc_meetings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/dc/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Reconstitute DC members */
+        put: operations["dc_members_api_v1_phd_scholars__sid__dc_members_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/discontinue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Discontinue */
+        post: operations["discontinue_api_v1_phd_scholars__sid__discontinue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/fellowship": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fellowships of a scholar */
+        get: operations["scholar_fellowships_api_v1_phd_scholars__sid__fellowship_get"];
+        put?: never;
+        /** Create a fellowship (defaults from phd.rules) */
+        post: operations["create_fellowship_api_v1_phd_scholars__sid__fellowship_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/fellowship/statement": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Agency statement (UGC / CSIR) */
+        get: operations["fellowship_statement_api_v1_phd_scholars__sid__fellowship_statement_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/guide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Allocate / reallocate the guide (load check under FOR UPDATE) */
+        post: operations["allocate_guide_api_v1_phd_scholars__sid__guide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/progress-periods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Half-yearly periods with due dates */
+        get: operations["progress_periods_api_v1_phd_scholars__sid__progress_periods_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/progress-reports": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Progress reports */
+        get: operations["progress_reports_api_v1_phd_scholars__sid__progress_reports_get"];
+        put?: never;
+        /** Submit a progress report (scholar) */
+        post: operations["submit_report_api_v1_phd_scholars__sid__progress_reports_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Requests of a scholar */
+        get: operations["scholar_requests_api_v1_phd_scholars__sid__requests_get"];
+        put?: never;
+        /** Raise a request (extension / change of guide / mode change / leave / exemption) */
+        post: operations["raise_request_api_v1_phd_scholars__sid__requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/thesis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Submissions of a scholar */
+        get: operations["scholar_thesis_api_v1_phd_scholars__sid__thesis_get"];
+        put?: never;
+        /** Submit pre-synopsis / synopsis / thesis / revised thesis (AI declaration mandatory) */
+        post: operations["submit_thesis_api_v1_phd_scholars__sid__thesis_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/scholars/{sid}/timeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Status timeline */
+        get: operations["timeline_api_v1_phd_scholars__sid__timeline_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** PhD stats (GPHD, durations, utilisation) */
+        get: operations["stats_api_v1_phd_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Plagiarism / DC approval queue */
+        get: operations["thesis_queue_api_v1_phd_thesis_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Submission */
+        get: operations["get_thesis_api_v1_phd_thesis__tid__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/award": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Award state */
+        get: operations["get_award_api_v1_phd_thesis__tid__award_get"];
+        put?: never;
+        /** Request the award (phd.award; resolution required with governance.minutes) */
+        post: operations["request_award_api_v1_phd_thesis__tid__award_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/certificate.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Plagiarism check certificate */
+        get: operations["thesis_certificate_api_v1_phd_thesis__tid__certificate_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/dc-approval": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Start the DC approval workflow (phd.thesis_dc_approval) */
+        post: operations["thesis_dc_approval_api_v1_phd_thesis__tid__dc_approval_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/etd": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** ETD uploads */
+        get: operations["etd_list_api_v1_phd_thesis__tid__etd_get"];
+        put?: never;
+        /** Upload to Shodhganga / institutional repository (job; ?inline=true uploads at once) */
+        post: operations["etd_upload_api_v1_phd_thesis__tid__etd_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/examiners": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Panel (identities hidden from the scholar until the viva) */
+        get: operations["panel_api_v1_phd_thesis__tid__examiners_get"];
+        put?: never;
+        /** Propose a panel (≥ 2 external, ≥ 1 outside state; COI → 409) */
+        post: operations["propose_panel_api_v1_phd_thesis__tid__examiners_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/examiners/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Panel decision (dean; closes phd.examiner_panel) */
+        post: operations["decide_panel_api_v1_phd_thesis__tid__examiners_decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/plagiarism/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Plagiarism check (job; ?inline=true checks at once) */
+        post: operations["plagiarism_check_api_v1_phd_thesis__tid__plagiarism_check_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/recommendations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consolidated recommendations */
+        get: operations["recommendations_api_v1_phd_thesis__tid__recommendations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/reject": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reject a submission */
+        post: operations["thesis_reject_api_v1_phd_thesis__tid__reject_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/thesis/{tid}/viva": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Viva of a thesis */
+        get: operations["get_viva_api_v1_phd_thesis__tid__viva_get"];
+        put?: never;
+        /** Schedule the viva (open defence notice) */
+        post: operations["schedule_viva_api_v1_phd_thesis__tid__viva_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/viva/upcoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Upcoming vivas (open-defence notices) */
+        get: operations["viva_upcoming_api_v1_phd_viva_upcoming_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/viva/{vid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Reschedule / panel */
+        put: operations["update_viva_api_v1_phd_viva__vid__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/phd/viva/{vid}/result": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Viva result */
+        post: operations["viva_result_api_v1_phd_viva__vid__result_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/placement/applications/me": {
         parameters: {
             query?: never;
@@ -26629,6 +27799,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/webhooks/plagiarism/{connection_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Plagiarism adapter callback (signed) */
+        post: operations["plagiarism_webhook_api_v1_webhooks_plagiarism__connection_id__post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/webhooks/whatsapp/{connection_id}": {
         parameters: {
             query?: never;
@@ -32429,6 +33616,16 @@ export interface components {
             /** Reason */
             reason: string;
         };
+        /** CancellationDecision */
+        CancellationDecision: {
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "warning" | "discontinue";
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** CanteenIn */
         CanteenIn: {
             /** College Id */
@@ -33062,6 +34259,17 @@ export interface components {
             date: string;
             /** No */
             no: string;
+        };
+        /** Chip */
+        Chip: {
+            /** Label */
+            label: string;
+            /**
+             * Tone
+             * @default info
+             * @enum {string}
+             */
+            tone: "ok" | "warn" | "danger" | "info";
         };
         /** Choice */
         Choice: {
@@ -33980,6 +35188,31 @@ export interface components {
              */
             warnings: string[];
         };
+        /** ComplianceRow */
+        ComplianceRow: {
+            /** Department Id */
+            department_id?: string | null;
+            /** Due */
+            due: number;
+            /** Guide Name */
+            guide_name?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Overdue */
+            overdue?: string[];
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Submitted */
+            submitted: number;
+            /**
+             * Unsatisfactory Streak
+             * @default 0
+             */
+            unsatisfactory_streak: number;
+        };
         /**
          * ComponentCategory
          * @enum {string}
@@ -34380,6 +35613,15 @@ export interface components {
         ContentViewPing: {
             /** Progress Pct */
             progress_pct: number;
+        };
+        /** ContingencyClaim */
+        ContingencyClaim: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Bills */
+            bills?: string[];
+            /** Description */
+            description: string;
         };
         /** Conversion */
         Conversion: {
@@ -35090,6 +36332,73 @@ export interface components {
             tutorial_hours?: number | null;
             /** Version */
             version?: number | null;
+        };
+        /** CourseworkCourse */
+        CourseworkCourse: {
+            /** Code */
+            code: string;
+            /**
+             * Course Id
+             * Format: uuid
+             */
+            course_id: string;
+            /** Credits */
+            credits: number;
+            /** Is Methodology */
+            is_methodology: boolean;
+            /** Result */
+            result?: string | null;
+            /** Title */
+            title: string;
+        };
+        /** CourseworkExemption */
+        CourseworkExemption: {
+            /** Evidence Url */
+            evidence_url?: string | null;
+            /** Reason */
+            reason: string;
+        };
+        /** CourseworkPlan */
+        CourseworkPlan: {
+            /** Course Ids */
+            course_ids: string[];
+        };
+        /** CourseworkStatusOut */
+        CourseworkStatusOut: {
+            /** Courses */
+            courses?: components["schemas"]["CourseworkCourse"][];
+            /** Credits Earned */
+            credits_earned: number;
+            /** Credits Required */
+            credits_required: number;
+            /** Deadline */
+            deadline?: string | null;
+            /** Exemption */
+            exemption?: {
+                [key: string]: unknown;
+            } | null;
+            /** Methodology Done */
+            methodology_done: boolean;
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Status */
+            status: string;
+        };
+        /** CourseworkSummary */
+        CourseworkSummary: {
+            /** Credits Earned */
+            credits_earned: number;
+            /** Credits Required */
+            credits_required: number;
+            /** Deadline */
+            deadline?: string | null;
+            /** Methodology Done */
+            methodology_done: boolean;
+            /** Status */
+            status: string;
         };
         /** CqiActionIn */
         CqiActionIn: {
@@ -35932,6 +37241,154 @@ export interface components {
              */
             status: string;
         };
+        /** DcConstitute */
+        DcConstitute: {
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Members */
+            members: components["schemas"]["DcMemberIn"][];
+        };
+        /** DcMeetingApprove */
+        DcMeetingApprove: {
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** DcMeetingCreate */
+        DcMeetingCreate: {
+            /** Agenda */
+            agenda?: string | null;
+            /**
+             * Held On
+             * Format: date
+             */
+            held_on: string;
+            /**
+             * Kind
+             * @default regular
+             * @enum {string}
+             */
+            kind: "regular" | "pre_synopsis";
+            /** Meeting No */
+            meeting_no: number;
+        };
+        /** DcMeetingMinutes */
+        DcMeetingMinutes: {
+            /** Attendance */
+            attendance?: string[];
+            /** Minutes */
+            minutes: string;
+            /** Minutes Url */
+            minutes_url?: string | null;
+            /** Recommendations */
+            recommendations?: components["schemas"]["DcRecommendationIn"][];
+        };
+        /** DcMeetingOut */
+        DcMeetingOut: {
+            /** Agenda */
+            agenda?: string | null;
+            /** Attendance */
+            attendance?: string[];
+            /** Held On */
+            held_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @default regular
+             */
+            kind: string;
+            /** Meeting No */
+            meeting_no: number;
+            /** Minutes */
+            minutes?: string | null;
+            /** Minutes Url */
+            minutes_url?: string | null;
+            /** Recommendations */
+            recommendations?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Status */
+            status: string;
+        };
+        /** DcMemberIn */
+        DcMemberIn: {
+            external?: components["schemas"]["ExternalPerson"] | null;
+            /** @default member */
+            role: components["schemas"]["DcRole"];
+            /** Staff Id */
+            staff_id?: string | null;
+        };
+        /** DcOut */
+        DcOut: {
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Constituted On */
+            constituted_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Meetings
+             * @default 0
+             */
+            meetings: number;
+            /** Members */
+            members: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+        };
+        /**
+         * DcRating
+         * @enum {string}
+         */
+        DcRating: "satisfactory" | "unsatisfactory";
+        /** DcRecommendationIn */
+        DcRecommendationIn: {
+            /** Due On */
+            due_on?: string | null;
+            /** Text */
+            text: string;
+        };
+        /** DcReview */
+        DcReview: {
+            /** Meeting Id */
+            meeting_id?: string | null;
+            rating: components["schemas"]["DcRating"];
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /**
+         * DcRole
+         * @enum {string}
+         */
+        DcRole: "convenor" | "member" | "external";
+        /** Deadline */
+        Deadline: {
+            /**
+             * Due On
+             * Format: date
+             */
+            due_on: string;
+            /** Kind */
+            kind: string;
+            /** Label */
+            label: string;
+        };
         /** DecideRequest */
         DecideRequest: {
             decision: components["schemas"]["EligibilityDecision"];
@@ -36572,11 +38029,52 @@ export interface components {
             /** Reference */
             reference?: string | null;
         };
+        /** DisbursementHold */
+        DisbursementHold: {
+            /** Reason */
+            reason: string;
+        };
         /**
          * DisbursementMode
          * @enum {string}
          */
         DisbursementMode: "fee_credit" | "bank_transfer" | "external_portal";
+        /** DisbursementPay */
+        DisbursementPay: {
+            /** Disbursement Ids */
+            disbursement_ids: string[];
+            /** Paid On */
+            paid_on?: string | null;
+            /** Reference */
+            reference: string;
+        };
+        /** DisbursementRun */
+        DisbursementRun: {
+            /**
+             * Month
+             * Format: date
+             */
+            month: string;
+        };
+        /** DisbursementRunResult */
+        DisbursementRunResult: {
+            /**
+             * Arrears Paise
+             * @default 0
+             */
+            arrears_paise: number;
+            /** Created */
+            created: number;
+            /** Held */
+            held: number;
+            /**
+             * Month
+             * Format: date
+             */
+            month: string;
+            /** Skipped */
+            skipped: number;
+        };
         /** DiscAppealCreate */
         DiscAppealCreate: {
             /**
@@ -36901,6 +38399,16 @@ export interface components {
              */
             incident_on: string;
             student: components["schemas"]["HostelStudentRef"];
+        };
+        /** Discontinue */
+        Discontinue: {
+            /**
+             * Reason
+             * @enum {string}
+             */
+            reason: "unsatisfactory_progress" | "max_duration_exceeded" | "voluntary" | "other";
+            /** Remarks */
+            remarks?: string | null;
         };
         /** DiscountAssign */
         DiscountAssign: {
@@ -40354,6 +41862,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CourseworkStatusOut] */
+        Envelope_CourseworkStatusOut_: {
+            data?: components["schemas"]["CourseworkStatusOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CqiActionOut] */
         Envelope_CqiActionOut_: {
             data?: components["schemas"]["CqiActionOut"] | null;
@@ -40477,6 +42000,36 @@ export interface components {
         /** Envelope[DayBookResponse] */
         Envelope_DayBookResponse_: {
             data?: components["schemas"]["DayBookResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DcMeetingOut] */
+        Envelope_DcMeetingOut_: {
+            data?: components["schemas"]["DcMeetingOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DcOut] */
+        Envelope_DcOut_: {
+            data?: components["schemas"]["DcOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -40627,6 +42180,21 @@ export interface components {
         /** Envelope[DirectoryPage] */
         Envelope_DirectoryPage_: {
             data?: components["schemas"]["DirectoryPage"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DisbursementRunResult] */
+        Envelope_DisbursementRunResult_: {
+            data?: components["schemas"]["DisbursementRunResult"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -41119,6 +42687,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[EtdOut] */
+        Envelope_EtdOut_: {
+            data?: components["schemas"]["EtdOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[EthicsApplicationOut] */
         Envelope_EthicsApplicationOut_: {
             data?: components["schemas"]["EthicsApplicationOut"] | null;
@@ -41257,6 +42840,36 @@ export interface components {
         /** Envelope[ExamSessionResponse] */
         Envelope_ExamSessionResponse_: {
             data?: components["schemas"]["ExamSessionResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExaminerOut] */
+        Envelope_ExaminerOut_: {
+            data?: components["schemas"]["ExaminerOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExaminerTokenView] */
+        Envelope_ExaminerTokenView_: {
+            data?: components["schemas"]["ExaminerTokenView"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -41632,6 +43245,21 @@ export interface components {
         /** Envelope[FeedbackResponse] */
         Envelope_FeedbackResponse_: {
             data?: components["schemas"]["FeedbackResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FellowshipOut] */
+        Envelope_FellowshipOut_: {
+            data?: components["schemas"]["FellowshipOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -43625,6 +45253,51 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PhdAwardOut] */
+        Envelope_PhdAwardOut_: {
+            data?: components["schemas"]["PhdAwardOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PhdDisbursementOut] */
+        Envelope_PhdDisbursementOut_: {
+            data?: components["schemas"]["PhdDisbursementOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PhdStats] */
+        Envelope_PhdStats_: {
+            data?: components["schemas"]["PhdStats"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PlatformInstitutionResponse] */
         Envelope_PlatformInstitutionResponse_: {
             data?: components["schemas"]["PlatformInstitutionResponse"] | null;
@@ -43988,6 +45661,21 @@ export interface components {
         /** Envelope[ProgramResponse] */
         Envelope_ProgramResponse_: {
             data?: components["schemas"]["ProgramResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ProgressReportOut] */
+        Envelope_ProgressReportOut_: {
+            data?: components["schemas"]["ProgressReportOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44528,6 +46216,21 @@ export interface components {
         /** Envelope[ReceiptResponse] */
         Envelope_ReceiptResponse_: {
             data?: components["schemas"]["ReceiptResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RecommendationsOut] */
+        Envelope_RecommendationsOut_: {
+            data?: components["schemas"]["RecommendationsOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -45083,6 +46786,66 @@ export interface components {
         /** Envelope[SavedSegmentOut] */
         Envelope_SavedSegmentOut_: {
             data?: components["schemas"]["SavedSegmentOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[Scholar360] */
+        Envelope_Scholar360_: {
+            data?: components["schemas"]["Scholar360"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ScholarOut] */
+        Envelope_ScholarOut_: {
+            data?: components["schemas"]["ScholarOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ScholarPortalDashboard] */
+        Envelope_ScholarPortalDashboard_: {
+            data?: components["schemas"]["ScholarPortalDashboard"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ScholarRequestOut] */
+        Envelope_ScholarRequestOut_: {
+            data?: components["schemas"]["ScholarRequestOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -45935,6 +47698,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ThesisOut] */
+        Envelope_ThesisOut_: {
+            data?: components["schemas"]["ThesisOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ThreadOut] */
         Envelope_ThreadOut_: {
             data?: components["schemas"]["ThreadOut"] | null;
@@ -46160,6 +47938,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[Union[DcOut, NoneType]] */
+        Envelope_Union_DcOut__NoneType__: {
+            data?: components["schemas"]["DcOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[Union[DocVerifyOut, DegreeVerifyResponse, VerifyResponse, ResultVerifyResponse, TranscriptVerifyResponse]] */
         Envelope_Union_DocVerifyOut__DegreeVerifyResponse__VerifyResponse__ResultVerifyResponse__TranscriptVerifyResponse__: {
             /** Data */
@@ -46194,6 +47987,21 @@ export interface components {
         /** Envelope[Union[RegistrationResponse, NoneType]] */
         Envelope_Union_RegistrationResponse__NoneType__: {
             data?: components["schemas"]["RegistrationResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[Union[VivaOut, NoneType]] */
+        Envelope_Union_VivaOut__NoneType__: {
+            data?: components["schemas"]["VivaOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -46390,6 +48198,21 @@ export interface components {
         /** Envelope[VendorBillOut] */
         Envelope_VendorBillOut_: {
             data?: components["schemas"]["VendorBillOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[VivaOut] */
+        Envelope_VivaOut_: {
+            data?: components["schemas"]["VivaOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -47582,6 +49405,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ComplianceRow]] */
+        Envelope_list_ComplianceRow__: {
+            /** Data */
+            data?: components["schemas"]["ComplianceRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CondonationResponse]] */
         Envelope_list_CondonationResponse__: {
             /** Data */
@@ -47858,6 +49697,22 @@ export interface components {
         Envelope_list_DataSubjectRequestResponse__: {
             /** Data */
             data?: components["schemas"]["DataSubjectRequestResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DcMeetingOut]] */
+        Envelope_list_DcMeetingOut__: {
+            /** Data */
+            data?: components["schemas"]["DcMeetingOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -48270,6 +50125,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[EtdOut]] */
+        Envelope_list_EtdOut__: {
+            /** Data */
+            data?: components["schemas"]["EtdOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[EthicsApplicationOut]] */
         Envelope_list_EthicsApplicationOut__: {
             /** Data */
@@ -48434,6 +50305,22 @@ export interface components {
         Envelope_list_ExamSessionResponse__: {
             /** Data */
             data?: components["schemas"]["ExamSessionResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExaminerOut]] */
+        Envelope_list_ExaminerOut__: {
+            /** Data */
+            data?: components["schemas"]["ExaminerOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -48686,6 +50573,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[FellowshipOut]] */
+        Envelope_list_FellowshipOut__: {
+            /** Data */
+            data?: components["schemas"]["FellowshipOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[FineConfigOut]] */
         Envelope_list_FineConfigOut__: {
             /** Data */
@@ -48866,6 +50769,22 @@ export interface components {
         Envelope_list_GuardianOut__: {
             /** Data */
             data?: components["schemas"]["GuardianOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[GuideLoadOut]] */
+        Envelope_list_GuideLoadOut__: {
+            /** Data */
+            data?: components["schemas"]["GuideLoadOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -50030,6 +51949,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[PhdDisbursementOut]] */
+        Envelope_list_PhdDisbursementOut__: {
+            /** Data */
+            data?: components["schemas"]["PhdDisbursementOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[PlatformInstitutionResponse]] */
         Envelope_list_PlatformInstitutionResponse__: {
             /** Data */
@@ -50258,6 +52193,38 @@ export interface components {
         Envelope_list_ProgramResponse__: {
             /** Data */
             data?: components["schemas"]["ProgramResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ProgressPeriod]] */
+        Envelope_list_ProgressPeriod__: {
+            /** Data */
+            data?: components["schemas"]["ProgressPeriod"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ProgressReportOut]] */
+        Envelope_list_ProgressReportOut__: {
+            /** Data */
+            data?: components["schemas"]["ProgressReportOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -50926,6 +52893,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ScholarOut]] */
+        Envelope_list_ScholarOut__: {
+            /** Data */
+            data?: components["schemas"]["ScholarOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ScholarRequestOut]] */
+        Envelope_list_ScholarRequestOut__: {
+            /** Data */
+            data?: components["schemas"]["ScholarRequestOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ScholarshipApplicationOut]] */
         Envelope_list_ScholarshipApplicationOut__: {
             /** Data */
@@ -51534,10 +53533,10 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[list[ThreadOut]] */
-        Envelope_list_ThreadOut__: {
+        /** Envelope[list[ThesisOut]] */
+        Envelope_list_ThesisOut__: {
             /** Data */
-            data?: components["schemas"]["ThreadOut"][] | null;
+            data?: components["schemas"]["ThesisOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -51550,10 +53549,10 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[list[TimelineEntry]] */
-        Envelope_list_TimelineEntry__: {
+        /** Envelope[list[ThreadOut]] */
+        Envelope_list_ThreadOut__: {
             /** Data */
-            data?: components["schemas"]["TimelineEntry"][] | null;
+            data?: components["schemas"]["ThreadOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -51810,6 +53809,22 @@ export interface components {
         Envelope_list_VendorBillOut__: {
             /** Data */
             data?: components["schemas"]["VendorBillOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[VivaOut]] */
+        Envelope_list_VivaOut__: {
+            /** Data */
+            data?: components["schemas"]["VivaOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -52088,6 +54103,62 @@ export interface components {
              */
             usage_count: number;
         };
+        /** EtdEmbargo */
+        EtdEmbargo: {
+            /** Approve */
+            approve?: boolean | null;
+            /** Months */
+            months: number;
+            /**
+             * Reason
+             * @default patent
+             * @enum {string}
+             */
+            reason: "patent" | "publication" | "other";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** EtdOut */
+        EtdOut: {
+            /** Due On */
+            due_on?: string | null;
+            /** Embargo */
+            embargo?: {
+                [key: string]: unknown;
+            } | null;
+            /** Error */
+            error?: string | null;
+            /** Handle */
+            handle?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Job Id */
+            job_id?: string | null;
+            /** Repository */
+            repository: string;
+            /** Status */
+            status: string;
+            /**
+             * Thesis Id
+             * Format: uuid
+             */
+            thesis_id: string;
+            /** Uploaded At */
+            uploaded_at?: string | null;
+        };
+        /**
+         * EtdRepository
+         * @enum {string}
+         */
+        EtdRepository: "shodhganga" | "institutional";
+        /** EtdUploadRequest */
+        EtdUploadRequest: {
+            /** @default shodhganga */
+            repository: components["schemas"]["EtdRepository"];
+        };
         /** EthicsAmend */
         EthicsAmend: {
             /** Description */
@@ -52121,6 +54192,8 @@ export interface components {
             protocol_url?: string | null;
             /** Reviewer Staff Id */
             reviewer_staff_id?: string | null;
+            /** Scholar Id */
+            scholar_id?: string | null;
         };
         /** EthicsApplicationOut */
         EthicsApplicationOut: {
@@ -52165,6 +54238,8 @@ export interface components {
             reviews?: {
                 [key: string]: unknown;
             }[];
+            /** Scholar Id */
+            scholar_id?: string | null;
             /**
              * Status
              * @default under_review
@@ -53121,6 +55196,143 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** ExaminerIn */
+        ExaminerIn: {
+            /** Affiliation */
+            affiliation: string;
+            /**
+             * Coi Declaration
+             * @default true
+             */
+            coi_declaration: boolean;
+            /**
+             * Country
+             * @default India
+             */
+            country: string;
+            /**
+             * Email
+             * Format: email
+             */
+            email: string;
+            /**
+             * Is External
+             * @default true
+             */
+            is_external: boolean;
+            /** Name */
+            name: string;
+            /** State */
+            state?: string | null;
+        };
+        /** ExaminerInvite */
+        ExaminerInvite: {
+            /** Due Days */
+            due_days?: number | null;
+        };
+        /** ExaminerOut */
+        ExaminerOut: {
+            /** Accepted At */
+            accepted_at?: string | null;
+            /** Affiliation */
+            affiliation?: string | null;
+            /** Country */
+            country?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /** Email */
+            email?: string | null;
+            /**
+             * Hidden
+             * @default false
+             */
+            hidden: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Invited At */
+            invited_at?: string | null;
+            /** Is External */
+            is_external: boolean;
+            /** Name */
+            name?: string | null;
+            /** Recommendation */
+            recommendation?: string | null;
+            /** Remuneration Paise */
+            remuneration_paise?: number | null;
+            /** Replaced By */
+            replaced_by?: string | null;
+            /** Report Received At */
+            report_received_at?: string | null;
+            /** Report Url */
+            report_url?: string | null;
+            /** State */
+            state?: string | null;
+            /** Status */
+            status: string;
+            /**
+             * Thesis Id
+             * Format: uuid
+             */
+            thesis_id: string;
+        };
+        /** ExaminerPanelPropose */
+        ExaminerPanelPropose: {
+            /** Examiners */
+            examiners: components["schemas"]["ExaminerIn"][];
+        };
+        /** ExaminerRemuneration */
+        ExaminerRemuneration: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Via
+             * @default payout
+             * @enum {string}
+             */
+            via: "payroll" | "payout";
+        };
+        /** ExaminerReplace */
+        ExaminerReplace: {
+            replacement: components["schemas"]["ExaminerIn"];
+        };
+        /** ExaminerReportUpload */
+        ExaminerReportUpload: {
+            recommendation: components["schemas"]["Recommendation"];
+            /** Remarks */
+            remarks?: string | null;
+            /** Report Url */
+            report_url: string;
+        };
+        /** ExaminerResponse */
+        ExaminerResponse: {
+            /** Accept */
+            accept: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** ExaminerTokenView */
+        ExaminerTokenView: {
+            /** Download Url */
+            download_url?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /**
+             * Examiner Id
+             * Format: uuid
+             */
+            examiner_id: string;
+            /** Institution */
+            institution?: string | null;
+            /** Name */
+            name: string;
+            /** Status */
+            status: string;
+            /** Thesis Title */
+            thesis_title?: string | null;
+        };
         /** ExitRequest */
         ExitRequest: {
             /** Exit Award */
@@ -53364,6 +55576,15 @@ export interface components {
             user_id: string;
             /** Valid To */
             valid_to?: string | null;
+        };
+        /** ExternalPerson */
+        ExternalPerson: {
+            /** Affiliation */
+            affiliation?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name: string;
         };
         /** ExtraSessionCreate */
         ExtraSessionCreate: {
@@ -54964,6 +57185,90 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** FellowshipCreate */
+        FellowshipCreate: {
+            /** Contingency Paise */
+            contingency_paise?: number | null;
+            fellowship_type: components["schemas"]["FellowshipType"];
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /** Funding Source */
+            funding_source?: string | null;
+            /**
+             * Hra Applicable
+             * @default false
+             */
+            hra_applicable: boolean;
+            /** Monthly Paise */
+            monthly_paise?: number | null;
+            /** To On */
+            to_on?: string | null;
+        };
+        /** FellowshipOut */
+        FellowshipOut: {
+            /** Contingency Paise */
+            contingency_paise?: number | null;
+            /**
+             * Contingency Used Paise
+             * @default 0
+             */
+            contingency_used_paise: number;
+            /** Fellowship Type */
+            fellowship_type: string;
+            /**
+             * From On
+             * Format: date
+             */
+            from_on: string;
+            /** Funding Source */
+            funding_source?: string | null;
+            /** Hra Applicable */
+            hra_applicable: boolean;
+            /**
+             * Hra Paise
+             * @default 0
+             */
+            hra_paise: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Monthly Paise */
+            monthly_paise: number;
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Status */
+            status: string;
+            /** To On */
+            to_on?: string | null;
+        };
+        /**
+         * FellowshipType
+         * @enum {string}
+         */
+        FellowshipType: "jrf" | "srf" | "institution" | "project" | "none";
+        /** FellowshipUpdate */
+        FellowshipUpdate: {
+            /** Contingency Paise */
+            contingency_paise?: number | null;
+            /** Funding Source */
+            funding_source?: string | null;
+            /** Hra Applicable */
+            hra_applicable?: boolean | null;
+            /** Monthly Paise */
+            monthly_paise?: number | null;
+            /** Status */
+            status?: ("active" | "held" | "closed") | null;
+            /** To On */
+            to_on?: string | null;
+        };
         /** FinalizeRequest */
         FinalizeRequest: {
             /** Note */
@@ -56148,6 +58453,53 @@ export interface components {
             phone?: string | null;
             /** Portal Access */
             portal_access?: boolean | null;
+        };
+        /** GuideAllocate */
+        GuideAllocate: {
+            /** Co Guide Staff Id */
+            co_guide_staff_id?: string | null;
+            /**
+             * Guide Staff Id
+             * Format: uuid
+             */
+            guide_staff_id: string;
+            /** Reason */
+            reason?: string | null;
+        };
+        /** GuideLoadOut */
+        GuideLoadOut: {
+            /** Available */
+            available: number;
+            /** Cadre */
+            cadre?: string | null;
+            /** Current */
+            current: number;
+            /** Department Id */
+            department_id?: string | null;
+            /** Max */
+            max: number;
+            /** Name */
+            name?: string | null;
+            /**
+             * Staff Id
+             * Format: uuid
+             */
+            staff_id: string;
+        };
+        /** GuideNoc */
+        GuideNoc: {
+            /**
+             * Granted
+             * @default true
+             */
+            granted: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** GuideReview */
+        GuideReview: {
+            /** Remarks */
+            remarks: string;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -62819,6 +65171,13 @@ export interface components {
             /** Skip Prerequisites */
             skip_prerequisites?: string[];
         };
+        /** PanelDecision */
+        PanelDecision: {
+            /** Approve */
+            approve: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** PanelIn */
         PanelIn: {
             /** Members */
@@ -63360,6 +65719,142 @@ export interface components {
             is_platform: boolean;
             /** Module */
             module: string;
+        };
+        /** PhdAwardOut */
+        PhdAwardOut: {
+            /** Certificate Document Id */
+            certificate_document_id?: string | null;
+            /** Date Of Award */
+            date_of_award?: string | null;
+            /** Degree Awarded Id */
+            degree_awarded_id?: string | null;
+            /** Etd Due On */
+            etd_due_on?: string | null;
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Scholar Name */
+            scholar_name?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "requested" | "awarded" | "rejected";
+            /**
+             * Thesis Id
+             * Format: uuid
+             */
+            thesis_id: string;
+            /** Title */
+            title?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** PhdAwardRequest */
+        PhdAwardRequest: {
+            /**
+             * Date Of Award
+             * Format: date
+             */
+            date_of_award: string;
+            /** Resolution Id */
+            resolution_id?: string | null;
+        };
+        /** PhdDisbursementOut */
+        PhdDisbursementOut: {
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Fellowship Id
+             * Format: uuid
+             */
+            fellowship_id: string;
+            /** Fellowship Type */
+            fellowship_type?: string | null;
+            /** Hold Reason */
+            hold_reason?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Kind
+             * @default stipend
+             */
+            kind: string;
+            /**
+             * Month
+             * Format: date
+             */
+            month: string;
+            /** Paid At */
+            paid_at?: string | null;
+            /** Payroll Ref */
+            payroll_ref?: string | null;
+            /** Scholar Id */
+            scholar_id?: string | null;
+            /** Scholar Name */
+            scholar_name?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** PhdStats */
+        PhdStats: {
+            /** Avg Duration Months */
+            avg_duration_months?: number | null;
+            /** Awarded By Year */
+            awarded_by_year: {
+                [key: string]: number;
+            };
+            /** By Department */
+            by_department: {
+                [key: string]: number;
+            };
+            /** By Guide */
+            by_guide: {
+                [key: string]: unknown;
+            }[];
+            /** By Status */
+            by_status: {
+                [key: string]: number;
+            };
+            /** Examiner Turnaround Days */
+            examiner_turnaround_days?: number | null;
+            /**
+             * Fellowship Spend Paise
+             * @default 0
+             */
+            fellowship_spend_paise: number;
+            /** Gphd */
+            gphd: number;
+            /** Guide Utilisation Pct */
+            guide_utilisation_pct?: number | null;
+            /** Plagiarism */
+            plagiarism?: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * PlagiarismResult
+         * @description Adapter callback (``POST /webhooks/plagiarism/{connection_id}``).
+         */
+        PlagiarismResult: {
+            /** Ai Generated Pct */
+            ai_generated_pct?: number | string | null;
+            /** Reference */
+            reference?: string | null;
+            /** Report Url */
+            report_url?: string | null;
+            /** Similarity Pct */
+            similarity_pct: number | string;
+            /**
+             * Thesis Id
+             * Format: uuid
+             */
+            thesis_id: string;
         };
         /** PlatformInstitutionResponse */
         PlatformInstitutionResponse: {
@@ -65200,6 +67695,63 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** ProgressPeriod */
+        ProgressPeriod: {
+            /**
+             * Due On
+             * Format: date
+             */
+            due_on: string;
+            /** Period Label */
+            period_label: string;
+            /** Report Id */
+            report_id?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** ProgressReportOut */
+        ProgressReportOut: {
+            /** Dc Rating */
+            dc_rating?: string | null;
+            /** Dc Remarks */
+            dc_remarks?: string | null;
+            /** Guide Remarks */
+            guide_remarks?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Period Label */
+            period_label: string;
+            /** Report Url */
+            report_url?: string | null;
+            /** Reviewed At */
+            reviewed_at?: string | null;
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Status */
+            status: string;
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+            /** Summary */
+            summary?: string | null;
+        };
+        /** ProgressReportSubmit */
+        ProgressReportSubmit: {
+            /** Period Label */
+            period_label: string;
+            /** Report Url */
+            report_url: string;
+            /** Summary */
+            summary: string;
+        };
         /** ProjectAction */
         ProjectAction: {
             /**
@@ -66982,6 +69534,30 @@ export interface components {
             /** Receipt Numbers */
             receipt_numbers?: string[];
         };
+        /**
+         * Recommendation
+         * @enum {string}
+         */
+        Recommendation: "accept" | "minor" | "major" | "reject";
+        /** RecommendationsOut */
+        RecommendationsOut: {
+            /**
+             * Consolidated
+             * @enum {string}
+             */
+            consolidated: "pending" | "viva_eligible" | "revise" | "board_decision";
+            /** Received */
+            received: number;
+            /** Recommendations */
+            recommendations: string[];
+            /**
+             * Thesis Id
+             * Format: uuid
+             */
+            thesis_id: string;
+            /** Total */
+            total: number;
+        };
         /** ReconAddRecord */
         ReconAddRecord: {
             /** Item Id */
@@ -67882,6 +70458,34 @@ export interface components {
              */
             total_paise: number;
         };
+        /** RequestDecision */
+        RequestDecision: {
+            /** Approve */
+            approve: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** RequestDetails */
+        RequestDetails: {
+            /** From On */
+            from_on?: string | null;
+            /** Leave Type */
+            leave_type?: ("maternity" | "medical" | "other") | null;
+            /** Months */
+            months?: number | null;
+            /** New Guide Staff Id */
+            new_guide_staff_id?: string | null;
+            new_mode?: components["schemas"]["ScholarMode"] | null;
+            /** Reason */
+            reason: string;
+            /** To On */
+            to_on?: string | null;
+        };
+        /**
+         * RequestType
+         * @enum {string}
+         */
+        RequestType: "extension" | "change_of_guide" | "mode_change" | "leave" | "coursework_exemption" | "cancellation_review";
         /** RequiredDocument */
         RequiredDocument: {
             /** Doc Type */
@@ -69684,6 +72288,282 @@ export interface components {
          * @enum {string}
          */
         ScaleType: "absolute" | "relative";
+        /** Scholar360 */
+        Scholar360: {
+            /**
+             * Cancellation Review
+             * @default false
+             */
+            cancellation_review: boolean;
+            /** Chips */
+            chips?: components["schemas"]["Chip"][];
+            /** Co Guide Name */
+            co_guide_name?: string | null;
+            /** Co Guide Staff Id */
+            co_guide_staff_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            committee?: components["schemas"]["DcOut"] | null;
+            coursework?: components["schemas"]["CourseworkSummary"] | null;
+            /** Coursework Exemption Reason */
+            coursework_exemption_reason?: string | null;
+            /** Coursework Status */
+            coursework_status: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Department Id */
+            department_id?: string | null;
+            /** Documents */
+            documents?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Ethics Approval */
+            ethics_approval?: {
+                [key: string]: unknown;
+            } | null;
+            /** External Co Guide */
+            external_co_guide?: {
+                [key: string]: unknown;
+            } | null;
+            fellowship?: components["schemas"]["FellowshipOut"] | null;
+            /** Fellowship Type */
+            fellowship_type: string;
+            /** Guide Name */
+            guide_name?: string | null;
+            /**
+             * Guide Staff Id
+             * Format: uuid
+             */
+            guide_staff_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Max Duration End */
+            max_duration_end?: string | null;
+            /** Mode */
+            mode: string;
+            /** Months Elapsed */
+            months_elapsed?: number | null;
+            /** Months Left */
+            months_left?: number | null;
+            /** Name */
+            name?: string | null;
+            /** Publications */
+            publications?: {
+                [key: string]: unknown;
+            }[];
+            /** Registration Date */
+            registration_date?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Relation */
+            relation?: string[];
+            /** Research Area */
+            research_area?: string | null;
+            /** Status */
+            status: string;
+            /** Student Id */
+            student_id?: string | null;
+            thesis?: components["schemas"]["ThesisOut"] | null;
+            /** Timeline */
+            timeline?: components["schemas"]["app__schemas__phd__TimelineEntry"][];
+        };
+        /** ScholarCreate */
+        ScholarCreate: {
+            /** Co Guide Staff Id */
+            co_guide_staff_id?: string | null;
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            external_co_guide?: components["schemas"]["ExternalPerson"] | null;
+            /** @default none */
+            fellowship_type: components["schemas"]["FellowshipType"];
+            /**
+             * Guide Staff Id
+             * Format: uuid
+             */
+            guide_staff_id: string;
+            /** @default full_time */
+            mode: components["schemas"]["ScholarMode"];
+            /** Registration Date */
+            registration_date?: string | null;
+            /** Research Area */
+            research_area?: string | null;
+        };
+        /**
+         * ScholarMode
+         * @enum {string}
+         */
+        ScholarMode: "full_time" | "part_time";
+        /** ScholarOut */
+        ScholarOut: {
+            /**
+             * Cancellation Review
+             * @default false
+             */
+            cancellation_review: boolean;
+            /** Chips */
+            chips?: components["schemas"]["Chip"][];
+            /** Co Guide Name */
+            co_guide_name?: string | null;
+            /** Co Guide Staff Id */
+            co_guide_staff_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Coursework Exemption Reason */
+            coursework_exemption_reason?: string | null;
+            /** Coursework Status */
+            coursework_status: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** External Co Guide */
+            external_co_guide?: {
+                [key: string]: unknown;
+            } | null;
+            /** Fellowship Type */
+            fellowship_type: string;
+            /** Guide Name */
+            guide_name?: string | null;
+            /**
+             * Guide Staff Id
+             * Format: uuid
+             */
+            guide_staff_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Max Duration End */
+            max_duration_end?: string | null;
+            /** Mode */
+            mode: string;
+            /** Months Elapsed */
+            months_elapsed?: number | null;
+            /** Months Left */
+            months_left?: number | null;
+            /** Name */
+            name?: string | null;
+            /** Registration Date */
+            registration_date?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Relation */
+            relation?: string[];
+            /** Research Area */
+            research_area?: string | null;
+            /** Status */
+            status: string;
+            /** Student Id */
+            student_id?: string | null;
+        };
+        /** ScholarPortalDashboard */
+        ScholarPortalDashboard: {
+            coursework?: components["schemas"]["CourseworkSummary"] | null;
+            /** Deadlines */
+            deadlines?: components["schemas"]["Deadline"][];
+            /** Duration Pct */
+            duration_pct?: number | null;
+            fellowship?: components["schemas"]["FellowshipOut"] | null;
+            latest_report?: components["schemas"]["ProgressReportOut"] | null;
+            /** Open Recommendations */
+            open_recommendations?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Open Requests
+             * @default 0
+             */
+            open_requests: number;
+            scholar: components["schemas"]["ScholarOut"];
+            thesis?: components["schemas"]["ThesisOut"] | null;
+            viva?: components["schemas"]["VivaOut"] | null;
+        };
+        /** ScholarRequestCreate */
+        ScholarRequestCreate: {
+            /** Attachments */
+            attachments?: string[];
+            details: components["schemas"]["RequestDetails"];
+            request_type: components["schemas"]["RequestType"];
+        };
+        /** ScholarRequestOut */
+        ScholarRequestOut: {
+            /**
+             * Actionable
+             * @default false
+             */
+            actionable: boolean;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Current Step */
+            current_step?: number | null;
+            /** Decided At */
+            decided_at?: string | null;
+            /** Details */
+            details?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Implications */
+            implications?: string[];
+            /** Request Type */
+            request_type: string;
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Scholar Name */
+            scholar_name?: string | null;
+            /** Status */
+            status: string;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+            /** Workflow Status */
+            workflow_status?: string | null;
+        };
+        /** ScholarUpdate */
+        ScholarUpdate: {
+            /** Co Guide Staff Id */
+            co_guide_staff_id?: string | null;
+            /** Ethics Approval Id */
+            ethics_approval_id?: string | null;
+            external_co_guide?: components["schemas"]["ExternalPerson"] | null;
+            fellowship_type?: components["schemas"]["FellowshipType"] | null;
+            /** Relaxation */
+            relaxation?: ("women" | "pwd" | "none") | null;
+            /** Research Area */
+            research_area?: string | null;
+        };
         /** ScholarshipApplicationOut */
         ScholarshipApplicationOut: {
             /**
@@ -74204,6 +77084,79 @@ export interface components {
              */
             width: number;
         };
+        /** ThesisOut */
+        ThesisOut: {
+            /**
+             * Ai Declaration
+             * @default false
+             */
+            ai_declaration: boolean;
+            /** Ai Generated Pct */
+            ai_generated_pct?: string | null;
+            /** Certificate Document Id */
+            certificate_document_id?: string | null;
+            /** Consolidated */
+            consolidated?: string | null;
+            /** File Url */
+            file_url: string;
+            /** Flags */
+            flags?: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Plagiarism Report Url */
+            plagiarism_report_url?: string | null;
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Similarity Limit Pct */
+            similarity_limit_pct?: number | null;
+            /** Similarity Pct */
+            similarity_pct?: string | null;
+            /** Stage */
+            stage: string;
+            /** Status */
+            status: string;
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+            /** Title */
+            title?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** ThesisReject */
+        ThesisReject: {
+            /** Reason */
+            reason: string;
+        };
+        /**
+         * ThesisStage
+         * @enum {string}
+         */
+        ThesisStage: "pre_synopsis" | "synopsis" | "thesis" | "revised_thesis";
+        /** ThesisSubmit */
+        ThesisSubmit: {
+            /** Abstract */
+            abstract?: string | null;
+            /** Ai Declaration */
+            ai_declaration: boolean;
+            /** Ai Generated Pct */
+            ai_generated_pct?: number | string | null;
+            /** File Url */
+            file_url: string;
+            /** Keywords */
+            keywords?: string[];
+            stage: components["schemas"]["ThesisStage"];
+            /** Title */
+            title: string;
+        };
         /** ThirdValuationAssign */
         ThirdValuationAssign: {
             /** Due At */
@@ -74258,24 +77211,6 @@ export interface components {
             is_locked?: boolean | null;
             /** Is Pinned */
             is_pinned?: boolean | null;
-        };
-        /** TimelineEntry */
-        TimelineEntry: {
-            /** Action */
-            action: string;
-            /**
-             * At
-             * Format: date-time
-             */
-            at: string;
-            /** By */
-            by?: string | null;
-            /** Remarks */
-            remarks?: string | null;
-            /** Status From */
-            status_from?: string | null;
-            /** Status To */
-            status_to?: string | null;
         };
         /** TimetableCreate */
         TimetableCreate: {
@@ -75980,6 +78915,107 @@ export interface components {
              */
             self: boolean;
         };
+        /** VivaOut */
+        VivaOut: {
+            /** Held At */
+            held_at?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Open Defence
+             * @default true
+             */
+            open_defence: boolean;
+            /** Panel */
+            panel?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Re Viva Count
+             * @default 0
+             */
+            re_viva_count: number;
+            /** Report Url */
+            report_url?: string | null;
+            /** Result */
+            result?: string | null;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Scholar Id */
+            scholar_id?: string | null;
+            /** Scholar Name */
+            scholar_name?: string | null;
+            /**
+             * Thesis Id
+             * Format: uuid
+             */
+            thesis_id: string;
+            /** Title */
+            title?: string | null;
+            /** Venue Or Link */
+            venue_or_link?: string | null;
+        };
+        /** VivaPanelMember */
+        VivaPanelMember: {
+            /** Examiner Id */
+            examiner_id?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Role
+             * @enum {string}
+             */
+            role: "guide" | "external_examiner" | "dc_member" | "chair" | "observer";
+            /** Staff Id */
+            staff_id?: string | null;
+        };
+        /**
+         * VivaResult
+         * @enum {string}
+         */
+        VivaResult: "recommended" | "re_viva" | "not_recommended";
+        /** VivaResultIn */
+        VivaResultIn: {
+            /** Attendance */
+            attendance?: string[];
+            /**
+             * Held At
+             * Format: date-time
+             */
+            held_at: string;
+            /** Report Url */
+            report_url: string;
+            result: components["schemas"]["VivaResult"];
+        };
+        /** VivaSchedule */
+        VivaSchedule: {
+            /**
+             * Open Defence
+             * @default true
+             */
+            open_defence: boolean;
+            /** Panel */
+            panel: components["schemas"]["VivaPanelMember"][];
+            /**
+             * Scheduled At
+             * Format: date-time
+             */
+            scheduled_at: string;
+            /** Venue Or Link */
+            venue_or_link: string;
+        };
+        /** VivaUpdate */
+        VivaUpdate: {
+            /** Panel */
+            panel?: components["schemas"]["VivaPanelMember"][] | null;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Venue Or Link */
+            venue_or_link?: string | null;
+        };
         /** WaitlistBrief */
         WaitlistBrief: {
             /**
@@ -76747,6 +79783,24 @@ export interface components {
             /** Total */
             total: number;
         };
+        /** TimelineEntry */
+        app__schemas__admissions__TimelineEntry: {
+            /** Action */
+            action: string;
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** By */
+            by?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+            /** Status From */
+            status_from?: string | null;
+            /** Status To */
+            status_to?: string | null;
+        };
         /** CampaignUpdate */
         app__schemas__alumni__CampaignUpdate: {
             /** From On */
@@ -76858,6 +79912,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[TimelineEntry]] */
+        app__schemas__common__Envelope_list_TimelineEntry____1: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__admissions__TimelineEntry"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[TimelineEntry]] */
+        app__schemas__common__Envelope_list_TimelineEntry____2: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__phd__TimelineEntry"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** CampaignUpdate */
         app__schemas__comms_advanced__CampaignUpdate: {
             audience_rules?: components["schemas"]["SegmentRules"] | null;
@@ -76933,6 +80019,19 @@ export interface components {
              * @default []
              */
             warnings: string[];
+        };
+        /** TimelineEntry */
+        app__schemas__phd__TimelineEntry: {
+            /** Action */
+            action: string;
+            /** At */
+            at: string;
+            /** By */
+            by?: string | null;
+            /** Detail */
+            detail?: {
+                [key: string]: unknown;
+            };
         };
         /** BudgetHeadIn */
         app__schemas__research__BudgetHeadIn: {
@@ -81177,7 +84276,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_TimelineEntry__"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_TimelineEntry____1"];
                 };
             };
             /** @description Validation Error */
@@ -83824,7 +86923,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_TimelineEntry__"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_TimelineEntry____1"];
                 };
             };
         };
@@ -116980,6 +120079,2678 @@ export interface operations {
             };
         };
     };
+    awards_api_v1_phd_awards_get: {
+        parameters: {
+            query?: {
+                year?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    etd_status_api_v1_phd_awards_etd_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+        };
+    };
+    meeting_approve_api_v1_phd_dc_meetings__mid__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DcMeetingApprove"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DcMeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    meeting_minutes_api_v1_phd_dc_meetings__mid__minutes_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                mid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DcMeetingMinutes"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DcMeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    disbursements_api_v1_phd_disbursements_get: {
+        parameters: {
+            query?: {
+                month?: string | null;
+                status?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PhdDisbursementOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pay_disbursements_api_v1_phd_disbursements_pay_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisbursementPay"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PhdDisbursementOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_disbursement_api_v1_phd_disbursements__did__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                did: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdDisbursementOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    contingency_api_v1_phd_disbursements__did__contingency_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                did: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContingencyClaim"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdDisbursementOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    hold_disbursement_api_v1_phd_disbursements__did__hold_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                did: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisbursementHold"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdDisbursementOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    release_disbursement_api_v1_phd_disbursements__did__release_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                did: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdDisbursementOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    etd_embargo_api_v1_phd_etd__eid__embargo_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EtdEmbargo"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EtdOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    etd_retry_api_v1_phd_etd__eid__retry_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EtdOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    examiner_tracker_api_v1_phd_examiners_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExaminerOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    examiner_token_view_api_v1_phd_examiners_respond__token__get: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerTokenView_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    examiner_token_respond_api_v1_phd_examiners_respond__token__post: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerResponse"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerTokenView_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    examiner_token_report_api_v1_phd_examiners_respond__token__report_post: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerReportUpload"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerTokenView_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dispatch_api_v1_phd_examiners__eid__dispatch_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    invite_api_v1_phd_examiners__eid__invite_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerInvite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remuneration_api_v1_phd_examiners__eid__remuneration_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerRemuneration"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    replace_examiner_api_v1_phd_examiners__eid__replace_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerReplace"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    examiner_report_api_v1_phd_examiners__eid__report_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                eid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerReportUpload"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ExaminerOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fellowships_me_api_v1_phd_fellowships_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PhdDisbursementOut__"];
+                };
+            };
+        };
+    };
+    fellowship_run_api_v1_phd_fellowships_run_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DisbursementRun"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DisbursementRunResult_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_fellowship_api_v1_phd_fellowships__fid__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                fid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FellowshipUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FellowshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guide_load_api_v1_phd_guides_load_get: {
+        parameters: {
+            query?: {
+                department_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_GuideLoadOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    me_api_v1_phd_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Scholar360_"];
+                };
+            };
+        };
+    };
+    me_dashboard_api_v1_phd_me_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarPortalDashboard_"];
+                };
+            };
+        };
+    };
+    compliance_api_v1_phd_progress_reports_compliance_get: {
+        parameters: {
+            query?: {
+                department_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ComplianceRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dc_review_api_v1_phd_progress_reports__rid__dc_review_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DcReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgressReportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guide_review_api_v1_phd_progress_reports__rid__guide_review_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuideReview"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgressReportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reports_api_v1_phd_reports__kind__get: {
+        parameters: {
+            query?: {
+                year?: number | null;
+                format?: string;
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    requests_queue_api_v1_phd_requests_get: {
+        parameters: {
+            query?: {
+                type?: string | null;
+                status?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScholarRequestOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_request_api_v1_phd_requests__rid__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancellation_decision_api_v1_phd_requests__rid__cancellation_decision_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CancellationDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_request_api_v1_phd_requests__rid__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RequestDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    guide_noc_api_v1_phd_requests__rid__guide_noc_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                rid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuideNoc"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholars_api_v1_phd_scholars_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                guide_id?: string | null;
+                department_id?: string | null;
+                q?: string | null;
+                scope?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScholarOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_scholar_api_v1_phd_scholars_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholar_api_v1_phd_scholars__sid__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Scholar360_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_scholar_api_v1_phd_scholars__sid__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    coursework_api_v1_phd_scholars__sid__coursework_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseworkStatusOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plan_coursework_api_v1_phd_scholars__sid__coursework_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseworkPlan"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseworkStatusOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    coursework_complete_api_v1_phd_scholars__sid__coursework_complete_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CourseworkStatusOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    coursework_exemption_api_v1_phd_scholars__sid__coursework_exemption_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CourseworkExemption"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dc_api_v1_phd_scholars__sid__dc_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Union_DcOut__NoneType__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    constitute_dc_api_v1_phd_scholars__sid__dc_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DcConstitute"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DcOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dc_meetings_api_v1_phd_scholars__sid__dc_meetings_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DcMeetingOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    schedule_meeting_api_v1_phd_scholars__sid__dc_meetings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DcMeetingCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DcMeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dc_members_api_v1_phd_scholars__sid__dc_members_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DcConstitute"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DcOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discontinue_api_v1_phd_scholars__sid__discontinue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Discontinue"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholar_fellowships_api_v1_phd_scholars__sid__fellowship_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FellowshipOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_fellowship_api_v1_phd_scholars__sid__fellowship_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FellowshipCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FellowshipOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fellowship_statement_api_v1_phd_scholars__sid__fellowship_statement_get: {
+        parameters: {
+            query?: {
+                year?: number | null;
+            };
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocate_guide_api_v1_phd_scholars__sid__guide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GuideAllocate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    progress_periods_api_v1_phd_scholars__sid__progress_periods_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ProgressPeriod__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    progress_reports_api_v1_phd_scholars__sid__progress_reports_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ProgressReportOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_report_api_v1_phd_scholars__sid__progress_reports_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgressReportSubmit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgressReportOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholar_requests_api_v1_phd_scholars__sid__requests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ScholarRequestOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    raise_request_api_v1_phd_scholars__sid__requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScholarRequestCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ScholarRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scholar_thesis_api_v1_phd_scholars__sid__thesis_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ThesisOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_thesis_api_v1_phd_scholars__sid__thesis_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ThesisSubmit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ThesisOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    timeline_api_v1_phd_scholars__sid__timeline_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_TimelineEntry____2"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stats_api_v1_phd_stats_get: {
+        parameters: {
+            query?: {
+                department_id?: string | null;
+                year?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdStats_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    thesis_queue_api_v1_phd_thesis_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ThesisOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_thesis_api_v1_phd_thesis__tid__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ThesisOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_award_api_v1_phd_thesis__tid__award_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdAwardOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_award_api_v1_phd_thesis__tid__award_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PhdAwardRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PhdAwardOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    thesis_certificate_api_v1_phd_thesis__tid__certificate_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    thesis_dc_approval_api_v1_phd_thesis__tid__dc_approval_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ThesisOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    etd_list_api_v1_phd_thesis__tid__etd_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EtdOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    etd_upload_api_v1_phd_thesis__tid__etd_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EtdUploadRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EtdOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    panel_api_v1_phd_thesis__tid__examiners_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExaminerOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    propose_panel_api_v1_phd_thesis__tid__examiners_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExaminerPanelPropose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExaminerOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_panel_api_v1_phd_thesis__tid__examiners_decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PanelDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ExaminerOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plagiarism_check_api_v1_phd_thesis__tid__plagiarism_check_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ThesisOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    recommendations_api_v1_phd_thesis__tid__recommendations_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RecommendationsOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    thesis_reject_api_v1_phd_thesis__tid__reject_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ThesisReject"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ThesisOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_viva_api_v1_phd_thesis__tid__viva_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Union_VivaOut__NoneType__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    schedule_viva_api_v1_phd_thesis__tid__viva_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VivaSchedule"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VivaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    viva_upcoming_api_v1_phd_viva_upcoming_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_VivaOut__"];
+                };
+            };
+        };
+    };
+    update_viva_api_v1_phd_viva__vid__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                vid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VivaUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VivaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    viva_result_api_v1_phd_viva__vid__result_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                vid: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VivaResultIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_VivaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     my_applications_api_v1_placement_applications_me_get: {
         parameters: {
             query?: never;
@@ -136406,6 +142177,41 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plagiarism_webhook_api_v1_webhooks_plagiarism__connection_id__post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                connection_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PlagiarismResult"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

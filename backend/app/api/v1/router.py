@@ -85,6 +85,7 @@ from app.api.v1.endpoints import (
     notifications,
     obe_attainment,
     payroll,
+    phd,
     placement,
     platform,
     platform_institutions,
@@ -230,6 +231,9 @@ api_router.include_router(fundraising.router)
 # Phase 30: research & faculty development (publications, patents, projects, consultancy, ethics, incentives, FDP,
 # MoUs, start-ups, API score, stats) — feature keys per route group
 api_router.include_router(research.router)
+# Phase 31: PhD & research-scholar management — feature keys per route group; examiner token pages + plagiarism callback
+api_router.include_router(phd.router)
+api_router.include_router(phd.public_router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

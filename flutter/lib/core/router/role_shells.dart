@@ -419,6 +419,29 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 31 — My PhD (scholars), my scholars (guides), PhD approvals (research cell)
+  const MoreMenuModule(
+      titleKey: 'my_phd',
+      icon: Icons.school_outlined,
+      route: AppRoutes.scholarHub,
+      color: Colors.deepPurple,
+      permission: 'phd:self',
+      feature: 'phd.scholar_portal',
+      roles: ['research_scholar']),
+  const MoreMenuModule(
+      titleKey: 'my_scholars',
+      icon: Icons.groups_2_outlined,
+      route: AppRoutes.guideScholars,
+      color: Colors.deepPurple,
+      permission: 'phd:guide',
+      feature: 'phd.core'),
+  const MoreMenuModule(
+      titleKey: 'phd_approvals',
+      icon: Icons.approval_outlined,
+      route: AppRoutes.phdApprovals,
+      color: Colors.deepPurple,
+      permission: 'phd:manage',
+      feature: 'phd.core'),
   // Phase 30 — research (faculty), verification queue (HOD / research cell), approvals (research cell)
   const MoreMenuModule(
       titleKey: 'research',

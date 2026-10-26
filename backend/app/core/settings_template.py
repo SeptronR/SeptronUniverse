@@ -10,6 +10,7 @@ types are ``str | int | bool | list | json | enum`` (``enum`` carries ``choices`
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from app.enums.phd import DEFAULT_PHD_RULES
 from app.enums.research import DEFAULT_API_SCHEME, DEFAULT_INCENTIVE_SLABS
 
 VALUE_TYPES = ("str", "int", "bool", "list", "json", "enum")
@@ -246,6 +247,11 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("research", "fdp_hours_target", "int", 40, label="Annual FDP hours target per faculty", min=0, max=500),
     SettingDef("research", "ethics_required_for_categories", "json", ["clinical", "animal", "biosafety"], label="Project categories that need an ethics approval before start"),
     SettingDef("research", "patent_renewal_months", "int", 12, label="Patent renewal reminder interval (months)", min=1, max=60),
+    # PhD & research-scholar management (Phase 31) — UGC PhD Regulations 2022 defaults from the IN pack
+    SettingDef("phd", "rules", "json", DEFAULT_PHD_RULES, label="PhD rules (guide load, coursework, durations, plagiarism, examiners, fellowships)"),
+    SettingDef("phd", "panel_vc_approval", "bool", False, label="Examiner panels also need the Vice-Chancellor's approval"),
+    SettingDef("phd", "thesis_fee_invoice", "bool", False, label="Raise a thesis submission fee invoice"),
+    SettingDef("phd", "fellowship_payment_route", "str", "payout", choices=("payout", "payroll"), label="Fellowship payment route (Phase 23 payout / Phase 06 payroll)"),
     # document templates & certificate requests (Phase 26)
     SettingDef("documents", "signatories", "json", {"registrar": {"name": "Registrar", "designation": "Registrar", "signature_url": None}, "principal": {"name": "Principal", "designation": "Principal", "signature_url": None}, "coe": {"name": "Controller of Examinations", "designation": "Controller of Examinations", "signature_url": None}}, label="Signatories (name, designation, signature image)"),
     SettingDef("documents", "request_rules", "json", {}, label="Certificate request rules per type (overrides of the shipped defaults)"),
@@ -502,6 +508,10 @@ NUMBER_SEQUENCE_TEMPLATE: tuple[SequenceTemplate, ...] = (
     SequenceTemplate("doc:custom", "DOC/{yyyy}/{seq:5}", 5, "yearly", "Document number (custom)"),
     SequenceTemplate("doc:donation_receipt_80g", "DR/{yyyy}/{seq:5}", 5, "yearly", "Document number (donation_receipt_80g)"),
     SequenceTemplate("doc:alumni_membership_card", "ALM/{yyyy}/{seq:5}", 5, "yearly", "Document number (alumni_membership_card)"),
+    SequenceTemplate("doc:phd_registration_letter", "PHDR/{yyyy}/{seq:5}", 5, "yearly", "Document number (phd_registration_letter)"),
+    SequenceTemplate("doc:phd_synopsis_ack", "PHDS/{yyyy}/{seq:5}", 5, "yearly", "Document number (phd_synopsis_ack)"),
+    SequenceTemplate("doc:phd_provisional_certificate", "PHDP/{yyyy}/{seq:5}", 5, "yearly", "Document number (phd_provisional_certificate)"),
+    SequenceTemplate("doc:examiner_invitation", "PHDX/{yyyy}/{seq:5}", 5, "yearly", "Document number (examiner_invitation)"),
     SequenceTemplate("serial:degree", "DSR{seq:6}", 6, "never", "Serial register (degree)"),
     SequenceTemplate("serial:provisional", "PSR{seq:6}", 6, "never", "Serial register (provisional)"),
     SequenceTemplate("serial:transcript", "TSR{seq:6}", 6, "never", "Serial register (transcript)"),

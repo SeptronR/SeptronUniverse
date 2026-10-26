@@ -210,7 +210,10 @@ class WorkflowEngine:
     ) -> list[WorkflowStep]:
         created: list[WorkflowStep] = []
         now = datetime.now(UTC)
+        ctx = instance.context or {}
         for spec in self._specs(definition, order):
+            if spec.get("skip_unless") and not ctx.get(str(spec["skip_unless"])):
+                continue  # a parallel member slot the start context left empty (Phase 31 DC approval)
             sla_hours = spec.get("sla_hours")
             due = now + timedelta(hours=float(sla_hours)) if sla_hours else None
             approver = spec.get("approver") or {}

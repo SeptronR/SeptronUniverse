@@ -82,6 +82,10 @@ class AppRoutes {
   static const research = '/app/research';
   static const researchVerification = '/app/research-verification';
   static const researchApprovals = '/app/research-approvals';
+  // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
+  static const scholarHub = '/app/scholar';
+  static const guideScholars = '/app/my-scholars';
+  static const phdApprovals = '/app/phd-approvals';
   // Phase 29 — alumni shell + alumni office
   static const alumniHub = '/app/alumni';
   static const alumniOffice = '/app/alumni-office';

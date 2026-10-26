@@ -2395,6 +2395,149 @@ ALUMNI_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 31 - PhD & research-scholar management
+PHD_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "phd.guide_allocated",
+        "academics",
+        "Guide allocated",
+        "Research guide allocated",
+        "{{ guide }} is your research guide{% if co_guide %} (co-guide {{ co_guide }}){% endif %}.",
+        ("guide", "co_guide"),
+        ("in_app", "email"),
+        link="/scholar",
+    ),
+    EventDef(
+        "phd.dc_meeting_scheduled",
+        "academics",
+        "DC meeting scheduled",
+        "Doctoral committee meeting {{ meeting_no }}",
+        "Doctoral committee meeting {{ meeting_no }} of {{ scholar }} is scheduled on {{ held_on }}.",
+        ("scholar", "meeting_no", "held_on"),
+        ("in_app", "email"),
+        link="/scholar/dc",
+    ),
+    EventDef(
+        "phd.progress_report_due",
+        "academics",
+        "Progress report due",
+        "Progress report {{ period }} due",
+        "Your half-yearly progress report for {{ period }} is due on {{ due_on }}.",
+        ("period", "due_on"),
+        ("in_app", "email"),
+        link="/scholar/progress",
+    ),
+    EventDef(
+        "phd.progress_report_reviewed",
+        "academics",
+        "Progress report reviewed",
+        "Progress report {{ period }} reviewed",
+        "Your progress report for {{ period }} was reviewed ({{ stage }}{% if rating %}: {{ rating }}{% endif %}).",
+        ("period", "stage", "rating"),
+        ("in_app", "email"),
+        link="/scholar/progress",
+    ),
+    EventDef(
+        "phd.fellowship_disbursed",
+        "academics",
+        "Fellowship disbursed",
+        "Fellowship for {{ month }}",
+        "Your fellowship of Rs {{ amount }} for {{ month }} is {{ status }}.",
+        ("month", "amount", "status"),
+        ("in_app", "email"),
+        link="/scholar/fellowship",
+    ),
+    EventDef(
+        "phd.request_decided",
+        "academics",
+        "Request decided",
+        "Your {{ request_type }} request was {{ decision }}",
+        "Your {{ request_type }} request was {{ decision }}.{% if remarks %} {{ remarks }}{% endif %}",
+        ("request_type", "decision", "remarks"),
+        ("in_app", "email"),
+        link="/scholar/requests",
+    ),
+    EventDef(
+        "phd.thesis_similarity_result",
+        "academics",
+        "Similarity result",
+        "Similarity check: {{ similarity }} %",
+        "The similarity of your {{ stage }} submission is {{ similarity }} % (limit {{ limit }} %): {{ outcome }}.",
+        ("stage", "similarity", "limit", "outcome"),
+        ("in_app", "email"),
+        link="/scholar/thesis",
+    ),
+    EventDef(
+        "phd.examiner_invite",
+        "academics",
+        "Examiner invitation",
+        "Invitation to examine a PhD thesis",
+        "You are invited to examine the PhD thesis “{{ title }}”. Respond at {{ link }}.",
+        ("title", "link"),
+        ("in_app", "email"),
+    ),
+    EventDef(
+        "phd.examiner_report_received",
+        "academics",
+        "Examiner report received",
+        "Examiner report received",
+        "An examiner report for “{{ title }}” was received ({{ received }} of {{ total }}).",
+        ("title", "received", "total"),
+        ("in_app", "email"),
+        link="/admin/phd/examiners",
+    ),
+    EventDef(
+        "phd.viva_scheduled",
+        "academics",
+        "Viva-voce scheduled",
+        "Viva-voce on {{ scheduled_at }}",
+        "The open viva-voce of {{ scholar }} on “{{ title }}” is scheduled on {{ scheduled_at }} at {{ venue }}.",
+        ("scholar", "title", "scheduled_at", "venue"),
+        ("in_app", "email"),
+        link="/scholar/thesis",
+    ),
+    EventDef(
+        "phd.awarded",
+        "academics",
+        "PhD awarded",
+        "Congratulations — PhD awarded",
+        "The PhD degree is awarded to {{ scholar }} on {{ date_of_award }}. Upload the thesis to {{ repository }} within {{ etd_days }} days.",
+        ("scholar", "date_of_award", "repository", "etd_days"),
+        ("in_app", "email"),
+        link="/scholar",
+    ),
+    EventDef(
+        "phd.etd_uploaded",
+        "academics",
+        "ETD uploaded",
+        "Thesis deposited ({{ repository }})",
+        "Your thesis was deposited in {{ repository }} (handle {{ handle }}).",
+        ("repository", "handle"),
+        ("in_app", "email"),
+        link="/scholar/thesis",
+    ),
+    EventDef(
+        "phd.duration_warning",
+        "academics",
+        "Duration warning",
+        "PhD maximum duration ends on {{ max_end }}",
+        "The maximum duration of {{ scholar }} ends on {{ max_end }} ({{ months }} months left) — submit the thesis or request an extension.",
+        ("scholar", "max_end", "months"),
+        ("in_app", "email"),
+        link="/scholar",
+    ),
+    EventDef(
+        "phd.cancellation_review",
+        "academics",
+        "Cancellation review",
+        "Cancellation review — {{ scholar }}",
+        "{{ scholar }} has {{ count }} consecutive unsatisfactory progress ratings; a cancellation review is open.",
+        ("scholar", "count"),
+        ("in_app", "email"),
+        link="/admin/phd/requests",
+    ),
+)
+
 EVENTS = (
     EVENTS
     + STUDENT_EVENTS
@@ -2421,6 +2564,7 @@ EVENTS = (
     + PLACEMENT_EVENTS
     + ALUMNI_EVENTS
     + RESEARCH_EVENTS
+    + PHD_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

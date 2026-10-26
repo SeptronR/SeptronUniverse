@@ -7,7 +7,7 @@ Beat: ``research.publication_sync`` (weekly, opted-in faculty), ``research.proje
 (monthly). Consumers: ``event.completed`` (FDP / workshop / conference → FDP records), ``fees.payment_received
 (source_type=consultancy)`` (receipt settled → shares), ``accounting.grant_received`` / ``accounting.grant_expensed``
 (ledger mirrored on the project), ``inventory.indent_fulfilled`` (project purchase → grant expense),
-``phd.thesis_awarded`` (Phase 31 — scholar publications tagging, recorded until Phase 31 models scholars).
+``phd.thesis_awarded`` (Phase 31 award → the scholar's publications through ``publications.scholar_id``).
 """
 
 import io
@@ -249,7 +249,7 @@ async def on_indent(db: Any, event: dict[str, Any]) -> None:
 
 @consumer("research.thesis_publications", events=["phd.thesis_awarded"])
 async def on_thesis(db: Any, event: dict[str, Any]) -> None:
-    """Phase 31 scholars: the awarded scholar's publications are marked for the research cell's review."""
+    """Phase 31 award (payload ``scholar_id``): the scholar's publications are marked for the research cell's review."""
     iid = await _enabled(event, "research.publications")
     p = event.get("payload") or {}
     if iid is None or not p.get("scholar_id"):

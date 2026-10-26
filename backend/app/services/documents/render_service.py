@@ -68,6 +68,10 @@ PREFIX: dict[str, str] = {
     "hostel_allotment": "HAL",
     "donation_receipt_80g": "80G",
     "alumni_membership_card": "ALM",
+    "phd_registration_letter": "PHDR",
+    "phd_synopsis_ack": "PHDS",
+    "phd_provisional_certificate": "PHDP",
+    "examiner_invitation": "PHDX",
 }
 
 
