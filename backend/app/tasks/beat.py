@@ -43,7 +43,9 @@ register_beat("fees.day_book_close_reminder", "beat.fees.day_book_close_reminder
 register_beat("fees.gateway_status_poll", "beat.fees.gateway_status_poll", 600.0)
 
 # ---- Phase 13 assessment / LMS (app/tasks/assessment.py) ---------------------------------------------------------------------
-register_beat("assessment.deadline_reminders", "beat.assessment.deadline_reminders", crontab(hour=3, minute=30))  # 09:00 IST
+register_beat(
+    "assessment.deadline_reminders", "beat.assessment.deadline_reminders", crontab(hour=3, minute=30)
+)  # 09:00 IST
 register_beat("assessment.auto_lock", "beat.assessment.auto_lock", crontab(hour=19, minute=30))  # 01:00 IST
 register_beat("assignments.close_due", "beat.assignments.close_due", crontab(minute=12))
 register_beat("quizzes.auto_submit", "beat.quizzes.auto_submit", 60.0)
@@ -61,13 +63,17 @@ register_beat("scripts.retention_check", "beat.scripts.retention_check", crontab
 # ---- Phase 16 post-result services (app/tasks/post_result.py) ----------------------------------------------------------------
 register_beat("reval.window_close", "beat.reval.window_close", crontab(hour=19, minute=5))  # 00:35 IST
 register_beat("reval.due_reminders", "beat.reval.due_reminders", crontab(hour=3, minute=10))  # 08:40 IST
-register_beat("malpractice.hearing_reminders", "beat.malpractice.hearing_reminders", crontab(hour=2, minute=40))  # 08:10
+register_beat(
+    "malpractice.hearing_reminders", "beat.malpractice.hearing_reminders", crontab(hour=2, minute=40)
+)  # 08:10
 register_beat("withheld.auto_release", "beat.withheld.auto_release", crontab(minute=23))
 register_beat("transcripts.reminders", "beat.transcripts.reminders", crontab(hour=4, minute=0))  # 09:30 IST
 
 # ---- Phase 17 OBE attainment (app/tasks/obe.py) --------------------------------------------------------------------------------
 register_beat("cqi.due_reminders", "beat.cqi.due_reminders", crontab(day_of_week=1, hour=3, minute=20))  # Mon 08:50 IST
-register_beat("obe.coverage_digest", "beat.obe.coverage_digest", crontab(day_of_month=1, hour=3, minute=40))  # 1st 09:10
+register_beat(
+    "obe.coverage_digest", "beat.obe.coverage_digest", crontab(day_of_month=1, hour=3, minute=40)
+)  # 1st 09:10
 
 # ---- Phase 18 degrees & credentials (app/tasks/degrees.py) -------------------------------------------------------------------------
 register_beat("credentials.retry_failed", "beat.credentials.retry_failed", crontab(minute=37))
@@ -77,7 +83,9 @@ register_beat("convocation.reminders", "beat.convocation.reminders", crontab(hou
 # ---- Phase 19 library (app/tasks/library.py) ---------------------------------------------------------------------------------------
 register_beat("library.overdue_scan", "beat.library.overdue_scan", crontab(hour=19, minute=30))  # 01:00 IST
 register_beat("library.reservation_expiry", "beat.library.reservation_expiry", crontab(minute=12))
-register_beat("library.eresource_expiry_reminders", "beat.library.eresource_expiry_reminders", crontab(hour=3, minute=45))
+register_beat(
+    "library.eresource_expiry_reminders", "beat.library.eresource_expiry_reminders", crontab(hour=3, minute=45)
+)
 register_beat("library.membership_expiry", "beat.library.membership_expiry", crontab(hour=20, minute=10))  # 01:40 IST
 
 # ---- Phase 20 hostel & mess (app/tasks/hostel.py) -------------------------------------------------------------------------------
@@ -89,8 +97,14 @@ register_beat("mess.bill_run", "beat.mess.bill_run", crontab(day_of_month=1, hou
 register_beat("hostel.leave_reminders", "beat.hostel.leave_reminders", crontab(minute="*/30"))
 
 # ---- Phase 21 transport (app/tasks/transport.py) ---------------------------------------------------------------------------
-register_beat("transport.document_expiry_scan", "beat.transport.document_expiry_scan", crontab(hour=1, minute=15))  # 06:45 IST
-register_beat("transport.gps_partition_maintenance", "beat.transport.gps_partition_maintenance", crontab(day_of_month=25, hour=21, minute=30))
+register_beat(
+    "transport.document_expiry_scan", "beat.transport.document_expiry_scan", crontab(hour=1, minute=15)
+)  # 06:45 IST
+register_beat(
+    "transport.gps_partition_maintenance",
+    "beat.transport.gps_partition_maintenance",
+    crontab(day_of_month=25, hour=21, minute=30),
+)
 register_beat("transport.trip_autoclose", "beat.transport.trip_autoclose", crontab(hour=18, minute=50))  # 00:20 IST
 register_beat("transport.fee_suspension", "beat.transport.fee_suspension", crontab(hour=19, minute=5))  # 00:35 IST
 register_beat("transport.live_cache_cleanup", "beat.transport.live_cache_cleanup", crontab(minute=12))
@@ -98,22 +112,34 @@ register_beat("transport.schedule_ahead", "beat.transport.schedule_ahead", cront
 
 # ---- Phase 22 inventory & procurement (app/tasks/inventory.py) ----------------------------------------------------------------
 register_beat("inventory.low_stock_scan", "beat.inventory.low_stock_scan", crontab(hour=1, minute=30))  # 07:00 IST
-register_beat("inventory.chemical_expiry_scan", "beat.inventory.chemical_expiry_scan", crontab(day_of_week=1, hour=2, minute=0))
+register_beat(
+    "inventory.chemical_expiry_scan", "beat.inventory.chemical_expiry_scan", crontab(day_of_week=1, hour=2, minute=0)
+)
 register_beat("inventory.po_overdue_scan", "beat.inventory.po_overdue_scan", crontab(hour=2, minute=15))
 register_beat("inventory.bill_due_reminders", "beat.inventory.bill_due_reminders", crontab(hour=2, minute=45))
 register_beat("inventory.audit_due", "beat.inventory.audit_due", crontab(day_of_month=1, hour=3, minute=0))
 register_beat("inventory.warranty_expiry", "beat.inventory.warranty_expiry", crontab(day_of_week=1, hour=3, minute=15))
 
 # ---- Phase 23 accounting (app/tasks/accounting.py) --------------------------------------------------------------------------------
-register_beat("accounting.budget_threshold_scan", "beat.accounting.budget_threshold_scan", crontab(hour=2, minute=30))  # 08:00 IST
-register_beat("accounting.reconciliation_reminder", "beat.accounting.reconciliation_reminder", crontab(day_of_month=3, hour=3, minute=30))
-register_beat("accounting.posting_gap_check", "beat.accounting.posting_gap_check", crontab(hour=19, minute=40))  # 01:10 IST
+register_beat(
+    "accounting.budget_threshold_scan", "beat.accounting.budget_threshold_scan", crontab(hour=2, minute=30)
+)  # 08:00 IST
+register_beat(
+    "accounting.reconciliation_reminder",
+    "beat.accounting.reconciliation_reminder",
+    crontab(day_of_month=3, hour=3, minute=30),
+)
+register_beat(
+    "accounting.posting_gap_check", "beat.accounting.posting_gap_check", crontab(hour=19, minute=40)
+)  # 01:10 IST
 
 # ---- Phase 24 communication advanced (app/tasks/comms_advanced.py) -----------------------------------------------------------
 register_beat("campaign.scheduler", "beat.campaign.scheduler", crontab(minute="*"))
 register_beat("campaign.deferred_quiet_hours_flush", "beat.campaign.deferred_flush", crontab(minute="*/5"))
 register_beat("bot.session_expiry", "beat.bot.session_expiry", crontab(minute=7))
-register_beat("assistant.conversation_retention", "beat.assistant.conversation_retention", crontab(hour=20, minute=55))  # 02:25 IST
+register_beat(
+    "assistant.conversation_retention", "beat.assistant.conversation_retention", crontab(hour=20, minute=55)
+)  # 02:25 IST
 register_beat("comms.provider_health_probe", "beat.comms.provider_health_probe", crontab(minute="*/5"))
 
 # ---- Phase 25 calendar / events / facilities (app/tasks/facilities.py) ------------------------------------------------------
@@ -137,8 +163,12 @@ register_beat("documents.signed_link_cleanup", "beat.documents.signed_link_clean
 register_beat("documents.preview_cleanup", "beat.documents.preview_cleanup", crontab(hour=20, minute=45))
 
 # ---- Phase 27 mentoring / grievances / discipline / surveys (app/tasks/student_support.py) --------------------------------
-register_beat("mentoring.follow_up_reminders", "beat.mentoring.follow_up_reminders", crontab(hour=2, minute=45))  # 08:15 IST
-register_beat("mentoring.min_sessions_check", "beat.mentoring.min_sessions_check", crontab(day_of_month=1, hour=3, minute=0))
+register_beat(
+    "mentoring.follow_up_reminders", "beat.mentoring.follow_up_reminders", crontab(hour=2, minute=45)
+)  # 08:15 IST
+register_beat(
+    "mentoring.min_sessions_check", "beat.mentoring.min_sessions_check", crontab(day_of_month=1, hour=3, minute=0)
+)
 register_beat("risk.compute_weekly", "beat.risk.compute_weekly", crontab(day_of_week=0, hour=20, minute=15))
 register_beat("grievances.sla_scan", "beat.grievances.sla_scan", crontab(minute=35))
 register_beat("grievances.auto_close", "beat.grievances.auto_close", crontab(hour=20, minute=10))
@@ -148,10 +178,23 @@ register_beat("discipline.appeal_window", "beat.discipline.appeal_window", cront
 
 # ---- Phase 28 placement / training (app/tasks/placement.py) ------------------------------------------------------------------
 register_beat("placement.deadline_close", "beat.placement.deadline_close", crontab(minute=5))
-register_beat("placement.joining_followup", "beat.placement.joining_followup", crontab(day_of_week=1, hour=3, minute=15))
+register_beat(
+    "placement.joining_followup", "beat.placement.joining_followup", crontab(day_of_week=1, hour=3, minute=15)
+)
 register_beat("placement.offer_reminders", "beat.placement.offer_reminders", crontab(hour=3, minute=45))  # 09:15 IST
 register_beat("placement.blacklist_expiry", "beat.placement.blacklist_expiry", crontab(hour=20, minute=30))
 register_beat("training.session_reminders", "beat.training.session_reminders", crontab(hour=2, minute=30))
+
+# ---- Phase 29 alumni / fundraising (app/tasks/alumni.py) --------------------------------------------------------------------
+register_beat("alumni.engagement_nightly", "beat.alumni.engagement_nightly", crontab(hour=21, minute=10))
+register_beat("alumni.jobs_expiry", "beat.alumni.jobs_expiry", crontab(hour=20, minute=40))
+register_beat("campaign.milestone_check", "beat.campaign.milestone_check", crontab(minute=25))
+register_beat("alumni.pledge_reminders", "beat.alumni.pledge_reminders", crontab(day_of_week=1, hour=4, minute=30))
+register_beat(
+    "alumni.annual_update_campaign",
+    "beat.alumni.annual_update_campaign",
+    crontab(month_of_year=7, day_of_month=1, hour=4, minute=0),
+)
 
 celery.conf.beat_schedule = BEAT_SCHEDULE
 

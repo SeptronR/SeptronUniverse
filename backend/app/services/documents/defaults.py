@@ -63,6 +63,8 @@ TITLES: dict[str, str] = {
     "medical_certificate": "Medical Certificate",
     "fee_structure_letter": "Fee Structure Letter",
     "offer_letter": "Offer Letter",
+    "donation_receipt_80g": "Donation Receipt (Section 80G)",
+    "alumni_membership_card": "Alumni Membership Card",
     "custom": "Certificate",
 }
 
@@ -109,10 +111,20 @@ BODIES: dict[str, str] = {
     "fee_structure_letter": f"The fee structure applicable to {_S}, {{{{ enrolment.program }}}}, for the academic "
     "year {{ enrolment.academic_year }} is issued for {{ purpose }}.",
     "offer_letter": "We are pleased to offer {{ student.name }} admission to {{ enrolment.program }}.",
+    "donation_receipt_80g": "Received with thanks from {{ donor.name }}{% if donor.pan %} (PAN {{ donor.pan }}){% endif %} "
+    "the sum of Rs. {{ donation.amount }} ({{ donation.amount_words }}) by {{ donation.mode }}{% if donation.reference %} "
+    "(ref. {{ donation.reference }}){% endif %} on {{ donation.on_date }} towards {{ donation.campaign }}. Receipt No. "
+    "{{ donation.receipt_no }}. Donations to {{ institution.name }} qualify for deduction under section 80G of the "
+    "Income-tax Act, 1961 vide registration {{ g80.registration_no }} valid from {{ g80.valid_from }} to "
+    "{{ g80.valid_to }}.",
+    "alumni_membership_card": "{{ alumni.name }}<br>{{ alumni.program }} · {{ alumni.batch }}<br>Member No. "
+    "{{ alumni.member_no }}",
     "custom": "{{ body }}",
     "id_card": "{{ student.name }}<br>{{ student.registration_number }}<br>{{ enrolment.program }}",
 }
 SECONDARY_HI: dict[str, str] = {
+    "donation_receipt_80g": "{{ donor.name }} से रु. {{ donation.amount }} का दान धन्यवाद सहित प्राप्त हुआ। यह दान आयकर "
+    "अधिनियम की धारा 80G के अंतर्गत कटौती योग्य है (पंजीकरण {{ g80.registration_no }})।",
     "bonafide": "प्रमाणित किया जाता है कि {{ student.name_secondary }} (पंजीकरण सं. {{ student.registration_number }}) "
     "इस संस्थान के {{ enrolment.program }} के वास्तविक छात्र/छात्रा हैं।",
     "degree": "{{ student.name_secondary }} को {{ award.degree }} की उपाधि प्रदान की जाती है।",
@@ -128,6 +140,8 @@ SIGNERS: dict[str, list[str]] = {
     "experience": ["principal"],
     "service": ["principal"],
     "noc": ["principal"],
+    "donation_receipt_80g": ["principal"],
+    "alumni_membership_card": ["registrar"],
 }
 
 
@@ -137,6 +151,15 @@ def variables_for(template_type: str) -> list[dict[str, str]]:
 
 
 def default_layout(template_type: str, *, bilingual: bool = False) -> dict[str, Any]:
+    if template_type == "alumni_membership_card":
+        return {
+            "variant": "alumni",
+            "blocks": [
+                {"type": "header", "props": {"logo": True}},
+                {"type": "paragraph", "text": BODIES["alumni_membership_card"]},
+                {"type": "qr", "props": {}},
+            ],
+        }
     if template_type == "id_card":
         return {
             "variant": "student",
@@ -238,7 +261,7 @@ def compile_layout(layout: dict[str, Any] | None) -> str:
 
 def default_template(template_type: str, *, bilingual: bool = False) -> dict[str, Any]:
     layout = default_layout(template_type, bilingual=bilingual)
-    card = template_type == "id_card"
+    card = template_type in ("id_card", "alumni_membership_card")
     return {
         "template_type": template_type,
         "name": f"{TITLES.get(template_type, template_type)}{' (bilingual)' if bilingual else ''}"[:120],

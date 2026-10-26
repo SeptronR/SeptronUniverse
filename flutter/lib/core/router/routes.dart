@@ -78,6 +78,9 @@ class AppRoutes {
   static const clubs = '/app/clubs';
   static const hoursVerification = '/app/hours-verification';
   static const parentSupport = '/app/parent-support';
+  // Phase 29 — alumni shell + alumni office
+  static const alumniHub = '/app/alumni';
+  static const alumniOffice = '/app/alumni-office';
   // Phase 28 — placement, internships, training
   static const placement = '/app/placement';
   static const wardPlacement = '/app/ward-placement';

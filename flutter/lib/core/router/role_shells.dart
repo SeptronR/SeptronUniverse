@@ -419,6 +419,21 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 29 — alumni shell (alumni) and the alumni office (coordinator)
+  const MoreMenuModule(
+      titleKey: 'alumni',
+      icon: Icons.school_outlined,
+      route: AppRoutes.alumniHub,
+      color: Colors.deepPurple,
+      roles: ['alumni'],
+      feature: 'alumni.portal'),
+  const MoreMenuModule(
+      titleKey: 'alumni_office',
+      icon: Icons.verified_user_outlined,
+      route: AppRoutes.alumniOffice,
+      color: Colors.deepPurple,
+      permission: 'alumni:verify',
+      feature: 'alumni.core'),
   // Phase 28 — placement (student / parent / officer / internship faculty)
   const MoreMenuModule(
       titleKey: 'placement',

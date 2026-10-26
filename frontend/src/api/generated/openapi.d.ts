@@ -2291,6 +2291,487 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/alumni/claim": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Claim a legacy alumni profile (registration number + year + contact on record → OTP) */
+        post: operations["claim_api_v1_alumni_claim_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/claim/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify the claim OTP */
+        post: operations["claim_verify_api_v1_alumni_claim_verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/directory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni directory (consented fields; mentor / recruiter finder) */
+        get: operations["directory_api_v1_alumni_directory_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/directory/{id}/contact-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Contact request (relayed; contacts never exposed) */
+        post: operations["contact_api_v1_alumni_directory__id__contact_request_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni events */
+        get: operations["events_api_v1_alumni_events_get"];
+        put?: never;
+        /** Create an alumni event (on the Events engine) */
+        post: operations["create_event_api_v1_alumni_events_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/events/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My alumni events */
+        get: operations["my_events_api_v1_alumni_events_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/events/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni event */
+        get: operations["event_api_v1_alumni_events__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/events/{id}/invite": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Invite a segment (batches / programmes / chapter / city) */
+        post: operations["invite_api_v1_alumni_events__id__invite_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Legacy alumni import (job; CSV file or rows) */
+        post: operations["import_alumni_api_v1_alumni_import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/import/inline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Legacy alumni import (inline, ≤ 5,000 rows) */
+        post: operations["import_inline_api_v1_alumni_import_inline_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/jobs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni jobs board */
+        get: operations["jobs_api_v1_alumni_jobs_get"];
+        put?: never;
+        /** Post a job (verified alumni; moderated) */
+        post: operations["post_job_api_v1_alumni_jobs_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/jobs/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My job posts */
+        get: operations["my_jobs_api_v1_alumni_jobs_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/jobs/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Job post */
+        get: operations["job_api_v1_alumni_jobs__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/jobs/{id}/click": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Track an apply click */
+        post: operations["click_api_v1_alumni_jobs__id__click_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/jobs/{id}/lead": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Convert to a placement company lead */
+        post: operations["lead_api_v1_alumni_jobs__id__lead_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/jobs/{id}/moderate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / reject */
+        post: operations["moderate_api_v1_alumni_jobs__id__moderate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My alumni profile */
+        get: operations["me_api_v1_alumni_me_get"];
+        /** Update profile & consents */
+        put: operations["update_me_api_v1_alumni_me_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/me/card.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Membership card (PDF) */
+        get: operations["my_card_api_v1_alumni_me_card_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/me/employment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My employment */
+        get: operations["my_employment_api_v1_alumni_me_employment_get"];
+        put?: never;
+        /** Add employment (a current job closes the previous one) */
+        post: operations["add_employment_api_v1_alumni_me_employment_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/me/employment/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update employment */
+        put: operations["update_employment_api_v1_alumni_me_employment__id__put"];
+        post?: never;
+        /** Delete employment */
+        delete: operations["delete_employment_api_v1_alumni_me_employment__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/me/engagement": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My engagement score */
+        get: operations["my_engagement_api_v1_alumni_me_engagement_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/profiles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni profiles (ScopeTabs Department | College | All) */
+        get: operations["profiles_api_v1_alumni_profiles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/profiles/claim-links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send claim links to unclaimed profiles (job) */
+        post: operations["claim_links_api_v1_alumni_profiles_claim_links_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/profiles/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export profiles (job, audited; contacts only when consented) */
+        get: operations["export_profiles_api_v1_alumni_profiles_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/profiles/merge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Merge duplicate profiles */
+        post: operations["merge_api_v1_alumni_profiles_merge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/profiles/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni profile */
+        get: operations["profile_api_v1_alumni_profiles__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/profiles/{id}/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify / reject a claimed profile */
+        post: operations["verify_api_v1_alumni_profiles__id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/alumni/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Alumni stats (NAAC 5.4) */
+        get: operations["stats_api_v1_alumni_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/announcements": {
         parameters: {
             query?: never;
@@ -11387,6 +11868,264 @@ export interface paths {
         get: operations["get_fines_api_v1_fine_configurations_get"];
         /** Save fine configuration (one row per applies_to) */
         put: operations["put_fines_api_v1_fine_configurations_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/80g/10bd": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Form 10BD-style statement (job → xlsx) */
+        get: operations["statement_10bd_api_v1_fundraising_80g_10bd_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/80g/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 80G register */
+        get: operations["register_80g_api_v1_fundraising_80g_register_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/campaigns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Campaigns */
+        get: operations["campaigns_api_v1_fundraising_campaigns_get"];
+        put?: never;
+        /** Create campaign (restricted fund → ledger mapping) */
+        post: operations["create_campaign_api_v1_fundraising_campaigns_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/campaigns/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Active public campaigns (website) */
+        get: operations["public_campaigns_api_v1_fundraising_campaigns_public_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/campaigns/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Campaign */
+        get: operations["campaign_api_v1_fundraising_campaigns__id__get"];
+        /** Update campaign */
+        put: operations["update_campaign_api_v1_fundraising_campaigns__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/campaigns/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close campaign (further donations 409) */
+        post: operations["close_campaign_api_v1_fundraising_campaigns__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Donate online (alumni / signed-in donor; Idempotency-Key) */
+        post: operations["donate_api_v1_fundraising_donate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donate/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Donate online from the website (captcha; Idempotency-Key) */
+        post: operations["donate_public_api_v1_fundraising_donate_public_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Donations */
+        get: operations["donations_api_v1_fundraising_donations_get"];
+        put?: never;
+        /** Record an offline donation (bank transfer / cheque / cash / UPI) */
+        post: operations["record_api_v1_fundraising_donations_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donations/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My donations */
+        get: operations["my_donations_api_v1_fundraising_donations_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donations/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Donation */
+        get: operations["donation_api_v1_fundraising_donations__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donations/{id}/receipt-80g": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Issue the 80G receipt */
+        post: operations["receipt_80g_api_v1_fundraising_donations__id__receipt_80g_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donations/{id}/receipt-80g/reissue": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reissue the 80G receipt (corrections; old document superseded) */
+        post: operations["reissue_80g_api_v1_fundraising_donations__id__receipt_80g_reissue_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donations/{id}/refund": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refund (audited; reverses raised amount) */
+        post: operations["refund_api_v1_fundraising_donations__id__refund_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/fundraising/donors/{donor_key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Donor page */
+        get: operations["donor_api_v1_fundraising_donors__donor_key__get"];
+        put?: never;
         post?: never;
         delete?: never;
         options?: never;
@@ -26350,6 +27089,563 @@ export interface components {
              */
             upgraded: number;
         };
+        /** AlmEmploymentIn */
+        AlmEmploymentIn: {
+            /** Company */
+            company: string;
+            /** Designation */
+            designation?: string | null;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Is Current
+             * @default false
+             */
+            is_current: boolean;
+            /** To On */
+            to_on?: string | null;
+        };
+        /** AlmEmploymentOut */
+        AlmEmploymentOut: {
+            /** Company */
+            company: string;
+            /** Designation */
+            designation?: string | null;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Current */
+            is_current: boolean;
+            /** To On */
+            to_on?: string | null;
+        };
+        /** AlmEngagementOut */
+        AlmEngagementOut: {
+            /**
+             * Alumni Id
+             * Format: uuid
+             */
+            alumni_id: string;
+            /** Breakdown */
+            breakdown?: {
+                [key: string]: number;
+            };
+            /** Computed At */
+            computed_at?: string | null;
+            /** Rank Pct */
+            rank_pct?: number | null;
+            /** Score */
+            score: number;
+        };
+        /** AlmEventIn */
+        AlmEventIn: {
+            /** Capacity */
+            capacity?: number | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Description */
+            description?: string | null;
+            /**
+             * Event Type
+             * @default meet
+             * @enum {string}
+             */
+            event_type: "meet" | "webinar" | "reunion" | "mentorship";
+            /**
+             * Held On
+             * Format: date
+             */
+            held_on: string;
+            /**
+             * Registration Fee Paise
+             * @default 0
+             */
+            registration_fee_paise: number;
+            /** Title */
+            title: string;
+            /** To On */
+            to_on?: string | null;
+            /** Venue */
+            venue?: string | null;
+            /** Webinar Url */
+            webinar_url?: string | null;
+        };
+        /** AlmEventInvite */
+        AlmEventInvite: {
+            /** Chapter */
+            chapter?: string | null;
+            /** City */
+            city?: string | null;
+            /** Graduation Years */
+            graduation_years?: number[];
+            /** Program Ids */
+            program_ids?: string[];
+            /**
+             * Verified Only
+             * @default false
+             */
+            verified_only: boolean;
+        };
+        /** AlmEventOut */
+        AlmEventOut: {
+            /**
+             * Attended Count
+             * @default 0
+             */
+            attended_count: number;
+            /** Created At */
+            created_at?: string | null;
+            /** Event Id */
+            event_id?: string | null;
+            /** Event Status */
+            event_status?: string | null;
+            /** Event Type */
+            event_type: string;
+            /** Held On */
+            held_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Invited
+             * @default 0
+             */
+            invited: number;
+            /** My Registration Id */
+            my_registration_id?: string | null;
+            /** Photos */
+            photos?: string[];
+            /**
+             * Registration Fee Paise
+             * @default 0
+             */
+            registration_fee_paise: number;
+            /**
+             * Registrations Count
+             * @default 0
+             */
+            registrations_count: number;
+            /** Title */
+            title: string;
+            /** Venue */
+            venue?: string | null;
+            /** Webinar Url */
+            webinar_url?: string | null;
+        };
+        /** AlmImportReport */
+        AlmImportReport: {
+            /**
+             * Created
+             * @default 0
+             */
+            created: number;
+            /** Errors */
+            errors?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Linked
+             * @default 0
+             */
+            linked: number;
+            /**
+             * Skipped
+             * @default 0
+             */
+            skipped: number;
+        };
+        /** AlmInviteReport */
+        AlmInviteReport: {
+            /** Campaign Id */
+            campaign_id?: string | null;
+            /** Invited */
+            invited: number;
+        };
+        /** AlmJobClick */
+        AlmJobClick: {
+            /** Apply Url */
+            apply_url?: string | null;
+            /** Clicks */
+            clicks: number;
+        };
+        /** AlmJobIn */
+        AlmJobIn: {
+            /** Apply Url */
+            apply_url?: string | null;
+            /** Company */
+            company?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Expires On */
+            expires_on?: string | null;
+            /** Location */
+            location?: string | null;
+            /**
+             * Open To Students
+             * @default false
+             */
+            open_to_students: boolean;
+            /** Title */
+            title: string;
+        };
+        /** AlmJobOut */
+        AlmJobOut: {
+            /** Apply Url */
+            apply_url?: string | null;
+            /**
+             * Clicks
+             * @default 0
+             */
+            clicks: number;
+            /** Company */
+            company?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Description */
+            description?: string | null;
+            /** Expires On */
+            expires_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /** Lead Company Id */
+            lead_company_id?: string | null;
+            /** Location */
+            location?: string | null;
+            /**
+             * Open To Students
+             * @default false
+             */
+            open_to_students: boolean;
+            /** Posted By */
+            posted_by?: string | null;
+            /** Posted By Alumni Id */
+            posted_by_alumni_id?: string | null;
+            /** Reason */
+            reason?: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "pending" | "approved" | "rejected" | "expired";
+            /** Title */
+            title: string;
+        };
+        /** AlmJobQueued */
+        AlmJobQueued: {
+            /** Job Id */
+            job_id?: string | null;
+            /** Result */
+            result?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Status
+             * @default queued
+             */
+            status: string;
+        };
+        /** AlmProfileListItem */
+        AlmProfileListItem: {
+            /** City */
+            city?: string | null;
+            /**
+             * Claim Status
+             * @enum {string}
+             */
+            claim_status: "unclaimed" | "claimed" | "verified" | "rejected";
+            /** Consent Contact */
+            consent_contact: boolean;
+            /** Current Company */
+            current_company?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Email */
+            email?: string | null;
+            /**
+             * Engagement Score
+             * @default 0
+             */
+            engagement_score: number;
+            /** Graduation Year */
+            graduation_year?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Verified */
+            is_verified: boolean;
+            /**
+             * Legacy
+             * @default false
+             */
+            legacy: boolean;
+            /** Name */
+            name: string;
+            /** Phone */
+            phone?: string | null;
+            /** Program */
+            program?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Willing To Mentor */
+            willing_to_mentor: boolean;
+            /** Willing To Recruit */
+            willing_to_recruit: boolean;
+        };
+        /**
+         * AlumniImport
+         * @description CSV via ``file_url`` + column ``mapping`` (``{csv_header: field}``), or ``rows`` inline (≤ 5,000).
+         */
+        AlumniImport: {
+            /** College Id */
+            college_id?: string | null;
+            /** File Url */
+            file_url?: string | null;
+            /** Mapping */
+            mapping?: {
+                [key: string]: string;
+            } | null;
+            /** Rows */
+            rows?: components["schemas"]["AlumniImportRow"][] | null;
+        };
+        /** AlumniImportRow */
+        AlumniImportRow: {
+            /** City */
+            city?: string | null;
+            /** Company */
+            company?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Graduation Year */
+            graduation_year: number;
+            /** Name */
+            name: string;
+            /** Phone */
+            phone?: string | null;
+            /** Program Code */
+            program_code?: string | null;
+            /** Registration Number */
+            registration_number: string;
+        };
+        /**
+         * AlumniProfileOut
+         * @description Self / coordinator view (full); auditors get masked contacts.
+         */
+        AlumniProfileOut: {
+            /** Chapter */
+            chapter?: string | null;
+            /** City */
+            city?: string | null;
+            /**
+             * Claim Status
+             * @enum {string}
+             */
+            claim_status: "unclaimed" | "claimed" | "verified" | "rejected";
+            /** College Id */
+            college_id?: string | null;
+            /**
+             * Completeness
+             * @default 0
+             */
+            completeness: number;
+            /** Consent Contact */
+            consent_contact: boolean;
+            /** Consent Directory Fields */
+            consent_directory_fields?: string[];
+            /** Country */
+            country?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Current Company */
+            current_company?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Designation */
+            designation?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Employment */
+            employment?: components["schemas"]["AlmEmploymentOut"][];
+            /**
+             * Engagement Score
+             * @default 0
+             */
+            engagement_score: number;
+            /** Graduation Year */
+            graduation_year?: number | null;
+            /** Higher Studies */
+            higher_studies?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Verified */
+            is_verified: boolean;
+            /** Last Updated By Alumni At */
+            last_updated_by_alumni_at?: string | null;
+            /**
+             * Legacy
+             * @default false
+             */
+            legacy: boolean;
+            /** Linkedin Url */
+            linkedin_url?: string | null;
+            /**
+             * Masked
+             * @default false
+             */
+            masked: boolean;
+            /** Name */
+            name: string;
+            /** Phone */
+            phone?: string | null;
+            /** Program */
+            program?: string | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /**
+             * Student Id
+             * Format: uuid
+             */
+            student_id: string;
+            /** User Id */
+            user_id?: string | null;
+            /** Willing To Mentor */
+            willing_to_mentor: boolean;
+            /** Willing To Recruit */
+            willing_to_recruit: boolean;
+        };
+        /** AlumniProfileUpdate */
+        AlumniProfileUpdate: {
+            /** Chapter */
+            chapter?: string | null;
+            /** City */
+            city?: string | null;
+            /** Consent Contact */
+            consent_contact?: boolean | null;
+            /** Consent Directory Fields */
+            consent_directory_fields?: ("name" | "batch" | "program" | "city" | "country" | "company" | "designation" | "linkedin_url" | "email" | "phone")[] | null;
+            /** Country */
+            country?: string | null;
+            /** Current Company */
+            current_company?: string | null;
+            /** Designation */
+            designation?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Higher Studies */
+            higher_studies?: {
+                [key: string]: unknown;
+            } | null;
+            /** Linkedin Url */
+            linkedin_url?: string | null;
+            /** Phone */
+            phone?: string | null;
+            /** Willing To Mentor */
+            willing_to_mentor?: boolean | null;
+            /** Willing To Recruit */
+            willing_to_recruit?: boolean | null;
+        };
+        /** AlumniStats */
+        AlumniStats: {
+            /** By Batch */
+            by_batch?: {
+                [key: string]: number;
+            };
+            /** By City */
+            by_city?: {
+                [key: string]: number;
+            };
+            /** By Country */
+            by_country?: {
+                [key: string]: number;
+            };
+            /**
+             * Claimed Pct
+             * @default 0
+             */
+            claimed_pct: number;
+            /**
+             * Consent Contact Pct
+             * @default 0
+             */
+            consent_contact_pct: number;
+            /** Donations By Campaign */
+            donations_by_campaign?: {
+                [key: string]: number;
+            };
+            /** Donations By Year */
+            donations_by_year?: {
+                [key: string]: number;
+            };
+            /**
+             * Donations Total Paise
+             * @default 0
+             */
+            donations_total_paise: number;
+            /**
+             * Employed Pct
+             * @default 0
+             */
+            employed_pct: number;
+            /**
+             * Event Participation
+             * @default 0
+             */
+            event_participation: number;
+            /**
+             * Events
+             * @default 0
+             */
+            events: number;
+            /**
+             * Higher Studies Pct
+             * @default 0
+             */
+            higher_studies_pct: number;
+            /**
+             * Jobs Posted
+             * @default 0
+             */
+            jobs_posted: number;
+            /**
+             * Mentors
+             * @default 0
+             */
+            mentors: number;
+            /**
+             * Recruiters
+             * @default 0
+             */
+            recruiters: number;
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+            /**
+             * Verified Pct
+             * @default 0
+             */
+            verified_pct: number;
+        };
         /**
          * AmountType
          * @enum {string}
@@ -29838,6 +31134,92 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** CampaignIn */
+        CampaignIn: {
+            /** From On */
+            from_on?: string | null;
+            /** Goal Paise */
+            goal_paise: number;
+            /**
+             * Is Public
+             * @default true
+             */
+            is_public: boolean;
+            /**
+             * Is Restricted Fund
+             * @default false
+             */
+            is_restricted_fund: boolean;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Purpose */
+            purpose?: string | null;
+            /**
+             * Status
+             * @default active
+             * @enum {string}
+             */
+            status: "draft" | "active";
+            /** Title */
+            title: string;
+            /** To On */
+            to_on?: string | null;
+        };
+        /** CampaignOut */
+        CampaignOut: {
+            /** Created At */
+            created_at?: string | null;
+            /** Donor Mix */
+            donor_mix?: {
+                [key: string]: number;
+            };
+            /**
+             * Donors Count
+             * @default 0
+             */
+            donors_count: number;
+            /** From On */
+            from_on?: string | null;
+            /** Goal Paise */
+            goal_paise?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Is Public
+             * @default true
+             */
+            is_public: boolean;
+            /**
+             * Is Restricted Fund
+             * @default false
+             */
+            is_restricted_fund: boolean;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Milestones Reached */
+            milestones_reached?: number[];
+            /**
+             * Progress Pct
+             * @default 0
+             */
+            progress_pct: number;
+            /** Purpose */
+            purpose?: string | null;
+            /**
+             * Raised Paise
+             * @default 0
+             */
+            raised_paise: number;
+            /** Status */
+            status: string;
+            /** Title */
+            title: string;
+            /** To On */
+            to_on?: string | null;
+        };
         /** CampaignReport */
         CampaignReport: {
             /** By Channel */
@@ -29932,25 +31314,6 @@ export interface components {
             template_id?: string | null;
             /** Total Recipients */
             total_recipients?: number | null;
-        };
-        /** CampaignUpdate */
-        CampaignUpdate: {
-            audience_rules?: components["schemas"]["SegmentRules"] | null;
-            body_override?: components["schemas"]["CampaignBody"] | null;
-            /** Channels */
-            channels?: ("sms" | "whatsapp" | "email" | "push" | "in_app")[] | null;
-            /** Name */
-            name?: string | null;
-            /** Respect Quiet Hours */
-            respect_quiet_hours?: boolean | null;
-            /** Scheduled At */
-            scheduled_at?: string | null;
-            /** Template Id */
-            template_id?: string | null;
-            /** Variables */
-            variables?: {
-                [key: string]: unknown;
-            } | null;
         };
         /** CancelReceiptRequest */
         CancelReceiptRequest: {
@@ -30687,6 +32050,65 @@ export interface components {
             rfid_tag?: string | null;
             /** User Id */
             user_id?: string | null;
+        };
+        /** ClaimRequest */
+        ClaimRequest: {
+            /** Captcha Token */
+            captcha_token?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Graduation Year */
+            graduation_year: number;
+            /** Phone */
+            phone?: string | null;
+            /** Registration Number */
+            registration_number: string;
+        };
+        /** ClaimResponse */
+        ClaimResponse: {
+            /** Channel */
+            channel?: string | null;
+            /** Claim Token */
+            claim_token?: string | null;
+            /**
+             * Message
+             * @default If the details match our records, a code has been sent.
+             */
+            message: string;
+            /**
+             * Sent
+             * @default true
+             */
+            sent: boolean;
+            /**
+             * Ttl Seconds
+             * @default 600
+             */
+            ttl_seconds: number;
+        };
+        /** ClaimVerify */
+        ClaimVerify: {
+            /** Claim Token */
+            claim_token: string;
+            /** Otp */
+            otp: string;
+        };
+        /** ClaimVerifyResponse */
+        ClaimVerifyResponse: {
+            /**
+             * Alumni Id
+             * Format: uuid
+             */
+            alumni_id: string;
+            /**
+             * Claim Status
+             * @enum {string}
+             */
+            claim_status: "unclaimed" | "claimed" | "verified" | "rejected";
+            /** Message */
+            message: string;
+            /** Username */
+            username?: string | null;
         };
         /** ClashItem */
         ClashItem: {
@@ -31571,6 +32993,28 @@ export interface components {
             rows?: components["schemas"]["CiaRow"][];
             /** Status */
             status?: string | null;
+        };
+        /** ContactRequest */
+        ContactRequest: {
+            /** Message */
+            message: string;
+        };
+        /** ContactRequestOut */
+        ContactRequestOut: {
+            /** Channels */
+            channels?: string[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Relayed */
+            relayed: boolean;
+            /**
+             * To Alumni Id
+             * Format: uuid
+             */
+            to_alumni_id: string;
         };
         /** ContentIn */
         ContentIn: {
@@ -33744,6 +35188,80 @@ export interface components {
          * @enum {string}
          */
         DeviceType: "biometric" | "rfid" | "qr_kiosk";
+        /**
+         * DirectoryEntry
+         * @description Consented projection — absent keys were not consented (or not visible to the requester class).
+         */
+        DirectoryEntry: {
+            /**
+             * Contactable
+             * @default false
+             */
+            contactable: boolean;
+            /** Fields */
+            fields?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Willing To Mentor
+             * @default false
+             */
+            willing_to_mentor: boolean;
+            /**
+             * Willing To Recruit
+             * @default false
+             */
+            willing_to_recruit: boolean;
+        };
+        /** DirectoryFacets */
+        DirectoryFacets: {
+            /** Batch */
+            batch?: {
+                [key: string]: number;
+            };
+            /** City */
+            city?: {
+                [key: string]: number;
+            };
+            /** Company */
+            company?: {
+                [key: string]: number;
+            };
+            /** Program */
+            program?: {
+                [key: string]: number;
+            };
+        };
+        /** DirectoryPage */
+        DirectoryPage: {
+            /**
+             * @default {
+             *       "batch": {},
+             *       "city": {},
+             *       "company": {},
+             *       "program": {}
+             *     }
+             */
+            facets: components["schemas"]["DirectoryFacets"];
+            /** Items */
+            items?: components["schemas"]["DirectoryEntry"][];
+            /**
+             * Requester
+             * @default alumni
+             * @enum {string}
+             */
+            requester: "alumni" | "student" | "staff";
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+        };
         /** DisburseRequest */
         DisburseRequest: {
             /** Invoice Id */
@@ -34856,6 +36374,156 @@ export interface components {
             revoked: number;
             /** Sla Compliance Pct */
             sla_compliance_pct?: number | null;
+        };
+        /**
+         * DonationCreate
+         * @description Offline record (bank transfer / cheque / cash / UPI) by the coordinator or accountant.
+         */
+        DonationCreate: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Campaign Id */
+            campaign_id?: string | null;
+            donor_ref: components["schemas"]["DonorRef"];
+            /**
+             * Donor Type
+             * @enum {string}
+             */
+            donor_type: "alumni" | "corporate" | "individual";
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "bank_transfer" | "cheque" | "cash" | "upi";
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /** Reference */
+            reference?: string | null;
+            /**
+             * Wants 80G
+             * @default false
+             */
+            wants_80g: boolean;
+        };
+        /** DonationOut */
+        DonationOut: {
+            /** Alumni Id */
+            alumni_id?: string | null;
+            /** Amount Paise */
+            amount_paise: number;
+            /**
+             * Anonymous
+             * @default false
+             */
+            anonymous: boolean;
+            /** Campaign */
+            campaign?: string | null;
+            /** Campaign Id */
+            campaign_id?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            /** Donor Key */
+            donor_key: string;
+            /** Donor Name */
+            donor_name: string;
+            /** Donor Type */
+            donor_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is 80G */
+            is_80g: boolean;
+            /** Mode */
+            mode?: string | null;
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /** Pan Masked */
+            pan_masked?: string | null;
+            /** Receipt Document Id */
+            receipt_document_id?: string | null;
+            /** Receipt No */
+            receipt_no?: string | null;
+            /** Receipt Url */
+            receipt_url?: string | null;
+            /** Reference */
+            reference?: string | null;
+            /** Refund */
+            refund?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Refunded
+             * @default false
+             */
+            refunded: boolean;
+            /**
+             * Wants 80G
+             * @default false
+             */
+            wants_80g: boolean;
+        };
+        /** DonationRefund */
+        DonationRefund: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** Reason */
+            reason: string;
+        };
+        /** DonorPage */
+        DonorPage: {
+            /** Campaigns */
+            campaigns?: string[];
+            /** Csr References */
+            csr_references?: string[];
+            /** Donations */
+            donations?: components["schemas"]["DonationOut"][];
+            /** Donor Key */
+            donor_key: string;
+            /** Donor Type */
+            donor_type: string;
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name: string;
+            /** Organisation */
+            organisation?: string | null;
+            /**
+             * Total Paise
+             * @default 0
+             */
+            total_paise: number;
+        };
+        /** DonorRef */
+        DonorRef: {
+            /** Address */
+            address?: string | null;
+            /** Alumni Id */
+            alumni_id?: string | null;
+            /**
+             * Anonymous
+             * @default false
+             */
+            anonymous: boolean;
+            /** Csr Reference */
+            csr_reference?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Organisation */
+            organisation?: string | null;
+            /** Pan */
+            pan?: string | null;
+            /** Phone */
+            phone?: string | null;
         };
         /** DuesResponse */
         DuesResponse: {
@@ -36019,6 +37687,156 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AlmEmploymentOut] */
+        Envelope_AlmEmploymentOut_: {
+            data?: components["schemas"]["AlmEmploymentOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmEngagementOut] */
+        Envelope_AlmEngagementOut_: {
+            data?: components["schemas"]["AlmEngagementOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmEventOut] */
+        Envelope_AlmEventOut_: {
+            data?: components["schemas"]["AlmEventOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmImportReport] */
+        Envelope_AlmImportReport_: {
+            data?: components["schemas"]["AlmImportReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmInviteReport] */
+        Envelope_AlmInviteReport_: {
+            data?: components["schemas"]["AlmInviteReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmJobClick] */
+        Envelope_AlmJobClick_: {
+            data?: components["schemas"]["AlmJobClick"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmJobOut] */
+        Envelope_AlmJobOut_: {
+            data?: components["schemas"]["AlmJobOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlmJobQueued] */
+        Envelope_AlmJobQueued_: {
+            data?: components["schemas"]["AlmJobQueued"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlumniProfileOut] */
+        Envelope_AlumniProfileOut_: {
+            data?: components["schemas"]["AlumniProfileOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AlumniStats] */
+        Envelope_AlumniStats_: {
+            data?: components["schemas"]["AlumniStats"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AnnouncementAnalytics] */
         Envelope_AnnouncementAnalytics_: {
             data?: components["schemas"]["AnnouncementAnalytics"] | null;
@@ -36574,6 +38392,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CampaignOut] */
+        Envelope_CampaignOut_: {
+            data?: components["schemas"]["CampaignOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CampaignReport] */
         Envelope_CampaignReport_: {
             data?: components["schemas"]["CampaignReport"] | null;
@@ -36697,6 +38530,36 @@ export interface components {
         /** Envelope[ChoiceFormResponse] */
         Envelope_ChoiceFormResponse_: {
             data?: components["schemas"]["ChoiceFormResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ClaimResponse] */
+        Envelope_ClaimResponse_: {
+            data?: components["schemas"]["ClaimResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ClaimVerifyResponse] */
+        Envelope_ClaimVerifyResponse_: {
+            data?: components["schemas"]["ClaimVerifyResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -36937,6 +38800,21 @@ export interface components {
         /** Envelope[ConsolidateResponse] */
         Envelope_ConsolidateResponse_: {
             data?: components["schemas"]["ConsolidateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ContactRequestOut] */
+        Envelope_ContactRequestOut_: {
+            data?: components["schemas"]["ContactRequestOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -37369,6 +39247,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DirectoryPage] */
+        Envelope_DirectoryPage_: {
+            data?: components["schemas"]["DirectoryPage"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DiscCaseOut] */
         Envelope_DiscCaseOut_: {
             data?: components["schemas"]["DiscCaseOut"] | null;
@@ -37627,6 +39520,36 @@ export interface components {
         /** Envelope[DocumentStatsOut] */
         Envelope_DocumentStatsOut_: {
             data?: components["schemas"]["DocumentStatsOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DonationOut] */
+        Envelope_DonationOut_: {
+            data?: components["schemas"]["DonationOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DonorPage] */
+        Envelope_DonorPage_: {
+            data?: components["schemas"]["DonorPage"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -39574,6 +41497,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[MergeReport] */
+        Envelope_MergeReport_: {
+            data?: components["schemas"]["MergeReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[MeritListDetail] */
         Envelope_MeritListDetail_: {
             data?: components["schemas"]["MeritListDetail"] | null;
@@ -39983,6 +41921,21 @@ export interface components {
         /** Envelope[OnboardingResponse] */
         Envelope_OnboardingResponse_: {
             data?: components["schemas"]["OnboardingResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[OnlineDonateResponse] */
+        Envelope_OnlineDonateResponse_: {
+            data?: components["schemas"]["OnlineDonateResponse"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -41033,6 +42986,21 @@ export interface components {
         /** Envelope[RebateOut] */
         Envelope_RebateOut_: {
             data?: components["schemas"]["RebateOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[Receipt80GOut] */
+        Envelope_Receipt80GOut_: {
+            data?: components["schemas"]["Receipt80GOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -43228,6 +45196,70 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[AlmEmploymentOut]] */
+        Envelope_list_AlmEmploymentOut__: {
+            /** Data */
+            data?: components["schemas"]["AlmEmploymentOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[AlmEventOut]] */
+        Envelope_list_AlmEventOut__: {
+            /** Data */
+            data?: components["schemas"]["AlmEventOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[AlmJobOut]] */
+        Envelope_list_AlmJobOut__: {
+            /** Data */
+            data?: components["schemas"]["AlmJobOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[AlmProfileListItem]] */
+        Envelope_list_AlmProfileListItem__: {
+            /** Data */
+            data?: components["schemas"]["AlmProfileListItem"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[AnnouncementOut]] */
         Envelope_list_AnnouncementOut__: {
             /** Data */
@@ -43664,6 +45696,22 @@ export interface components {
         Envelope_list_CalendarEventOut__: {
             /** Data */
             data?: components["schemas"]["CalendarEventOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CampaignOut]] */
+        Envelope_list_CampaignOut__: {
+            /** Data */
+            data?: components["schemas"]["CampaignOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44400,6 +46448,22 @@ export interface components {
         Envelope_list_DocumentOut__: {
             /** Data */
             data?: components["schemas"]["DocumentOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DonationOut]] */
+        Envelope_list_DonationOut__: {
+            /** Data */
+            data?: components["schemas"]["DonationOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -46672,6 +48736,22 @@ export interface components {
         Envelope_list_RefundResponse__: {
             /** Data */
             data?: components["schemas"]["RefundResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[Register80GRow]] */
+        Envelope_list_Register80GRow__: {
+            /** Data */
+            data?: components["schemas"]["Register80GRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -54254,6 +56334,13 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** JobModeration */
+        JobModeration: {
+            /** Approve */
+            approve: boolean;
+            /** Reason */
+            reason?: string | null;
+        };
         /** JobPostingIn */
         JobPostingIn: {
             cadre?: components["schemas"]["Cadre"] | null;
@@ -56398,6 +58485,36 @@ export interface components {
              */
             starts_at: string;
         };
+        /** MergeReport */
+        MergeReport: {
+            /**
+             * Kept Id
+             * Format: uuid
+             */
+            kept_id: string;
+            /**
+             * Merged Id
+             * Format: uuid
+             */
+            merged_id: string;
+            /** Moved */
+            moved?: {
+                [key: string]: number;
+            };
+        };
+        /** MergeRequest */
+        MergeRequest: {
+            /**
+             * Keep Id
+             * Format: uuid
+             */
+            keep_id: string;
+            /**
+             * Merge Id
+             * Format: uuid
+             */
+            merge_id: string;
+        };
         /** MeritEntry */
         MeritEntry: {
             /**
@@ -57943,6 +60060,69 @@ export interface components {
             plan_code: string;
             /** Roles Created */
             roles_created: number;
+        };
+        /** OnlineDonateRequest */
+        OnlineDonateRequest: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Campaign Id */
+            campaign_id?: string | null;
+            /** Captcha Token */
+            captcha_token?: string | null;
+            /**
+             * @default {
+             *       "anonymous": false
+             *     }
+             */
+            donor: components["schemas"]["OnlineDonor"];
+            /** Donor Type */
+            donor_type?: ("alumni" | "corporate" | "individual") | null;
+            /**
+             * Wants 80G
+             * @default false
+             */
+            wants_80g: boolean;
+        };
+        /** OnlineDonateResponse */
+        OnlineDonateResponse: {
+            /** Checkout */
+            checkout?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Intent Id
+             * Format: uuid
+             */
+            intent_id: string;
+            /** Order */
+            order: {
+                [key: string]: unknown;
+            };
+            /**
+             * Replayed
+             * @default false
+             */
+            replayed: boolean;
+        };
+        /** OnlineDonor */
+        OnlineDonor: {
+            /** Address */
+            address?: string | null;
+            /**
+             * Anonymous
+             * @default false
+             */
+            anonymous: boolean;
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Organisation */
+            organisation?: string | null;
+            /** Pan */
+            pan?: string | null;
+            /** Phone */
+            phone?: string | null;
         };
         /** OnlineImportResponse */
         OnlineImportResponse: {
@@ -61955,6 +64135,33 @@ export interface components {
              */
             to_on: string;
         };
+        /** Receipt80GOut */
+        Receipt80GOut: {
+            /**
+             * Donation Id
+             * Format: uuid
+             */
+            donation_id: string;
+            /** Receipt Document Id */
+            receipt_document_id?: string | null;
+            /** Receipt No */
+            receipt_no: string;
+            /** Superseded Document Id */
+            superseded_document_id?: string | null;
+            /** Url */
+            url?: string | null;
+        };
+        /** Receipt80GReissue */
+        Receipt80GReissue: {
+            /** Address */
+            address?: string | null;
+            /** Donor Name */
+            donor_name?: string | null;
+            /** Pan */
+            pan?: string | null;
+            /** Reason */
+            reason: string;
+        };
         /** ReceiptResponse */
         ReceiptResponse: {
             /**
@@ -62351,6 +64558,35 @@ export interface components {
             status: string;
             /** Workflow Instance Id */
             workflow_instance_id?: string | null;
+        };
+        /** Register80GRow */
+        Register80GRow: {
+            /** Address */
+            address?: string | null;
+            /** Amount Paise */
+            amount_paise: number;
+            /** Campaign */
+            campaign?: string | null;
+            /**
+             * Donation Id
+             * Format: uuid
+             */
+            donation_id: string;
+            /** Donor Name */
+            donor_name: string;
+            /** Donor Type */
+            donor_type: string;
+            /** Mode */
+            mode?: string | null;
+            /**
+             * On Date
+             * Format: date
+             */
+            on_date: string;
+            /** Pan Masked */
+            pan_masked?: string | null;
+            /** Receipt No */
+            receipt_no?: string | null;
         };
         /** RegisterGrid */
         RegisterGrid: {
@@ -70425,6 +72661,15 @@ export interface components {
              */
             store_id: string;
         };
+        /** VerifyDecision */
+        VerifyDecision: {
+            /** Approve */
+            approve: boolean;
+            /** Document Url */
+            document_url?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** VerifyRequest */
         VerifyRequest: {
             /** Comment */
@@ -71240,6 +73485,27 @@ export interface components {
              */
             status: "verified" | "rejected" | "resubmit";
         };
+        /** CampaignUpdate */
+        app__schemas__alumni__CampaignUpdate: {
+            /** From On */
+            from_on?: string | null;
+            /** Goal Paise */
+            goal_paise?: number | null;
+            /** Is Public */
+            is_public?: boolean | null;
+            /** Is Restricted Fund */
+            is_restricted_fund?: boolean | null;
+            /** Ledger Account Id */
+            ledger_account_id?: string | null;
+            /** Purpose */
+            purpose?: string | null;
+            /** Status */
+            status?: ("draft" | "active" | "archived") | null;
+            /** Title */
+            title?: string | null;
+            /** To On */
+            to_on?: string | null;
+        };
         /** Envelope[ReconcileSummary] */
         app__schemas__common__Envelope_ReconcileSummary___1: {
             data?: components["schemas"]["app__schemas__fees__ReconcileSummary"] | null;
@@ -71299,6 +73565,25 @@ export interface components {
              * @default true
              */
             success: boolean;
+        };
+        /** CampaignUpdate */
+        app__schemas__comms_advanced__CampaignUpdate: {
+            audience_rules?: components["schemas"]["SegmentRules"] | null;
+            body_override?: components["schemas"]["CampaignBody"] | null;
+            /** Channels */
+            channels?: ("sms" | "whatsapp" | "email" | "push" | "in_app")[] | null;
+            /** Name */
+            name?: string | null;
+            /** Respect Quiet Hours */
+            respect_quiet_hours?: boolean | null;
+            /** Scheduled At */
+            scheduled_at?: string | null;
+            /** Template Id */
+            template_id?: string | null;
+            /** Variables */
+            variables?: {
+                [key: string]: unknown;
+            } | null;
         };
         /** AttendanceMark */
         app__schemas__degrees__AttendanceMark: {
@@ -76574,6 +78859,1012 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_ApplicantResponse__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    claim_api_v1_alumni_claim_post: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClaimRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClaimResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    claim_verify_api_v1_alumni_claim_verify_post: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClaimVerify"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ClaimVerifyResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    directory_api_v1_alumni_directory_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                batch?: number | null;
+                program_id?: string | null;
+                city?: string | null;
+                company?: string | null;
+                willing_to_mentor?: boolean | null;
+                willing_to_recruit?: boolean | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DirectoryPage_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    contact_api_v1_alumni_directory__id__contact_request_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ContactRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ContactRequestOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    events_api_v1_alumni_events_get: {
+        parameters: {
+            query?: {
+                upcoming?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AlmEventOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_event_api_v1_alumni_events_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlmEventIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmEventOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_events_api_v1_alumni_events_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AlmEventOut__"];
+                };
+            };
+        };
+    };
+    event_api_v1_alumni_events__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmEventOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    invite_api_v1_alumni_events__id__invite_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlmEventInvite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmInviteReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_alumni_api_v1_alumni_import_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlumniImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobQueued_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_inline_api_v1_alumni_import_inline_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlumniImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmImportReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    jobs_api_v1_alumni_jobs_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AlmJobOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    post_job_api_v1_alumni_jobs_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlmJobIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_jobs_api_v1_alumni_jobs_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AlmJobOut__"];
+                };
+            };
+        };
+    };
+    job_api_v1_alumni_jobs__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    click_api_v1_alumni_jobs__id__click_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobClick_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    lead_api_v1_alumni_jobs__id__lead_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    moderate_api_v1_alumni_jobs__id__moderate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["JobModeration"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    me_api_v1_alumni_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlumniProfileOut_"];
+                };
+            };
+        };
+    };
+    update_me_api_v1_alumni_me_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlumniProfileUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlumniProfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_card_api_v1_alumni_me_card_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    my_employment_api_v1_alumni_me_employment_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AlmEmploymentOut__"];
+                };
+            };
+        };
+    };
+    add_employment_api_v1_alumni_me_employment_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlmEmploymentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmEmploymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_employment_api_v1_alumni_me_employment__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlmEmploymentIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmEmploymentOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_employment_api_v1_alumni_me_employment__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_engagement_api_v1_alumni_me_engagement_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmEngagementOut_"];
+                };
+            };
+        };
+    };
+    profiles_api_v1_alumni_profiles_get: {
+        parameters: {
+            query?: {
+                batch?: number | null;
+                program_id?: string | null;
+                status?: string | null;
+                department_id?: string | null;
+                q?: string | null;
+                scope?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AlmProfileListItem__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    claim_links_api_v1_alumni_profiles_claim_links_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobQueued_"];
+                };
+            };
+        };
+    };
+    export_profiles_api_v1_alumni_profiles_export_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobQueued_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    merge_api_v1_alumni_profiles_merge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MergeRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MergeReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    profile_api_v1_alumni_profiles__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlumniProfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    verify_api_v1_alumni_profiles__id__verify_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VerifyDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlumniProfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stats_api_v1_alumni_stats_get: {
+        parameters: {
+            query?: {
+                batch?: number | null;
+                program_id?: string | null;
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlumniStats_"];
                 };
             };
             /** @description Validation Error */
@@ -82408,7 +85699,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["CampaignUpdate"];
+                "application/json": components["schemas"]["app__schemas__comms_advanced__CampaignUpdate"];
             };
         };
         responses: {
@@ -96761,6 +100052,578 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_FineConfigOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    statement_10bd_api_v1_fundraising_80g_10bd_get: {
+        parameters: {
+            query: {
+                fy: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AlmJobQueued_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    register_80g_api_v1_fundraising_80g_register_get: {
+        parameters: {
+            query: {
+                fy: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_Register80GRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    campaigns_api_v1_fundraising_campaigns_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CampaignOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_campaign_api_v1_fundraising_campaigns_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CampaignIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CampaignOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_campaigns_api_v1_fundraising_campaigns_public_get: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CampaignOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    campaign_api_v1_fundraising_campaigns__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CampaignOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_campaign_api_v1_fundraising_campaigns__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__alumni__CampaignUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CampaignOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_campaign_api_v1_fundraising_campaigns__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CampaignOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    donate_api_v1_fundraising_donate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnlineDonateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OnlineDonateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    donate_public_api_v1_fundraising_donate_public_post: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OnlineDonateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_OnlineDonateResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    donations_api_v1_fundraising_donations_get: {
+        parameters: {
+            query?: {
+                campaign_id?: string | null;
+                donor_type?: string | null;
+                mode?: string | null;
+                fy?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DonationOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    record_api_v1_fundraising_donations_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DonationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DonationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_donations_api_v1_fundraising_donations_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DonationOut__"];
+                };
+            };
+        };
+    };
+    donation_api_v1_fundraising_donations__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DonationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    receipt_80g_api_v1_fundraising_donations__id__receipt_80g_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Receipt80GOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reissue_80g_api_v1_fundraising_donations__id__receipt_80g_reissue_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Receipt80GReissue"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Receipt80GOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refund_api_v1_fundraising_donations__id__refund_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DonationRefund"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DonationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    donor_api_v1_fundraising_donors__donor_key__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                donor_key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DonorPage_"];
                 };
             };
             /** @description Validation Error */
