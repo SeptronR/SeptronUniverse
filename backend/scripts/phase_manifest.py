@@ -344,6 +344,21 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # research & faculty development (section 28)
+    "30": [
+        "publications",
+        "patents",
+        "ethics_committees",
+        "ethics_approvals",
+        "research_projects",
+        "consultancies",
+        "research_incentives",
+        "faculty_developments",
+        "faculty_awards",
+        "mous",
+        "collaborations",
+        "incubation_startups",
+    ],
     # alumni, endowments & fundraising (section 27)
     "29": [
         "alumni_profiles",

@@ -4,6 +4,6 @@ Importing this package registers the adapters the shipped phases provide (Phase 
 ``security.sso``); Phase 41 adds the real providers and the per-tenant connection resolution.
 """
 
-from app.integrations import payments, sso  # noqa: F401  (Phase 02 mock identity provider, Phase 12 gateways)
+from app.integrations import bibliographic, payments, sso  # noqa: F401  (Phase 02 SSO, Phase 12 gateways, Phase 30)
 
 __all__ = ["sso"]

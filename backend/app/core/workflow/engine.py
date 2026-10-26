@@ -195,6 +195,16 @@ class WorkflowEngine:
     def _max_order(self, definition: WorkflowDefinition) -> int:
         return max((int(s.get("order", 0)) for s in definition.steps), default=1)
 
+    def _next_order(self, definition: WorkflowDefinition, instance: WorkflowInstance, after: int) -> int | None:
+        """The next step order to materialise. A spec with ``skip_unless: "<context key>"`` only runs when that start
+        context value is truthy (Phase 30: the dean step of large incentives, the legal step of MoUs)."""
+        ctx = instance.context or {}
+        for order in range(after + 1, self._max_order(definition) + 1):
+            specs = self._specs(definition, order)
+            if specs and any(not s.get("skip_unless") or ctx.get(str(s["skip_unless"])) for s in specs):
+                return order
+        return None
+
     async def _materialise_step(
         self, db: AsyncSession, definition: WorkflowDefinition, instance: WorkflowInstance, order: int
     ) -> list[WorkflowStep]:
@@ -446,14 +456,15 @@ class WorkflowEngine:
             s.status = "skipped"
         await self._emit(db, instance, "workflow.acted", payload, actor.id)
         await self._fire(db, key, "step_approved", instance, actor)
-        if step.step_order >= self._max_order(definition):
+        nxt = self._next_order(definition, instance, step.step_order)
+        if nxt is None:
             instance.status, instance.closed_at = "approved", now
             await db.flush()
             await self._emit(db, instance, "workflow.approved", {}, actor.id)
             await self._notify_requester(db, instance, "workflow.approved", None)
             await self._fire(db, key, "approved", instance, actor)
         else:
-            instance.current_step = step.step_order + 1
+            instance.current_step = nxt
             instance.status = "pending"
             await db.flush()
             await self._materialise_step(db, definition, instance, instance.current_step)

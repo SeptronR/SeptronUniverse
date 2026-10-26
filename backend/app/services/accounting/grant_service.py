@@ -6,14 +6,15 @@ A ledger per funded project (manual, or from Phase 30's ``research.project_sanct
 ``payee='[grant:<id>]'``) blocked beyond the head's available (409 ``GRANT_HEAD_EXCEEDED``), reallocation between heads
 when the agency allows it, utilisation certificate (GFR 12-A style PDF) and statement of expenditure per period,
 closure with the unspent balance moved to ``Unspent grants`` (refund record). PI ownership = ``pi_staff_id`` in the
-ledger's ``accounting_meta`` (falls back to ``research_projects.pi_staff_id``).
+ledger's ``accounting_meta`` (falls back to the Phase 30 ``ResearchProject.pi_staff_id``; ``from_project`` back-links
+``research_projects.grant_ledger_id``).
 """
 
 import uuid
 from datetime import date
 from typing import Any
 
-from sqlalchemy import select, text
+from sqlalchemy import select
 
 from app.core.errors import APIError, ErrorCode
 from app.models.accounting import ExpenseRecord, GrantLedger, IncomeRecord
@@ -43,15 +44,14 @@ class GrantService(AccountingBase):
         if m.get("pi_staff_id"):
             return uuid.UUID(m["pi_staff_id"])
         if g.research_project_id:
-            try:
-                v = (
-                    await self.db.execute(
-                        text("SELECT pi_staff_id FROM research_projects WHERE id = :i"), {"i": g.research_project_id}
-                    )
-                ).scalar_one_or_none()
-                return uuid.UUID(str(v)) if v else None
-            except Exception:  # noqa: BLE001 - Phase 30 table may be empty / restricted
-                return None
+            from app.models.research import ResearchProject
+
+            v = (
+                await self.db.execute(
+                    select(ResearchProject.pi_staff_id).where(ResearchProject.id == g.research_project_id)
+                )
+            ).scalar_one_or_none()
+            return v
         return None
 
     async def visible(self, g: GrantLedger, meta: dict[str, Any] | None = None) -> bool:
@@ -388,4 +388,12 @@ class GrantService(AccountingBase):
         await self.put_meta(
             "grant", g.id, {"pi_staff_id": str(pi_staff_id) if pi_staff_id else None, "reallocation_allowed": True}
         )
+        from app.models.research import ResearchProject
+
+        project = (
+            await self.db.execute(select(ResearchProject).where(ResearchProject.id == project_id).with_for_update())
+        ).scalar_one_or_none()
+        if project is not None:  # back-link (Prompts/30 §30.6 projects 1)
+            project.grant_ledger_id = g.id
+            await self.db.flush()
         return g.id

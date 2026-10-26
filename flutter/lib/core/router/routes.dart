@@ -78,6 +78,10 @@ class AppRoutes {
   static const clubs = '/app/clubs';
   static const hoursVerification = '/app/hours-verification';
   static const parentSupport = '/app/parent-support';
+  // Phase 30 — research (faculty / HOD verification / research cell approvals)
+  static const research = '/app/research';
+  static const researchVerification = '/app/research-verification';
+  static const researchApprovals = '/app/research-approvals';
   // Phase 29 — alumni shell + alumni office
   static const alumniHub = '/app/alumni';
   static const alumniOffice = '/app/alumni-office';

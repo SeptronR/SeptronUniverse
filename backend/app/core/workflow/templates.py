@@ -321,6 +321,47 @@ SUPPORT_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
     {"key": "discipline.case", "module": "discipline", "name": "Disciplinary decision", "steps": _chain("vice_chancellor", sla=72)},
     {"key": "discipline.appeal", "module": "discipline", "name": "Disciplinary appeal", "steps": _chain("vice_chancellor", sla=168)},
 )
+# Phase 30: incentives (HOD recommends → research cell → dean only above ``research.incentive_dean_threshold_paise`` —
+# ``skip_unless`` reads the start context), project sanction (research cell verifies → principal acknowledges), ethics
+# review (the assigned member reviews → the committee chair decides, both named in the start context) and MoUs
+# (research cell → legal officer only when ``governance.legal`` is on → principal)
+RESEARCH_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "research.incentive",
+        "module": "research",
+        "name": "Research incentive",
+        "steps": [
+            _role("hod", 1, 72, escalate="research_cell"),
+            _role("research_cell", 2, 72, escalate="vice_chancellor"),
+            {**_role("dean", 3, 72, escalate="vice_chancellor"), "skip_unless": "above_threshold"},
+        ],
+    },
+    {
+        "key": "research.project_sanction",
+        "module": "research",
+        "name": "Research project sanction",
+        "steps": _chain("research_cell", "vice_chancellor", sla=72),
+    },
+    {
+        "key": "research.ethics_review",
+        "module": "research",
+        "name": "Ethics review",
+        "steps": [
+            {"order": 1, "approver": {"type": "scope_rule", "value": "context.reviewer_user_id"}, "mode": "sequential", "sla_hours": 168},
+            {"order": 2, "approver": {"type": "scope_rule", "value": "context.chair_user_id"}, "mode": "sequential", "sla_hours": 168},
+        ],
+    },
+    {
+        "key": "research.mou",
+        "module": "research",
+        "name": "MoU approval",
+        "steps": [
+            _role("research_cell", 1, 72, escalate="vice_chancellor"),
+            {**_role("legal_officer", 2, 72, escalate="vice_chancellor"), "skip_unless": "legal_review"},
+            _role("vice_chancellor", 3, 72),
+        ],
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -335,9 +376,10 @@ WORKFLOW_TEMPLATES = (
     + ACCOUNTING_WORKFLOW_TEMPLATES
     + FACILITIES_WORKFLOW_TEMPLATES
     + SUPPORT_WORKFLOW_TEMPLATES
+    + RESEARCH_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 42, (
+assert len(WORKFLOW_TEMPLATES) == 46, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4"
 )

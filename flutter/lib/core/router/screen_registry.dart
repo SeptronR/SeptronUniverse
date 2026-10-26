@@ -29,6 +29,7 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
+import '../../features/research/research_screens.dart';
 import '../../features/students/students_screens.dart';
 import '../../shared/widgets/placeholder_screen.dart';
 import 'routes.dart';
@@ -463,6 +464,28 @@ class ScreenRegistry {
       feature: 'mentoring.core',
       permission: 'mentoring:wards',
       builder: (_, __) => const ParentSupportScreen(),
+    ),
+    // Phase 30 — research
+    AppRoutes.research: ScreenEntry(
+      route: AppRoutes.research,
+      titleKey: 'research',
+      feature: 'research.publications',
+      permission: 'research:manage',
+      builder: (_, __) => const FacultyResearchScreen(),
+    ),
+    AppRoutes.researchVerification: ScreenEntry(
+      route: AppRoutes.researchVerification,
+      titleKey: 'research_verification',
+      feature: 'research.publications',
+      permission: 'research:verify',
+      builder: (_, __) => const ResearchVerificationScreen(),
+    ),
+    AppRoutes.researchApprovals: ScreenEntry(
+      route: AppRoutes.researchApprovals,
+      titleKey: 'research_approvals',
+      feature: 'research.publications',
+      permission: 'research:incentives',
+      builder: (_, __) => const ResearchApprovalsScreen(),
     ),
     // Phase 29 — alumni
     AppRoutes.alumniHub: ScreenEntry(
