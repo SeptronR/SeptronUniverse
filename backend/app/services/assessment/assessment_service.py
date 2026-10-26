@@ -60,6 +60,7 @@ from app.schemas.assessment import (
     QuestionMapReplace,
     VerifyRequest,
 )
+from app.services.affiliation.gates import require_unlocked
 from app.services.assessment.common import AssessmentBase, now_utc, q2, rule, student_name
 
 ENTITY = "offering_assessment"
@@ -163,7 +164,10 @@ class AssessmentService(AssessmentBase):
             select(OfferingAssessment, CourseOffering, Course)
             .join(CourseOffering, CourseOffering.id == OfferingAssessment.offering_id)
             .join(Course, Course.id == CourseOffering.course_id)
-            .where(OfferingAssessment.institution_id == self.inst, OfferingAssessment.offering_id.in_(visible_offering_ids(self.principal, "marks", scope)))
+            .where(
+                OfferingAssessment.institution_id == self.inst,
+                OfferingAssessment.offering_id.in_(visible_offering_ids(self.principal, "marks", scope)),
+            )
         )
         if status:
             q = q.where(OfferingAssessment.status == status)
@@ -285,6 +289,7 @@ class AssessmentService(AssessmentBase):
     async def replace_questions(self, aid: uuid.UUID, body: QuestionMapReplace) -> list[AssessmentQuestionOut]:
         a, offering = await self.get_assessment(aid, for_update=True)
         await self.require_teacher(offering)
+        await require_unlocked(self.db, self.inst, offering.college_id, offering.term_id, "cia_marks")
         if a.status not in EDITABLE:
             raise APIError(409, ErrorCode.RECORD_LOCKED, f"Assessment is {a.status}")
         total = sum(q2(q.max_marks) for q in body.questions)
@@ -297,9 +302,11 @@ class AssessmentService(AssessmentBase):
             )
         if len({q.question_no for q in body.questions}) != len(body.questions):
             raise APIError(422, ErrorCode.VALIDATION, "Duplicate question numbers")
-        cos = set((
+        cos = set(
+            (
                 await self.db.execute(select(CourseOutcome.id).where(CourseOutcome.course_id == offering.course_id))
-            ).scalars())
+            ).scalars()
+        )
         bad = [q.question_no for q in body.questions if q.co_id and q.co_id not in cos]
         if bad:
             raise APIError(
@@ -383,6 +390,7 @@ class AssessmentService(AssessmentBase):
     async def bulk_upsert(self, aid: uuid.UUID, body: MarksBulkUpsert) -> MarksResult:
         a, offering = await self.get_assessment(aid, for_update=True)
         await self.require_teacher(offering)
+        await require_unlocked(self.db, self.inst, offering.college_id, offering.term_id, "cia_marks")
         if a.status not in EDITABLE:
             raise APIError(409, ErrorCode.RECORD_LOCKED, f"Assessment is {a.status}", {"status": a.status})
         roster = await self.roster_ids(offering)
@@ -443,6 +451,7 @@ class AssessmentService(AssessmentBase):
     async def submit(self, aid: uuid.UUID) -> OfferingAssessmentResponse:
         a, offering = await self.get_assessment(aid, for_update=True)
         await self.require_teacher(offering)
+        await require_unlocked(self.db, self.inst, offering.college_id, offering.term_id, "cia_marks")
         if a.status not in EDITABLE:
             raise APIError(409, ErrorCode.CONFLICT, f"Assessment is {a.status}")
         roster = await self.roster(offering)
@@ -716,6 +725,7 @@ class AssessmentService(AssessmentBase):
             ).scalars()
         }
         if recompute:
+            await require_unlocked(self.db, self.inst, offering.college_id, offering.term_id, "cia_marks")
             if not (await self.is_teacher(offering.id) or self.can("marks", "verify") or self.can("marks", "lock")):
                 raise APIError(403, ErrorCode.PERMISSION_DENIED, "Only the offering's faculty / HOD may consolidate")
             if any(c.status in ("locked", "submitted_to_university") for c in existing.values()):
@@ -821,6 +831,7 @@ class AssessmentService(AssessmentBase):
         offering = await self.offering(offering_id)
         if not await self.is_university_program(offering):
             raise rule("Only university-examined programmes submit CIA to the university", "NOT_AFFILIATED", 422)
+        await require_unlocked(self.db, self.inst, offering.college_id, offering.term_id, "cia_marks")
         out = await self._cia_move(offering_id, ("locked",), "submitted_to_university")
         sub = (
             await self.db.execute(
@@ -839,12 +850,13 @@ class AssessmentService(AssessmentBase):
                 college_id=offering.college_id,
                 term_id=offering.term_id,
                 submission_type="cia_marks",
-                status="submitted",
+                status="draft",
                 record_count=0,
             )
             self.db.add(sub)
+        # Phase 34: the per-offering CIA push only stages the college's ``cia_marks`` submission (draft / returned); the
+        # college submits it through the affiliation data-submission review (validation → verify → accept → lock)
         sub.record_count = int(sub.record_count or 0) + len(out.rows)
-        sub.status, sub.submitted_by, sub.submitted_at = "submitted", self.actor_id, now_utc()
         await self.db.flush()
         await self._emit(
             "cia.submitted_to_university",
@@ -987,6 +999,8 @@ class AssessmentService(AssessmentBase):
         ).scalar_one_or_none()
         if cia is not None and cia.status in ("locked", "submitted_to_university"):
             raise APIError(409, ErrorCode.RECORD_LOCKED, "CIA is locked — the COE must reopen it first")
+        offering = await self.offering(a.offering_id)
+        await require_unlocked(self.db, self.inst, offering.college_id, offering.term_id, "cia_marks")
         new = r.new_value
         await self.write_internal_mark(
             a,

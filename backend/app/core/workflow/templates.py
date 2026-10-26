@@ -11,6 +11,8 @@ Chancellor / Principal); "accounts" the ``accountant``; the academic council sec
 
 from typing import Any
 
+AFFILIATION_APPLICATION_STEPS: list[dict[str, Any]] = []
+
 
 def _role(
     slug: str, order: int = 1, sla: int = 48, mode: str = "sequential", escalate: str | None = None
@@ -85,16 +87,10 @@ WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         "key": "affiliation.application",
         "module": "affiliation",
         "name": "Affiliation application",
-        "steps": [
-            _role("registrar", 1, 168),
-            {
-                "order": 2,
-                "approver": {"type": "scope_rule", "value": "context.inspector"},
-                "mode": "sequential",
-                "sla_hours": 336,
-            },
-            _role("vice_chancellor", 3, 168),
-        ],
+        # Phase 34 type variants (``0034`` stores this as version 2): registrar scrutiny → inspection convenor (only when
+        # the type / last-inspection age requires one) → Academic / Executive Council secretaries (autonomy, with
+        # ``governance.minutes``) → VC decision
+        "steps": AFFILIATION_APPLICATION_STEPS,
     },
     {
         "key": "grievance.escalation",
@@ -429,6 +425,46 @@ ACCREDITATION_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         ],
     },
 )
+AFFILIATION_APPLICATION_STEPS.extend(
+    [
+        _role("registrar", 1, 168),
+        {
+            "order": 2,
+            "approver": {"type": "scope_rule", "value": "context.inspector"},
+            "mode": "sequential",
+            "sla_hours": 336,
+            "skip_unless": "inspection_required",
+        },
+        {
+            "order": 3,
+            "approver": {"type": "scope_rule", "value": "context.ac_user"},
+            "mode": "sequential",
+            "sla_hours": 720,
+            "skip_unless": "council_required",
+        },
+        {
+            "order": 4,
+            "approver": {"type": "scope_rule", "value": "context.ec_user"},
+            "mode": "sequential",
+            "sla_hours": 720,
+            "skip_unless": "council_required",
+        },
+        _role("vice_chancellor", 5, 168),
+    ]
+)
+# Phase 34: college data submission review (college submits → university verifier → COE accept / lock for exam types,
+# registrar for the rest — the acceptor is carried in the context)
+AFFILIATION_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "affiliation.submission_review",
+        "module": "affiliation",
+        "name": "College data submission review",
+        "steps": [
+            _role("registrar", 1, 72),
+            {"order": 2, "approver": {"type": "scope_rule", "value": "context.acceptor"}, "mode": "sequential", "sla_hours": 72},
+        ],
+    },
+)
 # Phase 33: minutes approval (the secretary submits → the chair named in the context approves), policy approval (owner
 # submits → registrar → principal; the council resolution is cited on approve) and e-file approval routes chosen at
 # movement time (up to four ad-hoc approvers carried in the context; empty slots are skipped)
@@ -481,9 +517,10 @@ WORKFLOW_TEMPLATES = (
     + PHD_WORKFLOW_TEMPLATES
     + ACCREDITATION_WORKFLOW_TEMPLATES
     + GOVERNANCE_WORKFLOW_TEMPLATES
+    + AFFILIATION_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 53, (
+assert len(WORKFLOW_TEMPLATES) == 54, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3, Prompts/32 1, Prompts/33 3"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3, Prompts/32 1, Prompts/33 3, Prompts/34 1"
 )

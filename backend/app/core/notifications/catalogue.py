@@ -45,6 +45,140 @@ CATEGORIES = (
 )
 MANDATORY_CATEGORIES = frozenset({"security", "emergency"})
 
+# Phase 34: affiliation — applications, fees, inspections, deficiencies, decisions, submissions, centres, expiries
+AFFILIATION_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "affiliation.application_submitted",
+        "approvals",
+        "Affiliation application submitted",
+        "Affiliation {{ type }} application {{ number }} from {{ college }}",
+        "{{ college }} submitted affiliation application {{ number }} ({{ type }}).",
+        ("college", "number", "type"),
+        ("in_app", "email"),
+        link="/university/affiliation/applications",
+    ),
+    EventDef(
+        "affiliation.fee_due",
+        "fees",
+        "Affiliation fee due",
+        "Affiliation fee due — {{ number }}",
+        "An affiliation fee of Rs. {{ amount }} is due from {{ college }} ({{ number }}). Pay through the fees portal.",
+        ("college", "number", "amount"),
+        ("in_app", "email"),
+        link="/college/affiliation",
+    ),
+    EventDef(
+        "affiliation.scrutiny",
+        "approvals",
+        "Affiliation scrutiny pending",
+        "Scrutiny pending — {{ number }}",
+        "Affiliation application {{ number }} awaits scrutiny{% if resubmitted %} (resubmitted){% endif %}.",
+        ("number", "resubmitted"),
+        ("in_app",),
+        link="/university/affiliation/applications",
+    ),
+    EventDef(
+        "affiliation.inspection_scheduled",
+        "announcements",
+        "Inspection scheduled",
+        "Inspection of {{ college }} on {{ on }}",
+        "The affiliation inspection of {{ college }} ({{ number }}) is scheduled on {{ on }} ({{ mode }}).",
+        ("college", "number", "on", "mode"),
+        ("in_app", "email", "sms"),
+        link="/inspections/me",
+    ),
+    EventDef(
+        "affiliation.deficiency",
+        "approvals",
+        "Affiliation deficiencies",
+        "Deficiencies — {{ number }}",
+        "Application {{ number }} of {{ college }}: {{ items }}. Respond with evidence within the compliance period.",
+        ("college", "number", "items"),
+        ("in_app", "email"),
+        link="/college/affiliation",
+    ),
+    EventDef(
+        "affiliation.decision",
+        "announcements",
+        "Affiliation decision",
+        "Affiliation {{ decision }} — {{ number }}",
+        "Application {{ number }} of {{ college }} is {{ decision }}; order {{ order_no }} is issued.",
+        ("college", "number", "decision", "order_no"),
+        ("in_app", "email"),
+        link="/college/affiliation",
+    ),
+    EventDef(
+        "affiliation.submission_window_open",
+        "announcements",
+        "Submission window open",
+        "{{ type }} submission open — {{ term }}",
+        "The {{ type }} submission window for {{ term }} is open for {{ college }}; due {{ due_on }}.",
+        ("college", "type", "term", "due_on"),
+        ("in_app",),
+        link="/college/submissions",
+    ),
+    EventDef(
+        "affiliation.submission_due",
+        "announcements",
+        "Submission due",
+        "{{ type }} submission due {{ due_on }}",
+        "{{ college }}: the {{ type }} submission for {{ term }} is due on {{ due_on }}.",
+        ("college", "type", "term", "due_on"),
+        ("in_app", "email"),
+        link="/college/submissions",
+    ),
+    EventDef(
+        "affiliation.submission_returned",
+        "approvals",
+        "Submission returned",
+        "{{ type }} submission returned",
+        "{{ college }}: the {{ type }} submission was returned — {{ remarks }}.",
+        ("college", "type", "remarks"),
+        ("in_app", "email"),
+        link="/college/submissions",
+    ),
+    EventDef(
+        "affiliation.submission_accepted",
+        "announcements",
+        "Submission accepted",
+        "{{ type }} submission accepted",
+        "{{ college }}: the {{ type }} submission is accepted by the university.",
+        ("college", "type", "remarks"),
+        ("in_app",),
+        link="/college/submissions",
+    ),
+    EventDef(
+        "affiliation.submission_locked",
+        "announcements",
+        "Submission locked",
+        "{{ type }} submission locked",
+        "{{ college }}: the {{ type }} submission is locked; the underlying records are frozen.",
+        ("college", "type", "remarks"),
+        ("in_app",),
+        link="/college/submissions",
+    ),
+    EventDef(
+        "affiliation.centre_assigned",
+        "announcements",
+        "Exam centre assigned",
+        "Exam centre {{ centre }} — {{ session }}",
+        "{{ college }} is assigned to exam centre {{ centre }} for {{ session }}.",
+        ("college", "centre", "session"),
+        ("in_app", "email"),
+        link="/college/exam-centre",
+    ),
+    EventDef(
+        "affiliation.program_approval_expiring",
+        "announcements",
+        "Programme approval expiring",
+        "Approval of {{ program }} expires {{ valid_to }}",
+        "The affiliation approval of {{ program }} at {{ college }} expires on {{ valid_to }}; apply for renewal.",
+        ("college", "program", "valid_to"),
+        ("in_app", "email"),
+        link="/college/affiliation",
+    ),
+)
+
 EVENTS: tuple[EventDef, ...] = (
     EventDef(
         "auth.password_reset",
@@ -2845,6 +2979,7 @@ EVENTS = (
     + PHD_EVENTS
     + ACCREDITATION_EVENTS
     + GOVERNANCE_EVENTS
+    + AFFILIATION_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

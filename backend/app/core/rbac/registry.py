@@ -857,6 +857,16 @@ REGISTRAR_GOVERNANCE: set[str] = (
 VC_GOVERNANCE: set[str] = P("governance", "approve") | P("efile", "approve")
 ACCOUNTANT_GOVERNANCE: set[str] = P("governance", "audit_paras")
 GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
+# Phase 34 (Prompts/34 "Visibility rules"): the registrar runs the affiliation office (manage + verify submissions;
+# the VC decides); the COE verifies exam submissions and reads the registry (accept / lock through exams:configure);
+# college admins apply / submit for their college (college scope); staff may sit on inspection committees
+# (``affiliation:inspect`` — rows narrowed to assigned inspections); the accountant reads dues
+REGISTRAR_AFFILIATION: set[str] = P("affiliation", "manage", "verify_submission", "view_all")
+VC_AFFILIATION: set[str] = P("affiliation", "decide", "view_all")
+COE_AFFILIATION: set[str] = P("affiliation", "verify_submission", "view_all") | P("exams", "configure")
+COLLEGE_AFFILIATION: set[str] = P("affiliation", "apply", "submit", "view")
+STAFF_AFFILIATION: set[str] = P("affiliation", "inspect")
+ACCOUNTANT_AFFILIATION: set[str] = P("affiliation", "view")
 PARENT_SUPPORT: set[str] = P("clubs", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
@@ -864,6 +874,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "support_agent": ALL("view", "view_all") | P("users", "impersonate") | COMMON,
     "institution_admin": _INSTITUTION_ADMIN,
     "vice_chancellor": ALL("view", "view_all")
+    | VC_AFFILIATION
     | VC_GOVERNANCE
     | PRINCIPAL_ACCREDITATION
     | VC_PROCUREMENT
@@ -881,6 +892,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | VC_FEES
     | STAFF_SELF,
     "registrar": STAFF_SELF
+    | REGISTRAR_AFFILIATION
     | REGISTRAR_GOVERNANCE
     | OFFICER_ACCREDITATION
     | REGISTRAR_SUPPORT
@@ -923,6 +935,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | REGISTRAR_COMMS
     | REGISTRAR_FACILITIES,
     "controller_of_examinations": STAFF_SELF
+    | COE_AFFILIATION
     | OFFICER_ACCREDITATION
     | COE_PHD
     | COE_DOCUMENTS
@@ -970,6 +983,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | EXAM_CELL_MARKS,
     "exam_decoder": STAFF_SELF | P("exams", "decode", "view"),
     "dean": ALL("view", "view_all")
+    | STAFF_AFFILIATION
     | PRINCIPAL_ACCREDITATION
     | HOD_PHD
     | P("leaves", "approve")
@@ -983,6 +997,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_ATTAINMENT
     | STAFF_SELF,
     "hod": FACULTY
+    | STAFF_AFFILIATION
     | HOD_ACCREDITATION
     | FACULTY_PHD
     | HOD_PHD
@@ -1036,7 +1051,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("attendance", "view")
     | ADVISOR_FEES
     | ADVISOR_HOSTEL,
-    "faculty": FACULTY | FACULTY_PHD | FACULTY_ACCREDITATION,
+    "faculty": FACULTY | FACULTY_PHD | FACULTY_ACCREDITATION | STAFF_AFFILIATION,
     "guest_faculty": (FACULTY - P("leaves", "self", "create", "view", "encash")),
     "external_examiner": COMMON | P("exams", "evaluate", "qp", "view") | P("payroll", "self"),
     "invigilator": COMMON
@@ -1094,6 +1109,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("reports", "run", "view")
     | P("communication", "send"),
     "accountant": STAFF_SELF
+    | ACCOUNTANT_AFFILIATION
     | ACCOUNTANT_GOVERNANCE
     | OFFICER_ACCREDITATION
     | ACCOUNTANT_PHD
@@ -1228,7 +1244,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("leaves", "self", "create", "view")
     | P("attendance", "staff_self"),
     "integration_admin": STAFF_SELF | P("integrations", "manage") | P("jobs", "view_all") | P("audit_logs", "view_all"),
-    "college_admin": _COLLEGE_ADMIN,
+    "college_admin": _COLLEGE_ADMIN | COLLEGE_AFFILIATION,
     "college_exam_coordinator": STAFF_SELF
     | P("affiliation", "submit", "view")
     | P("exams", "conduct", "hall_tickets", "view", "view_all")
@@ -1300,6 +1316,14 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0034": frozenset(
+        REGISTRAR_AFFILIATION
+        | VC_AFFILIATION
+        | COE_AFFILIATION
+        | COLLEGE_AFFILIATION
+        | STAFF_AFFILIATION
+        | ACCOUNTANT_AFFILIATION
+    ),
     "0033": frozenset(
         STAFF_GOVERNANCE | STUDENT_GOVERNANCE | REGISTRAR_GOVERNANCE | VC_GOVERNANCE | ACCOUNTANT_GOVERNANCE
     ),

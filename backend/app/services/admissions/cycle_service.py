@@ -353,6 +353,13 @@ class CycleService(AdmissionsBase):
                 )
             key = (row.program_id, college_id, quota, category)
             wanted[key] = wanted.get(key, 0) + row.seats
+        # Phase 34: affiliation approvals are the intake authority (409 INTAKE_EXCEEDED / PROGRAM_CLOSED)
+        from app.services.affiliation.gates import check_intake
+
+        totals: dict[tuple[uuid.UUID, uuid.UUID], int] = {}
+        for (pid, cid, _q, _c), n_seats in wanted.items():
+            totals[(pid, cid)] = totals.get((pid, cid), 0) + n_seats
+        await check_intake(self.db, self.inst, cycle.academic_year_id, totals)
         for key, r in existing.items():
             seats = wanted.get(key)
             if (seats is None or seats < r.filled) and r.filled > 0:

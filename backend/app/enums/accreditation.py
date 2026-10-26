@@ -632,6 +632,43 @@ METRIC_DEFINITIONS: tuple[MD, ...] = (
         None,
     ),
     ("placement.offers", "Placement offers", "count", "placement", "placement.offers", _MIN_CTC, None),
+    # Phase 34: affiliation portfolio keys pushed through ``metrics.publish`` (source ``affiliation``)
+    (
+        "affiliation.sanctioned_intake",
+        "Sanctioned intake (affiliated colleges)",
+        "count",
+        "affiliation",
+        "published:affiliation.sanctioned_intake",
+        None,
+        None,
+    ),
+    (
+        "affiliation.programs_approved",
+        "Programmes approved for affiliated colleges",
+        "count",
+        "affiliation",
+        "published:affiliation.programs_approved",
+        None,
+        None,
+    ),
+    (
+        "affiliation.autonomous_colleges",
+        "Autonomous colleges",
+        "count",
+        "affiliation",
+        "published:affiliation.autonomous_colleges",
+        None,
+        None,
+    ),
+    (
+        "affiliation.submission_compliance_pct",
+        "College data submissions accepted",
+        "pct",
+        "affiliation",
+        "published:affiliation.submission_compliance_pct",
+        None,
+        None,
+    ),
 )
 
 # §36.5 seed keys (``0001``) whose computation function is event-fed rather than computed here

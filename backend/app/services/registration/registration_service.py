@@ -618,6 +618,12 @@ class RegistrationService(RegistrationBase):
     # ---- rule 4: submit ---------------------------------------------------------------------------------------------------
     async def submit(self, term_id: uuid.UUID | None) -> SubmitResponse:
         student, enrolment, term, record = await self._context(term_id)
+        # Phase 34: registrations only in programmes approved for the year (continuing batches of closures pass)
+        from app.services.affiliation.gates import check_registration
+
+        await check_registration(
+            self.db, self.inst, enrolment.college_id, enrolment.program_id, getattr(term, "academic_year_id", None)
+        )
         reg = await self.regs.for_enrollment(enrolment.id, term.id, for_update=True)
         if reg is None:
             raise rule("Your cart is empty", "EMPTY_CART")

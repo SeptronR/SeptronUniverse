@@ -3150,6 +3150,797 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/affiliation/applications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Affiliation applications (ScopeTabs College | All) */
+        get: operations["applications_api_v1_affiliation_applications_get"];
+        put?: never;
+        /** Create an application (college, per year / type, programmes, checklist documents) */
+        post: operations["create_application_api_v1_affiliation_applications_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Application (checklist, fees, workflow, inspection, deficiencies, decision / order) */
+        get: operations["application_api_v1_affiliation_applications__id__get"];
+        /** Edit a draft application (programmes, documents, remarks) */
+        put: operations["update_application_api_v1_affiliation_applications__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/action": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit (checklist complete → fees / invoice) or withdraw before a decision */
+        post: operations["application_action_api_v1_affiliation_applications__id__action_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/checklist": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Document checklist for the application type */
+        get: operations["application_checklist_api_v1_affiliation_applications__id__checklist_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decision (approved / conditional / rejected) with intake / validity, resolution and order */
+        post: operations["decide_api_v1_affiliation_applications__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/deficiencies/{did}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close (or send back) a deficiency */
+        post: operations["close_deficiency_api_v1_affiliation_applications__id__deficiencies__did__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/deficiencies/{did}/respond": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** College response to a deficiency with evidence */
+        post: operations["respond_deficiency_api_v1_affiliation_applications__id__deficiencies__did__respond_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/fee-preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Fee lines from the schedules (flat / per programme / per student) */
+        get: operations["application_fee_preview_api_v1_affiliation_applications__id__fee_preview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/inspection/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Inspection report with findings / deficiencies (assigned committee) */
+        post: operations["inspection_report_api_v1_affiliation_applications__id__inspection_report_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/inspection/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Constitute the inspection committee (staff / external / Phase 33 committee) and schedule */
+        post: operations["schedule_inspection_api_v1_affiliation_applications__id__inspection_schedule_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/order.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Affiliation order (PDF) */
+        get: operations["order_pdf_api_v1_affiliation_applications__id__order_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/reinspect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Re-inspection round (critical deficiencies left) */
+        post: operations["reinspect_api_v1_affiliation_applications__id__reinspect_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/applications/{id}/scrutiny": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Registrar scrutiny: proceed or return with missing documents */
+        post: operations["application_scrutiny_api_v1_affiliation_applications__id__scrutiny_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/colleges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** College registry (type / status / faculty) with compliance score */
+        get: operations["colleges_api_v1_affiliation_colleges_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/colleges/me/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My college's affiliation dashboard */
+        get: operations["my_dashboard_api_v1_affiliation_colleges_me_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/colleges/{id}/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** College affiliation dashboard */
+        get: operations["college_dashboard_api_v1_affiliation_colleges__id__dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/colleges/{id}/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** College documents vault (statutory approvals with expiries) */
+        get: operations["college_documents_api_v1_affiliation_colleges__id__documents_get"];
+        put?: never;
+        /** Upload / replace a vault document */
+        post: operations["add_college_document_api_v1_affiliation_colleges__id__documents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/colleges/{id}/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** College affiliation profile */
+        get: operations["college_profile_api_v1_affiliation_colleges__id__profile_get"];
+        /** Update the profile (office: all fields incl. type transition; college: principal / AISHE / AICTE) */
+        put: operations["update_college_profile_api_v1_affiliation_colleges__id__profile_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/dues": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Dues by college (college invoices + exam-processing estimate) */
+        get: operations["dues_api_v1_affiliation_dues_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-centres": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Centres per session (registrations routed, seating, bundles) */
+        get: operations["exam_centres_api_v1_affiliation_exam_centres_get"];
+        put?: never;
+        /** Create a centre for a central session */
+        post: operations["create_exam_centre_api_v1_affiliation_exam_centres_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-centres/allocate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Allocation run: nearest | capacity | manual (job) */
+        post: operations["allocate_centres_api_v1_affiliation_exam_centres_allocate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-centres/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My college's centre(s) with the centre dashboard (coordinator) */
+        get: operations["my_centres_api_v1_affiliation_exam_centres_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-centres/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Centre */
+        get: operations["exam_centre_api_v1_affiliation_exam_centres__id__get"];
+        /** Update a centre (capacity below routed → 409) */
+        put: operations["update_exam_centre_api_v1_affiliation_exam_centres__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-centres/{id}/appointment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Chief superintendent appointment letter (job) */
+        post: operations["centre_appointment_api_v1_affiliation_exam_centres__id__appointment_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-centres/{id}/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Centre dashboard (registrations by college, seating, bundles) */
+        get: operations["centre_dashboard_api_v1_affiliation_exam_centres__id__dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/exam-sessions/{id}/college-status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Result gating per college for a central session */
+        get: operations["college_status_api_v1_affiliation_exam_sessions__id__college_status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/fee-schedules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Affiliation fee schedules per year */
+        get: operations["fee_schedules_api_v1_affiliation_fee_schedules_get"];
+        put?: never;
+        /** Add a fee schedule row */
+        post: operations["create_fee_schedule_api_v1_affiliation_fee_schedules_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/fee-schedules/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a fee schedule row */
+        put: operations["update_fee_schedule_api_v1_affiliation_fee_schedules__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/inspections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Inspection schedule (office: all; members: assigned) */
+        get: operations["inspections_api_v1_affiliation_inspections_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/inspections/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My assigned inspections (committee member) */
+        get: operations["my_inspections_api_v1_affiliation_inspections_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/portfolio": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** University portfolio (types, applications, inspections, deficiencies, dues, submissions, gating) */
+        get: operations["portfolio_api_v1_affiliation_portfolio_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/program-approvals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Programme approvals (college × programme × year) with validity chips */
+        get: operations["program_approvals_api_v1_affiliation_program_approvals_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/program-approvals/carry-forward": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Carry permanent approvals forward to a year (provisional rows) */
+        post: operations["carry_forward_api_v1_affiliation_program_approvals_carry_forward_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/program-approvals/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Intake / validity check (internal: admissions, registration) */
+        get: operations["program_approval_check_api_v1_affiliation_program_approvals_check_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/program-approvals/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Programme approval */
+        get: operations["program_approval_api_v1_affiliation_program_approvals__id__get"];
+        /** Update intake / status / conditions / validity (reason, audited) */
+        put: operations["update_program_approval_api_v1_affiliation_program_approvals__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/public/colleges": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Approved colleges and programmes (website; tenant by institution slug) */
+        get: operations["public_colleges_api_v1_affiliation_public_colleges_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/returns/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Statutory returns: colleges_list | intake | results_by_college (job; ?inline=true for rows) */
+        get: operations["returns_api_v1_affiliation_returns__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** College data submissions (ScopeTabs College | All) */
+        get: operations["submissions_api_v1_affiliation_submissions_get"];
+        put?: never;
+        /** Prepare a submission (system data or file upload) */
+        post: operations["create_submission_api_v1_affiliation_submissions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/compliance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Submission compliance per college (on-time %, returns) */
+        get: operations["submission_compliance_api_v1_affiliation_submissions_compliance_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/windows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Submission windows for a term (due chips; autonomous colleges: non-exam types only) */
+        get: operations["submission_windows_api_v1_affiliation_submissions_windows_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Submission (record count, validation, timeline, versions) */
+        get: operations["submission_api_v1_affiliation_submissions__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/{id}/action": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** submit | verify | return | accept | lock | unlock */
+        post: operations["submission_action_api_v1_affiliation_submissions__id__action_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/{id}/extract": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Extract from system data (job) */
+        post: operations["extract_submission_api_v1_affiliation_submissions__id__extract_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/{id}/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Import a CSV / XLSX file (job) */
+        post: operations["import_submission_api_v1_affiliation_submissions__id__import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/{id}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Validation report (errors / warnings / summary) */
+        get: operations["submission_report_api_v1_affiliation_submissions__id__report_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/affiliation/submissions/{id}/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Validate against the rules (job) */
+        post: operations["validate_submission_api_v1_affiliation_submissions__id__validate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/alumni/claim": {
         parameters: {
             query?: never;
@@ -30854,6 +31645,17 @@ export interface components {
          * @enum {string}
          */
         AdvisorDecisionKind: "approve" | "reject" | "request_changes";
+        /** AffiliationReturn */
+        AffiliationReturn: {
+            /** Kind */
+            kind: string;
+            /** Rows */
+            rows?: {
+                [key: string]: unknown;
+            }[];
+            /** Year */
+            year?: string | null;
+        };
         /** AgendaItem */
         AgendaItem: {
             /** Doc Url */
@@ -31157,55 +31959,6 @@ export interface components {
              * @description lottery seed (defaults to the run's timestamp)
              */
             seed?: number | null;
-        };
-        /** AllocationSummary */
-        AllocationSummary: {
-            /**
-             * Allocated
-             * @default 0
-             */
-            allocated: number;
-            /** Basket Code */
-            basket_code?: string | null;
-            /**
-             * Basket Id
-             * Format: uuid
-             */
-            basket_id: string;
-            /**
-             * Candidates
-             * @default 0
-             */
-            candidates: number;
-            /**
-             * Dry Run
-             * @default true
-             */
-            dry_run: boolean;
-            /** Job Id */
-            job_id?: string | null;
-            /** Mode */
-            mode: string;
-            /** Per Course */
-            per_course?: {
-                [key: string]: unknown;
-            }[];
-            /** Results */
-            results?: components["schemas"]["AllocationResultRow"][];
-            /** Run At */
-            run_at?: string | null;
-            /** Run Id */
-            run_id?: string | null;
-            /**
-             * Term Id
-             * Format: uuid
-             */
-            term_id: string;
-            /**
-             * Unallocated
-             * @default 0
-             */
-            unallocated: number;
         };
         /**
          * AllotmentAction
@@ -32604,11 +33357,156 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** ApplicationAction */
+        ApplicationAction: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "submit" | "withdraw";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** ApplicationCreate */
+        ApplicationCreate: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            application_type: components["schemas"]["ApplicationType"];
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Documents */
+            documents?: {
+                [key: string]: string;
+            };
+            /** Programs */
+            programs?: components["schemas"]["ApplicationProgram"][];
+            /** Reference Application Id */
+            reference_application_id?: string | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** ApplicationOut */
+        ApplicationOut: {
+            /** Academic Year */
+            academic_year?: string | null;
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Application Type */
+            application_type: string;
+            /**
+             * Checklist Complete
+             * @default false
+             */
+            checklist_complete: boolean;
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /** Created At */
+            created_at?: string | null;
+            decision?: components["schemas"]["DecisionOut"] | null;
+            /** Deficiencies */
+            deficiencies?: components["schemas"]["Deficiency"][];
+            /** Documents */
+            documents?: {
+                [key: string]: string;
+            };
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /** Fee Status */
+            fee_status?: string | null;
+            /** Fee Total Paise */
+            fee_total_paise?: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            inspection?: components["schemas"]["InspectionOut"] | null;
+            /** Missing Documents */
+            missing_documents?: string[];
+            /** Number */
+            number?: string | null;
+            /** Order No */
+            order_no?: string | null;
+            /** Order Url */
+            order_url?: string | null;
+            /** Programs */
+            programs?: components["schemas"]["ApplicationProgram"][];
+            /** Remarks */
+            remarks?: string | null;
+            /** Status */
+            status: components["schemas"]["ApplicationStatus-Output"] | string;
+            /** Timeline */
+            timeline?: {
+                [key: string]: unknown;
+            }[];
+            /** Updated At */
+            updated_at?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+            /** Workflow State */
+            workflow_state?: string | null;
+        };
+        /** ApplicationProgram */
+        ApplicationProgram: {
+            /** Current Intake */
+            current_intake?: number | null;
+            /**
+             * Lateral Intake
+             * @default 0
+             */
+            lateral_intake: number;
+            new?: components["schemas"]["NewProgram"] | null;
+            /** Program Code */
+            program_code?: string | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Program Name */
+            program_name?: string | null;
+            /** Requested Intake */
+            requested_intake?: number | null;
+        };
         /**
          * ApplicationStatus
          * @enum {string}
          */
-        ApplicationStatus: "applied" | "screened" | "shortlisted" | "interviewed" | "selected" | "offered" | "joined" | "rejected";
+        "ApplicationStatus-Input": "applied" | "screened" | "shortlisted" | "interviewed" | "selected" | "offered" | "joined" | "rejected";
+        /**
+         * ApplicationStatus
+         * @enum {string}
+         */
+        "ApplicationStatus-Output": "draft" | "submitted" | "fee_paid" | "scrutiny" | "inspection_scheduled" | "inspected" | "compliance_pending" | "approved" | "conditional" | "rejected" | "withdrawn";
+        /**
+         * ApplicationType
+         * @enum {string}
+         */
+        ApplicationType: "new" | "renewal" | "extension" | "intake_increase" | "program_addition" | "program_closure" | "autonomy";
+        /** ApplicationUpdate */
+        ApplicationUpdate: {
+            /** Documents */
+            documents?: {
+                [key: string]: string;
+            } | null;
+            /** Programs */
+            programs?: components["schemas"]["ApplicationProgram"][] | null;
+            /** Remarks */
+            remarks?: string | null;
+        };
         /** AppliesTo */
         AppliesTo: {
             /** Batch Ids */
@@ -32716,6 +33614,39 @@ export interface components {
          * @enum {string}
          */
         AppraisalStatus: "draft" | "submitted" | "reviewed" | "approved";
+        /**
+         * ApprovalStatus
+         * @enum {string}
+         */
+        ApprovalStatus: "provisional" | "permanent" | "conditional" | "withdrawn";
+        /** ApprovalsSummary */
+        ApprovalsSummary: {
+            /**
+             * Expiring
+             * @default 0
+             */
+            expiring: number;
+            /**
+             * Lateral Intake
+             * @default 0
+             */
+            lateral_intake: number;
+            /**
+             * Programmes
+             * @default 0
+             */
+            programmes: number;
+            /**
+             * Sanctioned Intake
+             * @default 0
+             */
+            sanctioned_intake: number;
+            /**
+             * Withdrawn
+             * @default 0
+             */
+            withdrawn: number;
+        };
         /** ApproveRequest */
         ApproveRequest: {
             /** Comment */
@@ -36050,6 +36981,26 @@ export interface components {
             /** Vendor Id */
             vendor_id?: string | null;
         };
+        /** CarryForwardIn */
+        CarryForwardIn: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+        };
+        /** CarryForwardOut */
+        CarryForwardOut: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Created */
+            created: number;
+            /** Skipped */
+            skipped: number;
+        };
         /** CartItemAdd */
         CartItemAdd: {
             /**
@@ -36304,6 +37255,46 @@ export interface components {
             window?: components["schemas"]["WindowResponse"] | null;
             /** Windows */
             windows?: components["schemas"]["WindowResponse"][];
+        };
+        /** CentreAllocationRun */
+        CentreAllocationRun: {
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /** Manual */
+            manual?: {
+                [key: string]: string[];
+            };
+            /**
+             * Strategy
+             * @default nearest
+             * @enum {string}
+             */
+            strategy: "nearest" | "capacity" | "manual";
+        };
+        /** CentreDashboard */
+        CentreDashboard: {
+            /**
+             * Attendance Marked
+             * @default 0
+             */
+            attendance_marked: number;
+            /** Bundles */
+            bundles?: {
+                [key: string]: number;
+            };
+            centre: components["schemas"]["app__schemas__affiliation__ExamCentreOut"];
+            /** Registrations By College */
+            registrations_by_college?: {
+                [key: string]: number;
+            };
+            /**
+             * Seating Allocated
+             * @default 0
+             */
+            seating_allocated: number;
         };
         /** CertReqCollected */
         CertReqCollected: {
@@ -36628,6 +37619,31 @@ export interface components {
             source: string;
             /** Status */
             status: string;
+        };
+        /** Checklist */
+        Checklist: {
+            /** Application Type */
+            application_type: string;
+            /** Complete */
+            complete: boolean;
+            /** Items */
+            items: components["schemas"]["ChecklistItem"][];
+            /** Missing */
+            missing?: string[];
+        };
+        /** ChecklistItem */
+        ChecklistItem: {
+            /** File Url */
+            file_url?: string | null;
+            /** Key */
+            key: string;
+            /** Label */
+            label: string;
+            /**
+             * Provided
+             * @default false
+             */
+            provided: boolean;
         };
         /** ChequeIn */
         ChequeIn: {
@@ -37329,6 +38345,50 @@ export interface components {
             /** Utr */
             utr?: string | null;
         };
+        /** CollegeAffiliationProfile */
+        CollegeAffiliationProfile: {
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            approvals?: components["schemas"]["ApprovalsSummary"];
+            /** Code */
+            code: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Type */
+            college_type: string;
+            compliance?: components["schemas"]["ComplianceFlags"];
+            /** Documents */
+            documents?: components["schemas"]["VaultDocument"][];
+            /** Exam Centre Code */
+            exam_centre_code?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /**
+             * Is Exam Centre
+             * @default false
+             */
+            is_exam_centre: boolean;
+            /** Last Inspection On */
+            last_inspection_on?: string | null;
+            /** Name */
+            name: string;
+            /** Principal Name */
+            principal_name?: string | null;
+            /** Principal Staff Id */
+            principal_staff_id?: string | null;
+        };
         /** CollegeCreate */
         CollegeCreate: {
             /** Address */
@@ -37373,6 +38433,87 @@ export interface components {
             slug?: string | null;
             /** Timezone */
             timezone?: string | null;
+        };
+        /** CollegeDashboard */
+        CollegeDashboard: {
+            /** Applications */
+            applications?: components["schemas"]["ApplicationOut"][];
+            /** Approvals */
+            approvals?: components["schemas"]["ProgramApprovalOut"][];
+            /**
+             * Compliance Score
+             * @default 100
+             */
+            compliance_score: number;
+            dues?: components["schemas"]["DuesRow"] | null;
+            /** Inspections */
+            inspections?: components["schemas"]["InspectionRow"][];
+            profile: components["schemas"]["CollegeAffiliationProfile"];
+            /** Results Release */
+            results_release?: {
+                [key: string]: unknown;
+            }[];
+            /** Submissions By Term */
+            submissions_by_term?: {
+                [key: string]: {
+                    [key: string]: string;
+                };
+            };
+        };
+        /** CollegeGatingStatus */
+        CollegeGatingStatus: {
+            /** By Type */
+            by_type?: {
+                [key: string]: string;
+            };
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /** Missing */
+            missing?: string[];
+            /**
+             * Registrations
+             * @default 0
+             */
+            registrations: number;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "ready" | "gated" | "not_applicable";
+        };
+        /**
+         * CollegeProfileUpdate
+         * @description Affiliation office edits every field; a college admin only ``principal_staff_id`` / ``aishe_code`` /
+         *     ``aicte_pid`` (other fields → 403).
+         */
+        CollegeProfileUpdate: {
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Aicte Pid */
+            aicte_pid?: string | null;
+            /** Aishe Code */
+            aishe_code?: string | null;
+            /** College Type */
+            college_type?: ("constituent" | "affiliated" | "autonomous" | "campus" | "study_centre") | null;
+            /** Effective Year Id */
+            effective_year_id?: string | null;
+            /** Exam Centre Code */
+            exam_centre_code?: string | null;
+            /** Is Exam Centre */
+            is_exam_centre?: boolean | null;
+            /** Principal Staff Id */
+            principal_staff_id?: string | null;
+            /** Reason */
+            reason?: string | null;
         };
         /** CollegeResponse */
         CollegeResponse: {
@@ -37448,6 +38589,54 @@ export interface components {
             updated_at: string;
             /** Version */
             version: number;
+        };
+        /** CollegeRow */
+        CollegeRow: {
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Code */
+            code: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Type */
+            college_type: string;
+            /**
+             * Compliance Score
+             * @default 100
+             */
+            compliance_score: number;
+            /**
+             * Dues Paise
+             * @default 0
+             */
+            dues_paise: number;
+            /**
+             * Is Exam Centre
+             * @default false
+             */
+            is_exam_centre: boolean;
+            /** Name */
+            name: string;
+            /**
+             * Open Applications
+             * @default 0
+             */
+            open_applications: number;
+            /**
+             * Programmes
+             * @default 0
+             */
+            programmes: number;
+            /**
+             * Sanctioned Intake
+             * @default 0
+             */
+            sanctioned_intake: number;
         };
         /** CollegeSummary */
         CollegeSummary: {
@@ -37795,6 +38984,36 @@ export interface components {
              */
             state: "ok" | "expiring" | "expired" | "missing";
         };
+        /** ComplianceFlags */
+        ComplianceFlags: {
+            /**
+             * Approvals Valid
+             * @default true
+             */
+            approvals_valid: boolean;
+            /**
+             * Deficiencies Open
+             * @default 0
+             */
+            deficiencies_open: number;
+            /**
+             * Documents Expired
+             * @default 0
+             */
+            documents_expired: number;
+            /**
+             * Dues Clear
+             * @default true
+             */
+            dues_clear: boolean;
+            /**
+             * Score
+             * @default 100
+             */
+            score: number;
+            /** Submissions On Time Pct */
+            submissions_on_time_pct?: number | null;
+        };
         /** ComplianceResult */
         ComplianceResult: {
             /** Errors */
@@ -37806,31 +39025,6 @@ export interface components {
              * @default []
              */
             warnings: string[];
-        };
-        /** ComplianceRow */
-        ComplianceRow: {
-            /** Department Id */
-            department_id?: string | null;
-            /** Due */
-            due: number;
-            /** Guide Name */
-            guide_name?: string | null;
-            /** Name */
-            name?: string | null;
-            /** Overdue */
-            overdue?: string[];
-            /**
-             * Scholar Id
-             * Format: uuid
-             */
-            scholar_id: string;
-            /** Submitted */
-            submitted: number;
-            /**
-             * Unsatisfactory Streak
-             * @default 0
-             */
-            unsatisfactory_streak: number;
         };
         /**
          * ComponentCategory
@@ -40271,6 +41465,65 @@ export interface components {
             /** Reason */
             reason: string;
         };
+        /** DecisionIn */
+        DecisionIn: {
+            /** Conditions */
+            conditions?: string[];
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "approved" | "conditional" | "rejected";
+            /** Order Date */
+            order_date?: string | null;
+            /** Programs */
+            programs?: components["schemas"]["DecisionProgram"][];
+            /** Remarks */
+            remarks?: string | null;
+            /** Resolution Id */
+            resolution_id?: string | null;
+        };
+        /** DecisionOut */
+        DecisionOut: {
+            /** Conditions */
+            conditions?: string[];
+            /** Decided By */
+            decided_by?: string | null;
+            /** Decision */
+            decision: string;
+            /** Issued Document Id */
+            issued_document_id?: string | null;
+            /** Order Date */
+            order_date?: string | null;
+            /** Order No */
+            order_no?: string | null;
+            /** Order Url */
+            order_url?: string | null;
+            /** Resolution Id */
+            resolution_id?: string | null;
+            /** Resolution Number */
+            resolution_number?: string | null;
+        };
+        /** DecisionProgram */
+        DecisionProgram: {
+            /** @default provisional */
+            approval_status: components["schemas"]["ApprovalStatus"];
+            /**
+             * Lateral Intake
+             * @default 0
+             */
+            lateral_intake: number;
+            /** New Code */
+            new_code?: string | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Sanctioned Intake */
+            sanctioned_intake: number;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
         /** DecodeResponse */
         DecodeResponse: {
             /** Decoded Count */
@@ -40282,6 +41535,61 @@ export interface components {
              * Format: uuid
              */
             paper: string;
+        };
+        /** Deficiency */
+        Deficiency: {
+            /** Area */
+            area: string;
+            /** Closed At */
+            closed_at?: string | null;
+            /** Closed By */
+            closed_by?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /** Evidence Url */
+            evidence_url?: string | null;
+            /** Id */
+            id: string;
+            /** Observation */
+            observation: string;
+            /** Responded At */
+            responded_at?: string | null;
+            /** Response Text */
+            response_text?: string | null;
+            /**
+             * Round
+             * @default 1
+             */
+            round: number;
+            /**
+             * Severity
+             * @default minor
+             * @enum {string}
+             */
+            severity: "minor" | "major" | "critical";
+            /**
+             * Status
+             * @default open
+             * @enum {string}
+             */
+            status: "open" | "responded" | "closed";
+        };
+        /** DeficiencyClose */
+        DeficiencyClose: {
+            /**
+             * Accept
+             * @default true
+             */
+            accept: boolean;
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** DeficiencyResponse */
+        DeficiencyResponse: {
+            /** Evidence Url */
+            evidence_url?: string | null;
+            /** Response Text */
+            response_text: string;
         };
         /** DegreeAwardedResponse */
         DegreeAwardedResponse: {
@@ -42068,13 +43376,6 @@ export interface components {
             /** Verified By */
             verified_by?: string | null;
         };
-        /** DocumentRef */
-        DocumentRef: {
-            /** Issued Document Id */
-            issued_document_id?: string | null;
-            /** Url */
-            url?: string | null;
-        };
         /** DocumentStatsOut */
         DocumentStatsOut: {
             /**
@@ -42301,6 +43602,52 @@ export interface components {
              * @default 0
              */
             total_due: number;
+        };
+        /** DuesRow */
+        DuesRow: {
+            /**
+             * Billed Paise
+             * @default 0
+             */
+            billed_paise: number;
+            /** By Type */
+            by_type?: {
+                [key: string]: number;
+            };
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /**
+             * Exam Processing Estimate Paise
+             * @default 0
+             */
+            exam_processing_estimate_paise: number;
+            /**
+             * Invoices
+             * @default 0
+             */
+            invoices: number;
+            /**
+             * Outstanding Paise
+             * @default 0
+             */
+            outstanding_paise: number;
+            /**
+             * Overdue Paise
+             * @default 0
+             */
+            overdue_paise: number;
+            /**
+             * Paid Paise
+             * @default 0
+             */
+            paid_paise: number;
         };
         /** DuesRule */
         DuesRule: {
@@ -43496,6 +44843,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AffiliationReturn] */
+        Envelope_AffiliationReturn_: {
+            data?: components["schemas"]["AffiliationReturn"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AlertConfig] */
         Envelope_AlertConfig_: {
             data?: components["schemas"]["AlertConfig"] | null;
@@ -43529,21 +44891,6 @@ export interface components {
         /** Envelope[AllocationResponse] */
         Envelope_AllocationResponse_: {
             data?: components["schemas"]["AllocationResponse"] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
-        /** Envelope[AllocationSummary] */
-        Envelope_AllocationSummary_: {
-            data?: components["schemas"]["AllocationSummary"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -43844,6 +45191,21 @@ export interface components {
         /** Envelope[ApplicantSelfResponse] */
         Envelope_ApplicantSelfResponse_: {
             data?: components["schemas"]["ApplicantSelfResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ApplicationOut] */
+        Envelope_ApplicationOut_: {
+            data?: components["schemas"]["ApplicationOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44441,6 +45803,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[CarryForwardOut] */
+        Envelope_CarryForwardOut_: {
+            data?: components["schemas"]["CarryForwardOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CasApplicationOut] */
         Envelope_CasApplicationOut_: {
             data?: components["schemas"]["CasApplicationOut"] | null;
@@ -44459,6 +45836,21 @@ export interface components {
         /** Envelope[CatalogResponse] */
         Envelope_CatalogResponse_: {
             data?: components["schemas"]["CatalogResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CentreDashboard] */
+        Envelope_CentreDashboard_: {
+            data?: components["schemas"]["CentreDashboard"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44504,6 +45896,21 @@ export interface components {
         /** Envelope[CheckinResult] */
         Envelope_CheckinResult_: {
             data?: components["schemas"]["CheckinResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[Checklist] */
+        Envelope_Checklist_: {
+            data?: components["schemas"]["Checklist"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44684,6 +46091,36 @@ export interface components {
         /** Envelope[CollaborationOut] */
         Envelope_CollaborationOut_: {
             data?: components["schemas"]["CollaborationOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CollegeAffiliationProfile] */
+        Envelope_CollegeAffiliationProfile_: {
+            data?: components["schemas"]["CollegeAffiliationProfile"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CollegeDashboard] */
+        Envelope_CollegeDashboard_: {
+            data?: components["schemas"]["CollegeDashboard"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -45716,21 +47153,6 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[DocumentRef] */
-        Envelope_DocumentRef_: {
-            data?: components["schemas"]["DocumentRef"] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
         /** Envelope[DocumentStatsOut] */
         Envelope_DocumentStatsOut_: {
             data?: components["schemas"]["DocumentStatsOut"] | null;
@@ -46121,21 +47543,6 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[ExamCentreOut] */
-        Envelope_ExamCentreOut_: {
-            data?: components["schemas"]["ExamCentreOut"] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
         /** Envelope[ExamPaperResponse] */
         Envelope_ExamPaperResponse_: {
             data?: components["schemas"]["ExamPaperResponse"] | null;
@@ -46496,6 +47903,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[FeeComputePreview] */
+        Envelope_FeeComputePreview_: {
+            data?: components["schemas"]["FeeComputePreview"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[FeeDashboard] */
         Envelope_FeeDashboard_: {
             data?: components["schemas"]["FeeDashboard"] | null;
@@ -46544,6 +47966,21 @@ export interface components {
         /** Envelope[FeeReport] */
         Envelope_FeeReport_: {
             data?: components["schemas"]["FeeReport"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[FeeScheduleOut] */
+        Envelope_FeeScheduleOut_: {
+            data?: components["schemas"]["FeeScheduleOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -49077,6 +50514,36 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ProgramApprovalCheck] */
+        Envelope_ProgramApprovalCheck_: {
+            data?: components["schemas"]["ProgramApprovalCheck"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ProgramApprovalOut] */
+        Envelope_ProgramApprovalOut_: {
+            data?: components["schemas"]["ProgramApprovalOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ProgramAttainmentTrend] */
         Envelope_ProgramAttainmentTrend_: {
             data?: components["schemas"]["ProgramAttainmentTrend"] | null;
@@ -51554,6 +53021,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[UniversityPortfolio] */
+        Envelope_UniversityPortfolio_: {
+            data?: components["schemas"]["UniversityPortfolio"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[UnreadCount] */
         Envelope_UnreadCount_: {
             data?: components["schemas"]["UnreadCount"] | null;
@@ -51632,6 +53114,21 @@ export interface components {
         /** Envelope[VacateResponse] */
         Envelope_VacateResponse_: {
             data?: components["schemas"]["VacateResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ValidationReport] */
+        Envelope_ValidationReport_: {
+            data?: components["schemas"]["ValidationReport"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -52337,6 +53834,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ApplicationOut]] */
+        Envelope_list_ApplicationOut__: {
+            /** Data */
+            data?: components["schemas"]["ApplicationOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[AppraisalOut]] */
         Envelope_list_AppraisalOut__: {
             /** Data */
@@ -52817,6 +54330,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[CentreDashboard]] */
+        Envelope_list_CentreDashboard__: {
+            /** Data */
+            data?: components["schemas"]["CentreDashboard"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CertReqOut]] */
         Envelope_list_CertReqOut__: {
             /** Data */
@@ -52961,10 +54490,42 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[CollegeGatingStatus]] */
+        Envelope_list_CollegeGatingStatus__: {
+            /** Data */
+            data?: components["schemas"]["CollegeGatingStatus"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[CollegeResponse]] */
         Envelope_list_CollegeResponse__: {
             /** Data */
             data?: components["schemas"]["CollegeResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CollegeRow]] */
+        Envelope_list_CollegeRow__: {
+            /** Data */
+            data?: components["schemas"]["CollegeRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -52997,22 +54558,6 @@ export interface components {
         Envelope_list_CommitteeTemplateOut__: {
             /** Data */
             data?: components["schemas"]["CommitteeTemplateOut"][] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
-        /** Envelope[list[ComplianceRow]] */
-        Envelope_list_ComplianceRow__: {
-            /** Data */
-            data?: components["schemas"]["ComplianceRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -53665,6 +55210,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[DuesRow]] */
+        Envelope_list_DuesRow__: {
+            /** Data */
+            data?: components["schemas"]["DuesRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[DutyResponse]] */
         Envelope_list_DutyResponse__: {
             /** Data */
@@ -53953,22 +55514,6 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[list[ExamCentreOut]] */
-        Envelope_list_ExamCentreOut__: {
-            /** Data */
-            data?: components["schemas"]["ExamCentreOut"][] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
         /** Envelope[list[ExamPaperResponse]] */
         Envelope_list_ExamPaperResponse__: {
             /** Data */
@@ -54229,6 +55774,22 @@ export interface components {
         Envelope_list_FeePaymentOut__: {
             /** Data */
             data?: components["schemas"]["FeePaymentOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[FeeScheduleOut]] */
+        Envelope_list_FeeScheduleOut__: {
+            /** Data */
+            data?: components["schemas"]["FeeScheduleOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -54725,6 +56286,22 @@ export interface components {
         Envelope_list_IndentResponse__: {
             /** Data */
             data?: components["schemas"]["IndentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[InspectionRow]] */
+        Envelope_list_InspectionRow__: {
+            /** Data */
+            data?: components["schemas"]["InspectionRow"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -55969,6 +57546,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ProgramApprovalOut]] */
+        Envelope_list_ProgramApprovalOut__: {
+            /** Data */
+            data?: components["schemas"]["ProgramApprovalOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ProgramRegulationResponse]] */
         Envelope_list_ProgramRegulationResponse__: {
             /** Data */
@@ -56069,6 +57662,22 @@ export interface components {
         Envelope_list_ProvisionalResponse__: {
             /** Data */
             data?: components["schemas"]["ProvisionalResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PublicCollege]] */
+        Envelope_list_PublicCollege__: {
+            /** Data */
+            data?: components["schemas"]["PublicCollege"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -57201,6 +58810,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[SubmissionWindowOut]] */
+        Envelope_list_SubmissionWindowOut__: {
+            /** Data */
+            data?: components["schemas"]["SubmissionWindowOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[SubstituteCandidate]] */
         Envelope_list_SubstituteCandidate__: {
             /** Data */
@@ -57573,6 +59198,22 @@ export interface components {
         Envelope_list_ValuationAssignmentResponse__: {
             /** Data */
             data?: components["schemas"]["ValuationAssignmentResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[VaultDocument]] */
+        Envelope_list_VaultDocument__: {
+            /** Data */
+            data?: components["schemas"]["VaultDocument"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -58778,48 +60419,6 @@ export interface components {
          * @enum {string}
          */
         ExamAuthority: "university" | "autonomous_college";
-        /** ExamCentreIn */
-        ExamCentreIn: {
-            /** Assigned Colleges */
-            assigned_colleges?: string[];
-            /** Capacity */
-            capacity?: number | null;
-            /** Centre Code */
-            centre_code: string;
-            /** Chief Superintendent Staff Id */
-            chief_superintendent_staff_id?: string | null;
-            /**
-             * College Id
-             * Format: uuid
-             */
-            college_id: string;
-        };
-        /** ExamCentreOut */
-        ExamCentreOut: {
-            /** Assigned Colleges */
-            assigned_colleges?: string[] | null;
-            /** Capacity */
-            capacity?: number | null;
-            /** Centre Code */
-            centre_code: string;
-            /** Chief Superintendent Staff Id */
-            chief_superintendent_staff_id?: string | null;
-            /**
-             * College Id
-             * Format: uuid
-             */
-            college_id: string;
-            /**
-             * Exam Session Id
-             * Format: uuid
-             */
-            exam_session_id: string;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-        };
         /** ExamPaperCreate */
         ExamPaperCreate: {
             /**
@@ -59489,6 +61088,17 @@ export interface components {
              * @description time-boxed external_examiner account
              */
             user_id?: string | null;
+        };
+        /** ExternalExpert */
+        ExternalExpert: {
+            /** Designation */
+            designation?: string | null;
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name: string;
+            /** Organisation */
+            organisation?: string | null;
         };
         /** ExternalMember */
         ExternalMember: {
@@ -60695,6 +62305,20 @@ export interface components {
                 [key: string]: unknown;
             }[];
         };
+        /** FeeComputePreview */
+        FeeComputePreview: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /** Inspection Required */
+            inspection_required: boolean;
+            /** Lines */
+            lines: components["schemas"]["FeeLine"][];
+            /** Total Paise */
+            total_paise: number;
+        };
         /** FeeDashboard */
         FeeDashboard: {
             /**
@@ -60793,6 +62417,21 @@ export interface components {
             ledger_account_id?: string | null;
             /** Name */
             name: string;
+        };
+        /** FeeLine */
+        FeeLine: {
+            /** Amount Paise */
+            amount_paise: number;
+            /** Fee Type */
+            fee_type: string;
+            /** Label */
+            label: string;
+            /** Per Unit */
+            per_unit: string;
+            /** Rate Paise */
+            rate_paise: number;
+            /** Units */
+            units: number;
         };
         /**
          * FeeOrder
@@ -60932,6 +62571,46 @@ export interface components {
             key: string;
             /** Label */
             label?: string | null;
+        };
+        /** FeeScheduleIn */
+        FeeScheduleIn: {
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Amount Paise */
+            amount_paise: number;
+            fee_type: components["schemas"]["FeeType"];
+            /** @default flat */
+            per_unit: components["schemas"]["PerUnit"];
+        };
+        /** FeeScheduleOut */
+        FeeScheduleOut: {
+            /** Academic Year */
+            academic_year?: string | null;
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /** Amount Paise */
+            amount_paise: number;
+            /** Fee Type */
+            fee_type: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Per Unit */
+            per_unit: string;
+        };
+        /** FeeScheduleUpdate */
+        FeeScheduleUpdate: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            per_unit?: components["schemas"]["PerUnit"] | null;
         };
         /** FeeStructureCreate */
         FeeStructureCreate: {
@@ -61079,6 +62758,11 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /**
+         * FeeType
+         * @enum {string}
+         */
+        FeeType: "affiliation" | "continuation" | "inspection" | "intake_increase" | "exam_processing_per_student" | "recognition";
         /** FeedbackCreate */
         FeedbackCreate: {
             /**
@@ -61215,6 +62899,24 @@ export interface components {
         FinalizeRequest: {
             /** Note */
             note?: string | null;
+        };
+        /** Finding */
+        Finding: {
+            /** Area */
+            area: string;
+            /**
+             * Is Deficiency
+             * @default false
+             */
+            is_deficiency: boolean;
+            /** Observation */
+            observation: string;
+            /**
+             * Severity
+             * @default minor
+             * @enum {string}
+             */
+            severity: "minor" | "major" | "critical";
         };
         /** FindingUpdate */
         FindingUpdate: {
@@ -63981,6 +65683,109 @@ export interface components {
              * @default false
              */
             invalidate_paper: boolean;
+        };
+        /** InspectionCommittee */
+        InspectionCommittee: {
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Convenor Staff Id */
+            convenor_staff_id?: string | null;
+            /** External */
+            external?: components["schemas"]["ExternalExpert"][];
+            /** Staff Ids */
+            staff_ids?: string[];
+        };
+        /** InspectionOut */
+        InspectionOut: {
+            /** Committee */
+            committee?: {
+                [key: string]: unknown;
+            } | null;
+            /** Inspection On */
+            inspection_on?: string | null;
+            /** Mode */
+            mode?: string | null;
+            /** Recommendation */
+            recommendation?: string | null;
+            /** Report Url */
+            report_url?: string | null;
+            /**
+             * Required
+             * @default true
+             */
+            required: boolean;
+            /**
+             * Rounds
+             * @default 0
+             */
+            rounds: number;
+        };
+        /** InspectionReportIn */
+        InspectionReportIn: {
+            /** Findings */
+            findings?: components["schemas"]["Finding"][];
+            /**
+             * Recommendation
+             * @default approve
+             * @enum {string}
+             */
+            recommendation: "approve" | "conditional" | "reject" | "reinspect";
+            /** Report Url */
+            report_url: string;
+        };
+        /** InspectionRow */
+        InspectionRow: {
+            /**
+             * Application Id
+             * Format: uuid
+             */
+            application_id: string;
+            /** Application Type */
+            application_type: string;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /** Committee */
+            committee?: {
+                [key: string]: unknown;
+            } | null;
+            /** Inspection On */
+            inspection_on?: string | null;
+            /** Mode */
+            mode?: string | null;
+            /** Number */
+            number?: string | null;
+            /**
+             * Open Deficiencies
+             * @default 0
+             */
+            open_deficiencies: number;
+            /**
+             * Report Submitted
+             * @default false
+             */
+            report_submitted: boolean;
+            /** Status */
+            status: string;
+        };
+        /** InspectionSchedule */
+        InspectionSchedule: {
+            committee: components["schemas"]["InspectionCommittee"];
+            /**
+             * Inspection On
+             * Format: date
+             */
+            inspection_on: string;
+            /**
+             * Mode
+             * @default physical
+             * @enum {string}
+             */
+            mode: "physical" | "virtual" | "hybrid";
         };
         /** InstallRequest */
         InstallRequest: {
@@ -68508,6 +70313,34 @@ export interface components {
              */
             program_id: string;
         };
+        /** NewProgram */
+        NewProgram: {
+            /** Code */
+            code: string;
+            /** Degree Name */
+            degree_name?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * Duration Years
+             * @default 4
+             */
+            duration_years: number;
+            /** Intake */
+            intake?: number | null;
+            /**
+             * Level
+             * @default ug
+             */
+            level: string;
+            /** Name */
+            name: string;
+            /**
+             * Total Terms
+             * @default 8
+             */
+            total_terms: number;
+        };
         /** NoDuesCreate */
         NoDuesCreate: {
             /** Enrollment Id */
@@ -70255,6 +72088,11 @@ export interface components {
              */
             via: string[];
         };
+        /**
+         * PerUnit
+         * @enum {string}
+         */
+        PerUnit: "flat" | "per_program" | "per_student";
         /** PeriodClose */
         PeriodClose: {
             /**
@@ -72107,6 +73945,112 @@ export interface components {
             /** Survey Present */
             survey_present: boolean;
         };
+        /** ProgramApprovalCheck */
+        ProgramApprovalCheck: {
+            /** Academic Year Id */
+            academic_year_id?: string | null;
+            /** Approval Status */
+            approval_status?: string | null;
+            /** Approved */
+            approved: boolean;
+            /**
+             * Closed
+             * @default false
+             */
+            closed: boolean;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Lateral Intake */
+            lateral_intake?: number | null;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /** Reason */
+            reason?: string | null;
+            /** Sanctioned Intake */
+            sanctioned_intake?: number | null;
+            /** Total Intake */
+            total_intake?: number | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** ProgramApprovalOut */
+        ProgramApprovalOut: {
+            /** Academic Year */
+            academic_year?: string | null;
+            /**
+             * Academic Year Id
+             * Format: uuid
+             */
+            academic_year_id: string;
+            /**
+             * Admitted
+             * @default 0
+             */
+            admitted: number;
+            /** Approval Status */
+            approval_status: string;
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Conditions */
+            conditions?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Lateral Intake */
+            lateral_intake: number;
+            /** Order No */
+            order_no?: string | null;
+            /** Program Code */
+            program_code?: string | null;
+            /**
+             * Program Id
+             * Format: uuid
+             */
+            program_id: string;
+            /** Program Name */
+            program_name?: string | null;
+            /** Sanctioned Intake */
+            sanctioned_intake: number;
+            /** Valid From */
+            valid_from?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+            /**
+             * Validity
+             * @default valid
+             * @enum {string}
+             */
+            validity: "valid" | "expiring" | "expired" | "withdrawn";
+        };
+        /** ProgramApprovalUpdate */
+        ProgramApprovalUpdate: {
+            approval_status?: components["schemas"]["ApprovalStatus"] | null;
+            /** Conditions */
+            conditions?: string[] | null;
+            /** Lateral Intake */
+            lateral_intake?: number | null;
+            /** Reason */
+            reason: string;
+            /** Sanctioned Intake */
+            sanctioned_intake?: number | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
         /** ProgramAttainmentTrend */
         ProgramAttainmentTrend: {
             /** Batches */
@@ -72897,6 +74841,23 @@ export interface components {
             institution: string;
             /** Programs */
             programs: components["schemas"]["PublicCatalogProgram"][];
+        };
+        /** PublicCollege */
+        PublicCollege: {
+            /** Affiliated Since */
+            affiliated_since?: string | null;
+            /** Affiliation Number */
+            affiliation_number?: string | null;
+            /** Code */
+            code: string;
+            /** College Type */
+            college_type: string;
+            /** Name */
+            name: string;
+            /** Programmes */
+            programmes?: {
+                [key: string]: unknown;
+            }[];
         };
         /** PublicConfig */
         PublicConfig: {
@@ -75154,6 +77115,13 @@ export interface components {
             } | null;
             /** Version */
             version?: number | null;
+        };
+        /** ReinspectRequest */
+        ReinspectRequest: {
+            /** Inspection On */
+            inspection_on?: string | null;
+            /** Remarks */
+            remarks?: string | null;
         };
         /** ReissueRequest */
         ReissueRequest: {
@@ -77878,6 +79846,18 @@ export interface components {
             submitted_at: string;
             /** Valuation Round */
             valuation_round: number;
+        };
+        /** ScrutinyDecision */
+        ScrutinyDecision: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "proceed" | "return";
+            /** Missing Documents */
+            missing_documents?: string[];
+            /** Remarks */
+            remarks?: string | null;
         };
         /** SearchResponse */
         SearchResponse: {
@@ -80886,14 +82866,15 @@ export interface components {
             /** Title */
             title: string;
         };
-        /** SubmissionCreate */
-        SubmissionCreate: {
-            /** Files */
-            files?: {
-                [key: string]: unknown;
-            }[] | null;
-            /** Text Answer */
-            text_answer?: string | null;
+        /** SubmissionAction */
+        SubmissionAction: {
+            /**
+             * Action
+             * @enum {string}
+             */
+            action: "submit" | "verify" | "return" | "accept" | "lock" | "unlock";
+            /** Remarks */
+            remarks?: string | null;
         };
         /** SubmissionDiff */
         SubmissionDiff: {
@@ -80914,13 +82895,22 @@ export interface components {
             /** Vs Period */
             vs_period?: string | null;
         };
+        /** SubmissionImport */
+        SubmissionImport: {
+            /** File Url */
+            file_url: string;
+            /** Mapping */
+            mapping?: {
+                [key: string]: string;
+            };
+        };
         /** SubmissionIn */
         SubmissionIn: {
             /** Framework Id */
             framework_id?: string | null;
             /** Period Label */
             period_label: string;
-            submission_type: components["schemas"]["SubmissionType"];
+            submission_type: components["schemas"]["app__enums__accreditation__SubmissionType"];
         };
         /** SubmissionMarkSubmitted */
         SubmissionMarkSubmitted: {
@@ -80940,10 +82930,39 @@ export interface components {
             submitted_on: string;
         };
         /**
-         * SubmissionType
+         * SubmissionStatus
          * @enum {string}
          */
-        SubmissionType: "aqar" | "nirf_data" | "aishe" | "aicte_approval" | "ugc_annual" | "nsp_return";
+        SubmissionStatus: "draft" | "submitted" | "verified" | "returned" | "accepted" | "locked";
+        /** SubmissionWindowOut */
+        SubmissionWindowOut: {
+            /**
+             * Applies
+             * @default true
+             */
+            applies: boolean;
+            /** Due On */
+            due_on?: string | null;
+            /**
+             * Exam Related
+             * @default false
+             */
+            exam_related: boolean;
+            /** Opens On */
+            opens_on?: string | null;
+            /**
+             * Status
+             * @default open
+             * @enum {string}
+             */
+            status: "upcoming" | "open" | "due" | "overdue" | "closed";
+            /** Submission Id */
+            submission_id?: string | null;
+            /** Submission Status */
+            submission_status?: string | null;
+            /** Submission Type */
+            submission_type: string;
+        };
         /** SubmitResponse */
         SubmitResponse: {
             /** Advisor Comment */
@@ -83090,6 +85109,54 @@ export interface components {
          * @enum {string}
          */
         UndertakingType: "anti_ragging" | "conduct" | "hostel_rules" | "data_consent" | "photo_consent" | "custom";
+        /** UniversityPortfolio */
+        UniversityPortfolio: {
+            /** Applications By Status */
+            applications_by_status?: {
+                [key: string]: number;
+            };
+            /** Applications By Type */
+            applications_by_type?: {
+                [key: string]: number;
+            };
+            /** Colleges By Type */
+            colleges_by_type?: {
+                [key: string]: number;
+            };
+            /**
+             * Deficiencies Open
+             * @default 0
+             */
+            deficiencies_open: number;
+            /** Dues By College */
+            dues_by_college?: components["schemas"]["DuesRow"][];
+            /**
+             * Dues Outstanding Paise
+             * @default 0
+             */
+            dues_outstanding_paise: number;
+            /**
+             * Expiring Approvals
+             * @default 0
+             */
+            expiring_approvals: number;
+            /**
+             * Inspections Due
+             * @default 0
+             */
+            inspections_due: number;
+            /** Results Gating */
+            results_gating?: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Sanctioned Intake
+             * @default 0
+             */
+            sanctioned_intake: number;
+            /** Submissions Compliance Pct */
+            submissions_compliance_pct?: number | null;
+        };
         /** UnmatchedPunch */
         UnmatchedPunch: {
             /**
@@ -83486,6 +85553,30 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** ValidationIssue */
+        ValidationIssue: {
+            /** Code */
+            code: string;
+            /** Message */
+            message: string;
+            /** Ref */
+            ref?: string | null;
+            /** Row */
+            row?: number | null;
+        };
+        /** ValidationReport */
+        ValidationReport: {
+            /** Errors */
+            errors?: components["schemas"]["ValidationIssue"][];
+            /** Summary */
+            summary?: {
+                [key: string]: unknown;
+            };
+            /** Validated At */
+            validated_at?: string | null;
+            /** Warnings */
+            warnings?: components["schemas"]["ValidationIssue"][];
+        };
         /** ValuationAssignmentResponse */
         ValuationAssignmentResponse: {
             /**
@@ -83572,6 +85663,26 @@ export interface components {
             question_wise?: {
                 [key: string]: number | string;
             } | null;
+        };
+        /** VaultDocument */
+        VaultDocument: {
+            /**
+             * Expired
+             * @default false
+             */
+            expired: boolean;
+            /** File Url */
+            file_url: string;
+            /** Issued By */
+            issued_by?: string | null;
+            /** Key */
+            key: string;
+            /** Title */
+            title: string;
+            /** Uploaded At */
+            uploaded_at?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
         };
         /** VehicleFuelIn */
         VehicleFuelIn: {
@@ -84794,10 +86905,20 @@ export interface components {
          */
         app__enums__accreditation__CycleStatus: "planning" | "data_collection" | "drafting" | "internal_review" | "submitted" | "peer_visit" | "result";
         /**
+         * SubmissionType
+         * @enum {string}
+         */
+        app__enums__accreditation__SubmissionType: "aqar" | "nirf_data" | "aishe" | "aicte_approval" | "ugc_annual" | "nsp_return";
+        /**
          * CycleStatus
          * @enum {string}
          */
         app__enums__admissions__CycleStatus: "draft" | "open" | "closed" | "merit_processing" | "counselling" | "completed" | "archived";
+        /**
+         * SubmissionType
+         * @enum {string}
+         */
+        app__enums__affiliation__SubmissionType: "student_registrations" | "course_registrations" | "cia_marks" | "attendance_eligibility" | "practical_marks" | "exam_registrations" | "internal_faculty_list";
         /**
          * AttendanceMark
          * @enum {string}
@@ -85010,6 +87131,220 @@ export interface components {
             /** Status To */
             status_to?: string | null;
         };
+        /** AllocationSummary */
+        app__schemas__affiliation__AllocationSummary: {
+            /** Centres */
+            centres: number;
+            /** Colleges Assigned */
+            colleges_assigned: number;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /** Over Capacity */
+            over_capacity?: string[];
+            /** Strategy */
+            strategy: string;
+            /** Unassigned */
+            unassigned?: string[];
+        };
+        /** ComplianceRow */
+        app__schemas__affiliation__ComplianceRow: {
+            /**
+             * Accepted
+             * @default 0
+             */
+            accepted: number;
+            /** By Type */
+            by_type?: {
+                [key: string]: string;
+            };
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /** On Time Pct */
+            on_time_pct?: number | null;
+            /**
+             * Pending
+             * @default 0
+             */
+            pending: number;
+            /**
+             * Returns
+             * @default 0
+             */
+            returns: number;
+        };
+        /** DocumentRef */
+        app__schemas__affiliation__DocumentRef: {
+            /** Document Number */
+            document_number?: string | null;
+            /** Issued Document Id */
+            issued_document_id?: string | null;
+            /** Url */
+            url?: string | null;
+        };
+        /** ExamCentreIn */
+        app__schemas__affiliation__ExamCentreIn: {
+            /** Assigned Colleges */
+            assigned_colleges?: string[];
+            /** Capacity */
+            capacity?: number | null;
+            /** Centre Code */
+            centre_code: string;
+            /** Chief Superintendent Staff Id */
+            chief_superintendent_staff_id?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Exam Session Id */
+            exam_session_id?: string | null;
+        };
+        /** ExamCentreOut */
+        app__schemas__affiliation__ExamCentreOut: {
+            /** Appointment Document Id */
+            appointment_document_id?: string | null;
+            /** Assigned Colleges */
+            assigned_colleges?: string[];
+            /** Bundles */
+            bundles?: {
+                [key: string]: number;
+            };
+            /** Capacity */
+            capacity?: number | null;
+            /** Centre Code */
+            centre_code: string;
+            /** Chief Superintendent Name */
+            chief_superintendent_name?: string | null;
+            /** Chief Superintendent Staff Id */
+            chief_superintendent_staff_id?: string | null;
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /** Effective Capacity */
+            effective_capacity?: number | null;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Registrations Routed
+             * @default 0
+             */
+            registrations_routed: number;
+            /** Seating Status */
+            seating_status?: string | null;
+        };
+        /** SubmissionCreate */
+        app__schemas__affiliation__SubmissionCreate: {
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** Exam Session Id */
+            exam_session_id?: string | null;
+            /** File Url */
+            file_url?: string | null;
+            submission_type: components["schemas"]["app__enums__affiliation__SubmissionType"];
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+        };
+        /** SubmissionOut */
+        app__schemas__affiliation__SubmissionOut: {
+            /** College Code */
+            college_code?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /** College Name */
+            college_name?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /** Exam Session Id */
+            exam_session_id?: string | null;
+            /** File Url */
+            file_url?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Late
+             * @default false
+             */
+            late: boolean;
+            /** Locked At */
+            locked_at?: string | null;
+            /** Record Count */
+            record_count?: number | null;
+            /** Remarks */
+            remarks?: string | null;
+            /**
+             * Source
+             * @default system
+             * @enum {string}
+             */
+            source: "system" | "file";
+            /** Status */
+            status: components["schemas"]["SubmissionStatus"] | string;
+            /** Submission Type */
+            submission_type: string;
+            /** Submitted At */
+            submitted_at?: string | null;
+            /** Submitted By */
+            submitted_by?: string | null;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /** Timeline */
+            timeline?: {
+                [key: string]: unknown;
+            }[];
+            validation?: components["schemas"]["ValidationReport"] | null;
+            /** Verified At */
+            verified_at?: string | null;
+            /** Verified By */
+            verified_by?: string | null;
+            /**
+             * Version
+             * @default 1
+             */
+            version: number;
+            /** Versions */
+            versions?: {
+                [key: string]: unknown;
+            }[];
+        };
         /** CampaignUpdate */
         app__schemas__alumni__CampaignUpdate: {
             /** From On */
@@ -85030,6 +87365,96 @@ export interface components {
             title?: string | null;
             /** To On */
             to_on?: string | null;
+        };
+        /** Envelope[AllocationSummary] */
+        app__schemas__common__Envelope_AllocationSummary___1: {
+            data?: components["schemas"]["app__schemas__registration__AllocationSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[AllocationSummary] */
+        app__schemas__common__Envelope_AllocationSummary___2: {
+            data?: components["schemas"]["app__schemas__affiliation__AllocationSummary"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocumentRef] */
+        app__schemas__common__Envelope_DocumentRef___1: {
+            data?: components["schemas"]["app__schemas__governance__DocumentRef"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DocumentRef] */
+        app__schemas__common__Envelope_DocumentRef___2: {
+            data?: components["schemas"]["app__schemas__affiliation__DocumentRef"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExamCentreOut] */
+        app__schemas__common__Envelope_ExamCentreOut___1: {
+            data?: components["schemas"]["app__schemas__affiliation__ExamCentreOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[ExamCentreOut] */
+        app__schemas__common__Envelope_ExamCentreOut___2: {
+            data?: components["schemas"]["app__schemas__exams__ExamCentreOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
         };
         /** Envelope[ImportResult] */
         app__schemas__common__Envelope_ImportResult___1: {
@@ -85151,6 +87576,85 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[SubmissionOut] */
+        app__schemas__common__Envelope_SubmissionOut___3: {
+            data?: components["schemas"]["app__schemas__affiliation__SubmissionOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ComplianceRow]] */
+        app__schemas__common__Envelope_list_ComplianceRow____1: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__phd__ComplianceRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ComplianceRow]] */
+        app__schemas__common__Envelope_list_ComplianceRow____2: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__affiliation__ComplianceRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExamCentreOut]] */
+        app__schemas__common__Envelope_list_ExamCentreOut____1: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__affiliation__ExamCentreOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[ExamCentreOut]] */
+        app__schemas__common__Envelope_list_ExamCentreOut____2: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__exams__ExamCentreOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ExportOut]] */
         app__schemas__common__Envelope_list_ExportOut____1: {
             /** Data */
@@ -85203,6 +87707,22 @@ export interface components {
         app__schemas__common__Envelope_list_SubmissionOut____2: {
             /** Data */
             data?: components["schemas"]["app__schemas__accreditation__SubmissionOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[SubmissionOut]] */
+        app__schemas__common__Envelope_list_SubmissionOut____3: {
+            /** Data */
+            data?: components["schemas"]["app__schemas__affiliation__SubmissionOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -85273,6 +87793,48 @@ export interface components {
             /** Token */
             token?: string | null;
         };
+        /** ExamCentreIn */
+        app__schemas__exams__ExamCentreIn: {
+            /** Assigned Colleges */
+            assigned_colleges?: string[];
+            /** Capacity */
+            capacity?: number | null;
+            /** Centre Code */
+            centre_code: string;
+            /** Chief Superintendent Staff Id */
+            chief_superintendent_staff_id?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+        };
+        /** ExamCentreOut */
+        app__schemas__exams__ExamCentreOut: {
+            /** Assigned Colleges */
+            assigned_colleges?: string[] | null;
+            /** Capacity */
+            capacity?: number | null;
+            /** Centre Code */
+            centre_code: string;
+            /** Chief Superintendent Staff Id */
+            chief_superintendent_staff_id?: string | null;
+            /**
+             * College Id
+             * Format: uuid
+             */
+            college_id: string;
+            /**
+             * Exam Session Id
+             * Format: uuid
+             */
+            exam_session_id: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+        };
         /** ReconcileSummary */
         app__schemas__fees__ReconcileSummary: {
             /**
@@ -85314,6 +87876,13 @@ export interface components {
              */
             self_check_in: boolean;
         };
+        /** DocumentRef */
+        app__schemas__governance__DocumentRef: {
+            /** Issued Document Id */
+            issued_document_id?: string | null;
+            /** Url */
+            url?: string | null;
+        };
         /** LinkedEntity */
         app__schemas__governance__LinkedEntity: {
             /**
@@ -85341,6 +87910,15 @@ export interface components {
             to_on?: string | null;
             /** User Id */
             user_id?: string | null;
+        };
+        /** SubmissionCreate */
+        app__schemas__lms__SubmissionCreate: {
+            /** Files */
+            files?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Text Answer */
+            text_answer?: string | null;
         };
         /** SubmissionOut */
         app__schemas__lms__SubmissionOut: {
@@ -85418,6 +87996,31 @@ export interface components {
              */
             warnings: string[];
         };
+        /** ComplianceRow */
+        app__schemas__phd__ComplianceRow: {
+            /** Department Id */
+            department_id?: string | null;
+            /** Due */
+            due: number;
+            /** Guide Name */
+            guide_name?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Overdue */
+            overdue?: string[];
+            /**
+             * Scholar Id
+             * Format: uuid
+             */
+            scholar_id: string;
+            /** Submitted */
+            submitted: number;
+            /**
+             * Unsatisfactory Streak
+             * @default 0
+             */
+            unsatisfactory_streak: number;
+        };
         /** TimelineEntry */
         app__schemas__phd__TimelineEntry: {
             /** Action */
@@ -85435,6 +88038,55 @@ export interface components {
         app__schemas__projects__MemberIn: {
             /** Members */
             members: string[];
+        };
+        /** AllocationSummary */
+        app__schemas__registration__AllocationSummary: {
+            /**
+             * Allocated
+             * @default 0
+             */
+            allocated: number;
+            /** Basket Code */
+            basket_code?: string | null;
+            /**
+             * Basket Id
+             * Format: uuid
+             */
+            basket_id: string;
+            /**
+             * Candidates
+             * @default 0
+             */
+            candidates: number;
+            /**
+             * Dry Run
+             * @default true
+             */
+            dry_run: boolean;
+            /** Job Id */
+            job_id?: string | null;
+            /** Mode */
+            mode: string;
+            /** Per Course */
+            per_course?: {
+                [key: string]: unknown;
+            }[];
+            /** Results */
+            results?: components["schemas"]["AllocationResultRow"][];
+            /** Run At */
+            run_at?: string | null;
+            /** Run Id */
+            run_id?: string | null;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /**
+             * Unallocated
+             * @default 0
+             */
+            unallocated: number;
         };
         /** BudgetHeadIn */
         app__schemas__research__BudgetHeadIn: {
@@ -92615,6 +95267,1779 @@ export interface operations {
             };
         };
     };
+    applications_api_v1_affiliation_applications_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                year?: string | null;
+                type?: string | null;
+                status?: string | null;
+                scope?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ApplicationOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_application_api_v1_affiliation_applications_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplicationCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    application_api_v1_affiliation_applications__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_application_api_v1_affiliation_applications__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplicationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    application_action_api_v1_affiliation_applications__id__action_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApplicationAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    application_checklist_api_v1_affiliation_applications__id__checklist_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_Checklist_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_api_v1_affiliation_applications__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DecisionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_deficiency_api_v1_affiliation_applications__id__deficiencies__did__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                did: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeficiencyClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    respond_deficiency_api_v1_affiliation_applications__id__deficiencies__did__respond_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+                did: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DeficiencyResponse"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    application_fee_preview_api_v1_affiliation_applications__id__fee_preview_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeComputePreview_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inspection_report_api_v1_affiliation_applications__id__inspection_report_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InspectionReportIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    schedule_inspection_api_v1_affiliation_applications__id__inspection_schedule_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InspectionSchedule"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    order_pdf_api_v1_affiliation_applications__id__order_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reinspect_api_v1_affiliation_applications__id__reinspect_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReinspectRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    application_scrutiny_api_v1_affiliation_applications__id__scrutiny_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScrutinyDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ApplicationOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    colleges_api_v1_affiliation_colleges_get: {
+        parameters: {
+            query?: {
+                type?: string | null;
+                status?: string | null;
+                faculty_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CollegeRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_dashboard_api_v1_affiliation_colleges_me_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeDashboard_"];
+                };
+            };
+        };
+    };
+    college_dashboard_api_v1_affiliation_colleges__id__dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeDashboard_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    college_documents_api_v1_affiliation_colleges__id__documents_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_VaultDocument__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_college_document_api_v1_affiliation_colleges__id__documents_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VaultDocument"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_VaultDocument__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    college_profile_api_v1_affiliation_colleges__id__profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeAffiliationProfile_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_college_profile_api_v1_affiliation_colleges__id__profile_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CollegeProfileUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CollegeAffiliationProfile_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dues_api_v1_affiliation_dues_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DuesRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    exam_centres_api_v1_affiliation_exam_centres_get: {
+        parameters: {
+            query?: {
+                exam_session_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_ExamCentreOut____1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_exam_centre_api_v1_affiliation_exam_centres_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__affiliation__ExamCentreIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ExamCentreOut___1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    allocate_centres_api_v1_affiliation_exam_centres_allocate_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CentreAllocationRun"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_AllocationSummary___2"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_centres_api_v1_affiliation_exam_centres_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CentreDashboard__"];
+                };
+            };
+        };
+    };
+    exam_centre_api_v1_affiliation_exam_centres__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ExamCentreOut___1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_exam_centre_api_v1_affiliation_exam_centres__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__affiliation__ExamCentreIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ExamCentreOut___1"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    centre_appointment_api_v1_affiliation_exam_centres__id__appointment_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_DocumentRef___2"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    centre_dashboard_api_v1_affiliation_exam_centres__id__dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CentreDashboard_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    college_status_api_v1_affiliation_exam_sessions__id__college_status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CollegeGatingStatus__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fee_schedules_api_v1_affiliation_fee_schedules_get: {
+        parameters: {
+            query?: {
+                year?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_FeeScheduleOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_fee_schedule_api_v1_affiliation_fee_schedules_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeScheduleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeScheduleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_fee_schedule_api_v1_affiliation_fee_schedules__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FeeScheduleUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_FeeScheduleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inspections_api_v1_affiliation_inspections_get: {
+        parameters: {
+            query?: {
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InspectionRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_inspections_api_v1_affiliation_inspections_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InspectionRow__"];
+                };
+            };
+        };
+    };
+    portfolio_api_v1_affiliation_portfolio_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_UniversityPortfolio_"];
+                };
+            };
+        };
+    };
+    program_approvals_api_v1_affiliation_program_approvals_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                year?: string | null;
+                program_id?: string | null;
+                status?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ProgramApprovalOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    carry_forward_api_v1_affiliation_program_approvals_carry_forward_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CarryForwardIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CarryForwardOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    program_approval_check_api_v1_affiliation_program_approvals_check_get: {
+        parameters: {
+            query: {
+                college_id: string;
+                program_id: string;
+                year?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramApprovalCheck_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    program_approval_api_v1_affiliation_program_approvals__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramApprovalOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_program_approval_api_v1_affiliation_program_approvals__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProgramApprovalUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ProgramApprovalOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_colleges_api_v1_affiliation_public_colleges_get: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PublicCollege__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    returns_api_v1_affiliation_returns__kind__get: {
+        parameters: {
+            query?: {
+                year?: string | null;
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                kind: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AffiliationReturn_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submissions_api_v1_affiliation_submissions_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+                term_id?: string | null;
+                type?: string | null;
+                status?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_SubmissionOut____3"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_submission_api_v1_affiliation_submissions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__affiliation__SubmissionCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_SubmissionOut___3"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submission_compliance_api_v1_affiliation_submissions_compliance_get: {
+        parameters: {
+            query: {
+                term_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_ComplianceRow____2"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submission_windows_api_v1_affiliation_submissions_windows_get: {
+        parameters: {
+            query: {
+                term_id: string;
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_SubmissionWindowOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submission_api_v1_affiliation_submissions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_SubmissionOut___3"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submission_action_api_v1_affiliation_submissions__id__action_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmissionAction"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_SubmissionOut___3"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    extract_submission_api_v1_affiliation_submissions__id__extract_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_SubmissionOut___3"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_submission_api_v1_affiliation_submissions__id__import_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SubmissionImport"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_SubmissionOut___3"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submission_report_api_v1_affiliation_submissions__id__report_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ValidationReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    validate_submission_api_v1_affiliation_submissions__id__validate_post: {
+        parameters: {
+            query?: {
+                inline?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ValidationReport_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     claim_api_v1_alumni_claim_post: {
         parameters: {
             query: {
@@ -94907,7 +99332,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["SubmissionCreate"];
+                "application/json": components["schemas"]["app__schemas__lms__SubmissionCreate"];
             };
         };
         responses: {
@@ -107565,7 +111990,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_AllocationSummary_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_AllocationSummary___1"];
                 };
             };
             /** @description Validation Error */
@@ -108815,7 +113240,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ExamCentreIn"];
+                "application/json": components["schemas"]["app__schemas__exams__ExamCentreIn"];
             };
         };
         responses: {
@@ -108825,7 +113250,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_ExamCentreOut_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ExamCentreOut___2"];
                 };
             };
             /** @description Validation Error */
@@ -110078,7 +114503,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_ExamCentreOut__"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_ExamCentreOut____2"];
                 };
             };
             /** @description Validation Error */
@@ -110103,7 +114528,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["ExamCentreIn"];
+                "application/json": components["schemas"]["app__schemas__exams__ExamCentreIn"];
             };
         };
         responses: {
@@ -110113,7 +114538,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_ExamCentreOut_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_ExamCentreOut___2"];
                 };
             };
             /** @description Validation Error */
@@ -116075,7 +120500,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_DocumentRef_"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_DocumentRef___1"];
                 };
             };
             /** @description Validation Error */
@@ -130222,7 +134647,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_ComplianceRow__"];
+                    "application/json": components["schemas"]["app__schemas__common__Envelope_list_ComplianceRow____1"];
                 };
             };
             /** @description Validation Error */
@@ -137301,7 +141726,7 @@ export interface operations {
     list_applications_api_v1_recruitment_postings__id__applications_get: {
         parameters: {
             query?: {
-                status?: components["schemas"]["ApplicationStatus"] | null;
+                status?: components["schemas"]["ApplicationStatus-Input"] | null;
             };
             header?: never;
             path: {

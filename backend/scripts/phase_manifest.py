@@ -344,6 +344,14 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # affiliation management (section 31; exam_centres moved from Phase 14, college_data_submissions from Phase 13)
+    "34": [
+        "affiliation_applications",
+        "affiliation_program_approvals",
+        "affiliation_fee_schedules",
+        "college_data_submissions",
+        "exam_centres",
+    ],
     # governance: committees, meetings, legal, RTI, audit paras, e-File, policies (section 30)
     "33": [
         "committees",

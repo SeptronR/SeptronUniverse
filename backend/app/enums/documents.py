@@ -43,6 +43,11 @@ class TemplateType(StrEnum):
     RESOLUTION_EXTRACT = "resolution_extract"
     RTI_RESPONSE = "rti_response"
     OFFICE_ORDER = "office_order"
+    # Phase 34: affiliation order, inspection report, deficiency notice, exam-centre appointment
+    AFFILIATION_ORDER = "affiliation_order"
+    INSPECTION_REPORT = "inspection_report"
+    DEFICIENCY_NOTICE = "deficiency_notice"
+    CENTRE_APPOINTMENT = "centre_appointment"
     CUSTOM = "custom"
 
 
@@ -86,7 +91,20 @@ STAFF_TYPES: frozenset[str] = frozenset({"experience", "service", "noc"})
 SENSITIVE_TYPES: frozenset[str] = frozenset({"transcript", "grade_card"})
 # several live documents per entity are normal for these (copies)
 MULTI_TYPES: frozenset[str] = frozenset(
-    {"bonafide", "receipt", "custom", "noc", "internship_noc", "minutes", "resolution_extract", "office_order"}
+    {
+        "bonafide",
+        "receipt",
+        "custom",
+        "noc",
+        "internship_noc",
+        "minutes",
+        "resolution_extract",
+        "office_order",
+        "affiliation_order",
+        "inspection_report",
+        "deficiency_notice",
+        "centre_appointment",
+    }
 )
 BILINGUAL_TYPES: tuple[str, ...] = ("bonafide", "degree", "provisional", "tc", "donation_receipt_80g")
 

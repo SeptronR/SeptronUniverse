@@ -105,6 +105,8 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/accreditation/disclosures/public",
     # Phase 33 — published policies flagged for the website (tenant by institution slug; {governance.policies} inside)
     "GET /api/v1/policies/public",
+    # Phase 34 — approved affiliated colleges / programmes for the website (tenant by institution slug; {affiliation.core})
+    "GET /api/v1/affiliation/public/colleges",
 }
 
 

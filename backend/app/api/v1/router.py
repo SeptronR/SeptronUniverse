@@ -43,6 +43,7 @@ from app.api.v1.endpoints import (
     accounting,
     accreditation,
     admissions,
+    affiliation,
     alumni,
     announcements,
     appraisals,
@@ -243,6 +244,10 @@ api_router.include_router(accreditation.public_router)
 # group; the public policies list is included first so /policies/public is not captured by /policies/{id})
 api_router.include_router(governance.public_router)
 api_router.include_router(governance.router)
+# Phase 34: affiliation management — feature keys per route group (core / inspections / fees / data submissions / exam
+# centres); the public college list (tenant by institution slug) is included first
+api_router.include_router(affiliation.public_router)
+api_router.include_router(affiliation.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

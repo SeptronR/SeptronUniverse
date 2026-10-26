@@ -89,6 +89,11 @@ class AppRoutes {
   static const governanceHub = '/app/governance';
   static const committeeDesk = '/app/committee-desk';
   static const governanceApprovals = '/app/governance-approvals';
+  // Phase 34 — affiliation (college admin), exam centre (coordinator), affiliation office (registrar / VC / COE), inspections
+  static const collegeAffiliation = '/app/affiliation';
+  static const examCentreDesk = '/app/exam-centre';
+  static const affiliationOffice = '/app/affiliation-office';
+  static const myInspections = '/app/inspections';
   // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
   static const scholarHub = '/app/scholar';
   static const guideScholars = '/app/my-scholars';

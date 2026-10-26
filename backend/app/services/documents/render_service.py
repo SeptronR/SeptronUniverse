@@ -77,6 +77,10 @@ PREFIX: dict[str, str] = {
     "resolution_extract": "RES",
     "rti_response": "RTIR",
     "office_order": "OO",
+    "affiliation_order": "AFO",
+    "inspection_report": "INR",
+    "deficiency_notice": "DFN",
+    "centre_appointment": "CAP",
 }
 
 

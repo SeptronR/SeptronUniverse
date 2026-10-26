@@ -1,5 +1,6 @@
-"""Internal assessment — section 14 of Database_Schema.sql (Prompts/13 §13.3) + ``college_data_submissions`` (§34; the
-CIA university submission of Phase 13 writes it, Phase 34 owns the module).
+"""Internal assessment — section 14 of Database_Schema.sql (Prompts/13 §13.3). ``college_data_submissions`` (§31) is
+mapped by ``app/models/affiliation.py`` since Phase 34 (the CIA university submission of Phase 13 writes it) and is
+re-exported here.
 
 DDL notes the services rely on: ``offering_assessments UNIQUE (offering_id, component_id)`` (instantiate is
 idempotent), ``assessment_questions UNIQUE (offering_assessment_id, question_no)``, ``internal_marks UNIQUE
@@ -18,6 +19,7 @@ from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.session import Base
+from app.models.affiliation import CollegeDataSubmission  # noqa: F401  (Phase 34 owns the table; re-exported)
 from app.models.base import TenantMixin, UUIDPrimaryKeyMixin
 from app.models.registration import _fk, _now, _updated
 
@@ -107,26 +109,5 @@ class MarksChangeRequest(UUIDPrimaryKeyMixin, TenantMixin, Base):
     workflow_instance_id: Mapped[uuid.UUID | None] = _uuid()
     status: Mapped[str] = mapped_column(String(20), nullable=False, default="requested")
     applied_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    created_at: Mapped[datetime] = _now()
-    updated_at: Mapped[datetime] = _updated()
-
-
-class CollegeDataSubmission(UUIDPrimaryKeyMixin, TenantMixin, Base):
-    __tablename__ = "college_data_submissions"
-    __table_args__ = (UniqueConstraint("college_id", "term_id", "submission_type"),)
-
-    college_id: Mapped[uuid.UUID] = _fk("colleges.id", "CASCADE", nullable=False)
-    term_id: Mapped[uuid.UUID] = _fk("academic_terms.id", nullable=False)
-    exam_session_id: Mapped[uuid.UUID | None] = _uuid()
-    submission_type: Mapped[str] = mapped_column(String(30), nullable=False)
-    status: Mapped[str] = mapped_column(String(20), nullable=False, default="draft")
-    record_count: Mapped[int | None] = mapped_column(Integer)
-    file_url: Mapped[str | None] = mapped_column(Text)
-    submitted_by: Mapped[uuid.UUID | None] = _uuid()
-    submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    verified_by: Mapped[uuid.UUID | None] = _uuid()
-    verified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    remarks: Mapped[str | None] = mapped_column(Text)
-    locked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = _now()
     updated_at: Mapped[datetime] = _updated()

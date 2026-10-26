@@ -259,7 +259,9 @@ register_beat(
 )
 
 # ---- Phase 33 governance (app/tasks/governance.py) ----------------------------------------------------------------------------------
-register_beat("governance.meeting_reminders", "beat.governance.meeting_reminders", crontab(hour=2, minute=50))  # 08:20 IST
+register_beat(
+    "governance.meeting_reminders", "beat.governance.meeting_reminders", crontab(hour=2, minute=50)
+)  # 08:20 IST
 register_beat(
     "governance.atr_due_reminders", "beat.governance.atr_due_reminders", crontab(day_of_week=1, hour=4, minute=10)
 )  # Mon 09:40 IST
@@ -348,3 +350,24 @@ register_beat("fees.day_book_close_reminder", "beat.fees.day_book_close_reminder
 register_beat("fees.gateway_status_poll", "beat.fees.gateway_status_poll", 600.0)
 
 celery.conf.beat_schedule = BEAT_SCHEDULE
+
+
+# ---- Phase 34 affiliation (app/tasks/affiliation.py) -------------------------------------------------------------------------------
+register_beat(
+    "affiliation.submission_windows", "beat.affiliation.submission_windows", crontab(hour=3, minute=20)
+)  # 08:50 IST
+register_beat(
+    "affiliation.approval_expiry_scan",
+    "beat.affiliation.approval_expiry_scan",
+    crontab(day_of_week=1, hour=4, minute=20),
+)  # Mon 09:50 IST
+register_beat(
+    "affiliation.deficiency_deadline_scan", "beat.affiliation.deficiency_deadline_scan", crontab(hour=3, minute=25)
+)
+register_beat("affiliation.inspection_reminders", "beat.affiliation.inspection_reminders", crontab(hour=2, minute=45))
+register_beat(
+    "affiliation.dues_reminders", "beat.affiliation.dues_reminders", crontab(day_of_week=2, hour=4, minute=20)
+)  # Tue 09:50 IST
+register_beat(
+    "affiliation.portfolio_refresh", "beat.affiliation.portfolio_refresh", crontab(day_of_week=0, hour=21, minute=0)
+)  # Mon 02:30 IST

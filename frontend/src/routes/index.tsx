@@ -262,6 +262,23 @@ const GovEfilePage = lazy(() => import('@/features/governance/pages/GovernancePa
 const GovPoliciesPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.PoliciesPage })));
 const GovGovernanceStatsPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.GovernanceStatsPage })));
 const GovStaffGovernancePage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.StaffGovernancePage })));
+// Phase 34 — affiliation (university office, college portal, inspection committee)
+const AffPortfolioPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.PortfolioPage })));
+const AffCollegesPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.CollegesPage })));
+const AffCollegeDetailPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.CollegeDetailPage })));
+const AffApplicationsPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.ApplicationsPage })));
+const AffApplicationPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.ApplicationPage })));
+const AffMyInspectionsPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.MyInspectionsPage })));
+const AffProgramApprovalsPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.ProgramApprovalsPage })));
+const AffFeeSchedulesPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.FeeSchedulesPage })));
+const AffSubmissionsPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.SubmissionsPage })));
+const AffSubmissionPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.SubmissionPage })));
+const AffSessionCollegesPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.SessionCollegesPage })));
+const AffExamCentresPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.ExamCentresPage })));
+const AffCollegeExamCentrePage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.CollegeExamCentrePage })));
+const AffReturnsPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.ReturnsPage })));
+const AffCollegeAffiliationPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.CollegeAffiliationPage })));
+const AffCollegeSubmissionsPage = lazy(() => import('@/features/affiliation/pages/AffiliationPages').then((m) => ({ default: m.CollegeSubmissionsPage })));
 const IqacDashboardPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacDashboardPage })));
 const IqacFrameworksPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacFrameworksPage })));
 const IqacMetricsPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacMetricsPage })));
@@ -718,6 +735,26 @@ export const router = createBrowserRouter([
               ['/admin/efiles/:id', 'governance.efile', 'efile', 'view', [['efile', 'create'], ['efile', 'view_all'], ['efile', 'manage']], <GovEfilePage key="gved" />],
               ['/admin/policies', 'governance.policies', 'governance', 'policies', [['governance', 'manage'], ['governance', 'view_all'], ['governance', 'view']], <GovPoliciesPage key="gvp" />],
               ['/staff/governance', 'governance.committees', 'governance', 'view', [['governance', 'view_all'], ['governance', 'manage']], <GovStaffGovernancePage key="gvst" />],
+              // Phase 34 — affiliation (narrowed by the services: college scope, inspector ownership, faculty / department read, office all)
+              ['/university/affiliation/portfolio', 'affiliation.core', 'affiliation', 'view_all', [['affiliation', 'view_all'], ['affiliation', 'manage'], ['affiliation', 'decide']], <AffPortfolioPage key="afp" />],
+              ['/university/affiliation/colleges', 'affiliation.core', 'affiliation', 'view_all', [['affiliation', 'view'], ['affiliation', 'view_all'], ['affiliation', 'manage'], ['affiliation', 'apply'], ['affiliation', 'submit'], ['affiliation', 'decide'], ['affiliation', 'inspect']], <AffCollegesPage key="afc" />],
+              ['/university/affiliation/colleges/:id', 'affiliation.core', 'affiliation', 'view_all', [['affiliation', 'view'], ['affiliation', 'view_all'], ['affiliation', 'manage'], ['affiliation', 'apply'], ['affiliation', 'submit'], ['affiliation', 'decide'], ['affiliation', 'inspect']], <AffCollegeDetailPage key="afcd" />],
+              ['/university/affiliation/applications', 'affiliation.core', 'affiliation', 'manage', [['affiliation', 'view'], ['affiliation', 'view_all'], ['affiliation', 'manage'], ['affiliation', 'apply'], ['affiliation', 'submit'], ['affiliation', 'decide'], ['affiliation', 'inspect']], <AffApplicationsPage key="afa" />],
+              ['/university/affiliation/applications/:id', 'affiliation.core', 'affiliation', 'manage', [['affiliation', 'view'], ['affiliation', 'view_all'], ['affiliation', 'manage'], ['affiliation', 'apply'], ['affiliation', 'submit'], ['affiliation', 'decide'], ['affiliation', 'inspect']], <AffApplicationPage key="afad" />],
+              ['/university/affiliation/program-approvals', 'affiliation.core', 'affiliation', 'manage', [['affiliation', 'view'], ['affiliation', 'view_all'], ['affiliation', 'manage'], ['affiliation', 'apply'], ['affiliation', 'submit'], ['affiliation', 'decide'], ['affiliation', 'inspect']], <AffProgramApprovalsPage key="afpa" />],
+              ['/university/affiliation/fee-schedules', 'affiliation.fees', 'affiliation', 'manage', [['affiliation', 'view_all'], ['accounting', 'view'], ['fees', 'view_all']], <AffFeeSchedulesPage key="aff" />],
+              ['/university/affiliation/submissions', 'affiliation.data_submissions', 'affiliation', 'verify_submission', [['affiliation', 'verify_submission'], ['affiliation', 'manage'], ['affiliation', 'view_all'], ['exams', 'configure'], ['exams', 'manage']], <AffSubmissionsPage key="afs" />],
+              ['/university/affiliation/submissions/:id', 'affiliation.data_submissions', 'affiliation', 'verify_submission', [['affiliation', 'verify_submission'], ['affiliation', 'manage'], ['affiliation', 'view_all'], ['exams', 'configure'], ['exams', 'manage']], <AffSubmissionPage key="afsd" />],
+              ['/university/exams/sessions/:id/colleges', 'affiliation.data_submissions', 'exams', 'configure', [['affiliation', 'verify_submission'], ['affiliation', 'manage'], ['affiliation', 'view_all'], ['exams', 'configure'], ['exams', 'manage']], <AffSessionCollegesPage key="afsc" />],
+              ['/university/affiliation/exam-centres', 'affiliation.exam_centres', 'exams', 'configure', [['exams', 'configure'], ['exams', 'manage'], ['affiliation', 'manage'], ['affiliation', 'view_all']], <AffExamCentresPage key="afec" />],
+              ['/university/affiliation/returns', 'affiliation.core', 'affiliation', 'view_all', [['affiliation', 'manage'], ['reports', 'statutory']], <AffReturnsPage key="afr" />],
+              ['/inspections/me', 'affiliation.inspections', 'affiliation', 'inspect', [['affiliation', 'manage']], <AffMyInspectionsPage key="afim" />],
+              ['/college/affiliation', 'affiliation.core', 'affiliation', 'apply', [['affiliation', 'view'], ['affiliation', 'submit']], <AffCollegeAffiliationPage key="afca" />],
+              ['/college/affiliation/applications/:id', 'affiliation.core', 'affiliation', 'apply', [['affiliation', 'view']], <AffApplicationPage key="afcap" college />],
+              ['/college/submissions', 'affiliation.data_submissions', 'affiliation', 'submit', [['affiliation', 'apply']], <AffCollegeSubmissionsPage key="afcs0" />],
+              ['/college/submissions/:termId', 'affiliation.data_submissions', 'affiliation', 'submit', [['affiliation', 'apply']], <AffCollegeSubmissionsPage key="afcs" />],
+              ['/college/submissions/view/:id', 'affiliation.data_submissions', 'affiliation', 'submit', [['affiliation', 'apply']], <AffSubmissionPage key="afcsv" college />],
+              ['/college/exam-centre', 'affiliation.exam_centres', 'affiliation', 'submit', [['affiliation', 'view'], ['exams', 'conduct']], <AffCollegeExamCentrePage key="afce" />],
               // Phase 28 — placement (eligibility, policy, consent and scopes in the services)
               ['/admin/placement/companies', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlCompaniesPage key="plc" />],
               ['/admin/placement/companies/:id', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlCompanyPage key="plcd" />],

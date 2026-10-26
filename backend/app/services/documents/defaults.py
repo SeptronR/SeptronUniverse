@@ -74,6 +74,10 @@ TITLES: dict[str, str] = {
     "resolution_extract": "Extract of Resolution",
     "rti_response": "Reply under the Right to Information Act, 2005",
     "office_order": "Office Order",
+    "affiliation_order": "Order of Affiliation",
+    "inspection_report": "Inspection Report",
+    "deficiency_notice": "Notice of Deficiencies",
+    "centre_appointment": "Appointment as Chief Superintendent",
     "custom": "Certificate",
 }
 
@@ -147,6 +151,10 @@ BODIES: dict[str, str] = {
     "resolution_extract": 'Certified true extract of resolution {{ resolution.number }} of the {{ committee.name }} passed at its meeting {{ meeting.number }} held on {{ meeting.held_on }}.<br><b>{{ resolution.subject }}</b><br>{{ resolution.text }}',
     "rti_response": 'Ref. {{ rti.request_no }} dated {{ rti.received_on }}. To {{ rti.applicant }}.<br>Subject: {{ rti.subject }}<br>{{ rti.response }}{% if rti.fee_additional %}<br>Additional fee for copies: Rs. {{ rti.fee_additional }}.{% endif %}<br>First appeal, if any, lies with {{ rti.appellate }} within {{ rti.appeal_days }} days of receipt of this reply.',
     "office_order": '{{ body }}',
+    "affiliation_order": 'Order No. {{ order.number }} dated {{ order.date }}.<br>Sub: {{ application.type_label }} — {{ college.name }} ({{ college.code }}) — {{ academic_year }} (application {{ application.number }}).<br>The competent authority has <b>{{ order.decision }}</b> the application{% if order.resolution %} vide resolution {{ order.resolution }}{% endif %}.<br>{{ programs }}{% if conditions %}<br>Conditions:<br>{{ conditions }}{% endif %}',
+    "inspection_report": 'Inspection of {{ college.name }} ({{ college.code }}) — application {{ application.number }}, round {{ inspection.round }}, held on {{ inspection.on }} ({{ inspection.mode }}). Recommendation: {{ inspection.recommendation }}.{% if deficiencies %}<br>Deficiencies:<br>{{ deficiencies }}{% endif %}',
+    "deficiency_notice": 'To the Principal, {{ college.name }}.<br>The inspection committee (application {{ application.number }}, round {{ inspection.round }}) recorded the following deficiencies. Please comply and upload evidence by the due dates.<br>{{ deficiencies }}',
+    "centre_appointment": '{{ appointee.name }} is appointed Chief Superintendent of examination centre {{ centre.code }} ({{ centre.college }}) for {{ session.name }} ({{ session.start }} to {{ session.end }}); capacity {{ centre.capacity }}.',
     "id_card": "{{ student.name }}<br>{{ student.registration_number }}<br>{{ enrolment.program }}",
 }
 SECONDARY_HI: dict[str, str] = {
@@ -178,6 +186,10 @@ SIGNERS: dict[str, list[str]] = {
     "resolution_extract": ['registrar'],
     "rti_response": ['registrar'],
     "office_order": ['registrar'],
+    "affiliation_order": ['registrar'],
+    "inspection_report": ['registrar'],
+    "deficiency_notice": ['registrar'],
+    "centre_appointment": ['coe'],
 }
 
 
