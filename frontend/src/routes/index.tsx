@@ -233,6 +233,21 @@ const AlJobsPortalPage = lazy(() => import('@/features/alumni/pages/AlumniPages'
 const AlGivePage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniGivePage })));
 const AlClaimPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.AlumniClaimPage })));
 const AlPublicCampaignsPage = lazy(() => import('@/features/alumni/pages/AlumniPages').then((m) => ({ default: m.PublicCampaignsPage })));
+// Phase 30 — research & faculty development
+const RsPublicationsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.PublicationsPage })));
+const RsPatentsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.PatentsPage })));
+const RsProjectsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.ProjectsPage })));
+const RsProjectPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.ProjectPage })));
+const RsConsultancyPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.ConsultancyPage })));
+const RsEthicsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.EthicsPage })));
+const RsIncentivesPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.IncentivesPage })));
+const RsFdpPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.FdpPage })));
+const RsMousPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.MousPage })));
+const RsMouPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.MouPage })));
+const RsStartupsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.StartupsPage })));
+const RsApiScorePage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.ApiScorePage })));
+const RsStatsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.StatsPage })));
+const RsFacultyResearchPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.FacultyResearchPage })));
 const PlStudentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.StudentPlacementPage })));
 const PlParentPlacementPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.ParentPlacementPage })));
 const PlFacultyInternshipsPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.FacultyInternshipsPage })));
@@ -664,6 +679,22 @@ export const router = createBrowserRouter([
               ['/admin/alumni/jobs', 'alumni.jobs_board', 'alumni', 'manage', [['alumni', 'view_all'], ['placement', 'manage']], <AlJobsAdminPage key="alj" />],
               ['/admin/alumni/fundraising', 'alumni.fundraising', 'fundraising', 'manage', [['alumni', 'campaign'], ['fundraising', 'receipt'], ['fundraising', 'view_all']], <AlFundraisingPage key="alf" />],
               ['/admin/alumni/stats', 'alumni.core', 'alumni', 'view_all', [['alumni', 'manage']], <AlStatsPage key="als" />],
+              // Phase 30 — research & faculty development (ownership, scopes, locks and workflows in the services)
+              ['/admin/research/publications', 'research.publications', 'research', 'view', [['research', 'view_all'], ['research', 'manage']], <RsPublicationsPage key="rsp" />],
+              ['/admin/research/verification', 'research.publications', 'research', 'verify', [['research', 'manage']], <RsPublicationsPage key="rsv" verification />],
+              ['/admin/research/patents', 'research.patents', 'research', 'view', [['research', 'view_all'], ['research', 'manage']], <RsPatentsPage key="rspt" />],
+              ['/admin/research/projects', 'research.projects_grants', 'research', 'view', [['research', 'view_all'], ['research', 'manage'], ['accounting', 'view_all']], <RsProjectsPage key="rspr" />],
+              ['/admin/research/projects/:id', 'research.projects_grants', 'research', 'view', [['research', 'view_all'], ['research', 'manage'], ['accounting', 'view_all']], <RsProjectPage key="rsprd" />],
+              ['/admin/research/consultancy', 'research.consultancy', 'research', 'view', [['research', 'view_all'], ['research', 'manage'], ['accounting', 'view_all']], <RsConsultancyPage key="rsc" />],
+              ['/admin/research/ethics', 'research.ethics_committee', 'research', 'ethics', [['research', 'view'], ['research', 'view_all'], ['research', 'manage']], <RsEthicsPage key="rse" />],
+              ['/admin/research/incentives', 'research.seed_grants_incentives', 'research', 'incentives', [['research', 'view'], ['research', 'view_all'], ['research', 'manage'], ['accounting', 'manage']], <RsIncentivesPage key="rsi" />],
+              ['/admin/research/fdp', 'research.fdp', 'research', 'view', [['research', 'view_all'], ['research', 'manage']], <RsFdpPage key="rsf" />],
+              ['/admin/research/awards', 'research.fdp', 'research', 'view', [['research', 'view_all'], ['research', 'manage']], <RsFdpPage key="rsa" />],
+              ['/admin/research/mous', 'research.mous_collaborations', 'research', 'mous', [['research', 'view'], ['research', 'view_all'], ['research', 'manage']], <RsMousPage key="rsm" />],
+              ['/admin/research/mous/:id', 'research.mous_collaborations', 'research', 'mous', [['research', 'view'], ['research', 'view_all'], ['research', 'manage']], <RsMouPage key="rsmd" />],
+              ['/admin/research/startups', 'research.incubation', 'research', 'incubation', [['research', 'view'], ['research', 'view_all'], ['research', 'manage']], <RsStartupsPage key="rss" />],
+              ['/admin/research/api-score', 'research.api_score', 'research', 'manage', [['research', 'view_all'], ['hr', 'view_all']], <RsApiScorePage key="rsapi" />],
+              ['/admin/research/stats', 'research.publications', 'research', 'view_all', [['reports', 'export']], <RsStatsPage key="rsst" />],
               ['/admin/documents/templates', 'documents.templates', 'templates', 'view', [['templates', 'manage'], ['certificates', 'issue']], <DocTemplatesPage key="dt" />],
               ['/admin/documents/issued', 'documents.templates', 'certificates', 'view_all', [['certificates', 'issue'], ['certificates', 'manage']], <DocIssuedPage key="di" />],
               ['/admin/documents/bulk', 'documents.bulk_generation', 'certificates', 'issue', [['certificates', 'manage']], <DocBulkPage key="db" />],
@@ -1001,6 +1032,9 @@ export const router = createBrowserRouter([
           { path: 'mentees/:enrollmentId', element: page(<FeatureRoute feature="mentoring.core"><SsMentee360Page /></FeatureRoute>) },
           { path: 'surveys', element: page(<FeatureRoute feature="surveys.core"><SsFacultySurveysPage /></FeatureRoute>) },
           { path: 'internships', element: page(<FeatureRoute feature="placement.internships"><PlFacultyInternshipsPage /></FeatureRoute>) },
+          // Phase 30 — my research (profile, publications, patents, projects PI dashboard, incentives, FDP, API score)
+          { path: 'research', element: page(<FeatureRoute feature="research.publications"><RsFacultyResearchPage /></FeatureRoute>) },
+          { path: 'research/projects/:id', element: page(<FeatureRoute feature="research.projects_grants"><RsProjectPage /></FeatureRoute>) },
           { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },

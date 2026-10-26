@@ -10,6 +10,8 @@ types are ``str | int | bool | list | json | enum`` (``enum`` carries ``choices`
 from dataclasses import asdict, dataclass, field
 from typing import Any
 
+from app.enums.research import DEFAULT_API_SCHEME, DEFAULT_INCENTIVE_SLABS
+
 VALUE_TYPES = ("str", "int", "bool", "list", "json", "enum")
 
 
@@ -230,6 +232,20 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("fundraising", "min_online_paise", "int", 10000, label="Minimum online donation (paise)", min=100),
     SettingDef("fundraising", "pan_threshold_paise", "int", 200000, label="PAN required on 80G receipts above (paise)", min=0),
     SettingDef("fundraising", "pledges", "bool", False, label="Allow pledges with reminders"),
+    # research & faculty development (Phase 30)
+    SettingDef("research", "api_score_scheme", "json", DEFAULT_API_SCHEME, label="API / CAS score scheme (UGC CAS 2018 category tables)"),
+    SettingDef("research", "publication_incentive_slabs", "json", DEFAULT_INCENTIVE_SLABS, label="Publication incentive slabs (rupees per indexing / author position)"),
+    SettingDef("research", "seed_grant_max_paise", "int", 50000000, label="Seed grant maximum (paise)", min=0),
+    SettingDef("research", "travel_grant_max_paise", "int", 5000000, label="Travel grant maximum (paise)", min=0),
+    SettingDef("research", "incentive_annual_cap_paise", "int", 20000000, label="Incentives per faculty per year cap (paise)", min=0),
+    SettingDef("research", "incentive_dean_threshold_paise", "int", 2000000, label="Incentives above this go to the dean / principal step (paise)", min=0),
+    SettingDef("research", "consultancy_share_pct", "json", {"institution": 30, "faculty": 70}, label="Consultancy revenue share (%)"),
+    SettingDef("research", "duplicate_doi_policy", "str", "block", choices=("block", "warn"), label="Duplicate DOI policy"),
+    SettingDef("research", "mou_expiry_alert_days", "int", 90, label="MoU expiry alert window (days)", min=1, max=365),
+    SettingDef("research", "import_sources", "json", ["crossref", "scopus", "orcid"], label="Bibliographic import sources"),
+    SettingDef("research", "fdp_hours_target", "int", 40, label="Annual FDP hours target per faculty", min=0, max=500),
+    SettingDef("research", "ethics_required_for_categories", "json", ["clinical", "animal", "biosafety"], label="Project categories that need an ethics approval before start"),
+    SettingDef("research", "patent_renewal_months", "int", 12, label="Patent renewal reminder interval (months)", min=1, max=60),
     # document templates & certificate requests (Phase 26)
     SettingDef("documents", "signatories", "json", {"registrar": {"name": "Registrar", "designation": "Registrar", "signature_url": None}, "principal": {"name": "Principal", "designation": "Principal", "signature_url": None}, "coe": {"name": "Controller of Examinations", "designation": "Controller of Examinations", "signature_url": None}}, label="Signatories (name, designation, signature image)"),
     SettingDef("documents", "request_rules", "json", {}, label="Certificate request rules per type (overrides of the shipped defaults)"),

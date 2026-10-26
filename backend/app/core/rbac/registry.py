@@ -252,6 +252,8 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     # Phase 28: guardians read their ward's drives / offers; internship course faculty evaluate assigned internships
     ("placement", "wards", "Wards placement"),
     ("placement", "evaluate", "Evaluate internships"),
+    # Phase 30: HOD first-level / research cell final verification of publications, patents, awards
+    ("research", "verify", "Verify research records"),
     ("alumni", "self", "Own alumni profile"),
     ("alumni", "verify", "Verify alumni"),
     ("alumni", "campaign", "Campaigns"),
@@ -813,6 +815,12 @@ ALUMNI_COORDINATOR: set[str] = P("alumni", "verify", "campaign", "view_all", "ex
 )
 HOD_ALUMNI: set[str] = P("alumni", "view_all")
 READ_ALUMNI: set[str] = P("alumni", "view_all") | P("fundraising", "view_all")
+# Phase 30 (Prompts/30 "Visibility rules"): the research cell verifies / imports / sanctions and runs the ethics
+# secretariat, incentives, MoUs and incubation; HODs verify their department's records first and recommend incentives;
+# the accountant reaches project / consultancy money and incentive disbursement through accounting:*; IQAC / principal-level readers aggregates
+RESEARCH_CELL: set[str] = P("research", "verify", "view_all", "export", "ethics", "incentives", "mous", "incubation")
+HOD_RESEARCH: set[str] = P("research", "verify", "view_all")
+READ_RESEARCH: set[str] = P("research", "view_all")
 GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
 PARENT_SUPPORT: set[str] = P("clubs", "view")
 
@@ -932,6 +940,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | DEAN_ATTAINMENT
     | STAFF_SELF,
     "hod": FACULTY
+    | HOD_RESEARCH
     | HOD_SUPPORT
     | HOD_PLACEMENT
     | HOD_ALUMNI
@@ -1005,12 +1014,14 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("research", "view"),
     "research_cell": STAFF_SELF
     | P("research", "manage")
+    | RESEARCH_CELL
     | P("phd", "manage")
     | P("accounting", "view_all")
     | P("hr", "view_all")
     | P("faculty", "view_all", "research")
     | P("reports", "run", "view"),
     "iqac_coordinator": ALL("view", "view_all")
+    | READ_RESEARCH
     | IQAC_ACCOUNTING
     | P("accreditation", "manage")
     | P("surveys", "manage")
@@ -1236,6 +1247,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0030": frozenset(RESEARCH_CELL | HOD_RESEARCH | READ_RESEARCH),
     "0029": frozenset(ALUMNI_COORDINATOR | HOD_ALUMNI | READ_ALUMNI),
     "0028": frozenset(
         PLACEMENT_OFFICER | HOD_PLACEMENT | FACULTY_PLACEMENT | PARENT_PLACEMENT | READ_PLACEMENT | ACCOUNTANT_PLACEMENT

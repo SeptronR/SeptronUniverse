@@ -196,6 +196,27 @@ register_beat(
     crontab(month_of_year=7, day_of_month=1, hour=4, minute=0),
 )
 
+# ---- Phase 30 research & faculty development (app/tasks/research.py) ----------------------------------------------------------
+register_beat(
+    "research.publication_sync", "beat.research.publication_sync", crontab(day_of_week=0, hour=20, minute=30)
+)  # Mon 02:00 IST
+register_beat(
+    "research.project_report_reminders",
+    "beat.research.project_report_reminders",
+    crontab(day_of_week=1, hour=3, minute=0),
+)  # Mon 08:30 IST
+register_beat("research.mou_expiry_scan", "beat.research.mou_expiry_scan", crontab(hour=2, minute=50))  # 08:20 IST
+register_beat(
+    "research.incentive_cap_reset",
+    "beat.research.incentive_cap_reset",
+    crontab(month_of_year=1, day_of_month=1, hour=0, minute=5),
+)
+register_beat(
+    "research.patent_renewal_reminders",
+    "beat.research.patent_renewal_reminders",
+    crontab(day_of_month=1, hour=3, minute=15),
+)
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

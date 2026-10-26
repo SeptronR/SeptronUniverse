@@ -1,5 +1,9 @@
 import {
   Activity,
+  Award,
+  FlaskConical,
+  Handshake,
+  Rocket,
   Bus,
   MapPin,
   Radio,
@@ -351,6 +355,24 @@ export const NAV_GROUPS: NavGroup[] = [
     ],
   },
   { title: 'ENGAGEMENT', items: [] },
+  {
+    title: 'RESEARCH',
+    items: [
+      // Phase 30 — research & faculty development
+      { label: 'Publications', to: '/admin/research/publications', icon: FlaskConical, module: 'research', action: 'view', altActions: ['view_all', 'manage'], feature: 'research.publications' },
+      { label: 'Verification queue', to: '/admin/research/verification', icon: ClipboardCheck, module: 'research', action: 'verify', feature: 'research.publications' },
+      { label: 'Patents', to: '/admin/research/patents', icon: ScrollText, module: 'research', action: 'view', altActions: ['view_all', 'manage'], feature: 'research.patents' },
+      { label: 'Projects & grants', to: '/admin/research/projects', icon: Landmark, module: 'research', action: 'view', altActions: ['view_all', 'manage'], feature: 'research.projects_grants' },
+      { label: 'Consultancy', to: '/admin/research/consultancy', icon: Briefcase, module: 'research', action: 'view', altActions: ['view_all', 'manage'], feature: 'research.consultancy' },
+      { label: 'Ethics', to: '/admin/research/ethics', icon: ShieldCheck, module: 'research', action: 'ethics', altActions: ['view_all', 'manage'], feature: 'research.ethics_committee' },
+      { label: 'Incentives', to: '/admin/research/incentives', icon: HandCoins, module: 'research', action: 'incentives', altActions: ['view_all', 'manage'], feature: 'research.seed_grants_incentives' },
+      { label: 'FDP & awards', to: '/admin/research/fdp', icon: Award, module: 'research', action: 'view', altActions: ['view_all', 'manage'], feature: 'research.fdp' },
+      { label: 'MoUs & collaborations', to: '/admin/research/mous', icon: Handshake, module: 'research', action: 'mous', altActions: ['view', 'view_all', 'manage'], feature: 'research.mous_collaborations' },
+      { label: 'Incubation', to: '/admin/research/startups', icon: Rocket, module: 'research', action: 'incubation', altActions: ['view_all', 'manage'], feature: 'research.incubation' },
+      { label: 'API score', to: '/admin/research/api-score', icon: TrendingUp, module: 'research', action: 'manage', altActions: ['view_all'], feature: 'research.api_score' },
+      { label: 'Research stats', to: '/admin/research/stats', icon: TrendingUp, module: 'research', action: 'view_all', feature: 'research.publications' },
+    ],
+  },
   {
     title: 'QUALITY & GOVERNANCE',
     items: [

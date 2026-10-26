@@ -419,6 +419,28 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 30 — research (faculty), verification queue (HOD / research cell), approvals (research cell)
+  const MoreMenuModule(
+      titleKey: 'research',
+      icon: Icons.science_outlined,
+      route: AppRoutes.research,
+      color: Colors.indigo,
+      permission: 'research:manage',
+      feature: 'research.publications'),
+  const MoreMenuModule(
+      titleKey: 'research_verification',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.researchVerification,
+      color: Colors.indigo,
+      permission: 'research:verify',
+      feature: 'research.publications'),
+  const MoreMenuModule(
+      titleKey: 'research_approvals',
+      icon: Icons.approval_outlined,
+      route: AppRoutes.researchApprovals,
+      color: Colors.indigo,
+      permission: 'research:incentives',
+      feature: 'research.publications'),
   // Phase 29 — alumni shell (alumni) and the alumni office (coordinator)
   const MoreMenuModule(
       titleKey: 'alumni',

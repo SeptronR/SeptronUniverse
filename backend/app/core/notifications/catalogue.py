@@ -2068,6 +2068,120 @@ PLACEMENT_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 30 - research & faculty development
+RESEARCH_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "research.publication_verified",
+        "hr",
+        "Publication verified",
+        "Publication verified",
+        "Your publication “{{ title }}” was verified ({{ level }}).",
+        ("title", "level"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.publication_rejected",
+        "hr",
+        "Publication returned",
+        "Publication returned",
+        "Your publication “{{ title }}” was returned: {{ remarks }}",
+        ("title", "remarks"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.project_sanctioned",
+        "hr",
+        "Project sanctioned",
+        "Project sanctioned",
+        "Your project “{{ title }}” was sanctioned for Rs {{ amount }} by {{ agency }}.",
+        ("title", "amount", "agency"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.project_report_due",
+        "hr",
+        "Project report due",
+        "Project report due",
+        "The {{ period }} report of “{{ title }}” is due on {{ due_on }}.",
+        ("title", "period", "due_on"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.project_closing",
+        "hr",
+        "Project closing",
+        "Project ending soon",
+        "“{{ title }}” ends on {{ end_on }} — submit the final report and utilisation certificate.",
+        ("title", "end_on"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.incentive_status",
+        "hr",
+        "Incentive status",
+        "Incentive {{ status }}",
+        "Your {{ incentive_type }} request (Rs {{ amount }}) is now {{ status }}.",
+        ("incentive_type", "amount", "status"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.ethics_decision",
+        "hr",
+        "Ethics decision",
+        "Ethics decision: {{ decision }}",
+        "The ethics committee decided “{{ decision }}” on “{{ title }}”{% if approval_no %} (approval {{ approval_no }}){% endif %}.",
+        ("title", "decision", "approval_no"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.mou_expiring",
+        "hr",
+        "MoU expiring",
+        "MoU with {{ partner }} expires on {{ valid_to }}",
+        "The MoU with {{ partner }} expires on {{ valid_to }} — renew it or record the closure.",
+        ("partner", "valid_to"),
+        ("in_app", "email"),
+        link="/admin/research/mous",
+    ),
+    EventDef(
+        "research.fdp_recorded",
+        "hr",
+        "FDP recorded",
+        "FDP recorded",
+        "“{{ title }}” ({{ hours }} h, {{ role }}) was added to your FDP record.",
+        ("title", "hours", "role"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.api_updated",
+        "hr",
+        "API score updated",
+        "API score updated",
+        "Your API score for {{ period }} is {{ total }}.",
+        ("period", "total"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+    EventDef(
+        "research.patent_renewal",
+        "hr",
+        "Patent renewal",
+        "Patent renewal due",
+        "The renewal of patent {{ application_no }} (“{{ title }}”) is due.",
+        ("title", "application_no"),
+        ("in_app", "email"),
+        link="/faculty/research",
+    ),
+)
+
 # Phase 29 - alumni, endowments & fundraising
 ALUMNI_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -2306,6 +2420,7 @@ EVENTS = (
     + SUPPORT_EVENTS
     + PLACEMENT_EVENTS
     + ALUMNI_EVENTS
+    + RESEARCH_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

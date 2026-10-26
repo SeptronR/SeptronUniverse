@@ -96,6 +96,7 @@ from app.api.v1.endpoints import (
     recruitment,
     registration,
     regulations,
+    research,
     results,
     scholarships,
     search,
@@ -226,6 +227,9 @@ api_router.include_router(alumni.public_router)
 api_router.include_router(alumni.router)
 api_router.include_router(fundraising.public_router)
 api_router.include_router(fundraising.router)
+# Phase 30: research & faculty development (publications, patents, projects, consultancy, ethics, incentives, FDP,
+# MoUs, start-ups, API score, stats) — feature keys per route group
+api_router.include_router(research.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)
