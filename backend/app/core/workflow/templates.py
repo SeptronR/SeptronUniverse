@@ -410,6 +410,25 @@ PHD_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         ],
     },
 )
+# Phase 32: criterion response review (owner submits → the owner's HOD when a department is known → IQAC → principal)
+ACCREDITATION_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "accreditation.response_review",
+        "module": "accreditation",
+        "name": "Criterion response review",
+        "steps": [
+            {
+                "order": 1,
+                "approver": {"type": "scope_rule", "value": "entity.department.hod"},
+                "mode": "sequential",
+                "sla_hours": 72,
+                "skip_unless": "department_id",
+            },
+            _role("iqac_coordinator", 2, 72, escalate="vice_chancellor"),
+            {**_role("vice_chancellor", 3, 96), "approver": {"type": "scope_rule", "value": "entity.college.principal"}},
+        ],
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -426,9 +445,10 @@ WORKFLOW_TEMPLATES = (
     + SUPPORT_WORKFLOW_TEMPLATES
     + RESEARCH_WORKFLOW_TEMPLATES
     + PHD_WORKFLOW_TEMPLATES
+    + ACCREDITATION_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 49, (
+assert len(WORKFLOW_TEMPLATES) == 50, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3, Prompts/32 1"
 )

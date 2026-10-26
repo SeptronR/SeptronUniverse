@@ -82,6 +82,9 @@ class AppRoutes {
   static const research = '/app/research';
   static const researchVerification = '/app/research-verification';
   static const researchApprovals = '/app/research-approvals';
+  // Phase 32 — IQAC hub (coordinator) and department quality (HOD / faculty)
+  static const iqacHub = '/app/iqac';
+  static const departmentQuality = '/app/department-quality';
   // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
   static const scholarHub = '/app/scholar';
   static const guideScholars = '/app/my-scholars';

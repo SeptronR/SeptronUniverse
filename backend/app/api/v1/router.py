@@ -41,6 +41,7 @@ import app.features  # noqa: F401  (registers every feature key before routers c
 from app.api.v1.endpoints import (
     academic_sessions,
     accounting,
+    accreditation,
     admissions,
     alumni,
     announcements,
@@ -234,6 +235,9 @@ api_router.include_router(research.router)
 # Phase 31: PhD & research-scholar management — feature keys per route group; examiner token pages + plagiarism callback
 api_router.include_router(phd.router)
 api_router.include_router(phd.public_router)
+# Phase 32: accreditation & compliance (IQAC) — feature keys per route group; public disclosures feed by institution slug
+api_router.include_router(accreditation.router)
+api_router.include_router(accreditation.public_router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

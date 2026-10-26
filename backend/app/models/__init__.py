@@ -6,6 +6,7 @@ Phases append their module here (``from app.models import <module>  # noqa: F401
 from app.models import (  # noqa: F401
     academic,
     accounting,
+    accreditation,
     admissions,
     alumni,
     assessment,
@@ -54,6 +55,7 @@ __all__ = [
     "placement",
     "research",
     "phd",
+    "accreditation",
     "clubs",
     "discipline",
     "grievances",

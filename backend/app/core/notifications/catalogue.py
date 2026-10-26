@@ -2538,6 +2538,90 @@ PHD_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 32 - accreditation & compliance (IQAC)
+ACCREDITATION_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "accreditation.compute_done",
+        "academics",
+        "Metric computation finished",
+        "Metrics computed for {{ period }}",
+        "Metric computation for {{ period }} finished: {{ computed }} computed, {{ failed }} failed.",
+        ("period", "computed", "failed"),
+        ("in_app",),
+        link="/iqac/metrics",
+    ),
+    EventDef(
+        "accreditation.override_pending",
+        "approvals",
+        "Metric override awaiting verification",
+        "Override proposed for {{ key }} ({{ period }})",
+        "An override of {{ key }} for {{ period }} to {{ value }} awaits verification. Reason: {{ reason }}",
+        ("key", "period", "value", "reason"),
+        ("in_app", "email"),
+        link="/iqac/metrics",
+    ),
+    EventDef(
+        "accreditation.response_assigned",
+        "academics",
+        "Criterion response assigned",
+        "Criterion response assigned — {{ cycle }}",
+        "You are the owner of criteria {{ criteria }} in {{ cycle }} (due {{ due_on }}).",
+        ("cycle", "criteria", "due_on"),
+        ("in_app", "email"),
+        link="/iqac/cycles",
+    ),
+    EventDef(
+        "accreditation.response_due",
+        "academics",
+        "Criterion response due",
+        "Criterion response due on {{ due_on }}",
+        "A criterion response assigned to you is due on {{ due_on }}.",
+        ("due_on",),
+        ("in_app", "email"),
+        link="/iqac/cycles",
+    ),
+    EventDef(
+        "accreditation.response_reviewed",
+        "approvals",
+        "Criterion response reviewed",
+        "Criterion response {{ status }}",
+        "Your criterion response is {{ status }}. {{ remarks }}",
+        ("status", "remarks"),
+        ("in_app", "email"),
+        link="/iqac/cycles",
+    ),
+    EventDef(
+        "accreditation.submission_due",
+        "academics",
+        "Compliance submission due",
+        "{{ type }} {{ period }} due on {{ due_on }}",
+        "The {{ type }} submission for {{ period }} is due on {{ due_on }}.",
+        ("type", "period", "due_on"),
+        ("in_app", "email"),
+        link="/iqac/submissions",
+    ),
+    EventDef(
+        "accreditation.audit_finding_assigned",
+        "academics",
+        "Audit finding assigned",
+        "{{ audit }} audit finding ({{ period }})",
+        "A {{ audit }} audit finding for {{ period }} is assigned to you (due {{ due_on }}): {{ finding }}",
+        ("audit", "period", "finding", "due_on"),
+        ("in_app", "email"),
+        link="/hod/quality",
+    ),
+    EventDef(
+        "accreditation.consistency_alert",
+        "academics",
+        "Data consistency alert",
+        "Consistency checks failed for {{ period }}",
+        "Cross-framework checks failed for {{ period }}: {{ checks }}.",
+        ("period", "checks"),
+        ("in_app", "email"),
+        link="/iqac/consistency",
+    ),
+)
+
 EVENTS = (
     EVENTS
     + STUDENT_EVENTS
@@ -2565,6 +2649,7 @@ EVENTS = (
     + ALUMNI_EVENTS
     + RESEARCH_EVENTS
     + PHD_EVENTS
+    + ACCREDITATION_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}
