@@ -29,6 +29,7 @@ import '../../features/settings/settings_screen.dart';
 import '../../features/admissions/admissions_screens.dart';
 import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
+import '../../features/governance/governance_screens.dart';
 import '../../features/iqac/iqac_screens.dart';
 import '../../features/phd/phd_screens.dart';
 import '../../features/research/research_screens.dart';
@@ -503,6 +504,28 @@ class ScreenRegistry {
       feature: 'accreditation.aishe',
       permission: 'accreditation:evidence',
       builder: (_, __) => const IqacHubScreen(department: true),
+    ),
+    // Phase 33 — governance
+    AppRoutes.governanceHub: ScreenEntry(
+      route: AppRoutes.governanceHub,
+      titleKey: 'governance',
+      feature: 'governance.committees',
+      permission: 'governance:view',
+      builder: (_, __) => const GovernanceHubScreen(),
+    ),
+    AppRoutes.committeeDesk: ScreenEntry(
+      route: AppRoutes.committeeDesk,
+      titleKey: 'committee_desk',
+      feature: 'governance.minutes',
+      permission: 'governance:minutes',
+      builder: (_, __) => const CommitteeDeskScreen(),
+    ),
+    AppRoutes.governanceApprovals: ScreenEntry(
+      route: AppRoutes.governanceApprovals,
+      titleKey: 'governance_approvals',
+      feature: 'governance.committees',
+      permission: 'governance:approve',
+      builder: (_, __) => const GovernanceApprovalsScreen(),
     ),
     // Phase 31 — PhD
     AppRoutes.scholarHub: ScreenEntry(

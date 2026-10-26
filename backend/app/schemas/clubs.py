@@ -195,55 +195,6 @@ class AchOut(BaseModel):
     created_at: datetime | None = None
 
 
-class GovCommitteeIn(_Strict):
-    name: str = Field(min_length=2, max_length=160)
-    committee_type: str = Field(min_length=2, max_length=30)
-    college_id: uuid.UUID | None = None
-    department_id: uuid.UUID | None = None
-    chair_staff_id: uuid.UUID | None = None
-    secretary_staff_id: uuid.UUID | None = None
-    constituted_on: date | None = None
-    valid_to: date | None = None
-    is_active: bool = True
-
-
-class GovCommitteeOut(BaseModel):
-    id: uuid.UUID
-    name: str
-    committee_type: str
-    college_id: uuid.UUID | None = None
-    department_id: uuid.UUID | None = None
-    chair_staff_id: uuid.UUID | None = None
-    chair_name: str | None = None
-    secretary_staff_id: uuid.UUID | None = None
-    constituted_on: date | None = None
-    valid_to: date | None = None
-    is_active: bool
-    members: int = 0
-
-
-class GovCommitteeMemberIn(_Strict):
-    member_type: Literal["staff", "student", "external"] = "staff"
-    staff_id: uuid.UUID | None = None
-    user_id: uuid.UUID | None = None
-    external: dict[str, Any] | None = None
-    role: str = Field("member", max_length=40)
-    from_on: date | None = None
-    to_on: date | None = None
-
-
-class GovCommitteeMemberOut(BaseModel):
-    id: uuid.UUID
-    committee_id: uuid.UUID
-    member_type: str
-    staff_id: uuid.UUID | None = None
-    user_id: uuid.UUID | None = None
-    name: str | None = None
-    role: str
-    from_on: date | None = None
-    to_on: date | None = None
-
-
 class SupportStats(BaseModel):
     term_id: uuid.UUID | None = None
     mentoring: dict[str, Any]

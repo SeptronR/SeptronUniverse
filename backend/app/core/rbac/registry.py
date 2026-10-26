@@ -277,6 +277,9 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     ("governance", "committees", "Committees"),
     ("governance", "minutes", "Minutes"),
     ("governance", "resolutions", "Resolutions"),
+    # Phase 33: policy repository management and statutory / AG audit paras (replies by finance)
+    ("governance", "policies", "Manage policies"),
+    ("governance", "audit_paras", "Audit paras"),
     ("affiliation", "apply", "Apply for affiliation"),
     ("affiliation", "inspect", "Inspections"),
     ("affiliation", "decide", "Decide affiliation"),
@@ -486,8 +489,13 @@ STAFF_SUPPORT: set[str] = P("grievances", "view") | P("discipline", "view")
 COMMITTEE_SUPPORT: set[str] = P("discipline", "decide")
 # Phase 28: internship course faculty evaluate the internships mapped to their offerings
 FACULTY_PLACEMENT: set[str] = P("placement", "evaluate")
+# Phase 33: staff see their own committees / meetings / resolutions / files and acknowledge policies; student members
+# read their committees (rows narrowed in the governance services)
+STAFF_GOVERNANCE: set[str] = P("governance", "view") | P("efile", "create", "view")
+STUDENT_GOVERNANCE: set[str] = P("governance", "view")
 STAFF_SELF: set[str] = (
     COMMON
+    | STAFF_GOVERNANCE
     | P("leaves", "self", "create", "view")
     | P("payroll", "self")
     | P("attendance", "staff_self")
@@ -581,6 +589,7 @@ _COLLEGE_ADMIN: set[str] = (
 
 STUDENT: set[str] = (
     COMMON
+    | STUDENT_GOVERNANCE
     | P("students", "self", "undertakings", "id_card", "view")
     | P("registration", "self")
     | P("attendance", "self")
@@ -837,6 +846,16 @@ FACULTY_ACCREDITATION: set[str] = P("accreditation", "view", "evidence")
 HOD_ACCREDITATION: set[str] = P("accreditation", "view", "override", "evidence")
 PRINCIPAL_ACCREDITATION: set[str] = P("accreditation", "approve", "override")
 OFFICER_ACCREDITATION: set[str] = P("accreditation", "view")
+# Phase 33 (Prompts/33 "Visibility rules"): every staff member sees their committees / meetings / owned resolutions,
+# creates and moves e-files and acknowledges policies (``governance:view`` + ``efile:create|view``; rows narrowed by
+# membership / ownership / holder in the services); student members read their committees; the registrar administers
+# governance (manage), reads legal / RTI, decides first RTI appeals (``rti:approve``) and administers e-files; the
+# principal (vice_chancellor) approves minutes, policies and files; finance replies to audit paras
+REGISTRAR_GOVERNANCE: set[str] = (
+    P("governance", "manage") | P("legal", "view_all") | P("rti", "view_all", "approve") | P("efile", "manage")
+)
+VC_GOVERNANCE: set[str] = P("governance", "approve") | P("efile", "approve")
+ACCOUNTANT_GOVERNANCE: set[str] = P("governance", "audit_paras")
 GRIEVANCE_OFFICER_SUPPORT: set[str] = P("governance", "committees")
 PARENT_SUPPORT: set[str] = P("clubs", "view")
 
@@ -845,6 +864,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "support_agent": ALL("view", "view_all") | P("users", "impersonate") | COMMON,
     "institution_admin": _INSTITUTION_ADMIN,
     "vice_chancellor": ALL("view", "view_all")
+    | VC_GOVERNANCE
     | PRINCIPAL_ACCREDITATION
     | VC_PROCUREMENT
     | VC_ACCOUNTING
@@ -861,6 +881,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | VC_FEES
     | STAFF_SELF,
     "registrar": STAFF_SELF
+    | REGISTRAR_GOVERNANCE
     | OFFICER_ACCREDITATION
     | REGISTRAR_SUPPORT
     | READ_PLACEMENT
@@ -1073,6 +1094,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     | P("reports", "run", "view")
     | P("communication", "send"),
     "accountant": STAFF_SELF
+    | ACCOUNTANT_GOVERNANCE
     | OFFICER_ACCREDITATION
     | ACCOUNTANT_PHD
     | ACCOUNTANT_PLACEMENT
@@ -1278,6 +1300,9 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0033": frozenset(
+        STAFF_GOVERNANCE | STUDENT_GOVERNANCE | REGISTRAR_GOVERNANCE | VC_GOVERNANCE | ACCOUNTANT_GOVERNANCE
+    ),
     "0032": frozenset(FACULTY_ACCREDITATION | HOD_ACCREDITATION | PRINCIPAL_ACCREDITATION | OFFICER_ACCREDITATION),
     "0031": frozenset(FACULTY_PHD | HOD_PHD | RESEARCH_CELL_PHD | COE_PHD | ACCOUNTANT_PHD),
     "0030": frozenset(RESEARCH_CELL | HOD_RESEARCH | READ_RESEARCH),

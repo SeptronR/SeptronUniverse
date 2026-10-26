@@ -205,7 +205,6 @@ const SsClubsAdminPage = lazy(() => import('@/features/student_support/pages/Sup
 const SsStudentClubsPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentClubsPage })));
 const SsStudentMentorPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.StudentMentorPage })));
 const SsParentSupportPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.ParentSupportPage })));
-const SsCommitteesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.CommitteesStubPage })));
 // Phase 28 — placement, internships, training, recruiter portal
 const PlCompaniesPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.CompaniesPage })));
 const PlCompanyPage = lazy(() => import('@/features/placement/pages/PlacementPages').then((m) => ({ default: m.CompanyPage })));
@@ -249,6 +248,20 @@ const RsApiScorePage = lazy(() => import('@/features/research/pages/ResearchPage
 const RsStatsPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.StatsPage })));
 const RsFacultyResearchPage = lazy(() => import('@/features/research/pages/ResearchPages').then((m) => ({ default: m.FacultyResearchPage })));
 // Phase 32 — accreditation & compliance (IQAC)
+// Phase 33 — governance: committees, meetings, resolutions, legal, RTI, audit paras, e-File, policies
+const GovCommitteesPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.CommitteesPage })));
+const GovCommitteePage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.CommitteePage })));
+const GovMeetingsPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.MeetingsPage })));
+const GovMeetingPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.MeetingPage })));
+const GovResolutionsPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.ResolutionsPage })));
+const GovLegalPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.LegalPage })));
+const GovRtiPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.RtiPage })));
+const GovAuditParasPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.AuditParasPage })));
+const GovEfilesPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.EfilesPage })));
+const GovEfilePage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.EfilePage })));
+const GovPoliciesPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.PoliciesPage })));
+const GovGovernanceStatsPage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.GovernanceStatsPage })));
+const GovStaffGovernancePage = lazy(() => import('@/features/governance/pages/GovernancePages').then((m) => ({ default: m.StaffGovernancePage })));
 const IqacDashboardPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacDashboardPage })));
 const IqacFrameworksPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacFrameworksPage })));
 const IqacMetricsPage = lazy(() => import('@/features/iqac/pages/IqacPages').then((m) => ({ default: m.IqacMetricsPage })));
@@ -691,7 +704,20 @@ export const router = createBrowserRouter([
               ['/admin/surveys', 'surveys.core', 'surveys', 'manage', [['surveys', 'view_all'], ['surveys', 'analyse']], <SsSurveysAdminPage key="sss" />],
               ['/admin/surveys/:id', 'surveys.core', 'surveys', 'manage', [['surveys', 'view_all'], ['surveys', 'analyse']], <SsSurveyDetailPage key="sssd" />],
               ['/admin/clubs', 'clubs.core', 'clubs', 'view_all', [['clubs', 'verify_hours'], ['clubs', 'manage']], <SsClubsAdminPage key="ssc" />],
-              ['/admin/governance/committees', 'governance.committees', 'governance', 'committees', [['governance', 'manage'], ['governance', 'view']], <SsCommitteesPage key="ssgc" />],
+              // Phase 33 — governance (narrowed by the services: member / secretary / chair / owner / holder / PIO / legal; department / college / all)
+              ['/admin/governance/committees', 'governance.committees', 'governance', 'committees', [['governance', 'view'], ['governance', 'view_all'], ['governance', 'committees'], ['governance', 'minutes'], ['governance', 'manage']], <GovCommitteesPage key="gvc" />],
+              ['/admin/governance/committees/:id', 'governance.committees', 'governance', 'committees', [['governance', 'view'], ['governance', 'view_all'], ['governance', 'committees'], ['governance', 'minutes'], ['governance', 'manage']], <GovCommitteePage key="gvcd" />],
+              ['/admin/governance/meetings', 'governance.minutes', 'governance', 'minutes', [['governance', 'view'], ['governance', 'view_all'], ['governance', 'committees'], ['governance', 'minutes'], ['governance', 'manage']], <GovMeetingsPage key="gvm" />],
+              ['/admin/governance/meetings/:id', 'governance.minutes', 'governance', 'minutes', [['governance', 'view'], ['governance', 'view_all'], ['governance', 'committees'], ['governance', 'minutes'], ['governance', 'manage']], <GovMeetingPage key="gvmd" />],
+              ['/admin/governance/resolutions', 'governance.minutes', 'governance', 'resolutions', [['governance', 'view'], ['governance', 'view_all'], ['governance', 'committees'], ['governance', 'minutes'], ['governance', 'manage']], <GovResolutionsPage key="gvr" />],
+              ['/admin/governance/stats', 'governance.committees', 'governance', 'view_all', [['governance', 'manage']], <GovGovernanceStatsPage key="gvs" />],
+              ['/admin/legal', 'governance.legal', 'legal', 'manage', [['legal', 'view_all'], ['legal', 'view']], <GovLegalPage key="gvl" />],
+              ['/admin/rti', 'governance.rti', 'rti', 'manage', [['rti', 'view_all'], ['rti', 'approve'], ['rti', 'view']], <GovRtiPage key="gvrt" />],
+              ['/admin/audit-paras', 'governance.audit_paras', 'governance', 'audit_paras', [['governance', 'manage'], ['governance', 'view_all']], <GovAuditParasPage key="gvap" />],
+              ['/admin/efiles', 'governance.efile', 'efile', 'view', [['efile', 'create'], ['efile', 'view_all'], ['efile', 'manage']], <GovEfilesPage key="gve" />],
+              ['/admin/efiles/:id', 'governance.efile', 'efile', 'view', [['efile', 'create'], ['efile', 'view_all'], ['efile', 'manage']], <GovEfilePage key="gved" />],
+              ['/admin/policies', 'governance.policies', 'governance', 'policies', [['governance', 'manage'], ['governance', 'view_all'], ['governance', 'view']], <GovPoliciesPage key="gvp" />],
+              ['/staff/governance', 'governance.committees', 'governance', 'view', [['governance', 'view_all'], ['governance', 'manage']], <GovStaffGovernancePage key="gvst" />],
               // Phase 28 — placement (eligibility, policy, consent and scopes in the services)
               ['/admin/placement/companies', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlCompaniesPage key="plc" />],
               ['/admin/placement/companies/:id', 'placement.core', 'placement', 'view_all', [['placement', 'manage'], ['placement', 'drive_manage']], <PlCompanyPage key="plcd" />],

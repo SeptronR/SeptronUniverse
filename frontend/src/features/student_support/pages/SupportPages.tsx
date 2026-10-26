@@ -660,25 +660,3 @@ export function ParentSupportPage() {
     </div>
   );
 }
-
-// ---- committees stub --------------------------------------------------------------------------------------------------------
-export function CommitteesStubPage() {
-  useTitle('Committees');
-  const q = useQ(['committees'], () => sa.committees());
-  const run = useRun();
-  const [open, setOpen] = useState<Any>(null);
-  const members = useQ(['cmembers', open?.id], () => sa.committeeMembers(open.id), !!open);
-  const [f, setF] = useState<Any>({ name: '', committee_type: 'grievance' });
-  const [staffId, setStaffId] = useState('');
-  return (
-    <div className="space-y-4">
-      <PageHeader title="Committees" description="Minimal committee register for grievance / ICC / anti-ragging / SC-ST / OBC / discipline (Phase 33 replaces this)." />
-      <Section title="New committee"><div className="flex gap-2"><Input placeholder="Name" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} /><select className={sel} value={f.committee_type} onChange={(e) => setF({ ...f, committee_type: e.target.value })}>{['grievance', 'icc', 'anti_ragging', 'sc_st_cell', 'obc_cell', 'discipline'].map((t) => <option key={t}>{t}</option>)}</select><Button size="sm" disabled={f.name.length < 2} onClick={() => run.mutate(() => sa.createCommittee(f), { onError: fail })}>Create</Button></div></Section>
-      <Section title="Committees"><SimpleTable head={['Name', 'Type', 'Chair', 'Members', '']} rows={list(q.data).map((c: Any) => [c.name, c.committee_type, c.chair_name ?? '—', c.members, <Button key="o" size="sm" variant="outline" onClick={() => setOpen(c)}>Members</Button>])} /></Section>
-      {open && <Section title={`${open.name} — members`} action={<Button size="sm" variant="outline" onClick={() => setOpen(null)}>Close</Button>}>
-        <SimpleTable head={['Name', 'Role', 'Type']} rows={list(members.data).map((m: Any) => [m.name, m.role, m.member_type])} />
-        <div className="flex gap-2"><Input className="w-96" placeholder="Staff id" value={staffId} onChange={(e) => setStaffId(e.target.value)} /><Button size="sm" disabled={!staffId} onClick={() => run.mutate(() => sa.addCommitteeMember(open.id, { staff_id: staffId, role: 'member' }), { onSuccess: () => setStaffId(''), onError: fail })}>Add</Button></div>
-      </Section>}
-    </div>
-  );
-}

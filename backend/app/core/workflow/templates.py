@@ -429,6 +429,40 @@ ACCREDITATION_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
         ],
     },
 )
+# Phase 33: minutes approval (the secretary submits → the chair named in the context approves), policy approval (owner
+# submits → registrar → principal; the council resolution is cited on approve) and e-file approval routes chosen at
+# movement time (up to four ad-hoc approvers carried in the context; empty slots are skipped)
+GOVERNANCE_WORKFLOW_TEMPLATES: tuple[dict[str, Any], ...] = (
+    {
+        "key": "governance.minutes_approval",
+        "module": "governance",
+        "name": "Minutes approval",
+        "steps": [
+            {"order": 1, "approver": {"type": "scope_rule", "value": "context.chair_user_id"}, "mode": "sequential", "sla_hours": 168}
+        ],
+    },
+    {
+        "key": "governance.policy_approval",
+        "module": "governance",
+        "name": "Policy approval",
+        "steps": [_role("registrar", 1, 72, escalate="vice_chancellor"), _role("vice_chancellor", 2, 120)],
+    },
+    {
+        "key": "efile.approval",
+        "module": "efile",
+        "name": "e-File approval route",
+        "steps": [
+            {
+                "order": i,
+                "approver": {"type": "scope_rule", "value": f"context.route_{i}"},
+                "mode": "sequential",
+                "sla_hours": 168,
+                "skip_unless": f"route_{i}",
+            }
+            for i in range(1, 5)
+        ],
+    },
+)
 WORKFLOW_TEMPLATES = (
     WORKFLOW_TEMPLATES
     + HR_WORKFLOW_TEMPLATES
@@ -446,9 +480,10 @@ WORKFLOW_TEMPLATES = (
     + RESEARCH_WORKFLOW_TEMPLATES
     + PHD_WORKFLOW_TEMPLATES
     + ACCREDITATION_WORKFLOW_TEMPLATES
+    + GOVERNANCE_WORKFLOW_TEMPLATES
 )
 
-assert len(WORKFLOW_TEMPLATES) == 50, (
+assert len(WORKFLOW_TEMPLATES) == 53, (
     "Prompts/04 ships 18 templates, Prompts/06 adds 5, Prompts/07 2, Prompts/08 1, Prompts/10 1, Prompts/11 1, "
-    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3, Prompts/32 1"
+    "Prompts/12 1, Prompts/16 3, Prompts/20 3, Prompts/22 1, Prompts/23 2, Prompts/25 2, Prompts/27 2, Prompts/30 4, Prompts/31 3, Prompts/32 1, Prompts/33 3"
 )
