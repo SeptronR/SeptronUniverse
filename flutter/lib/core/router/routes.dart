@@ -85,6 +85,10 @@ class AppRoutes {
   // Phase 32 — IQAC hub (coordinator) and department quality (HOD / faculty)
   static const iqacHub = '/app/iqac';
   static const departmentQuality = '/app/department-quality';
+  // Phase 33 — governance (staff hub), committee desk (secretary), governance approvals (registrar / principal / PIO / legal)
+  static const governanceHub = '/app/governance';
+  static const committeeDesk = '/app/committee-desk';
+  static const governanceApprovals = '/app/governance-approvals';
   // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
   static const scholarHub = '/app/scholar';
   static const guideScholars = '/app/my-scholars';

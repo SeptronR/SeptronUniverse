@@ -103,6 +103,8 @@ PUBLIC_ROUTES: set[str] = {
     "POST /api/v1/webhooks/plagiarism/{connection_id}",
     # Phase 32 — mandatory disclosures website feed (tenant by institution slug; aggregates only; {accreditation.aishe} inside)
     "GET /api/v1/accreditation/disclosures/public",
+    # Phase 33 — published policies flagged for the website (tenant by institution slug; {governance.policies} inside)
+    "GET /api/v1/policies/public",
 }
 
 

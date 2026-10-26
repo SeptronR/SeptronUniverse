@@ -258,6 +258,24 @@ register_beat(
     crontab(day_of_month=5, hour=21, minute=0),
 )
 
+# ---- Phase 33 governance (app/tasks/governance.py) ----------------------------------------------------------------------------------
+register_beat("governance.meeting_reminders", "beat.governance.meeting_reminders", crontab(hour=2, minute=50))  # 08:20 IST
+register_beat(
+    "governance.atr_due_reminders", "beat.governance.atr_due_reminders", crontab(day_of_week=1, hour=4, minute=10)
+)  # Mon 09:40 IST
+register_beat("legal.hearing_reminders", "beat.legal.hearing_reminders", crontab(hour=2, minute=55))
+register_beat("rti.due_reminders", "beat.rti.due_reminders", crontab(hour=3, minute=5))
+register_beat(
+    "audit_para.due_reminders", "beat.audit_para.due_reminders", crontab(day_of_week=3, hour=4, minute=0)
+)  # Wed 09:30 IST
+register_beat("efile.pendency_scan", "beat.efile.pendency_scan", crontab(hour=3, minute=15))
+register_beat("policy.ack_reminders", "beat.policy.ack_reminders", crontab(day_of_week=4, hour=4, minute=0))
+register_beat(
+    "governance.member_tenure_expiry",
+    "beat.governance.member_tenure_expiry",
+    crontab(day_of_month=1, hour=3, minute=30),
+)
+
 celery.conf.beat_schedule = BEAT_SCHEDULE
 
 

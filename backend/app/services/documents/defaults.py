@@ -69,6 +69,11 @@ TITLES: dict[str, str] = {
     "phd_synopsis_ack": "Acknowledgement of Synopsis Submission",
     "phd_provisional_certificate": "Provisional Certificate (Doctor of Philosophy)",
     "examiner_invitation": "Invitation to Examine a PhD Thesis",
+    "meeting_notice": "Notice of Meeting",
+    "minutes": "Minutes of the Meeting",
+    "resolution_extract": "Extract of Resolution",
+    "rti_response": "Reply under the Right to Information Act, 2005",
+    "office_order": "Office Order",
     "custom": "Certificate",
 }
 
@@ -137,6 +142,11 @@ BODIES: dict[str, str] = {
     "thesis entitled “{{ thesis.title }}” submitted in {{ enrolment.department }}. Kindly respond within "
     "{{ examiner.due_days }} days using the link sent by email.",
     "custom": "{{ body }}",
+    "meeting_notice": '{{ committee.name }} — meeting {{ meeting.number }} will be held on {{ meeting.held_on }} at {{ meeting.venue }}.<br>Agenda:<br>{{ meeting.agenda }}{% if meeting.short_notice %}<br>(Convened at short notice.){% endif %}',
+    "minutes": 'Minutes of meeting {{ meeting.number }} of the {{ committee.name }} held on {{ meeting.held_on }} at {{ meeting.venue }}. Members present: {{ meeting.present }} (quorum {{ meeting.quorum }}).<br>{{ meeting.minutes }}<br>Resolutions:<br>{{ meeting.resolutions }}',
+    "resolution_extract": 'Certified true extract of resolution {{ resolution.number }} of the {{ committee.name }} passed at its meeting {{ meeting.number }} held on {{ meeting.held_on }}.<br><b>{{ resolution.subject }}</b><br>{{ resolution.text }}',
+    "rti_response": 'Ref. {{ rti.request_no }} dated {{ rti.received_on }}. To {{ rti.applicant }}.<br>Subject: {{ rti.subject }}<br>{{ rti.response }}{% if rti.fee_additional %}<br>Additional fee for copies: Rs. {{ rti.fee_additional }}.{% endif %}<br>First appeal, if any, lies with {{ rti.appellate }} within {{ rti.appeal_days }} days of receipt of this reply.',
+    "office_order": '{{ body }}',
     "id_card": "{{ student.name }}<br>{{ student.registration_number }}<br>{{ enrolment.program }}",
 }
 SECONDARY_HI: dict[str, str] = {
@@ -163,6 +173,11 @@ SIGNERS: dict[str, list[str]] = {
     "phd_synopsis_ack": ["registrar"],
     "phd_provisional_certificate": ["coe", "registrar"],
     "examiner_invitation": ["coe"],
+    "meeting_notice": ['registrar'],
+    "minutes": ['registrar'],
+    "resolution_extract": ['registrar'],
+    "rti_response": ['registrar'],
+    "office_order": ['registrar'],
 }
 
 

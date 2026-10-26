@@ -4694,6 +4694,110 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/audit-paras": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Audit paras (financial statutory / AG registers) */
+        get: operations["audit_paras_api_v1_audit_paras_get"];
+        put?: never;
+        /** Record a para */
+        post: operations["create_para_api_v1_audit_paras_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audit-paras/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ageing / status / register dashboard */
+        get: operations["para_dashboard_api_v1_audit_paras_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audit-paras/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Paras I own */
+        get: operations["my_paras_api_v1_audit_paras_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audit-paras/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Para */
+        get: operations["audit_para_api_v1_audit_paras__id__get"];
+        /** Update a para */
+        put: operations["update_para_api_v1_audit_paras__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audit-paras/{id}/reply": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reply (owner / finance) */
+        post: operations["reply_para_api_v1_audit_paras__id__reply_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/audit-paras/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Settle / drop / reopen a para */
+        post: operations["para_status_api_v1_audit_paras__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/change-password": {
         parameters: {
             query?: never;
@@ -9473,6 +9577,177 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/efiles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Files visible to me (search) */
+        get: operations["efiles_api_v1_efiles_get"];
+        put?: never;
+        /** Open a file with the initial noting */
+        post: operations["create_efile_api_v1_efiles_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/inbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Files with me */
+        get: operations["handler_api_v1_efiles_inbox_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/mine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Files I created */
+        get: operations["handler_api_v1_efiles_mine_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/outbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Files I moved (held by others) */
+        get: operations["handler_api_v1_efiles_outbox_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/pendency": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Pendency by holder (SLA breaches first) */
+        get: operations["efile_pendency_api_v1_efiles_pendency_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** File with the append-only notings sheet */
+        get: operations["efile_api_v1_efiles__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close with summary */
+        post: operations["close_efile_api_v1_efiles__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/{id}/move": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Forward (user / role) / return / approve / reject with a noting */
+        post: operations["move_efile_api_v1_efiles__id__move_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/{id}/notings.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Notings sheet PDF */
+        get: operations["notings_pdf_api_v1_efiles__id__notings_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/efiles/{id}/reopen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reopen (admin) */
+        post: operations["reopen_efile_api_v1_efiles__id__reopen_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/elective-allocation-runs/{id}": {
         parameters: {
             query?: never;
@@ -12992,6 +13267,41 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/governance/atr/{id}/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Accept (→ implemented) / return an ATR (secretary) */
+        post: operations["decide_atr_api_v1_governance_atr__id__decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committee-members/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Update a membership (role / tenure) */
+        put: operations["update_member_api_v1_governance_committee_members__id__put"];
+        post?: never;
+        /** End a membership today (history kept) */
+        delete: operations["remove_member_api_v1_governance_committee_members__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/governance/committees": {
         parameters: {
             query?: never;
@@ -12999,11 +13309,97 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Committees (stub until Phase 33) */
+        /** Committees (member / secretary / department / college / all) */
         get: operations["committees_api_v1_governance_committees_get"];
         put?: never;
-        /** Create a committee (stub) */
+        /** Create a committee */
         post: operations["create_committee_api_v1_governance_committees_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committees/coverage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Statutory committee coverage (anti-ragging, ICC, grievance mandatory) with validity */
+        get: operations["coverage_api_v1_governance_committees_coverage_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committees/from-template": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Constitute a committee from a statutory template */
+        post: operations["committee_from_template_api_v1_governance_committees_from_template_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committees/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** My committees (member / chair / secretary) */
+        get: operations["my_committees_api_v1_governance_committees_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committees/templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Statutory committee templates for the institution type */
+        get: operations["committee_templates_api_v1_governance_committees_templates_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committees/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Committee page (members with tenure, meetings, open resolutions, ATR pendency, history) */
+        get: operations["committee_api_v1_governance_committees__id__get"];
+        /** Update a committee (secretary / chair / administrator) */
+        put: operations["update_committee_api_v1_governance_committees__id__put"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -13017,11 +13413,404 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Committee members (stub) */
+        /** Committee members */
         get: operations["committee_members_api_v1_governance_committees__id__members_get"];
         put?: never;
-        /** Add a committee member (stub) */
-        post: operations["add_committee_member_api_v1_governance_committees__id__members_post"];
+        /** Add a member (staff / external / student) */
+        post: operations["add_member_api_v1_governance_committees__id__members_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/committees/{id}/reconstitute": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reconstitute: new tenure, old members closed, history kept */
+        post: operations["reconstitute_api_v1_governance_committees__id__reconstitute_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Staff / student governance overview (committees, meetings, resolutions, e-file inbox, policy acks) */
+        get: operations["governance_me_api_v1_governance_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Meetings (ScopeTabs Mine | Committee | All) */
+        get: operations["meetings_api_v1_governance_meetings_get"];
+        put?: never;
+        /** Schedule a meeting (number auto per committee / year; ATR item added) */
+        post: operations["create_meeting_api_v1_governance_meetings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Meetings of my committees */
+        get: operations["my_meetings_api_v1_governance_meetings_me_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Meeting (agenda, notice, attendance / quorum, minutes, resolutions, approval) */
+        get: operations["meeting_api_v1_governance_meetings__id__get"];
+        /** Reschedule / change venue */
+        put: operations["update_meeting_api_v1_governance_meetings__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/agenda": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Replace the agenda (until frozen) */
+        put: operations["set_agenda_api_v1_governance_meetings__id__agenda_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/agenda/suggestions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Agenda suggestions (ATRs, regulations, result runs, degrees, BoS items, policies, audit paras, IQAC gaps) */
+        get: operations["agenda_suggestions_api_v1_governance_meetings__id__agenda_suggestions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/attendance": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark attendance (secretary roll or member self check-in) → quorum */
+        post: operations["attendance_api_v1_governance_meetings__id__attendance_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cancel / adjourn a meeting */
+        post: operations["cancel_meeting_api_v1_governance_meetings__id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/corrigendum": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Corrigendum to approved minutes (new version with approval record) */
+        post: operations["corrigendum_api_v1_governance_meetings__id__corrigendum_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/minutes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Draft minutes with per-item resolutions (409 QUORUM_NOT_MET when blocked) */
+        post: operations["draft_minutes_api_v1_governance_meetings__id__minutes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/minutes.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Minutes PDF (approved; drafts to the secretary / chair) */
+        get: operations["minutes_pdf_api_v1_governance_meetings__id__minutes_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/minutes/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / return the minutes (chair) — numbers resolutions, renders the minutes */
+        post: operations["approve_minutes_api_v1_governance_meetings__id__minutes_approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/minutes/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit the minutes (governance.minutes_approval: secretary → chair) */
+        post: operations["submit_minutes_api_v1_governance_meetings__id__minutes_submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/meetings/{id}/notice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send the meeting notice (short notice flagged; calendar entry) */
+        post: operations["send_notice_api_v1_governance_meetings__id__notice_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolution register (ScopeTabs Mine | Committee | All) */
+        get: operations["resolutions_api_v1_governance_resolutions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolutions linked to an entity (regulation / result_run / degree_award / policy / …) */
+        get: operations["resolution_lookup_api_v1_governance_resolutions_lookup_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Resolution with its ATR */
+        get: operations["resolution_api_v1_governance_resolutions__id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions/{id}/atr": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit the action-taken report (action owner) */
+        post: operations["submit_atr_api_v1_governance_resolutions__id__atr_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions/{id}/extract.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Certified extract (Phase 26 resolution_extract) */
+        get: operations["resolution_extract_api_v1_governance_resolutions__id__extract_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions/{id}/link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Link a resolution to an entity (writes the entity's approval_resolution_id) */
+        post: operations["link_resolution_api_v1_governance_resolutions__id__link_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/resolutions/{id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Change a resolution's status */
+        post: operations["resolution_status_api_v1_governance_resolutions__id__status_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/governance/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Governance statistics (meetings, quorum, resolutions, ATR, legal, RTI, paras, e-file, policy acks) */
+        get: operations["governance_stats_api_v1_governance_stats_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -16243,6 +17032,110 @@ export interface paths {
         put?: never;
         /** Validate a legacy import */
         post: operations["legacy_validate_api_v1_legacy_results_imports__id__validate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legal/calendar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Hearing calendar */
+        get: operations["legal_calendar_api_v1_legal_calendar_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legal/cases": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Legal case register */
+        get: operations["legal_cases_api_v1_legal_cases_get"];
+        put?: never;
+        /** Register a case (appeals link the parent case) */
+        post: operations["create_case_api_v1_legal_cases_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legal/cases/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Case */
+        get: operations["legal_case_api_v1_legal_cases__id__get"];
+        /** Update a case */
+        put: operations["update_case_api_v1_legal_cases__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legal/cases/{id}/documents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Case documents (legal:manage only) */
+        get: operations["case_documents_api_v1_legal_cases__id__documents_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legal/cases/{id}/hearings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a hearing and the next date */
+        post: operations["case_hearing_api_v1_legal_cases__id__hearings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/legal/cases/{id}/outcome": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Outcome / judgement */
+        post: operations["case_outcome_api_v1_legal_cases__id__outcome_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -20879,6 +21772,178 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/policies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Policy repository */
+        get: operations["policies_api_v1_policies_get"];
+        put?: never;
+        /** Draft a policy (version) */
+        post: operations["create_policy_api_v1_policies_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/me/pending-ack": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Published policies awaiting my acknowledgement */
+        get: operations["pending_acks_api_v1_policies_me_pending_ack_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/public": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Published policies flagged for the website (tenant by institution slug) */
+        get: operations["public_policies_api_v1_policies_public_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Policy */
+        get: operations["policy_api_v1_policies__id__get"];
+        /** Edit a draft */
+        put: operations["update_policy_api_v1_policies__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}/acknowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Acknowledge a policy */
+        post: operations["acknowledge_policy_api_v1_policies__id__acknowledge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}/acknowledgements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Acknowledgements */
+        get: operations["policy_acks_api_v1_policies__id__acknowledgements_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}/approve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Approve / return (final approval cites a council resolution with governance.minutes) */
+        post: operations["approve_policy_api_v1_policies__id__approve_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}/publish": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Publish (announcement with acknowledgement where required) */
+        post: operations["publish_policy_api_v1_policies__id__publish_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}/submit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Submit for approval (owner → registrar → principal) */
+        post: operations["submit_policy_api_v1_policies__id__submit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/policies/{id}/supersede": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark superseded */
+        post: operations["supersede_policy_api_v1_policies__id__supersede_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/posts/{id}/mark-answer": {
         parameters: {
             query?: never;
@@ -24710,6 +25775,161 @@ export interface paths {
         post?: never;
         /** Delete a room */
         delete: operations["delete_room_api_v1_rooms__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** RTI requests (PIO queue) */
+        get: operations["rti_requests_api_v1_rti_requests_get"];
+        put?: never;
+        /** Record an RTI request (due date, fee / BPL waiver) */
+        post: operations["create_rti_api_v1_rti_requests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** RTI request */
+        get: operations["rti_request_api_v1_rti_requests__id__get"];
+        /** Correct an RTI request */
+        put: operations["update_rti_api_v1_rti_requests__id__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}/appeal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Record a first appeal */
+        post: operations["appeal_rti_api_v1_rti_requests__id__appeal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}/appeal/decide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Decide the first appeal (appellate authority) */
+        post: operations["decide_rti_appeal_api_v1_rti_requests__id__appeal_decide_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}/assign": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Assign the PIO */
+        post: operations["assign_rti_api_v1_rti_requests__id__assign_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Close a replied request */
+        post: operations["close_rti_api_v1_rti_requests__id__close_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}/consult": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Consult a department through e-File */
+        post: operations["consult_rti_api_v1_rti_requests__id__consult_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/requests/{id}/respond": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reply (Phase 26 rti_response; additional fee for copies) */
+        post: operations["respond_rti_api_v1_rti_requests__id__respond_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rti/returns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Quarterly / annual RTI return (job; ?inline=true returns the figures) */
+        get: operations["rti_returns_api_v1_rti_returns_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -29634,6 +30854,38 @@ export interface components {
          * @enum {string}
          */
         AdvisorDecisionKind: "approve" | "reject" | "request_changes";
+        /** AgendaItem */
+        AgendaItem: {
+            /** Doc Url */
+            doc_url?: string | null;
+            /** Item */
+            item: string;
+            linked_entity?: components["schemas"]["app__schemas__governance__LinkedEntity"] | null;
+            /** Presenter */
+            presenter?: string | null;
+            /** Source */
+            source?: string | null;
+        };
+        /** AgendaSuggestion */
+        AgendaSuggestion: {
+            /** Detail */
+            detail?: string | null;
+            /** Item */
+            item: string;
+            linked_entity?: components["schemas"]["LinkedEntity-Output"] | null;
+            /** Source */
+            source: string;
+        };
+        /** AgendaUpdate */
+        AgendaUpdate: {
+            /** Agenda */
+            agenda: components["schemas"]["AgendaItem"][];
+            /**
+             * Freeze
+             * @default false
+             */
+            freeze: boolean;
+        };
         /** AlertConfig */
         AlertConfig: {
             /** Checkpoints */
@@ -32131,6 +33383,59 @@ export interface components {
             /** Accepted */
             accepted: boolean;
         };
+        /** AtrDecision */
+        AtrDecision: {
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "accepted" | "returned";
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** AtrOut */
+        AtrOut: {
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: unknown[];
+            /** Decision Remarks */
+            decision_remarks?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Report Text */
+            report_text: string;
+            /**
+             * Resolution Id
+             * Format: uuid
+             */
+            resolution_id: string;
+            /** Status */
+            status: string;
+            /**
+             * Submitted At
+             * Format: date-time
+             */
+            submitted_at: string;
+            /** Submitted By */
+            submitted_by?: string | null;
+            /** Submitted By Name */
+            submitted_by_name?: string | null;
+        };
+        /** AtrSubmit */
+        AtrSubmit: {
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: string[];
+            /** Report Text */
+            report_text: string;
+        };
         /** AttainmentConfigIn */
         AttainmentConfigIn: {
             /**
@@ -32490,6 +33795,85 @@ export interface components {
             owner_staff_id?: string | null;
             /** Text */
             text: string;
+        };
+        /** AuditParaIn */
+        AuditParaIn: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /**
+             * Audit Register Id
+             * Format: uuid
+             */
+            audit_register_id: string;
+            /** Description */
+            description: string;
+            /** Due On */
+            due_on?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Para No */
+            para_no: string;
+        };
+        /** AuditParaOut */
+        AuditParaOut: {
+            /**
+             * Age Days
+             * @default 0
+             */
+            age_days: number;
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /**
+             * Audit Register Id
+             * Format: uuid
+             */
+            audit_register_id: string;
+            /** Audit Type */
+            audit_type?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Description */
+            description: string;
+            /** Due On */
+            due_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Owner Name */
+            owner_name?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Para No */
+            para_no: string;
+            /** Period Label */
+            period_label?: string | null;
+            /**
+             * Replies
+             * @default []
+             */
+            replies: {
+                [key: string]: unknown;
+            }[];
+            /** Reply Text */
+            reply_text?: string | null;
+            /** Status */
+            status: string;
+        };
+        /** AuditParaUpdate */
+        AuditParaUpdate: {
+            /** Amount Paise */
+            amount_paise?: number | null;
+            /** Description */
+            description?: string | null;
+            /** Due On */
+            due_on?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
         };
         /** AuditRegisterIn */
         AuditRegisterIn: {
@@ -36129,6 +37513,244 @@ export interface components {
             /** Version */
             version?: number | null;
         };
+        /** CommitteeDetail */
+        CommitteeDetail: {
+            /** Chair Name */
+            chair_name?: string | null;
+            /** Chair Staff Id */
+            chair_staff_id?: string | null;
+            /** Code */
+            code: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Committee Type */
+            committee_type: string;
+            /** Constituted On */
+            constituted_on?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * History
+             * @default []
+             */
+            history: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Meetings
+             * @default []
+             */
+            meetings: components["schemas"]["MeetingOut"][];
+            /**
+             * Member List
+             * @default []
+             */
+            member_list: components["schemas"]["MemberOut"][];
+            /**
+             * Members
+             * @default 0
+             */
+            members: number;
+            /** My Role */
+            my_role?: string | null;
+            /** Name */
+            name: string;
+            /** Next Meeting */
+            next_meeting?: string | null;
+            /**
+             * Open Resolutions
+             * @default 0
+             */
+            open_resolutions: number;
+            /**
+             * Pending Atrs
+             * @default 0
+             */
+            pending_atrs: number;
+            /** Quorum Rule */
+            quorum_rule?: {
+                [key: string]: unknown;
+            } | null;
+            /** Secretary Name */
+            secretary_name?: string | null;
+            /** Secretary Staff Id */
+            secretary_staff_id?: string | null;
+            /**
+             * Valid
+             * @default true
+             */
+            valid: boolean;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** CommitteeFromTemplate */
+        CommitteeFromTemplate: {
+            /** Chair Staff Id */
+            chair_staff_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Constituted On */
+            constituted_on?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Secretary Staff Id */
+            secretary_staff_id?: string | null;
+            /** Template Key */
+            template_key: string;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** CommitteeIn */
+        CommitteeIn: {
+            /** Chair Staff Id */
+            chair_staff_id?: string | null;
+            /** College Id */
+            college_id?: string | null;
+            committee_type: components["schemas"]["CommitteeType"];
+            /** Constituted On */
+            constituted_on?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /** Name */
+            name: string;
+            quorum_rule?: components["schemas"]["QuorumRule"] | null;
+            /** Secretary Staff Id */
+            secretary_staff_id?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** CommitteeOut */
+        CommitteeOut: {
+            /** Chair Name */
+            chair_name?: string | null;
+            /** Chair Staff Id */
+            chair_staff_id?: string | null;
+            /** Code */
+            code: string;
+            /** College Id */
+            college_id?: string | null;
+            /** Committee Type */
+            committee_type: string;
+            /** Constituted On */
+            constituted_on?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Active */
+            is_active: boolean;
+            /**
+             * Members
+             * @default 0
+             */
+            members: number;
+            /** My Role */
+            my_role?: string | null;
+            /** Name */
+            name: string;
+            /** Next Meeting */
+            next_meeting?: string | null;
+            /**
+             * Open Resolutions
+             * @default 0
+             */
+            open_resolutions: number;
+            /**
+             * Pending Atrs
+             * @default 0
+             */
+            pending_atrs: number;
+            /** Quorum Rule */
+            quorum_rule?: {
+                [key: string]: unknown;
+            } | null;
+            /** Secretary Name */
+            secretary_name?: string | null;
+            /** Secretary Staff Id */
+            secretary_staff_id?: string | null;
+            /**
+             * Valid
+             * @default true
+             */
+            valid: boolean;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** CommitteeReconstitute */
+        CommitteeReconstitute: {
+            /**
+             * Carry Over Member Ids
+             * @default []
+             */
+            carry_over_member_ids: string[];
+            /** Chair Staff Id */
+            chair_staff_id?: string | null;
+            /**
+             * Constituted On
+             * Format: date
+             */
+            constituted_on: string;
+            /**
+             * Members
+             * @default []
+             */
+            members: components["schemas"]["app__schemas__governance__MemberIn"][];
+            /** Secretary Staff Id */
+            secretary_staff_id?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
+        /** CommitteeTemplateOut */
+        CommitteeTemplateOut: {
+            /** Code */
+            code: string;
+            /** Committee Type */
+            committee_type: string;
+            /** Name */
+            name: string;
+            /** Per Department */
+            per_department: boolean;
+            /** Quorum Rule */
+            quorum_rule: {
+                [key: string]: unknown;
+            };
+            /** Template Key */
+            template_key: string;
+        };
+        /**
+         * CommitteeType
+         * @enum {string}
+         */
+        CommitteeType: "bos" | "academic_council" | "executive_council" | "senate" | "governing_body" | "academic_committee" | "finance" | "iqac" | "anti_ragging" | "icc" | "grievance" | "research_board" | "purchase" | "discipline" | "ethics" | "custom";
+        /** CommitteeUpdate */
+        CommitteeUpdate: {
+            /** Chair Staff Id */
+            chair_staff_id?: string | null;
+            /** Is Active */
+            is_active?: boolean | null;
+            /** Name */
+            name?: string | null;
+            quorum_rule?: components["schemas"]["QuorumRule"] | null;
+            /** Secretary Staff Id */
+            secretary_staff_id?: string | null;
+            /** Valid To */
+            valid_to?: string | null;
+        };
         /** CommsJobAccepted */
         CommsJobAccepted: {
             /**
@@ -36918,6 +38540,13 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** Corrigendum */
+        Corrigendum: {
+            /** Minutes Text */
+            minutes_text: string;
+            /** Reason */
+            reason: string;
+        };
         /** CounsellingAppointmentOut */
         CounsellingAppointmentOut: {
             /** Counsellor Name */
@@ -37460,6 +39089,31 @@ export interface components {
             methodology_done: boolean;
             /** Status */
             status: string;
+        };
+        /** CoverageItem */
+        CoverageItem: {
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Committee Type */
+            committee_type: string;
+            /** Mandatory */
+            mandatory: boolean;
+            /**
+             * Members
+             * @default 0
+             */
+            members: number;
+            /** Name */
+            name?: string | null;
+            /** Present */
+            present: boolean;
+            /**
+             * Valid
+             * @default false
+             */
+            valid: boolean;
+            /** Valid To */
+            valid_to?: string | null;
         };
         /** CqiActionIn */
         CqiActionIn: {
@@ -40414,6 +42068,13 @@ export interface components {
             /** Verified By */
             verified_by?: string | null;
         };
+        /** DocumentRef */
+        DocumentRef: {
+            /** Issued Document Id */
+            issued_document_id?: string | null;
+            /** Url */
+            url?: string | null;
+        };
         /** DocumentStatsOut */
         DocumentStatsOut: {
             /**
@@ -40748,6 +42409,149 @@ export interface components {
         EditFinalizedRequest: {
             /** Marks */
             marks: components["schemas"]["MarkItem"][];
+            /** Reason */
+            reason: string;
+        };
+        /**
+         * EfileAction
+         * @enum {string}
+         */
+        EfileAction: "forward" | "return" | "approve" | "reject";
+        /** EfileClose */
+        EfileClose: {
+            /** Summary */
+            summary: string;
+        };
+        /** EfileCreate */
+        EfileCreate: {
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: string[];
+            /** Category */
+            category?: string | null;
+            /** Initial Noting */
+            initial_noting: string;
+            linked_entity?: components["schemas"]["app__schemas__governance__LinkedEntity"] | null;
+            /**
+             * Priority
+             * @default normal
+             * @enum {string}
+             */
+            priority: "low" | "normal" | "high" | "urgent";
+            /** Subject */
+            subject: string;
+        };
+        /** EfileMove */
+        EfileMove: {
+            action: components["schemas"]["EfileAction"];
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: string[];
+            /** Noting */
+            noting: string;
+            /**
+             * Route User Ids
+             * @default []
+             */
+            route_user_ids: string[];
+            /** To Role */
+            to_role?: string | null;
+            /** To User Id */
+            to_user_id?: string | null;
+        };
+        /** EfileMovementOut */
+        EfileMovementOut: {
+            /** Action */
+            action: string;
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: unknown[];
+            /** From Name */
+            from_name?: string | null;
+            /** From User Id */
+            from_user_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Moved At
+             * Format: date-time
+             */
+            moved_at: string;
+            /** Noting */
+            noting?: string | null;
+            /** To Name */
+            to_name?: string | null;
+            /** To User Id */
+            to_user_id?: string | null;
+        };
+        /** EfileOut */
+        EfileOut: {
+            /** Category */
+            category?: string | null;
+            /** Closed At */
+            closed_at?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Created By
+             * Format: uuid
+             */
+            created_by: string;
+            /** Creator Name */
+            creator_name?: string | null;
+            /** Current Holder User Id */
+            current_holder_user_id?: string | null;
+            /** File No */
+            file_no: string;
+            /** Holder Name */
+            holder_name?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Linked Entity */
+            linked_entity?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Movements
+             * @default []
+             */
+            movements: components["schemas"]["EfileMovementOut"][];
+            /**
+             * Over Sla
+             * @default false
+             */
+            over_sla: boolean;
+            /**
+             * Pendency Days
+             * @default 0
+             */
+            pendency_days: number;
+            /** Priority */
+            priority: string;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+            /** Summary */
+            summary?: string | null;
+        };
+        /** EfileReopen */
+        EfileReopen: {
             /** Reason */
             reason: string;
         };
@@ -42232,6 +44036,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[AuditParaOut] */
+        Envelope_AuditParaOut_: {
+            data?: components["schemas"]["AuditParaOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[AuditRegisterOut] */
         Envelope_AuditRegisterOut_: {
             data?: components["schemas"]["AuditRegisterOut"] | null;
@@ -42880,6 +44699,36 @@ export interface components {
         /** Envelope[CollegeResponse] */
         Envelope_CollegeResponse_: {
             data?: components["schemas"]["CollegeResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CommitteeDetail] */
+        Envelope_CommitteeDetail_: {
+            data?: components["schemas"]["CommitteeDetail"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[CommitteeOut] */
+        Envelope_CommitteeOut_: {
+            data?: components["schemas"]["CommitteeOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -43867,6 +45716,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DocumentRef] */
+        Envelope_DocumentRef_: {
+            data?: components["schemas"]["DocumentRef"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DocumentStatsOut] */
         Envelope_DocumentStatsOut_: {
             data?: components["schemas"]["DocumentStatsOut"] | null;
@@ -43945,6 +45809,21 @@ export interface components {
         /** Envelope[DutyResponse] */
         Envelope_DutyResponse_: {
             data?: components["schemas"]["DutyResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[EfileOut] */
+        Envelope_EfileOut_: {
+            data?: components["schemas"]["EfileOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44767,9 +46646,9 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[GovCommitteeMemberOut] */
-        Envelope_GovCommitteeMemberOut_: {
-            data?: components["schemas"]["GovCommitteeMemberOut"] | null;
+        /** Envelope[GovernanceMe] */
+        Envelope_GovernanceMe_: {
+            data?: components["schemas"]["GovernanceMe"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -44782,9 +46661,9 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[GovCommitteeOut] */
-        Envelope_GovCommitteeOut_: {
-            data?: components["schemas"]["GovCommitteeOut"] | null;
+        /** Envelope[GovernanceStats] */
+        Envelope_GovernanceStats_: {
+            data?: components["schemas"]["GovernanceStats"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -45667,6 +47546,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[LegalCaseOut] */
+        Envelope_LegalCaseOut_: {
+            data?: components["schemas"]["LegalCaseOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[LessonPlanOut] */
         Envelope_LessonPlanOut_: {
             data?: components["schemas"]["LessonPlanOut"] | null;
@@ -45925,6 +47819,36 @@ export interface components {
         /** Envelope[MedalResponse] */
         Envelope_MedalResponse_: {
             data?: components["schemas"]["MedalResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MeetingOut] */
+        Envelope_MeetingOut_: {
+            data?: components["schemas"]["MeetingOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[MemberOut] */
+        Envelope_MemberOut_: {
+            data?: components["schemas"]["MemberOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -46658,6 +48582,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ParaDashboard] */
+        Envelope_ParaDashboard_: {
+            data?: components["schemas"]["ParaDashboard"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PassengerScanResponse] */
         Envelope_PassengerScanResponse_: {
             data?: components["schemas"]["PassengerScanResponse"] | null;
@@ -47081,6 +49020,21 @@ export interface components {
         /** Envelope[PoResponse] */
         Envelope_PoResponse_: {
             data?: components["schemas"]["PoResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[PolicyOut] */
+        Envelope_PolicyOut_: {
+            data?: components["schemas"]["PolicyOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -47633,6 +49587,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[QuorumOut] */
+        Envelope_QuorumOut_: {
+            data?: components["schemas"]["QuorumOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[QuotationOut] */
         Envelope_QuotationOut_: {
             data?: components["schemas"]["QuotationOut"] | null;
@@ -47978,6 +49947,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ResolutionOut] */
+        Envelope_ResolutionOut_: {
+            data?: components["schemas"]["ResolutionOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[ResultAnalysis] */
         Envelope_ResultAnalysis_: {
             data?: components["schemas"]["ResultAnalysis"] | null;
@@ -48251,6 +50235,36 @@ export interface components {
         /** Envelope[RschVerifyResult] */
         Envelope_RschVerifyResult_: {
             data?: components["schemas"]["RschVerifyResult"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RtiOut] */
+        Envelope_RtiOut_: {
+            data?: components["schemas"]["RtiOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RtiReturnOut] */
+        Envelope_RtiReturnOut_: {
+            data?: components["schemas"]["RtiReturnOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -50099,6 +52113,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[AgendaSuggestion]] */
+        Envelope_list_AgendaSuggestion__: {
+            /** Data */
+            data?: components["schemas"]["AgendaSuggestion"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[AllocationResponse]] */
         Envelope_list_AllocationResponse__: {
             /** Data */
@@ -50471,6 +52501,22 @@ export interface components {
         Envelope_list_AuditCycleOut__: {
             /** Data */
             data?: components["schemas"]["AuditCycleOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[AuditParaOut]] */
+        Envelope_list_AuditParaOut__: {
+            /** Data */
+            data?: components["schemas"]["AuditParaOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -50931,6 +52977,38 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[CommitteeOut]] */
+        Envelope_list_CommitteeOut__: {
+            /** Data */
+            data?: components["schemas"]["CommitteeOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CommitteeTemplateOut]] */
+        Envelope_list_CommitteeTemplateOut__: {
+            /** Data */
+            data?: components["schemas"]["CommitteeTemplateOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ComplianceRow]] */
         Envelope_list_ComplianceRow__: {
             /** Data */
@@ -51111,6 +53189,22 @@ export interface components {
         Envelope_list_CourseResultResponse__: {
             /** Data */
             data?: components["schemas"]["CourseResultResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[CoverageItem]] */
+        Envelope_list_CoverageItem__: {
+            /** Data */
+            data?: components["schemas"]["CoverageItem"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -51575,6 +53669,22 @@ export interface components {
         Envelope_list_DutyResponse__: {
             /** Data */
             data?: components["schemas"]["DutyResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[EfileOut]] */
+        Envelope_list_EfileOut__: {
+            /** Data */
+            data?: components["schemas"]["EfileOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -52227,38 +54337,6 @@ export interface components {
              */
             success: boolean;
         };
-        /** Envelope[list[GovCommitteeMemberOut]] */
-        Envelope_list_GovCommitteeMemberOut__: {
-            /** Data */
-            data?: components["schemas"]["GovCommitteeMemberOut"][] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
-        /** Envelope[list[GovCommitteeOut]] */
-        Envelope_list_GovCommitteeOut__: {
-            /** Data */
-            data?: components["schemas"]["GovCommitteeOut"][] | null;
-            /** Message */
-            message?: string | null;
-            /** Meta */
-            meta?: {
-                [key: string]: unknown;
-            };
-            /**
-             * Success
-             * @default true
-             */
-            success: boolean;
-        };
         /** Envelope[list[GpsDeviceOut]] */
         Envelope_list_GpsDeviceOut__: {
             /** Data */
@@ -52899,6 +54977,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[LegalCaseOut]] */
+        Envelope_list_LegalCaseOut__: {
+            /** Data */
+            data?: components["schemas"]["LegalCaseOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[LessonPlanOut]] */
         Envelope_list_LessonPlanOut__: {
             /** Data */
@@ -53047,6 +55141,38 @@ export interface components {
         Envelope_list_MedalResponse__: {
             /** Data */
             data?: components["schemas"]["MedalResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MeetingOut]] */
+        Envelope_list_MeetingOut__: {
+            /** Data */
+            data?: components["schemas"]["MeetingOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[MemberOut]] */
+        Envelope_list_MemberOut__: {
+            /** Data */
+            data?: components["schemas"]["MemberOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -53571,6 +55697,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[PendencyRow]] */
+        Envelope_list_PendencyRow__: {
+            /** Data */
+            data?: components["schemas"]["PendencyRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[PhdDisbursementOut]] */
         Envelope_list_PhdDisbursementOut__: {
             /** Data */
@@ -53767,6 +55909,38 @@ export interface components {
         Envelope_list_PoResponse__: {
             /** Data */
             data?: components["schemas"]["PoResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PolicyAckOut]] */
+        Envelope_list_PolicyAckOut__: {
+            /** Data */
+            data?: components["schemas"]["PolicyAckOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[PolicyOut]] */
+        Envelope_list_PolicyOut__: {
+            /** Data */
+            data?: components["schemas"]["PolicyOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -54227,6 +56401,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ResolutionOut]] */
+        Envelope_list_ResolutionOut__: {
+            /** Data */
+            data?: components["schemas"]["ResolutionOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ResponseVersion]] */
         Envelope_list_ResponseVersion__: {
             /** Data */
@@ -54439,6 +56629,22 @@ export interface components {
         Envelope_list_RschProjectOut__: {
             /** Data */
             data?: components["schemas"]["RschProjectOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RtiOut]] */
+        Envelope_list_RtiOut__: {
+            /** Data */
+            data?: components["schemas"]["RtiOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -57284,6 +59490,17 @@ export interface components {
              */
             user_id?: string | null;
         };
+        /** ExternalMember */
+        ExternalMember: {
+            /** Email */
+            email?: string | null;
+            /** Name */
+            name: string;
+            /** Org */
+            org?: string | null;
+            /** Phone */
+            phone?: string | null;
+        };
         /** ExternalMemberCreate */
         ExternalMemberCreate: {
             /** Deposit Paise */
@@ -59241,115 +61458,55 @@ export interface components {
             /** Lng */
             lng: number;
         };
-        /** GovCommitteeIn */
-        GovCommitteeIn: {
-            /** Chair Staff Id */
-            chair_staff_id?: string | null;
-            /** College Id */
-            college_id?: string | null;
-            /** Committee Type */
-            committee_type: string;
-            /** Constituted On */
-            constituted_on?: string | null;
-            /** Department Id */
-            department_id?: string | null;
-            /**
-             * Is Active
-             * @default true
-             */
-            is_active: boolean;
-            /** Name */
-            name: string;
-            /** Secretary Staff Id */
-            secretary_staff_id?: string | null;
-            /** Valid To */
-            valid_to?: string | null;
+        /** GovernanceMe */
+        GovernanceMe: {
+            /** Audit Paras */
+            audit_paras: number;
+            /** Committees */
+            committees: components["schemas"]["CommitteeOut"][];
+            /** Efile Inbox */
+            efile_inbox: number;
+            /** Meetings */
+            meetings: components["schemas"]["MeetingOut"][];
+            /** Pending Acks */
+            pending_acks: components["schemas"]["PolicyOut"][];
+            /** Resolutions */
+            resolutions: components["schemas"]["ResolutionOut"][];
         };
-        /** GovCommitteeMemberIn */
-        GovCommitteeMemberIn: {
-            /** External */
-            external?: {
+        /** GovernanceStats */
+        GovernanceStats: {
+            /** Atr Pending */
+            atr_pending: number;
+            /** Audit Paras Settled Pct */
+            audit_paras_settled_pct?: number | null;
+            /** Efile Open */
+            efile_open: number;
+            /** Efile Over Sla */
+            efile_over_sla: number;
+            /** Legal By Status */
+            legal_by_status: {
+                [key: string]: number;
+            };
+            /** Meetings */
+            meetings: number;
+            /** Meetings Per Committee */
+            meetings_per_committee: {
                 [key: string]: unknown;
-            } | null;
-            /** From On */
-            from_on?: string | null;
-            /**
-             * Member Type
-             * @default staff
-             * @enum {string}
-             */
-            member_type: "staff" | "student" | "external";
-            /**
-             * Role
-             * @default member
-             */
-            role: string;
-            /** Staff Id */
-            staff_id?: string | null;
-            /** To On */
-            to_on?: string | null;
-            /** User Id */
-            user_id?: string | null;
-        };
-        /** GovCommitteeMemberOut */
-        GovCommitteeMemberOut: {
-            /**
-             * Committee Id
-             * Format: uuid
-             */
-            committee_id: string;
-            /** From On */
-            from_on?: string | null;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Member Type */
-            member_type: string;
-            /** Name */
-            name?: string | null;
-            /** Role */
-            role: string;
-            /** Staff Id */
-            staff_id?: string | null;
-            /** To On */
-            to_on?: string | null;
-            /** User Id */
-            user_id?: string | null;
-        };
-        /** GovCommitteeOut */
-        GovCommitteeOut: {
-            /** Chair Name */
-            chair_name?: string | null;
-            /** Chair Staff Id */
-            chair_staff_id?: string | null;
-            /** College Id */
-            college_id?: string | null;
-            /** Committee Type */
-            committee_type: string;
-            /** Constituted On */
-            constituted_on?: string | null;
-            /** Department Id */
-            department_id?: string | null;
-            /**
-             * Id
-             * Format: uuid
-             */
-            id: string;
-            /** Is Active */
-            is_active: boolean;
-            /**
-             * Members
-             * @default 0
-             */
-            members: number;
-            /** Name */
-            name: string;
-            /** Secretary Staff Id */
-            secretary_staff_id?: string | null;
-            /** Valid To */
-            valid_to?: string | null;
+            }[];
+            /** Policy Ack Pct */
+            policy_ack_pct?: number | null;
+            /** Quorum Compliance Pct */
+            quorum_compliance_pct?: number | null;
+            /** Resolutions */
+            resolutions: number;
+            /** Resolutions Implemented Pct */
+            resolutions_implemented_pct?: number | null;
+            /** Rti Received */
+            rti_received: number;
+            /** Rti Within Time Pct */
+            rti_within_time_pct?: number | null;
+            /** Year */
+            year: number;
         };
         /** GpsBatch */
         GpsBatch: {
@@ -60466,6 +62623,18 @@ export interface components {
              */
             visited_at: string;
         };
+        /** HearingUpdate */
+        HearingUpdate: {
+            /**
+             * Held On
+             * Format: date
+             */
+            held_on: string;
+            /** Next Hearing */
+            next_hearing?: string | null;
+            /** Notes */
+            notes?: string | null;
+        };
         /** HelpArticleResponse */
         HelpArticleResponse: {
             /** Audience */
@@ -61534,7 +63703,7 @@ export interface components {
             incentive_type: components["schemas"]["IncentiveType"];
             /** Justification */
             justification?: string | null;
-            linked_entity?: components["schemas"]["LinkedEntity"] | null;
+            linked_entity?: components["schemas"]["app__schemas__research__LinkedEntity"] | null;
         };
         /** IncentiveSlabs */
         IncentiveSlabs: {
@@ -63317,6 +65486,127 @@ export interface components {
                 [key: string]: unknown;
             } | null;
         };
+        /** LegalCaseIn */
+        LegalCaseIn: {
+            /** Appeal Of Case Id */
+            appeal_of_case_id?: string | null;
+            /** Case No */
+            case_no?: string | null;
+            /** Case Type */
+            case_type?: string | null;
+            /** Counsel */
+            counsel?: string | null;
+            /** Counsel Fee Paise */
+            counsel_fee_paise?: number | null;
+            /** Court */
+            court?: string | null;
+            /**
+             * Documents
+             * @default []
+             */
+            documents: {
+                [key: string]: unknown;
+            }[];
+            /** Filed On */
+            filed_on?: string | null;
+            /**
+             * Institution Role
+             * @default respondent
+             * @enum {string}
+             */
+            institution_role: "petitioner" | "respondent" | "other";
+            /** Next Hearing */
+            next_hearing?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Parties */
+            parties?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** LegalCaseOut */
+        LegalCaseOut: {
+            /** Appeal Of Case Id */
+            appeal_of_case_id?: string | null;
+            /** Case No */
+            case_no: string;
+            /** Case Type */
+            case_type?: string | null;
+            /** Counsel */
+            counsel?: string | null;
+            /** Court */
+            court?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Documents Count
+             * @default 0
+             */
+            documents_count: number;
+            /** Filed On */
+            filed_on?: string | null;
+            /**
+             * Hearings
+             * @default []
+             */
+            hearings: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Institution Role */
+            institution_role?: string | null;
+            /** Next Hearing */
+            next_hearing?: string | null;
+            /** Outcome */
+            outcome?: string | null;
+            /** Owner Name */
+            owner_name?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Parties */
+            parties?: {
+                [key: string]: unknown;
+            } | null;
+            /** Status */
+            status: string;
+        };
+        /** LegalCaseUpdate */
+        LegalCaseUpdate: {
+            /** Counsel */
+            counsel?: string | null;
+            /** Court */
+            court?: string | null;
+            /** Documents */
+            documents?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Next Hearing */
+            next_hearing?: string | null;
+            /** Owner Staff Id */
+            owner_staff_id?: string | null;
+            /** Parties */
+            parties?: {
+                [key: string]: unknown;
+            } | null;
+        };
+        /** LegalOutcome */
+        LegalOutcome: {
+            /** Outcome */
+            outcome: string;
+            status: components["schemas"]["LegalStatus"];
+        };
+        /**
+         * LegalStatus
+         * @enum {string}
+         */
+        LegalStatus: "open" | "hearing" | "judgement" | "appeal" | "closed";
         /** LessonPlanIn */
         LessonPlanIn: {
             /** Co Id */
@@ -63635,16 +65925,16 @@ export interface components {
             returned_today: number;
         };
         /** LinkedEntity */
-        LinkedEntity: {
-            /** Id */
-            id?: string | null;
-            /** Title */
-            title?: string | null;
+        "LinkedEntity-Output": {
             /**
-             * Type
-             * @enum {string}
+             * Entity Id
+             * Format: uuid
              */
-            type: "publication" | "patent" | "conference" | "proposal" | "project";
+            entity_id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Label */
+            label?: string | null;
         };
         /** LiveVehicle */
         LiveVehicle: {
@@ -64398,10 +66688,180 @@ export interface components {
             /** Title */
             title: string;
         };
-        /** MemberIn */
-        MemberIn: {
-            /** Members */
-            members: string[];
+        /** MeetingCancel */
+        MeetingCancel: {
+            /** Reason */
+            reason: string;
+        };
+        /** MeetingCreate */
+        MeetingCreate: {
+            /**
+             * Agenda
+             * @default []
+             */
+            agenda: components["schemas"]["AgendaItem"][];
+            /**
+             * Committee Id
+             * Format: uuid
+             */
+            committee_id: string;
+            /**
+             * Held On
+             * Format: date-time
+             */
+            held_on: string;
+            /**
+             * Include Atr
+             * @default true
+             */
+            include_atr: boolean;
+            /** Meeting No */
+            meeting_no?: string | null;
+            /** Venue Or Link */
+            venue_or_link?: string | null;
+        };
+        /** MeetingOut */
+        MeetingOut: {
+            /**
+             * Agenda
+             * @default []
+             */
+            agenda: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Agenda Frozen
+             * @default false
+             */
+            agenda_frozen: boolean;
+            /**
+             * Approval
+             * @default []
+             */
+            approval: {
+                [key: string]: unknown;
+            }[];
+            /** Attendance */
+            attendance?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Can Edit
+             * @default false
+             */
+            can_edit: boolean;
+            /**
+             * Committee Id
+             * Format: uuid
+             */
+            committee_id: string;
+            /** Committee Name */
+            committee_name?: string | null;
+            /** Committee Type */
+            committee_type?: string | null;
+            /**
+             * Held On
+             * Format: date-time
+             */
+            held_on: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Meeting No */
+            meeting_no?: string | null;
+            /** Minutes Pdf Document Id */
+            minutes_pdf_document_id?: string | null;
+            /** Minutes Text */
+            minutes_text?: string | null;
+            /** Minutes Url */
+            minutes_url?: string | null;
+            /**
+             * Minutes Version
+             * @default 0
+             */
+            minutes_version: number;
+            /** Notice Sent At */
+            notice_sent_at?: string | null;
+            quorum?: components["schemas"]["QuorumOut"] | null;
+            /** Quorum Met */
+            quorum_met?: boolean | null;
+            /**
+             * Resolutions
+             * @default []
+             */
+            resolutions: components["schemas"]["ResolutionOut"][];
+            /**
+             * Short Notice
+             * @default false
+             */
+            short_notice: boolean;
+            /** Status */
+            status: string;
+            /** Venue Or Link */
+            venue_or_link?: string | null;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** MeetingUpdate */
+        MeetingUpdate: {
+            /** Held On */
+            held_on?: string | null;
+            /** Venue Or Link */
+            venue_or_link?: string | null;
+        };
+        /** MemberOut */
+        MemberOut: {
+            /**
+             * Active
+             * @default true
+             */
+            active: boolean;
+            /**
+             * Committee Id
+             * Format: uuid
+             */
+            committee_id: string;
+            /** From On */
+            from_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Member Type */
+            member_type: string;
+            /** Name */
+            name?: string | null;
+            /** Organisation */
+            organisation?: string | null;
+            /** Role */
+            role: string;
+            /** Staff Id */
+            staff_id?: string | null;
+            /** To On */
+            to_on?: string | null;
+            /** User Id */
+            user_id?: string | null;
+        };
+        /**
+         * MemberRole
+         * @enum {string}
+         */
+        MemberRole: "chair" | "secretary" | "member" | "convenor" | "special_invitee";
+        /**
+         * MemberType
+         * @enum {string}
+         */
+        MemberType: "staff" | "external" | "student";
+        /** MemberUpdate */
+        MemberUpdate: {
+            /** From On */
+            from_on?: string | null;
+            role?: components["schemas"]["MemberRole"] | null;
+            /** To On */
+            to_on?: string | null;
         };
         /** MentActionItem */
         MentActionItem: {
@@ -65582,6 +68042,28 @@ export interface components {
             /** Secret */
             secret: string;
         };
+        /** MinutesApprove */
+        MinutesApprove: {
+            /**
+             * Approve
+             * @default true
+             */
+            approve: boolean;
+            /** Comment */
+            comment?: string | null;
+        };
+        /** MinutesDraft */
+        MinutesDraft: {
+            /** Minutes Text */
+            minutes_text: string;
+            /** Minutes Url */
+            minutes_url?: string | null;
+            /**
+             * Resolutions
+             * @default []
+             */
+            resolutions: components["schemas"]["ResolutionDraft"][];
+        };
         /** MissingSessionRow */
         MissingSessionRow: {
             /** Course Code */
@@ -66093,6 +68575,17 @@ export interface components {
             signed_by?: string | null;
             /** Status */
             status: string;
+        };
+        /** NoticeSend */
+        NoticeSend: {
+            /**
+             * Channels
+             * @default [
+             *       "in_app",
+             *       "email"
+             *     ]
+             */
+            channels: ("in_app" | "email" | "sms" | "whatsapp")[];
         };
         /** NotificationResponse */
         NotificationResponse: {
@@ -67333,6 +69826,44 @@ export interface components {
             /** Title */
             title?: string | null;
         };
+        /** ParaDashboard */
+        ParaDashboard: {
+            /** Ageing */
+            ageing: {
+                [key: string]: number;
+            };
+            /** Amount Open Paise */
+            amount_open_paise: number;
+            /** By Register */
+            by_register: {
+                [key: string]: unknown;
+            }[];
+            /** By Status */
+            by_status: {
+                [key: string]: number;
+            };
+        };
+        /** ParaReply */
+        ParaReply: {
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: string[];
+            /** Reply Text */
+            reply_text: string;
+        };
+        /**
+         * ParaStatus
+         * @enum {string}
+         */
+        ParaStatus: "open" | "replied" | "settled" | "dropped";
+        /** ParaStatusUpdate */
+        ParaStatusUpdate: {
+            /** Remarks */
+            remarks?: string | null;
+            status: components["schemas"]["ParaStatus"];
+        };
         /**
          * PartnerType
          * @enum {string}
@@ -67672,6 +70203,21 @@ export interface components {
          * @enum {string}
          */
         PayrollStatus: "draft" | "approved" | "paid" | "cancelled";
+        /** PendencyRow */
+        PendencyRow: {
+            /** Department Id */
+            department_id?: string | null;
+            /** Files */
+            files: number;
+            /** Holder Name */
+            holder_name?: string | null;
+            /** Holder User Id */
+            holder_user_id?: string | null;
+            /** Max Days */
+            max_days: number;
+            /** Over Sla */
+            over_sla: number;
+        };
         /** PeoPoCell */
         PeoPoCell: {
             /** Level */
@@ -69231,6 +71777,147 @@ export interface components {
             items?: components["schemas"]["PoLine"][] | null;
             /** Terms */
             terms?: string | null;
+        };
+        /** PolicyAckOut */
+        PolicyAckOut: {
+            /**
+             * Acknowledged At
+             * Format: date-time
+             */
+            acknowledged_at: string;
+            /** Name */
+            name?: string | null;
+            /**
+             * User Id
+             * Format: uuid
+             */
+            user_id: string;
+        };
+        /** PolicyApprove */
+        PolicyApprove: {
+            /**
+             * Approve
+             * @default true
+             */
+            approve: boolean;
+            /** Comment */
+            comment?: string | null;
+            /** Resolution Id */
+            resolution_id?: string | null;
+        };
+        /** PolicyIn */
+        PolicyIn: {
+            /** Category */
+            category?: string | null;
+            /** Effective From */
+            effective_from?: string | null;
+            /** File Url */
+            file_url?: string | null;
+            /** Requires Ack */
+            requires_ack?: boolean | null;
+            /** Summary */
+            summary?: string | null;
+            /** Supersedes Policy Id */
+            supersedes_policy_id?: string | null;
+            /** Title */
+            title: string;
+            /**
+             * Version
+             * @default 1.0
+             */
+            version: string;
+            /**
+             * Website
+             * @default false
+             */
+            website: boolean;
+        };
+        /** PolicyOut */
+        PolicyOut: {
+            /**
+             * Ack Count
+             * @default 0
+             */
+            ack_count: number;
+            /** Ack Pct */
+            ack_pct?: number | null;
+            /**
+             * Acknowledged
+             * @default false
+             */
+            acknowledged: boolean;
+            /** Approved Resolution Id */
+            approved_resolution_id?: string | null;
+            /** Category */
+            category?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Effective From */
+            effective_from?: string | null;
+            /** File Url */
+            file_url?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Owner User Id */
+            owner_user_id?: string | null;
+            /**
+             * Published
+             * @default false
+             */
+            published: boolean;
+            /**
+             * Requires Ack
+             * @default false
+             */
+            requires_ack: boolean;
+            /** Resolution Number */
+            resolution_number?: string | null;
+            /** Stage */
+            stage: string;
+            /** Status */
+            status: string;
+            /** Summary */
+            summary?: string | null;
+            /** Superseded By Policy Id */
+            superseded_by_policy_id?: string | null;
+            /** Supersedes Policy Id */
+            supersedes_policy_id?: string | null;
+            /** Title */
+            title: string;
+            /** Version */
+            version: string;
+            /**
+             * Website
+             * @default false
+             */
+            website: boolean;
+            /** Workflow Instance Id */
+            workflow_instance_id?: string | null;
+        };
+        /** PolicyUpdate */
+        PolicyUpdate: {
+            /** Category */
+            category?: string | null;
+            /** Effective From */
+            effective_from?: string | null;
+            /** File Url */
+            file_url?: string | null;
+            /** Requires Ack */
+            requires_ack?: boolean | null;
+            /** Summary */
+            summary?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Version */
+            version?: string | null;
+            /** Website */
+            website?: boolean | null;
         };
         /** PostIn */
         PostIn: {
@@ -71230,6 +73917,31 @@ export interface components {
             /** Total Score */
             total_score?: number | null;
         };
+        /** QuorumOut */
+        QuorumOut: {
+            /** Met */
+            met: boolean;
+            /** Present */
+            present: number;
+            /** Required */
+            required: number;
+            /** Total */
+            total: number;
+        };
+        /** QuorumRule */
+        QuorumRule: {
+            /**
+             * Type
+             * @default fraction
+             * @enum {string}
+             */
+            type: "fraction" | "count";
+            /**
+             * Value
+             * @default 1/2
+             */
+            value: string;
+        };
         /** QuotationIn */
         QuotationIn: {
             /** Comparison Notes */
@@ -72725,6 +75437,95 @@ export interface components {
          * @enum {string}
          */
         ResetPolicy: "never" | "yearly" | "per_term";
+        /** ResolutionDraft */
+        ResolutionDraft: {
+            /** Action Owner Staff Id */
+            action_owner_staff_id?: string | null;
+            /** Agenda Item */
+            agenda_item?: number | null;
+            /** Due On */
+            due_on?: string | null;
+            linked_entity?: components["schemas"]["app__schemas__governance__LinkedEntity"] | null;
+            /**
+             * Status
+             * @default passed
+             * @enum {string}
+             */
+            status: "passed" | "deferred" | "rejected";
+            /** Subject */
+            subject: string;
+            /** Text */
+            text: string;
+        };
+        /** ResolutionLink */
+        ResolutionLink: {
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Label */
+            label?: string | null;
+        };
+        /** ResolutionOut */
+        ResolutionOut: {
+            /** Action Owner Staff Id */
+            action_owner_staff_id?: string | null;
+            atr?: components["schemas"]["AtrOut"] | null;
+            /** Committee Id */
+            committee_id?: string | null;
+            /** Committee Name */
+            committee_name?: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Due On */
+            due_on?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Linked Entity */
+            linked_entity?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Meeting Id
+             * Format: uuid
+             */
+            meeting_id: string;
+            /** Number */
+            number: string;
+            /**
+             * Overdue
+             * @default false
+             */
+            overdue: boolean;
+            /** Owner Name */
+            owner_name?: string | null;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+            /** Text */
+            text: string;
+        };
+        /**
+         * ResolutionStatus
+         * @enum {string}
+         */
+        ResolutionStatus: "passed" | "deferred" | "rejected" | "implemented";
+        /** ResolutionStatusChange */
+        ResolutionStatusChange: {
+            /** Remarks */
+            remarks?: string | null;
+            status: components["schemas"]["ResolutionStatus"];
+        };
         /** ResponseAssign */
         ResponseAssign: {
             /** Criterion Codes */
@@ -74109,6 +76910,204 @@ export interface components {
              * @default 0
              */
             verified: number;
+        };
+        /** RtiAppeal */
+        RtiAppeal: {
+            /** Appellate Authority Staff Id */
+            appellate_authority_staff_id?: string | null;
+            /** Filed On */
+            filed_on?: string | null;
+            /** Grounds */
+            grounds: string;
+        };
+        /** RtiAppealDecision */
+        RtiAppealDecision: {
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "upheld" | "allowed" | "partly_allowed" | "dismissed";
+            /** Remarks */
+            remarks: string;
+            /** Second Appeal Note */
+            second_appeal_note?: string | null;
+        };
+        /** RtiApplicant */
+        RtiApplicant: {
+            /** Address */
+            address?: string | null;
+            /** Email */
+            email?: string | null;
+            /**
+             * Is Bpl
+             * @default false
+             */
+            is_bpl: boolean;
+            /** Name */
+            name: string;
+            /** Phone */
+            phone?: string | null;
+        };
+        /** RtiAssign */
+        RtiAssign: {
+            /**
+             * Departments Consulted
+             * @default []
+             */
+            departments_consulted: string[];
+            /**
+             * Pio Staff Id
+             * Format: uuid
+             */
+            pio_staff_id: string;
+        };
+        /** RtiClose */
+        RtiClose: {
+            /** Remarks */
+            remarks?: string | null;
+        };
+        /** RtiConsult */
+        RtiConsult: {
+            /** Noting */
+            noting: string;
+            /** To Role */
+            to_role?: string | null;
+            /** To User Id */
+            to_user_id?: string | null;
+        };
+        /** RtiIn */
+        RtiIn: {
+            applicant: components["schemas"]["RtiApplicant"];
+            /**
+             * Fee Mode
+             * @default cash
+             * @enum {string}
+             */
+            fee_mode: "invoice" | "cash" | "ipo" | "dd" | "waived";
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /**
+             * Mode
+             * @default in_person
+             * @enum {string}
+             */
+            mode: "online" | "post" | "in_person" | "transfer_6_3";
+            /** Received On */
+            received_on?: string | null;
+            /** Subject */
+            subject: string;
+            /** Transferred On */
+            transferred_on?: string | null;
+        };
+        /** RtiOut */
+        RtiOut: {
+            /** Applicant */
+            applicant: {
+                [key: string]: unknown;
+            };
+            /**
+             * Consultations
+             * @default []
+             */
+            consultations: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Days Left */
+            days_left?: number | null;
+            /**
+             * Due On
+             * Format: date
+             */
+            due_on: string;
+            /** Fee Invoice Id */
+            fee_invoice_id?: string | null;
+            /** Fee Paise */
+            fee_paise?: number | null;
+            /** Fee Status */
+            fee_status?: string | null;
+            /** First Appeal */
+            first_appeal?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Late
+             * @default false
+             */
+            late: boolean;
+            /**
+             * Masked
+             * @default false
+             */
+            masked: boolean;
+            /** Mode */
+            mode?: string | null;
+            /** Pio Name */
+            pio_name?: string | null;
+            /** Pio Staff Id */
+            pio_staff_id?: string | null;
+            /**
+             * Received On
+             * Format: date
+             */
+            received_on: string;
+            /** Request No */
+            request_no: string;
+            /** Responded On */
+            responded_on?: string | null;
+            /** Response Text */
+            response_text?: string | null;
+            /** Response Url */
+            response_url?: string | null;
+            /** Status */
+            status: string;
+            /** Subject */
+            subject: string;
+        };
+        /** RtiRespond */
+        RtiRespond: {
+            /** Fee Additional Paise */
+            fee_additional_paise?: number | null;
+            /** Response Text */
+            response_text: string;
+            /** Response Url */
+            response_url?: string | null;
+        };
+        /** RtiReturnOut */
+        RtiReturnOut: {
+            /** Appeals */
+            appeals: number;
+            /** Bpl Waivers */
+            bpl_waivers: number;
+            /** Disposed */
+            disposed: number;
+            /** Fees Collected Paise */
+            fees_collected_paise: number;
+            /** Pending */
+            pending: number;
+            /** Period */
+            period: string;
+            /** Received */
+            received: number;
+            /** Within Time */
+            within_time: number;
+            /** Within Time Pct */
+            within_time_pct: number;
+        };
+        /** RtiUpdate */
+        RtiUpdate: {
+            applicant?: components["schemas"]["RtiApplicant"] | null;
+            /** Subject */
+            subject?: string | null;
         };
         /** RulesEffectiveResponse */
         RulesEffectiveResponse: {
@@ -82297,6 +85296,52 @@ export interface components {
              */
             unmatched: number;
         };
+        /** AttendanceMark */
+        app__schemas__governance__AttendanceMark: {
+            /**
+             * Invitees
+             * @default []
+             */
+            invitees: string[];
+            /**
+             * Present Member Ids
+             * @default []
+             */
+            present_member_ids: string[];
+            /**
+             * Self Check In
+             * @default false
+             */
+            self_check_in: boolean;
+        };
+        /** LinkedEntity */
+        app__schemas__governance__LinkedEntity: {
+            /**
+             * Entity Id
+             * Format: uuid
+             */
+            entity_id: string;
+            /** Entity Type */
+            entity_type: string;
+            /** Label */
+            label?: string | null;
+        };
+        /** MemberIn */
+        app__schemas__governance__MemberIn: {
+            external?: components["schemas"]["ExternalMember"] | null;
+            /** From On */
+            from_on?: string | null;
+            /** @default staff */
+            member_type: components["schemas"]["MemberType"];
+            /** @default member */
+            role: components["schemas"]["MemberRole"];
+            /** Staff Id */
+            staff_id?: string | null;
+            /** To On */
+            to_on?: string | null;
+            /** User Id */
+            user_id?: string | null;
+        };
         /** SubmissionOut */
         app__schemas__lms__SubmissionOut: {
             /**
@@ -82386,6 +85431,11 @@ export interface components {
                 [key: string]: unknown;
             };
         };
+        /** MemberIn */
+        app__schemas__projects__MemberIn: {
+            /** Members */
+            members: string[];
+        };
         /** BudgetHeadIn */
         app__schemas__research__BudgetHeadIn: {
             /** Allocated Paise */
@@ -82410,6 +85460,18 @@ export interface components {
              * @default 0
              */
             skipped: number;
+        };
+        /** LinkedEntity */
+        app__schemas__research__LinkedEntity: {
+            /** Id */
+            id?: string | null;
+            /** Title */
+            title?: string | null;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "publication" | "patent" | "conference" | "proposal" | "project";
         };
         /** PublishRequest */
         app__schemas__results__PublishRequest: {
@@ -92743,6 +95805,247 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_MySummaryResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    audit_paras_api_v1_audit_paras_get: {
+        parameters: {
+            query?: {
+                audit_register_id?: string | null;
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AuditParaOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_para_api_v1_audit_paras_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AuditParaIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AuditParaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    para_dashboard_api_v1_audit_paras_dashboard_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ParaDashboard_"];
+                };
+            };
+        };
+    };
+    my_paras_api_v1_audit_paras_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AuditParaOut__"];
+                };
+            };
+        };
+    };
+    audit_para_api_v1_audit_paras__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AuditParaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_para_api_v1_audit_paras__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AuditParaUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AuditParaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reply_para_api_v1_audit_paras__id__reply_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ParaReply"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AuditParaOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    para_status_api_v1_audit_paras__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ParaStatusUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_AuditParaOut_"];
                 };
             };
             /** @description Validation Error */
@@ -103710,6 +107013,368 @@ export interface operations {
             };
         };
     };
+    efiles_api_v1_efiles_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                status?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EfileOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_efile_api_v1_efiles_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EfileCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    handler_api_v1_efiles_inbox_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EfileOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    handler_api_v1_efiles_mine_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EfileOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    handler_api_v1_efiles_outbox_get: {
+        parameters: {
+            query?: {
+                q?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_EfileOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    efile_pendency_api_v1_efiles_pendency_get: {
+        parameters: {
+            query?: {
+                department_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PendencyRow__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    efile_api_v1_efiles__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_efile_api_v1_efiles__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EfileClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    move_efile_api_v1_efiles__id__move_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EfileMove"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    notings_pdf_api_v1_efiles__id__notings_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reopen_efile_api_v1_efiles__id__reopen_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EfileReopen"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_EfileOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     allocation_run_api_v1_elective_allocation_runs__id__get: {
         parameters: {
             query?: never;
@@ -111318,10 +114983,113 @@ export interface operations {
             };
         };
     };
+    decide_atr_api_v1_governance_atr__id__decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AtrDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ResolutionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_member_api_v1_governance_committee_members__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MemberUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MemberOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_member_api_v1_governance_committee_members__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     committees_api_v1_governance_committees_get: {
         parameters: {
             query?: {
                 committee_type?: string | null;
+                college_id?: string | null;
+                active?: boolean | null;
             };
             header?: never;
             path?: never;
@@ -111335,7 +115103,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_GovCommitteeOut__"];
+                    "application/json": components["schemas"]["Envelope_list_CommitteeOut__"];
                 };
             };
             /** @description Validation Error */
@@ -111358,7 +115126,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GovCommitteeIn"];
+                "application/json": components["schemas"]["CommitteeIn"];
             };
         };
         responses: {
@@ -111368,7 +115136,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_GovCommitteeOut_"];
+                    "application/json": components["schemas"]["Envelope_CommitteeOut_"];
                 };
             };
             /** @description Validation Error */
@@ -111382,7 +115150,100 @@ export interface operations {
             };
         };
     };
-    committee_members_api_v1_governance_committees__id__members_get: {
+    coverage_api_v1_governance_committees_coverage_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CoverageItem__"];
+                };
+            };
+        };
+    };
+    committee_from_template_api_v1_governance_committees_from_template_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CommitteeFromTemplate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CommitteeOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_committees_api_v1_governance_committees_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CommitteeOut__"];
+                };
+            };
+        };
+    };
+    committee_templates_api_v1_governance_committees_templates_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_CommitteeTemplateOut__"];
+                };
+            };
+        };
+    };
+    committee_api_v1_governance_committees__id__get: {
         parameters: {
             query?: never;
             header?: never;
@@ -111399,7 +115260,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_list_GovCommitteeMemberOut__"];
+                    "application/json": components["schemas"]["Envelope_CommitteeDetail_"];
                 };
             };
             /** @description Validation Error */
@@ -111413,7 +115274,7 @@ export interface operations {
             };
         };
     };
-    add_committee_member_api_v1_governance_committees__id__members_post: {
+    update_committee_api_v1_governance_committees__id__put: {
         parameters: {
             query?: never;
             header?: never;
@@ -111424,7 +115285,75 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["GovCommitteeMemberIn"];
+                "application/json": components["schemas"]["CommitteeUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CommitteeOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    committee_members_api_v1_governance_committees__id__members_get: {
+        parameters: {
+            query?: {
+                include_past?: boolean;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MemberOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_member_api_v1_governance_committees__id__members_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__governance__MemberIn"];
             };
         };
         responses: {
@@ -111434,7 +115363,820 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Envelope_GovCommitteeMemberOut_"];
+                    "application/json": components["schemas"]["Envelope_MemberOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconstitute_api_v1_governance_committees__id__reconstitute_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CommitteeReconstitute"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_CommitteeDetail_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    governance_me_api_v1_governance_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GovernanceMe_"];
+                };
+            };
+        };
+    };
+    meetings_api_v1_governance_meetings_get: {
+        parameters: {
+            query?: {
+                committee_id?: string | null;
+                status?: string | null;
+                year?: number | null;
+                scope?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MeetingOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_meeting_api_v1_governance_meetings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeetingCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    my_meetings_api_v1_governance_meetings_me_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_MeetingOut__"];
+                };
+            };
+        };
+    };
+    meeting_api_v1_governance_meetings__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_meeting_api_v1_governance_meetings__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeetingUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_agenda_api_v1_governance_meetings__id__agenda_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgendaUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agenda_suggestions_api_v1_governance_meetings__id__agenda_suggestions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_AgendaSuggestion__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    attendance_api_v1_governance_meetings__id__attendance_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__governance__AttendanceMark"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_QuorumOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_meeting_api_v1_governance_meetings__id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MeetingCancel"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    corrigendum_api_v1_governance_meetings__id__corrigendum_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Corrigendum"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    draft_minutes_api_v1_governance_meetings__id__minutes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MinutesDraft"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    minutes_pdf_api_v1_governance_meetings__id__minutes_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_minutes_api_v1_governance_meetings__id__minutes_approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MinutesApprove"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_minutes_api_v1_governance_meetings__id__minutes_submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_notice_api_v1_governance_meetings__id__notice_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoticeSend"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_MeetingOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolutions_api_v1_governance_resolutions_get: {
+        parameters: {
+            query?: {
+                committee_id?: string | null;
+                status?: string | null;
+                owner_id?: string | null;
+                year?: number | null;
+                scope?: string | null;
+                page?: number;
+                per_page?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ResolutionOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolution_lookup_api_v1_governance_resolutions_lookup_get: {
+        parameters: {
+            query: {
+                entity_type: string;
+                entity_id: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ResolutionOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolution_api_v1_governance_resolutions__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ResolutionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_atr_api_v1_governance_resolutions__id__atr_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AtrSubmit"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ResolutionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolution_extract_api_v1_governance_resolutions__id__extract_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DocumentRef_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    link_resolution_api_v1_governance_resolutions__id__link_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolutionLink"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ResolutionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resolution_status_api_v1_governance_resolutions__id__status_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResolutionStatusChange"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ResolutionOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    governance_stats_api_v1_governance_stats_get: {
+        parameters: {
+            query?: {
+                year?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_GovernanceStats_"];
                 };
             };
             /** @description Validation Error */
@@ -118622,6 +123364,269 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_LegacyImportResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legal_calendar_api_v1_legal_calendar_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legal_cases_api_v1_legal_cases_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_LegalCaseOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_case_api_v1_legal_cases_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LegalCaseIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegalCaseOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    legal_case_api_v1_legal_cases__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegalCaseOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_case_api_v1_legal_cases__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LegalCaseUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegalCaseOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    case_documents_api_v1_legal_cases__id__documents_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_dict_str__Any___"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    case_hearing_api_v1_legal_cases__id__hearings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HearingUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegalCaseOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    case_outcome_api_v1_legal_cases__id__outcome_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LegalOutcome"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_LegalCaseOut_"];
                 };
             };
             /** @description Validation Error */
@@ -128961,6 +133966,381 @@ export interface operations {
             };
         };
     };
+    policies_api_v1_policies_get: {
+        parameters: {
+            query?: {
+                category?: string | null;
+                status?: string | null;
+                q?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PolicyOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_policy_api_v1_policies_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PolicyIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pending_acks_api_v1_policies_me_pending_ack_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PolicyOut__"];
+                };
+            };
+        };
+    };
+    public_policies_api_v1_policies_public_get: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PolicyOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    policy_api_v1_policies__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_policy_api_v1_policies__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PolicyUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    acknowledge_policy_api_v1_policies__id__acknowledge_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    policy_acks_api_v1_policies__id__acknowledgements_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_PolicyAckOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    approve_policy_api_v1_policies__id__approve_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PolicyApprove"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    publish_policy_api_v1_policies__id__publish_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    submit_policy_api_v1_policies__id__submit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    supersede_policy_api_v1_policies__id__supersede_post: {
+        parameters: {
+            query?: {
+                by_policy_id?: string | null;
+            };
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PolicyOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     mark_answer_api_v1_posts__id__mark_answer_post: {
         parameters: {
             query?: never;
@@ -129762,7 +135142,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["MemberIn"];
+                "application/json": components["schemas"]["app__schemas__projects__MemberIn"];
             };
         };
         responses: {
@@ -137652,6 +143032,379 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_NoneType_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rti_requests_api_v1_rti_requests_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+                overdue?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RtiOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_rti_api_v1_rti_requests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rti_request_api_v1_rti_requests__id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_rti_api_v1_rti_requests__id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    appeal_rti_api_v1_rti_requests__id__appeal_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiAppeal"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    decide_rti_appeal_api_v1_rti_requests__id__appeal_decide_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiAppealDecision"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    assign_rti_api_v1_rti_requests__id__assign_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiAssign"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    close_rti_api_v1_rti_requests__id__close_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiClose"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    consult_rti_api_v1_rti_requests__id__consult_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiConsult"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    respond_rti_api_v1_rti_requests__id__respond_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RtiRespond"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rti_returns_api_v1_rti_returns_get: {
+        parameters: {
+            query: {
+                period: string;
+                inline?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RtiReturnOut_"];
                 };
             };
             /** @description Validation Error */

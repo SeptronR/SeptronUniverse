@@ -37,6 +37,12 @@ class TemplateType(StrEnum):
     PHD_SYNOPSIS_ACK = "phd_synopsis_ack"
     PHD_PROVISIONAL_CERTIFICATE = "phd_provisional_certificate"
     EXAMINER_INVITATION = "examiner_invitation"
+    # Phase 33: meeting notice, minutes, resolution extract, RTI reply, office order
+    MEETING_NOTICE = "meeting_notice"
+    MINUTES = "minutes"
+    RESOLUTION_EXTRACT = "resolution_extract"
+    RTI_RESPONSE = "rti_response"
+    OFFICE_ORDER = "office_order"
     CUSTOM = "custom"
 
 
@@ -79,7 +85,9 @@ STAFF_TYPES: frozenset[str] = frozenset({"experience", "service", "noc"})
 # per-download watermark ("Downloaded by …") applies to these
 SENSITIVE_TYPES: frozenset[str] = frozenset({"transcript", "grade_card"})
 # several live documents per entity are normal for these (copies)
-MULTI_TYPES: frozenset[str] = frozenset({"bonafide", "receipt", "custom", "noc", "internship_noc"})
+MULTI_TYPES: frozenset[str] = frozenset(
+    {"bonafide", "receipt", "custom", "noc", "internship_noc", "minutes", "resolution_extract", "office_order"}
+)
 BILINGUAL_TYPES: tuple[str, ...] = ("bonafide", "degree", "provisional", "tc", "donation_receipt_80g")
 
 PERSON_TYPES: tuple[str, ...] = ("student", "staff", "alumni")

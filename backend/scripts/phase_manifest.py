@@ -344,6 +344,20 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # governance: committees, meetings, legal, RTI, audit paras, e-File, policies (section 30)
+    "33": [
+        "committees",
+        "committee_members",
+        "meetings",
+        "resolutions",
+        "action_taken_reports",
+        "legal_cases",
+        "rti_requests",
+        "audit_paras",
+        "efiles",
+        "efile_movements",
+        "policies",
+    ],
     # accreditation & compliance / IQAC (section 29)
     "32": [
         "accreditation_frameworks",

@@ -72,6 +72,11 @@ PREFIX: dict[str, str] = {
     "phd_synopsis_ack": "PHDS",
     "phd_provisional_certificate": "PHDP",
     "examiner_invitation": "PHDX",
+    "meeting_notice": "MTN",
+    "minutes": "MIN",
+    "resolution_extract": "RES",
+    "rti_response": "RTIR",
+    "office_order": "OO",
 }
 
 

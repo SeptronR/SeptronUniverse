@@ -1,7 +1,7 @@
-"""Clubs, activity hours, achievements, the committees stub and student-support stats — Prompts/27 §27.8:
-clubs / members / events {clubs.core}, activity hours {clubs.core} with credit mapping
-{clubs.activity_hours_credits}, achievements {clubs.achievements}, ``/governance/committees`` (stub until Phase 33)
-{governance.committees} and ``/student-support/stats`` {mentoring.core}.
+"""Clubs, activity hours, achievements and student-support stats — Prompts/27 §27.8: clubs / members / events
+{clubs.core}, activity hours {clubs.core} with credit mapping {clubs.activity_hours_credits}, achievements
+{clubs.achievements} and ``/student-support/stats`` {mentoring.core}. The Phase 27 ``/governance/committees`` stub is
+replaced by Phase 33 (``app/api/v1/endpoints/governance.py``).
 """
 
 import uuid
@@ -32,15 +32,10 @@ from app.schemas.clubs import (
     ClubMemberOut,
     ClubMemberRole,
     ClubOut,
-    GovCommitteeIn,
-    GovCommitteeMemberIn,
-    GovCommitteeMemberOut,
-    GovCommitteeOut,
     SupportStats,
 )
 from app.schemas.common import Envelope
 from app.services.student_support.club_service import ClubService
-from app.services.student_support.committee_stub_service import CommitteeStubService
 from app.services.student_support.stats_service import StatsService
 from app.utils.response import ok
 
@@ -51,7 +46,6 @@ VIEW = any_permission_required((C, "view"), (C, "view_all"), (C, "manage"), (C, 
 MANAGE = any_permission_required((C, "manage"), (C, "view"))  # advisors (clubs:view) are checked per club
 HOURS_SELF = any_permission_required((C, "view"), (C, "verify_hours"), (C, "manage"))
 VERIFY = any_permission_required((C, "verify_hours"), (C, "manage"), (C, "view"))
-COMMITTEES = any_permission_required(("governance", "committees"), ("governance", "manage"), ("governance", "view"))
 STATS = any_permission_required(
     ("mentoring", "view_all"), ("mentoring", "manage"), ("accreditation", "view"), ("surveys", "manage")
 )
@@ -59,7 +53,6 @@ STATS = any_permission_required(
 CORE = [feature_required("clubs.core")]
 CREDITS = [feature_required("clubs.activity_hours_credits")]
 ACH = [feature_required("clubs.achievements")]
-GOV = [feature_required("governance.committees")]
 SUPPORT = [feature_required("mentoring.core")]
 
 
@@ -371,67 +364,6 @@ async def verify_achievement(
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
     return ok(await ClubService(db, principal, request).verify_achievement(id, body), message="Verified")
-
-
-# ---- committees stub ------------------------------------------------------------------------------------------------------
-@router.get(
-    "/governance/committees",
-    summary="Committees (stub until Phase 33)",
-    response_model=Envelope[list[GovCommitteeOut]],
-    dependencies=GOV,
-)
-async def committees(
-    request: Request,
-    committee_type: str | None = None,
-    principal: Principal = Depends(COMMITTEES),
-    db: AsyncSession = Depends(get_db),
-) -> dict[str, Any]:
-    return ok(await CommitteeStubService(db, principal, request).list_committees(committee_type))
-
-
-@router.post(
-    "/governance/committees",
-    status_code=201,
-    summary="Create a committee (stub)",
-    response_model=Envelope[GovCommitteeOut],
-    dependencies=GOV,
-)
-async def create_committee(
-    body: GovCommitteeIn,
-    request: Request,
-    principal: Principal = Depends(COMMITTEES),
-    db: AsyncSession = Depends(get_db),
-) -> dict[str, Any]:
-    return ok(await CommitteeStubService(db, principal, request).create(body), message="Created")
-
-
-@router.get(
-    "/governance/committees/{id}/members",
-    summary="Committee members (stub)",
-    response_model=Envelope[list[GovCommitteeMemberOut]],
-    dependencies=GOV,
-)
-async def committee_members(
-    id: uuid.UUID, request: Request, principal: Principal = Depends(COMMITTEES), db: AsyncSession = Depends(get_db)
-) -> dict[str, Any]:
-    return ok(await CommitteeStubService(db, principal, request).members(id))
-
-
-@router.post(
-    "/governance/committees/{id}/members",
-    status_code=201,
-    summary="Add a committee member (stub)",
-    response_model=Envelope[GovCommitteeMemberOut],
-    dependencies=GOV,
-)
-async def add_committee_member(
-    id: uuid.UUID,
-    body: GovCommitteeMemberIn,
-    request: Request,
-    principal: Principal = Depends(COMMITTEES),
-    db: AsyncSession = Depends(get_db),
-) -> dict[str, Any]:
-    return ok(await CommitteeStubService(db, principal, request).add_member(id, body), message="Added")
 
 
 # ---- stats ----------------------------------------------------------------------------------------------------------------

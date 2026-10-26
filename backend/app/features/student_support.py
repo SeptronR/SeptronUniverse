@@ -1,5 +1,5 @@
 """Feature keys registered by Phase 27 (docs/Feature_Flags.md §2.14 mentoring / grievances / discipline / surveys /
-clubs) plus ``governance.committees``, whose minimal committee CRUD stub ships here until Phase 33 replaces it.
+clubs). ``governance.committees`` (registered here by the Phase 27 stub) now lives in ``app/features/governance.py``.
 
 Dependencies on keys of later phases (``analytics.early_warning`` — Phase 35) are listed as documented.
 """
@@ -84,7 +84,6 @@ _KEYS: tuple[tuple[str, str, str, str, bool, str, tuple[str, ...]], ...] = (
         "standard",
         ("clubs.core",),
     ),
-    ("governance", "governance.committees", "Committees", "committees & members", True, "standard", ()),
 )
 
 for _group, _key, _name, _desc, _on, _tier, _deps in _KEYS:

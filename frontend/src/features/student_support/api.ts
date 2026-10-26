@@ -12,7 +12,7 @@ const post = <T = Any>(url: string, body?: unknown) => api.post(url, body ?? {},
 const put = <T = Any>(url: string, body?: unknown) => api.put(url, body) as unknown as Promise<Envelope<T>>;
 const del = <T = Any>(url: string) => api.delete(url) as unknown as Promise<Envelope<T>>;
 
-/** Mentoring, early warning, grievances, discipline, surveys, clubs, committees stub (Prompts/27 §27.8). */
+/** Mentoring, early warning, grievances, discipline, surveys, clubs (Prompts/27 §27.8; the committees stub moved to features/governance). */
 export const ssApi = {
   // mentoring
   assignments: (p: Params = {}) => get('/mentoring/assignments', p),
@@ -110,10 +110,7 @@ export const ssApi = {
   submitAchievement: (b: Body) => post('/achievements', b),
   myAchievements: () => get('/achievements/me'),
   verifyAchievement: (id: string, approve = true) => post(`/achievements/${id}/verify`, { approve }),
-  // committees stub + stats
+  // committees (Phase 33 governance list, used to pick the inquiry committee) + stats
   committees: (p: Params = {}) => get('/governance/committees', p),
-  createCommittee: (b: Body) => post('/governance/committees', b),
-  committeeMembers: (id: string) => get(`/governance/committees/${id}/members`),
-  addCommitteeMember: (id: string, b: Body) => post(`/governance/committees/${id}/members`, b),
   stats: (p: Params = {}) => get('/student-support/stats', p),
 };

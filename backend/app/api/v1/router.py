@@ -70,6 +70,7 @@ from app.api.v1.endpoints import (
     feedback,
     fees,
     fundraising,
+    governance,
     grading,
     grievances,
     help,
@@ -238,6 +239,10 @@ api_router.include_router(phd.public_router)
 # Phase 32: accreditation & compliance (IQAC) — feature keys per route group; public disclosures feed by institution slug
 api_router.include_router(accreditation.router)
 api_router.include_router(accreditation.public_router)
+# Phase 33: governance — committees, meetings / minutes, legal, RTI, audit paras, e-File, policies (feature keys per route
+# group; the public policies list is included first so /policies/public is not captured by /policies/{id})
+api_router.include_router(governance.public_router)
+api_router.include_router(governance.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

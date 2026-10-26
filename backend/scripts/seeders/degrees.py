@@ -18,6 +18,7 @@ from sqlalchemy import func, select
 async def seed_degrees(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PLR0915 - one linear demo script
     import app.features  # noqa: F401
     from app.core.errors import APIError
+    from app.core.features import is_enabled
     from app.core.tenancy import today_for
     from app.db.session import bind_tenant, set_tenant
     from app.models.academic import Batch
@@ -86,7 +87,10 @@ async def seed_degrees(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PLR091
         (
             await db.execute(
                 select(StudentProgramEnrollment)
-                .where(StudentProgramEnrollment.batch_id == batch.id, StudentProgramEnrollment.status.in_(("active", "completed")))
+                .where(
+                    StudentProgramEnrollment.batch_id == batch.id,
+                    StudentProgramEnrollment.status.in_(("active", "completed")),
+                )
                 .order_by(StudentProgramEnrollment.created_at)
             )
         )
@@ -125,7 +129,9 @@ async def seed_degrees(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PLR091
         )
     )
     await conv_svc.change_status(conv.id, ConvocationStatusChange(status="registration_open"))
-    eligible = [c for c in await elig.list_checks(batch.id, None, True) if c.enrollment.status in ("active", "completed")]
+    eligible = [
+        c for c in await elig.list_checks(batch.id, None, True) if c.enrollment.status in ("active", "completed")
+    ]
     for i, c in enumerate(eligible[:150]):
         try:
             reg = await conv_svc.register(
@@ -163,8 +169,13 @@ async def seed_degrees(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PLR091
         .scalars()
         .all()
     )
+    resolution_id = None
+    if rows and await is_enabled(inst.id, "governance.minutes"):
+        from seeders.governance import council_resolution  # Phase 33: the council approval cites a resolution
+
+        resolution_id = await council_resolution(db, inst.id, "Award of degrees to the recommended candidates")
     for a in rows:
-        await awards.approve(a.id, ApproveRequest(comment="Academic Council (demo)"))
+        await awards.approve(a.id, ApproveRequest(resolution_id=resolution_id, comment="Academic Council (demo)"))
         if a.award_type in ("degree", "honours"):
             await awards.issue(a.id, IssueRequest(esign=True))
             ctx.count("awards_issued")

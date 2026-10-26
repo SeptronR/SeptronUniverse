@@ -419,6 +419,28 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.teal,
       permission: 'mentoring:wards',
       feature: 'mentoring.core'),
+  // Phase 33 — governance (staff: meetings / ATRs / e-file / policy acks), committee desk (secretary), approvals
+  const MoreMenuModule(
+      titleKey: 'governance',
+      icon: Icons.account_balance_outlined,
+      route: AppRoutes.governanceHub,
+      color: Colors.blueGrey,
+      permission: 'governance:view',
+      feature: 'governance.committees'),
+  const MoreMenuModule(
+      titleKey: 'committee_desk',
+      icon: Icons.groups_outlined,
+      route: AppRoutes.committeeDesk,
+      color: Colors.blueGrey,
+      permission: 'governance:minutes',
+      feature: 'governance.minutes'),
+  const MoreMenuModule(
+      titleKey: 'governance_approvals',
+      icon: Icons.approval_outlined,
+      route: AppRoutes.governanceApprovals,
+      color: Colors.blueGrey,
+      permission: 'governance:approve',
+      feature: 'governance.committees'),
   // Phase 32 — IQAC (coordinator) and department quality (HOD / faculty: metrics, responses, evidence, findings)
   const MoreMenuModule(
       titleKey: 'iqac',

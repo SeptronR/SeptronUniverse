@@ -185,14 +185,13 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     title: 'STUDENT SUPPORT',
     items: [
-      // Phase 27 — mentoring, early warning, grievances, discipline, surveys, clubs, committees (stub)
+      // Phase 27 — mentoring, early warning, grievances, discipline, surveys, clubs (committees moved to GOVERNANCE)
       { label: 'Mentoring', to: '/admin/mentoring', icon: Users, module: 'mentoring', action: 'view_all', altActions: ['manage'], feature: 'mentoring.core' },
       { label: 'Early warning', to: '/admin/risk', icon: Activity, module: 'mentoring', action: 'view_all', altActions: ['manage'], feature: 'mentoring.early_warning' },
       { label: 'Grievances', to: '/admin/grievances', icon: LifeBuoy, module: 'grievances', action: 'view_all', altActions: ['triage', 'view', 'manage'], feature: 'grievances.core' },
       { label: 'Discipline', to: '/admin/discipline', icon: ShieldCheck, module: 'discipline', action: 'view_all', altActions: ['manage', 'decide'], feature: 'discipline.core' },
       { label: 'Surveys', to: '/admin/surveys', icon: ClipboardCheck, module: 'surveys', action: 'manage', altActions: ['view_all', 'analyse'], feature: 'surveys.core' },
       { label: 'Clubs & activities', to: '/admin/clubs', icon: UsersRound, module: 'clubs', action: 'view_all', altActions: ['verify_hours', 'manage'], feature: 'clubs.core' },
-      { label: 'Committees', to: '/admin/governance/committees', icon: Landmark, module: 'governance', action: 'committees', altActions: ['manage', 'view'], feature: 'governance.committees' },
       // Phase 28 — placement, internships, training
       { label: 'Companies', to: '/admin/placement/companies', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage', 'drive_manage'], feature: 'placement.core' },
       { label: 'Policies', to: '/admin/placement/policies', icon: Briefcase, module: 'placement', action: 'view_all', altActions: ['manage'], feature: 'placement.core' },
@@ -405,6 +404,22 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Consistency', to: '/iqac/consistency', icon: Activity, module: 'accreditation', action: 'view_all', altActions: ['manage'], feature: 'accreditation.aishe' },
       { label: 'Disclosures', to: '/iqac/disclosures', icon: Award, module: 'accreditation', action: 'view_all', altActions: ['manage'], feature: 'accreditation.aishe' },
       { label: 'Department quality', to: '/hod/quality', icon: Gauge, module: 'accreditation', action: 'override', feature: 'accreditation.aishe' },
+    ],
+  },
+  {
+    title: 'GOVERNANCE',
+    items: [
+      // Phase 33 — committees, meetings, resolutions, legal, RTI, audit paras, e-File, policies, stats
+      { label: 'Committees', to: '/admin/governance/committees', icon: Landmark, module: 'governance', action: 'committees', altActions: ['manage', 'view_all', 'view'], feature: 'governance.committees' },
+      { label: 'Meetings', to: '/admin/governance/meetings', icon: CalendarCheck, module: 'governance', action: 'minutes', altActions: ['manage', 'view_all', 'view'], feature: 'governance.minutes' },
+      { label: 'Resolutions', to: '/admin/governance/resolutions', icon: ScrollText, module: 'governance', action: 'resolutions', altActions: ['manage', 'view_all', 'view'], feature: 'governance.minutes' },
+      { label: 'Legal', to: '/admin/legal', icon: ShieldCheck, module: 'legal', action: 'manage', altActions: ['view_all', 'view'], feature: 'governance.legal' },
+      { label: 'RTI', to: '/admin/rti', icon: ClipboardCheck, module: 'rti', action: 'manage', altActions: ['view_all', 'approve', 'view'], feature: 'governance.rti' },
+      { label: 'Audit paras', to: '/admin/audit-paras', icon: Banknote, module: 'governance', action: 'audit_paras', altActions: ['manage', 'view_all'], feature: 'governance.audit_paras' },
+      { label: 'e-File', to: '/admin/efiles', icon: Briefcase, module: 'efile', action: 'view', altActions: ['create', 'view_all', 'manage'], feature: 'governance.efile' },
+      { label: 'Policies', to: '/admin/policies', icon: ScrollText, module: 'governance', action: 'policies', altActions: ['manage', 'view_all', 'view'], feature: 'governance.policies' },
+      { label: 'Governance stats', to: '/admin/governance/stats', icon: Gauge, module: 'governance', action: 'view_all', altActions: ['manage'], feature: 'governance.committees' },
+      { label: 'My governance', to: '/staff/governance', icon: Landmark, module: 'governance', action: 'view', feature: 'governance.committees' },
     ],
   },
   {
