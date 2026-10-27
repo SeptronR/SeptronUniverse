@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { InsightsPanel } from '@/features/analytics/components/InsightsPanel';
 import { useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
 import { CalendarDays, List, Plus } from 'lucide-react';
@@ -62,6 +63,7 @@ export default function LeavesPage() {
           </div>
         }
       />
+      <InsightsPanel module="leaves" />
       {actionable.length > 0 && (
         <div className="rounded-md border border-amber-300 bg-amber-50 p-3 text-sm dark:bg-amber-950/30">
           <b>Approvals queue:</b> {actionable.length} leave(s) await your decision —{' '}

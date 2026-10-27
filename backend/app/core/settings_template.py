@@ -203,6 +203,16 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("risk", "thresholds", "json", {"medium": 40, "high": 65}, label="Risk level thresholds"),
     SettingDef("risk", "show_to_student", "bool", False, label="Students see their own risk level"),
     SettingDef("risk", "cia_pass_pct", "int", 40, label="CIA pass % used by the risk score", min=0, max=100),
+    # analytics / early warning (Phase 35) — read-model refresh cadence, KPI targets + alert recipients, digests, the public
+    # website counters, intervention types and cohort / intervention alert thresholds
+    SettingDef("analytics", "refresh_minutes", "json", {"mv_kpi_daily": 15, "mv_attendance_term": 60, "mv_fees_position": 30, "default": 120}, label="Read-model refresh interval per view (minutes)"),
+    SettingDef("analytics", "targets", "json", {"attendance_pct": 75, "fee_collection_pct": 90, "result_pass_pct": 85, "placement_pct": 70, "grievance_sla_pct": 95}, label="KPI targets"),
+    SettingDef("analytics", "alert_recipients", "json", {"default": ["institution_admin", "vice_chancellor", "registrar"]}, label="KPI alert recipients per KPI (role slugs / user ids)"),
+    SettingDef("analytics", "digest", "json", {"weekly": ["vice_chancellor", "registrar"], "daily": ["hod"]}, label="Dashboard digest roles per cadence"),
+    SettingDef("analytics", "public_counter_keys", "list", ["students_active", "programmes", "faculty_count"], label="KPI keys shown on the public website"),
+    SettingDef("risk", "intervention_types", "list", ["mentor_meeting", "guardian_call", "counselling", "fee_plan", "remedial_class", "hostel_warden", "other"], label="Intervention types"),
+    SettingDef("risk", "alert_threshold_pct", "int", 15, label="Cohort alert: department high-risk share above (%)", min=1, max=100),
+    SettingDef("risk", "intervention_due_days", "int", 14, label="High risk without intervention for N days → reminder", min=1, max=90),
     SettingDef("grievances", "sla_hours", "json", {"harassment": 24, "ragging": 24, "discrimination": 48, "exam": 72, "fee": 72, "academic": 120, "hostel": 72, "infrastructure": 120, "other": 120}, label="Grievance SLA hours by category"),
     SettingDef("grievances", "committee_routing", "json", {"harassment": "icc", "ragging": "anti_ragging", "discrimination": "sc_st_cell|obc_cell", "default": "grievance_cell"}, label="Category to committee routing"),
     SettingDef("grievances", "auto_close_days", "int", 7, label="Auto-close resolved grievances after (days)", min=1, max=60),

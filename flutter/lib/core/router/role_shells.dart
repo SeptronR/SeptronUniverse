@@ -434,6 +434,14 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.brown,
       permission: 'affiliation:submit',
       feature: 'affiliation.exam_centres'),
+  // Phase 35 — early warning analytics (HOD / registrar / mentor)
+  const MoreMenuModule(
+      titleKey: 'early_warning',
+      icon: Icons.monitor_heart_outlined,
+      route: AppRoutes.riskCohort,
+      color: Colors.red,
+      permission: 'mentoring:manage|mentoring:view_all',
+      feature: 'analytics.early_warning'),
   const MoreMenuModule(
       titleKey: 'affiliation_office',
       icon: Icons.domain_verification_outlined,

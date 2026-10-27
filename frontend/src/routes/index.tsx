@@ -188,6 +188,12 @@ const StudentTranscriptsPage = lazy(() => import('@/features/post_result/pages/P
 const SsMentoringAdminPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.MentoringAdminPage })));
 const SsMenteesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.MenteesPage })));
 const SsMentee360Page = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.Mentee360Page })));
+const AnCataloguePage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.CataloguePage })));
+const AnTargetsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.TargetsPage })));
+const AnReadModelsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.ReadModelsPage })));
+const AnDigestsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.DigestsPage })));
+const AnLayoutsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.DashboardLayoutsPage })));
+const AnRiskPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.RiskAnalyticsPage })));
 const SsRiskPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.RiskPage })));
 const SsGrievancesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievancesAdminPage })));
 const SsGrievanceTicketPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievanceTicketPage })));
@@ -713,6 +719,13 @@ export const router = createBrowserRouter([
               // Phase 26 — documents (role type limits and scopes in the services)
               // Phase 27 — student support (ownership / confidentiality / scopes in the services)
               ['/admin/mentoring', 'mentoring.core', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsMentoringAdminPage key="ssm" />],
+              // Phase 35 — analytics / early warning (visibility, masking and aggregates-only narrowed by the services)
+              ['/admin/analytics', 'analytics.core', 'analytics', 'view', [['analytics', 'manage']], <AnCataloguePage key="anc" />],
+              ['/admin/analytics/targets', 'analytics.core', 'analytics', 'view', [['settings', 'manage']], <AnTargetsPage key="ant" />],
+              ['/admin/analytics/readmodels', 'analytics.core', 'analytics', 'manage', [], <AnReadModelsPage key="anr" />],
+              ['/admin/analytics/digests', 'analytics.core', 'settings', 'manage', [], <AnDigestsPage key="and" />],
+              ['/admin/dashboard-layouts', 'core.dashboard', 'settings', 'manage', [], <AnLayoutsPage key="anl" />],
+              ['/admin/risk/analytics', 'analytics.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage'], ['mentoring', 'view']], <AnRiskPage key="anrk" />],
               ['/admin/risk', 'mentoring.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsRiskPage key="ssr" />],
               ['/admin/grievances', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievancesPage key="ssg" />],
               ['/admin/grievances/:id', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievanceTicketPage key="ssgt" />],

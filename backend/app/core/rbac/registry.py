@@ -1306,6 +1306,41 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
     "applicant": COMMON | P("admissions", "create", "view") | P("fees", "self") | P("communication", "view"),
 }
 
+# Phase 35 (Prompts/35 "Visibility rules"): dashboards never widen visibility — ``analytics:view`` only opens the chart
+# catalogue / Insights; every provider still narrows rows through the module's own scope. Office roles read their module
+# charts (``<module>:view_all`` decides which), registrar / principal / IQAC / accountant / college admin export, the
+# registrar and institution admin manage read models (refresh) — ``analytics:manage``.
+ANALYTICS_READ: set[str] = P("analytics", "view")
+ANALYTICS_EXPORT: set[str] = P("analytics", "view", "export")
+ANALYTICS_ADMIN: set[str] = P("analytics", "view", "export", "manage")
+PHASE35_GRANTS: dict[str, set[str]] = {
+    "institution_admin": ANALYTICS_ADMIN,
+    "registrar": ANALYTICS_ADMIN,
+    "vice_chancellor": ANALYTICS_EXPORT,
+    "iqac_coordinator": ANALYTICS_EXPORT,
+    "accountant": ANALYTICS_EXPORT,
+    "college_admin": ANALYTICS_EXPORT,
+    "controller_of_examinations": ANALYTICS_READ,
+    "exam_cell": ANALYTICS_READ,
+    "dean": ANALYTICS_READ,
+    "hod": ANALYTICS_READ,
+    "faculty": ANALYTICS_READ,
+    "class_advisor": ANALYTICS_READ,
+    "research_guide": ANALYTICS_READ,
+    "hr_officer": ANALYTICS_READ,
+    "admissions_officer": ANALYTICS_READ,
+    "placement_officer": ANALYTICS_READ,
+    "hostel_warden": ANALYTICS_READ,
+    "librarian": ANALYTICS_READ,
+    "transport_manager": ANALYTICS_READ,
+    "estate_officer": ANALYTICS_READ,
+    "research_cell": ANALYTICS_READ,
+    "alumni_coordinator": ANALYTICS_READ,
+}
+for _slug, _extra in PHASE35_GRANTS.items():
+    if "*:*" not in ROLE_TEMPLATES[_slug]:
+        ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra  # new set: templates may share base sets
+
 # ---- import-time invariants ------------------------------------------------------------------------------------
 assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
@@ -1316,6 +1351,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0035": frozenset(ANALYTICS_ADMIN),
     "0034": frozenset(
         REGISTRAR_AFFILIATION
         | VC_AFFILIATION

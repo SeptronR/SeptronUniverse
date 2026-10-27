@@ -107,6 +107,9 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/policies/public",
     # Phase 34 — approved affiliated colleges / programmes for the website (tenant by institution slug; {affiliation.core})
     "GET /api/v1/affiliation/public/colleges",
+    # Phase 35 — website counters (tenant by institution slug; only analytics.public_counter_keys, no college breakdown;
+    # {analytics.core} inside)
+    "GET /api/v1/analytics/public-counters",
 }
 
 
