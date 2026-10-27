@@ -618,3 +618,46 @@ async def dev_assessment_task(
     else:
         raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown task {task!r}")
     return ok({"task": task, "count": n}, message="Done")
+
+
+# ---- Phase 37 audit / security / retention ----------------------------------------------------------------------------------
+@router.post(
+    "/audit/{task}",
+    summary="Phase 37 fixtures: corrupt-copy | digest-daily | verify-daily | tamper-digest | anomaly-scan | purge-daily | archive-due",
+    dependencies=[feature_required("core.audit_logs")],
+    response_model=Envelope[dict[str, Any]],
+)
+async def dev_audit_task(
+    task: str,
+    request: Request,
+    day: str | None = Query(None, description="tamper-digest: YYYY-MM-DD"),
+    principal: Principal = Depends(any_permission_required(("audit_logs", "verify_chain"), ("audit_logs", "manage"))),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    from datetime import date as _date
+
+    from app.services.audit.chain_service import ChainService
+    from app.services.audit.retention_service import RetentionService
+    from app.services.audit.security_service import SecurityService
+
+    chain = ChainService(db, principal, request)
+    today = await chain.today()
+    result: Any
+    if task == "corrupt-copy":
+        result = (await chain.dev_corrupt_copy()).model_dump(mode="json")
+    elif task == "digest-daily":
+        result = await chain.daily_digest(today)
+    elif task == "verify-daily":
+        result = await chain.daily_verify(today)
+    elif task == "tamper-digest":
+        await chain.dev_tamper_digest(_date.fromisoformat(day) if day else today.fromordinal(today.toordinal() - 1))
+        result = "tampered"
+    elif task == "anomaly-scan":
+        result = await SecurityService(db, principal, request).scan()
+    elif task == "purge-daily":
+        result = await RetentionService(db, principal, request).purge_all()
+    elif task == "archive-due":
+        result = await RetentionService(db, principal, request).archive_due()
+    else:
+        raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown task {task!r}")
+    return ok({"task": task, "result": result}, message="Done")

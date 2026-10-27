@@ -297,6 +297,9 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     ("reports", "schedule", "Schedule reports"),
     ("reports", "statutory", "Statutory reports"),
     ("audit_logs", "verify_chain", "Verify audit chain"),
+    # Phase 37: security events console (login failures, sessions, impersonation, anomalies) and exam audit trails
+    ("audit_logs", "security", "Security events console"),
+    ("exams", "audit", "Exam audit trail"),
     ("integrations", "connect", "Manage connections"),
     ("integrations", "api_keys", "API keys"),
     ("integrations", "webhooks", "Webhooks"),
@@ -1378,6 +1381,27 @@ for _slug, _extra in PHASE36_GRANTS.items():
     if "*:*" not in ROLE_TEMPLATES[_slug]:
         ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra  # new set: templates may share base sets
 
+# Phase 37 (Prompts/37 "Visibility rules"): every user reads their own audit rows (``audit_logs:view`` → ``/audit-logs/me``
+# and the self tab); ``audit_logs:view_all`` widens by scope (HOD department, college admin college, registrar /
+# principal / auditor all — IQAC aggregates only); ``audit_logs:security`` opens the security console; ``exams:audit``
+# the per-session exam audit (decode events only with ``exams:decode`` / institution admin / auditor); the principal
+# manages settings; the auditor verifies the chain (read-only everywhere else).
+AUDIT_SELF: set[str] = P("audit_logs", "view")
+PHASE37_GRANTS: dict[str, set[str]] = {
+    "registrar": P("audit_logs", "view_all", "security") | P("exams", "audit") | P("settings", "view"),
+    "vice_chancellor": P("audit_logs", "view_all", "security") | P("exams", "audit") | P("settings", "view", "manage"),
+    "controller_of_examinations": P("exams", "audit") | P("settings", "view"),
+    "exam_cell": P("exams", "audit") | P("settings", "view"),
+    "hod": P("audit_logs", "view_all") | P("settings", "view"),
+    "dean": P("audit_logs", "view_all") | P("settings", "view"),
+    "security_officer": P("audit_logs", "security") | P("settings", "view"),
+    "iqac_coordinator": P("settings", "view"),
+    "auditor": P("audit_logs", "view_all", "verify_chain", "security") | P("exams", "audit") | P("settings", "view"),
+}
+for _slug in ROLE_TEMPLATES:
+    if "*:*" not in ROLE_TEMPLATES[_slug]:
+        ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | AUDIT_SELF | PHASE37_GRANTS.get(_slug, set())
+
 # ---- import-time invariants ------------------------------------------------------------------------------------
 assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
@@ -1388,6 +1412,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0037": frozenset(AUDIT_SELF | P("exams", "audit") | P("audit_logs", "security") | P("settings", "view")),
     "0036": frozenset(REPORTS_STATUTORY | P("reports", "view_all")),
     "0035": frozenset(ANALYTICS_ADMIN),
     "0034": frozenset(

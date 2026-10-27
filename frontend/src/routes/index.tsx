@@ -202,6 +202,14 @@ const RepSavedPage = lazy(() => import('@/features/reports/pages/ReportsPages').
 const RepStatutoryPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.StatutoryPage })));
 const RepSchedulesPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.SchedulesPage })));
 const RepAccessLogPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.AccessLogPage })));
+// Phase 37 — audit logs, integrity, exam audit, security, settings catalogue, feature changes, retention
+const AuExplorerPage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.AuditExplorerPage })));
+const AuIntegrityPage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.AuditIntegrityPage })));
+const AuExamAuditPage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.ExamAuditPage })));
+const AuSecurityPage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.SecurityPage })));
+const AuSettingsCataloguePage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.SettingsCataloguePage })));
+const AuFeatureChangesPage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.FeatureChangesPage })));
+const AuRetentionPage = lazy(() => import('@/features/audit/pages/AuditPages').then((m) => ({ default: m.RetentionPage })));
 const SsRiskPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.RiskPage })));
 const SsGrievancesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievancesAdminPage })));
 const SsGrievanceTicketPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievanceTicketPage })));
@@ -608,7 +616,8 @@ export const router = createBrowserRouter([
               ['/admin/academic-years', 'core.institution', 'institutions', 'view', <AcademicYearsPage key="y" />],
               ['/admin/academic-terms/:id', 'core.institution', 'institutions', 'view', <AcademicTermPage key="t" />],
               ['/admin/holidays', 'institution.holidays', 'institutions', 'view', <HolidaysPage key="h" />],
-              ['/admin/settings', 'core.settings', 'settings', 'view', <SettingsPage key="s" />],
+              ['/admin/settings', 'core.settings', 'settings', 'view', <AuSettingsCataloguePage key="s" />],
+              ['/admin/settings/classic', 'core.settings', 'settings', 'view', <SettingsPage key="sc" />],
               ['/admin/number-sequences', 'institution.number_sequences_custom', 'settings', 'manage', <NumberSequencesPage key="n" />],
             ] as const
           ).map(([path, feature, module, action, node]) => ({
@@ -743,6 +752,13 @@ export const router = createBrowserRouter([
               ['/admin/reports/statutory', 'reports.statutory', 'reports', 'statutory', [['reports', 'manage']], <RepStatutoryPage key="rpst" />],
               ['/admin/reports/schedules', 'reports.scheduled', 'reports', 'schedule', [['reports', 'manage']], <RepSchedulesPage key="rpsc" />],
               ['/admin/reports/access-log', 'reports.core', 'reports', 'manage', [['audit_logs', 'view_all']], <RepAccessLogPage key="rpa" />],
+              // Phase 37 — audit / security / settings / retention (scope, masking, decode visibility and locks in the services)
+              ['/admin/audit-logs', 'core.audit_logs', 'audit_logs', 'view', [['audit_logs', 'view_all']], <AuExplorerPage key="aue" />],
+              ['/admin/audit-logs/integrity', 'core.audit_logs', 'audit_logs', 'verify_chain', [['audit_logs', 'manage']], <AuIntegrityPage key="aui" />],
+              ['/admin/exams/:sessionId/audit', 'exams.sessions', 'exams', 'audit', [['exams', 'manage']], <AuExamAuditPage key="aux" />],
+              ['/admin/security', 'core.audit_logs', 'audit_logs', 'security', [['audit_logs', 'manage']], <AuSecurityPage key="aus" />],
+              ['/admin/settings/feature-changes', 'core.settings', 'features', 'view', [['audit_logs', 'view_all']], <AuFeatureChangesPage key="auf" />],
+              ['/admin/retention', 'core.settings', 'settings', 'manage', [], <AuRetentionPage key="aur" />],
               ['/admin/risk', 'mentoring.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsRiskPage key="ssr" />],
               ['/admin/grievances', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievancesPage key="ssg" />],
               ['/admin/grievances/:id', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievanceTicketPage key="ssgt" />],

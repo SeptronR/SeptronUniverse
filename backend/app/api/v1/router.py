@@ -46,6 +46,7 @@ from app.api.v1.endpoints import (
     affiliation,
     alumni,
     analytics,
+    audit_logs,
     announcements,
     appraisals,
     assessment,
@@ -257,6 +258,9 @@ api_router.include_router(analytics.router)
 # Phase 36: reports — {reports.core} registry / catalogue / runs / registers / builder, {reports.scheduled} schedules,
 # {reports.statutory} statutory renderers + sign-off
 api_router.include_router(reports.router)
+# Phase 37: audit explorer / chain integrity {core.audit_logs}, exam audit {exams.sessions}, security console
+# {core.audit_logs} (+ {security.session_management} for sessions, checked in the service), retention {core.settings}
+api_router.include_router(audit_logs.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

@@ -97,6 +97,9 @@ class AppRoutes {
   static const riskCohort = '/app/risk';
   // Phase 36 — reports (registrar / HOD / COE / accountant / placement / IQAC): catalogue, params sheet, runs
   static const reports = '/app/reports';
+  // Phase 37 — audit & security (admin / registrar: audit list, anomalies, effective settings) and COE exam audit
+  static const auditHub = '/app/audit';
+  static const examAudit = '/app/exam-audit';
   static const myInspections = '/app/inspections';
   // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
   static const scholarHub = '/app/scholar';

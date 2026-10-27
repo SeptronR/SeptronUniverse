@@ -263,6 +263,19 @@ class StudentService(StudentServiceBase):
                 r.aadhaar = None if r.aadhaar is None else "********"
                 r.bank_details = None if r.bank_details is None else "********"
             return r
+        if may_unmask(self.principal, "students"):
+            from app.core.audit import record_pii_view
+
+            shown = [k for k in ("aadhaar", "bank_details", "phone", "email") if getattr(r, k, None)]
+            await record_pii_view(
+                self.db,
+                principal=self.principal,
+                module="students",
+                record_type="student",
+                record_id=s.id,
+                fields=shown,
+                request=self.request,
+            )
         masked: StudentDetailResponse = mask_pii(r, self.principal, "students")
         if masked.emergency_contact and not may_unmask(self.principal, "students"):
             # the emergency contact lives in a JSON column: mask its phone like the student's own

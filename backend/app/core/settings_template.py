@@ -221,6 +221,15 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("reports", "schedule_hours_allowed", "json", [5, 22], label="Scheduled report hours [from, to] (institution time)"),
     SettingDef("reports", "statutory_signoff_roles", "json", {"aishe": ["registrar", "principal"], "nirf": ["iqac_coordinator", "principal"], "aicte": ["principal"], "aicte_eoa": ["principal"], "ugc_annual": ["registrar"], "nsp": ["accountant", "registrar"], "nsp_return": ["accountant", "registrar"], "fee_regulatory": ["accountant", "principal"], "rti_annual": ["pio"], "phd_awarded": ["research_cell", "registrar"], "placement_nirf": ["placement_officer", "iqac_coordinator"]}, label="Statutory sign-off roles per report"),
     SettingDef("reports", "builder_pii_default_masked", "bool", True, label="Builder masks PII columns by default"),
+    # audit / retention (Phase 37) — integrity checks, signed daily digests, anomaly rules, alert recipients; the
+    # retention policy per data class (an institution may shorten, never lengthen beyond RETENTION_MAXIMUMS)
+    SettingDef("audit", "chain_verify_daily", "bool", True, label="Verify the audit hash chain daily"),
+    SettingDef("audit", "digest_signing_key_id", "str", "platform-default", label="Digest signing key id (platform key)"),
+    SettingDef("audit", "anomaly_rules", "json", [{"rule": "pii_unmask_burst", "threshold": 50, "window_minutes": 10}, {"rule": "export_off_hours", "hours": [0, 6]}, {"rule": "login_failures_per_ip", "threshold": 30, "window_minutes": 15}, {"rule": "impersonation_writes", "threshold": 1}], label="Security anomaly rules"),
+    SettingDef("audit", "alert_recipients", "list", ["institution_admin", "security_officer"], label="Audit / anomaly alert recipients (role slugs)"),
+    SettingDef("audit", "sensitive_change_notify", "list", ["vice_chancellor"], label="Roles notified of sensitive settings changes"),
+    SettingDef("privacy", "retention", "json", {"login_history_days": 365, "notifications_days": 180, "message_logs_days": 365, "domain_events_days": 90, "webhook_deliveries_days": 90, "job_files_days": 30, "report_files_days": 30, "document_previews_days": 7, "visitor_pii_days": 90, "gps_logs_days": 180, "audit_logs_archive_after_years": 2, "attendance_archive_after_years": 3, "legal_hold": []}, label="Retention policy per data class"),
+    SettingDef("security", "jwt_kid", "str", None, label="JWT signing key id (platform)"),
     SettingDef("grievances", "sla_hours", "json", {"harassment": 24, "ragging": 24, "discrimination": 48, "exam": 72, "fee": 72, "academic": 120, "hostel": 72, "infrastructure": 120, "other": 120}, label="Grievance SLA hours by category"),
     SettingDef("grievances", "committee_routing", "json", {"harassment": "icc", "ragging": "anti_ragging", "discrimination": "sc_st_cell|obc_cell", "default": "grievance_cell"}, label="Category to committee routing"),
     SettingDef("grievances", "auto_close_days", "int", 7, label="Auto-close resolved grievances after (days)", min=1, max=60),
