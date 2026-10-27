@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import type { ColumnDef } from '@tanstack/react-table';
 import { Plus, Upload } from 'lucide-react';
 import { getApiError } from '@/api/axios';
+import { useReportRun } from '@/features/reports/hooks';
 import { DataTable } from '@/components/shared/DataTable';
 import { FormField } from '@/components/shared/FormField';
 import { PageHeader } from '@/components/shared/PageHeader';
@@ -15,7 +16,6 @@ import { toast } from '@/components/ui/Toaster';
 import { usePermission } from '@/hooks/usePermission';
 import { useDepartments } from '@/features/institution/hooks';
 import { hrApi } from '../api';
-import { downloadBlob } from '../download';
 import { useDesignations, useHrMutation, useStaffList } from '../hooks';
 import { label, type Staff } from '../types';
 
@@ -63,13 +63,9 @@ export default function StaffPage() {
     ],
     [],
   );
-  const onExport = async () => {
-    try {
-      downloadBlob(await hrApi.exportStaff({ ...params, page: undefined, page_size: undefined }), 'staff.xlsx');
-    } catch (e) {
-      toast.error(getApiError(e));
-    }
-  };
+  const report = useReportRun();
+  // Phase 36: the DataTable export runs the registry report with the page's current filters (job → JobsTray)
+  const onExport = () => void report.run('hr.staff_list', { ...params }, 'xlsx', ['status', 'staff_category', 'college_id', 'department_id']);
   const submitImport = async () => {
     try {
       const r = await hrApi.bulkImport(csv);

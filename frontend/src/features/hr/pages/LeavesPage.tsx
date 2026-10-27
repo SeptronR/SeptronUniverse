@@ -13,6 +13,7 @@ import { Select, Textarea } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
 import { toast } from '@/components/ui/Toaster';
 import { usePermission } from '@/hooks/usePermission';
+import { useReportRun } from '@/features/reports/hooks';
 import { hrApi } from '../api';
 import { LeaveApplyModal, SimpleTable, WorkflowPanel } from '../components/shared';
 import { useHrMutation, useLeaves } from '../hooks';
@@ -28,6 +29,7 @@ export default function LeavesPage() {
   const [open, setOpen] = useState<Leave | null>(null);
   const [comment, setComment] = useState('');
   const list = useLeaves(params);
+  const report = useReportRun();
   const queue = useLeaves({ scope: 'all', status: 'pending', page_size: 100 });
   const calendar = useQuery({ queryKey: ['leaves', 'calendar'], queryFn: () => hrApi.calendar(), enabled: view === 'calendar' });
   const decide = useHrMutation(({ id, d }: { id: string; d: 'approve' | 'reject' }) => hrApi.decideLeave(id, d, comment || undefined), ['leaves', 'approvals']);
@@ -88,6 +90,8 @@ export default function LeavesPage() {
           onSortChange={(sort) => setParams((p) => ({ ...p, sort }))}
           onRowClick={(r) => setOpen(r)}
           rowKey={(r) => r.id}
+          // Phase 36: export = the leave register report with the current filters (job → JobsTray)
+          onExport={() => void report.run('hr.leave_register', { ...params }, 'xlsx', ['status', 'college_id', 'department_id'])}
         />
       ) : (
         <SimpleTable head={['Staff', 'Dept', 'Type', 'From', 'To', 'Days', 'Status']} rows={(calendar.data?.data ?? []).map((c) => [c.staff_name, c.department_code, c.leave_type_code, c.from_date, c.to_date, num(c.days_count), <StatusBadge key={c.id} status={c.status} />])} empty="No leave in the next two months." />

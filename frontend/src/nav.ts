@@ -1,5 +1,12 @@
 import {
   Activity,
+  FileBarChart2,
+  History,
+  BookOpenCheck,
+  Wrench,
+  Bookmark,
+  FileCheck2,
+  CalendarClock,
   BarChart3,
   Database,
   LayoutGrid,
@@ -477,6 +484,15 @@ export const NAV_GROUPS: NavGroup[] = [
   {
     title: 'ADMIN',
     items: [
+      // Phase 36 — reports: catalogue, runs, registers, builder, saved, statutory, schedules, access log
+      { label: 'Reports', to: '/admin/reports', icon: FileBarChart2, module: 'reports', altActions: ['run', 'manage'], feature: 'reports.core' },
+      { label: 'Report runs', to: '/admin/reports/runs', icon: History, module: 'reports', altActions: ['run', 'manage'], feature: 'reports.core' },
+      { label: 'Registers', to: '/admin/reports/registers', icon: BookOpenCheck, module: 'reports', action: 'run', altActions: ['manage'], feature: 'reports.core' },
+      { label: 'Report builder', to: '/admin/reports/builder', icon: Wrench, module: 'reports', action: 'run', altActions: ['manage'], feature: 'reports.core' },
+      { label: 'Saved reports', to: '/admin/reports/saved', icon: Bookmark, module: 'reports', action: 'run', altActions: ['manage'], feature: 'reports.core' },
+      { label: 'Statutory reports', to: '/admin/reports/statutory', icon: FileCheck2, module: 'reports', action: 'statutory', altActions: ['manage'], feature: 'reports.statutory' },
+      { label: 'Report schedules', to: '/admin/reports/schedules', icon: CalendarClock, module: 'reports', action: 'schedule', altActions: ['manage'], feature: 'reports.scheduled' },
+      { label: 'Report access log', to: '/admin/reports/access-log', icon: ShieldCheck, module: 'reports', action: 'manage', feature: 'reports.core' },
       // Phase 03 — institution structure, academic sessions, settings
       { label: 'Institution', to: '/admin/institution', icon: Landmark, module: 'institutions', feature: 'core.institution' },
       { label: 'Colleges', to: '/admin/colleges', icon: Building2, module: 'institutions', feature: 'core.institution' },

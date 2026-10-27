@@ -1064,12 +1064,17 @@ async def report(
     }
     if format == "csv":
         from app.core.jobs import enqueue
+        from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
 
+        legacy = {
+            "from": date_from,
+            "to": date_to,
+            "group_by": group_by,
+            "batch_id": batch_id,
+            "batch_year": batch_year,
+        }
         job = await enqueue(
-            db,
-            principal,
-            "fees.reports_export",
-            {"report": report, "params": {k: (str(v) if v is not None else None) for k, v in params.items()}},
+            db, principal, "report.run", await alias_params(db, principal, f"fees.{report}", legacy, "csv")
         )
         return _queued({"job_id": str(job.id)}, "Export queued")
     return ok(await FeeReportService(db, principal, request).run(report, params))

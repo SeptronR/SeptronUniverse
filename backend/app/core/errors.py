@@ -24,11 +24,12 @@ class ErrorCode:
     RULE_VIOLATION = "RULE_VIOLATION"
     INTEGRATION_FAILED = "INTEGRATION_FAILED"
     MFA_REQUIRED = "MFA_REQUIRED"
+    GONE = "GONE"  # a purged report file (Phase 36 retention)
     INTERNAL = "INTERNAL"
 
 
-# HTTP codes the API is allowed to return (coding standard 3)
-ALLOWED_HTTP_CODES = {200, 201, 202, 204, 400, 401, 403, 404, 409, 422, 429, 503, 500}
+# HTTP codes the API is allowed to return (coding standard 3); 410 only for report files past retention (Phase 36)
+ALLOWED_HTTP_CODES = {200, 201, 202, 204, 400, 401, 403, 404, 409, 410, 422, 429, 503, 500}
 
 
 class APIError(Exception):

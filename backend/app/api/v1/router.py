@@ -101,6 +101,7 @@ from app.api.v1.endpoints import (
     recruitment,
     registration,
     regulations,
+    reports,
     research,
     results,
     scholarships,
@@ -253,6 +254,9 @@ api_router.include_router(affiliation.router)
 # {analytics.early_warning} for the /risk cohort routes (Phase 27 keeps /risk/flags|heatmap|compute); public counters first
 api_router.include_router(analytics.public_router)
 api_router.include_router(analytics.router)
+# Phase 36: reports — {reports.core} registry / catalogue / runs / registers / builder, {reports.scheduled} schedules,
+# {reports.statutory} statutory renderers + sign-off
+api_router.include_router(reports.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

@@ -46,6 +46,70 @@ CATEGORIES = (
 MANDATORY_CATEGORIES = frozenset({"security", "emergency"})
 
 # Phase 34: affiliation — applications, fees, inspections, deficiencies, decisions, submissions, centres, expiries
+# Phase 36: reports — run ready / failed, scheduled deliveries, statutory review / sign-off / due dates
+REPORTS_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "reports.ready",
+        "announcements",
+        "Report ready",
+        "{{ report }} is ready",
+        "Your report {{ report }} is ready ({{ rows }} rows). Download: {{ url }}",
+        ("report", "key", "rows", "url", "job_id"),
+        ("in_app",),
+        link="/admin/reports/runs",
+    ),
+    EventDef(
+        "reports.failed",
+        "announcements",
+        "Report failed",
+        "{{ report }} could not be generated",
+        "{{ report }} failed: {{ error }}",
+        ("report", "key", "error", "job_id"),
+        ("in_app", "email"),
+        link="/admin/reports/runs",
+    ),
+    EventDef(
+        "reports.scheduled_delivery",
+        "announcements",
+        "Scheduled report",
+        "{{ report }} — scheduled delivery",
+        "Your scheduled report {{ report }} ({{ rows }} rows) is ready. The link is valid for the retention period: {{ url }}",
+        ("report", "key", "rows", "url"),
+        ("in_app", "email", "whatsapp"),
+        link="/admin/reports/runs",
+    ),
+    EventDef(
+        "reports.statutory_review_requested",
+        "approvals",
+        "Statutory report review",
+        "{{ name }} {{ period }} awaits your sign-off",
+        "{{ name }} for {{ period }} was generated and needs sign-off by {{ roles }}.",
+        ("code", "name", "period", "roles"),
+        ("in_app", "email"),
+        link="/admin/reports/statutory",
+    ),
+    EventDef(
+        "reports.statutory_signed_off",
+        "approvals",
+        "Statutory report signed off",
+        "{{ name }} {{ period }} is signed off",
+        "All required roles signed off {{ name }} for {{ period }}; the files are locked.",
+        ("code", "name", "period"),
+        ("in_app", "email"),
+        link="/admin/reports/statutory",
+    ),
+    EventDef(
+        "reports.statutory_due",
+        "announcements",
+        "Statutory return due",
+        "{{ name }} {{ period }} is due on {{ due_on }}",
+        "{{ name }} for {{ period }} is due on {{ due_on }} and is not signed off yet.",
+        ("code", "name", "period", "due_on"),
+        ("in_app", "email"),
+        link="/admin/reports/statutory",
+    ),
+)
+
 ANALYTICS_EVENTS: tuple[EventDef, ...] = (
     EventDef(
         "analytics.kpi_threshold",
@@ -3035,6 +3099,7 @@ EVENTS = (
     + GOVERNANCE_EVENTS
     + AFFILIATION_EVENTS
     + ANALYTICS_EVENTS
+    + REPORTS_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

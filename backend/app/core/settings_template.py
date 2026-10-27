@@ -213,6 +213,14 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("risk", "intervention_types", "list", ["mentor_meeting", "guardian_call", "counselling", "fee_plan", "remedial_class", "hostel_warden", "other"], label="Intervention types"),
     SettingDef("risk", "alert_threshold_pct", "int", 15, label="Cohort alert: department high-risk share above (%)", min=1, max=100),
     SettingDef("risk", "intervention_due_days", "int", 14, label="High risk without intervention for N days → reminder", min=1, max=90),
+    # reports (Phase 36) — inline preview / run row caps, file retention, schedule hours (institution TZ), statutory
+    # sign-off roles per code, builder PII masking default
+    SettingDef("reports", "max_inline_rows", "int", 2000, label="Inline preview row cap", min=100, max=10000),
+    SettingDef("reports", "max_rows", "int", 500000, label="Report row cap", min=1000, max=2000000),
+    SettingDef("reports", "retention_days", "int", 30, label="Report file retention (days)", min=1, max=365),
+    SettingDef("reports", "schedule_hours_allowed", "json", [5, 22], label="Scheduled report hours [from, to] (institution time)"),
+    SettingDef("reports", "statutory_signoff_roles", "json", {"aishe": ["registrar", "principal"], "nirf": ["iqac_coordinator", "principal"], "aicte": ["principal"], "aicte_eoa": ["principal"], "ugc_annual": ["registrar"], "nsp": ["accountant", "registrar"], "nsp_return": ["accountant", "registrar"], "fee_regulatory": ["accountant", "principal"], "rti_annual": ["pio"], "phd_awarded": ["research_cell", "registrar"], "placement_nirf": ["placement_officer", "iqac_coordinator"]}, label="Statutory sign-off roles per report"),
+    SettingDef("reports", "builder_pii_default_masked", "bool", True, label="Builder masks PII columns by default"),
     SettingDef("grievances", "sla_hours", "json", {"harassment": 24, "ragging": 24, "discrimination": 48, "exam": 72, "fee": 72, "academic": 120, "hostel": 72, "infrastructure": 120, "other": 120}, label="Grievance SLA hours by category"),
     SettingDef("grievances", "committee_routing", "json", {"harassment": "icc", "ragging": "anti_ragging", "discrimination": "sc_st_cell|obc_cell", "default": "grievance_cell"}, label="Category to committee routing"),
     SettingDef("grievances", "auto_close_days", "int", 7, label="Auto-close resolved grievances after (days)", min=1, max=60),

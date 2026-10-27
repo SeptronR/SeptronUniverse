@@ -194,6 +194,14 @@ const AnReadModelsPage = lazy(() => import('@/features/analytics/pages/Analytics
 const AnDigestsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.DigestsPage })));
 const AnLayoutsPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.DashboardLayoutsPage })));
 const AnRiskPage = lazy(() => import('@/features/analytics/pages/AnalyticsPages').then((m) => ({ default: m.RiskAnalyticsPage })));
+const RepCataloguePage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.ReportCataloguePage })));
+const RepRunsPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.ReportRunsPage })));
+const RepRegistersPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.RegistersPage })));
+const RepBuilderPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.BuilderPage })));
+const RepSavedPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.SavedReportsPage })));
+const RepStatutoryPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.StatutoryPage })));
+const RepSchedulesPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.SchedulesPage })));
+const RepAccessLogPage = lazy(() => import('@/features/reports/pages/ReportsPages').then((m) => ({ default: m.AccessLogPage })));
 const SsRiskPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.RiskPage })));
 const SsGrievancesPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievancesAdminPage })));
 const SsGrievanceTicketPage = lazy(() => import('@/features/student_support/pages/SupportPages').then((m) => ({ default: m.GrievanceTicketPage })));
@@ -726,6 +734,15 @@ export const router = createBrowserRouter([
               ['/admin/analytics/digests', 'analytics.core', 'settings', 'manage', [], <AnDigestsPage key="and" />],
               ['/admin/dashboard-layouts', 'core.dashboard', 'settings', 'manage', [], <AnLayoutsPage key="anl" />],
               ['/admin/risk/analytics', 'analytics.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage'], ['mentoring', 'view']], <AnRiskPage key="anrk" />],
+              // Phase 36 — reports (scope narrowing, PII masking and statutory sign-off roles enforced by the services)
+              ['/admin/reports', 'reports.core', 'reports', 'view', [['reports', 'run'], ['reports', 'manage']], <RepCataloguePage key="rpc" />],
+              ['/admin/reports/runs', 'reports.core', 'reports', 'view', [['reports', 'run'], ['reports', 'manage']], <RepRunsPage key="rpr" />],
+              ['/admin/reports/registers', 'reports.core', 'reports', 'run', [['reports', 'manage']], <RepRegistersPage key="rpg" />],
+              ['/admin/reports/builder', 'reports.core', 'reports', 'run', [['reports', 'manage']], <RepBuilderPage key="rpb" />],
+              ['/admin/reports/saved', 'reports.core', 'reports', 'run', [['reports', 'manage']], <RepSavedPage key="rps" />],
+              ['/admin/reports/statutory', 'reports.statutory', 'reports', 'statutory', [['reports', 'manage']], <RepStatutoryPage key="rpst" />],
+              ['/admin/reports/schedules', 'reports.scheduled', 'reports', 'schedule', [['reports', 'manage']], <RepSchedulesPage key="rpsc" />],
+              ['/admin/reports/access-log', 'reports.core', 'reports', 'manage', [['audit_logs', 'view_all']], <RepAccessLogPage key="rpa" />],
               ['/admin/risk', 'mentoring.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsRiskPage key="ssr" />],
               ['/admin/grievances', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievancesPage key="ssg" />],
               ['/admin/grievances/:id', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievanceTicketPage key="ssgt" />],

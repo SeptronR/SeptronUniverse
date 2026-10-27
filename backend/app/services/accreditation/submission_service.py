@@ -37,6 +37,16 @@ FINANCE_PREFIXES = (
 )
 
 
+# Phase 36 statutory code → Phase 32 submission type (``app/enums/reports.py:STATUTORY_DEFS``)
+STATUTORY_SUBMISSION_CODES: dict[str, str] = {
+    "aishe": "aishe",
+    "nirf": "nirf_data",
+    "aicte_eoa": "aicte_approval",
+    "ugc_annual": "ugc_annual",
+    "nsp_return": "nsp_return",
+}
+
+
 class SubmissionService(AccreditationBase):
     def require_reader(self) -> None:
         if not (self.can(self.module, "view") or self.can(self.module, "view_all") or self.can(self.module, "manage")):
@@ -203,6 +213,13 @@ class SubmissionService(AccreditationBase):
         if s.status in ("submitted", "acknowledged"):
             raise rule("Submitted payloads are immutable — create a correction", "IMMUTABLE")
         s.payload = await self.build_payload(s)
+        # Phase 36: the submission files are rendered by the statutory renderers (``/reports/statutory/{code}``); while
+        # ``reports.statutory`` is off the payload says so instead of carrying files
+        code = {v: k for k, v in STATUTORY_SUBMISSION_CODES.items()}.get(s.submission_type)
+        if code and await self.feature("reports.statutory"):
+            s.payload["renderer"] = {"code": code, "status": "available", "route": f"/reports/statutory/{code}"}
+        else:
+            s.payload["renderer"] = {"code": code, "status": "RENDERER_UNAVAILABLE"}
         s.status, s.job_id = "generated", job_id
         await self.db.flush()
         await self._emit(
