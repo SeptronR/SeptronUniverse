@@ -46,6 +46,60 @@ CATEGORIES = (
 MANDATORY_CATEGORIES = frozenset({"security", "emergency"})
 
 # Phase 34: affiliation — applications, fees, inspections, deficiencies, decisions, submissions, centres, expiries
+ANALYTICS_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "analytics.kpi_threshold",
+        "announcements",
+        "KPI below target",
+        "{{ kpi }} is {{ direction }} target ({{ value }} vs {{ target }})",
+        "{{ kpi }}{% if scope %} for {{ scope }}{% endif %} is {{ value }} against a target of {{ target }} since {{ since }}.",
+        ("kpi", "value", "target", "direction", "scope", "since"),
+        ("in_app", "email"),
+        link="/admin/analytics/targets",
+    ),
+    EventDef(
+        "analytics.kpi_recovered",
+        "announcements",
+        "KPI back on target",
+        "{{ kpi }} is back on target ({{ value }})",
+        "{{ kpi }}{% if scope %} for {{ scope }}{% endif %} recovered to {{ value }} (target {{ target }}).",
+        ("kpi", "value", "target", "scope"),
+        ("in_app", "email"),
+        link="/admin/analytics/targets",
+    ),
+    EventDef(
+        "analytics.digest",
+        "announcements",
+        "Dashboard digest",
+        "Your {{ cadence }} dashboard digest — {{ institution }}",
+        "Your {{ cadence }} {{ role }} dashboard digest is ready: {{ summary }}{% if url %} Download: {{ url }}{% endif %}",
+        ("cadence", "institution", "role", "summary", "url"),
+        ("in_app", "email", "whatsapp"),
+        link="/dashboard",
+    ),
+    EventDef(
+        "risk.cohort_alert",
+        "mentoring",
+        "High-risk share above threshold",
+        "{{ department }}: {{ high_pct }}% of students at high risk",
+        "{{ high }} of {{ total }} students ({{ high_pct }}%) in {{ department }} are at high risk for {{ term }} (threshold {{ threshold }}%).",
+        ("department", "high", "total", "high_pct", "threshold", "term"),
+        ("in_app", "email"),
+        link="/admin/risk/analytics",
+    ),
+    EventDef(
+        "risk.intervention_due",
+        "mentoring",
+        "Intervention due",
+        "Intervention due for {{ student }}",
+        "{{ student }} has stayed at high risk on two computations with no intervention in {{ days }} days. Log an intervention.",
+        ("student", "days"),
+        ("in_app", "email"),
+        link="/admin/risk/analytics",
+    ),
+)
+
+
 AFFILIATION_EVENTS: tuple[EventDef, ...] = (
     EventDef(
         "affiliation.application_submitted",
@@ -2980,6 +3034,7 @@ EVENTS = (
     + ACCREDITATION_EVENTS
     + GOVERNANCE_EVENTS
     + AFFILIATION_EVENTS
+    + ANALYTICS_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

@@ -1,5 +1,11 @@
 import {
   Activity,
+  BarChart3,
+  Database,
+  LayoutGrid,
+  MailCheck,
+  Target,
+  HeartPulse,
   Award,
   FlaskConical,
   Handshake,
@@ -353,7 +359,13 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Reports', to: '/admin/fees/reports', icon: TrendingUp, module: 'fees', action: 'view_all', altActions: ['export'], feature: 'fees.core' },
     ],
   },
-  { title: 'ENGAGEMENT', items: [] },
+  {
+    title: 'ENGAGEMENT',
+    items: [
+      // Phase 35 — early-warning analytics on top of the Phase 27 risk flags (cohorts, students, interventions)
+      { label: 'Early warning', to: '/admin/risk/analytics', icon: HeartPulse, module: 'mentoring', action: 'view_all', altActions: ['manage'], feature: 'analytics.early_warning' },
+    ],
+  },
   {
     title: 'RESEARCH',
     items: [
@@ -479,6 +491,12 @@ export const NAV_GROUPS: NavGroup[] = [
       },
       { label: 'Holidays', to: '/admin/holidays', icon: CalendarDays, module: 'institutions', feature: 'institution.holidays' },
       { label: 'Settings', to: '/admin/settings', icon: Settings, module: 'settings', feature: 'core.settings' },
+      // Phase 35 — analytics: chart catalogue, KPI targets, read models, digests, per-role dashboard layouts
+      { label: 'Analytics', to: '/admin/analytics', icon: BarChart3, module: 'analytics', feature: 'analytics.core' },
+      { label: 'KPI targets', to: '/admin/analytics/targets', icon: Target, module: 'analytics', feature: 'analytics.core' },
+      { label: 'Read models', to: '/admin/analytics/readmodels', icon: Database, module: 'analytics', action: 'manage', feature: 'analytics.core' },
+      { label: 'Digests', to: '/admin/analytics/digests', icon: MailCheck, module: 'settings', action: 'manage', feature: 'analytics.core' },
+      { label: 'Dashboard layouts', to: '/admin/dashboard-layouts', icon: LayoutGrid, module: 'settings', action: 'manage', feature: 'core.dashboard' },
       {
         label: 'Number Sequences',
         to: '/admin/number-sequences',

@@ -344,6 +344,8 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # dashboards, analytics & early warning: no tables — the section 37 materialized read models are listed in VIEWS
+    "35": [],
     # affiliation management (section 31; exam_centres moved from Phase 14, college_data_submissions from Phase 13)
     "34": [
         "affiliation_applications",
@@ -534,7 +536,23 @@ PHASES: dict[str, list[str]] = {
     ],
 }
 
-VIEWS: set[str] = {"answer_scripts_for_evaluation"}
+VIEWS: set[str] = {
+    "answer_scripts_for_evaluation",
+    # Phase 35 analytics read models (Database_Schema.sql section 37; app/services/analytics/read_models.py)
+    "mv_enrolment_daily",
+    "mv_attendance_term",
+    "mv_fees_position",
+    "mv_exam_progress",
+    "mv_results_summary",
+    "mv_hr_snapshot",
+    "mv_admissions_funnel",
+    "mv_placement_funnel",
+    "mv_hostel_occupancy",
+    "mv_research_counts",
+    "mv_service_desk_sla",
+    "mv_risk_cohort",
+    "mv_kpi_daily",
+}
 
 
 def tables_for(phase: str) -> list[str]:

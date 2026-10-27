@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { InsightsPanel } from '@/features/analytics/components/InsightsPanel';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getApiError } from '@/api/axios';
@@ -161,6 +162,7 @@ export function DrivesPage() {
   return (
     <div className="space-y-4">
       <PageHeader title="Drives" description="Drive wizard with rule builder and live eligibility preview; lifecycle draft → open → closed → in progress → completed." />
+      <InsightsPanel module="placement" />
       <Section title="Drive wizard">
         <div className="flex flex-wrap items-end gap-2">
           <select className={sel} value={w.company_id} onChange={(e) => setW({ ...w, company_id: e.target.value })}><option value="">Company…</option>{list(cos.data).filter((c: Any) => !c.is_blacklisted).map((c: Any) => <option key={c.id} value={c.id}>{c.name} ({c.tier})</option>)}</select>

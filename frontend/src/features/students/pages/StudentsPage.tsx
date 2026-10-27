@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { InsightsPanel } from '@/features/analytics/components/InsightsPanel';
 import { useNavigate } from 'react-router-dom';
 import type { ColumnDef } from '@tanstack/react-table';
 import { CreditCard, FileSpreadsheet, Plus, Upload } from 'lucide-react';
@@ -202,6 +203,7 @@ export default function StudentsPage() {
           </div>
         }
       />
+      <InsightsPanel module="students" filters={{ program_id: params.program_id, department_id: params.department_id, batch_id: params.batch_id }} />
       {stats.data && (
         <div className="grid gap-3 sm:grid-cols-4">
           <Card><CardContent className="pt-4 sm:pt-4"><p className="text-xs text-muted-foreground">Students</p><p className="text-2xl font-semibold">{stats.data.data.total}</p></CardContent></Card>

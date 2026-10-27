@@ -9,6 +9,7 @@ import '../../core/auth/auth_state.dart';
 import '../../core/providers.dart';
 import '../../core/router/routes.dart';
 import '../../shared/widgets/placeholder_screen.dart';
+import '../analytics/analytics_screens.dart';
 import '../../shared/widgets/segmented_scope.dart';
 import '../academic_structure/academic_structure_screens.dart';
 
@@ -163,7 +164,8 @@ class _LoaderState<T> extends State<_Loader<T>> {
       );
 }
 
-/// Home tab: the student / parent dashboards; other roles keep the placeholder until their phases fill Home.
+/// Home tab: the student / parent dashboards (Phase 07); every other role renders its Phase 35 role dashboard
+/// (`GET /dashboard` widgets) — the placeholder only when dashboards are off.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -175,6 +177,9 @@ class HomeScreen extends ConsumerWidget {
     }
     if (auth.roles.contains('parent') && auth.hasFeature('portals.parent')) {
       return const ParentHomeScreen();
+    }
+    if (auth.hasFeature('core.dashboard') || auth.roles.isNotEmpty) {
+      return const DashboardHomeScreen();
     }
     return const PlaceholderScreen(title: 'Home');
   }

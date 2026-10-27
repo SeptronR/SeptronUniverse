@@ -4422,6 +4422,246 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/analytics/alerts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** KPI threshold alerts */
+        get: operations["kpi_alerts_api_v1_analytics_alerts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/charts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Chart catalogue for me */
+        get: operations["chart_catalogue_api_v1_analytics_charts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/charts/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Chart data + table + drill-down (format=json|table|csv) */
+        get: operations["chart_data_api_v1_analytics_charts__key__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/charts/{key}/drilldown": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Rows behind a chart point (target module list, masked) */
+        get: operations["chart_drilldown_api_v1_analytics_charts__key__drilldown_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/charts/{key}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Export chart rows (job analytics.chart_export) */
+        post: operations["chart_export_api_v1_analytics_charts__key__export_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/digests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Digest schedules */
+        get: operations["digests_api_v1_analytics_digests_get"];
+        put?: never;
+        /** Create a digest schedule */
+        post: operations["create_digest_api_v1_analytics_digests_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/digests/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a digest schedule */
+        delete: operations["delete_digest_api_v1_analytics_digests__id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/digests/{id}/send-now": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a digest now (job analytics.digest) */
+        post: operations["send_digest_api_v1_analytics_digests__id__send_now_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/insights/{module}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Insights tab charts for a list page (current filters) */
+        get: operations["insights_api_v1_analytics_insights__module__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/public-counters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Website counters (tenant by institution slug) */
+        get: operations["public_counters_api_v1_analytics_public_counters_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/readmodels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read models: refreshed_at, stale, dirty */
+        get: operations["readmodels_api_v1_analytics_readmodels_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/readmodels/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Refresh read models (job analytics.refresh_all) */
+        post: operations["refresh_readmodels_api_v1_analytics_readmodels_refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/targets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** KPI targets, alert recipients and history */
+        get: operations["get_targets_api_v1_analytics_targets_get"];
+        /** Set KPI targets / alert recipients */
+        put: operations["put_targets_api_v1_analytics_targets_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/analytics/targets/evaluate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Evaluate KPI targets now (job analytics.kpi_evaluate) */
+        post: operations["evaluate_targets_api_v1_analytics_targets_evaluate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/announcements": {
         parameters: {
             query?: never;
@@ -9126,6 +9366,92 @@ export interface paths {
         put?: never;
         /** Department verification (equivalent course / basket) */
         post: operations["verify_credit_transfer_api_v1_credit_transfers__id__verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Role dashboard (widgets rendered, meta.visibility) */
+        get: operations["dashboard_api_v1_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dashboard/layouts/{role}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Institution layout for a role */
+        get: operations["get_layout_api_v1_dashboard_layouts__role__get"];
+        /** Edit the institution layout of a role */
+        put: operations["put_layout_api_v1_dashboard_layouts__role__put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dashboard/layouts/{role}/reset": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reset a role layout to the defaults */
+        post: operations["reset_layout_api_v1_dashboard_layouts__role__reset_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dashboard/pins": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** My pinned / hidden widgets */
+        put: operations["dashboard_pins_api_v1_dashboard_pins_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/dashboard/widgets/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Single widget (re-fetch / live refresh) */
+        get: operations["dashboard_widget_api_v1_dashboard_widgets__key__get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -26325,6 +26651,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/risk/cohort": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Risk cohort heat map (ScopeTabs Mine | Department | All) */
+        get: operations["risk_cohort_api_v1_risk_cohort_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/risk/cohort/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Cohort / student list / IQAC export (job risk.cohort_export) */
+        post: operations["risk_export_api_v1_risk_cohort_export_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/risk/cohort/trend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Risk levels across terms */
+        get: operations["risk_trend_api_v1_risk_cohort_trend_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/risk/compute": {
         parameters: {
             query?: never;
@@ -26336,6 +26713,23 @@ export interface paths {
         put?: never;
         /** Compute risk flags (job risk.compute) */
         post: operations["risk_compute_api_v1_risk_compute_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/risk/effectiveness": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Intervention effectiveness (level change within the term) */
+        get: operations["risk_effectiveness_api_v1_risk_effectiveness_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -26404,6 +26798,41 @@ export interface paths {
         get: operations["risk_heatmap_api_v1_risk_heatmap_get"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/risk/students": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Flagged students (Phase 27 visibility; filters) */
+        get: operations["risk_students_api_v1_risk_students_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/risk/students/{enrollment_id}/interventions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Interventions of a student */
+        get: operations["list_interventions_api_v1_risk_students__enrollment_id__interventions_get"];
+        put?: never;
+        /** Log an intervention (stored as a mentoring session) */
+        post: operations["log_intervention_api_v1_risk_students__enrollment_id__interventions_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -37570,6 +37999,53 @@ export interface components {
             /** Workflow Instance Id */
             workflow_instance_id?: string | null;
         };
+        /** ChartCatalogueItem */
+        ChartCatalogueItem: {
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /** Dims */
+            dims: string[];
+            /** Drilldown Route */
+            drilldown_route?: string | null;
+            /** Feature */
+            feature?: string | null;
+            /** Key */
+            key: string;
+            /** Kind */
+            kind: string;
+            /** Module */
+            module: string;
+            /** Params Schema */
+            params_schema?: {
+                [key: string]: unknown;
+            };
+            /** Source View */
+            source_view?: string | null;
+            /** Title */
+            title: string;
+        };
+        /** ChartExportIn */
+        ChartExportIn: {
+            /** Dims */
+            dims?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Format
+             * @default xlsx
+             * @enum {string}
+             */
+            format: "csv" | "xlsx";
+            /** Params */
+            params?: {
+                [key: string]: unknown;
+            };
+            /** Scope */
+            scope?: ("self" | "mine" | "own" | "department" | "faculty" | "college" | "all") | null;
+        };
         /** ChartImport */
         ChartImport: {
             /**
@@ -37582,6 +38058,55 @@ export interface components {
              * @default IN
              */
             template: "IN" | null;
+        };
+        /**
+         * ChartOut
+         * @description ``ChartData{series[], dims{}, table{columns[], rows[]}, generated_at, stale}`` + drill-down.
+         */
+        ChartOut: {
+            /** Dims */
+            dims?: {
+                [key: string]: unknown;
+            };
+            /** Drilldown */
+            drilldown?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Generated At
+             * Format: date-time
+             */
+            generated_at: string;
+            /** Key */
+            key: string;
+            /** Kind */
+            kind: string;
+            /**
+             * Scope
+             * @default all
+             */
+            scope: string;
+            /** Series */
+            series: {
+                [key: string]: unknown;
+            }[];
+            /**
+             * Stale
+             * @default false
+             */
+            stale: boolean;
+            table: components["schemas"]["ChartTableOut"];
+            /** Title */
+            title: string;
+            /** Total */
+            total?: number | null;
+        };
+        /** ChartTableOut */
+        ChartTableOut: {
+            /** Columns */
+            columns: string[];
+            /** Rows */
+            rows: unknown[][];
         };
         /** CheckInRequest */
         CheckInRequest: {
@@ -41142,6 +41667,70 @@ export interface components {
             /** Item */
             item: string;
         };
+        /** DashboardLayoutIn */
+        DashboardLayoutIn: {
+            /** Columns */
+            columns?: number | null;
+            /** Widgets */
+            widgets: components["schemas"]["LayoutWidget"][];
+        };
+        /** DashboardLayoutOut */
+        DashboardLayoutOut: {
+            /** Columns */
+            columns: number;
+            /**
+             * Customised
+             * @default false
+             */
+            customised: boolean;
+            /** Role */
+            role: string;
+            /** Widgets */
+            widgets: components["schemas"]["LayoutWidget"][];
+        };
+        /** DashboardOut */
+        DashboardOut: {
+            /** Alerts */
+            alerts?: {
+                [key: string]: unknown;
+            }[];
+            /** Layout */
+            layout: {
+                [key: string]: unknown;
+            };
+            /** Risk */
+            risk?: {
+                [key: string]: unknown;
+            } | null;
+            /** Role */
+            role: string;
+            /** Roles */
+            roles?: string[];
+            /** Targets */
+            targets?: {
+                [key: string]: unknown;
+            };
+            /** Visibility */
+            visibility?: {
+                [key: string]: unknown;
+            };
+            /** Widgets */
+            widgets: components["schemas"]["DashboardWidgetOut"][];
+        };
+        /** DashboardPinsIn */
+        DashboardPinsIn: {
+            /** Hidden Keys */
+            hidden_keys?: string[];
+            /** Pinned Keys */
+            pinned_keys?: string[];
+        };
+        /** DashboardPinsOut */
+        DashboardPinsOut: {
+            /** Hidden Keys */
+            hidden_keys: string[];
+            /** Pinned Keys */
+            pinned_keys: string[];
+        };
         /** DashboardResponse */
         DashboardResponse: {
             batch: components["schemas"]["BatchRef"];
@@ -41167,6 +41756,64 @@ export interface components {
                 [key: string]: unknown;
             }[];
             run?: components["schemas"]["RunSummary"] | null;
+        };
+        /** DashboardWidgetOut */
+        DashboardWidgetOut: {
+            /** Chart Kind */
+            chart_kind?: string | null;
+            /** Data */
+            data?: {
+                [key: string]: unknown;
+            } | null;
+            /** Drilldown */
+            drilldown?: {
+                [key: string]: unknown;
+            } | null;
+            /** Generated At */
+            generated_at?: string | null;
+            /** Icon */
+            icon?: string | null;
+            /** Items */
+            items?: {
+                [key: string]: unknown;
+            }[] | null;
+            /** Key */
+            key: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "chart" | "stat" | "list" | "action";
+            /**
+             * Permission Ok
+             * @default true
+             */
+            permission_ok: boolean;
+            /** Reason */
+            reason?: string | null;
+            /** Route */
+            route?: string | null;
+            /**
+             * Size
+             * @default md
+             */
+            size: string;
+            /**
+             * Stale
+             * @default false
+             */
+            stale: boolean;
+            /** Stat */
+            stat?: {
+                [key: string]: unknown;
+            } | null;
+            /** Title */
+            title?: string | null;
+            /**
+             * Unavailable
+             * @default false
+             */
+            unavailable: boolean;
         };
         /** DataSubjectRequestCreate */
         DataSubjectRequestCreate: {
@@ -42131,6 +42778,47 @@ export interface components {
          * @enum {string}
          */
         DeviceType: "biometric" | "rfid" | "qr_kiosk";
+        /** DigestScheduleIn */
+        DigestScheduleIn: {
+            /**
+             * Cadence
+             * @enum {string}
+             */
+            cadence: "daily" | "weekly";
+            /** Channels */
+            channels?: ("in_app" | "email" | "whatsapp")[];
+            /**
+             * Hour
+             * @default 7
+             */
+            hour: number;
+            /** Roles */
+            roles?: string[];
+            /** User Ids */
+            user_ids?: string[];
+        };
+        /** DigestScheduleOut */
+        DigestScheduleOut: {
+            /** Cadence */
+            cadence: string;
+            /** Channels */
+            channels?: string[];
+            /** Created At */
+            created_at?: string | null;
+            /**
+             * Hour
+             * @default 7
+             */
+            hour: number;
+            /** Id */
+            id: string;
+            /** Last Sent At */
+            last_sent_at?: string | null;
+            /** Roles */
+            roles?: string[];
+            /** User Ids */
+            user_ids?: string[];
+        };
         /**
          * DirectoryEntry
          * @description Consented projection — absent keys were not consented (or not visible to the requester class).
@@ -43554,6 +44242,32 @@ export interface components {
             pan?: string | null;
             /** Phone */
             phone?: string | null;
+        };
+        /** DrilldownOut */
+        DrilldownOut: {
+            /**
+             * Aggregates Only
+             * @default false
+             */
+            aggregates_only: boolean;
+            /** Key */
+            key: string;
+            /**
+             * Masked
+             * @default true
+             */
+            masked: boolean;
+            /**
+             * Page
+             * @default 1
+             */
+            page: number;
+            /** Rows */
+            rows: {
+                [key: string]: unknown;
+            }[];
+            /** Total */
+            total: number;
         };
         /** DrilldownRows */
         DrilldownRows: {
@@ -45893,6 +46607,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[ChartOut] */
+        Envelope_ChartOut_: {
+            data?: components["schemas"]["ChartOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[CheckinResult] */
         Envelope_CheckinResult_: {
             data?: components["schemas"]["CheckinResult"] | null;
@@ -46643,9 +47372,69 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[DashboardLayoutOut] */
+        Envelope_DashboardLayoutOut_: {
+            data?: components["schemas"]["DashboardLayoutOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DashboardOut] */
+        Envelope_DashboardOut_: {
+            data?: components["schemas"]["DashboardOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DashboardPinsOut] */
+        Envelope_DashboardPinsOut_: {
+            data?: components["schemas"]["DashboardPinsOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[DashboardResponse] */
         Envelope_DashboardResponse_: {
             data?: components["schemas"]["DashboardResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DashboardWidgetOut] */
+        Envelope_DashboardWidgetOut_: {
+            data?: components["schemas"]["DashboardWidgetOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -46841,6 +47630,21 @@ export interface components {
         /** Envelope[DeviceResponse] */
         Envelope_DeviceResponse_: {
             data?: components["schemas"]["DeviceResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DigestScheduleOut] */
+        Envelope_DigestScheduleOut_: {
+            data?: components["schemas"]["DigestScheduleOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -47186,6 +47990,21 @@ export interface components {
         /** Envelope[DonorPage] */
         Envelope_DonorPage_: {
             data?: components["schemas"]["DonorPage"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[DrilldownOut] */
+        Envelope_DrilldownOut_: {
+            data?: components["schemas"]["DrilldownOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -48683,6 +49502,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[InsightsOut] */
+        Envelope_InsightsOut_: {
+            data?: components["schemas"]["InsightsOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[InstallResponse] */
         Envelope_InstallResponse_: {
             data?: components["schemas"]["InstallResponse"] | null;
@@ -48776,6 +49610,21 @@ export interface components {
         /** Envelope[InternshipOut] */
         Envelope_InternshipOut_: {
             data?: components["schemas"]["InternshipOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[InterventionOut] */
+        Envelope_InterventionOut_: {
+            data?: components["schemas"]["InterventionOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -48908,9 +49757,39 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[JobQueued] */
+        Envelope_JobQueued_: {
+            data?: components["schemas"]["JobQueued"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[JobResponse] */
         Envelope_JobResponse_: {
             data?: components["schemas"]["JobResponse"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[KpiTargetsOut] */
+        Envelope_KpiTargetsOut_: {
+            data?: components["schemas"]["KpiTargetsOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -50769,6 +51648,21 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[PublicCountersOut] */
+        Envelope_PublicCountersOut_: {
+            data?: components["schemas"]["PublicCountersOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[PublicCycleInfo] */
         Envelope_PublicCycleInfo_: {
             data?: components["schemas"]["PublicCycleInfo"] | null;
@@ -51504,9 +52398,54 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[RiskCohortOut] */
+        Envelope_RiskCohortOut_: {
+            data?: components["schemas"]["RiskCohortOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RiskEffectivenessOut] */
+        Envelope_RiskEffectivenessOut_: {
+            data?: components["schemas"]["RiskEffectivenessOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[RiskFlagOut] */
         Envelope_RiskFlagOut_: {
             data?: components["schemas"]["RiskFlagOut"] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[RiskTrendOut] */
+        Envelope_RiskTrendOut_: {
+            data?: components["schemas"]["RiskTrendOut"] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -54394,6 +55333,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[ChartCatalogueItem]] */
+        Envelope_list_ChartCatalogueItem__: {
+            /** Data */
+            data?: components["schemas"]["ChartCatalogueItem"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[ChoiceFormResponse]] */
         Envelope_list_ChoiceFormResponse__: {
             /** Data */
@@ -55022,6 +55977,22 @@ export interface components {
         Envelope_list_DeviationRow__: {
             /** Data */
             data?: components["schemas"]["DeviationRow"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[DigestScheduleOut]] */
+        Envelope_list_DigestScheduleOut__: {
+            /** Data */
+            data?: components["schemas"]["DigestScheduleOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -56346,6 +57317,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[InterventionOut]] */
+        Envelope_list_InterventionOut__: {
+            /** Data */
+            data?: components["schemas"]["InterventionOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[InvCategoryOut]] */
         Envelope_list_InvCategoryOut__: {
             /** Data */
@@ -56446,6 +57433,22 @@ export interface components {
         Envelope_list_JobResponse__: {
             /** Data */
             data?: components["schemas"]["JobResponse"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[KpiAlertOut]] */
+        Envelope_list_KpiAlertOut__: {
+            /** Data */
+            data?: components["schemas"]["KpiAlertOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -57930,6 +58933,22 @@ export interface components {
              */
             success: boolean;
         };
+        /** Envelope[list[RefreshStatusOut]] */
+        Envelope_list_RefreshStatusOut__: {
+            /** Data */
+            data?: components["schemas"]["RefreshStatusOut"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
         /** Envelope[list[RefundResponse]] */
         Envelope_list_RefundResponse__: {
             /** Data */
@@ -58094,6 +59113,22 @@ export interface components {
         Envelope_list_RiskHeatCell__: {
             /** Data */
             data?: components["schemas"]["RiskHeatCell"][] | null;
+            /** Message */
+            message?: string | null;
+            /** Meta */
+            meta?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Success
+             * @default true
+             */
+            success: boolean;
+        };
+        /** Envelope[list[RiskStudentOut]] */
+        Envelope_list_RiskStudentOut__: {
+            /** Data */
+            data?: components["schemas"]["RiskStudentOut"][] | null;
             /** Message */
             message?: string | null;
             /** Meta */
@@ -65684,6 +66719,17 @@ export interface components {
              */
             invalidate_paper: boolean;
         };
+        /** InsightsOut */
+        InsightsOut: {
+            /** Charts */
+            charts: components["schemas"]["ChartOut"][];
+            /** Filters */
+            filters?: {
+                [key: string]: unknown;
+            };
+            /** Module */
+            module: string;
+        };
         /** InspectionCommittee */
         InspectionCommittee: {
             /** Committee Id */
@@ -66288,6 +67334,43 @@ export interface components {
             /** To On */
             to_on?: string | null;
         };
+        /** InterventionIn */
+        InterventionIn: {
+            /** Follow Up On */
+            follow_up_on?: string | null;
+            /** Intervention Type */
+            intervention_type: string;
+            /** Notes */
+            notes?: string | null;
+        };
+        /** InterventionOut */
+        InterventionOut: {
+            /**
+             * Enrollment Id
+             * Format: uuid
+             */
+            enrollment_id: string;
+            /** Follow Up On */
+            follow_up_on?: string | null;
+            /**
+             * Held On
+             * Format: date
+             */
+            held_on: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Intervention Type */
+            intervention_type?: string | null;
+            /** Logged By */
+            logged_by?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /** Risk Level At Log */
+            risk_level_at_log?: string | null;
+        };
         /** InvCategoryIn */
         InvCategoryIn: {
             /**
@@ -66861,6 +67944,18 @@ export interface components {
             /** Vacancies */
             vacancies: number;
         };
+        /** JobQueued */
+        JobQueued: {
+            /** Detail */
+            detail?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Job Id
+             * Format: uuid
+             */
+            job_id: string;
+        };
         /** JobResponse */
         JobResponse: {
             /**
@@ -66934,6 +68029,74 @@ export interface components {
              * @enum {string}
              */
             source: "koha" | "dspace";
+        };
+        /** KpiAlertOut */
+        KpiAlertOut: {
+            /** Direction */
+            direction?: string | null;
+            /** Key */
+            key: string | null;
+            /**
+             * Open
+             * @default true
+             */
+            open: boolean;
+            /** Recovered At */
+            recovered_at?: string | null;
+            /** Scope */
+            scope?: string | null;
+            /** Since */
+            since?: string | null;
+            /** Target */
+            target?: number | null;
+            /** Value */
+            value?: number | null;
+        };
+        /** KpiTargetsIn */
+        KpiTargetsIn: {
+            /** Alert Recipients */
+            alert_recipients?: {
+                [key: string]: string[];
+            } | null;
+            /** College Id */
+            college_id?: string | null;
+            /** Targets */
+            targets?: {
+                [key: string]: number;
+            };
+        };
+        /** KpiTargetsOut */
+        KpiTargetsOut: {
+            /** Alert Recipients */
+            alert_recipients?: {
+                [key: string]: unknown;
+            };
+            /** College Id */
+            college_id?: string | null;
+            /** History */
+            history?: {
+                [key: string]: unknown[][];
+            };
+            /** Targets */
+            targets: {
+                [key: string]: unknown;
+            };
+        };
+        /** LayoutWidget */
+        LayoutWidget: {
+            /**
+             * Hidden
+             * @default false
+             */
+            hidden: boolean;
+            /** Key */
+            key: string;
+            /** Kind */
+            kind?: string | null;
+            /** Position */
+            position?: number | null;
+            /** Size */
+            size?: ("sm" | "md" | "lg" | "xl") | null;
         };
         /**
          * LeaveAccrual
@@ -74891,6 +76054,15 @@ export interface components {
             /** Themes */
             themes: string[];
         };
+        /** PublicCountersOut */
+        PublicCountersOut: {
+            /** As Of */
+            as_of?: string | null;
+            /** Counters */
+            counters: {
+                [key: string]: unknown;
+            };
+        };
         /** PublicCycleInfo */
         PublicCycleInfo: {
             /** Application Fee Paise */
@@ -76535,14 +77707,6 @@ export interface components {
             /** Section Id */
             section_id?: string | null;
         };
-        /** RefreshRequest */
-        RefreshRequest: {
-            /**
-             * Refresh Token
-             * @description mobile clients (web uses the httpOnly cookie)
-             */
-            refresh_token?: string | null;
-        };
         /** RefreshResponse */
         RefreshResponse: {
             /** Access Token */
@@ -76552,6 +77716,37 @@ export interface components {
              * @description only for mobile clients (body-based refresh)
              */
             refresh_token?: string | null;
+        };
+        /** RefreshStatusOut */
+        RefreshStatusOut: {
+            /**
+             * Description
+             * @default
+             */
+            description: string;
+            /**
+             * Dirty
+             * @default 0
+             */
+            dirty: number;
+            /** Duration Ms */
+            duration_ms?: number | null;
+            /**
+             * Interval Minutes
+             * @default 120
+             */
+            interval_minutes: number;
+            /** Refreshed At */
+            refreshed_at?: string | null;
+            /** Rows */
+            rows?: number | null;
+            /**
+             * Stale
+             * @default true
+             */
+            stale: boolean;
+            /** View */
+            view: string;
         };
         /** RefundCreate */
         RefundCreate: {
@@ -77873,6 +79068,92 @@ export interface components {
             /** Action */
             action: string;
         };
+        /** RiskCohortCell */
+        RiskCohortCell: {
+            /**
+             * Acknowledged Pct
+             * @default 0
+             */
+            acknowledged_pct: number;
+            /** Group */
+            group: string;
+            /** Group Id */
+            group_id?: string | null;
+            /**
+             * High
+             * @default 0
+             */
+            high: number;
+            /**
+             * Low
+             * @default 0
+             */
+            low: number;
+            /**
+             * Medium
+             * @default 0
+             */
+            medium: number;
+            /**
+             * Total
+             * @default 0
+             */
+            total: number;
+        };
+        /** RiskCohortOut */
+        RiskCohortOut: {
+            /**
+             * Aggregates Only
+             * @default false
+             */
+            aggregates_only: boolean;
+            /** Cells */
+            cells: components["schemas"]["RiskCohortCell"][];
+            /** Factor Means */
+            factor_means: {
+                [key: string]: number | null;
+            };
+            /** Group By */
+            group_by: string;
+            /** Scope */
+            scope: string;
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+            /** Trend */
+            trend?: {
+                [key: string]: unknown;
+            }[];
+        };
+        /** RiskEffectivenessOut */
+        RiskEffectivenessOut: {
+            /** By Type */
+            by_type: {
+                [key: string]: {
+                    [key: string]: number;
+                };
+            };
+            /**
+             * Term Id
+             * Format: uuid
+             */
+            term_id: string;
+        };
+        /** RiskExportIn */
+        RiskExportIn: {
+            /**
+             * Kind
+             * @default cohort
+             * @enum {string}
+             */
+            kind: "cohort" | "students" | "iqac";
+            /** Scope */
+            scope?: ("self" | "mine" | "own" | "department" | "faculty" | "college" | "all") | null;
+            /** Term Id */
+            term_id?: string | null;
+        };
         /** RiskFlagOut */
         RiskFlagOut: {
             /**
@@ -77946,6 +79227,55 @@ export interface components {
             enrollment_ids?: string[] | null;
             /** Term Id */
             term_id?: string | null;
+        };
+        /** RiskStudentOut */
+        RiskStudentOut: {
+            /**
+             * Acknowledged
+             * @default false
+             */
+            acknowledged: boolean;
+            /** Batch Id */
+            batch_id?: string | null;
+            /** Department Id */
+            department_id?: string | null;
+            /** Enrollment Id */
+            enrollment_id?: string | null;
+            /** Factors */
+            factors?: {
+                [key: string]: unknown;
+            };
+            /** Last Intervention */
+            last_intervention?: {
+                [key: string]: unknown;
+            } | null;
+            /** Level */
+            level: string;
+            /** Mentor */
+            mentor?: string | null;
+            /** Mentor Staff Id */
+            mentor_staff_id?: string | null;
+            /** Program Id */
+            program_id?: string | null;
+            /** Registration Number */
+            registration_number?: string | null;
+            /** Score */
+            score: number;
+            /** Student Name */
+            student_name?: string | null;
+        };
+        /** RiskTrendOut */
+        RiskTrendOut: {
+            /** Counts By Level */
+            counts_by_level: {
+                [key: string]: number[];
+            };
+            /** Periods */
+            periods: string[];
+            /** Points */
+            points?: {
+                [key: string]: unknown;
+            }[];
         };
         /** RoleCloneRequest */
         RoleCloneRequest: {
@@ -87365,6 +88695,19 @@ export interface components {
             title?: string | null;
             /** To On */
             to_on?: string | null;
+        };
+        /** RefreshRequest */
+        app__schemas__analytics__RefreshRequest: {
+            /** Views */
+            views?: string[];
+        };
+        /** RefreshRequest */
+        app__schemas__auth__RefreshRequest: {
+            /**
+             * Refresh Token
+             * @description mobile clients (web uses the httpOnly cookie)
+             */
+            refresh_token?: string | null;
         };
         /** Envelope[AllocationSummary] */
         app__schemas__common__Envelope_AllocationSummary___1: {
@@ -98046,6 +99389,491 @@ export interface operations {
             };
         };
     };
+    kpi_alerts_api_v1_analytics_alerts_get: {
+        parameters: {
+            query?: {
+                active?: boolean | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_KpiAlertOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chart_catalogue_api_v1_analytics_charts_get: {
+        parameters: {
+            query?: {
+                module?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_ChartCatalogueItem__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chart_data_api_v1_analytics_charts__key__get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+                format?: string;
+                college_id?: string | null;
+                department_id?: string | null;
+                program_id?: string | null;
+                batch_id?: string | null;
+                term_id?: string | null;
+                period?: string | null;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_ChartOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chart_drilldown_api_v1_analytics_charts__key__drilldown_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                size?: number;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DrilldownOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    chart_export_api_v1_analytics_charts__key__export_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChartExportIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    digests_api_v1_analytics_digests_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_DigestScheduleOut__"];
+                };
+            };
+        };
+    };
+    create_digest_api_v1_analytics_digests_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DigestScheduleIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DigestScheduleOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_digest_api_v1_analytics_digests__id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_dict_str__Any__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_digest_api_v1_analytics_digests__id__send_now_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    insights_api_v1_analytics_insights__module__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                module: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InsightsOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    public_counters_api_v1_analytics_public_counters_get: {
+        parameters: {
+            query: {
+                institution: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_PublicCountersOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    readmodels_api_v1_analytics_readmodels_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RefreshStatusOut__"];
+                };
+            };
+        };
+    };
+    refresh_readmodels_api_v1_analytics_readmodels_refresh_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["app__schemas__analytics__RefreshRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_targets_api_v1_analytics_targets_get: {
+        parameters: {
+            query?: {
+                college_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_KpiTargetsOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_targets_api_v1_analytics_targets_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["KpiTargetsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_KpiTargetsOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    evaluate_targets_api_v1_analytics_targets_evaluate_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
     list_announcements_api_v1_announcements_get: {
         parameters: {
             query?: {
@@ -100789,7 +102617,7 @@ export interface operations {
         };
         requestBody?: {
             content: {
-                "application/json": components["schemas"]["RefreshRequest"] | null;
+                "application/json": components["schemas"]["app__schemas__auth__RefreshRequest"] | null;
             };
         };
         responses: {
@@ -108772,6 +110600,208 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_CreditTransferResponse_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_api_v1_dashboard_get: {
+        parameters: {
+            query?: {
+                role?: string | null;
+                scope?: string | null;
+                college_id?: string | null;
+                department_id?: string | null;
+                term_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_layout_api_v1_dashboard_layouts__role__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                role: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardLayoutOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    put_layout_api_v1_dashboard_layouts__role__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                role: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DashboardLayoutIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardLayoutOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reset_layout_api_v1_dashboard_layouts__role__reset_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                role: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardLayoutOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_pins_api_v1_dashboard_pins_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DashboardPinsIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardPinsOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dashboard_widget_api_v1_dashboard_widgets__key__get: {
+        parameters: {
+            query?: {
+                role?: string | null;
+                scope?: string | null;
+                college_id?: string | null;
+                department_id?: string | null;
+                term_id?: string | null;
+            };
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_DashboardWidgetOut_"];
                 };
             };
             /** @description Validation Error */
@@ -146747,6 +148777,104 @@ export interface operations {
             };
         };
     };
+    risk_cohort_api_v1_risk_cohort_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+                group_by?: string;
+                level?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RiskCohortOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    risk_export_api_v1_risk_cohort_export_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RiskExportIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_JobQueued_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    risk_trend_api_v1_risk_cohort_trend_get: {
+        parameters: {
+            query?: {
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RiskTrendOut_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     risk_compute_api_v1_risk_compute_post: {
         parameters: {
             query?: never;
@@ -146767,6 +148895,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    risk_effectiveness_api_v1_risk_effectiveness_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_RiskEffectivenessOut_"];
                 };
             };
             /** @description Validation Error */
@@ -146887,6 +149047,111 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Envelope_list_RiskHeatCell__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    risk_students_api_v1_risk_students_get: {
+        parameters: {
+            query?: {
+                term_id?: string | null;
+                level?: string | null;
+                department_id?: string | null;
+                program_id?: string | null;
+                batch_id?: string | null;
+                factor?: string | null;
+                unacknowledged?: boolean | null;
+                no_intervention_days?: number | null;
+                scope?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_RiskStudentOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_interventions_api_v1_risk_students__enrollment_id__interventions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_list_InterventionOut__"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    log_intervention_api_v1_risk_students__enrollment_id__interventions_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                enrollment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InterventionIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Envelope_InterventionOut_"];
                 };
             };
             /** @description Validation Error */

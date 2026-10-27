@@ -45,6 +45,7 @@ from app.api.v1.endpoints import (
     admissions,
     affiliation,
     alumni,
+    analytics,
     announcements,
     appraisals,
     assessment,
@@ -248,6 +249,10 @@ api_router.include_router(governance.router)
 # centres); the public college list (tenant by institution slug) is included first
 api_router.include_router(affiliation.public_router)
 api_router.include_router(affiliation.router)
+# Phase 35: dashboards, analytics & early warning — {core.dashboard} for /dashboard*, {analytics.core} for /analytics/*,
+# {analytics.early_warning} for the /risk cohort routes (Phase 27 keeps /risk/flags|heatmap|compute); public counters first
+api_router.include_router(analytics.public_router)
+api_router.include_router(analytics.router)
 api_router.include_router(campus.router)
 api_router.include_router(exams.router, dependencies=[feature_required("exams.sessions")])
 api_router.include_router(exams.public_router)  # hall-ticket verification (unguessable token)

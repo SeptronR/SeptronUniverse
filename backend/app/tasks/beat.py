@@ -371,3 +371,9 @@ register_beat(
 register_beat(
     "affiliation.portfolio_refresh", "beat.affiliation.portfolio_refresh", crontab(day_of_week=0, hour=21, minute=0)
 )  # Mon 02:30 IST
+
+# ---- Phase 35 analytics (app/tasks/analytics.py) ----------------------------------------------------------------------------------
+register_beat("analytics.refresh_scheduler", "beat.analytics.refresh_scheduler", 300.0)  # every 5 min (dirty + interval)
+register_beat("analytics.digest_daily", "beat.analytics.digest_daily", crontab(minute=5))  # hourly: schedules at their hour
+register_beat("analytics.digest_weekly", "beat.analytics.digest_weekly", crontab(minute=10))  # hourly; Mondays only
+register_beat("risk.intervention_reminders", "beat.risk.intervention_reminders", crontab(hour=3, minute=35))  # 09:05 IST

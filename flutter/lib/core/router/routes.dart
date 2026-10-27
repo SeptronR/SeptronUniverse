@@ -93,6 +93,8 @@ class AppRoutes {
   static const collegeAffiliation = '/app/affiliation';
   static const examCentreDesk = '/app/exam-centre';
   static const affiliationOffice = '/app/affiliation-office';
+  // Phase 35 — early warning (HOD / registrar / mentor): cohort heat map, at-risk students, interventions
+  static const riskCohort = '/app/risk';
   static const myInspections = '/app/inspections';
   // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
   static const scholarHub = '/app/scholar';

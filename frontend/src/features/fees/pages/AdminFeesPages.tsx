@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { InsightsPanel } from '@/features/analytics/components/InsightsPanel';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Banknote, Copy, Download, Plus, Printer, QrCode, RefreshCw, Search, Upload } from 'lucide-react';
 import { getApiError } from '@/api/axios';
@@ -373,6 +374,7 @@ export function FeeInvoicesPage() {
   return (
     <div className="space-y-3">
       <PageHeader title="Invoices" description="Every fee invoice with its source (structure, registration, condonation, application …)." />
+      <InsightsPanel module="fees" />
       <div className="flex flex-wrap items-center gap-2">
         <ScopeTabs visibility={list.data?.meta.visibility} value={scope} onChange={setScope} />
         <Select className="w-36" value={f.status} placeholder="Any status" options={Object.keys(INVOICE_VARIANT).map((s) => ({ value: s, label: s }))} onChange={(e) => setF({ ...f, status: e.target.value, page: 1 })} />

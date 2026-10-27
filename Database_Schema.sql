@@ -3958,5 +3958,341 @@ INSERT INTO users (institution_id, username, email, password_hash, display_name,
 VALUES (NULL, 'superadmin', 'superadmin@universe.local', crypt('ChangeMe@1234', gen_salt('bf', 12)), 'Platform Super Admin', 'platform', TRUE, TRUE, TRUE)
 ON CONFLICT DO NOTHING;
 
+-- ===================================== 37. ANALYTICS READ MODELS =====================================
+-- Phase 35 materialized views (app/services/analytics/read_models.py is the single source; Alembic 0035 applies the
+-- same statements). Refreshed CONCURRENTLY by the analytics.refresh_scheduler Beat task; no RLS on matviews — the
+-- analytics repository applies institution_id + the scope-dimension predicate on every read.
+-- mv_enrolment_daily: Enrolments by college / department / programme / batch / category / gender / quota / status per day
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_enrolment_daily AS
+SELECT e.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id,
+       COALESCE(s.category, '') AS category, COALESCE(s.gender, '') AS gender, COALESCE(s.admission_quota, '') AS quota,
+       e.status, COALESCE(e.admission_date, e.created_at::date) AS day, COUNT(*)::int AS enrolments
+FROM student_program_enrollments e
+JOIN students s ON s.id = e.student_id
+WHERE e.deleted_at IS NULL AND s.deleted_at IS NULL
+GROUP BY e.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id, COALESCE(s.category, ''),
+         COALESCE(s.gender, ''), COALESCE(s.admission_quota, ''), e.status, COALESCE(e.admission_date, e.created_at::date);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_enrolment_daily ON mv_enrolment_daily (institution_id, college_id, department_id, program_id, batch_id, category, gender, quota, status, day);
+CREATE INDEX IF NOT EXISTS ix_mv_enrolment_daily_inst ON mv_enrolment_daily (institution_id);
+
+-- mv_attendance_term: Per enrolment × offering: sessions held / present / %, shortfall vs threshold
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_attendance_term AS
+SELECT a.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id, o.term_id,
+       o.department_id AS offering_department_id, a.offering_id, a.student_program_enrollment_id AS enrollment_id,
+       a.total_sessions AS sessions_held, (a.present + a.late + a.on_duty) AS sessions_present, a.pct,
+       GREATEST(0, 75 - a.pct)::numeric(5,2) AS shortfall_pct, (a.eligibility <> 'eligible') AS is_short,
+       a.eligibility, a.computed_at AS last_computed
+FROM attendance_summaries a
+JOIN course_offerings o ON o.id = a.offering_id
+JOIN student_program_enrollments e ON e.id = a.student_program_enrollment_id;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_attendance_term ON mv_attendance_term (offering_id, enrollment_id);
+CREATE INDEX IF NOT EXISTS ix_mv_attendance_term_inst ON mv_attendance_term (institution_id);
+
+-- mv_fees_position: Per enrolment: billed / paid / overdue paise and aging bands
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_fees_position AS
+SELECT i.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id,
+       i.student_program_enrollment_id AS enrollment_id,
+       SUM(i.total_paise - i.discount_paise + i.tax_paise + i.fine_paise)::bigint AS billed_paise,
+       SUM(i.paid_paise)::bigint AS paid_paise, SUM(i.balance_paise)::bigint AS balance_paise,
+       SUM(CASE WHEN i.due_date < CURRENT_DATE THEN i.balance_paise ELSE 0 END)::bigint AS overdue_paise,
+       SUM(CASE WHEN i.due_date < CURRENT_DATE AND CURRENT_DATE - i.due_date <= 30 THEN i.balance_paise ELSE 0 END)::bigint AS aging_0_30_paise,
+       SUM(CASE WHEN CURRENT_DATE - i.due_date BETWEEN 31 AND 60 THEN i.balance_paise ELSE 0 END)::bigint AS aging_31_60_paise,
+       SUM(CASE WHEN CURRENT_DATE - i.due_date BETWEEN 61 AND 90 THEN i.balance_paise ELSE 0 END)::bigint AS aging_61_90_paise,
+       SUM(CASE WHEN CURRENT_DATE - i.due_date > 90 THEN i.balance_paise ELSE 0 END)::bigint AS aging_90_plus_paise,
+       COUNT(*)::int AS invoices, MAX(i.updated_at) AS last_activity_at
+FROM fee_invoices i
+JOIN student_program_enrollments e ON e.id = i.student_program_enrollment_id
+WHERE i.student_program_enrollment_id IS NOT NULL AND i.status NOT IN ('cancelled', 'refunded')
+GROUP BY i.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id, i.student_program_enrollment_id;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_fees_position ON mv_fees_position (enrollment_id);
+CREATE INDEX IF NOT EXISTS ix_mv_fees_position_inst ON mv_fees_position (institution_id);
+
+-- mv_exam_progress: Per exam session: registrations, eligibility, hall tickets, scripts, valuation %, discrepancies, results stage
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_exam_progress AS
+SELECT s.institution_id, s.college_id, s.term_id, s.id AS exam_session_id, s.name, s.exam_kind, s.status,
+       COALESCE(r.registrations, 0) AS registrations, COALESCE(r.confirmed, 0) AS confirmed,
+       COALESCE(r.eligibility_applied, 0) AS eligibility_applied, COALESCE(r.hall_tickets, 0) AS hall_tickets,
+       COALESCE(sc.scripts, 0) AS scripts, COALESCE(sc.valuated, 0) AS scripts_valuated,
+       COALESCE(sc.discrepancies, 0) AS discrepancies,
+       CASE WHEN COALESCE(sc.scripts, 0) = 0 THEN 0
+            ELSE ROUND(100.0 * sc.valuated / sc.scripts, 2) END::numeric(5,2) AS valuation_pct,
+       CASE WHEN s.status IN ('results_published', 'closed') THEN 'published'
+            WHEN s.status = 'result_processing' THEN 'processing' ELSE 'pending' END AS results_stage
+FROM exam_sessions s
+LEFT JOIN (
+  SELECT exam_session_id, COUNT(*)::int AS registrations,
+         COUNT(*) FILTER (WHERE status = 'confirmed')::int AS confirmed,
+         COUNT(*) FILTER (WHERE eligibility_snapshot IS NOT NULL)::int AS eligibility_applied,
+         COUNT(*) FILTER (WHERE hall_ticket_issued_at IS NOT NULL)::int AS hall_tickets
+  FROM exam_registrations GROUP BY exam_session_id
+) r ON r.exam_session_id = s.id
+LEFT JOIN (
+  SELECT er.exam_session_id, COUNT(a.id)::int AS scripts,
+         COUNT(a.id) FILTER (WHERE a.status IN ('valuated', 'finalized', 'moderated', 'decoded', 'archived'))::int AS valuated,
+         COUNT(a.id) FILTER (WHERE a.status IN ('discrepancy', 'third_valuation'))::int AS discrepancies
+  FROM answer_scripts a
+  JOIN exam_registration_items it ON it.id = a.exam_registration_item_id
+  JOIN exam_registrations er ON er.id = it.exam_registration_id
+  GROUP BY er.exam_session_id
+) sc ON sc.exam_session_id = s.id
+WHERE s.deleted_at IS NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_exam_progress ON mv_exam_progress (exam_session_id);
+CREATE INDEX IF NOT EXISTS ix_mv_exam_progress_inst ON mv_exam_progress (institution_id);
+
+-- mv_results_summary: Per term × programme × batch: pass %, SGPA distribution, arrears, toppers
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_results_summary AS
+SELECT e.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id, tr.term_id,
+       COUNT(*)::int AS students, COUNT(*) FILTER (WHERE r.backlog_count = 0)::int AS passed,
+       ROUND(100.0 * COUNT(*) FILTER (WHERE r.backlog_count = 0) / NULLIF(COUNT(*), 0), 2)::numeric(5,2) AS pass_pct,
+       ROUND(AVG(r.sgpa), 2)::numeric(4,2) AS avg_sgpa, MAX(r.sgpa) AS top_sgpa,
+       SUM(r.backlog_count)::int AS arrears,
+       COUNT(*) FILTER (WHERE r.sgpa < 5)::int AS sgpa_lt5,
+       COUNT(*) FILTER (WHERE r.sgpa >= 5 AND r.sgpa < 6)::int AS sgpa_5_6,
+       COUNT(*) FILTER (WHERE r.sgpa >= 6 AND r.sgpa < 7)::int AS sgpa_6_7,
+       COUNT(*) FILTER (WHERE r.sgpa >= 7 AND r.sgpa < 8)::int AS sgpa_7_8,
+       COUNT(*) FILTER (WHERE r.sgpa >= 8 AND r.sgpa < 9)::int AS sgpa_8_9,
+       COUNT(*) FILTER (WHERE r.sgpa >= 9)::int AS sgpa_9_plus
+FROM student_term_results r
+JOIN student_term_records tr ON tr.id = r.student_term_record_id
+JOIN student_program_enrollments e ON e.id = tr.student_program_enrollment_id
+WHERE r.is_current AND r.status = 'published'
+GROUP BY e.institution_id, e.college_id, e.department_id, e.program_id, e.batch_id, tr.term_id;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_results_summary ON mv_results_summary (institution_id, college_id, department_id, program_id, batch_id, term_id);
+CREATE INDEX IF NOT EXISTS ix_mv_results_summary_inst ON mv_results_summary (institution_id);
+
+-- mv_hr_snapshot: Staff by department / designation / cadre, leaves pending, attendance today
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_hr_snapshot AS
+SELECT s.institution_id, s.college_id, s.department_id, COALESCE(s.designation_id, '00000000-0000-0000-0000-000000000000'::uuid) AS designation_id,
+       COALESCE(d.cadre, '') AS cadre, COALESCE(s.staff_category, '') AS staff_category,
+       COUNT(*) FILTER (WHERE s.status IN ('active', 'on_leave'))::int AS headcount,
+       COUNT(*) FILTER (WHERE EXISTS (SELECT 1 FROM staff_leaves l WHERE l.staff_id = s.id AND l.status = 'approved'
+                                      AND CURRENT_DATE BETWEEN l.from_date AND l.to_date))::int AS on_leave_today,
+       COUNT(*) FILTER (WHERE EXISTS (SELECT 1 FROM staff_attendance a WHERE a.staff_id = s.id
+                                      AND a.attendance_date = CURRENT_DATE
+                                      AND a.status IN ('present', 'half_day', 'on_duty')))::int AS present_today,
+       COALESCE(SUM((SELECT COUNT(*) FROM staff_leaves l WHERE l.staff_id = s.id AND l.status = 'pending')), 0)::int AS leaves_pending
+FROM staff s
+LEFT JOIN designations d ON d.id = s.designation_id
+WHERE s.deleted_at IS NULL AND s.status <> 'exited'
+GROUP BY s.institution_id, s.college_id, s.department_id, COALESCE(s.designation_id, '00000000-0000-0000-0000-000000000000'::uuid), COALESCE(d.cadre, ''),
+         COALESCE(s.staff_category, '');
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_hr_snapshot ON mv_hr_snapshot (institution_id, college_id, department_id, designation_id, cadre, staff_category);
+CREATE INDEX IF NOT EXISTS ix_mv_hr_snapshot_inst ON mv_hr_snapshot (institution_id);
+
+-- mv_admissions_funnel: Per cycle × programme: applications → verified → merit → allotted → admitted, by category / quota
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_admissions_funnel AS
+SELECT a.institution_id, COALESCE(p.college_id, c.college_id) AS college_id, a.cycle_id,
+       COALESCE(p.program_id, '00000000-0000-0000-0000-000000000000'::uuid) AS program_id, COALESCE(a.category, '') AS category,
+       COALESCE(a.quota_claimed, '') AS quota,
+       COUNT(*) FILTER (WHERE a.status <> 'draft')::int AS applications,
+       COUNT(*) FILTER (WHERE a.status IN ('verified', 'waitlisted', 'merit_listed', 'allotted', 'accepted',
+                                           'provisionally_admitted', 'admitted'))::int AS verified,
+       COUNT(*) FILTER (WHERE a.status IN ('merit_listed', 'allotted', 'accepted', 'provisionally_admitted',
+                                           'admitted'))::int AS merit,
+       COUNT(*) FILTER (WHERE a.status IN ('allotted', 'accepted', 'provisionally_admitted', 'admitted'))::int AS allotted,
+       COUNT(*) FILTER (WHERE a.status IN ('provisionally_admitted', 'admitted') OR a.admitted_student_id IS NOT NULL)::int AS admitted,
+       COUNT(*)::int AS started
+FROM applicants a
+JOIN admission_cycles c ON c.id = a.cycle_id
+LEFT JOIN applicant_preferences p ON p.applicant_id = a.id AND p.priority = 1
+WHERE a.deleted_at IS NULL
+GROUP BY a.institution_id, COALESCE(p.college_id, c.college_id), a.cycle_id, COALESCE(p.program_id, '00000000-0000-0000-0000-000000000000'::uuid),
+         COALESCE(a.category, ''), COALESCE(a.quota_claimed, '');
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_admissions_funnel ON mv_admissions_funnel (institution_id, college_id, cycle_id, program_id, category, quota);
+CREATE INDEX IF NOT EXISTS ix_mv_admissions_funnel_inst ON mv_admissions_funnel (institution_id);
+
+-- mv_placement_funnel: Per drive / batch: eligible → applied → rounds → offers → accepted, CTC bands
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_placement_funnel AS
+SELECT d.institution_id, COALESCE(e.college_id, d.college_id) AS college_id, e.department_id,
+       COALESCE(e.batch_id, '00000000-0000-0000-0000-000000000000'::uuid) AS batch_id, d.id AS drive_id, d.status AS drive_status, d.drive_on,
+       COUNT(da.id) FILTER (WHERE da.is_eligible)::int AS eligible, COUNT(da.id)::int AS applied,
+       COUNT(da.id) FILTER (WHERE da.status IN ('shortlisted', 'in_process', 'selected', 'offer_accepted',
+                                                'offer_declined'))::int AS in_rounds,
+       COUNT(o.id)::int AS offers, COUNT(o.id) FILTER (WHERE o.status IN ('accepted', 'joined'))::int AS accepted,
+       COUNT(o.id) FILTER (WHERE o.ctc_paise < 50000000)::int AS ctc_lt5l,
+       COUNT(o.id) FILTER (WHERE o.ctc_paise >= 50000000 AND o.ctc_paise < 100000000)::int AS ctc_5_10l,
+       COUNT(o.id) FILTER (WHERE o.ctc_paise >= 100000000 AND o.ctc_paise < 200000000)::int AS ctc_10_20l,
+       COUNT(o.id) FILTER (WHERE o.ctc_paise >= 200000000)::int AS ctc_20l_plus,
+       COALESCE(MAX(o.ctc_paise), 0)::bigint AS max_ctc_paise
+FROM placement_drives d
+LEFT JOIN drive_applications da ON da.drive_id = d.id
+LEFT JOIN student_program_enrollments e ON e.id = da.student_program_enrollment_id
+LEFT JOIN placement_offers o ON o.application_id = da.id
+GROUP BY d.institution_id, COALESCE(e.college_id, d.college_id), e.department_id, COALESCE(e.batch_id, '00000000-0000-0000-0000-000000000000'::uuid), d.id,
+         d.status, d.drive_on;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_placement_funnel ON mv_placement_funnel (institution_id, college_id, department_id, batch_id, drive_id);
+CREATE INDEX IF NOT EXISTS ix_mv_placement_funnel_inst ON mv_placement_funnel (institution_id);
+
+-- mv_hostel_occupancy: Per hostel / block: beds, occupied, leave-out today, complaints open
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_hostel_occupancy AS
+SELECT h.institution_id, h.college_id, h.id AS hostel_id, b.id AS block_id, h.name AS hostel_name, b.name AS block_name,
+       h.warden_staff_id,
+       COUNT(bd.id)::int AS beds, COUNT(bd.id) FILTER (WHERE bd.status = 'allocated')::int AS occupied,
+       (SELECT COUNT(*) FROM hostel_leaves l WHERE l.hostel_id = h.id AND l.status = 'out')::int AS leave_out_today,
+       (SELECT COUNT(*) FROM hostel_complaints c JOIN hostel_rooms cr ON cr.id = c.room_id
+         WHERE cr.block_id = b.id AND c.status NOT IN ('resolved', 'closed'))::int AS complaints_open
+FROM hostels h
+JOIN hostel_blocks b ON b.hostel_id = h.id
+LEFT JOIN hostel_rooms r ON r.block_id = b.id
+LEFT JOIN hostel_beds bd ON bd.room_id = r.id
+WHERE h.deleted_at IS NULL
+GROUP BY h.institution_id, h.college_id, h.id, b.id, h.name, b.name, h.warden_staff_id;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_hostel_occupancy ON mv_hostel_occupancy (block_id);
+CREATE INDEX IF NOT EXISTS ix_mv_hostel_occupancy_inst ON mv_hostel_occupancy (institution_id);
+
+-- mv_research_counts: Per department / year: publications by indexing, projects / grants amount, PhD scholars by status
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_research_counts AS
+SELECT x.institution_id, x.college_id, COALESCE(x.department_id, '00000000-0000-0000-0000-000000000000'::uuid) AS department_id, x.year, x.metric, x.sub_key,
+       COUNT(*)::int AS count, COALESCE(SUM(x.amount_paise), 0)::bigint AS amount_paise
+FROM (
+  SELECT p.institution_id, s.college_id, s.department_id, COALESCE(p.year, 0)::int AS year, 'publications' AS metric,
+         COALESCE(p.indexing, 'none') AS sub_key, 0::bigint AS amount_paise
+  FROM publications p LEFT JOIN staff s ON s.id = p.staff_id
+  UNION ALL
+  SELECT rp.institution_id, s.college_id, s.department_id, COALESCE(EXTRACT(YEAR FROM rp.start_on), 0)::int, 'projects',
+         rp.status, COALESCE(rp.sanctioned_paise, 0)::bigint
+  FROM research_projects rp LEFT JOIN staff s ON s.id = rp.pi_staff_id
+  UNION ALL
+  SELECT rs.institution_id, e.college_id, e.department_id, COALESCE(EXTRACT(YEAR FROM rs.registration_date), 0)::int,
+         'scholars', rs.status, 0::bigint
+  FROM research_scholars rs JOIN student_program_enrollments e ON e.id = rs.student_program_enrollment_id
+) x
+GROUP BY x.institution_id, x.college_id, COALESCE(x.department_id, '00000000-0000-0000-0000-000000000000'::uuid), x.year, x.metric, x.sub_key;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_research_counts ON mv_research_counts (institution_id, college_id, department_id, year, metric, sub_key);
+CREATE INDEX IF NOT EXISTS ix_mv_research_counts_inst ON mv_research_counts (institution_id);
+
+-- mv_service_desk_sla: Per category: open, breached, MTTR
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_service_desk_sla AS
+SELECT r.institution_id, COALESCE(r.college_id, '00000000-0000-0000-0000-000000000000'::uuid) AS college_id, r.category,
+       COUNT(*) FILTER (WHERE r.status NOT IN ('resolved', 'closed'))::int AS open,
+       COUNT(*) FILTER (WHERE r.status NOT IN ('resolved', 'closed') AND r.sla_due_at < NOW())::int AS breached,
+       COUNT(*) FILTER (WHERE r.resolved_at IS NOT NULL)::int AS resolved,
+       COUNT(*) FILTER (WHERE r.resolved_at IS NOT NULL AND (r.sla_due_at IS NULL OR r.resolved_at <= r.sla_due_at))::int AS within_sla,
+       ROUND(AVG(EXTRACT(EPOCH FROM (r.resolved_at - r.created_at)) / 3600.0)
+             FILTER (WHERE r.resolved_at IS NOT NULL), 2)::numeric(10,2) AS mttr_hours
+FROM service_requests r
+GROUP BY r.institution_id, COALESCE(r.college_id, '00000000-0000-0000-0000-000000000000'::uuid), r.category;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_service_desk_sla ON mv_service_desk_sla (institution_id, college_id, category);
+CREATE INDEX IF NOT EXISTS ix_mv_service_desk_sla_inst ON mv_service_desk_sla (institution_id);
+
+-- mv_risk_cohort: Per term × department × programme × batch × level: counts, factor means, acknowledged %, interventions
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_risk_cohort AS
+SELECT f.institution_id, e.college_id, f.term_id, e.department_id, e.program_id, e.batch_id,
+       COALESCE(s.category, '') AS category, COALESCE(h.hostel_id, '00000000-0000-0000-0000-000000000000'::uuid) AS hostel_id, f.level,
+       COUNT(*)::int AS students,
+       ROUND(AVG((f.factors -> 'attendance' ->> 'value')::numeric), 3) AS attendance_mean,
+       ROUND(AVG((f.factors -> 'cia' ->> 'value')::numeric), 3) AS cia_mean,
+       ROUND(AVG((f.factors -> 'dues' ->> 'value')::numeric), 3) AS dues_mean,
+       ROUND(AVG((f.factors -> 'standing' ->> 'value')::numeric), 3) AS standing_mean,
+       ROUND(AVG((f.factors -> 'hostel' ->> 'value')::numeric), 3) AS hostel_mean,
+       ROUND(AVG((f.factors -> 'engagement' ->> 'value')::numeric), 3) AS engagement_mean,
+       ROUND(AVG(f.score), 2) AS score_mean,
+       COUNT(*) FILTER (WHERE f.acknowledged_at IS NOT NULL)::int AS acknowledged,
+       ROUND(100.0 * COUNT(*) FILTER (WHERE f.acknowledged_at IS NOT NULL) / NULLIF(COUNT(*), 0), 2)::numeric(5,2) AS acknowledged_pct,
+       COALESCE(SUM((SELECT COUNT(*) FROM mentoring_sessions ms JOIN mentor_assignments ma ON ma.id = ms.mentor_assignment_id
+                      WHERE ma.student_program_enrollment_id = f.student_program_enrollment_id
+                        AND ms.mode = 'intervention')), 0)::int AS interventions
+FROM risk_flags f
+JOIN student_program_enrollments e ON e.id = f.student_program_enrollment_id
+JOIN students s ON s.id = e.student_id
+LEFT JOIN LATERAL (
+  SELECT ha.hostel_id FROM hostel_allocations ha
+  WHERE ha.student_program_enrollment_id = e.id AND ha.status IN ('allotted', 'checked_in')
+  ORDER BY ha.created_at DESC LIMIT 1
+) h ON TRUE
+GROUP BY f.institution_id, e.college_id, f.term_id, e.department_id, e.program_id, e.batch_id, COALESCE(s.category, ''),
+         COALESCE(h.hostel_id, '00000000-0000-0000-0000-000000000000'::uuid), f.level;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_risk_cohort ON mv_risk_cohort (institution_id, college_id, term_id, department_id, program_id, batch_id, category, hostel_id, level);
+CREATE INDEX IF NOT EXISTS ix_mv_risk_cohort_inst ON mv_risk_cohort (institution_id);
+
+-- mv_kpi_daily: One row per institution × college × day: the headline numbers used by Home cards
+CREATE MATERIALIZED VIEW IF NOT EXISTS mv_kpi_daily AS
+WITH keys AS (SELECT institution_id, id AS college_id, id::text AS ckey FROM colleges WHERE deleted_at IS NULL UNION ALL SELECT id, NULL::uuid, 'all' FROM institutions WHERE deleted_at IS NULL),
+stu AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) FILTER (WHERE status = 'active') AS students_active, COUNT(*) AS students_total FROM (SELECT e.institution_id, e.college_id, e.status FROM student_program_enrollments e WHERE e.deleted_at IS NULL) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+prg AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) FILTER (WHERE status = 'active') AS programmes FROM (SELECT institution_id, college_id, status FROM programs WHERE deleted_at IS NULL) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+stf AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) AS staff_active, COUNT(*) FILTER (WHERE staff_category = 'teaching') AS faculty_count FROM (SELECT institution_id, college_id, staff_category, status FROM staff WHERE deleted_at IS NULL AND status <> 'exited') s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+hrs AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(present_today) AS staff_present_today, SUM(on_leave_today) AS staff_on_leave_today, SUM(leaves_pending) AS leaves_pending FROM (SELECT institution_id, college_id, present_today, on_leave_today, leaves_pending FROM mv_hr_snapshot) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+att AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, ROUND(AVG(pct), 2) AS attendance_avg_pct, COUNT(DISTINCT enrollment_id) FILTER (WHERE is_short) AS attendance_shortfall FROM (SELECT institution_id, college_id, pct, is_short, enrollment_id FROM mv_attendance_term a WHERE a.term_id IN (SELECT id FROM academic_terms WHERE is_current)) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+fee AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(billed_paise) AS fee_billed_paise, SUM(paid_paise) AS fee_collected_paise, SUM(overdue_paise) AS fee_overdue_paise, COUNT(*) FILTER (WHERE overdue_paise > 0) AS fee_defaulters, ROUND(100.0 * SUM(paid_paise) / NULLIF(SUM(billed_paise), 0), 2) AS fee_collection_pct FROM (SELECT institution_id, college_id, billed_paise, paid_paise, overdue_paise FROM mv_fees_position) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+pay AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(amount_paise) AS fee_collected_today_paise FROM (SELECT p.institution_id, i.college_id, p.amount_paise FROM fee_payments p JOIN fee_invoices i ON i.id = p.invoice_id WHERE p.status IN ('success', 'reconciled') AND p.payment_date::date = CURRENT_DATE) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+exm AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) FILTER (WHERE status NOT IN ('draft', 'results_published', 'closed')) AS exam_sessions_active, ROUND(AVG(valuation_pct) FILTER (WHERE status = 'valuation'), 2) AS valuation_pct FROM (SELECT institution_id, college_id, status, valuation_pct FROM mv_exam_progress) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+res AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, ROUND(100.0 * SUM(passed) / NULLIF(SUM(students), 0), 2) AS result_pass_pct, ROUND(AVG(avg_sgpa), 2) AS avg_sgpa FROM (SELECT institution_id, college_id, students, passed, avg_sgpa FROM mv_results_summary) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+adm AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(applications) AS applications, SUM(admitted) AS admitted FROM (SELECT f.institution_id, f.college_id, f.applications, f.admitted FROM mv_admissions_funnel f JOIN admission_cycles c ON c.id = f.cycle_id WHERE c.status NOT IN ('archived')) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+enq AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) FILTER (WHERE stage NOT IN ('admitted', 'lost')) AS enquiries_open FROM (SELECT institution_id, college_id, stage FROM enquiries) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+plc AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(offers) AS placement_offers, SUM(accepted) AS placement_accepted, ROUND(100.0 * SUM(accepted) / NULLIF(SUM(eligible), 0), 2) AS placement_pct FROM (SELECT institution_id, college_id, offers, accepted, eligible FROM mv_placement_funnel) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+hst AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(beds) AS hostel_beds, SUM(occupied) AS hostel_occupied, SUM(leave_out_today) AS hostel_out_today, SUM(complaints_open) AS hostel_complaints_open FROM (SELECT institution_id, college_id, beds, occupied, leave_out_today, complaints_open FROM mv_hostel_occupancy) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+lib AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) FILTER (WHERE returned_on IS NULL) AS library_issued, COUNT(*) FILTER (WHERE returned_on IS NULL AND due_on < CURRENT_DATE) AS library_overdue FROM (SELECT institution_id, NULL::uuid AS college_id, status, due_on, returned_on FROM book_issues) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+grv AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) FILTER (WHERE status NOT IN ('resolved', 'closed')) AS grievances_open, COUNT(*) FILTER (WHERE status NOT IN ('resolved', 'closed') AND sla_due_at < NOW()) AS grievances_breached, ROUND(100.0 * COUNT(*) FILTER (WHERE resolved_at IS NOT NULL AND (sla_due_at IS NULL OR resolved_at <= sla_due_at)) / NULLIF(COUNT(*) FILTER (WHERE resolved_at IS NOT NULL), 0), 2) AS grievance_sla_pct FROM (SELECT institution_id, college_id, status, sla_due_at, resolved_at FROM grievances) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+srv AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(open) AS service_open, SUM(breached) AS service_breached FROM (SELECT institution_id, NULLIF(college_id, '00000000-0000-0000-0000-000000000000'::uuid) AS college_id, open, breached FROM mv_service_desk_sla) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+rsk AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(students) FILTER (WHERE level = 'high') AS risk_high, SUM(students) FILTER (WHERE level = 'medium') AS risk_medium FROM (SELECT institution_id, college_id, level, students FROM mv_risk_cohort WHERE term_id IN (SELECT id FROM academic_terms WHERE is_current)) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+rch AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, SUM(count) FILTER (WHERE metric = 'publications' AND year = EXTRACT(YEAR FROM CURRENT_DATE)) AS publications_year, SUM(count) FILTER (WHERE metric = 'projects' AND sub_key IN ('sanctioned', 'ongoing')) AS projects_active, SUM(count) FILTER (WHERE metric = 'scholars' AND sub_key NOT IN ('awarded', 'discontinued')) AS scholars_active FROM (SELECT institution_id, college_id, metric, sub_key, year, count FROM mv_research_counts) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id))),
+hld AS (SELECT institution_id, CASE WHEN GROUPING(college_id) = 1 THEN 'all' ELSE COALESCE(college_id::text, 'none') END AS ckey, COUNT(*) AS holds_active FROM (SELECT h.institution_id, e.college_id FROM student_holds h JOIN student_program_enrollments e ON e.id = h.student_program_enrollment_id WHERE h.released_at IS NULL) s GROUP BY GROUPING SETS ((institution_id, college_id), (institution_id)))
+SELECT k.institution_id, k.college_id, k.ckey AS college_key, CURRENT_DATE AS day, NOW() AS refreshed_at,
+       COALESCE(stu.students_active, 0) AS students_active,
+       COALESCE(stu.students_total, 0) AS students_total,
+       COALESCE(prg.programmes, 0) AS programmes,
+       COALESCE(stf.staff_active, 0) AS staff_active,
+       COALESCE(stf.faculty_count, 0) AS faculty_count,
+       COALESCE(hrs.staff_present_today, 0) AS staff_present_today,
+       COALESCE(hrs.staff_on_leave_today, 0) AS staff_on_leave_today,
+       COALESCE(hrs.leaves_pending, 0) AS leaves_pending,
+       att.attendance_avg_pct AS attendance_avg_pct,
+       COALESCE(att.attendance_shortfall, 0) AS attendance_shortfall,
+       COALESCE(fee.fee_billed_paise, 0) AS fee_billed_paise,
+       COALESCE(fee.fee_collected_paise, 0) AS fee_collected_paise,
+       COALESCE(fee.fee_overdue_paise, 0) AS fee_overdue_paise,
+       COALESCE(fee.fee_defaulters, 0) AS fee_defaulters,
+       fee.fee_collection_pct AS fee_collection_pct,
+       COALESCE(pay.fee_collected_today_paise, 0) AS fee_collected_today_paise,
+       COALESCE(exm.exam_sessions_active, 0) AS exam_sessions_active,
+       exm.valuation_pct AS valuation_pct,
+       res.result_pass_pct AS result_pass_pct,
+       res.avg_sgpa AS avg_sgpa,
+       COALESCE(adm.applications, 0) AS applications,
+       COALESCE(adm.admitted, 0) AS admitted,
+       COALESCE(enq.enquiries_open, 0) AS enquiries_open,
+       COALESCE(plc.placement_offers, 0) AS placement_offers,
+       COALESCE(plc.placement_accepted, 0) AS placement_accepted,
+       plc.placement_pct AS placement_pct,
+       COALESCE(hst.hostel_beds, 0) AS hostel_beds,
+       COALESCE(hst.hostel_occupied, 0) AS hostel_occupied,
+       COALESCE(hst.hostel_out_today, 0) AS hostel_out_today,
+       COALESCE(hst.hostel_complaints_open, 0) AS hostel_complaints_open,
+       COALESCE(lib.library_issued, 0) AS library_issued,
+       COALESCE(lib.library_overdue, 0) AS library_overdue,
+       COALESCE(grv.grievances_open, 0) AS grievances_open,
+       COALESCE(grv.grievances_breached, 0) AS grievances_breached,
+       grv.grievance_sla_pct AS grievance_sla_pct,
+       COALESCE(srv.service_open, 0) AS service_open,
+       COALESCE(srv.service_breached, 0) AS service_breached,
+       COALESCE(rsk.risk_high, 0) AS risk_high,
+       COALESCE(rsk.risk_medium, 0) AS risk_medium,
+       COALESCE(rch.publications_year, 0) AS publications_year,
+       COALESCE(rch.projects_active, 0) AS projects_active,
+       COALESCE(rch.scholars_active, 0) AS scholars_active,
+       COALESCE(hld.holds_active, 0) AS holds_active
+FROM keys k
+LEFT JOIN stu ON stu.institution_id = k.institution_id AND stu.ckey = k.ckey
+LEFT JOIN prg ON prg.institution_id = k.institution_id AND prg.ckey = k.ckey
+LEFT JOIN stf ON stf.institution_id = k.institution_id AND stf.ckey = k.ckey
+LEFT JOIN hrs ON hrs.institution_id = k.institution_id AND hrs.ckey = k.ckey
+LEFT JOIN att ON att.institution_id = k.institution_id AND att.ckey = k.ckey
+LEFT JOIN fee ON fee.institution_id = k.institution_id AND fee.ckey = k.ckey
+LEFT JOIN pay ON pay.institution_id = k.institution_id AND pay.ckey = k.ckey
+LEFT JOIN exm ON exm.institution_id = k.institution_id AND exm.ckey = k.ckey
+LEFT JOIN res ON res.institution_id = k.institution_id AND res.ckey = k.ckey
+LEFT JOIN adm ON adm.institution_id = k.institution_id AND adm.ckey = k.ckey
+LEFT JOIN enq ON enq.institution_id = k.institution_id AND enq.ckey = k.ckey
+LEFT JOIN plc ON plc.institution_id = k.institution_id AND plc.ckey = k.ckey
+LEFT JOIN hst ON hst.institution_id = k.institution_id AND hst.ckey = k.ckey
+LEFT JOIN lib ON lib.institution_id = k.institution_id AND lib.ckey = k.ckey
+LEFT JOIN grv ON grv.institution_id = k.institution_id AND grv.ckey = k.ckey
+LEFT JOIN srv ON srv.institution_id = k.institution_id AND srv.ckey = k.ckey
+LEFT JOIN rsk ON rsk.institution_id = k.institution_id AND rsk.ckey = k.ckey
+LEFT JOIN rch ON rch.institution_id = k.institution_id AND rch.ckey = k.ckey
+LEFT JOIN hld ON hld.institution_id = k.institution_id AND hld.ckey = k.ckey;
+CREATE UNIQUE INDEX IF NOT EXISTS uq_mv_kpi_daily ON mv_kpi_daily (institution_id, college_key, day);
+CREATE INDEX IF NOT EXISTS ix_mv_kpi_daily_inst ON mv_kpi_daily (institution_id);
+
 -- ===================================== END =====================================
 -- Sanity: SELECT count(*) FROM information_schema.tables WHERE table_schema='public' AND table_type='BASE TABLE';
