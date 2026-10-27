@@ -377,3 +377,10 @@ register_beat("analytics.refresh_scheduler", "beat.analytics.refresh_scheduler",
 register_beat("analytics.digest_daily", "beat.analytics.digest_daily", crontab(minute=5))  # hourly: schedules at their hour
 register_beat("analytics.digest_weekly", "beat.analytics.digest_weekly", crontab(minute=10))  # hourly; Mondays only
 register_beat("risk.intervention_reminders", "beat.risk.intervention_reminders", crontab(hour=3, minute=35))  # 09:05 IST
+
+# ---- Phase 36 reports (app/tasks/reports.py) ---------------------------------------------------------------------------------------
+register_beat("reports.schedules_tick", "beat.reports.schedules_tick", 300.0)  # every 5 min: due schedules + settle history
+register_beat("reports.retention_purge", "beat.reports.retention_purge", crontab(hour=21, minute=0))  # 02:30 IST
+register_beat(
+    "reports.statutory_due_calendar", "beat.reports.statutory_due_calendar", crontab(day_of_week=1, hour=3, minute=20)
+)  # Mon 08:50 IST

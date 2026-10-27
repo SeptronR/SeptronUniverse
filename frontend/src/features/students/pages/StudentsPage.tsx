@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import type { ColumnDef } from '@tanstack/react-table';
 import { CreditCard, FileSpreadsheet, Plus, Upload } from 'lucide-react';
 import { getApiError } from '@/api/axios';
+import { useReportRun } from '@/features/reports/hooks';
 import { DataTable } from '@/components/shared/DataTable';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { ScopeTabs } from '@/components/shared/ScopeTabs';
@@ -160,13 +161,10 @@ export default function StudentsPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [canCards, rows, selected],
   );
-  const onExport = async () => {
-    try {
-      downloadBlob(await studentsApi.exportXlsx({ ...params, page: undefined, page_size: undefined }), 'students.xlsx');
-    } catch (e) {
-      toast.error(getApiError(e));
-    }
-  };
+  const report = useReportRun();
+  // Phase 36: the DataTable export runs the registry report with the page's current filters (job → JobsTray)
+  const onExport = () =>
+    void report.run('students.list_export', { ...params }, 'xlsx', ['status', 'category', 'gender', 'college_id', 'department_id', 'program_id', 'batch_id']);
   const idCards = async () => {
     try {
       const r = await studentsApi.idCards([...selected]);

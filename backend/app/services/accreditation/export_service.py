@@ -5,13 +5,11 @@ denominator, QlM narratives and an evidence index with links; ``pdf`` through th
 NIRF DCF / AISHE DCF / AICTE / UGC annual / xlsx (openpyxl workbooks, one sheet per section). Every export is
 registered as an ``issued_documents`` row (``documents.render('custom', 'accreditation_cycle', cycle_id)``, skipped
 while ``documents.templates`` is off) for traceability and recorded in the cycle side store (``cycle:<id>.exports``).
-This is the data provider for the Phase 36 statutory renderers."""
+This is the data provider for the Phase 36 statutory renderers; the workbook / docx writers are the shared Phase 36
+``services/reports/render_service`` (re-exported here for existing imports)."""
 
-import io
 import uuid
-import zipfile
 from typing import Any
-from xml.sax.saxutils import escape
 
 from sqlalchemy import select
 
@@ -19,84 +17,11 @@ from app.models.accreditation import AccreditationCycle, EvidenceDocument, Metri
 from app.services.accreditation.common import AccreditationBase, forbidden, now_utc
 from app.services.accreditation.cycle_service import CycleService, cycle_period_label
 from app.services.documents.render_service import register_resolver
+from app.services.reports.render_service import docx_bytes, xlsx_sheets  # shared renderers (Phase 36)
 
 ENTITY = "accreditation_cycle"
 DOCX = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-
-
-def docx_bytes(title: str, blocks: list[tuple[str, Any]]) -> bytes:
-    """Minimal .docx: ``("h1"|"h2"|"p", text)`` and ``("table", [[cell, …], …])`` blocks."""
-
-    def para(text: str, style: str | None = None) -> str:
-        ppr = f'<w:pPr><w:pStyle w:val="{style}"/></w:pPr>' if style else ""
-        runs = "".join(
-            f'<w:r><w:t xml:space="preserve">{escape(line)}</w:t></w:r>'
-            + ("<w:r><w:br/></w:r>" if i < len(lines) - 1 else "")
-            for lines in [str(text).splitlines() or [""]]
-            for i, line in enumerate(lines)
-        )
-        return f"<w:p>{ppr}{runs}</w:p>"
-
-    body: list[str] = [para(title, "Title")]
-    for kind, content in blocks:
-        if kind == "table":
-            rows = "".join(
-                "<w:tr>"
-                + "".join(f'<w:tc><w:tcPr><w:tcW w:w="0" w:type="auto"/></w:tcPr>{para(c)}</w:tc>' for c in row)
-                + "</w:tr>"
-                for row in content
-            )
-            body.append(
-                '<w:tbl><w:tblPr><w:tblStyle w:val="TableGrid"/><w:tblW w:w="0" w:type="auto"/>'
-                '<w:tblBorders><w:top w:val="single" w:sz="4"/><w:left w:val="single" w:sz="4"/><w:bottom w:val="single" w:sz="4"/>'
-                '<w:right w:val="single" w:sz="4"/><w:insideH w:val="single" w:sz="4"/><w:insideV w:val="single" w:sz="4"/></w:tblBorders>'
-                f"</w:tblPr>{rows}</w:tbl>"
-            )
-        else:
-            body.append(para(str(content), {"h1": "Heading1", "h2": "Heading2"}.get(kind)))
-    document = (
-        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
-        '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'
-        + "".join(body)
-        + "</w:body></w:document>"
-    )
-    buf = io.BytesIO()
-    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
-        z.writestr(
-            "[Content_Types].xml",
-            '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
-            '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
-            '<Default Extension="xml" ContentType="application/xml"/>'
-            '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
-            "</Types>",
-        )
-        z.writestr(
-            "_rels/.rels",
-            '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
-            '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
-            "</Relationships>",
-        )
-        z.writestr("word/document.xml", document)
-    return buf.getvalue()
-
-
-def xlsx_sheets(sheets: dict[str, list[dict[str, Any]]]) -> bytes:
-    from openpyxl import Workbook
-
-    wb = Workbook()
-    wb.remove(wb.active)
-    for name, rows in sheets.items() or {"(empty)": []}.items():
-        ws = wb.create_sheet(name[:30])
-        cols = list(rows[0].keys()) if rows else ["(no rows)"]
-        ws.append(cols)
-        for r in rows:
-            ws.append([r.get(c) if not isinstance(r.get(c), dict | list) else str(r.get(c)) for c in cols])
-    if not wb.sheetnames:
-        wb.create_sheet("(empty)")
-    buf = io.BytesIO()
-    wb.save(buf)
-    return buf.getvalue()
 
 
 class ExportService(AccreditationBase):

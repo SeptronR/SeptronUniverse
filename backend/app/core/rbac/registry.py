@@ -1341,6 +1341,43 @@ for _slug, _extra in PHASE35_GRANTS.items():
     if "*:*" not in ROLE_TEMPLATES[_slug]:
         ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra  # new set: templates may share base sets
 
+# Phase 36 (Prompts/36 "Visibility rules"): ``reports:view`` opens the catalogue, ``reports:run`` runs / previews /
+# builds (rows still narrowed by every provider to the caller's module scope), ``reports:schedule`` schedules (private
+# for faculty), ``reports:statutory`` the statutory workspace (generation per code is limited to its sign-off roles +
+# registrar / IQAC / principal), ``reports:view_all`` sees every run, ``reports:manage`` shares saved reports / edits
+# others' schedules / reads the access log.
+REPORTS_READ: set[str] = P("reports", "view", "run")
+REPORTS_SCHEDULE: set[str] = P("reports", "view", "run", "schedule")
+REPORTS_STATUTORY: set[str] = P("reports", "view", "run", "schedule", "statutory")
+PHASE36_GRANTS: dict[str, set[str]] = {
+    "registrar": REPORTS_STATUTORY | P("reports", "view_all"),
+    "vice_chancellor": REPORTS_STATUTORY,
+    "iqac_coordinator": REPORTS_STATUTORY,
+    "controller_of_examinations": REPORTS_SCHEDULE,
+    "exam_cell": REPORTS_SCHEDULE,
+    "dean": REPORTS_SCHEDULE,
+    "hod": REPORTS_SCHEDULE,
+    "faculty": REPORTS_SCHEDULE,
+    "class_advisor": REPORTS_SCHEDULE,
+    "research_guide": REPORTS_SCHEDULE,
+    "accountant": REPORTS_STATUTORY,
+    "hr_officer": REPORTS_SCHEDULE,
+    "admissions_officer": REPORTS_SCHEDULE,
+    "placement_officer": REPORTS_STATUTORY,
+    "librarian": REPORTS_SCHEDULE,
+    "hostel_warden": REPORTS_SCHEDULE,
+    "transport_manager": REPORTS_SCHEDULE,
+    "inventory_manager": REPORTS_SCHEDULE,
+    "estate_officer": REPORTS_SCHEDULE,
+    "alumni_coordinator": REPORTS_SCHEDULE,
+    "research_cell": REPORTS_STATUTORY,
+    "pio": REPORTS_STATUTORY,
+    "auditor": P("reports", "statutory"),
+}
+for _slug, _extra in PHASE36_GRANTS.items():
+    if "*:*" not in ROLE_TEMPLATES[_slug]:
+        ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra  # new set: templates may share base sets
+
 # ---- import-time invariants ------------------------------------------------------------------------------------
 assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
@@ -1351,6 +1388,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0036": frozenset(REPORTS_STATUTORY | P("reports", "view_all")),
     "0035": frozenset(ANALYTICS_ADMIN),
     "0034": frozenset(
         REGISTRAR_AFFILIATION

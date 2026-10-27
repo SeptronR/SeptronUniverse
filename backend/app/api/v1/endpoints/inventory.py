@@ -107,9 +107,13 @@ ANY = any_permission_required(
 )
 MANAGE = any_permission_required((INV, "manage"))
 READ = any_permission_required((INV, "view_all"), (INV, "manage"), (PR, "view_all"), (PR, "quote"))
-STORE = any_permission_required((INV, "manage"), (INV, "view_all"), (INV, "receive"), (INV, "issue"), (INV, "approve_indent"))
+STORE = any_permission_required(
+    (INV, "manage"), (INV, "view_all"), (INV, "receive"), (INV, "issue"), (INV, "approve_indent")
+)
 MOVE = any_permission_required((INV, "issue"), (INV, "receive"), (INV, "manage"))
-INDENT = any_permission_required((INV, "indent"), (INV, "approve_indent"), (INV, "issue"), (INV, "view_all"), (INV, "manage"))
+INDENT = any_permission_required(
+    (INV, "indent"), (INV, "approve_indent"), (INV, "issue"), (INV, "view_all"), (INV, "manage")
+)
 QUOTE = any_permission_required((PR, "quote"), (PR, "manage"), (PR, "view_all"), (INV, "manage"))
 PO = any_permission_required(
     (PR, "manage"),
@@ -123,7 +127,9 @@ PO = any_permission_required(
 PO_WRITE = any_permission_required((PR, "create"), (PR, "update"), (PR, "manage"), (INV, "manage"))
 PO_APPROVE = any_permission_required((PR, "po_approve"))
 RECEIVE = any_permission_required((INV, "receive"), (INV, "view_all"), (INV, "manage"), (PR, "view_all"))
-ASSET = any_permission_required((INV, "manage"), (INV, "view_all"), (INV, "view"), (INV, "asset_audit"), (INV, "approve_indent"))
+ASSET = any_permission_required(
+    (INV, "manage"), (INV, "view_all"), (INV, "view"), (INV, "asset_audit"), (INV, "approve_indent")
+)
 AUDIT = any_permission_required((INV, "asset_audit"), (INV, "manage"), (INV, "view_all"))
 DEPR = any_permission_required((INV, "manage"), (INV, "view_all"), ("accounting", "view"))
 BILL = any_permission_required(
@@ -1241,7 +1247,11 @@ async def report(
     if kind not in KINDS:
         raise APIError(404, ErrorCode.NOT_FOUND, "Unknown report")
     if format == "xlsx":
-        return await _job(db, principal, "inventory.reports_export", {"kind": kind})
+        from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
+        return await _job(
+            db, principal, "report.run", await alias_params(db, principal, f"inventory.{kind}", {"fy": fy})
+        )
     return ok(await InventoryReportsService(db, principal, request).report(kind, fy))
 
 

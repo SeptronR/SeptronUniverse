@@ -194,8 +194,10 @@ async def reports(
 ) -> JSONResponse:
     if kind not in ("occupancy", "fees", "roll_call", "leaves", "mess", "visitors", "discipline"):
         raise APIError(404, ErrorCode.NOT_FOUND, "Unknown report")
+    from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
     return await _job(
-        db, principal, "hostel.registers_export", {"kind": kind, "hostel_id": str(hostel_id) if hostel_id else None}
+        db, principal, "report.run", await alias_params(db, principal, f"hostel.{kind}", {"hostel_id": hostel_id})
     )
 
 

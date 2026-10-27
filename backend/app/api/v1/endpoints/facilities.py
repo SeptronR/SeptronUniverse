@@ -686,15 +686,13 @@ async def facilities_report(
 
     if kind not in REPORT_KINDS:
         raise APIError(404, ErrorCode.NOT_FOUND, f"Unknown report {kind!r}", {"kinds": list(REPORT_KINDS)})
+    from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
     j = await enqueue(
         db,
         principal,
-        "facilities.report",
-        {
-            "kind": kind,
-            "date_from": date_from.isoformat() if date_from else None,
-            "date_to": date_to.isoformat() if date_to else None,
-        },
+        "report.run",
+        await alias_params(db, principal, f"facilities.{kind}", {"from": date_from, "to": date_to}),
     )
     return JSONResponse(
         status_code=202, content=ok(FacJobAccepted(job_id=j.id).model_dump(mode="json"), message="Queued")

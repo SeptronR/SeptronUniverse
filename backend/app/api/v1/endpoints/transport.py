@@ -863,5 +863,7 @@ async def report(
     if kind not in KINDS:
         raise APIError(404, ErrorCode.NOT_FOUND, "Unknown report")
     if format == "xlsx":
-        return await _job(db, principal, "transport.reports_export", {"kind": kind})
+        from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
+        return await _job(db, principal, "report.run", await alias_params(db, principal, f"transport.{kind}", {}))
     return ok(await TransportReportsService(db, principal, request).report(kind))

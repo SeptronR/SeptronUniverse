@@ -794,7 +794,9 @@ async def report(
         from app.core.errors import APIError, ErrorCode
 
         raise APIError(404, ErrorCode.NOT_FOUND, "Unknown report")
-    return _accepted(await _job(db, principal, "library.reports_export", {"kind": kind}), "Report queued")
+    from app.services.reports.report_service import alias_job  # Phase 36: alias of POST /reports/run
+
+    return _accepted((await alias_job(db, principal, f"library.{kind}", {})).id, "Report queued")
 
 
 @router.get(

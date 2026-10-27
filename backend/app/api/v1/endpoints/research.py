@@ -1251,7 +1251,11 @@ async def report(
             media_type=XLSX,
             headers={"Content-Disposition": f'attachment; filename="research-{kind}.xlsx"'},
         )
-    return await _job(db, principal, "research.reports_export", {"kind": kind, "year": year, "format": format})
+    from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
+    return await _job(
+        db, principal, "report.run", await alias_params(db, principal, f"research.{kind}", {"year": year})
+    )
 
 
 @router.post(

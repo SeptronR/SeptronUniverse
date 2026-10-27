@@ -434,6 +434,14 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.brown,
       permission: 'affiliation:submit',
       feature: 'affiliation.exam_centres'),
+  // Phase 36 — reports (registrar / HOD / COE / accountant / placement / IQAC)
+  const MoreMenuModule(
+      titleKey: 'reports',
+      icon: Icons.summarize_outlined,
+      route: AppRoutes.reports,
+      color: Colors.indigo,
+      permission: 'reports:run',
+      feature: 'reports.core'),
   // Phase 35 — early warning analytics (HOD / registrar / mentor)
   const MoreMenuModule(
       titleKey: 'early_warning',

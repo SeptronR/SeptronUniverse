@@ -43,6 +43,7 @@ from app.models import (  # noqa: F401
     post_result,
     projects,
     registration,
+    reports,
     research,
     results,
     saas,

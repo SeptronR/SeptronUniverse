@@ -31,6 +31,7 @@ import '../../features/alumni/alumni_screens.dart';
 import '../../features/placement/placement_screens.dart';
 import '../../features/affiliation/affiliation_screens.dart';
 import '../../features/analytics/analytics_screens.dart';
+import '../../features/reports/reports_screens.dart';
 import '../../features/governance/governance_screens.dart';
 import '../../features/iqac/iqac_screens.dart';
 import '../../features/phd/phd_screens.dart';
@@ -506,6 +507,14 @@ class ScreenRegistry {
       feature: 'accreditation.aishe',
       permission: 'accreditation:evidence',
       builder: (_, __) => const IqacHubScreen(department: true),
+    ),
+    // Phase 36 — reports
+    AppRoutes.reports: ScreenEntry(
+      route: AppRoutes.reports,
+      titleKey: 'reports',
+      feature: 'reports.core',
+      permission: 'reports:run|reports:view',
+      builder: (_, __) => const ReportsScreen(),
     ),
     // Phase 35 — early warning analytics
     AppRoutes.riskCohort: ScreenEntry(

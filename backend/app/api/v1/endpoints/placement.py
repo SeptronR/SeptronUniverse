@@ -852,4 +852,6 @@ async def report(
             media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             headers={"Content-Disposition": f'attachment; filename="placement-{kind}.xlsx"'},
         )
-    return await _job(db, principal, "placement.stats_export", {"kind": kind, "format": format})
+    from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
+    return await _job(db, principal, "report.run", await alias_params(db, principal, f"placement.{kind}", {}, format))

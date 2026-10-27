@@ -344,6 +344,9 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # reports (registry, statutory, scheduled): no tables — runs are background_jobs, schedules / saved reports /
+    # statutory state in institution_settings (reports_meta), files in issued_documents
+    "36": [],
     # dashboards, analytics & early warning: no tables — the section 37 materialized read models are listed in VIEWS
     "35": [],
     # affiliation management (section 31; exam_centres moved from Phase 14, college_data_submissions from Phase 13)

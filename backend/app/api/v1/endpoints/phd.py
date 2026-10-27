@@ -1281,7 +1281,9 @@ async def reports(
     if kind not in ("scholars", "fellowships", "awards", "ugc_return", "examiners"):
         raise APIError(404, ErrorCode.NOT_FOUND, "Unknown report")
     if not inline:
-        return await _job(db, principal, "phd.reports_export", {"kind": kind, "year": year})
+        from app.services.reports.report_service import alias_params  # Phase 36: alias of POST /reports/run
+
+        return await _job(db, principal, "report.run", await alias_params(db, principal, f"phd.{kind}", {"year": year}))
     rows = await StatsService(db, principal, request).report_rows(kind, year)
     if format == "json":
         return ok(rows)
