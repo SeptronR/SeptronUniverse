@@ -1863,3 +1863,8 @@ view_chart(
     where="x.level = 'high'",
     **_RK,
 )
+
+# ---- Phase 37: audit / security charts (registered by the audit module) ---------------------------------------------
+from app.services.audit.registrations import register_charts  # noqa: E402
+
+register_charts()

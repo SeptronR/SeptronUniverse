@@ -175,7 +175,20 @@ class SettingsService:
         return defn.default if defn else None
 
     # ---- rule 2 ---------------------------------------------------------------------------------------------------
-    async def bulk_update(self, items: list[SettingItem], request: Request | None) -> list[SettingsCategoryResponse]:
+    async def bulk_update(
+        self,
+        items: list[SettingItem],
+        request: Request | None,
+        *,
+        reason: str | None = None,
+        strict: bool = False,
+        action: str = "update",
+    ) -> list[SettingsCategoryResponse]:
+        """``strict`` (the ``PUT /settings`` route — Phase 37 rule 2): college overrides only for college-scoped keys,
+        institution rows only from an institution scope, dependency hints enforced, ``reason`` for sensitive
+        categories. Locked keys (platform scope / env / plan) are refused for every caller (409 RULE_VIOLATION)."""
+        from app.core.settings_catalogue import CATALOGUE
+
         inst = tenant_id(self.principal, request)
         validated: list[tuple[SettingItem, SettingDef, Any]] = []
         errors: list[dict[str, Any]] = []
@@ -190,6 +203,53 @@ class SettingsService:
                 errors.append({"index": idx, "field": defn.full_key, "reason": str(exc)})
         if errors:
             raise APIError(422, ErrorCode.VALIDATION, "Invalid setting values", {"errors": errors})
+        sensitive: list[str] = []
+        for idx, (item, defn, value) in enumerate(validated):
+            meta = CATALOGUE.get(defn.full_key)
+            if meta is None:
+                continue
+            if meta.scope == "platform" or meta.locked_by != "none":
+                raise APIError(
+                    409,
+                    ErrorCode.RULE_VIOLATION,
+                    f"{defn.full_key} is locked ({meta.lock_reason or meta.locked_by})",
+                    {"code": "SETTING_LOCKED", "key": defn.full_key, "locked_by": meta.locked_by},
+                )
+            if not strict:
+                continue
+            if item.college_id is not None and meta.scope != "college":
+                errors.append({"index": idx, "field": defn.full_key, "reason": "not overridable per college"})
+            if meta.depends_on and value:
+                dep_cat, _, dep_key = meta.depends_on[0].partition(".")
+                pending = next(
+                    (
+                        v
+                        for it, d, v in validated
+                        if d.category == dep_cat and d.key == dep_key and it.college_id is None
+                    ),
+                    None,
+                )
+                dep_value = pending if pending is not None else await self.value(inst, dep_cat, dep_key)
+                if not dep_value:
+                    errors.append(
+                        {
+                            "index": idx,
+                            "field": defn.full_key,
+                            "reason": meta.dependency_hint or "dependency unmet",
+                            "depends_on": meta.depends_on,
+                        }
+                    )
+            if meta.sensitive:
+                sensitive.append(defn.full_key)
+        if errors:
+            raise APIError(422, ErrorCode.VALIDATION, "Invalid setting values", {"errors": errors})
+        if strict and sensitive and not (reason or "").strip():
+            raise APIError(
+                422,
+                ErrorCode.VALIDATION,
+                "A reason is required for changes to sensitive settings",
+                {"field": "reason", "keys": sensitive},
+            )
         for item, defn, _ in validated:
             if defn.feature and not await is_enabled(inst, defn.feature):
                 raise APIError(
@@ -198,7 +258,8 @@ class SettingsService:
                     f"Feature '{defn.feature}' is not enabled",
                     {"feature": defn.feature},
                 )
-            if item.college_id is not None:
+            if strict or item.college_id is not None:
+                # strict: an institution row (college_id NULL) also needs an institution scope
                 check_college_writable(self.principal, item.college_id)
         changed: dict[str, dict[str, Any]] = {}
         old_values: dict[str, Any] = {}
@@ -222,13 +283,15 @@ class SettingsService:
             self.db,
             principal=self.principal,
             module="settings",
-            action="update",
+            action=action,
             record_type="institution_settings",
             record_id=inst,
             old=old_values,
-            new=changed,
+            new={**changed, **({"_reason": reason} if reason else {})},
             request=request,
         )
+        if sensitive:
+            await self._sensitive_changed(inst, sensitive, reason)
         await events.emit(
             self.db,
             institution_id=inst,
@@ -242,6 +305,33 @@ class SettingsService:
         for cat in categories:
             out.append(SettingsCategoryResponse(category=cat, items=await self._merged(inst, cat, None)))
         return out
+
+    async def _sensitive_changed(self, inst: uuid.UUID, keys: list[str], reason: str | None) -> None:
+        from app.core.notifications.notify import notify_event
+
+        roles = await self.value(inst, "audit", "sensitive_change_notify") or ["vice_chancellor"]
+        actor = (
+            getattr(self.principal, "display_name", None)
+            or getattr(self.principal, "username", None)
+            or "An administrator"
+        )
+        await events.emit(
+            self.db,
+            institution_id=inst,
+            event_type="settings.changed_sensitive",
+            payload={"keys": keys, "reason": reason},
+            aggregate_type="institution",
+            aggregate_id=inst,
+            actor_user_id=self.principal.id if self.principal else None,
+        )
+        await notify_event(
+            self.db,
+            inst,
+            "settings.changed_sensitive",
+            audience={"roles": list(roles)},
+            context={"keys": ", ".join(keys), "actor": str(actor), "reason": reason or ""},
+            actor_user_id=self.principal.id if self.principal else None,
+        )
 
     # ---- rule 3 ---------------------------------------------------------------------------------------------------
     async def public(self, institution_id: uuid.UUID | None, user: Any = None) -> PublicSettingsResponse:

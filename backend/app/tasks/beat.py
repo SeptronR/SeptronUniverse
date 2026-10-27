@@ -384,3 +384,12 @@ register_beat("reports.retention_purge", "beat.reports.retention_purge", crontab
 register_beat(
     "reports.statutory_due_calendar", "beat.reports.statutory_due_calendar", crontab(day_of_week=1, hour=3, minute=20)
 )  # Mon 08:50 IST
+
+# ---- Phase 37 audit / security / retention (app/tasks/audit.py) ------------------------------------------------------------
+register_beat("audit.digest_daily", "beat.audit.digest_daily", crontab(hour=18, minute=45))  # 00:15 IST
+register_beat("audit.chain_verify_daily", "beat.audit.chain_verify_daily", crontab(hour=19, minute=30))  # 01:00 IST
+register_beat("security.anomaly_scan", "beat.security.anomaly_scan", 300.0)  # every 5 min
+register_beat("retention.purge_daily", "beat.retention.purge_daily", crontab(hour=22, minute=0))  # 03:30 IST
+register_beat(
+    "retention.archive_monthly", "beat.retention.archive_monthly", crontab(day_of_month=1, hour=20, minute=30)
+)  # 1st, 02:00 IST on the 2nd (UTC crontab)

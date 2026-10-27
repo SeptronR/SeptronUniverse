@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { toast } from '@/components/ui/Toaster';
 import { SimpleTable } from '@/features/hr/components/shared';
 import { CodingTab, CustodyTab, DecodeTab, ModerationTab, ResultsRunTab, ValuationTab } from '@/features/results/pages/EvaluationTabs';
+import { AuditTrailButton } from '@/components/shared/AuditTrailButton';
 import { usePermission } from '@/hooks/usePermission';
 import { examsApi, openBlob } from '../api';
 
@@ -263,7 +264,16 @@ export function ExamSessionWorkspacePage() {
   const next = d ? FLOW[FLOW.indexOf(d.status) + 1] : undefined;
   return (
     <div className="space-y-4">
-      <PageHeader title={d?.name ?? 'Exam session'} description={d ? `${d.exam_kind} · ${d.status}${d.is_locked ? ' · locked' : ''}` : ''} />
+      <PageHeader
+        title={d?.name ?? 'Exam session'}
+        description={d ? `${d.exam_kind} · ${d.status}${d.is_locked ? ' · locked' : ''}` : ''}
+        actions={
+          <div className="flex gap-2">
+            {can('exams', 'audit') && <Link to={`/admin/exams/${id}/audit`}><Button size="sm" variant="outline">Exam audit</Button></Link>}
+            <AuditTrailButton recordType="exam_session" recordId={id} />
+          </div>
+        }
+      />
       {next && <Button variant="outline" onClick={() => run.mutate(() => examsApi.status(id, next), { onSuccess: () => toast.success(`→ ${next}`), onError: fail })}>Move to {next.replace(/_/g, ' ')}</Button>}
       <Tabs defaultValue="papers">
         <TabsList>

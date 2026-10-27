@@ -98,3 +98,28 @@ async def audit_fallback(request: Request, status: int) -> None:
             await db.commit()
     except Exception as exc:  # noqa: BLE001 - never fail the response because the fallback audit failed
         log.warning("audit_fallback_failed", path=request.url.path, error=str(exc))
+
+
+async def record_pii_view(
+    db: AsyncSession,
+    *,
+    principal: Any,
+    module: str,
+    record_type: str,
+    record_id: uuid.UUID | None,
+    fields: list[str],
+    request: Request | None = None,
+) -> None:
+    """Prompts/37 "who viewed": an unmasked read of confidential fields writes a ``view_pii`` row (never the values)."""
+    if not fields or principal is None or getattr(principal, "id", None) is None:
+        return
+    await log_audit(
+        db,
+        principal=principal,
+        module=module,
+        action="view_pii",
+        record_type=record_type,
+        record_id=record_id,
+        new={"fields": sorted(fields)},
+        request=request,
+    )

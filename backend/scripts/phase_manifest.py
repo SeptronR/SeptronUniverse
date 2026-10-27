@@ -344,6 +344,9 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # audit logs, security events & settings: no tables — reads section 6 / 3 / 5 / 32 / 2 and the exam audit sources;
+    # digests, anomalies, legal holds and manifests in institution_settings (audit_meta)
+    "37": [],
     # reports (registry, statutory, scheduled): no tables — runs are background_jobs, schedules / saved reports /
     # statutory state in institution_settings (reports_meta), files in issued_documents
     "36": [],

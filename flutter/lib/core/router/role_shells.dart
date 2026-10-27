@@ -434,6 +434,21 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.brown,
       permission: 'affiliation:submit',
       feature: 'affiliation.exam_centres'),
+  // Phase 37 — audit & security (institution admin / registrar) and exam audit (COE)
+  const MoreMenuModule(
+      titleKey: 'audit_logs',
+      icon: Icons.policy_outlined,
+      route: AppRoutes.auditHub,
+      color: Colors.blueGrey,
+      permission: 'audit_logs:view_all',
+      feature: 'core.audit_logs'),
+  const MoreMenuModule(
+      titleKey: 'exam_audit',
+      icon: Icons.fact_check_outlined,
+      route: AppRoutes.examAudit,
+      color: Colors.deepPurple,
+      permission: 'exams:audit',
+      feature: 'exams.sessions'),
   // Phase 36 — reports (registrar / HOD / COE / accountant / placement / IQAC)
   const MoreMenuModule(
       titleKey: 'reports',

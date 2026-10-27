@@ -22,6 +22,7 @@ import { downloadBlob } from '@/features/hr/download';
 import { SimpleTable, WorkflowPanel } from '@/features/hr/components/shared';
 import { formatDate, formatDateTime } from '@/utils/formatters';
 import { studentsApi } from '../api';
+import { AuditTrailButton } from '@/components/shared/AuditTrailButton';
 import { Field, HoldBanner, HoldsBadge, StandingChip } from '../components/shared';
 import { useStudent, useStudentMutation } from '../hooks';
 import { HOLD_TYPES, TRANSFER_TYPES, addressLine, label, type StudentDetail } from '../types';
@@ -118,6 +119,7 @@ export default function StudentDetailPage() {
         breadcrumbs={[{ label: 'Students', to: '/admin/students' }, { label: s.registration_number }]}
         actions={
           <div className="flex flex-wrap items-center gap-2">
+            <AuditTrailButton recordType="student" recordId={s.id} />
             {can('students', 'id_card') && <Button variant="outline" onClick={idCard}><CreditCard className="h-4 w-4" /> ID card</Button>}
             {holdsOn && (can('students', 'holds') || can('library', 'manage') || can('hostel', 'manage')) && (
               <Button variant="outline" onClick={() => setHoldOpen(true)}><Ban className="h-4 w-4" /> Place hold</Button>

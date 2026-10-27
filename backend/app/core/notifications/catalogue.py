@@ -46,6 +46,61 @@ CATEGORIES = (
 MANDATORY_CATEGORIES = frozenset({"security", "emergency"})
 
 # Phase 34: affiliation — applications, fees, inspections, deficiencies, decisions, submissions, centres, expiries
+# Phase 37: audit integrity, security anomalies, sensitive settings changes, retention / legal holds
+AUDIT_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "audit.chain_broken",
+        "security",
+        "Audit chain broken",
+        "Audit chain verification failed",
+        "The audit trail of {{ institution }} failed verification ({{ range }}): first broken row {{ first_broken }}. "
+        "Treat the trail as suspect and review the integrity page.",
+        ("institution", "range", "first_broken"),
+        ("in_app", "email"),
+        link="/admin/audit-logs/integrity",
+    ),
+    EventDef(
+        "audit.anomaly",
+        "security",
+        "Security anomaly",
+        "Security anomaly: {{ rule }}",
+        "{{ count }} events matched {{ rule }} in the last {{ window }} minutes ({{ users }}). Review the security console.",
+        ("rule", "count", "window", "users"),
+        ("in_app", "email"),
+        link="/admin/security",
+    ),
+    EventDef(
+        "settings.changed_sensitive",
+        "security",
+        "Sensitive setting changed",
+        "{{ keys }} changed",
+        "{{ actor }} changed {{ keys }}. Reason: {{ reason }}",
+        ("keys", "actor", "reason"),
+        ("in_app",),
+        link="/admin/settings",
+    ),
+    EventDef(
+        "retention.archive_done",
+        "announcements",
+        "Archive complete",
+        "{{ data_class }} {{ period }} archived",
+        "{{ rows }} {{ data_class }} rows of {{ period }} were archived (sha256 {{ sha256 }}).",
+        ("data_class", "period", "rows", "sha256"),
+        ("in_app",),
+        link="/admin/retention",
+    ),
+    EventDef(
+        "retention.legal_hold_set",
+        "announcements",
+        "Legal hold set",
+        "Legal hold on {{ data_class }}",
+        "A legal hold was placed on {{ data_class }} ({{ scope }}): {{ reason }}",
+        ("data_class", "scope", "reason"),
+        ("in_app",),
+        link="/admin/retention",
+    ),
+)
+
 # Phase 36: reports — run ready / failed, scheduled deliveries, statutory review / sign-off / due dates
 REPORTS_EVENTS: tuple[EventDef, ...] = (
     EventDef(
@@ -3100,6 +3155,7 @@ EVENTS = (
     + AFFILIATION_EVENTS
     + ANALYTICS_EVENTS
     + REPORTS_EVENTS
+    + AUDIT_EVENTS
 )
 
 BY_KEY: dict[str, EventDef] = {e.key: e for e in EVENTS}

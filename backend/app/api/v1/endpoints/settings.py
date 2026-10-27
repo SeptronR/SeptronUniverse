@@ -8,26 +8,184 @@ theme of the tenant named by ``?institution=<slug>`` / ``X-Institution-Slug`` / 
 """
 
 import uuid
+from datetime import datetime
 from typing import Any
 
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.authz.dependencies import Principal, permission_required
+from app.core.authz.dependencies import Principal, any_permission_required, permission_required
 from app.db.session import bind_tenant, get_db, set_tenant
 from app.repositories.institution_repository import InstitutionRepository
+from app.schemas.audit import AuditRowOut, FeatureChangeLogOut
 from app.schemas.common import Envelope
 from app.schemas.settings import (
+    EffectiveSettingOut,
     ProviderTestRequest,
     ProviderTestResponse,
     PublicSettingsResponse,
+    SettingDefOut,
     SettingsBulkUpdate,
     SettingsCategoryResponse,
+    SettingsDiffOut,
+    SettingsExportOut,
+    SettingsHistoryOut,
+    SettingsImportIn,
+    SettingsImportReport,
 )
+from app.services.audit.feature_change_service import FeatureChangeService
+from app.services.audit.settings_admin_service import SettingsAdminService
 from app.services.settings_service import SettingsService
 from app.utils.response import ok
 
 router = APIRouter(tags=["settings"])
+
+VIEW = any_permission_required(("settings", "view"), ("settings", "manage"))
+MANAGE = permission_required("settings", "manage")
+FEATURE_LOG = any_permission_required(("features", "view"), ("audit_logs", "view_all"), ("audit_logs", "manage"))
+PLATFORM_LOG = any_permission_required(("audit_logs", "view_all"), ("audit_logs", "manage"))
+
+
+# ---- Phase 37: catalogue / effective / history / import-export / reset / overrides (before /settings/{key}) --------
+@router.get(
+    "/settings/catalogue",
+    summary="Settings catalogue (metadata of every key)",
+    response_model=Envelope[list[SettingDefOut]],
+)
+async def catalogue(
+    request: Request,
+    category: str | None = Query(None, max_length=40),
+    q: str | None = Query(None, max_length=80),
+    scope: str | None = Query(None, pattern="^(platform|institution|college)$"),
+    principal: Principal = Depends(VIEW),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await SettingsAdminService(db, principal, request).catalogue(category, q, scope))
+
+
+@router.get(
+    "/settings/effective",
+    summary="Effective values with source badges",
+    response_model=Envelope[list[EffectiveSettingOut]],
+)
+async def effective(
+    request: Request,
+    college_id: uuid.UUID | None = None,
+    category: str | None = Query(None, max_length=40),
+    principal: Principal = Depends(VIEW),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await SettingsAdminService(db, principal, request).effective(college_id, category))
+
+
+@router.get(
+    "/settings/history",
+    summary="Change history per key (from audit_logs)",
+    response_model=Envelope[list[SettingsHistoryOut]],
+)
+async def history(
+    request: Request,
+    key: str | None = Query(None, max_length=120),
+    category: str | None = Query(None, max_length=40),
+    date_from: datetime | None = Query(None, alias="from"),
+    date_to: datetime | None = Query(None, alias="to"),
+    principal: Principal = Depends(VIEW),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await SettingsAdminService(db, principal, request).history(key, category, date_from, date_to))
+
+
+@router.get(
+    "/settings/changes-since", summary="What changed since a date", response_model=Envelope[list[SettingsDiffOut]]
+)
+async def changes_since(
+    request: Request,
+    since: datetime = Query(),
+    principal: Principal = Depends(VIEW),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await SettingsAdminService(db, principal, request).changes_since(since))
+
+
+@router.get("/settings/export", summary="Export settings (JSON)", response_model=Envelope[SettingsExportOut])
+async def export_settings(
+    request: Request, principal: Principal = Depends(MANAGE), db: AsyncSession = Depends(get_db)
+) -> dict[str, Any]:
+    return ok(await SettingsAdminService(db, principal, request).export())
+
+
+@router.post(
+    "/settings/import", summary="Import settings (dry run first)", response_model=Envelope[SettingsImportReport]
+)
+async def import_settings(
+    body: SettingsImportIn,
+    request: Request,
+    dry_run: bool = True,
+    principal: Principal = Depends(MANAGE),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    out = await SettingsAdminService(db, principal, request).import_(body.json_, dry_run, body.reason)
+    return ok(out, message="Dry run" if dry_run else "Settings imported")
+
+
+@router.get(
+    "/settings/feature-changes",
+    summary="Feature flag change log of the tenant",
+    response_model=Envelope[list[FeatureChangeLogOut]],
+)
+async def feature_changes(
+    request: Request,
+    date_from: datetime | None = Query(None, alias="from"),
+    date_to: datetime | None = Query(None, alias="to"),
+    principal: Principal = Depends(FEATURE_LOG),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await FeatureChangeService(db, principal, request).feature_changes(date_from, date_to))
+
+
+@router.get(
+    "/settings/platform-actions",
+    summary="Platform (super admin) actions affecting the tenant",
+    response_model=Envelope[list[AuditRowOut]],
+)
+async def platform_actions(
+    request: Request,
+    date_from: datetime | None = Query(None, alias="from"),
+    date_to: datetime | None = Query(None, alias="to"),
+    principal: Principal = Depends(PLATFORM_LOG),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await FeatureChangeService(db, principal, request).platform_actions(date_from, date_to))
+
+
+@router.post(
+    "/settings/{key}/reset", summary="Reset a key to its default", response_model=Envelope[list[EffectiveSettingOut]]
+)
+async def reset_setting(
+    key: str,
+    request: Request,
+    reason: str | None = Query(None, max_length=500),
+    principal: Principal = Depends(MANAGE),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(await SettingsAdminService(db, principal, request).reset(key, reason), message="Reset to default")
+
+
+@router.delete(
+    "/settings/{key}/override", summary="Clear a college override", response_model=Envelope[list[EffectiveSettingOut]]
+)
+async def clear_override(
+    key: str,
+    request: Request,
+    college_id: uuid.UUID = Query(),
+    reason: str | None = Query(None, max_length=500),
+    principal: Principal = Depends(MANAGE),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    return ok(
+        await SettingsAdminService(db, principal, request).clear_override(key, college_id, reason),
+        message="Override cleared",
+    )
 
 
 @router.get(
@@ -56,7 +214,8 @@ async def update_settings(
     principal: Principal = Depends(permission_required("settings", "manage")),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
-    return ok(await SettingsService(db, principal).bulk_update(body.items, request), message="Settings saved")
+    out = await SettingsService(db, principal).bulk_update(body.items, request, reason=body.reason, strict=True)
+    return ok(out, message="Settings saved")
 
 
 @router.get(
