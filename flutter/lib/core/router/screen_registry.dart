@@ -34,6 +34,7 @@ import '../../features/analytics/analytics_screens.dart';
 import '../../features/reports/reports_screens.dart';
 import '../../features/audit/audit_screens.dart';
 import '../../features/portals/portal_screens.dart';
+import '../../features/website/website_screens.dart';
 import '../../features/saas/saas_screens.dart';
 import '../../features/governance/governance_screens.dart';
 import '../../features/iqac/iqac_screens.dart';
@@ -525,6 +526,14 @@ class ScreenRegistry {
       feature: 'exams.sessions',
       permission: 'exams:audit',
       builder: (_, __) => const ExamAuditSummaryScreen(),
+    ),
+    // Phase 40 — website quick actions (institution admin / registrar)
+    AppRoutes.websiteQuick: ScreenEntry(
+      route: AppRoutes.websiteQuick,
+      titleKey: 'website',
+      feature: 'website.core',
+      permission: 'website:manage|website:publish',
+      builder: (_, __) => const WebsiteQuickScreen(),
     ),
     // Phase 39 — notification centre + preferences (self only)
     AppRoutes.notificationCentre: ScreenEntry(

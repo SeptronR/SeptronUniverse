@@ -6,6 +6,33 @@ Phases append their public routes (login/OTP, public config, website, verificati
 """
 
 PUBLIC_ROUTES: set[str] = {
+    # Phase 40 — public website (tenant by ?slug / verified custom host / header; published rows, aggregates and tokens
+    # only; the enquiry form and result lookup are captcha + rate limited), marketing / pricing (platform) and the
+    # edge endpoints (X-Edge-Token)
+    "GET /api/v1/public/site",
+    "GET /api/v1/public/site/notices",
+    "GET /api/v1/public/site/notices.rss",
+    "GET /api/v1/public/site/notices/{notice_slug}",
+    "GET /api/v1/public/site/events",
+    "GET /api/v1/public/site/gallery",
+    "GET /api/v1/public/site/gallery/{album}",
+    "GET /api/v1/public/site/pages/{section}/{page_slug}",
+    "GET /api/v1/public/site/disclosures",
+    "GET /api/v1/public/site/faculty",
+    "GET /api/v1/public/site/colleges",
+    "GET /api/v1/public/site/departments/{code}",
+    "POST /api/v1/public/site/enquiries",
+    "GET /api/v1/public/catalogue",
+    "GET /api/v1/public/catalogue/programmes/{code}",
+    "GET /api/v1/public/catalogue/courses/{code}",
+    "GET /api/v1/public/site/admissions",
+    "GET /api/v1/public/site/affiliated-colleges",
+    "GET /api/v1/public/site/verify/college/{code}",
+    "POST /api/v1/public/site/results/lookup",
+    "GET /api/v1/public/marketing",
+    "GET /api/v1/public/pricing",
+    "GET /api/v1/internal/domains",
+    "POST /api/v1/internal/domains/{id}/ssl-status",
     # Phase 39 — PWA manifest / service-worker config / VAPID public key / icons and locale packs (tenant by
     # ?institution=<slug> or header; no PII)
     "GET /api/v1/public/manifest.json",

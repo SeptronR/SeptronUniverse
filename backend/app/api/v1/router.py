@@ -100,6 +100,7 @@ from app.api.v1.endpoints import (
     privacy,
     programs,
     public_saas,
+    public_website,
     rbac,
     recruiter,
     recruitment,
@@ -120,6 +121,7 @@ from app.api.v1.endpoints import (
     training,
     transport,
     verify,
+    website,
     workflow,
     workload,
 )
@@ -289,6 +291,11 @@ api_router.include_router(help.router, dependencies=[feature_required("platform.
 # manifest / PWA config / VAPID key / icons / locale packs (PUBLIC_ROUTES)
 api_router.include_router(portals.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(portals.public_router)
+# Phase 40: website administration {website.core} (+ per-route catalogue / enquiry / domain features), the platform
+# marketing editor (super admin) and the public site / catalogue / admissions / verification / edge routes (PUBLIC_ROUTES)
+api_router.include_router(website.router, dependencies=[feature_required("website.core")])
+api_router.include_router(website.marketing_router, dependencies=[feature_required("core.institution")])
+api_router.include_router(public_website.router)
 api_router.include_router(feedback.router, dependencies=[feature_required("platform.in_app_feedback")])
 
 if settings.APP_ENV == "development":

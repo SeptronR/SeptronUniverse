@@ -3447,8 +3447,74 @@ PORTAL_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 40: public website — enquiries, domains / certificates, notices
+WEBSITE_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "website.enquiry_received",
+        "admissions",
+        "Website enquiry received",
+        "New website enquiry {{ reference }}",
+        "{{ name }} wrote: {{ subject }}. Follow up from the enquiries page.",
+        ("name", "subject", "reference"),
+        ("in_app", "email"),
+        link="/admin/website/enquiries",
+    ),
+    EventDef(
+        "website.enquiry_ack",
+        "admissions",
+        "Website enquiry acknowledgement",
+        "We received your enquiry ({{ reference }})",
+        "Dear {{ name }}, thank you for contacting us. Our admissions team will reply soon. Reference {{ reference }}. "
+        "Your details are used only to answer this enquiry (privacy notice {{ dpdp_version }}).",
+        ("name", "reference", "dpdp_version"),
+        ("email", "sms"),
+        hi_body="प्रिय {{ name }}, आपकी पूछताछ प्राप्त हुई। संदर्भ {{ reference }}।",
+    ),
+    EventDef(
+        "website.domain_verified",
+        "system",
+        "Custom domain verified",
+        "{{ hostname }} is verified",
+        "The DNS record for {{ hostname }} was found. The certificate is being issued.",
+        ("hostname",),
+        ("in_app", "email"),
+        link="/admin/website/domains",
+    ),
+    EventDef(
+        "website.domain_ssl_ready",
+        "system",
+        "Custom domain live",
+        "{{ hostname }} is live with HTTPS",
+        "Your website now answers on https://{{ hostname }}.",
+        ("hostname",),
+        ("in_app", "email"),
+        link="/admin/website/domains",
+    ),
+    EventDef(
+        "website.domain_ssl_failed",
+        "system",
+        "Custom domain certificate failed",
+        "Certificate for {{ hostname }} failed",
+        "The certificate for {{ hostname }} could not be issued: {{ reason }}. Check the DNS records.",
+        ("hostname", "reason"),
+        ("in_app", "email"),
+        link="/admin/website/domains",
+    ),
+    EventDef(
+        "website.notice_published",
+        "announcements",
+        "Website notice",
+        "{{ title }}",
+        "A new {{ category }} notice was published: {{ title }}.",
+        ("title", "category"),
+        ("in_app", "push"),
+        hi_body="नई सूचना: {{ title }}",
+    ),
+)
+
 EVENTS = (
     EVENTS
+    + WEBSITE_EVENTS
     + PORTAL_EVENTS
     + STUDENT_EVENTS
     + ADMISSION_EVENTS

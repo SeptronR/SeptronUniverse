@@ -26,6 +26,11 @@ export default defineConfig({
       '/api': { target: API_TARGET, changeOrigin: true, ws: true },
       '/uploads': { target: API_TARGET, changeOrigin: true },
       '/health': { target: API_TARGET, changeOrigin: true },
+      // Phase 39 / 40: association files and the API-rendered public site
+      '/.well-known': { target: API_TARGET, changeOrigin: true },
+      '/site': { target: API_TARGET, changeOrigin: true },
+      '/sitemap.xml': { target: API_TARGET, changeOrigin: true },
+      '/robots.txt': { target: API_TARGET, changeOrigin: true },
       '/ready': { target: API_TARGET, changeOrigin: true },
       '/ws': { target: WS_TARGET, ws: true },
     },

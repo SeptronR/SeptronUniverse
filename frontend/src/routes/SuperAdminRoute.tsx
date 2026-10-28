@@ -13,7 +13,7 @@ const LINKS = [
   ...[
     ['institutions', 'Institutions'], ['plans', 'Plans'], ['billing', 'Billing'], ['usage', 'Usage'], ['impersonations', 'Impersonations'],
     ['support', 'Support'], ['help', 'Help'], ['feedback', 'Feedback'], ['announcements', 'Announcements'], ['health', 'Health'],
-    ['read-only', 'Read-only'], ['settings', 'Settings'], ['registrations', 'Registrations'], ['demo-requests', 'Demo requests'],
+    ['read-only', 'Read-only'], ['marketing', 'Marketing site'], ['settings', 'Settings'], ['registrations', 'Registrations'], ['demo-requests', 'Demo requests'],
     ['audit', 'Audit'], ['features/matrix', 'Feature matrix'],
   ].map(([path, label]) => ({ to: `/super-admin/${path}`, label, end: false })),
 ];

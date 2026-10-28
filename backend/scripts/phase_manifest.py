@@ -349,6 +349,18 @@ PHASES: dict[str, list[str]] = {
     # portals, PWA, notification centre & guided help: no tables — device tokens / notifications / preferences /
     # announcements / help / feedback of sections 3 / 6 / 23; tour and portal state in users.preferences
     "39": [],
+    # public website, catalogue, admission entry & marketing site: the website tables of section 32 (drafts, versions,
+    # catalogue settings and other column-less facts in institution_settings website_meta)
+    "40": [
+        "institution_website_config",
+        "institution_domains",
+        "gallery_albums",
+        "gallery_images",
+        "website_notices",
+        "website_events",
+        "website_content_items",
+        "website_enquiries",
+    ],
     "38": [
         "platform_settings",
         "platform_announcements",

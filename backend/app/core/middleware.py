@@ -63,11 +63,63 @@ class InstitutionContextMiddleware(BaseHTTPMiddleware):
         request.state.college_id = request.headers.get("X-College-Id") or None
         host = (request.headers.get("host") or "").split(":")[0]
         if not request.state.institution_slug and host and host not in settings.PLATFORM_HOSTS:
-            # <slug>.universe.septronr.com or a mapped custom domain (Phase 40 resolves domains → slug)
-            request.state.institution_slug = host.split(".")[0] if host.count(".") >= 2 else host
+            # Phase 40: a verified custom domain → its institution; else <slug>.universe.septronr.com
+            mapped = await _custom_host(host)
+            if mapped:
+                request.state.institution_slug = mapped
+                path = request.scope.get("path", "/")
+                if not path.startswith(SITE_PASSTHROUGH):
+                    # the public site is served at the domain root: rewrite to the SSR route
+                    request.scope["path"] = f"/site/{mapped}{path if path != '/' else '/'}"
+                    request.scope["headers"] = [*request.scope["headers"], (b"x-site-host", host.encode())]
+            else:
+                request.state.institution_slug = host.split(".")[0] if host.count(".") >= 2 else host
         if not request.state.institution_id:
             request.state.institution_id = _tenant_from_token(request.headers.get("authorization"))
         return await call_next(request)
+
+
+SITE_PASSTHROUGH = (
+    "/api/",
+    "/ws",
+    "/site/",
+    "/.well-known/",
+    "/sitemap.xml",
+    "/robots.txt",
+    "/health",
+    "/ready",
+    "/files/",
+)
+
+
+async def _custom_host(host: str) -> str | None:
+    """Slug of the institution owning a verified custom ``host`` (Redis ``host:{host}`` = ``id|slug``, 5 min)."""
+    from app.db.session import redis_client
+
+    try:
+        cached = await redis_client.get(f"host:{host}")
+        if cached == "-":
+            return None
+        if cached:
+            return str(cached).split("|", 1)[1]
+        from sqlalchemy import text
+
+        from app.db.session import PlatformSessionLocal
+
+        async with PlatformSessionLocal() as db:
+            row = (
+                await db.execute(
+                    text(
+                        "SELECT i.id, i.slug FROM institution_domains d JOIN institutions i ON i.id = d.institution_id "
+                        "WHERE d.hostname = :h AND d.verified_at IS NOT NULL AND i.deleted_at IS NULL"
+                    ),
+                    {"h": host},
+                )
+            ).first()
+        await redis_client.set(f"host:{host}", f"{row[0]}|{row[1]}" if row else "-", ex=300)
+        return str(row[1]) if row else None
+    except Exception:  # noqa: BLE001 - host mapping must never take the API down
+        return None
 
 
 def _tenant_from_token(header: str | None) -> str | None:

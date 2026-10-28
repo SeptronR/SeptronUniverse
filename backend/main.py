@@ -143,6 +143,10 @@ from app.api.v1.endpoints import portals  # noqa: E402  (after the router regist
 
 # Phase 39: universal-link association files at the site root (public; outside /api/v1)
 app.include_router(portals.well_known_router)
+# Phase 40: server-rendered public sites (/site/{slug}/…), sitemap.xml and robots.txt per host
+from app.api.v1.endpoints import public_website  # noqa: E402
+
+app.include_router(public_website.site_router)
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 

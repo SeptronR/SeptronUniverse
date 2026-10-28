@@ -1,5 +1,6 @@
 import {
   Activity,
+  Globe,
   FileBarChart2,
   History,
   BookOpenCheck,
@@ -299,6 +300,17 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Wellness', to: '/wellness', icon: Activity, module: 'health', action: 'view', altActions: ['record', 'view_all'], feature: 'facilities.health_centre' },
       { label: 'Sports', to: '/admin/sports', icon: TrendingUp, module: 'sports', action: 'manage', altActions: ['view_all'], feature: 'facilities.sports' },
       { label: 'Canteen & wallet', to: '/wallet', icon: Banknote, module: 'facilities', action: 'view', altActions: ['manage'], feature: 'facilities.canteen_wallet' },
+      // Phase 40 — public website
+      { label: 'Website', to: '/admin/website', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
+      { label: 'Website content', to: '/admin/website/content', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
+      { label: 'Website notices', to: '/admin/website/notices', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
+      { label: 'Website events', to: '/admin/website/events', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
+      { label: 'Gallery', to: '/admin/website/gallery', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
+      { label: 'Website enquiries', to: '/admin/website/enquiries', icon: Globe, module: 'website', altActions: ['manage'], feature: 'website.enquiry' },
+      { label: 'Catalogue', to: '/admin/website/catalogue', icon: Globe, module: 'website', altActions: ['manage'], feature: 'website.course_catalog' },
+      { label: 'Disclosures', to: '/admin/website/disclosures', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
+      { label: 'Domains', to: '/admin/website/domains', icon: Globe, module: 'website', action: 'manage', feature: 'website.custom_domain' },
+      { label: 'Site analytics', to: '/admin/website/analytics', icon: Globe, module: 'website', altActions: ['manage'], feature: 'website.core' },
       // Phase 24 — communication advanced
       { label: 'Campaigns', to: '/admin/comms/campaigns', icon: Radio, module: 'communication', action: 'bulk', altActions: ['send', 'approve', 'manage'], feature: 'comms.bulk_campaigns' },
       { label: 'Audience segments', to: '/admin/comms/segments', icon: UserRound, module: 'communication', action: 'bulk', altActions: ['send', 'manage'], feature: 'comms.bulk_campaigns' },

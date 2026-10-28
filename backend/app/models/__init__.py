@@ -51,6 +51,7 @@ from app.models import (  # noqa: F401
     timetable,
     transport,
     valuation,
+    website,
 )
 
 __all__ = [
@@ -99,4 +100,5 @@ __all__ = [
     "timetable",
     "transport",
     "valuation",
+    "website",
 ]

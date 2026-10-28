@@ -449,6 +449,14 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.deepPurple,
       permission: 'exams:audit',
       feature: 'exams.sessions'),
+  // Phase 40 — website quick actions
+  const MoreMenuModule(
+      titleKey: 'website',
+      icon: Icons.public,
+      route: AppRoutes.websiteQuick,
+      color: Colors.blue,
+      permission: 'website:publish',
+      feature: 'website.core'),
   // Phase 39 — notification centre (every role)
   const MoreMenuModule(
       titleKey: 'notifications',

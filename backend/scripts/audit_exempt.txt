@@ -205,6 +205,7 @@ POST /api/v1/hostel-roll-calls
 POST /api/v1/hostel-visitors
 POST /api/v1/hostel-visitors/{id}/out
 POST /api/v1/hostels/{id}/blocks
+POST /api/v1/internal/domains/{id}/ssl-status
 POST /api/v1/internships/{id}/noc
 POST /api/v1/internships/{id}/ppo
 POST /api/v1/inventory/asset-audits
@@ -300,6 +301,7 @@ POST /api/v1/posts/{id}/mark-answer
 POST /api/v1/posts/{id}/upvote
 POST /api/v1/program-regulations/{id}/structure/validate
 POST /api/v1/public/results/lookup
+POST /api/v1/public/site/enquiries
 POST /api/v1/push/subscribe
 POST /api/v1/push/test
 POST /api/v1/pwa/installed
@@ -387,6 +389,7 @@ POST /api/v1/wallet/debit
 POST /api/v1/webhooks/plagiarism/{connection_id}
 POST /api/v1/webhooks/whatsapp/{connection_id}
 POST /api/v1/webhooks/{provider}/{channel}
+POST /api/v1/website/config/preview-token
 PUT /api/v1/_dev/plans/{code}
 PUT /api/v1/_dev/users/{id}/validity
 PUT /api/v1/accounting/budgets/{id}
