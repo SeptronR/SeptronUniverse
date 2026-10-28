@@ -1,4 +1,4 @@
-# SeptronUniverse — End-to-End UI QA Test Plan (skeleton)
+# SeptronUniverse — End-to-End UI QA Test Plan
 
 _Status: **skeleton** (Batch I). Phase 43 fills §3 (per-role sweeps from every prompt's NN.12), §7 (entry/exit criteria, release gate) and creates `QA_Findings.csv`; Phase 44 adds the DR-drill and status-page gates. Shape adapted from SeptronOrbit's `QA_Test_Plan.md`._
 
@@ -180,7 +180,9 @@ Each scenario chains modules and roles. Expand to literal steps in Phase 43; the
 
 ---
 
-## 7. Entry / exit criteria, severity scale and release gate — _completed in Phase 43/44_
+## 7. Entry / exit criteria, severity scale and release gate
+
+**Entry:** demo seed `--all` completed, guards green. **Exit:** §10 release gate. **Severity:** P0 data loss / leak / security · P1 blocks a role's core flow · P2 wrong result with a workaround · P3 cosmetic.
 
 - **Entry**: all phases up to the tested round committed; `RUN_AFTER_PHASE.md` guards green; demo seed `--all` succeeded; `run_all.py --suite api_round_<n>` green.
 - **Exit per round**: §3 sweeps for the round executed for every role listed; §5 scenarios touching the round pass; 0 open P0/P1; P2 triaged with owner.
@@ -198,3 +200,25 @@ Log every defect in `QA_Findings.csv` with columns: `id, phase, role, page_or_en
 ## Verification
 
 Execute this plan by driving the running web app (5173), the public site and the Flutter app through the Browser tool / device against the backend (8000) with the seeded roles. Each functional step is verified by: action succeeds with no console/network error → data persists on reload → propagates wherever §5 says it should. RBAC/visibility checks (§0, §4, E2E-11/12/13) are verified by **backend** 403/scoped responses in the Network tab, never by what the frontend renders. The API scripts (`run_all.py`) run first as the sanity gate; they do not replace this walkthrough.
+
+## 9. Automated suites (Phase 43)
+
+| Suite | Command | Needs | Gate |
+|---|---|---|---|
+| static guards | `python scripts/verify/run_all.py --suite static` | DB + Redis | 0 offenders / diffs |
+| golden datasets | `--suite golden` (18 cases through the production calculators) | — | 0 diffs |
+| isolation | `--suite visibility` (RLS on every tenant table, no cross-tenant rows, no `SET ROLE`) | DB | 0 leaks |
+| immutability | `--suite immutability` (result triggers, append-only audit grants) | DB | 0 failures |
+| API per phase | `--suite api_all` / `--suite api_round_N` (`scripts/verify/NN_*.ps1`, PowerShell 7) | running seeded API | 0 failed phases |
+| E2E + axe | `cd e2e && npx playwright test` (portals + admin sweeps) | running web + API | 0 serious / critical axe issues |
+| load | `k6 run load/<scenario>.js` (staging) | staging stack + `--load` fixtures | thresholds in each script |
+
+Reports: `backend/reports/qa/<suite>-<timestamp>/{junit.xml,summary.md,summary.json}`; `/admin/qa` runs suites as jobs
+outside production. Findings go to `QA_Findings.csv` (id, phase, role, page / endpoint, severity, status, owner,
+fixed-in commit).
+
+## 10. Release gate
+
+All P0 / P1 findings closed · every suite above green on the release candidate · load thresholds met on staging ·
+VAPT gate `pass` (`GET /security/vapt`) · restore drill within 30 days (Phase 44) · posture score ≥ 90 with no `fail`
+controls on the pilot tenants.

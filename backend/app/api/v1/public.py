@@ -8,6 +8,10 @@ Phases append their public routes (login/OTP, public config, website, verificati
 PUBLIC_ROUTES: set[str] = {
     # Phase 41 — inbound provider webhooks (signature verified by the connection's adapter; idempotent by event id)
     "POST /api/v1/webhooks/in/{provider}/{connection_id}",
+    # Phase 43: published privacy notices (website / app) and sampled CSP violation reports
+    "GET /api/v1/public/privacy/notices/{key}",
+    "POST /api/v1/security/csp-report",
+    "POST /api/v1/internal/security/scans",  # X-Ops-Token (CI)
     # Phase 40 — public website (tenant by ?slug / verified custom host / header; published rows, aggregates and tokens
     # only; the enquiry form and result lookup are captcha + rate limited), marketing / pricing (platform) and the
     # edge endpoints (X-Edge-Token)

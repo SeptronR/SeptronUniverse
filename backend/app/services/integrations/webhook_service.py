@@ -226,6 +226,9 @@ class WebhookService:
             raise APIError(422, ErrorCode.VALIDATION, f"Unknown events: {', '.join(bad)}", {"field": "events"})
 
     async def create(self, body: WebhookIn) -> WebhookCreatedOut:
+        from app.core.hardening import assert_public_url
+
+        assert_public_url(body.url)  # Phase 43 SSRF guard
         self._writer()
         self._validate(body)
         from app.core.security import encrypt_secret
@@ -266,6 +269,9 @@ class WebhookService:
         return WebhookCreatedOut(**(await self._out(w)).model_dump(), secret=secret)
 
     async def update(self, wid: uuid.UUID, body: WebhookIn) -> WebhookOut:
+        from app.core.hardening import assert_public_url
+
+        assert_public_url(body.url)
         self._writer()
         self._validate(body)
         w = await self._get(wid)

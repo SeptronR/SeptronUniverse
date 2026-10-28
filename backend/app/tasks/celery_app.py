@@ -57,7 +57,7 @@ celery = Celery(
         "app.tasks.portals",
         "app.tasks.website",
         "app.tasks.integrations",
-        "app.tasks.integrations",
+        "app.tasks.hardening",
     ],
 )
 celery.conf.update(

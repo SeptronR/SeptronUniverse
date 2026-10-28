@@ -6,6 +6,7 @@ import '../../core/auth/auth_state.dart';
 import '../../core/router/role_shells.dart';
 import '../../core/session/academic_session.dart';
 import '../../l10n/app_localizations.dart';
+import '../../features/privacy/privacy_screens.dart';
 import 'sync_status.dart';
 
 /// Role shell: bottom NavigationBar (≤ 5 tabs from role_shells.dart) + offline/read-only banners.
@@ -45,7 +46,7 @@ class RoleShellScaffold extends ConsumerWidget {
                     alignment: Alignment.centerLeft, child: CurrentTermChip()),
               ),
             ),
-          Expanded(child: child),
+          Expanded(child: ConsentBannerGate(child: child)),
         ],
       ),
       bottomNavigationBar: tabs.length < 2

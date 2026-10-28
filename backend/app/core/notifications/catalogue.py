@@ -3525,7 +3525,23 @@ INTEGRATION_EVENTS: tuple[EventDef, ...] = (
     EventDef("exports.ready", "system", "Export ready", "Your data export is ready", "Download it from the exports page within 7 days.", (), ("in_app", "email"), link="/admin/exports"),
 )
 
+HARDENING_EVENTS: tuple[EventDef, ...] = (
+    EventDef("privacy.consent_version_changed", "system", "Privacy notice updated", "Our privacy notice changed (v{{ version }})", "Please review the updated notice and your consent choices under Profile › Privacy.", ("version",), ("in_app", "email"), link="/profile/privacy"),
+    EventDef("privacy.dsr_received", "system", "Request received", "We received your data request", "Your request {{ request_id }} is due by {{ due_at }}. Verification code: {{ otp }} (enter it on the request page).", ("request_id", "otp", "due_at"), ("in_app", "email", "sms"), link="/profile/privacy"),
+    EventDef("privacy.dsr_identity_required", "system", "Verify your identity", "Verify your identity for request {{ request_id }}", "Upload an identity document or enter the code we sent.", ("request_id",), ("in_app", "email"), link="/profile/privacy"),
+    EventDef("privacy.dsr_in_progress", "system", "Request in progress", "Your data request is being processed", "Request {{ request_id }} is in progress.", ("request_id",), ("in_app",), link="/profile/privacy"),
+    EventDef("privacy.dsr_completed", "system", "Request completed", "Your data request is complete", "Request {{ request_id }} is complete. Downloads stay available for 7 days.", ("request_id",), ("in_app", "email"), link="/profile/privacy"),
+    EventDef("privacy.dsr_rejected", "system", "Request rejected", "Your data request was not fulfilled", "Request {{ request_id }} was rejected: {{ reason }}.", ("request_id", "reason"), ("in_app", "email"), link="/profile/privacy"),
+    EventDef("privacy.dsr_extended", "system", "Request extended", "Your data request needs more time", "Request {{ request_id }} was extended: {{ reason }}.", ("request_id", "reason"), ("in_app", "email"), link="/profile/privacy"),
+    EventDef("privacy.dsr_due_soon", "system", "DSR due soon", "Data-subject request {{ request_id }} needs action", "A {{ request_type }} request is open and due soon.", ("request_id", "request_type"), ("in_app", "email"), link="/admin/privacy"),
+    EventDef("security.mfa_enforcement_reminder", "security", "Set up two-factor sign-in", "Enable two-factor authentication before {{ grace_until }}", "Your role requires two-factor sign-in. Set it up under Profile › Security before {{ grace_until }} to keep access.", ("grace_until",), ("in_app", "email"), link="/profile/mfa"),
+    EventDef("security.scan_findings", "security", "Security scan findings", "{{ high }} high-severity scan finding(s)", "The latest CI security scans reported {{ high }} high-severity findings.", ("high",), ("in_app", "email"), link="/admin/security"),
+    EventDef("qa.suite_finished", "system", "Verification suite finished", "{{ suite }} finished", "The {{ suite }} suite finished with {{ failed }} failure(s).", ("suite", "failed"), ("in_app",), link="/admin/qa"),
+)
+
 EVENTS = (
+    HARDENING_EVENTS
+    +
     EVENTS
     + INTEGRATION_EVENTS
     + WEBSITE_EVENTS

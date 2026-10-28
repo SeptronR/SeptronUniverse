@@ -1,0 +1,40 @@
+# Repository semgrep rules (Prompts/43 §43.6 item 5) — run by .github/workflows/security.yml next to p/owasp-top-ten.
+rules:
+  - id: route-without-permission-dependency
+    message: API route handler without a permission dependency (permission_required / any_permission_required / authenticated / platform_permission). Public routes must be listed in app/api/v1/public.py.
+    severity: WARNING
+    languages: [python]
+    paths:
+      include: [backend/app/api/v1/endpoints/]
+    patterns:
+      - pattern: |
+          @$R.$M($PATH, ...)
+          async def $F(...):
+              ...
+      - metavariable-regex:
+          metavariable: $M
+          regex: ^(post|put|patch|delete)$
+      - pattern-not: |
+          @$R.$M($PATH, ...)
+          async def $F(..., $P: Principal = Depends(...), ...):
+              ...
+      - pattern-not-inside: |
+          @public_router.$M(...)
+          async def $F(...):
+              ...
+  - id: raw-sql-fstring
+    message: "SQL built with an f-string — use bound parameters (text(...) with a dict); only identifiers from code may be interpolated."
+    severity: WARNING
+    languages: [python]
+    paths:
+      include: [backend/app/]
+    pattern-either:
+      - pattern: text(f"...")
+      - pattern: $DB.execute(f"...")
+  - id: unsafe-markup
+    message: Markup / mark_safe on non-literal input bypasses escaping.
+    severity: ERROR
+    languages: [python]
+    pattern-either:
+      - pattern: markupsafe.Markup($X)
+      - pattern: Markup($X)

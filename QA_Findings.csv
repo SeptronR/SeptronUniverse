@@ -1,0 +1,4 @@
+id,phase,role,page_or_endpoint,severity,status,owner,fixed_in
+QA-001,43,dean,GET /api/v1/qa/suites/runs,P2,fixed,platform,phase-43
+QA-002,43,(database),audit_logs grants,P1,fixed,platform,phase-43
+QA-003,04,(catalogue),notification catalogue duplicate keys results.published / results.reval_decided,P3,open,platform,

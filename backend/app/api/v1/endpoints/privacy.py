@@ -7,18 +7,25 @@ privacy officer (``settings:manage``) sees every request of the institution. ``G
 
 from typing import Any
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.authz.dependencies import Principal, authenticated, permission_required
+from app.core.authz.dependencies import Principal, any_permission_required, authenticated, permission_required
 from app.core.features import feature_required
 from app.core.rate_limit import rate_limited
 from app.db.session import get_db, get_platform_db
 from app.schemas.common import Envelope
-from app.schemas.privacy import ConsentRequest, ConsentResponse, DataSubjectRequestCreate, DataSubjectRequestResponse
+from app.schemas.privacy import (
+    ConsentRequest,
+    ConsentResponse,
+    DataSubjectRequestCreate,
+    DataSubjectRequestResponse,
+    DsrOut,
+)
 from app.schemas.saas import EntitlementsResponse, InstallRequest, InstallResponse
 from app.services.entitlement_service import EntitlementService
 from app.services.install_service import InstallService
+from app.services.hardening.privacy_office import PrivacyOfficeService
 from app.services.privacy_service import PrivacyService
 from app.utils.response import ok
 
@@ -57,7 +64,7 @@ async def my_consents(
     "/data-subject-requests",
     status_code=201,
     summary="Raise a data-subject request (access / export / correction / erasure)",
-    response_model=Envelope[DataSubjectRequestResponse],
+    response_model=Envelope[DsrOut],
     dependencies=[feature_required("privacy.data_subject_requests")],
 )
 async def create_dsr(
@@ -66,7 +73,8 @@ async def create_dsr(
     principal: Principal = Depends(authenticated()),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
-    return ok(await PrivacyService(db, principal).create_request(body, request), message="Request received")
+    # Phase 43: on-behalf (guardian) requests, identity OTP, timeline — the privacy office workflow
+    return ok(await PrivacyOfficeService(db, principal, request).create(body), message="Request received")
 
 
 @router.get(
@@ -83,14 +91,19 @@ async def my_dsrs(
 
 @router.get(
     "/data-subject-requests",
-    summary="All data-subject requests of the institution (privacy officer)",
-    response_model=Envelope[list[DataSubjectRequestResponse]],
+    summary="Data-subject requests (Mine | All for the privacy officer)",
+    response_model=Envelope[list[DsrOut]],
     dependencies=[feature_required("privacy.data_subject_requests")],
 )
 async def all_dsrs(
-    principal: Principal = Depends(permission_required("settings", "manage")), db: AsyncSession = Depends(get_db)
+    scope: str = Query(default="all", pattern="^(mine|all)$"),
+    status: str | None = Query(default=None, max_length=20),
+    principal: Principal = Depends(
+        any_permission_required(("privacy", "manage"), ("privacy", "view_all"), ("settings", "manage"))
+    ),
+    db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
-    return ok(await PrivacyService(db, principal).all_requests())
+    return ok(await PrivacyOfficeService(db, principal).list(scope, status))
 
 
 @router.get("/entitlements", summary="Plan, status, limits and usage", response_model=Envelope[EntitlementsResponse])

@@ -457,6 +457,14 @@ class AuthService:
                 return False
             configured = await self.config.institution_setting(institution.id, "security", "mfa_required_roles")
             required = set(configured) if isinstance(configured, list) else set(MFA_REQUIRED_ROLES)
+            # Phase 43: during an enforcement grace window un-enrolled users may still sign in (they get reminders)
+            grace = await self.config.institution_setting(institution.id, "security", "mfa_grace_until")
+            if grace and any(r in required for r in roles) and not await self._mfa_enrolled(user):
+                try:
+                    if datetime.fromisoformat(str(grace)) > datetime.now(UTC):
+                        return False
+                except ValueError:
+                    pass
         else:
             if not FEATURE_REGISTRY["security.mfa"].default_enabled:
                 return False
@@ -733,6 +741,9 @@ class AuthService:
         prefs = dict(user.preferences or {})
         history: list[str] = list(prefs.get("password_history") or [])
         check_password_policy(password, history + ([user.password_hash] if user.password_hash else []))
+        from app.core.hardening import check_breached_password
+
+        await check_breached_password(password)
         if user.password_hash:
             history = [user.password_hash, *history][: settings.PASSWORD_HISTORY]
         prefs["password_history"] = history

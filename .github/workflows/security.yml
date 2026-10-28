@@ -1,7 +1,8 @@
 # Supply-chain & static security scans (Phase 43 43.6 security_hardening 5; Technical_Architecture §11).
 # Runs on every PR, on main/develop pushes and weekly. High/critical findings block the release gate.
-# Phase 43 completes: scripts/push_scan_summary.py → platform_settings['security.scans'] (GET /security/scans), custom semgrep rules
-# (missing permission_required, raw SQL, unsafe mark_safe) in .semgrep/, osv-scanner for Dart.
+# Each scanner also writes a JSON report (artefact `scan-<tool>`); the summary job runs scripts/push_scan_summary.py →
+# POST /api/v1/internal/security/scans (X-Ops-Token) → platform_settings['security.scans'] (GET /security/scans).
+# Custom semgrep rules live in .semgrep/ (missing permission dependency, raw SQL f-strings, unsafe markup).
 
 name: Security
 
@@ -64,9 +65,15 @@ jobs:
           cache-dependency-path: backend/requirements*.txt
       - run: pip install -r requirements.txt -r requirements-dev.txt
       - name: pip-audit
-        run: pip-audit -r requirements.txt --strict --desc
+        run: |
+          mkdir -p ../scan
+          pip-audit -r requirements.txt --desc -f json -o ../scan/pip-audit.json || true
+          pip-audit -r requirements.txt --strict --desc
       - name: bandit
-        run: bandit -r app -q -ll -f sarif -o ../bandit.sarif || true
+        run: |
+          mkdir -p ../scan
+          bandit -r app -q -ll -f json -o ../scan/bandit.json || true
+          bandit -r app -q -ll -f sarif -o ../bandit.sarif || true
       - name: semgrep (OWASP + repo rules)
         uses: returntocorp/semgrep-action@v1
         with:
@@ -80,6 +87,11 @@ jobs:
         with:
           sarif_file: bandit.sarif
           category: bandit
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scan-python
+          path: scan/
 
   node:
     name: npm audit
@@ -97,7 +109,13 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci --ignore-scripts
+      - run: mkdir -p ../scan && (npm audit --json > ../scan/npm-audit.json || true)
       - run: npm audit --audit-level=high
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scan-node
+          path: scan/
 
   dart:
     name: Dart dependencies (osv-scanner / pub outdated)
@@ -151,12 +169,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: scan-*
+          merge-multiple: true
+          path: scan
       - run: |
-          if [ -f backend/scripts/push_scan_summary.py ]; then
-            pip install httpx && python backend/scripts/push_scan_summary.py --run-id "${{ github.run_id }}" --results '${{ toJSON(needs) }}'
-          else
-            echo "push_scan_summary.py arrives in Phase 43; results: ${{ toJSON(needs.*.result) }}"
-          fi
+          pip install httpx pydantic-settings
+          ARGS="--dir scan --report-base ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          if [ -n "$SCAN_SUMMARY_URL" ]; then ARGS="$ARGS --post-url $SCAN_SUMMARY_URL"; else ARGS="$ARGS --dry-run"; fi
+          cd backend && SECRET_KEY=ci INSTALL_SECRET_KEY=ci DATABASE_URL=postgresql://x/y REDIS_URL=redis://x CELERY_BROKER_URL=redis://x CELERY_RESULT_BACKEND=redis://x \
+            python scripts/push_scan_summary.py $ARGS
         env:
           SCAN_SUMMARY_URL: ${{ vars.SCAN_SUMMARY_URL }}
           INTERNAL_OPS_TOKEN: ${{ secrets.INTERNAL_OPS_TOKEN }}

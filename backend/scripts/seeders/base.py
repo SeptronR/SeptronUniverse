@@ -53,6 +53,9 @@ DEMO_USERS: list[tuple[str, str, str, str, str, int | None]] = [
     ("parent.1", "Parent One", "parent", "self", "guardian", None),
     ("alumni.1", "Alumnus One", "alumni", "self", "alumni", None),
     ("auditor.tmp", "Visiting Auditor", "auditor", "institution", "external", 7),
+    # Phase 43 — DPDP privacy officer and the security officer (posture dashboard)
+    ("privacy.off", "Privacy Officer", "privacy_officer", "institution", "staff", None),
+    ("security.off", "Security Officer", "security_officer", "institution", "staff", None),
     ("examiner.ext", "External Examiner", "external_examiner", "self", "external", 30),
 ]
 

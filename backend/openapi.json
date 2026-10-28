@@ -26896,6 +26896,85 @@
         "title": "ConnectionTestRequest",
         "type": "object"
       },
+      "ConsentBannerOut": {
+        "properties": {
+          "current": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "title": "Current",
+            "type": "object"
+          },
+          "is_minor": {
+            "default": false,
+            "title": "Is Minor",
+            "type": "boolean"
+          },
+          "notice_version": {
+            "title": "Notice Version",
+            "type": "string"
+          },
+          "purposes": {
+            "items": {
+              "$ref": "#/components/schemas/ConsentPurposeOut"
+            },
+            "title": "Purposes",
+            "type": "array"
+          },
+          "requires_update": {
+            "title": "Requires Update",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "purposes",
+          "notice_version",
+          "requires_update"
+        ],
+        "title": "ConsentBannerOut",
+        "type": "object"
+      },
+      "ConsentBulkIn": {
+        "properties": {
+          "grants": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "minProperties": 1,
+            "title": "Grants",
+            "type": "object"
+          },
+          "notice_version": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notice Version"
+          },
+          "on_behalf_student_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Behalf Student Id"
+          }
+        },
+        "required": [
+          "grants"
+        ],
+        "title": "ConsentBulkIn",
+        "type": "object"
+      },
       "ConsentOtpVerify": {
         "additionalProperties": false,
         "properties": {
@@ -26912,6 +26991,70 @@
         "title": "ConsentOtpVerify",
         "type": "object"
       },
+      "ConsentPurposeOut": {
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "legal_basis": {
+            "title": "Legal Basis",
+            "type": "string"
+          },
+          "mandatory": {
+            "title": "Mandatory",
+            "type": "boolean"
+          },
+          "text_version": {
+            "title": "Text Version",
+            "type": "string"
+          },
+          "texts": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Texts",
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "mandatory",
+          "legal_basis",
+          "text_version",
+          "texts"
+        ],
+        "title": "ConsentPurposeOut",
+        "type": "object"
+      },
+      "ConsentReportOut": {
+        "properties": {
+          "counts": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "integer"
+              },
+              "type": "object"
+            },
+            "title": "Counts",
+            "type": "object"
+          },
+          "rows": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Rows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "counts",
+          "rows"
+        ],
+        "title": "ConsentReportOut",
+        "type": "object"
+      },
       "ConsentRequest": {
         "properties": {
           "granted": {
@@ -26925,7 +27068,15 @@
               "marketing",
               "health",
               "photo",
-              "third_party"
+              "third_party",
+              "communication_transactional",
+              "communication_marketing",
+              "photo_media",
+              "third_party_placement",
+              "analytics_external",
+              "biometric",
+              "location",
+              "guardian_access"
             ],
             "title": "Purpose",
             "type": "string"
@@ -33663,6 +33814,18 @@
               }
             ],
             "title": "Details"
+          },
+          "on_behalf_student_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "On Behalf Student Id"
           },
           "request_type": {
             "enum": [
@@ -41401,6 +41564,262 @@
         "title": "DrilldownRows",
         "type": "object"
       },
+      "DsrAction": {
+        "properties": {
+          "action": {
+            "enum": [
+              "verify_identity",
+              "start",
+              "extend",
+              "complete",
+              "reject"
+            ],
+            "title": "Action",
+            "type": "string"
+          },
+          "corrections": {
+            "items": {
+              "$ref": "#/components/schemas/DsrCorrection"
+            },
+            "maxItems": 50,
+            "title": "Corrections",
+            "type": "array"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "action"
+        ],
+        "title": "DsrAction",
+        "type": "object"
+      },
+      "DsrCorrection": {
+        "properties": {
+          "field": {
+            "maxLength": 60,
+            "title": "Field",
+            "type": "string"
+          },
+          "new_value": {
+            "maxLength": 500,
+            "title": "New Value",
+            "type": "string"
+          },
+          "record_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Record Id"
+          },
+          "table": {
+            "maxLength": 60,
+            "title": "Table",
+            "type": "string"
+          }
+        },
+        "required": [
+          "table",
+          "field",
+          "new_value"
+        ],
+        "title": "DsrCorrection",
+        "type": "object"
+      },
+      "DsrIdentityVerify": {
+        "properties": {
+          "document_url": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Url"
+          },
+          "method": {
+            "enum": [
+              "otp",
+              "document"
+            ],
+            "title": "Method",
+            "type": "string"
+          },
+          "otp": {
+            "anyOf": [
+              {
+                "maxLength": 10,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Otp"
+          }
+        },
+        "required": [
+          "method"
+        ],
+        "title": "DsrIdentityVerify",
+        "type": "object"
+      },
+      "DsrOut": {
+        "properties": {
+          "closed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Closed At"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "details": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Details"
+          },
+          "due_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due At"
+          },
+          "extensions": {
+            "default": 0,
+            "title": "Extensions",
+            "type": "integer"
+          },
+          "filed_by": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filed By"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "identity_verified": {
+            "default": false,
+            "title": "Identity Verified",
+            "type": "boolean"
+          },
+          "manifest_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Manifest Id"
+          },
+          "request_type": {
+            "title": "Request Type",
+            "type": "string"
+          },
+          "result_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result Url"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "timeline": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Timeline",
+            "type": "array"
+          },
+          "user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "User Id"
+          },
+          "work_items": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Work Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "request_type",
+          "status",
+          "created_at"
+        ],
+        "title": "DsrOut",
+        "type": "object"
+      },
       "DuesResponse": {
         "properties": {
           "enrollment_id": {
@@ -49090,6 +49509,80 @@
         "title": "Envelope[ConnectionTestOut]",
         "type": "object"
       },
+      "Envelope_ConsentBannerOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConsentBannerOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ConsentBannerOut]",
+        "type": "object"
+      },
+      "Envelope_ConsentReportOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ConsentReportOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[ConsentReportOut]",
+        "type": "object"
+      },
       "Envelope_ConsentResponse_": {
         "properties": {
           "data": {
@@ -50235,43 +50728,6 @@
           }
         },
         "title": "Envelope[DashboardWidgetOut]",
-        "type": "object"
-      },
-      "Envelope_DataSubjectRequestResponse_": {
-        "properties": {
-          "data": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/DataSubjectRequestResponse"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "message": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Message"
-          },
-          "meta": {
-            "additionalProperties": true,
-            "title": "Meta",
-            "type": "object"
-          },
-          "success": {
-            "default": true,
-            "title": "Success",
-            "type": "boolean"
-          }
-        },
-        "title": "Envelope[DataSubjectRequestResponse]",
         "type": "object"
       },
       "Envelope_DayBookResponse_": {
@@ -51900,6 +52356,43 @@
           }
         },
         "title": "Envelope[DrilldownRows]",
+        "type": "object"
+      },
+      "Envelope_DsrOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DsrOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[DsrOut]",
         "type": "object"
       },
       "Envelope_DuesResponse_": {
@@ -59183,43 +59676,6 @@
           }
         },
         "title": "Envelope[NoneType]",
-        "type": "object"
-      },
-      "Envelope_NoticeOut_": {
-        "properties": {
-          "data": {
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/NoticeOut"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "message": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Message"
-          },
-          "meta": {
-            "additionalProperties": true,
-            "title": "Meta",
-            "type": "object"
-          },
-          "success": {
-            "default": true,
-            "title": "Success",
-            "type": "boolean"
-          }
-        },
-        "title": "Envelope[NoticeOut]",
         "type": "object"
       },
       "Envelope_NotificationCounts_": {
@@ -73367,6 +73823,47 @@
         "title": "Envelope[list[ConnectionOut]]",
         "type": "object"
       },
+      "Envelope_list_ConsentPurposeOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ConsentPurposeOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[ConsentPurposeOut]]",
+        "type": "object"
+      },
       "Envelope_list_ConsentResponse__": {
         "properties": {
           "data": {
@@ -75210,6 +75707,47 @@
           }
         },
         "title": "Envelope[list[DonationOut]]",
+        "type": "object"
+      },
+      "Envelope_list_DsrOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/DsrOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[DsrOut]]",
         "type": "object"
       },
       "Envelope_list_DuesRow__": {
@@ -80827,47 +81365,6 @@
           }
         },
         "title": "Envelope[list[NoDuesResponse]]",
-        "type": "object"
-      },
-      "Envelope_list_NoticeOut__": {
-        "properties": {
-          "data": {
-            "anyOf": [
-              {
-                "items": {
-                  "$ref": "#/components/schemas/NoticeOut"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Data"
-          },
-          "message": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Message"
-          },
-          "meta": {
-            "additionalProperties": true,
-            "title": "Meta",
-            "type": "object"
-          },
-          "success": {
-            "default": true,
-            "title": "Success",
-            "type": "boolean"
-          }
-        },
-        "title": "Envelope[list[NoticeOut]]",
         "type": "object"
       },
       "Envelope_list_NotificationResponse__": {
@@ -124217,223 +124714,6 @@
           "action"
         ],
         "title": "NoticeBulkAction",
-        "type": "object"
-      },
-      "NoticeIn": {
-        "properties": {
-          "also_announce": {
-            "default": false,
-            "title": "Also Announce",
-            "type": "boolean"
-          },
-          "attachments": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "maxItems": 20,
-            "title": "Attachments",
-            "type": "array"
-          },
-          "body": {
-            "anyOf": [
-              {
-                "maxLength": 100000,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Body"
-          },
-          "category": {
-            "default": "general",
-            "maxLength": 40,
-            "title": "Category",
-            "type": "string"
-          },
-          "college_code": {
-            "anyOf": [
-              {
-                "maxLength": 20,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "College Code"
-          },
-          "expires_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Expires At"
-          },
-          "is_published": {
-            "default": false,
-            "title": "Is Published",
-            "type": "boolean"
-          },
-          "pin": {
-            "default": false,
-            "title": "Pin",
-            "type": "boolean"
-          },
-          "publish_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Publish At"
-          },
-          "slug": {
-            "anyOf": [
-              {
-                "maxLength": 120,
-                "pattern": "^[a-z0-9-]+$",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Slug"
-          },
-          "title": {
-            "maxLength": 200,
-            "title": "Title",
-            "type": "string"
-          }
-        },
-        "required": [
-          "title"
-        ],
-        "title": "NoticeIn",
-        "type": "object"
-      },
-      "NoticeOut": {
-        "properties": {
-          "attachments": {
-            "anyOf": [
-              {
-                "items": {
-                  "additionalProperties": true,
-                  "type": "object"
-                },
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Attachments"
-          },
-          "body": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Body"
-          },
-          "category": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Category"
-          },
-          "created_at": {
-            "format": "date-time",
-            "title": "Created At",
-            "type": "string"
-          },
-          "expires_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Expires At"
-          },
-          "id": {
-            "format": "uuid",
-            "title": "Id",
-            "type": "string"
-          },
-          "is_published": {
-            "title": "Is Published",
-            "type": "boolean"
-          },
-          "pinned": {
-            "default": false,
-            "title": "Pinned",
-            "type": "boolean"
-          },
-          "publish_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Publish At"
-          },
-          "slug": {
-            "title": "Slug",
-            "type": "string"
-          },
-          "state": {
-            "default": "draft",
-            "title": "State",
-            "type": "string"
-          },
-          "title": {
-            "title": "Title",
-            "type": "string"
-          },
-          "updated_at": {
-            "format": "date-time",
-            "title": "Updated At",
-            "type": "string"
-          }
-        },
-        "required": [
-          "id",
-          "title",
-          "slug",
-          "is_published",
-          "created_at",
-          "updated_at"
-        ],
-        "title": "NoticeOut",
         "type": "object"
       },
       "NoticeSend": {
@@ -184140,6 +184420,80 @@
         "title": "Envelope[ImportResult]",
         "type": "object"
       },
+      "app__schemas__common__Envelope_NoticeOut___1": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__schemas__website__NoticeOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[NoticeOut]",
+        "type": "object"
+      },
+      "app__schemas__common__Envelope_NoticeOut___2": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/app__schemas__privacy__NoticeOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[NoticeOut]",
+        "type": "object"
+      },
       "app__schemas__common__Envelope_ReconcileSummary___1": {
         "properties": {
           "data": {
@@ -184725,6 +185079,88 @@
           }
         },
         "title": "Envelope[list[ExportOut]]",
+        "type": "object"
+      },
+      "app__schemas__common__Envelope_list_NoticeOut____1": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/app__schemas__website__NoticeOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[NoticeOut]]",
+        "type": "object"
+      },
+      "app__schemas__common__Envelope_list_NoticeOut____2": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/app__schemas__privacy__NoticeOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[NoticeOut]]",
         "type": "object"
       },
       "app__schemas__common__Envelope_list_SubmissionOut____1": {
@@ -185947,6 +186383,91 @@
         "title": "CalendarItem",
         "type": "object"
       },
+      "app__schemas__privacy__NoticeIn": {
+        "properties": {
+          "effective_from": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective From"
+          },
+          "key": {
+            "maxLength": 40,
+            "title": "Key",
+            "type": "string"
+          },
+          "texts": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "minProperties": 1,
+            "title": "Texts",
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "texts"
+        ],
+        "title": "NoticeIn",
+        "type": "object"
+      },
+      "app__schemas__privacy__NoticeOut": {
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Draft"
+          },
+          "effective_from": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective From"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "texts": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Texts",
+            "type": "object"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "version",
+          "texts"
+        ],
+        "title": "NoticeOut",
+        "type": "object"
+      },
       "app__schemas__projects__MemberIn": {
         "properties": {
           "members": {
@@ -186718,6 +187239,223 @@
         ],
         "title": "DisclosureItem",
         "type": "object"
+      },
+      "app__schemas__website__NoticeIn": {
+        "properties": {
+          "also_announce": {
+            "default": false,
+            "title": "Also Announce",
+            "type": "boolean"
+          },
+          "attachments": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "maxItems": 20,
+            "title": "Attachments",
+            "type": "array"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "maxLength": 100000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "category": {
+            "default": "general",
+            "maxLength": 40,
+            "title": "Category",
+            "type": "string"
+          },
+          "college_code": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Code"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "is_published": {
+            "default": false,
+            "title": "Is Published",
+            "type": "boolean"
+          },
+          "pin": {
+            "default": false,
+            "title": "Pin",
+            "type": "boolean"
+          },
+          "publish_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publish At"
+          },
+          "slug": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "pattern": "^[a-z0-9-]+$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Slug"
+          },
+          "title": {
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "title": "NoticeIn",
+        "type": "object"
+      },
+      "app__schemas__website__NoticeOut": {
+        "properties": {
+          "attachments": {
+            "anyOf": [
+              {
+                "items": {
+                  "additionalProperties": true,
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attachments"
+          },
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_published": {
+            "title": "Is Published",
+            "type": "boolean"
+          },
+          "pinned": {
+            "default": false,
+            "title": "Pinned",
+            "type": "boolean"
+          },
+          "publish_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publish At"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "state": {
+            "default": "draft",
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "slug",
+          "is_published",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "NoticeOut",
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -186768,6 +187506,29 @@
         "summary": "Android App Links",
         "tags": [
           "portals-public"
+        ]
+      }
+    },
+    "/.well-known/jwks.json": {
+      "get": {
+        "operationId": "well_known_jwks__well_known_jwks_json_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Well Known Jwks  Well Known Jwks Json Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "JWK set of the token signing keys",
+        "tags": [
+          "public"
         ]
       }
     },
@@ -187086,6 +187847,65 @@
           }
         ],
         "summary": "Mark a session's attendance taken / finalized (dev fixture until Phase 11)",
+        "tags": [
+          "dev"
+        ]
+      }
+    },
+    "/api/v1/_dev/compute/{kind}": {
+      "post": {
+        "operationId": "dev_compute_api_v1__dev_compute__kind__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "title": "Kind",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": true,
+                "title": "Body",
+                "type": "object"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run a production calculator on golden input",
         "tags": [
           "dev"
         ]
@@ -219156,6 +219976,52 @@
         ]
       }
     },
+    "/api/v1/consents/bulk": {
+      "post": {
+        "operationId": "consents_bulk_api_v1_consents_bulk_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConsentBulkIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record several consent decisions (self or a minor ward)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
     "/api/v1/consents/me": {
       "get": {
         "operationId": "my_consents_api_v1_consents_me_get",
@@ -219177,6 +220043,79 @@
           }
         ],
         "summary": "My current consents (latest decision per purpose)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/consents/wards": {
+      "get": {
+        "operationId": "consent_wards_api_v1_consents_wards_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My wards' consents (guardian)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/consents/{purpose}/withdraw": {
+      "post": {
+        "operationId": "consent_withdraw_api_v1_consents__purpose__withdraw_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "purpose",
+            "required": true,
+            "schema": {
+              "title": "Purpose",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Withdraw a consent",
         "tags": [
           "privacy"
         ]
@@ -225452,16 +226391,56 @@
     "/api/v1/data-subject-requests": {
       "get": {
         "operationId": "all_dsrs_api_v1_data_subject_requests_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "scope",
+            "required": false,
+            "schema": {
+              "default": "all",
+              "pattern": "^(mine|all)$",
+              "title": "Scope",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 20,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_list_DataSubjectRequestResponse__"
+                  "$ref": "#/components/schemas/Envelope_list_DsrOut__"
                 }
               }
             },
             "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
           }
         },
         "security": [
@@ -225469,7 +226448,7 @@
             "HTTPBearer": []
           }
         ],
-        "summary": "All data-subject requests of the institution (privacy officer)",
+        "summary": "Data-subject requests (Mine | All for the privacy officer)",
         "tags": [
           "privacy"
         ]
@@ -225491,7 +226470,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_DataSubjectRequestResponse_"
+                  "$ref": "#/components/schemas/Envelope_DsrOut_"
                 }
               }
             },
@@ -225540,6 +226519,275 @@
           }
         ],
         "summary": "My data-subject requests",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/data-subject-requests/{id}": {
+      "get": {
+        "operationId": "dsr_get_api_v1_data_subject_requests__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DsrOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "A data-subject request (requester / officer / owner)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/data-subject-requests/{id}/action": {
+      "post": {
+        "operationId": "dsr_action_api_v1_data_subject_requests__id__action_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DsrAction"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DsrOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Officer action (start / extend / complete / reject)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/data-subject-requests/{id}/identity": {
+      "post": {
+        "operationId": "dsr_identity_api_v1_data_subject_requests__id__identity_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DsrIdentityVerify"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DsrOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Verify identity (OTP or document)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/data-subject-requests/{id}/work-items": {
+      "get": {
+        "operationId": "dsr_work_items_api_v1_data_subject_requests__id__work_items_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Correction work items",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/data-subject-requests/{id}/work-items/{n}/done": {
+      "post": {
+        "operationId": "dsr_work_item_done_api_v1_data_subject_requests__id__work_items__n__done_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "n",
+            "required": true,
+            "schema": {
+              "title": "N",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_DsrOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Close a work item (record owner)",
         "tags": [
           "privacy"
         ]
@@ -255098,6 +256346,20 @@
         ]
       }
     },
+    "/api/v1/internal/security/scans": {
+      "post": {
+        "operationId": "internal_scans_api_v1_internal_security_scans_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "CI scan summary push (X-Ops-Token)",
+        "tags": [
+          "public"
+        ]
+      }
+    },
     "/api/v1/internships": {
       "get": {
         "operationId": "internships_api_v1_internships_get",
@@ -284074,6 +285336,393 @@
         ]
       }
     },
+    "/api/v1/privacy/consent-banner": {
+      "get": {
+        "operationId": "consent_banner_api_v1_privacy_consent_banner_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ConsentBannerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Consent banner state for me",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/consents/report": {
+      "get": {
+        "operationId": "consent_report_api_v1_privacy_consents_report_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "purpose",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Purpose"
+            }
+          },
+          {
+            "in": "query",
+            "name": "granted",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Granted"
+            }
+          },
+          {
+            "in": "query",
+            "name": "college_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "College Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_ConsentReportOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Consent report (masked rows)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/dsr/dashboard": {
+      "get": {
+        "operationId": "dsr_dashboard_api_v1_privacy_dsr_dashboard_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "DSR board counts / SLA",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/dsr/register": {
+      "get": {
+        "operationId": "dsr_register_api_v1_privacy_dsr_register_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "DSR register rows (export)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/masking-audit": {
+      "post": {
+        "operationId": "masking_audit_api_v1_privacy_masking_audit_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run the masking audit",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/masking-audit/latest": {
+      "get": {
+        "operationId": "masking_audit_latest_api_v1_privacy_masking_audit_latest_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Latest masking audit",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/notices": {
+      "get": {
+        "operationId": "notices_api_v1_privacy_notices_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_list_NoticeOut____2"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Privacy notices with drafts",
+        "tags": [
+          "privacy"
+        ]
+      },
+      "post": {
+        "operationId": "notice_save_api_v1_privacy_notices_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/app__schemas__privacy__NoticeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_NoticeOut___2"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save a notice draft",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/notices/{key}/publish": {
+      "post": {
+        "operationId": "notice_publish_api_v1_privacy_notices__key__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_NoticeOut___2"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Publish a notice (new version, re-consent)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/pii-inventory": {
+      "get": {
+        "operationId": "pii_inventory_api_v1_privacy_pii_inventory_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "PII field inventory",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
+    "/api/v1/privacy/purposes": {
+      "get": {
+        "operationId": "purposes_api_v1_privacy_purposes_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ConsentPurposeOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Consent purposes (registry)",
+        "tags": [
+          "privacy"
+        ]
+      }
+    },
     "/api/v1/program-regulations": {
       "get": {
         "operationId": "list_program_regulations_api_v1_program_regulations_get",
@@ -286746,6 +288395,65 @@
         ]
       }
     },
+    "/api/v1/public/privacy/notices/{key}": {
+      "get": {
+        "operationId": "public_notice_api_v1_public_privacy_notices__key__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "institution",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Institution"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Published notice text (website / app)",
+        "tags": [
+          "public"
+        ]
+      }
+    },
     "/api/v1/public/push/vapid-key": {
       "get": {
         "operationId": "public_vapid_key_api_v1_public_push_vapid_key_get",
@@ -288297,6 +290005,243 @@
         "summary": "Install analytics ping",
         "tags": [
           "portals"
+        ]
+      }
+    },
+    "/api/v1/qa/access-matrix": {
+      "get": {
+        "operationId": "qa_matrix_api_v1_qa_access_matrix_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Access matrix summary + unexpected grants",
+        "tags": [
+          "qa"
+        ]
+      }
+    },
+    "/api/v1/qa/access-matrix/regenerate": {
+      "post": {
+        "operationId": "qa_matrix_regen_api_v1_qa_access_matrix_regenerate_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Regenerate the access matrix (job)",
+        "tags": [
+          "qa"
+        ]
+      }
+    },
+    "/api/v1/qa/golden/run": {
+      "post": {
+        "operationId": "qa_golden_api_v1_qa_golden_run_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run the golden datasets",
+        "tags": [
+          "qa"
+        ]
+      }
+    },
+    "/api/v1/qa/load-results": {
+      "get": {
+        "operationId": "qa_load_api_v1_qa_load_results_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Load-test results vs thresholds",
+        "tags": [
+          "qa"
+        ]
+      }
+    },
+    "/api/v1/qa/suites/run": {
+      "post": {
+        "operationId": "qa_run_api_v1_qa_suites_run_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "suite",
+            "required": true,
+            "schema": {
+              "maxLength": 40,
+              "title": "Suite",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "env",
+            "required": false,
+            "schema": {
+              "default": "dev",
+              "pattern": "^(dev|demo|staging)$",
+              "title": "Env",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run a verification suite (job)",
+        "tags": [
+          "qa"
+        ]
+      }
+    },
+    "/api/v1/qa/suites/runs": {
+      "get": {
+        "operationId": "qa_runs_api_v1_qa_suites_runs_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Suite runs",
+        "tags": [
+          "qa"
+        ]
+      }
+    },
+    "/api/v1/qa/suites/runs/{id}/report": {
+      "get": {
+        "operationId": "qa_report_api_v1_qa_suites_runs__id__report_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Suite report",
+        "tags": [
+          "qa"
         ]
       }
     },
@@ -305808,6 +307753,20 @@
         ]
       }
     },
+    "/api/v1/security/csp-report": {
+      "post": {
+        "operationId": "csp_report_api_v1_security_csp_report_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "CSP violation report (sampled)",
+        "tags": [
+          "public"
+        ]
+      }
+    },
     "/api/v1/security/events": {
       "get": {
         "operationId": "security_events_api_v1_security_events_get",
@@ -305948,6 +307907,84 @@
         ]
       }
     },
+    "/api/v1/security/iso-readiness": {
+      "get": {
+        "operationId": "iso_api_v1_security_iso_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "ISO 27001 readiness summary",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/jwt": {
+      "get": {
+        "operationId": "jwt_status_api_v1_security_jwt_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Signing keys status",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/jwt/rotate": {
+      "post": {
+        "operationId": "jwt_rotate_api_v1_security_jwt_rotate_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "JWT key rotation (runbook — keys are deployment secrets)",
+        "tags": [
+          "security"
+        ]
+      }
+    },
     "/api/v1/security/login-history": {
       "get": {
         "operationId": "admin_login_history_api_v1_security_login_history_get",
@@ -306034,6 +308071,186 @@
         "summary": "Login history across users",
         "tags": [
           "audit"
+        ]
+      }
+    },
+    "/api/v1/security/mfa-enforcement": {
+      "get": {
+        "operationId": "mfa_enforcement_api_v1_security_mfa_enforcement_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Users missing MFA in required roles",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/mfa-enforcement/enforce": {
+      "post": {
+        "operationId": "mfa_enforce_api_v1_security_mfa_enforcement_enforce_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "grace_days",
+            "required": false,
+            "schema": {
+              "default": 3,
+              "maximum": 60,
+              "minimum": 0,
+              "title": "Grace Days",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Enforce MFA after a grace period",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/platform-posture": {
+      "get": {
+        "operationId": "platform_posture_api_v1_security_platform_posture_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Platform posture across tenants (super admin)",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/posture": {
+      "get": {
+        "operationId": "posture_api_v1_security_posture_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Latest posture result",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/posture/check": {
+      "post": {
+        "operationId": "posture_check_api_v1_security_posture_check_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Re-check the posture controls",
+        "tags": [
+          "security"
+        ]
+      }
+    },
+    "/api/v1/security/scans": {
+      "get": {
+        "operationId": "scans_api_v1_security_scans_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "CI scan summary",
+        "tags": [
+          "security"
         ]
       }
     },
@@ -306145,6 +308362,32 @@
         "summary": "Revoke a session / all sessions of a user (optionally force MFA re-enrolment)",
         "tags": [
           "audit"
+        ]
+      }
+    },
+    "/api/v1/security/vapt": {
+      "get": {
+        "operationId": "vapt_api_v1_security_vapt_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "VAPT findings and release gate",
+        "tags": [
+          "security"
         ]
       }
     },
@@ -324455,7 +326698,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_list_NoticeOut__"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_list_NoticeOut____1"
                 }
               }
             },
@@ -324488,7 +326731,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoticeIn"
+                "$ref": "#/components/schemas/app__schemas__website__NoticeIn"
               }
             }
           },
@@ -324499,7 +326742,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_NoticeOut_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_NoticeOut___1"
                 }
               }
             },
@@ -324632,7 +326875,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_NoticeOut_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_NoticeOut___1"
                 }
               }
             },
@@ -324677,7 +326920,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NoticeIn"
+                "$ref": "#/components/schemas/app__schemas__website__NoticeIn"
               }
             }
           },
@@ -324688,7 +326931,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Envelope_NoticeOut_"
+                  "$ref": "#/components/schemas/app__schemas__common__Envelope_NoticeOut___1"
                 }
               }
             },

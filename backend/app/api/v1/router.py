@@ -304,6 +304,14 @@ api_router.include_router(integrations.imports_router, dependencies=[feature_req
 api_router.include_router(integrations.exports_router, dependencies=[feature_required("data.export_portability")])
 api_router.include_router(integrations.inbound_router)
 api_router.include_router(feedback.router, dependencies=[feature_required("platform.in_app_feedback")])
+# Phase 43: privacy office / security posture / QA {core.settings} (+ privacy.* keys per route; qa 404 in production),
+# public notice texts + CSP reports (PUBLIC_ROUTES) and the golden calculators outside production
+from app.api.v1.endpoints import hardening  # noqa: E402
+
+api_router.include_router(hardening.router, dependencies=[feature_required("core.settings")])
+api_router.include_router(hardening.public_router)
+if not settings.is_production:
+    api_router.include_router(hardening.dev_router, dependencies=[feature_required("core.settings")])
 
 if settings.APP_ENV == "development":
     from app.api.v1.endpoints import dev
