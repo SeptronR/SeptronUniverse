@@ -133,6 +133,11 @@ async def get_current_user(
     db: AsyncSession = Depends(get_db),
 ) -> Principal:
     if not creds:
+        api_key = request.headers.get("x-api-key")
+        if api_key:  # Phase 41: scoped service principal of an institution API key
+            from app.services.integrations.api_key_service import principal_from_api_key
+
+            return await principal_from_api_key(request, api_key, db)  # type: ignore[no-any-return]
         raise APIError(401, ErrorCode.UNAUTHENTICATED, "Missing bearer token")
     principal = await _resolve(request, creds.credentials, db)
     path = request.url.path

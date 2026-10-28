@@ -34,6 +34,7 @@ import '../../features/analytics/analytics_screens.dart';
 import '../../features/reports/reports_screens.dart';
 import '../../features/audit/audit_screens.dart';
 import '../../features/portals/portal_screens.dart';
+import '../../features/integrations/integrations_screens.dart';
 import '../../features/website/website_screens.dart';
 import '../../features/saas/saas_screens.dart';
 import '../../features/governance/governance_screens.dart';
@@ -534,6 +535,14 @@ class ScreenRegistry {
       feature: 'website.core',
       permission: 'website:manage|website:publish',
       builder: (_, __) => const WebsiteQuickScreen(),
+    ),
+    // Phase 41 — integration health (institution admin)
+    AppRoutes.integrationsHealth: ScreenEntry(
+      route: AppRoutes.integrationsHealth,
+      titleKey: 'integrations',
+      feature: 'core.settings',
+      permission: 'integrations:view|integrations:manage',
+      builder: (_, __) => const IntegrationsHealthScreen(),
     ),
     // Phase 39 — notification centre + preferences (self only)
     AppRoutes.notificationCentre: ScreenEntry(

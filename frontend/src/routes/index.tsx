@@ -52,6 +52,13 @@ const WebsiteCataloguePage = lazy(() => import('@/features/website/pages/Website
 const WebsiteDisclosuresPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDisclosuresPage })));
 const WebsiteDomainsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDomainsPage })));
 const WebsiteAnalyticsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteAnalyticsPage })));
+const IntegrationsHubPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.IntegrationsHubPage })));
+const InboundLogPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.InboundLogPage })));
+const ApiKeysPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.ApiKeysPage })));
+const WebhooksPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.WebhooksPage })));
+const DeadLettersPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.DeadLettersPage })));
+const ImportsPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.ImportsPage })));
+const ExportsPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.ExportsPage })));
 const MarketingSitePage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.MarketingSitePage })));
 const PortalUnified = (name: string) =>
   lazy(() => import('@/features/portals/pages/UnifiedPages').then((m) => ({ default: (m as unknown as Record<string, React.ComponentType>)[name] })));
@@ -692,6 +699,14 @@ export const router = createBrowserRouter([
               ['/admin/website/disclosures', 'website.core', 'website', 'view', <WebsiteDisclosuresPage key="wd" />],
               ['/admin/website/domains', 'website.custom_domain', 'website', 'manage', <WebsiteDomainsPage key="wm" />],
               ['/admin/website/analytics', 'website.core', 'website', 'view', <WebsiteAnalyticsPage key="wa" />],
+              // Phase 41 — integrations hub, platform APIs, migration toolkit (services refine scopes)
+              ['/admin/integrations', 'core.settings', 'integrations', 'view', <IntegrationsHubPage key="ih" />],
+              ['/admin/integrations/inbound', 'core.settings', 'integrations', 'view', <InboundLogPage key="ii" />],
+              ['/admin/integrations/api-keys', 'integrations.api_keys_webhooks', 'integrations', 'view', <ApiKeysPage key="ik" />],
+              ['/admin/integrations/webhooks', 'integrations.api_keys_webhooks', 'integrations', 'view', <WebhooksPage key="iw" />],
+              ['/admin/integrations/dead-letters', 'core.settings', 'integrations', 'manage', <DeadLettersPage key="id" />],
+              ['/admin/imports', 'data.migration_toolkit', 'integrations', 'view', <ImportsPage key="im" />],
+              ['/admin/exports', 'data.export_portability', 'settings', 'view', <ExportsPage key="ie" />],
             ] as const
           ).map(([path, feature, module, action, node]) => ({
             path,

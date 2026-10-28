@@ -308,6 +308,11 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Gallery', to: '/admin/website/gallery', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
       { label: 'Website enquiries', to: '/admin/website/enquiries', icon: Globe, module: 'website', altActions: ['manage'], feature: 'website.enquiry' },
       { label: 'Catalogue', to: '/admin/website/catalogue', icon: Globe, module: 'website', altActions: ['manage'], feature: 'website.course_catalog' },
+      // Phase 41 — integrations & data
+      { label: 'Integrations', to: '/admin/integrations', icon: Globe, module: 'integrations', action: 'view', altActions: ['manage', 'connect'], feature: 'core.settings' },
+      { label: 'API keys', to: '/admin/integrations/api-keys', icon: Globe, module: 'integrations', action: 'view', altActions: ['api_keys', 'manage'], feature: 'integrations.api_keys_webhooks' },
+      { label: 'Webhooks', to: '/admin/integrations/webhooks', icon: Globe, module: 'integrations', action: 'view', altActions: ['webhooks', 'manage'], feature: 'integrations.api_keys_webhooks' },
+      { label: 'Data import', to: '/admin/imports', icon: Globe, module: 'integrations', action: 'view', altActions: ['import'], feature: 'data.migration_toolkit' },
       { label: 'Disclosures', to: '/admin/website/disclosures', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
       { label: 'Domains', to: '/admin/website/domains', icon: Globe, module: 'website', action: 'manage', feature: 'website.custom_domain' },
       { label: 'Site analytics', to: '/admin/website/analytics', icon: Globe, module: 'website', altActions: ['manage'], feature: 'website.core' },
