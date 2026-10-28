@@ -24,7 +24,7 @@ Legend for status columns: `☐ not started` · `🟡 in progress` · `🧪 sand
 | GPS transport check-in, driver app | Phase 21/42 | ☐ | |
 | Flutter app (Android/iOS) | Phase 42 | ☐ | first signed build + store internal test |
 | Play Store / App Store listings | Phase 42/44 | ☐ | |
-| VAPT (ASVS L2) | Phase 43 | ☐ | report + retest |
+| VAPT (ASVS L2) | Phase 43 | 🟡 scope, ASVS self-assessment and findings tracker ready (`docs/Security/`); external test not run | report + retest |
 | Backups & restore drill (RPO 15 min / RTO 4 h) | Phase 44 | ☐ no restore ever tested | drill record |
 | Monitoring / alerting / status page | Phase 44 | ☐ | |
 | Data migration from legacy systems (pilot) | Phase 41 | ☐ | reconciliation sign-off |

@@ -31,6 +31,7 @@ POST /api/v1/_dev/attendance/consume/{event}
 POST /api/v1/_dev/attendance/{task}
 POST /api/v1/_dev/audit/{task}
 POST /api/v1/_dev/class-sessions/{session_id}/attendance
+POST /api/v1/_dev/compute/{kind}
 POST /api/v1/_dev/condonations/{condonation_id}/paid
 POST /api/v1/_dev/fees/link
 POST /api/v1/_dev/fees/pay/{ref}
@@ -220,6 +221,7 @@ POST /api/v1/integrations/webhooks
 POST /api/v1/integrations/webhooks/{id}/rotate-secret
 POST /api/v1/integrations/webhooks/{id}/test
 POST /api/v1/internal/domains/{id}/ssl-status
+POST /api/v1/internal/security/scans
 POST /api/v1/internships/{id}/noc
 POST /api/v1/internships/{id}/ppo
 POST /api/v1/inventory/asset-audits
@@ -376,6 +378,7 @@ POST /api/v1/scholarship-applications/{id}/recommend
 POST /api/v1/scholarship-applications/{id}/reject
 POST /api/v1/scholarship-applications/{id}/sanction
 POST /api/v1/scholarship-applications/{id}/verify
+POST /api/v1/security/csp-report
 POST /api/v1/student-transfers/{id}/approve
 POST /api/v1/student-transfers/{id}/reject
 POST /api/v1/students/bulk-import

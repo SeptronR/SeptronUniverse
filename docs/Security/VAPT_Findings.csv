@@ -1,0 +1,6 @@
+id,severity,title,cwe,asvs,component,status,owner,due,retest
+INT-001,high,Application role could UPDATE / DELETE / TRUNCATE audit_logs (append-only log tamperable),CWE-284,V7.3.3,database grants,fixed,platform,2026-10-28,pass
+INT-002,medium,qa reports reachable by every role holding ALL(view) (dean / college admin / IQAC / VC),CWE-285,V4.1.3,rbac registry,fixed,platform,2026-10-28,pass
+INT-003,medium,Application role holds DELETE on issued_documents (code never deletes; revoke + reissue only),CWE-284,V4.1.5,database grants,open,platform,2026-11-15,
+INT-004,low,CSP served in report-only mode until the SPA nonce rollout completes,CWE-1021,V14.4.3,http headers,accepted,platform,2026-12-31,
+INT-005,low,JWT signed with HS256 until RS256 keys are provisioned per environment,CWE-327,V3.5.3,auth tokens,open,platform,2026-11-30,

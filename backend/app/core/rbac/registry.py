@@ -93,6 +93,10 @@ MODULES: tuple[str, ...] = (
     # support tickets (tenants raise / reply; platform staff triage)
     "platform",
     "support",
+    # Phase 43: DPDP privacy office (notices, consent reports, DSR board), security posture, verification suites
+    "privacy",
+    "security",
+    "qa",
 )
 
 STANDARD_ACTIONS: tuple[str, ...] = (
@@ -309,6 +313,8 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     ("integrations", "webhooks", "Webhooks"),
     ("integrations", "import", "Data imports"),
     ("jobs", "cancel", "Cancel jobs"),
+    # Phase 43: run verification suites / golden / access-matrix jobs (non-production only)
+    ("qa", "run", "Run verification suites"),
     # Phase 38: platform billing (plans, subscriptions, invoices), help-centre authoring and the support desk
     ("platform", "billing", "Platform billing"),
     ("platform", "help", "Author platform help articles"),
@@ -404,6 +410,8 @@ ROLE_META: tuple[RoleMeta, ...] = tuple(
         # Phase 22 — supplier portal user and store keeper (stores owned through stores.keeper_staff_id)
         ("Vendor", "vendor", "self", "vendor"),
         ("Store Keeper", "store_keeper", "self", "admin"),
+        # Phase 43 — DPDP privacy officer (notices, consents, data-subject requests)
+        ("Privacy Officer", "privacy_officer", "institution", "admin"),
     )
 )
 ROLE_SLUGS: tuple[str, ...] = tuple(r.slug for r in ROLE_META)
@@ -477,9 +485,19 @@ def P(module: str, *actions: str) -> set[str]:
     return {f"{module}:{a}" for a in actions}
 
 
+# Phase 43: privacy office / security posture / QA are granted explicitly (``PHASE43_GRANTS``), never through ALL()
+EXPLICIT_MODULES: tuple[str, ...] = ("privacy", "security", "qa")
+
+
 def ALL(*actions: str, exclude: tuple[str, ...] = ()) -> set[str]:
-    """Every module × ``actions`` — never the platform-only modules (Phase 38 ``platform``)."""
-    return {f"{m}:{a}" for m in MODULES if m not in exclude and m not in PLATFORM_MODULES for a in actions}
+    """Every module × ``actions`` — never the platform-only modules (Phase 38 ``platform``) nor the Phase 43 office
+    modules (granted explicitly)."""
+    return {
+        f"{m}:{a}"
+        for m in MODULES
+        if m not in exclude and m not in PLATFORM_MODULES and m not in EXPLICIT_MODULES
+        for a in actions
+    }
 
 
 def MODULE_ALL(module: str, exclude: tuple[str, ...] = ()) -> set[str]:
@@ -1442,8 +1460,29 @@ PHASE40_GRANTS: dict[str, set[str]] = {
 for _slug, _extra in PHASE40_GRANTS.items():
     ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra
 
+# Phase 43 (Prompts/43 "Visibility rules"): the privacy officer runs notices / consent reports / DSRs; the security
+# officer owns the posture dashboard; auditors read both (``ALL("view")``); institution admins hold everything via
+# ``ALL("manage")``; record owners fulfil DSR correction work items through their own ``<module>:update``.
+PRIVACY_OFFICE: set[str] = P("privacy", "view", "view_all", "create", "update", "manage")
+PHASE43_GRANTS: dict[str, set[str]] = {
+    "institution_admin": P("privacy", "manage") | P("security", "manage") | P("qa", "manage", "run"),
+    "security_officer": P("security", "view", "view_all", "manage") | P("privacy", "view") | P("qa", "view", "run"),
+    "auditor": P("privacy", "view", "view_all") | P("security", "view", "view_all") | P("qa", "view"),
+}
+ROLE_TEMPLATES["privacy_officer"] = (
+    STAFF_SELF
+    | PRIVACY_OFFICE
+    | P("settings", "view")
+    | P("audit_logs", "view_all")
+    | P("users", "view_all")
+    | P("students", "view_pii")
+    | P("security", "view")
+)
+for _slug, _extra in PHASE43_GRANTS.items():
+    ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra
+
 # ---- import-time invariants ------------------------------------------------------------------------------------
-assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
+assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 54 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
     _unknown = {g for g in _grants if g != "*:*" and g not in PERMISSIONS}
     assert not _unknown, f"role template {_slug} cites unknown permissions: {sorted(_unknown)}"
@@ -1452,6 +1491,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0043": frozenset(PHASE43_GRANTS["institution_admin"] | PHASE43_GRANTS["security_officer"] | PHASE43_GRANTS["auditor"]),
     "0040": frozenset(PHASE40_GRANTS["registrar"] | PHASE40_GRANTS["college_admin"] | PHASE40_GRANTS["iqac_coordinator"]),
     "0038": frozenset(SUPPORT_RAISE | P("support", "manage")),
     "0037": frozenset(AUDIT_SELF | P("exams", "audit") | P("audit_logs", "security") | P("settings", "view")),

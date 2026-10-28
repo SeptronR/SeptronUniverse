@@ -1,0 +1,20 @@
+# Response-schema fields that classify as identifier / financial but are returned unmasked by design (Phase 43
+# review). Each needs a reason; check_pii_masking.py fails on anything not masked and not listed here.
+# organisation (not personal) data: institution bank accounts, supplier PAN / bank details (vendor master, accounts:view)
+ReconciliationOut.bank_account
+ReconcileRowOut.bank_account
+SupplierOut.pan
+SupplierOut.bank_details
+# placement figures published to all eligible students (drive bands, dream threshold)
+PlcPolicyOut.dream_ctc_threshold_paise
+PlcDriveOut.ctc_min_paise
+PlcDriveOut.ctc_max_paise
+# own offer (student self view) / placement officer (placement:view_all) — service-filtered
+PlcOfferOut.ctc_paise
+PlcOfferOut.ctc_breakup
+# payroll amounts: HR / accountant (payroll:view_all) and the employee's own payslip only
+SalaryStructureOut.ctc_paise
+SalaryStructureOut.monthly_gross_paise
+PayrollResponse.gross_paise
+# ABC ledger: APAAR id is the key of the national depository upload (degrees:manage only)
+AbcLedgerRow.apaar_id

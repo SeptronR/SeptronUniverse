@@ -29,7 +29,7 @@ class ErrorCode:
 
 
 # HTTP codes the API is allowed to return (coding standard 3); 410 only for report files past retention (Phase 36)
-ALLOWED_HTTP_CODES = {200, 201, 202, 204, 400, 401, 403, 404, 409, 410, 422, 429, 503, 500}
+ALLOWED_HTTP_CODES = {200, 201, 202, 204, 400, 401, 403, 404, 409, 410, 413, 422, 429, 503, 500}
 
 
 class APIError(Exception):

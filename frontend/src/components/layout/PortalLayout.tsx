@@ -16,6 +16,7 @@ import { applyUpdate, initPwa, loadLocale, promptInstall, pushLogout, pwaState }
 import { useFeature } from '@/hooks/useFeature';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
+import { ConsentBanner } from '@/features/privacy/ConsentBanner';
 
 interface PortalLayoutProps {
   title: string;
@@ -195,6 +196,7 @@ export function PortalLayout({ title, children }: PortalLayoutProps) {
         )}
         <main id="portal-main" tabIndex={-1} className="min-w-0 flex-1 p-4 outline-none sm:p-6" data-tour="page-main">
           {children}
+          <ConsentBanner />
         </main>
       </div>
       {tabs.length > 0 && (

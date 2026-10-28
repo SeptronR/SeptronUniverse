@@ -12,6 +12,13 @@ class Settings(BaseSettings):
     SECRET_KEY: str
     JWT_KID: str = "k1"
     JWT_PREVIOUS_KEYS: dict[str, str] = {}
+    # Phase 43: RS256 when a private key (PEM) is configured; previous public keys stay valid for the grace window
+    JWT_RSA_PRIVATE_KEY: str | None = None
+    JWT_RSA_PREVIOUS_PUBLIC_KEYS: dict[str, str] = {}
+    # Phase 43 hardening: CSP report-only until switched; breached-password check (HIBP k-anonymity)
+    CSP_ENFORCE: bool = False
+    BREACHED_PASSWORD_CHECK: bool = True
+    MAX_JSON_DEPTH: int = 64
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     ALLOWED_ORIGINS: list[str] = ["http://localhost:5173"]
@@ -53,6 +60,8 @@ class Settings(BaseSettings):
     BUILD_HASH: str = "dev"
     # Phase 40 edge integration (Traefik provider + ACME callback; Phase 44 wires the edge)
     EDGE_TOKEN: str = ""
+    # Phase 43/44: CI / ops callers (scan summaries, backup status) authenticate with X-Ops-Token
+    INTERNAL_OPS_TOKEN: str = ""
     EDGE_HOSTNAME: str = "edge.septron.in"
     PAYMENT_PROVIDER: str = "mock"
     INTEGRATION_ENCRYPTION_KEY: str
@@ -82,6 +91,10 @@ class Settings(BaseSettings):
 
     @property
     def cookie_secure(self) -> bool:
+        return self.APP_ENV == "production"
+
+    @property
+    def is_production(self) -> bool:
         return self.APP_ENV == "production"
 
     @property

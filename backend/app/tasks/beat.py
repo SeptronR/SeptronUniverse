@@ -426,3 +426,10 @@ register_beat("website.analytics_rollup", "beat.website.analytics_rollup", cront
 register_beat("webhooks.retry_due", "beat.webhooks.retry_due", crontab(minute="*"))
 register_beat("api_keys.expiry_reminders", "beat.api_keys.expiry_reminders", crontab(hour=3, minute=30, day_of_week=1))  # Mon 09:00 IST
 register_beat("imports.expire_unapplied", "beat.imports.expire_unapplied", crontab(hour=20, minute=40))  # 02:10 IST
+
+# ---- Phase 43 hardening (app/tasks/hardening.py) -------------------------------------------------------------------------------
+register_beat("security.posture_daily", "beat.security.posture_daily", crontab(hour=22, minute=30))  # 04:00 IST
+register_beat("security.mfa_enforcement_scan", "beat.security.mfa_enforcement_scan", crontab(hour=3, minute=10))  # 08:40 IST
+register_beat("privacy.dsr_due_reminders", "beat.privacy.dsr_due_reminders", crontab(hour=3, minute=20))  # 08:50 IST
+register_beat("privacy.minor_recompute", "beat.privacy.minor_recompute", crontab(hour=18, minute=40))  # 00:10 IST
+register_beat("privacy.consent_version_reminders", "beat.privacy.consent_version_reminders", crontab(hour=4, minute=10, day_of_week=1))

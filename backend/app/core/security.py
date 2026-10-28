@@ -82,13 +82,53 @@ def generate_temp_password(length: int = 12) -> str:
 
 
 # ---- JWT with kid rotation -----------------------------------------------------------------------------------
+# HS256 (shared secret) by default; RS256 when ``JWT_RSA_PRIVATE_KEY`` is set (Phase 43) — rotation deploys a new
+# private key under a new ``JWT_KID`` and moves the old public key into ``JWT_RSA_PREVIOUS_PUBLIC_KEYS`` for the grace
+# window (access-token lifetime + refresh lifetime); ``/.well-known/jwks.json`` publishes the public keys.
 def _keys() -> dict[str, str]:
     return {settings.JWT_KID: settings.SECRET_KEY, **settings.JWT_PREVIOUS_KEYS}
+
+
+def _rsa_public_keys() -> dict[str, str]:
+    if not settings.JWT_RSA_PRIVATE_KEY:
+        return {}
+    from cryptography.hazmat.primitives import serialization
+
+    priv = serialization.load_pem_private_key(settings.JWT_RSA_PRIVATE_KEY.encode(), password=None)
+    pub = (
+        priv.public_key()
+        .public_bytes(serialization.Encoding.PEM, serialization.PublicFormat.SubjectPublicKeyInfo)
+        .decode()
+    )
+    return {settings.JWT_KID: pub, **settings.JWT_RSA_PREVIOUS_PUBLIC_KEYS}
+
+
+def jwks() -> dict[str, Any]:
+    """JWK set of the RS256 public keys (empty when the platform runs HS256)."""
+    from cryptography.hazmat.primitives import serialization
+    from cryptography.hazmat.primitives.asymmetric.rsa import RSAPublicKey
+
+    def b64(n: int) -> str:
+        return base64.urlsafe_b64encode(n.to_bytes((n.bit_length() + 7) // 8, "big")).rstrip(b"=").decode()
+
+    keys = []
+    for kid, pem in _rsa_public_keys().items():
+        pub = serialization.load_pem_public_key(pem.encode())
+        if isinstance(pub, RSAPublicKey):
+            nums = pub.public_numbers()
+            keys.append({"kty": "RSA", "use": "sig", "alg": "RS256", "kid": kid, "n": b64(nums.n), "e": b64(nums.e)})
+    return {"keys": keys}
+
+
+def signing_algorithm() -> str:
+    return "RS256" if settings.JWT_RSA_PRIVATE_KEY else ALGORITHM
 
 
 def _encode(claims: dict[str, Any], expires: timedelta) -> str:
     now = datetime.now(UTC)
     payload = {**claims, "iat": int(now.timestamp()), "exp": int((now + expires).timestamp())}
+    if settings.JWT_RSA_PRIVATE_KEY:
+        return str(jwt.encode(payload, settings.JWT_RSA_PRIVATE_KEY, algorithm="RS256", headers={"kid": settings.JWT_KID}))
     return str(jwt.encode(payload, settings.SECRET_KEY, algorithm=ALGORITHM, headers={"kid": settings.JWT_KID}))
 
 
@@ -131,11 +171,17 @@ def create_limited_token(sub: uuid.UUID | str, purpose: str, minutes: int, **ext
 
 def decode_token(token: str, expected_type: str = "access") -> dict[str, Any]:
     try:
-        kid = jwt.get_unverified_header(token).get("kid", settings.JWT_KID)
-        key = _keys().get(kid)
+        header = jwt.get_unverified_header(token)
+        kid = header.get("kid", settings.JWT_KID)
+        if header.get("alg") == "RS256":
+            key = _rsa_public_keys().get(kid)
+            algorithms = ["RS256"]
+        else:
+            key = _keys().get(kid)
+            algorithms = [ALGORITHM]
         if not key:
             raise APIError(401, ErrorCode.UNAUTHENTICATED, "Unknown signing key")
-        claims: dict[str, Any] = jwt.decode(token, key, algorithms=[ALGORITHM])
+        claims: dict[str, Any] = jwt.decode(token, key, algorithms=algorithms)
     except JWTError:
         raise APIError(401, ErrorCode.UNAUTHENTICATED, "Invalid or expired token") from None
     if claims.get("type") != expected_type:

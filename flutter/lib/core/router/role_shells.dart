@@ -635,6 +635,13 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.blue,
       permission: 'website:publish',
       feature: 'website.core'),
+  // Phase 43 — privacy (consents, data requests)
+  const MoreMenuModule(
+      titleKey: 'privacy',
+      icon: Icons.privacy_tip_outlined,
+      route: AppRoutes.privacy,
+      color: Colors.indigo,
+      feature: 'privacy.dpdp_consent'),
   // Phase 41 — integration health
   const MoreMenuModule(
       titleKey: 'integrations',

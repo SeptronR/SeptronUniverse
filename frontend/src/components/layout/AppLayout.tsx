@@ -4,6 +4,7 @@ import { AlertTriangle, ShieldAlert } from 'lucide-react';
 import { Sidebar } from './Sidebar';
 import { Navbar } from './Navbar';
 import { CommandPalette } from '@/components/shared/CommandPalette';
+import { ConsentBanner } from '@/features/privacy/ConsentBanner';
 import { useAuthStore } from '@/store/authStore';
 import { useSessionStore } from '@/store/sessionStore';
 import { useReadOnlyPoll } from '@/features/platform/hooks';
@@ -79,6 +80,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </main>
       </div>
       <CommandPalette />
+      <ConsentBanner />
     </div>
   );
 }

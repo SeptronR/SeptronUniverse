@@ -1,0 +1,914 @@
+[
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "institutions"
+ },
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "colleges"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "institution_settings"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "users"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "users"
+ },
+ {
+  "cls": "health",
+  "column": "last_health_at",
+  "legal_basis": "consent",
+  "masking": "secret",
+  "retention_class": "health_5y",
+  "table": "webhook_deliveries"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "feedback_entries"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "assessment_components"
+ },
+ {
+  "cls": "identifier",
+  "column": "apaar_id",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "identifier",
+  "column": "abc_id",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "identifier",
+  "column": "aadhaar_encrypted",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "minor",
+  "column": "dob",
+  "legal_basis": "contract",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "health",
+  "column": "blood_group",
+  "legal_basis": "consent",
+  "masking": "secret",
+  "retention_class": "health_5y",
+  "table": "students"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "sub_category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "is_minority",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "minority_type",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "religion",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "students"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "students"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "students"
+ },
+ {
+  "cls": "contact",
+  "column": "permanent_address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "students"
+ },
+ {
+  "cls": "contact",
+  "column": "current_address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "students"
+ },
+ {
+  "cls": "financial",
+  "column": "bank_details_encrypted",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "students"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "student_guardians"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "student_guardians"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "annual_income_paise",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "student_guardians"
+ },
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "student_guardians"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "designations"
+ },
+ {
+  "cls": "minor",
+  "column": "dob",
+  "legal_basis": "contract",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "staff"
+ },
+ {
+  "cls": "health",
+  "column": "blood_group",
+  "legal_basis": "consent",
+  "masking": "secret",
+  "retention_class": "health_5y",
+  "table": "staff"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "staff"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "staff"
+ },
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "staff"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "staff_category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "staff"
+ },
+ {
+  "cls": "identifier",
+  "column": "aadhaar_encrypted",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "staff"
+ },
+ {
+  "cls": "financial",
+  "column": "bank_details_encrypted",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "staff"
+ },
+ {
+  "cls": "identifier",
+  "column": "pf_number",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "staff"
+ },
+ {
+  "cls": "identifier",
+  "column": "esi_number",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "staff"
+ },
+ {
+  "cls": "identifier",
+  "column": "uan",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "staff"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "attendance_devices"
+ },
+ {
+  "cls": "location",
+  "column": "geo",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "staff_attendance"
+ },
+ {
+  "cls": "financial",
+  "column": "ctc_paise",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "staff_salary_structures"
+ },
+ {
+  "cls": "financial",
+  "column": "gross_paise",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "staff_payrolls"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "job_applications"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "seat_matrix"
+ },
+ {
+  "cls": "minor",
+  "column": "dob",
+  "legal_basis": "contract",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "applicants"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "applicants"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "merit_lists"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "seat_allotments"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "enquiries"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "enquiries"
+ },
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "buildings"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "fee_structures"
+ },
+ {
+  "cls": "financial",
+  "column": "bank_account",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "offline_payment_reconciliations"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "income_paise",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "scholarship_applications"
+ },
+ {
+  "cls": "biometric",
+  "column": "face_match_score",
+  "legal_basis": "consent",
+  "masking": "secret",
+  "retention_class": "consent_bound",
+  "table": "exam_attendance"
+ },
+ {
+  "cls": "location",
+  "column": "custody_location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "answer_script_bundles"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "script_custody_log"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "malpractice_cases"
+ },
+ {
+  "cls": "identifier",
+  "column": "apaar_id",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "abc_credit_ledger"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category_id",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "books"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "library_copies"
+ },
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "hostels"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "hostel_visitors"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "hostel_complaints"
+ },
+ {
+  "cls": "location",
+  "column": "lat",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "transport_stops"
+ },
+ {
+  "cls": "location",
+  "column": "lng",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "transport_stops"
+ },
+ {
+  "cls": "location",
+  "column": "lat",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "vehicle_gps_logs"
+ },
+ {
+  "cls": "location",
+  "column": "lng",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "vehicle_gps_logs"
+ },
+ {
+  "cls": "identifier",
+  "column": "pan",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "suppliers"
+ },
+ {
+  "cls": "contact",
+  "column": "address",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "suppliers"
+ },
+ {
+  "cls": "financial",
+  "column": "bank_details_encrypted",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "suppliers"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category_id",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "items"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "assets"
+ },
+ {
+  "cls": "location",
+  "column": "location_room_id",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "assets"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "asset_category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "amc_contracts"
+ },
+ {
+  "cls": "financial",
+  "column": "bank_account",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "bank_reconciliations"
+ },
+ {
+  "cls": "contact",
+  "column": "whatsapp_template_name",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "notification_templates"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "dlt_templates"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "whatsapp_templates"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "notification_preferences"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "notifications"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "announcements"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "emergency_alerts"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "calendar_events"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "service_requests"
+ },
+ {
+  "cls": "location",
+  "column": "location_room_id",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "service_requests"
+ },
+ {
+  "cls": "location",
+  "column": "location_text",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "service_requests"
+ },
+ {
+  "cls": "health",
+  "column": "diagnosis",
+  "legal_basis": "consent",
+  "masking": "secret",
+  "retention_class": "health_5y",
+  "table": "health_visits"
+ },
+ {
+  "cls": "health",
+  "column": "notes_encrypted",
+  "legal_basis": "consent",
+  "masking": "secret",
+  "retention_class": "health_5y",
+  "table": "counselling_appointments"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "lost_found_items"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "canteens"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "mentoring_slots"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "grievances"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "disciplinary_cases"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "student_achievements"
+ },
+ {
+  "cls": "financial",
+  "column": "ctc_min_paise",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "placement_drives"
+ },
+ {
+  "cls": "financial",
+  "column": "ctc_max_paise",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "placement_drives"
+ },
+ {
+  "cls": "financial",
+  "column": "ctc_paise",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "placement_offers"
+ },
+ {
+  "cls": "financial",
+  "column": "ctc_breakup",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "placement_offers"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "placement_offers"
+ },
+ {
+  "cls": "financial",
+  "column": "dream_ctc_threshold_paise",
+  "legal_basis": "contract",
+  "masking": "secret",
+  "retention_class": "financial_8y",
+  "table": "placement_policies"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "alumni_profiles"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "alumni_profiles"
+ },
+ {
+  "cls": "location",
+  "column": "location",
+  "legal_basis": "consent",
+  "masking": "none",
+  "retention_class": "operational_90d",
+  "table": "alumni_jobs"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "efiles"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "policies"
+ },
+ {
+  "cls": "contact",
+  "column": "admin_email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "pending_registrations"
+ },
+ {
+  "cls": "contact",
+  "column": "admin_phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "pending_registrations"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "demo_requests"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "demo_requests"
+ },
+ {
+  "cls": "academic_sensitive",
+  "column": "category",
+  "legal_basis": "legal_obligation",
+  "masking": "generic",
+  "retention_class": "statutory_10y",
+  "table": "website_notices"
+ },
+ {
+  "cls": "contact",
+  "column": "email",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "website_enquiries"
+ },
+ {
+  "cls": "contact",
+  "column": "phone",
+  "legal_basis": "contract",
+  "masking": "phone_email",
+  "retention_class": "active_plus_3y",
+  "table": "website_enquiries"
+ }
+]

@@ -366,6 +366,9 @@ PHASES: dict[str, list[str]] = {
     "41": [],
     # flutter mobile app: no tables — device_tokens / users / platform_settings / idempotency_keys (sections 3 / 6 / 32)
     "42": [],
+    # testing, security & privacy hardening: no tables — consent_records / data_subject_requests / audit_logs (section 6);
+    # DSR timelines in institution_settings privacy_meta, posture in security_meta
+    "43": [],
     "38": [
         "platform_settings",
         "platform_announcements",

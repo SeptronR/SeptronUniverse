@@ -107,6 +107,7 @@ class AppRoutes {
   // Phase 40 — website quick actions (notice publish, enquiries)
   static const websiteQuick = '/app/website';
   static const integrationsHealth = '/app/integrations';
+  static const privacy = '/app/privacy';
   static const notificationSettings = '/app/notification-settings';
   static const tenantSupport = '/app/support';
   static const tenantBilling = '/app/billing';

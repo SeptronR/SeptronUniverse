@@ -81,6 +81,9 @@ app = FastAPI(
 
 # Middleware (added in reverse execution order): GZip → CORS → RequestLogger → InstitutionContext → TenantUsage →
 # ReadOnly → Audit
+from app.core.hardening import SecurityHeadersMiddleware  # noqa: E402
+
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(AuditMiddleware)
 app.add_middleware(ReadOnlyModeMiddleware)
 app.add_middleware(TenantUsageMiddleware)
@@ -143,6 +146,10 @@ from app.api.v1.endpoints import portals  # noqa: E402  (after the router regist
 
 # Phase 39: universal-link association files at the site root (public; outside /api/v1)
 app.include_router(portals.well_known_router)
+from app.api.v1.endpoints import hardening as _hardening  # noqa: E402
+
+# Phase 43: JWK set of the RS256 signing keys (empty under HS256)
+app.include_router(_hardening.well_known_router)
 # Phase 40: server-rendered public sites (/site/{slug}/…), sitemap.xml and robots.txt per host
 from app.api.v1.endpoints import public_website  # noqa: E402
 

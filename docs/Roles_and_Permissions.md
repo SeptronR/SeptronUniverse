@@ -46,7 +46,8 @@ Permission strings are `module:action`. Roles are seeded per institution from th
 | transport_manager | institution | Transport operations. |
 | inventory_manager | institution/college | Stores, procurement, assets, bills. |
 | estate_officer | institution | Facilities, room/equipment booking approvals, service desk, AMC. |
-| security_officer | institution | Visitor & gate management, emergency alerts. |
+| security_officer | institution | Visitor & gate management, emergency alerts; security posture dashboard (Phase 43). |
+| privacy_officer | institution | DPDP privacy office: notices, consent reports, data-subject requests (Phase 43). |
 | medical_officer | institution | Health centre records (confidential). |
 | sports_officer | institution | Sports teams, events, achievements verification. |
 | grievance_officer | institution | Grievance triage, SLA, committee routing. |
@@ -172,7 +173,8 @@ Every role also carries `dashboard:view`, `jobs:view|cancel` and — since Phase
 | transport_manager | `transport:manage` |
 | inventory_manager | `inventory:manage|receive|issue|asset_audit`, `procurement:quote|po_approve` |
 | estate_officer | `facilities:manage|approve_booking|service_assign`, `timetable:view_all` (rooms) |
-| security_officer | `facilities:manage` (visitors/gate), `communication:emergency` |
+| security_officer | `facilities:manage` (visitors/gate), `communication:emergency`, `security:manage`, `qa:run`, `privacy:view` |
+| privacy_officer | `privacy:manage`, `settings:view`, `audit_logs:view_all`, `users:view_all`, `students:view_pii`, `security:view` |
 | medical_officer | `health:manage|record` |
 | sports_officer | `sports:manage`, `clubs:verify_hours` |
 | grievance_officer | `grievances:triage|resolve|escalate|committee`, `students:view` (cases) |

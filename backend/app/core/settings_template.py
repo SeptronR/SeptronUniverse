@@ -63,6 +63,12 @@ SETTINGS_TEMPLATE: tuple[SettingDef, ...] = (
     SettingDef("security", "password_min_length", "int", 10, min=8, max=128),
     SettingDef("security", "ip_allowlist_enforced", "bool", False),
     SettingDef("security", "sso_role_map", "json", None, label="SSO group → role map"),
+    # Phase 43 hardening (posture checks read these; mfa_grace_until is written by the MFA enforcement action)
+    SettingDef("security", "mfa_grace_until", "str", None, label="MFA enforcement grace ends (ISO date-time)"),
+    SettingDef("security", "session_max_days", "int", 7, min=1, max=90, label="Maximum session age (days)"),
+    SettingDef("security", "concurrent_sessions", "json", {"controller_of_examinations": 3}, label="Concurrent sessions per role"),
+    SettingDef("security", "upload_max_mb", "int", 25, min=1, max=200, label="Upload limit (MB)"),
+    SettingDef("security", "api_key_unused_days", "int", 90, min=7, max=365, label="Warn on API keys unused for (days)"),
     # academics
     SettingDef("academics", "attendance_min_pct_default", "int", 75, min=0, max=100),
     SettingDef("academics", "credit_limits_enforced", "bool", True),

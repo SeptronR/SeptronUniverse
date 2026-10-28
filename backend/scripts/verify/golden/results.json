@@ -1,0 +1,21 @@
+[
+  {"kind": "sgpa", "name": "three courses, all passed", "version": "reg-2024",
+   "input": {"rows": [[4, 9, true], [3, 8, true], [3, 7, true]]}, "expected": {"sgpa": "8.10"}},
+  {"kind": "sgpa", "name": "failed course excluded", "version": "reg-2024",
+   "input": {"rows": [[4, 10, true], [4, 0, false]], "include_failed": false}, "expected": {"sgpa": "10.00"}},
+  {"kind": "sgpa", "name": "failed course counted (include_failed)", "version": "reg-2024",
+   "input": {"rows": [[4, 10, true], [4, 0, false]], "include_failed": true}, "expected": {"sgpa": "5.00"}},
+  {"kind": "sgpa", "name": "no credit-bearing rows", "version": "reg-2024", "input": {"rows": []}, "expected": {"sgpa": null}},
+  {"kind": "cgpa", "name": "arrear cleared — latest attempt counts", "version": "reg-2024",
+   "input": {"policy": "latest", "attempts": {"MA101": [[1, 1, 4, 0, false], [2, 1, 4, 6, true]], "PH101": [[1, 1, 3, 8, true]]}},
+   "expected": {"cgpa": "6.86", "credits_earned": "7"}},
+  {"kind": "cgpa", "name": "best attempt policy", "version": "reg-2024",
+   "input": {"policy": "best", "attempts": {"CS201": [[1, 1, 4, 9, true], [2, 1, 4, 7, true]]}},
+   "expected": {"cgpa": "9.00", "credits_earned": "4"}},
+  {"kind": "grade", "name": "10-point scale, 0.4 below the next boundary", "version": "scale-10",
+   "input": {"pct": "89.6", "ranges": [{"grade": "O", "min_pct": 90, "points": 10}, {"grade": "A+", "min_pct": 80, "points": 9}, {"grade": "A", "min_pct": 70, "points": 8}, {"grade": "F", "min_pct": 0, "points": 0, "is_fail": true}]},
+   "expected": {"grade": "A+", "points": "9", "boundary": true}},
+  {"kind": "grade", "name": "fail band", "version": "scale-10",
+   "input": {"pct": "35", "ranges": [{"grade": "O", "min_pct": 90, "points": 10}, {"grade": "P", "min_pct": 40, "points": 4}, {"grade": "F", "min_pct": 0, "points": 0, "is_fail": true}]},
+   "expected": {"grade": "F", "points": "0", "boundary": false}}
+]

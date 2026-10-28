@@ -52,6 +52,10 @@ const WebsiteCataloguePage = lazy(() => import('@/features/website/pages/Website
 const WebsiteDisclosuresPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDisclosuresPage })));
 const WebsiteDomainsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDomainsPage })));
 const WebsiteAnalyticsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteAnalyticsPage })));
+const PrivacyOfficePage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.PrivacyOfficePage })));
+const SecurityPosturePage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.SecurityPosturePage })));
+const QaPage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.QaPage })));
+const MyPrivacyPage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.MyPrivacyPage })));
 const IntegrationsHubPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.IntegrationsHubPage })));
 const InboundLogPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.InboundLogPage })));
 const ApiKeysPage = lazy(() => import('@/features/integrations/pages/IntegrationsPages').then((m) => ({ default: m.ApiKeysPage })));
@@ -630,6 +634,8 @@ export const router = createBrowserRouter([
           },
           // Phase 02 — my profile (password, MFA, sessions, consents) is reachable by every signed-in user
           { path: '/profile', element: page(<ProfilePage />) },
+          // Phase 43 — my consents and data requests (every signed-in user)
+          { path: '/profile/privacy', element: page(<MyPrivacyPage />) },
           {
             path: '/admin/users',
             element: page(
@@ -847,6 +853,10 @@ export const router = createBrowserRouter([
               ['/admin/security', 'core.audit_logs', 'audit_logs', 'security', [['audit_logs', 'manage']], <AuSecurityPage key="aus" />],
               ['/admin/settings/feature-changes', 'core.settings', 'features', 'view', [['audit_logs', 'view_all']], <AuFeatureChangesPage key="auf" />],
               ['/admin/retention', 'core.settings', 'settings', 'manage', [], <AuRetentionPage key="aur" />],
+              // Phase 43 — privacy office, security posture, QA (non-production; the API answers 404 in production)
+              ['/admin/privacy', 'privacy.dpdp_consent', 'privacy', 'view_all', [['privacy', 'manage']], <PrivacyOfficePage key="pro" />],
+              ['/admin/security/posture', 'core.settings', 'security', 'view', [['security', 'manage'], ['security', 'view_all']], <SecurityPosturePage key="sp" />],
+              ['/admin/qa', 'core.settings', 'qa', 'run', [['security', 'manage'], ['security', 'view_all']], <QaPage key="qa" />],
               ['/admin/risk', 'mentoring.early_warning', 'mentoring', 'view_all', [['mentoring', 'manage']], <SsRiskPage key="ssr" />],
               ['/admin/grievances', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievancesPage key="ssg" />],
               ['/admin/grievances/:id', 'grievances.core', 'grievances', 'view_all', [['grievances', 'triage'], ['grievances', 'view'], ['grievances', 'manage']], <SsGrievanceTicketPage key="ssgt" />],

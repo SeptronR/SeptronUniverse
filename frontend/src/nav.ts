@@ -301,6 +301,10 @@ export const NAV_GROUPS: NavGroup[] = [
       { label: 'Sports', to: '/admin/sports', icon: TrendingUp, module: 'sports', action: 'manage', altActions: ['view_all'], feature: 'facilities.sports' },
       { label: 'Canteen & wallet', to: '/wallet', icon: Banknote, module: 'facilities', action: 'view', altActions: ['manage'], feature: 'facilities.canteen_wallet' },
       // Phase 40 — public website
+      // Phase 43 — privacy office, security posture, QA
+      { label: 'Privacy', to: '/admin/privacy', icon: ShieldCheck, module: 'privacy', action: 'view_all', altActions: ['manage'], feature: 'privacy.dpdp_consent' },
+      { label: 'Security posture', to: '/admin/security/posture', icon: ShieldCheck, module: 'security', action: 'view', altActions: ['view_all', 'manage'], feature: 'core.settings' },
+      { label: 'QA', to: '/admin/qa', icon: ShieldCheck, module: 'qa', action: 'run', feature: 'core.settings' },
       { label: 'Website', to: '/admin/website', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
       { label: 'Website content', to: '/admin/website/content', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
       { label: 'Website notices', to: '/admin/website/notices', icon: Globe, module: 'website', altActions: ['update', 'manage'], feature: 'website.core' },
