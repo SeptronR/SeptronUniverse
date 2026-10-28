@@ -3512,8 +3512,22 @@ WEBSITE_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 41: integrations hub, migration toolkit, exports
+INTEGRATION_EVENTS: tuple[EventDef, ...] = (
+    EventDef("integrations.connection_failed", "system", "Integration failed", "{{ provider }} ({{ capability }}) is failing", "Health checks for {{ provider }} failed three times: {{ error }}.", ("provider", "capability", "error"), ("in_app", "email"), link="/admin/integrations"),
+    EventDef("integrations.connection_recovered", "system", "Integration recovered", "{{ provider }} ({{ capability }}) recovered", "{{ provider }} is healthy again.", ("provider", "capability"), ("in_app",), link="/admin/integrations"),
+    EventDef("integrations.webhook_dead_letter", "system", "Webhook delivery dead", "Webhook {{ webhook }} could not deliver {{ event_type }}", "A delivery failed five times and moved to dead letters. Retry it from the webhooks page.", ("webhook", "event_type"), ("in_app", "email"), link="/admin/integrations/webhooks"),
+    EventDef("integrations.api_key_expiring", "security", "API key expiring", "API key {{ name }} expires soon", "The API key {{ name }} expires on {{ expires_at }}. Rotate it to avoid an outage.", ("name", "expires_at"), ("in_app", "email"), link="/admin/integrations/api-keys"),
+    EventDef("imports.validated", "system", "Import validated", "{{ entity }} import validated", "{{ valid }} valid and {{ invalid }} invalid rows.", ("entity", "valid", "invalid"), ("in_app",), link="/admin/imports"),
+    EventDef("imports.applied", "system", "Import applied", "{{ entity }} import applied", "{{ applied }} rows applied, {{ failed }} failed.", ("entity", "applied", "failed"), ("in_app", "email"), link="/admin/imports"),
+    EventDef("imports.failed", "system", "Import failed", "{{ entity }} import failed", "The import job failed: {{ error }}.", ("entity", "error"), ("in_app", "email"), link="/admin/imports"),
+    EventDef("imports.rolled_back", "system", "Import rolled back", "{{ entity }} import rolled back", "The import was rolled back.", ("entity",), ("in_app",), link="/admin/imports"),
+    EventDef("exports.ready", "system", "Export ready", "Your data export is ready", "Download it from the exports page within 7 days.", (), ("in_app", "email"), link="/admin/exports"),
+)
+
 EVENTS = (
     EVENTS
+    + INTEGRATION_EVENTS
     + WEBSITE_EVENTS
     + PORTAL_EVENTS
     + STUDENT_EVENTS

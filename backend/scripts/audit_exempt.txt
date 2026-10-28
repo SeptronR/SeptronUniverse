@@ -11,6 +11,9 @@ DELETE /api/v1/exam-papers/{id}
 DELETE /api/v1/governance/committee-members/{id}
 DELETE /api/v1/hostel-applications/{id}
 DELETE /api/v1/hostels/{id}
+DELETE /api/v1/imports/profiles/{name}
+DELETE /api/v1/imports/{id}
+DELETE /api/v1/integrations/webhooks/{id}
 DELETE /api/v1/invigilation-duties/{id}
 DELETE /api/v1/library/categories/{id}
 DELETE /api/v1/library/eresources/{id}
@@ -178,6 +181,7 @@ POST /api/v1/exam-sessions/{id}/eligibility/apply
 POST /api/v1/exam-sessions/{id}/hall-tickets/generate
 POST /api/v1/exam-sessions/{id}/registrations/bulk
 POST /api/v1/exam-sessions/{id}/seating/generate
+POST /api/v1/exports/tenant
 POST /api/v1/facilities/lost-found
 POST /api/v1/facilities/service-requests/{id}/close
 POST /api/v1/facilities/service-requests/{id}/rate
@@ -205,6 +209,16 @@ POST /api/v1/hostel-roll-calls
 POST /api/v1/hostel-visitors
 POST /api/v1/hostel-visitors/{id}/out
 POST /api/v1/hostels/{id}/blocks
+POST /api/v1/imports/profiles
+POST /api/v1/imports/workbook/start
+POST /api/v1/imports/workbook/steps/{order}/attach
+POST /api/v1/integrations/connections/{id}/test
+POST /api/v1/integrations/dead-letters/discard
+POST /api/v1/integrations/dead-letters/replay
+POST /api/v1/integrations/deliveries/retry
+POST /api/v1/integrations/webhooks
+POST /api/v1/integrations/webhooks/{id}/rotate-secret
+POST /api/v1/integrations/webhooks/{id}/test
 POST /api/v1/internal/domains/{id}/ssl-status
 POST /api/v1/internships/{id}/noc
 POST /api/v1/internships/{id}/ppo
@@ -386,6 +400,7 @@ POST /api/v1/vendor/register
 POST /api/v1/verify/bulk
 POST /api/v1/verify/hash
 POST /api/v1/wallet/debit
+POST /api/v1/webhooks/in/{provider}/{connection_id}
 POST /api/v1/webhooks/plagiarism/{connection_id}
 POST /api/v1/webhooks/whatsapp/{connection_id}
 POST /api/v1/webhooks/{provider}/{channel}
@@ -425,6 +440,8 @@ PUT /api/v1/governance/meetings/{id}
 PUT /api/v1/governance/meetings/{id}/agenda
 PUT /api/v1/hostel-beds/{id}/status
 PUT /api/v1/hostel-roll-calls/{id}/entries
+PUT /api/v1/imports/{id}/mapping
+PUT /api/v1/integrations/webhooks/{id}
 PUT /api/v1/inventory/assets/{id}
 PUT /api/v1/inventory/indents/{id}
 PUT /api/v1/inventory/purchase-orders/{id}

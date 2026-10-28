@@ -106,6 +106,7 @@ class AppRoutes {
   static const notificationCentre = '/app/notification-centre';
   // Phase 40 — website quick actions (notice publish, enquiries)
   static const websiteQuick = '/app/website';
+  static const integrationsHealth = '/app/integrations';
   static const notificationSettings = '/app/notification-settings';
   static const tenantSupport = '/app/support';
   static const tenantBilling = '/app/billing';

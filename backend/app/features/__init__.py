@@ -4,7 +4,7 @@ Core keys live in ``app/core/features.py``. Each phase adds ``from app.features 
 """
 
 from app.core.features import FEATURE_REGISTRY  # noqa: F401  (core keys)
-from app.features import (  # noqa: F401  (01-40)
+from app.features import (  # noqa: F401  (01-41)
     academics,
     accounting,
     accreditation,
@@ -25,6 +25,7 @@ from app.features import (  # noqa: F401  (01-40)
     hostel,
     hr,
     institution,
+    integrations,
     inventory,
     library,
     obe,

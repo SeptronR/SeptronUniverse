@@ -57,6 +57,7 @@ celery = Celery(
         "app.tasks.portals",
         "app.tasks.website",
         "app.tasks.integrations",
+        "app.tasks.integrations",
     ],
 )
 celery.conf.update(

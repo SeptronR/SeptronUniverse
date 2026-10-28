@@ -457,6 +457,14 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.blue,
       permission: 'website:publish',
       feature: 'website.core'),
+  // Phase 41 — integration health
+  const MoreMenuModule(
+      titleKey: 'integrations',
+      icon: Icons.hub,
+      route: AppRoutes.integrationsHealth,
+      color: Colors.teal,
+      permission: 'integrations:view',
+      feature: 'core.settings'),
   // Phase 39 — notification centre (every role)
   const MoreMenuModule(
       titleKey: 'notifications',

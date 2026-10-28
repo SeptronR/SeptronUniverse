@@ -421,3 +421,8 @@ register_beat("website.domain_verify_retry", "beat.website.domain_verify_retry",
 register_beat("website.cache_sweep", "beat.website.cache_sweep", crontab(minute=25))
 register_beat("website.sitemap_daily", "beat.website.sitemap_daily", crontab(hour=21, minute=30))  # 03:00 IST
 register_beat("website.analytics_rollup", "beat.website.analytics_rollup", crontab(hour=19, minute=10))  # 00:40 IST
+
+# ---- Phase 41 integrations hub (app/tasks/integrations.py) ---------------------------------------------------------------------
+register_beat("webhooks.retry_due", "beat.webhooks.retry_due", crontab(minute="*"))
+register_beat("api_keys.expiry_reminders", "beat.api_keys.expiry_reminders", crontab(hour=3, minute=30, day_of_week=1))  # Mon 09:00 IST
+register_beat("imports.expire_unapplied", "beat.imports.expire_unapplied", crontab(hour=20, minute=40))  # 02:10 IST

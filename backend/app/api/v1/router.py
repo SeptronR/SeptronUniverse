@@ -80,6 +80,7 @@ from app.api.v1.endpoints import (
     help,
     hostel,
     institution,
+    integrations,
     internships,
     inventory,
     jobs,
@@ -296,6 +297,12 @@ api_router.include_router(portals.public_router)
 api_router.include_router(website.router, dependencies=[feature_required("website.core")])
 api_router.include_router(website.marketing_router, dependencies=[feature_required("core.institution")])
 api_router.include_router(public_website.router)
+# Phase 41: integrations hub {core.settings} (+ {integrations.api_keys_webhooks} on keys / webhooks), migration toolkit
+# {data.migration_toolkit}, exports {data.export_portability} and the signed inbound provider webhooks (PUBLIC_ROUTES)
+api_router.include_router(integrations.router, dependencies=[feature_required("core.settings")])
+api_router.include_router(integrations.imports_router, dependencies=[feature_required("data.migration_toolkit")])
+api_router.include_router(integrations.exports_router, dependencies=[feature_required("data.export_portability")])
+api_router.include_router(integrations.inbound_router)
 api_router.include_router(feedback.router, dependencies=[feature_required("platform.in_app_feedback")])
 
 if settings.APP_ENV == "development":
