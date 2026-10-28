@@ -80408,6 +80408,11 @@ export interface components {
         /** MobileConfigResponse */
         MobileConfigResponse: {
             /**
+             * Biometric Timeout Minutes
+             * @default 5
+             */
+            biometric_timeout_minutes: number;
+            /**
              * Cache Ttl Seconds
              * @default 300
              */
@@ -80429,16 +80434,27 @@ export interface components {
                 [key: string]: string;
             };
             /**
+             * Mobile Enabled
+             * @default true
+             */
+            mobile_enabled: boolean;
+            /**
              * Read Only
              * @default false
              */
             read_only: boolean;
+            /** Screenshot Block Routes */
+            screenshot_block_routes?: string[];
             /** Store Urls */
             store_urls: {
                 [key: string]: string;
             };
             /** Update Available */
             update_available: boolean;
+            /** Write Queue */
+            write_queue?: {
+                [key: string]: number;
+            };
         };
         /** ModerationDecision */
         ModerationDecision: {

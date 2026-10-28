@@ -1,0 +1,37 @@
+# Codemagic alternative to the Fastlane lanes (Prompts/42 §42.10 step 9). Signing material lives in Codemagic
+# environment groups (`android_signing`, `ios_signing`, `store_credentials`); nothing is committed.
+workflows:
+  android-beta:
+    name: Android internal testing
+    environment:
+      flutter: stable
+      groups: [android_signing, store_credentials]
+      android_signing: [septron_upload_key]
+    scripts:
+      - flutter pub get
+      - flutter analyze
+      - dart run tool/check_l10n.dart
+      - dart run tool/check_screen_registry.dart
+      - flutter build appbundle --release --dart-define=APP_ENV=production --dart-define=APP_API_URL=$APP_API_URL --dart-define=APP_VERSION=$APP_VERSION
+    artifacts: [build/app/outputs/bundle/release/*.aab]
+    publishing:
+      google_play:
+        credentials: $PLAY_JSON_KEY
+        track: internal
+  ios-beta:
+    name: iOS TestFlight
+    environment:
+      flutter: stable
+      xcode: latest
+      groups: [ios_signing, store_credentials]
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.septronr.universe
+    scripts:
+      - flutter pub get
+      - flutter build ipa --release --dart-define=APP_ENV=production --dart-define=APP_API_URL=$APP_API_URL --dart-define=APP_VERSION=$APP_VERSION
+    artifacts: [build/ios/ipa/*.ipa]
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

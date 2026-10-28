@@ -47,6 +47,10 @@ MOBILE_DEFAULTS: dict[str, Any] = {
     "maintenance_banner": None,
     "feature_hints": {},
     "cache_ttl": 300,
+    # Phase 42 — app-side engine settings
+    "write_queue": {"max_items": 5000, "max_age_hours": 72, "flush_batch": 50},
+    "biometric_timeout_minutes": 5,
+    "screenshot_block_routes": ["marks", "valuation", "pii"],
 }
 
 
@@ -116,7 +120,22 @@ class PlatformService:
             read_only=bool(ro.platform or ro.institution),
             feature_hints=dict(mobile.get("feature_hints") or {}),
             cache_ttl_seconds=int(mobile.get("cache_ttl") or 300),
+            write_queue=dict(mobile.get("write_queue") or {}),
+            biometric_timeout_minutes=int(mobile.get("biometric_timeout_minutes") or 5),
+            screenshot_block_routes=list(mobile.get("screenshot_block_routes") or []),
+            mobile_enabled=await self._mobile_enabled(institution_id),
         )
+
+    async def _mobile_enabled(self, institution_id: uuid.UUID | None) -> bool:
+        """Phase 42: ``mobile.app`` per institution (the app shows "mobile access not enabled" when false)."""
+        if institution_id is None:
+            return True
+        from app.core.features import is_enabled
+
+        try:
+            return bool(await is_enabled(institution_id, "mobile.app"))
+        except Exception:  # noqa: BLE001 - a missing flag row never locks the app out
+            return True
 
     async def _mobile_settings(self) -> dict[str, Any]:
         stored = await self.repo.platform_setting("mobile")

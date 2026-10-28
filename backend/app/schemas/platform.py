@@ -186,3 +186,7 @@ class MobileConfigResponse(BaseModel):
     read_only: bool = False
     feature_hints: dict[str, str] = Field(default_factory=dict)
     cache_ttl_seconds: int = 300
+    write_queue: dict[str, int] = Field(default_factory=dict)
+    biometric_timeout_minutes: int = 5
+    screenshot_block_routes: list[str] = Field(default_factory=list)
+    mobile_enabled: bool = True

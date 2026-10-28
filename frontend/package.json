@@ -11,7 +11,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
     "gen:api": "openapi-typescript http://localhost:8000/api/v1/openapi.json -o src/api/generated/openapi.d.ts",
     "gen:api:file": "openapi-typescript ../backend/openapi.json -o src/api/generated/openapi.d.ts",
-    "tours:export": "node scripts/export-tours.mjs"
+    "tours:export": "node scripts/export-tours.mjs",
+    "tokens:export": "node scripts/export-tokens.mjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",
