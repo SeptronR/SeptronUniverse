@@ -136,12 +136,10 @@ async def seed_affiliation(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PL
         )
 
     # ---- colleges ----------------------------------------------------------------------------------------------------
-    colleges = {
-        c.code: c
-        for c in (
-            await db.execute(select(College).where(College.institution_id == inst.id, College.deleted_at.is_(None)))
-        ).scalars()
-    }
+    # include soft-deleted rows: (institution_id, code) is unique regardless of deleted_at
+    all_colleges = list((await db.execute(select(College).where(College.institution_id == inst.id))).scalars())
+    by_code = {c.code: c for c in all_colleges}
+    colleges = {c.code: c for c in all_colleges if c.deleted_at is None}
     base_lat, base_lng = 13.05, 80.22
 
     def geo(i: int) -> dict[str, Any]:
@@ -159,6 +157,11 @@ async def seed_affiliation(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PL
     specs += [(f"K{i}", f"Constituent College {i}", "constituent") for i in range(1, CONSTITUENT_EXTRA + 1)]
     for i, (code, name, ctype) in enumerate(specs, start=1):
         if code in colleges:
+            continue
+        if code in by_code:  # a demo college soft-deleted by an earlier test run: revive it
+            by_code[code].deleted_at = None
+            by_code[code].is_active = True
+            colleges[code] = by_code[code]
             continue
         c = College(
             institution_id=inst.id,
