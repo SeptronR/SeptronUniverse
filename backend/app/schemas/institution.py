@@ -406,6 +406,14 @@ class OnboardingRequest(BaseModel):
     plan_code: str = Field(default="standard", max_length=30)
     pack: str = Field(default="IN", max_length=10)
     seed_demo: bool = False
+    # Phase 38 wizard: the template decides the type defaults and forced features; trial without an invoice; pending
+    # until activated; the custom domain is recorded for Phase 40 verification
+    template: Literal["university", "autonomous", "affiliated", "standalone"] | None = None
+    trial: bool = False
+    trial_days: int | None = Field(default=None, ge=1, le=365)
+    billing_cycle: Literal["monthly", "yearly"] = "yearly"
+    activate: bool = True
+    custom_domain: str | None = Field(default=None, max_length=255, pattern=r"^[a-z0-9.-]+\.[a-z]{2,}$")
 
 
 class OnboardingResponse(BaseModel):
@@ -419,6 +427,11 @@ class OnboardingResponse(BaseModel):
     admin_username: str
     admin_temp_password: str = Field(description="shown once; the admin must change it at first sign-in")
     demo_job_id: uuid.UUID | None = None
+    template: str | None = None
+    status: str = "active"
+    subscription_status: str | None = None
+    subscription_ends_on: date | None = None
+    forced_features: dict[str, list[str]] = Field(default_factory=dict)
 
 
 class PlatformInstitutionResponse(ORMModel):

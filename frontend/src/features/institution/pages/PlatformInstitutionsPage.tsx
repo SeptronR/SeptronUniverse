@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { platformApi } from '@/features/saas/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { Building2, Plus } from 'lucide-react';
 import { getApiError, getApiErrorDetails } from '@/api/axios';
@@ -14,7 +16,7 @@ import { institutionApi } from '../api';
 import { useInstMutation, usePlatformInstitutions } from '../hooks';
 import { INSTITUTION_TYPES, type OnboardingPayload, type OnboardingResult } from '../types';
 
-const STEPS = ['Institution', 'Admin', 'Plan', 'Pack', 'Demo data', 'Done'];
+const STEPS = ['Institution', 'Admin', 'Plan & template', 'Pack', 'Demo & domain', 'Done'];
 /** Wizard step that owns a payload path ("institution.slug", "admin.email", "plan_code", …). */
 const stepOf = (path: string) => (path.startsWith('institution') ? 0 : path.startsWith('admin') ? 1 : path === 'plan_code' ? 2 : path === 'pack' ? 3 : 4);
 const REQUIRED: Record<number, string[]> = { 0: ['institution.name', 'institution.slug'], 1: ['admin.username', 'admin.email', 'admin.display_name'] };
@@ -39,6 +41,13 @@ function OnboardingWizard({ onClose }: { onClose: () => void }) {
     plan_code: 'standard',
     pack: 'IN',
     seed_demo: false,
+    template: 'autonomous',
+    trial: true,
+  });
+  const preview = useQuery({
+    queryKey: ['saas', 'preview', data.template, data.plan_code],
+    queryFn: () => platformApi.preview(data.template ?? 'standalone', data.plan_code),
+    enabled: step === 2,
   });
   const onboard = useInstMutation((b: OnboardingPayload) => institutionApi.onboard(b), ['platform-institutions']);
   const inst = data.institution;
@@ -115,10 +124,24 @@ function OnboardingWizard({ onClose }: { onClose: () => void }) {
         </div>
       )}
       {step === 2 && (
-        <label className="space-y-1.5 text-sm font-medium">
-          Plan
-          <Select value={data.plan_code} options={['starter', 'standard', 'professional', 'university'].map((p) => ({ value: p, label: p }))} onChange={(e) => setData({ ...data, plan_code: e.target.value })} />
-        </label>
+        <div className="space-y-3">
+          <label className="space-y-1.5 text-sm font-medium">
+            Plan
+            <Select value={data.plan_code} options={['starter', 'standard', 'professional', 'university'].map((p) => ({ value: p, label: p }))} onChange={(e) => setData({ ...data, plan_code: e.target.value })} />
+          </label>
+          <label className="space-y-1.5 text-sm font-medium">
+            Template (decides the type defaults and forced features)
+            <Select value={data.template ?? 'standalone'} options={['university', 'autonomous', 'affiliated', 'standalone'].map((p) => ({ value: p, label: p }))} onChange={(e) => setData({ ...data, template: e.target.value as OnboardingPayload['template'] })} />
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <Checkbox aria-label="Trial" checked={!!data.trial} onCheckedChange={(c) => setData({ ...data, trial: c === true })} /> Start as a trial (no invoice)
+          </label>
+          {preview.data?.data && (
+            <p className="text-xs text-muted-foreground">
+              {preview.data.data.enabled.length} features · forced on: {preview.data.data.forced_on.join(', ') || '—'} · forced off: {preview.data.data.forced_off.join(', ') || '—'}
+            </p>
+          )}
+        </div>
       )}
       {step === 3 && (
         <label className="space-y-1.5 text-sm font-medium">
@@ -132,10 +155,13 @@ function OnboardingWizard({ onClose }: { onClose: () => void }) {
           Seed demo data (current year, terms, a department per college, national holidays) as a background job
         </label>
       )}
+      {step === 4 && (
+        <FormField label="Custom domain (verified in Phase 40)" value={data.custom_domain ?? ''} onChange={(e) => setData({ ...data, custom_domain: e.target.value.toLowerCase() || undefined })} />
+      )}
       {step === 5 && result && (
         <div className="space-y-2 text-sm">
           <p>
-            <b>{result.institution.name}</b> is active: {result.roles_created} roles, plan {result.plan_code} ({result.features_enabled} features).
+            <b>{result.institution.name}</b> is {result.status ?? 'active'}{result.subscription_status ? ` (${result.subscription_status})` : ''}: {result.roles_created} roles, plan {result.plan_code} ({result.features_enabled} features).
           </p>
           <p>
             First admin <b>{result.admin_username}</b> — temporary password (shown once, also e-mailed):{' '}
@@ -151,7 +177,9 @@ function OnboardingWizard({ onClose }: { onClose: () => void }) {
 export default function PlatformInstitutionsPage() {
   const [q, setQ] = useState('');
   const [status, setStatus] = useState('');
-  const list = usePlatformInstitutions({ q: q || undefined, status: status || undefined, page_size: 100 });
+  const [plan, setPlan] = useState('');
+  const [health, setHealth] = useState('');
+  const list = usePlatformInstitutions({ q: q || undefined, status: status || undefined, plan: plan || undefined, health: health || undefined });
   const [wizard, setWizard] = useState(false);
   return (
     <div className="space-y-4">
@@ -159,6 +187,8 @@ export default function PlatformInstitutionsPage() {
       <div className="flex gap-2">
         <Input className="w-64" placeholder="Search name or slug…" value={q} onChange={(e) => setQ(e.target.value)} />
         <Select className="w-44" placeholder="All statuses" value={status} options={['active', 'pending', 'suspended', 'archived'].map((s) => ({ value: s, label: s }))} onChange={(e) => setStatus(e.target.value)} />
+        <Select className="w-44" placeholder="All plans" value={plan} options={['starter', 'standard', 'professional', 'university'].map((s) => ({ value: s, label: s }))} onChange={(e) => setPlan(e.target.value)} />
+        <Select className="w-44" placeholder="Any health" value={health} options={['ok', 'degraded', 'failing', 'none'].map((s) => ({ value: s, label: s }))} onChange={(e) => setHealth(e.target.value)} />
       </div>
       <table className="w-full text-sm">
         <thead className="text-left text-muted-foreground">
@@ -166,8 +196,8 @@ export default function PlatformInstitutionsPage() {
             <th className="p-2">Institution</th>
             <th className="p-2">Type</th>
             <th className="p-2">Plan</th>
-            <th className="p-2">Colleges</th>
-            <th className="p-2">Users</th>
+            <th className="p-2">Students / staff</th>
+            <th className="p-2">Health</th>
             <th className="p-2">Status</th>
           </tr>
         </thead>
@@ -180,10 +210,10 @@ export default function PlatformInstitutionsPage() {
                 </Link>
                 <span className="text-xs text-muted-foreground">{i.slug}</span>
               </td>
-              <td className="p-2">{i.institution_type.replace(/_/g, ' ')}</td>
-              <td className="p-2">{i.plan_code ?? '—'}</td>
-              <td className="p-2">{i.college_count}</td>
-              <td className="p-2">{i.user_count}</td>
+              <td className="p-2">{i.type.replace(/_/g, ' ')}</td>
+              <td className="p-2">{i.plan ?? '—'} <span className="text-xs text-muted-foreground">{i.subscription_status ?? ''}</span></td>
+              <td className="p-2">{i.students_active} / {i.staff_active}</td>
+              <td className="p-2"><StatusBadge status={i.health} /></td>
               <td className="p-2"><StatusBadge status={i.status} /></td>
             </tr>
           ))}

@@ -344,6 +344,15 @@ PHASES: dict[str, list[str]] = {
         "training_attendance",
         "company_feedback",
     ],
+    # super admin & SaaS operations: the rest of section 32 (website tables are Phase 40); invoices, usage extras, caps
+    # and ticket / registration facts without columns live in platform_settings / institution_settings (saas_meta)
+    "38": [
+        "platform_settings",
+        "platform_announcements",
+        "support_tickets",
+        "pending_registrations",
+        "demo_requests",
+    ],
     # audit logs, security events & settings: no tables — reads section 6 / 3 / 5 / 32 / 2 and the exam audit sources;
     # digests, anomalies, legal holds and manifests in institution_settings (audit_meta)
     "37": [],

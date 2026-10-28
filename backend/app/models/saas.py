@@ -1,7 +1,10 @@
 """SaaS models — Database_Schema.sql §32 (subscription plans, tenant subscriptions, usage meters, impersonation).
 
-Phase 02 maps the four tables the entitlement and impersonation services need (Prompts/02 §02.3); Phase 38 adds the
-rest of §32 (``platform_settings``, announcements, support tickets, registrations, website tables).
+Phase 02 maps the four tables the entitlement and impersonation services need (Prompts/02 §02.3); Phase 38 adds
+``platform_settings``, ``platform_announcements``, ``support_tickets``, ``pending_registrations`` and
+``demo_requests`` (the website tables of §32 belong to Phase 40). Facts without columns (invoices, usage extras,
+caps, ticket SLA / category / internal notes, registration tokens, CRM notes) live in the side stores described in
+``app/services/saas/common.py``.
 """
 
 import uuid
@@ -87,6 +90,86 @@ class ImpersonationLog(UUIDPrimaryKeyMixin, Base):
     started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     ended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     ip: Mapped[str | None] = mapped_column(INET)
+
+
+class PlatformSetting(Base):
+    __tablename__ = "platform_settings"
+
+    key: Mapped[str] = mapped_column(String(80), primary_key=True)
+    value: Mapped[Any | None] = mapped_column(JSONB)
+    updated_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class PlatformAnnouncement(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "platform_announcements"
+
+    title: Mapped[str] = mapped_column(String(200), nullable=False)
+    body: Mapped[str] = mapped_column(Text, nullable=False)
+    # {type: all|plan|institution_type|institution_ids|roles, values: [...], channels: [banner, inapp, email]}
+    audience: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    starts_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    ends_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
+    created_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+
+class SupportTicket(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "support_tickets"
+
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(
+        UUID(as_uuid=True), ForeignKey("institutions.id", ondelete="CASCADE")
+    )
+    ticket_number: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
+    raised_by: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("users.id"))
+    subject: Mapped[str] = mapped_column(String(200), nullable=False)
+    description: Mapped[str | None] = mapped_column(Text)
+    priority: Mapped[str] = mapped_column(String(10), nullable=False, default="normal")
+    module: Mapped[str | None] = mapped_column(String(60))
+    # open | in_progress | waiting | resolved | closed
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="open")
+    assigned_to: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
+    # {"thread": [{by, at, text, attachments, internal}], "meta": {category, sla_due_at, breached, csat, ...}}
+    messages: Mapped[dict[str, Any] | None] = mapped_column(JSONB)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+    )
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
+class PendingRegistration(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "pending_registrations"
+
+    institution_name: Mapped[str] = mapped_column(String(200), nullable=False)
+    institution_type: Mapped[str] = mapped_column(String(30), nullable=False)
+    slug: Mapped[str] = mapped_column(String(60), nullable=False)
+    admin_name: Mapped[str | None] = mapped_column(String(200))
+    admin_email: Mapped[str] = mapped_column(String(200), nullable=False)
+    admin_phone: Mapped[str | None] = mapped_column(String(20))
+    plan_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("subscription_plans.id"))
+    payment_ref: Mapped[str | None] = mapped_column(String(80))
+    # pending | verified | paid | provisioned | failed | expired
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="pending")
+    institution_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), ForeignKey("institutions.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False
+    )
+
+
+class DemoRequest(UUIDPrimaryKeyMixin, Base):
+    __tablename__ = "demo_requests"
+
+    name: Mapped[str] = mapped_column(String(200), nullable=False)
+    institution_name: Mapped[str | None] = mapped_column(String(200))
+    email: Mapped[str | None] = mapped_column(String(200))
+    phone: Mapped[str | None] = mapped_column(String(20))
+    institution_type: Mapped[str | None] = mapped_column(String(30))
+    message: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[str] = mapped_column(String(20), nullable=False, default="new")  # new|contacted|converted|dropped
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
 
 def plan_limits(plan: SubscriptionPlan | None) -> dict[str, Any]:

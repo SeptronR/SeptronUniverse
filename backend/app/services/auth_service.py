@@ -204,7 +204,7 @@ async def ensure_institution_active(db: AsyncSession, institution_id: uuid.UUID 
             403,
             ErrorCode.PERMISSION_DENIED,
             f"This institution is {status}; contact the SeptronUniverse team",
-            {"reason": f"institution_{status}"},
+            {"reason": f"institution_{status}", "code": f"INSTITUTION_{status.upper()}"},
         )
 
 
@@ -535,7 +535,9 @@ class AuthService:
     async def me(self) -> MeResponse:
         assert self.principal is not None
         payload = await self.principal_payload(self.principal)
-        return MeResponse(**_payload_fields(payload))
+        from app.services.saas.banners import banners
+
+        return MeResponse(**_payload_fields(payload), banners=await banners(self.db, self.principal))
 
     # ---- rule 2 ---------------------------------------------------------------------------------------------------
     async def refresh(self, token: str, from_body: bool) -> tuple[str, str, User]:

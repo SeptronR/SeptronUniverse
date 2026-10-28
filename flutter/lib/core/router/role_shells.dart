@@ -449,6 +449,28 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.deepPurple,
       permission: 'exams:audit',
       feature: 'exams.sessions'),
+  // Phase 38 — platform hub (super admin / support agent), support and billing (institution admin)
+  const MoreMenuModule(
+      titleKey: 'platform',
+      icon: Icons.admin_panel_settings_outlined,
+      route: AppRoutes.platformHub,
+      color: Colors.indigo,
+      permission: 'platform:view',
+      feature: 'core.institution'),
+  const MoreMenuModule(
+      titleKey: 'support',
+      icon: Icons.support_agent,
+      route: AppRoutes.tenantSupport,
+      color: Colors.teal,
+      permission: 'support:manage',
+      feature: 'core.settings'),
+  const MoreMenuModule(
+      titleKey: 'billing',
+      icon: Icons.receipt_long_outlined,
+      route: AppRoutes.tenantBilling,
+      color: Colors.brown,
+      permission: 'settings:manage',
+      feature: 'core.settings'),
   // Phase 36 — reports (registrar / HOD / COE / accountant / placement / IQAC)
   const MoreMenuModule(
       titleKey: 'reports',

@@ -3,9 +3,9 @@
 Business rules
 1. ``current`` — the tenant's latest ``institution_subscriptions`` row joined with its plan; no row → status ``none``
    (treated like an active starter plan without limits so a fresh tenant is never locked out before billing exists).
-2. ``require_active_subscription`` — ``active`` / ``trial`` pass; ``grace`` refuses writes with
-   ``403 RULE_VIOLATION`` (``code: SUBSCRIPTION_GRACE`` — the "402-style" answer of the prompt) but allows reads;
-   ``expired`` / ``cancelled`` refuse everything with ``403 RULE_VIOLATION`` (``code: SUBSCRIPTION_EXPIRED``).
+2. ``require_active_subscription`` — ``active`` / ``trial`` / ``grace`` pass (Phase 38: grace keeps writes with a
+   banner); ``expired`` / ``cancelled`` refuse writes with ``403 RULE_VIOLATION`` (``code: SUBSCRIPTION_EXPIRED``)
+   and keep reads (the Phase 38 ``TenantUsageMiddleware`` applies the same rule to every route from Redis).
    ``subscription_required()`` wraps it as a route dependency for later phases.
 3. ``enforce_seat_limit(kind)`` — before creating a student/staff account: the seats in use + ``adding`` must not
    exceed the plan limit → ``403 RULE_VIOLATION`` (``code: SEAT_LIMIT``, details ``{kind, limit, current}``). Students
@@ -60,19 +60,7 @@ class EntitlementService:
     async def require_active_subscription(self, *, write: bool, institution_id: uuid.UUID | None = None) -> None:
         sub, _ = await self.current(institution_id)
         status = sub.status if sub else "none"
-        if status in {"active", "trial", "none"}:
-            return
-        if status == "grace":
-            if write:
-                raise APIError(
-                    403,
-                    ErrorCode.RULE_VIOLATION,
-                    "The subscription is in its grace period; the workspace is read-only until it is renewed",
-                    {
-                        "code": "SUBSCRIPTION_GRACE",
-                        "grace_until": sub.grace_until.isoformat() if sub and sub.grace_until else None,
-                    },
-                )
+        if status in {"active", "trial", "none", "grace"} or not write:
             return
         raise APIError(
             403,
@@ -129,8 +117,17 @@ class EntitlementService:
             grace_until=sub.grace_until if sub else None,
             limits=EntitlementLimits(**plan_limits(plan)),
             usage=usage,
-            writable=status in {"active", "trial", "none"},
+            writable=status in {"active", "trial", "none", "grace"},
+            locked_settings=await self._locked(plan),
         )
+
+    async def _locked(self, plan: SubscriptionPlan | None) -> dict[str, Any]:
+        """Phase 38 plan-locked settings (``reports.max_rows``, ``comms.credits``) explained on the entitlements page."""
+        if plan is None:
+            return {}
+        from app.services.saas.subscription_service import SubscriptionService
+
+        return dict((await SubscriptionService(self.db, None).plan_out(plan)).locked_settings)
 
     # ---- rule 5 -----------------------------------------------------------------------------------------------
     async def meter(self, institution_id: uuid.UUID, period_month: date) -> dict[str, Any]:

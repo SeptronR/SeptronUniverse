@@ -33,6 +33,7 @@ import '../../features/affiliation/affiliation_screens.dart';
 import '../../features/analytics/analytics_screens.dart';
 import '../../features/reports/reports_screens.dart';
 import '../../features/audit/audit_screens.dart';
+import '../../features/saas/saas_screens.dart';
 import '../../features/governance/governance_screens.dart';
 import '../../features/iqac/iqac_screens.dart';
 import '../../features/phd/phd_screens.dart';
@@ -523,6 +524,28 @@ class ScreenRegistry {
       feature: 'exams.sessions',
       permission: 'exams:audit',
       builder: (_, __) => const ExamAuditSummaryScreen(),
+    ),
+    // Phase 38 — platform hub, tenant support / billing
+    AppRoutes.platformHub: ScreenEntry(
+      route: AppRoutes.platformHub,
+      titleKey: 'platform',
+      feature: 'core.institution',
+      permission: 'platform:view',
+      builder: (_, __) => const PlatformHubScreen(),
+    ),
+    AppRoutes.tenantSupport: ScreenEntry(
+      route: AppRoutes.tenantSupport,
+      titleKey: 'support',
+      feature: 'core.settings',
+      permission: 'support:create|support:manage',
+      builder: (_, __) => const TenantSupportScreen(),
+    ),
+    AppRoutes.tenantBilling: ScreenEntry(
+      route: AppRoutes.tenantBilling,
+      titleKey: 'billing',
+      feature: 'core.settings',
+      permission: 'settings:manage',
+      builder: (_, __) => const TenantBillingScreen(),
     ),
     // Phase 36 — reports
     AppRoutes.reports: ScreenEntry(

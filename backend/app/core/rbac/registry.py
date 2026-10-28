@@ -89,6 +89,10 @@ MODULES: tuple[str, ...] = (
     "integrations",
     "jobs",
     "website",
+    # Phase 38: the platform operator's console (super admin / support agent only — never granted to tenant roles) and
+    # support tickets (tenants raise / reply; platform staff triage)
+    "platform",
+    "support",
 )
 
 STANDARD_ACTIONS: tuple[str, ...] = (
@@ -305,9 +309,11 @@ BESPOKE_ACTIONS: tuple[tuple[str, str, str], ...] = (
     ("integrations", "webhooks", "Webhooks"),
     ("integrations", "import", "Data imports"),
     ("jobs", "cancel", "Cancel jobs"),
+    # Phase 38: platform billing (plans, subscriptions, invoices), help-centre authoring and the support desk
+    ("platform", "billing", "Platform billing"),
+    ("platform", "help", "Author platform help articles"),
+    ("platform", "support", "Platform support desk"),
 )
-
-PLATFORM_ONLY_PERMISSIONS: frozenset[str] = frozenset({"users:impersonate", "features:manage"})
 
 
 def _catalogue() -> dict[str, str]:
@@ -321,6 +327,11 @@ def _catalogue() -> dict[str, str]:
 
 
 PERMISSIONS: dict[str, str] = _catalogue()  # "module:action" → description
+# never grantable to tenant roles (``RbacService`` refuses them); Phase 38 adds every ``platform:*`` action
+PLATFORM_MODULES: tuple[str, ...] = ("platform",)
+PLATFORM_ONLY_PERMISSIONS: frozenset[str] = frozenset(
+    {"users:impersonate", "features:manage"} | {k for k in PERMISSIONS if k.split(":", 1)[0] in PLATFORM_MODULES}
+)
 ACTIONS_BY_MODULE: dict[str, list[str]] = {m: list(STANDARD_ACTIONS) for m in MODULES}
 for _m, _a, _ in BESPOKE_ACTIONS:
     ACTIONS_BY_MODULE[_m].append(_a)
@@ -467,7 +478,8 @@ def P(module: str, *actions: str) -> set[str]:
 
 
 def ALL(*actions: str, exclude: tuple[str, ...] = ()) -> set[str]:
-    return {f"{m}:{a}" for m in MODULES if m not in exclude for a in actions}
+    """Every module × ``actions`` — never the platform-only modules (Phase 38 ``platform``)."""
+    return {f"{m}:{a}" for m in MODULES if m not in exclude and m not in PLATFORM_MODULES for a in actions}
 
 
 def MODULE_ALL(module: str, exclude: tuple[str, ...] = ()) -> set[str]:
@@ -580,7 +592,7 @@ _INSTITUTION_ADMIN: set[str] = (
 )
 
 _COLLEGE_ADMIN: set[str] = (
-    ALL("manage", exclude=("features", "exams", "regulations", "results", "degrees", "institutions"))
+    ALL("manage", exclude=("features", "exams", "regulations", "results", "degrees", "institutions", "support"))
     | MODULE_ALL("exams", exclude=("decode",))
     | MODULE_ALL("regulations", exclude=("approve",))
     | MODULE_ALL("results", exclude=("publish",))
@@ -874,7 +886,7 @@ PARENT_SUPPORT: set[str] = P("clubs", "view")
 
 ROLE_TEMPLATES: dict[str, set[str]] = {
     "super_admin": {"*:*"},
-    "support_agent": ALL("view", "view_all") | P("users", "impersonate") | COMMON,
+    "support_agent": ALL("view", "view_all") | P("users", "impersonate") | COMMON | P("platform", "view", "support"),
     "institution_admin": _INSTITUTION_ADMIN,
     "vice_chancellor": ALL("view", "view_all")
     | VC_AFFILIATION
@@ -1402,6 +1414,19 @@ for _slug in ROLE_TEMPLATES:
     if "*:*" not in ROLE_TEMPLATES[_slug]:
         ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | AUDIT_SELF | PHASE37_GRANTS.get(_slug, set())
 
+# Phase 38 (Prompts/38 "Visibility rules"): tenant institution admins hold ``support:manage`` through their
+# ``ALL("manage")`` (raise, reply, close own tickets); integration and college admins may raise tickets
+# (``support:create``); the support agent reads every tenant (``support:view_all``, masked) and works the desk
+# (``platform:support``) — ``platform:*`` is never granted to a tenant role.
+SUPPORT_RAISE: set[str] = P("support", "create", "view")
+PHASE38_GRANTS: dict[str, set[str]] = {
+    "integration_admin": SUPPORT_RAISE,
+    "college_admin": SUPPORT_RAISE,
+    "support_agent": P("support", "view_all", "create", "update"),
+}
+for _slug, _extra in PHASE38_GRANTS.items():
+    ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra
+
 # ---- import-time invariants ------------------------------------------------------------------------------------
 assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
@@ -1412,6 +1437,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0038": frozenset(SUPPORT_RAISE | P("support", "manage")),
     "0037": frozenset(AUDIT_SELF | P("exams", "audit") | P("audit_logs", "security") | P("settings", "view")),
     "0036": frozenset(REPORTS_STATUTORY | P("reports", "view_all")),
     "0035": frozenset(ANALYTICS_ADMIN),

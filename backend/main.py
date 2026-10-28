@@ -33,6 +33,7 @@ from app.core.middleware import (
     InstitutionContextMiddleware,
     ReadOnlyModeMiddleware,
     RequestLoggerMiddleware,
+    TenantUsageMiddleware,
 )
 from app.core.ws import ws_router
 from app.db.session import PlatformSessionLocal, engine, redis_client
@@ -58,6 +59,11 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         async with PlatformSessionLocal() as db:
             windows = await ReadOnlyService(db).refresh_cache()
             log.info("read_only_cache_refreshed", windows=windows)
+    with contextlib.suppress(Exception):  # Phase 38: subscription states read by the write gate
+        from app.services.saas.subscription_service import SubscriptionService
+
+        async with PlatformSessionLocal() as db:
+            log.info("subscription_state_cache_refreshed", tenants=await SubscriptionService(db).refresh_state_cache())
     yield
     await engine.dispose()
     await redis_client.aclose()
@@ -73,9 +79,11 @@ app = FastAPI(
     redoc_url="/api/v1/redoc",
 )
 
-# Middleware (added in reverse execution order): GZip → CORS → RequestLogger → InstitutionContext → ReadOnly → Audit
+# Middleware (added in reverse execution order): GZip → CORS → RequestLogger → InstitutionContext → TenantUsage →
+# ReadOnly → Audit
 app.add_middleware(AuditMiddleware)
 app.add_middleware(ReadOnlyModeMiddleware)
+app.add_middleware(TenantUsageMiddleware)
 app.add_middleware(InstitutionContextMiddleware)
 app.add_middleware(RequestLoggerMiddleware)
 app.add_middleware(

@@ -1542,4 +1542,7 @@ sql_report(
 
 # Phase 37 audit / exam audit exports
 from app.services.audit import registrations as _audit_reports  # noqa: E402, F401
+
+# Phase 38 billing exports (usage by month, subscription invoices)
+from app.services.saas import registrations as _saas_reports  # noqa: E402, F401
 from app.services.reports import legacy  # noqa: E402, F401  (retro-registered Round 3–4 exports + chart exports)

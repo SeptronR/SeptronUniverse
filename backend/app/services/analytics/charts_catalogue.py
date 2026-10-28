@@ -1868,3 +1868,8 @@ view_chart(
 from app.services.audit.registrations import register_charts  # noqa: E402
 
 register_charts()
+
+# ---- Phase 38: SaaS usage / invoices charts (tenant-scoped; the platform dashboard evaluates them cross-tenant) ------
+from app.services.saas.registrations import register_charts as _saas_charts  # noqa: E402
+
+_saas_charts()

@@ -325,6 +325,10 @@ class UserService:
             new={"impersonation_log_id": str(row.id), "reason": reason, "read_only": read_only},
             request=request,
         )
+        # Phase 38: tenant admins are told (setting ``saas.notify_impersonation``); sessions auto-stop after 60 min
+        from app.services.saas.impersonation_service import ImpersonationService
+
+        await ImpersonationService(self.db, p, request).started(row, p.user, target)
         roles = [r.slug for _, r in await UserRoleRepository(self.db).for_user(target.id)]
         me = MeUser(
             id=target.id,
