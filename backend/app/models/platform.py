@@ -739,7 +739,8 @@ class HelpArticle(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     title: Mapped[str] = mapped_column(String(200), nullable=False)
     body: Mapped[str] = mapped_column(Text, nullable=False)
     module: Mapped[str | None] = mapped_column(String(60))
-    audience: Mapped[list[str] | None] = mapped_column(JSONB)
+    # Phase 01 stored a role list; Phase 38 authoring writes {roles: [...], portals: [...], public: bool}
+    audience: Mapped[dict[str, Any] | list[str] | None] = mapped_column(JSONB)
     is_published: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 
 

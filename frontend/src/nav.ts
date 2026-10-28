@@ -53,6 +53,7 @@ import {
   CreditCard,
   LayoutDashboard,
   LifeBuoy,
+  Lock,
   ShieldCheck,
   ToggleLeft,
   Users,
@@ -528,10 +529,15 @@ export const NAV_GROUPS: NavGroup[] = [
         feature: 'institution.number_sequences_custom',
       },
       { label: 'Workflows', to: '/admin/workflows', icon: GitBranch, module: 'settings', action: 'manage', feature: 'workflow.engine' },
-      // super admin only (features:manage is platform-only): tenants + onboarding wizard
+      // Phase 38 — tenant SaaS pages
+      { label: 'Support', to: '/admin/support', icon: LifeBuoy, module: 'support', altActions: ['create', 'manage'], feature: 'core.settings' },
+      { label: 'Billing', to: '/admin/billing', icon: CreditCard, module: 'settings', feature: 'core.settings' },
+      { label: 'Help articles', to: '/admin/help-articles', icon: BookOpen, module: 'settings', action: 'manage', feature: 'platform.help_center' },
+      { label: 'Read-only windows', to: '/admin/read-only', icon: Lock, module: 'settings', action: 'manage', feature: 'platform.read_only_mode' },
+      // super admin only (features:manage is platform-only): the platform console
       {
-        label: 'Tenants',
-        to: '/super-admin/institutions',
+        label: 'Platform console',
+        to: '/super-admin',
         icon: Landmark,
         module: 'features',
         action: 'manage',

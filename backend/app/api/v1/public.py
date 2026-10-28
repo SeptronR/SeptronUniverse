@@ -6,6 +6,15 @@ Phases append their public routes (login/OTP, public config, website, verificati
 """
 
 PUBLIC_ROUTES: set[str] = {
+    # Phase 38 — self-serve registration / demo requests / pricing (captcha + rate limits) and the platform gateway
+    # webhook (provider signature verified)
+    "GET /api/v1/public/plans",
+    "POST /api/v1/public/registrations",
+    "GET /api/v1/public/registrations/{id}/status",
+    "POST /api/v1/public/registrations/{id}/verify",
+    "POST /api/v1/public/registrations/{id}/pay",
+    "POST /api/v1/public/demo-requests",
+    "POST /api/v1/public/billing/webhook",
     # Phase 01 — platform configuration for clients before sign-in
     "GET /api/v1/public/config",
     "GET /api/v1/platform/read-only",

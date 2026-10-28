@@ -61,6 +61,16 @@ class FeedbackService:
         )
         return row
 
+    async def mine(self, params: PageParams) -> tuple[list[FeedbackEntry], PaginationMeta]:
+        """Phase 38 ``GET /feedback/me`` — the caller's own entries regardless of ``settings:view_all``."""
+        q = (
+            self.repo._base()
+            .where(FeedbackEntry.user_id == self.principal.id)
+            .order_by(FeedbackEntry.created_at.desc())
+        )
+        rows, pagination = await self.repo.paginate(q, params)
+        return list(rows), pagination
+
     async def list(self, params: PageParams) -> tuple[list[FeedbackEntry], PaginationMeta]:
         """Rule 2."""
         rows, pagination = await self.repo.list_visible(params)

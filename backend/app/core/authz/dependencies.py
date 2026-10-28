@@ -99,6 +99,11 @@ async def _resolve(request: Request, token: str, db: AsyncSession, *, allow_limi
         limited = True
     if await redis_client.exists(f"blacklist:jti:{claims['jti']}"):
         raise APIError(401, ErrorCode.UNAUTHENTICATED, "Token revoked")
+    # Phase 38: an impersonation force-stopped / auto-stopped by the platform revokes its token
+    if claims.get("imp_log") and await redis_client.exists(f"imp_revoked:{claims['imp_log']}"):
+        raise APIError(
+            401, ErrorCode.UNAUTHENTICATED, "The impersonation session was ended", {"reason": "impersonation_ended"}
+        )
     request.state.claims = claims
     # RLS: pin the tenant named by the token BEFORE reading the user row; super admins keep the header override
     header_inst = getattr(request.state, "institution_id", None)
@@ -209,6 +214,26 @@ def super_admin_required() -> PermissionDependency:
         return principal
 
     _dep.__permissions__ = [("features", "manage")]  # type: ignore[attr-defined]
+    return _dep
+
+
+def is_support_agent(principal: Principal) -> bool:
+    """A platform support user (``support_agent`` role, no tenant of its own)."""
+    return "support_agent" in (principal.roles or []) and principal.institution_id is None
+
+
+def platform_permission(module: str, action: str, *, support: bool = True) -> PermissionDependency:
+    """Phase 38 platform console: the super admin, or (``support=True``) a support agent holding ``module:action``.
+    Tenant users never pass — their own ``institutions:manage`` / ``support:manage`` stay inside their tenant."""
+
+    async def _dep(principal: Principal = Depends(get_current_user)) -> Principal:
+        if principal.is_super_admin:
+            return principal
+        if support and is_support_agent(principal) and principal.has(module, action):
+            return principal
+        raise APIError(403, ErrorCode.PERMISSION_DENIED, "Platform console only", {"module": module, "action": action})
+
+    _dep.__permissions__ = [(module, action)]  # type: ignore[attr-defined]
     return _dep
 
 

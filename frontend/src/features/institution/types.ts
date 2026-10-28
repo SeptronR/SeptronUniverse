@@ -196,23 +196,29 @@ export interface SettingsCategory {
 }
 
 export interface PlatformInstitution {
+  // Phase 38 /platform/institutions list row (InstitutionAdminOut)
   id: string;
   name: string;
-  short_name: string | null;
   slug: string;
-  code: string | null;
-  institution_type: string;
-  regulatory_pack: string;
-  timezone: string;
+  type: string;
   status: string;
-  created_at: string;
-  college_count: number;
-  user_count: number;
-  plan_code: string | null;
+  plan: string | null;
+  tier: string | null;
   subscription_status: string | null;
+  ends_on: string | null;
+  students_active: number;
+  staff_active: number;
+  storage_gb: number;
+  health: string;
+  last_login_at: string | null;
+  created_at: string;
+  is_demo: boolean;
 }
 
 export interface OnboardingPayload {
+  template?: 'university' | 'autonomous' | 'affiliated' | 'standalone';
+  trial?: boolean;
+  custom_domain?: string;
   institution: {
     name: string;
     short_name?: string;
@@ -238,6 +244,8 @@ export interface OnboardingResult {
   admin_username: string;
   admin_temp_password: string;
   demo_job_id: string | null;
+  status?: string;
+  subscription_status?: string | null;
 }
 
 export const INSTITUTION_TYPES = [

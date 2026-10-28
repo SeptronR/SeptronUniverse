@@ -47,6 +47,7 @@ from app.api.v1.endpoints import (
     alumni,
     analytics,
     audit_logs,
+    billing,
     announcements,
     appraisals,
     assessment,
@@ -96,6 +97,7 @@ from app.api.v1.endpoints import (
     platform_institutions,
     post_result,
     privacy,
+    public_saas,
     programs,
     rbac,
     recruiter,
@@ -105,11 +107,13 @@ from app.api.v1.endpoints import (
     reports,
     research,
     results,
+    saas_platform,
     scholarships,
     search,
     staff,
     staff_attendance,
     students,
+    support,
     surveys,
     timetable,
     training,
@@ -269,6 +273,13 @@ api_router.include_router(results.public_router)  # public result lookup (rate-l
 api_router.include_router(admissions.public_router)  # public; the tenant dependency checks the feature
 api_router.include_router(jobs.router, dependencies=[feature_required("core.background_jobs")])
 api_router.include_router(search.router, dependencies=[feature_required("search.global")])
+# Phase 38: platform console (/platform/*: super admin / support agent; the core key {core.institution} as Phase 03),
+# tenant billing {core.settings} (+ {data.export_portability} on the export), support tickets {core.settings}, public
+# registration / demo / pricing / gateway webhook routes (PUBLIC_ROUTES)
+api_router.include_router(saas_platform.router, dependencies=[feature_required("core.institution")])
+api_router.include_router(billing.router, dependencies=[feature_required("core.settings")])
+api_router.include_router(support.router, dependencies=[feature_required("core.settings")])
+api_router.include_router(public_saas.router)
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])
 api_router.include_router(feedback.router, dependencies=[feature_required("platform.in_app_feedback")])
 

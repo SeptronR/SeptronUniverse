@@ -11,6 +11,7 @@ from app.db.session import get_db
 from app.schemas.common import Envelope
 from app.schemas.platform import FeedbackCreate, FeedbackResponse
 from app.services.feedback_service import FeedbackService
+from app.utils.pagination import PageParams, page_params
 from app.utils.response import ok
 
 router = APIRouter(prefix="/feedback", tags=["feedback"])
@@ -28,3 +29,15 @@ async def create_feedback(
     response = ok(FeedbackResponse.model_validate(row), message="Thanks for the feedback")
     await store(request, response, db, 201)
     return response
+
+
+@router.get(
+    "/me", summary="My feedback and its triage status (Phase 38)", response_model=Envelope[list[FeedbackResponse]]
+)
+async def my_feedback(
+    params: PageParams = Depends(page_params),
+    principal: Principal = Depends(permission_required("dashboard", "view")),
+    db: AsyncSession = Depends(get_db),
+) -> dict[str, Any]:
+    rows, pagination = await FeedbackService(db, principal).mine(params)
+    return ok([FeedbackResponse.model_validate(r) for r in rows], pagination=pagination)

@@ -1,6 +1,7 @@
 """Request middleware — Prompts/00_PREREQUISITE_Project_Setup.md §3.9.
 
-Execution order (main.py adds them in reverse): GZip → CORS → RequestLogger → InstitutionContext → ReadOnly → Audit.
+Execution order (main.py adds them in reverse): GZip → CORS → RequestLogger → InstitutionContext → TenantUsage →
+ReadOnly → Audit.
 """
 
 import time
@@ -110,6 +111,67 @@ class ReadOnlyModeMiddleware(BaseHTTPMiddleware):
             return bool(inst and await redis_client.get(f"ro:{inst}"))
         except Exception:  # pragma: no cover - degraded Redis
             return False
+
+
+class TenantUsageMiddleware(BaseHTTPMiddleware):
+    """Phase 38 (Prompts/38 §38.6 ``usage_service`` rule 2, ``subscription_service`` rule 5) — per request of a tenant:
+
+    * counts API calls in ``api:{institution}:{yyyymmdd}`` (Redis; summed into ``usage_meters.api_calls``) and refuses
+      calls beyond the tenant's ``api_calls_per_day`` cap (``apicap:{institution}``) with ``429 RATE_LIMITED``
+      (``code: API_CAP``; ``/auth/*`` and the billing / support pages stay reachable);
+    * refuses writes while the subscription is ``expired`` / ``cancelled`` (``sub:{institution}``) with
+      ``403 RULE_VIOLATION`` (``code: SUBSCRIPTION_EXPIRED``) — reads stay open and ``grace`` still writes.
+    Redis is the only source here: an outage never blocks a request.
+    """
+
+    EXEMPT_PREFIXES = (
+        "/api/v1/auth",
+        "/api/v1/billing",
+        "/api/v1/support",
+        "/api/v1/platform",
+        "/api/v1/public",
+        "/api/v1/help",
+        "/api/v1/feedback",
+    )
+    WRITES = {"POST", "PUT", "PATCH", "DELETE"}
+
+    async def dispatch(self, request: Request, call_next: CallNext) -> Response:
+        path = request.url.path
+        inst = getattr(request.state, "institution_id", None)
+        if not inst or not path.startswith("/api/v1") or path.startswith(self.EXEMPT_PREFIXES):
+            return await call_next(request)
+        from datetime import UTC, datetime
+
+        from app.db.session import redis_client
+
+        try:
+            day = datetime.now(UTC).strftime("%Y%m%d")
+            key = f"api:{inst}:{day}"
+            count = int(await redis_client.incr(key))
+            if count == 1:
+                await redis_client.expire(key, 40 * 86400)
+            cap = await redis_client.get(f"apicap:{inst}")
+            if cap and count > int(cap):
+                return error_response(
+                    request,
+                    429,
+                    ErrorCode.RATE_LIMITED,
+                    "The daily API call cap of your plan is reached",
+                    {"code": "API_CAP", "cap": int(cap)},
+                )
+            if request.method in self.WRITES:
+                state = await redis_client.get(f"sub:{inst}")
+                if state in ("expired", "cancelled"):
+                    return error_response(
+                        request,
+                        403,
+                        ErrorCode.RULE_VIOLATION,
+                        "The subscription has expired; renew it to make changes",
+                        {"code": "SUBSCRIPTION_EXPIRED", "status": state},
+                    )
+        except Exception:  # pragma: no cover - degraded Redis never blocks requests
+            pass
+        return await call_next(request)
 
 
 class AuditMiddleware(BaseHTTPMiddleware):

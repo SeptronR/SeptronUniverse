@@ -20,6 +20,25 @@ const ForgotPasswordPage = lazy(() => import('@/pages/ForgotPasswordPage'));
 const ResetPasswordPage = lazy(() => import('@/pages/ResetPasswordPage'));
 const MfaEnrolmentPage = lazy(() => import('@/pages/MfaEnrolmentPage'));
 const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
+// Phase 38 — super-admin console + tenant support / billing / help authoring / read-only windows
+const SaasDashboardPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasDashboardPage })));
+const SaasInstitutionDetailPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasInstitutionDetailPage })));
+const SaasPlansPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasPlansPage })));
+const SaasBillingPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasBillingPage })));
+const SaasUsagePage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasUsagePage })));
+const SaasImpersonationsPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasImpersonationsPage })));
+const SaasSupportPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasSupportPage })));
+const SaasTicketPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasTicketPage })));
+const SaasHelpPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasHelpPage })));
+const SaasFeedbackPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasFeedbackPage })));
+const SaasAnnouncementsPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasAnnouncementsPage })));
+const SaasHealthPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasHealthPage })));
+const SaasReadOnlyPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasReadOnlyPage })));
+const SaasSettingsPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasSettingsPage })));
+const SaasRegistrationsPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasRegistrationsPage })));
+const SaasDemoRequestsPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasDemoRequestsPage })));
+const SaasAuditPage = lazy(() => import('@/features/saas/pages/SuperAdminPages').then((m) => ({ default: m.SaasAuditPage })));
+const TenantBillingPage = lazy(() => import('@/features/saas/pages/TenantPages').then((m) => ({ default: m.TenantBillingPage })));
 const AccessDeniedPage = lazy(() => import('@/pages/AccessDeniedPage'));
 const FeatureDisabledPage = lazy(() => import('@/pages/FeatureDisabledPage'));
 const PortalHomePage = lazy(() => import('@/pages/PortalHomePage'));
@@ -41,7 +60,6 @@ const HolidaysPage = lazy(() => import('@/features/institution/pages/HolidaysPag
 const SettingsPage = lazy(() => import('@/features/institution/pages/SettingsPage'));
 const NumberSequencesPage = lazy(() => import('@/features/institution/pages/NumberSequencesPage'));
 const PlatformInstitutionsPage = lazy(() => import('@/features/institution/pages/PlatformInstitutionsPage'));
-const PlatformInstitutionDetailPage = lazy(() => import('@/features/institution/pages/PlatformInstitutionDetailPage'));
 // Phase 04 — communication core & approvals
 const CommunicationsPage = lazy(() => import('@/features/communication/pages/CommunicationsPage'));
 const AnnouncementsPage = lazy(() => import('@/features/communication/pages/AnnouncementsPage'));
@@ -619,6 +637,12 @@ export const router = createBrowserRouter([
               ['/admin/settings', 'core.settings', 'settings', 'view', <AuSettingsCataloguePage key="s" />],
               ['/admin/settings/classic', 'core.settings', 'settings', 'view', <SettingsPage key="sc" />],
               ['/admin/number-sequences', 'institution.number_sequences_custom', 'settings', 'manage', <NumberSequencesPage key="n" />],
+              // Phase 38 — tenant SaaS pages (the API narrows to the institution admin / own tickets)
+              ['/admin/billing', 'core.settings', 'settings', 'view', <TenantBillingPage key="bl" />],
+              ['/admin/support', 'core.settings', 'support', 'view', <SaasSupportPage key="sp" tenant />],
+              ['/admin/support/:id', 'core.settings', 'support', 'view', <SaasTicketPage key="st" tenant />],
+              ['/admin/help-articles', 'platform.help_center', 'settings', 'manage', <SaasHelpPage key="ha" tenant />],
+              ['/admin/read-only', 'platform.read_only_mode', 'settings', 'manage', <SaasReadOnlyPage key="ro" tenant />],
             ] as const
           ).map(([path, feature, module, action, node]) => ({
             path,
@@ -1093,14 +1117,31 @@ export const router = createBrowserRouter([
       {
         path: '/platform',
         element: <SuperAdminRoute />,
-        children: [{ index: true, element: page(<DashboardPage />) }],
+        children: [{ index: true, element: page(<SaasDashboardPage />) }],
       },
       {
         path: '/super-admin',
         element: <SuperAdminRoute />,
         children: [
+          // Phase 38 console
+          { index: true, element: page(<SaasDashboardPage />) },
           { path: 'institutions', element: page(<PlatformInstitutionsPage />) },
-          { path: 'institutions/:id', element: page(<PlatformInstitutionDetailPage />) },
+          { path: 'institutions/:id', element: page(<SaasInstitutionDetailPage />) },
+          { path: 'plans', element: page(<SaasPlansPage />) },
+          { path: 'billing', element: page(<SaasBillingPage />) },
+          { path: 'usage', element: page(<SaasUsagePage />) },
+          { path: 'impersonations', element: page(<SaasImpersonationsPage />) },
+          { path: 'support', element: page(<SaasSupportPage />) },
+          { path: 'support/:id', element: page(<SaasTicketPage />) },
+          { path: 'help', element: page(<SaasHelpPage />) },
+          { path: 'feedback', element: page(<SaasFeedbackPage />) },
+          { path: 'announcements', element: page(<SaasAnnouncementsPage />) },
+          { path: 'health', element: page(<SaasHealthPage />) },
+          { path: 'read-only', element: page(<SaasReadOnlyPage />) },
+          { path: 'settings', element: page(<SaasSettingsPage />) },
+          { path: 'registrations', element: page(<SaasRegistrationsPage />) },
+          { path: 'demo-requests', element: page(<SaasDemoRequestsPage />) },
+          { path: 'audit', element: page(<SaasAuditPage />) },
           { path: 'institutions/:id/features', element: page(<InstitutionFeaturesPage />) },
           { path: 'features/matrix', element: page(<FeatureMatrixPage />) },
         ],

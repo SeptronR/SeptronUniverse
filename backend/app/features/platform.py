@@ -47,3 +47,13 @@ register_feature(
     default_enabled=True,
     min_plan_tier="starter",
 )
+# Phase 38: tenant data export (the institution admin's ``POST /billing/export``; user exports are Phase 43 DSR)
+register_feature(
+    key="data.export_portability",
+    group="data",
+    name="Data export",
+    description="tenant/user exports",
+    default_enabled=True,
+    min_plan_tier="standard",
+    depends_on=("core.background_jobs",),
+)

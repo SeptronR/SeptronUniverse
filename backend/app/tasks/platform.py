@@ -76,19 +76,19 @@ def integrations_health() -> dict[str, int]:
     return run_async(_integrations_health())
 
 
-async def _integrations_health() -> dict[str, int]:
-    """Health-check every configured integration connection (mock adapters until Phase 41 wires providers)."""
+async def _integrations_health(connection_ids: list[Any] | None = None) -> dict[str, int]:
+    """Health-check every configured integration connection (mock adapters until Phase 41 wires providers); Phase 38
+    retries pass ``connection_ids`` and every run emits ``integrations.health_checked`` for the outage rollup."""
     from app.db.session import PlatformSessionLocal
     from app.integrations.registry import get_adapter
     from app.models.platform import IntegrationConnection, IntegrationHealthCheck
 
     checked = healthy = 0
     async with PlatformSessionLocal() as db:
-        rows = (
-            (await db.execute(select(IntegrationConnection).where(IntegrationConnection.status != "disabled")))
-            .scalars()
-            .all()
-        )
+        stmt = select(IntegrationConnection).where(IntegrationConnection.status != "disabled")
+        if connection_ids:
+            stmt = stmt.where(IntegrationConnection.id.in_(connection_ids))
+        rows = (await db.execute(stmt)).scalars().all()
         for conn in rows:
             t0 = time.perf_counter()
             try:
@@ -107,6 +107,16 @@ async def _integrations_health() -> dict[str, int]:
             conn.status = "healthy" if ok else ("degraded" if conn.status == "healthy" else "failed")
             checked += 1
             healthy += int(ok)
+        if checked:
+            from app.core import events
+
+            await events.emit(
+                db,
+                institution_id=None,
+                event_type="integrations.health_checked",
+                payload={"checked": checked, "healthy": healthy},
+                aggregate_type="integration_connection",
+            )
         await db.commit()
     if checked:
         log.info("integrations_health", checked=checked, healthy=healthy)

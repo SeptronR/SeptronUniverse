@@ -5,12 +5,14 @@ Public routes (no auth, listed in ``PUBLIC_ROUTES``): ``GET /public/config``, ``
 window additionally requires the super admin (service rule 1) — and the ``platform.read_only_mode`` feature.
 """
 
+import uuid
 from typing import Any
 
 from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.authz.dependencies import Principal, permission_required
+from app.api.v1.endpoints.saas_deps import dual_db
+from app.core.authz.dependencies import Principal, any_permission_required, permission_required
 from app.core.features import feature_required
 from app.db.session import get_db
 from app.schemas.common import Envelope
@@ -21,8 +23,10 @@ from app.schemas.platform import (
     ReadOnlyModeRequest,
     ReadOnlyState,
 )
+from app.schemas.saas import ReadOnlyScheduleIn, ReadOnlyWindowOut
 from app.services.platform_service import PlatformService
 from app.services.read_only_service import ReadOnlyService
+from app.services.saas.read_only_schedule_service import ReadOnlyScheduleService
 from app.utils.response import ok
 
 router = APIRouter(tags=["platform"])
@@ -88,3 +92,50 @@ async def mobile_config_get(
 )
 async def mobile_config_post(body: MobileConfigRequest, db: AsyncSession = Depends(get_db)) -> dict[str, Any]:
     return ok(await PlatformService(db).mobile_config(body))
+
+
+# ---- Phase 38: scheduled read-only / maintenance windows -----------------------------------------------------------
+SCHEDULER = any_permission_required(("settings", "manage"), ("platform", "manage"))
+
+
+@router.get(
+    "/platform/read-only/schedules",
+    summary="Read-only windows (own tenant + platform; super admin: all)",
+    dependencies=[feature_required("platform.read_only_mode")],
+    response_model=Envelope[list[ReadOnlyWindowOut]],
+)
+async def read_only_schedules(
+    institution_id: uuid.UUID | None = None,
+    include_past: bool = False,
+    principal: Principal = Depends(any_permission_required(("settings", "view"), ("platform", "view"))),
+    db: AsyncSession = Depends(dual_db),
+) -> dict[str, Any]:
+    return ok(await ReadOnlyScheduleService(db, principal).list_windows(institution_id, include_past))
+
+
+@router.post(
+    "/platform/read-only/schedules",
+    status_code=201,
+    summary="Schedule a read-only window (tenant: own institution; platform: super admin)",
+    dependencies=[feature_required("platform.read_only_mode")],
+    response_model=Envelope[ReadOnlyWindowOut],
+)
+async def schedule_read_only(
+    body: ReadOnlyScheduleIn,
+    request: Request,
+    principal: Principal = Depends(SCHEDULER),
+    db: AsyncSession = Depends(dual_db),
+) -> dict[str, Any]:
+    return ok(await ReadOnlyScheduleService(db, principal, request).schedule(body), message="Window scheduled")
+
+
+@router.delete(
+    "/platform/read-only/schedules/{id}",
+    summary="Cancel a read-only window",
+    dependencies=[feature_required("platform.read_only_mode")],
+    response_model=Envelope[ReadOnlyWindowOut],
+)
+async def cancel_read_only(
+    id: uuid.UUID, request: Request, principal: Principal = Depends(SCHEDULER), db: AsyncSession = Depends(dual_db)
+) -> dict[str, Any]:
+    return ok(await ReadOnlyScheduleService(db, principal, request).cancel(id), message="Window cancelled")

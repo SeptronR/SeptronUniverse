@@ -100,6 +100,10 @@ class AppRoutes {
   // Phase 37 — audit & security (admin / registrar: audit list, anomalies, effective settings) and COE exam audit
   static const auditHub = '/app/audit';
   static const examAudit = '/app/exam-audit';
+  // Phase 38 — platform hub (super admin / support agent), tenant support and billing (institution admin)
+  static const platformHub = '/app/platform';
+  static const tenantSupport = '/app/support';
+  static const tenantBilling = '/app/billing';
   static const myInspections = '/app/inspections';
   // Phase 31 — PhD (scholar hub / guide scholars / research cell approvals)
   static const scholarHub = '/app/scholar';

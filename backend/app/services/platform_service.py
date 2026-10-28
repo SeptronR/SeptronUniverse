@@ -127,6 +127,14 @@ class PlatformService:
                     merged[k] = {**merged[k], **v}
                 else:
                     merged[k] = v
+        # Phase 38: the typed platform key ``mobile.min_versions`` ({android, ios, force_update}) edited on the
+        # super-admin settings page wins; force_update raises the hard floor to the same versions
+        typed = await self.repo.platform_setting("mobile.min_versions")
+        if isinstance(typed, dict):
+            versions = {p: str(typed[p]) for p in ("android", "ios") if typed.get(p)}
+            merged["min_versions"] = {**merged["min_versions"], **versions}
+            if typed.get("force_update"):
+                merged["force_update_below"] = {**merged["force_update_below"], **versions}
         return merged
 
     async def readiness(self) -> tuple[bool, dict[str, Any]]:

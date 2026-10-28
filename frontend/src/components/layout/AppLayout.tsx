@@ -10,6 +10,7 @@ import { useReadOnlyPoll } from '@/features/platform/hooks';
 import { useStopImpersonation } from '@/features/auth/hooks';
 import { Button } from '@/components/ui/Button';
 import { wsClient } from '@/lib/ws';
+import { PlatformBanners } from '@/features/saas/components/PlatformBanners';
 
 /** Admin shell: sidebar + navbar + banners (impersonation, read-only). Portals use PortalLayout instead. */
 export function AppLayout({ children }: { children: ReactNode }) {
@@ -47,6 +48,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
       </div>
       <div className="flex min-w-0 flex-1 flex-col">
         <Navbar onToggleSidebar={() => setCollapsed((c) => !c)} />
+        <PlatformBanners />
         {impersonatorId && (
           <div role="status" className="flex items-center gap-2 bg-warning px-4 py-1.5 text-sm text-warning-foreground">
             <ShieldAlert className="h-4 w-4" />

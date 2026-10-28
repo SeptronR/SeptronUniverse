@@ -172,7 +172,8 @@ class LoginResponse(PrincipalPayload):
 
 
 class MeResponse(PrincipalPayload):
-    pass
+    # Phase 38: shell banners — subscription state, provider outage, API cap, active impersonation, announcements
+    banners: dict[str, Any] | None = None
 
 
 class SsoStartResponse(BaseModel):

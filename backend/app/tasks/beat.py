@@ -293,7 +293,7 @@ register_beat(
 register_beat("auth.cleanup_sessions", "beat.auth.cleanup_sessions", crontab(minute=5))
 register_beat("auth.expire_time_boxed_accounts", "beat.auth.expire_time_boxed_accounts", crontab(hour=1, minute=0))
 register_beat("subscriptions.reminders", "beat.subscriptions.reminders", crontab(hour=6, minute=0))
-register_beat("usage.meter", "beat.usage.meter", crontab(day_of_month="1", hour=2, minute=30))
+# ``usage.meter`` moved to Phase 38 (``usage.meter_month`` / ``usage.meter_incremental`` below)
 
 # ---- Phase 03 institution structure / sessions (app/tasks/institution.py) ------------------------------------------------
 register_beat("sequences.reset", "beat.sequences.reset", crontab(hour=0, minute=5))
@@ -393,3 +393,16 @@ register_beat("retention.purge_daily", "beat.retention.purge_daily", crontab(hou
 register_beat(
     "retention.archive_monthly", "beat.retention.archive_monthly", crontab(day_of_month=1, hour=20, minute=30)
 )  # 1st, 02:00 IST on the 2nd (UTC crontab)
+
+# ---- Phase 38 SaaS operations (app/tasks/saas.py) ---------------------------------------------------------------------------
+register_beat("usage.meter_incremental", "beat.usage.meter_incremental", crontab(hour=19, minute=30))  # 01:00 IST
+register_beat("usage.meter_month", "beat.usage.meter_month", crontab(day_of_month=1, hour=1, minute=0))  # 1st, 06:30 IST
+register_beat("billing.invoices_monthly", "beat.billing.invoices_monthly", crontab(day_of_month=1, hour=0, minute=30))  # 06:00 IST
+register_beat("billing.dunning", "beat.billing.dunning", crontab(hour=2, minute=30))  # 08:00 IST
+register_beat("subscriptions.state_machine", "beat.subscriptions.state_machine", crontab(hour=2, minute=45))  # 08:15 IST
+register_beat("support.sla_scan", "beat.support.sla_scan", crontab(minute="*/15"))
+register_beat("support.auto_close", "beat.support.auto_close", crontab(hour=3, minute=10))  # 08:40 IST
+register_beat("registrations.expire", "beat.registrations.expire", crontab(minute=20))  # hourly
+register_beat("demo.reset_nightly", "beat.demo.reset_nightly", crontab(minute="*/15"))  # fires on demo.reset_cron (UTC)
+register_beat("platform.health_rollup", "beat.platform.health_rollup", 300.0)  # every 5 min
+register_beat("impersonation.auto_stop", "beat.impersonation.auto_stop", 60.0)  # + scheduled read-only windows
