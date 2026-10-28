@@ -54,6 +54,7 @@ celery = Celery(
         "app.tasks.reports",
         "app.tasks.audit",
         "app.tasks.saas",
+        "app.tasks.portals",
         "app.tasks.integrations",
     ],
 )

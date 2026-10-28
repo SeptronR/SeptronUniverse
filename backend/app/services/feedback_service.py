@@ -47,7 +47,13 @@ class FeedbackService:
             action="feedback",
             record_type="feedback_entry",
             record_id=row.id,
-            new={"page": body.page, "category": body.category, "rating": body.rating, "client": body.client},
+            new={
+                "page": body.page,
+                "category": body.category,
+                "rating": body.rating,
+                "client": body.client,
+                "persona": body.persona,
+            },
             request=request,
         )
         await events.emit(
@@ -59,6 +65,16 @@ class FeedbackService:
             aggregate_id=row.id,
             actor_user_id=self.principal.id,
         )
+        if body.persona:  # Phase 39: portal feedback (page + persona) for the Phase 38 triage
+            await events.emit(
+                self.db,
+                institution_id=self.principal.institution_id,
+                event_type="portal.feedback_submitted",
+                payload={"id": str(row.id), "page": body.page, "persona": body.persona, "rating": body.rating},
+                aggregate_type="feedback_entry",
+                aggregate_id=row.id,
+                actor_user_id=self.principal.id,
+            )
         return row
 
     async def mine(self, params: PageParams) -> tuple[list[FeedbackEntry], PaginationMeta]:

@@ -139,6 +139,10 @@ async def unhandled_handler(request: Request, exc: Exception) -> ORJSONResponse:
 
 app.include_router(api_router, prefix="/api/v1")
 app.include_router(ws_router)
+from app.api.v1.endpoints import portals  # noqa: E402  (after the router registered every feature key)
+
+# Phase 39: universal-link association files at the site root (public; outside /api/v1)
+app.include_router(portals.well_known_router)
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 

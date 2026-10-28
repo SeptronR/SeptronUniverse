@@ -17,6 +17,7 @@ DELETE /api/v1/library/eresources/{id}
 DELETE /api/v1/library/reservations/{id}
 DELETE /api/v1/mentoring/slots/{id}
 DELETE /api/v1/modules/{id}
+DELETE /api/v1/push/subscribe
 DELETE /api/v1/questions/{id}
 DELETE /api/v1/registration/me/items/{item_id}
 DELETE /api/v1/reports/saved/{sid}
@@ -192,6 +193,7 @@ POST /api/v1/governance/meetings/{id}/minutes
 POST /api/v1/governance/meetings/{id}/notice
 POST /api/v1/governance/resolutions/{id}/atr
 POST /api/v1/governance/resolutions/{id}/link
+POST /api/v1/help/helpful/{slug}
 POST /api/v1/hostel-applications
 POST /api/v1/hostel-applications/{id}/allot-manual
 POST /api/v1/hostel-applications/{id}/decline
@@ -238,7 +240,10 @@ POST /api/v1/mess-subscriptions/{id}/change
 POST /api/v1/mess-subscriptions/{id}/close
 POST /api/v1/mobile/config
 POST /api/v1/modules/{id}/contents
+POST /api/v1/notifications/mark-read
 POST /api/v1/notifications/read-all
+POST /api/v1/notifications/snooze
+POST /api/v1/notifications/test
 POST /api/v1/notifications/{id}/read
 POST /api/v1/number-sequences/{id}/preview
 POST /api/v1/on-duty/{id}/documents
@@ -290,10 +295,14 @@ POST /api/v1/policies/{id}/acknowledge
 POST /api/v1/policies/{id}/publish
 POST /api/v1/policies/{id}/submit
 POST /api/v1/policies/{id}/supersede
+POST /api/v1/portal/wards/switch
 POST /api/v1/posts/{id}/mark-answer
 POST /api/v1/posts/{id}/upvote
 POST /api/v1/program-regulations/{id}/structure/validate
 POST /api/v1/public/results/lookup
+POST /api/v1/push/subscribe
+POST /api/v1/push/test
+POST /api/v1/pwa/installed
 POST /api/v1/question-papers/generate
 POST /api/v1/questions
 POST /api/v1/quiz-attempts/{id}/submit
@@ -425,6 +434,7 @@ PUT /api/v1/mentoring/sessions/{id}
 PUT /api/v1/mentoring/sessions/{id}/action-items/{idx}
 PUT /api/v1/modules/{id}
 PUT /api/v1/notification-preferences/me
+PUT /api/v1/notifications/preferences
 PUT /api/v1/phd/dc-meetings/{mid}/minutes
 PUT /api/v1/phd/fellowships/{fid}
 PUT /api/v1/phd/scholars/{sid}
@@ -448,3 +458,4 @@ PUT /api/v1/rti/requests/{id}
 PUT /api/v1/study-materials/{id}
 PUT /api/v1/surveys/{id}
 PUT /api/v1/threads/{id}
+PUT /api/v1/tours/state

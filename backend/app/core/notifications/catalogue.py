@@ -42,6 +42,9 @@ CATEGORIES = (
     "grievances",
     "hr",
     "emergency",
+    # Phase 39 notification centre
+    "events",
+    "system",
 )
 MANDATORY_CATEGORIES = frozenset({"security", "emergency"})
 
@@ -3390,8 +3393,63 @@ SAAS_EVENTS: tuple[EventDef, ...] = (
     ),
 )
 
+# Phase 39: portals, push, digests, tours
+PORTAL_EVENTS: tuple[EventDef, ...] = (
+    EventDef(
+        "portal.welcome",
+        "system",
+        "Portal welcome",
+        "Welcome to {{ app_name }}",
+        "Hi {{ name }}, your {{ persona }} portal is ready. Install it on your phone from the browser menu.",
+        ("app_name", "persona"),
+        ("in_app", "email"),
+        hi_body="नमस्ते {{ name }}, आपका {{ persona }} पोर्टल तैयार है।",
+        link="/",
+    ),
+    EventDef(
+        "portal.push_enabled",
+        "system",
+        "Push enabled",
+        "Push notifications are on",
+        "You will now receive notifications on this device. Manage categories under Notification settings.",
+        (),
+        ("in_app",),
+        hi_body="इस डिवाइस पर सूचनाएँ चालू हो गई हैं।",
+    ),
+    EventDef(
+        "portal.test",
+        "system",
+        "Test notification",
+        "{{ title }}",
+        "{{ body }}",
+        ("title", "body"),
+        ("in_app", "push"),
+    ),
+    EventDef(
+        "notifications.unread_digest",
+        "system",
+        "Unread digest",
+        "Your {{ period }} summary: {{ total }} unread",
+        "Unread notifications by category — {{ summary }}.",
+        ("period", "summary", "total"),
+        ("email", "push"),
+        hi_body="आपकी {{ period }} सूचना सारांश: {{ summary }}",
+        link="/",
+    ),
+    EventDef(
+        "tour.completed",
+        "system",
+        "Tour completed (analytics only)",
+        "Tour completed",
+        "{{ key }}",
+        ("key",),
+        (),
+    ),
+)
+
 EVENTS = (
     EVENTS
+    + PORTAL_EVENTS
     + STUDENT_EVENTS
     + ADMISSION_EVENTS
     + REGISTRATION_EVENTS

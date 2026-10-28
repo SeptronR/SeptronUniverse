@@ -46,13 +46,13 @@ from app.api.v1.endpoints import (
     affiliation,
     alumni,
     analytics,
-    audit_logs,
-    billing,
     announcements,
     appraisals,
     assessment,
     attendance,
+    audit_logs,
     auth,
+    billing,
     calendar,
     campus,
     catalog,
@@ -95,10 +95,11 @@ from app.api.v1.endpoints import (
     placement,
     platform,
     platform_institutions,
+    portals,
     post_result,
     privacy,
-    public_saas,
     programs,
+    public_saas,
     rbac,
     recruiter,
     recruitment,
@@ -140,6 +141,8 @@ api_router.include_router(platform_institutions.router, dependencies=[feature_re
 api_router.include_router(fees.public_router)  # gateway webhook; signature + {fees.online_payment} checked inside
 api_router.include_router(communication.router, dependencies=[feature_required("core.notifications_inapp")])
 api_router.include_router(notifications.router, dependencies=[feature_required("core.notifications_inapp")])
+# Phase 39: /announcements/me before /announcements/{id}
+api_router.include_router(portals.early_router, dependencies=[feature_required("comms.announcements")])
 api_router.include_router(announcements.router, dependencies=[feature_required("comms.announcements")])
 api_router.include_router(workflow.router, dependencies=[feature_required("workflow.engine")])
 api_router.include_router(programs.router, dependencies=[feature_required("academics.programs")])
@@ -281,6 +284,11 @@ api_router.include_router(billing.router, dependencies=[feature_required("core.s
 api_router.include_router(support.router, dependencies=[feature_required("core.settings")])
 api_router.include_router(public_saas.router)
 api_router.include_router(help.router, dependencies=[feature_required("platform.help_center")])
+# Phase 39: portal shell / unified pages / notification centre / push / tours / contextual help (self only; per-route
+# features) after the Phase 04 notifications router (``/notifications/unread-count`` stays reachable) and the public
+# manifest / PWA config / VAPID key / icons / locale packs (PUBLIC_ROUTES)
+api_router.include_router(portals.router, dependencies=[feature_required("core.notifications_inapp")])
+api_router.include_router(portals.public_router)
 api_router.include_router(feedback.router, dependencies=[feature_required("platform.in_app_feedback")])
 
 if settings.APP_ENV == "development":

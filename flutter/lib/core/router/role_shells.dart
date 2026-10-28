@@ -449,6 +449,13 @@ final List<MoreMenuModule> moreMenuModules = [
       color: Colors.deepPurple,
       permission: 'exams:audit',
       feature: 'exams.sessions'),
+  // Phase 39 — notification centre (every role)
+  const MoreMenuModule(
+      titleKey: 'notifications',
+      icon: Icons.notifications_active_outlined,
+      route: AppRoutes.notificationCentre,
+      color: Colors.orange,
+      feature: 'core.notifications_inapp'),
   // Phase 38 — platform hub (super admin / support agent), support and billing (institution admin)
   const MoreMenuModule(
       titleKey: 'platform',

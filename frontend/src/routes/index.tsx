@@ -42,6 +42,19 @@ const TenantBillingPage = lazy(() => import('@/features/saas/pages/TenantPages')
 const AccessDeniedPage = lazy(() => import('@/pages/AccessDeniedPage'));
 const FeatureDisabledPage = lazy(() => import('@/pages/FeatureDisabledPage'));
 const PortalHomePage = lazy(() => import('@/pages/PortalHomePage'));
+const PortalUnified = (name: string) =>
+  lazy(() => import('@/features/portals/pages/UnifiedPages').then((m) => ({ default: (m as unknown as Record<string, React.ComponentType>)[name] })));
+const PortalMorePage = PortalUnified('PortalMorePage');
+const PortalRequestsPage = PortalUnified('PortalRequestsPage');
+const PortalDocumentsPage = PortalUnified('PortalDocumentsPage');
+const PortalPaymentsPage = PortalUnified('PortalPaymentsPage');
+const PortalApprovalsPage = PortalUnified('PortalApprovalsPage');
+const PortalCalendarPage = PortalUnified('PortalCalendarPage');
+const PortalTimelinePage = PortalUnified('PortalTimelinePage');
+const PortalNotificationsPage = PortalUnified('PortalNotificationsPage');
+const PortalNotificationSettingsPage = PortalUnified('PortalNotificationSettingsPage');
+const PortalProfilePage = PortalUnified('PortalProfilePage');
+const OfflinePage = PortalUnified('OfflinePage');
 // Phase 02 — auth, RBAC, features, entitlements
 const ProfilePage = lazy(() => import('@/features/auth/pages/ProfilePage'));
 const UsersPage = lazy(() => import('@/features/auth/pages/UsersPage'));
@@ -362,7 +375,6 @@ const DocRegistersPage = lazy(() => import('@/features/documents/pages/DocumentP
 const DocRequestsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.RequestsQueuePage })));
 const DocSettingsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.DocumentSettingsPage })));
 const MyDocumentsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.MyDocumentsPage })));
-const WardDocumentsPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.WardDocumentsPage })));
 const DocVerifyPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.DocVerifyPage })));
 const VerifyLandingPage = lazy(() => import('@/features/documents/pages/DocumentPages').then((m) => ({ default: m.VerifyLandingPage })));
 // Phase 25 — calendar, events & facilities
@@ -524,6 +536,21 @@ const ApplicantStatusPage = lazy(() => import('@/features/admissions/pages/Appli
 const JobsPage = lazy(() => import('@/features/platform/pages/JobsPage'));
 const HelpPage = lazy(() => import('@/features/platform/pages/HelpPage'));
 const SearchPage = lazy(() => import('@/features/platform/pages/SearchPage'));
+
+/** Phase 39 unified portal pages, appended to every persona (paths resolve under the persona prefix). */
+const portalPages = (skip: string[] = []) =>
+  [
+  { path: 'more', element: page(<PortalMorePage />) },
+  { path: 'requests', element: page(<PortalRequestsPage />) },
+  { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><PortalDocumentsPage /></FeatureRoute>) },
+  { path: 'payments', element: page(<FeatureRoute feature="fees.core"><PortalPaymentsPage /></FeatureRoute>) },
+  { path: 'approvals', element: page(<FeatureRoute feature="workflow.engine"><PortalApprovalsPage /></FeatureRoute>) },
+  { path: 'calendar', element: page(<PortalCalendarPage />) },
+  { path: 'timeline', element: page(<PortalTimelinePage />) },
+  { path: 'notifications', element: page(<PortalNotificationsPage />) },
+  { path: 'notifications/settings', element: page(<FeatureRoute feature="comms.preferences"><PortalNotificationSettingsPage /></FeatureRoute>) },
+  { path: 'profile', element: page(<PortalProfilePage />) },
+  ].filter((r) => !skip.includes(r.path));
 
 const page = (node: React.ReactNode) => (
   <ErrorBoundary>
@@ -1152,6 +1179,7 @@ export const router = createBrowserRouter([
         element: <PortalRoute roles={['student', 'learner']} title="Student" />,
         // Phase 07 — dashboard + self-service; pending undertakings gate every page but the dashboard / undertakings
         children: [
+          ...portalPages(['profile']),
           { index: true, element: page(<FeatureRoute feature="portals.student"><StudentHomePage /></FeatureRoute>) },
           { path: 'undertakings', element: page(<StudentUndertakingsPage />) },
           ...(
@@ -1177,7 +1205,6 @@ export const router = createBrowserRouter([
               ['exams/malpractice', <FeatureRoute key="smp" feature="results.malpractice"><StudentMalpracticePage /></FeatureRoute>],
               ['transcripts', <FeatureRoute key="str" feature="results.transcripts"><StudentTranscriptsPage /></FeatureRoute>],
               ['transport', <FeatureRoute key="tp" feature="transport.core"><MyTransportPage /></FeatureRoute>],
-              ['documents', <FeatureRoute key="doc" feature="documents.templates"><MyDocumentsPage /></FeatureRoute>],
               ['mentor', <FeatureRoute key="ssm" feature="mentoring.core"><SsStudentMentorPage /></FeatureRoute>],
               ['grievances', <FeatureRoute key="ssg" feature="grievances.core"><SsStudentGrievancesPage /></FeatureRoute>],
               ['discipline', <FeatureRoute key="ssd" feature="discipline.core"><SsStudentDisciplinePage /></FeatureRoute>],
@@ -1192,6 +1219,7 @@ export const router = createBrowserRouter([
         path: '/parent',
         element: <PortalRoute roles={['parent']} title="Parent" />,
         children: [
+          ...portalPages(),
           { index: true, element: page(<FeatureRoute feature="portals.parent"><ParentHomePage /></FeatureRoute>) },
           { path: 'timetable', element: page(<FeatureRoute feature="timetable.core"><MyTimetablePage /></FeatureRoute>) },
           { path: 'attendance', element: page(<FeatureRoute feature="attendance.core"><ParentAttendancePage /></FeatureRoute>) },
@@ -1201,7 +1229,6 @@ export const router = createBrowserRouter([
           { path: 'library', element: page(<FeatureRoute feature="library.core"><WardLibraryPage /></FeatureRoute>) },
           { path: 'hostel', element: page(<FeatureRoute feature="hostel.core"><ParentHostelPage /></FeatureRoute>) },
           { path: 'transport', element: page(<FeatureRoute feature="transport.core"><ParentTransportPage /></FeatureRoute>) },
-          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><WardDocumentsPage /></FeatureRoute>) },
           { path: 'support', element: page(<FeatureRoute feature="mentoring.core"><SsParentSupportPage /></FeatureRoute>) },
           { path: 'placement', element: page(<FeatureRoute feature="placement.core"><PlParentPlacementPage /></FeatureRoute>) },
         ],
@@ -1210,6 +1237,7 @@ export const router = createBrowserRouter([
         path: '/faculty',
         element: <PortalRoute roles={['faculty', 'guest_faculty']} title="Faculty" />,
         children: [
+          ...portalPages(),
           { index: true, element: page(<PortalHomePage />) },
           { path: 'offerings', element: page(<FacultyOfferingsPage />) },
           { path: 'offerings/:id', element: page(<OfferingRosterPage />) },
@@ -1246,13 +1274,13 @@ export const router = createBrowserRouter([
           // Phase 32 — assigned criterion responses and own evidence
           { path: 'accreditation', element: page(<FeatureRoute feature="accreditation.iqac_cycles"><FacultyAccreditationPage /></FeatureRoute>) },
           { path: 'scholars/:id', element: page(<FeatureRoute feature="phd.core"><PhdScholarPage /></FeatureRoute>) },
-          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
       {
         path: '/alumni',
         element: <PortalRoute roles={['alumni']} title="Alumni" />,
         children: [
+          ...portalPages(['profile']),
           // Phase 29 — alumni portal {alumni.portal}: home, profile & privacy, directory, events, jobs, give
           { index: true, element: page(<FeatureRoute feature="alumni.portal"><AlHomePage /></FeatureRoute>) },
           { path: 'profile', element: page(<FeatureRoute feature="alumni.portal"><AlProfileSelfPage /></FeatureRoute>) },
@@ -1260,13 +1288,13 @@ export const router = createBrowserRouter([
           { path: 'events', element: page(<FeatureRoute feature="alumni.core"><AlEventsPortalPage /></FeatureRoute>) },
           { path: 'jobs', element: page(<FeatureRoute feature="alumni.jobs_board"><AlJobsPortalPage /></FeatureRoute>) },
           { path: 'give', element: page(<FeatureRoute feature="alumni.fundraising"><AlGivePage /></FeatureRoute>) },
-          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
       {
         path: '/warden',
         element: <PortalRoute roles={['hostel_warden', 'hostel_gate_staff']} title="Warden" />,
         children: [
+          ...portalPages(),
           { index: true, element: page(<PortalHomePage />) },
           { path: 'gate', element: page(<PortalHomePage />) },
         ],
@@ -1274,7 +1302,9 @@ export const router = createBrowserRouter([
       {
         path: '/driver',
         element: <PortalRoute roles={['driver']} title="Driver" />,
-        children: [{ index: true, element: page(<FeatureRoute feature="transport.core"><DriverPage /></FeatureRoute>) }],
+        children: [
+          ...portalPages(),
+          { index: true, element: page(<FeatureRoute feature="transport.core"><DriverPage /></FeatureRoute>) }],
       },
       {
         path: '/vendor',
@@ -1284,13 +1314,16 @@ export const router = createBrowserRouter([
       {
         path: '/evaluator',
         element: <PortalRoute roles={['external_examiner']} title="Evaluator" />,
-        children: [{ index: true, element: page(<PortalHomePage />) }],
+        children: [
+          ...portalPages(),
+          { index: true, element: page(<PortalHomePage />) }],
       },
       {
         path: '/scholar',
         element: <PortalRoute roles={['research_scholar']} title="Scholar" />,
         // Phase 31 — scholar portal {phd.scholar_portal}: dashboard, coursework, progress & DC, thesis & viva, fellowship, requests
         children: [
+          ...portalPages(),
           { index: true, element: page(<FeatureRoute feature="phd.scholar_portal"><PhdScholarHomePage /></FeatureRoute>) },
           { path: 'coursework', element: page(<FeatureRoute feature="phd.coursework"><PhdScholarCourseworkPage /></FeatureRoute>) },
           { path: 'progress', element: page(<FeatureRoute feature="phd.progress_reports"><PhdScholarProgressPage /></FeatureRoute>) },
@@ -1298,7 +1331,6 @@ export const router = createBrowserRouter([
           { path: 'thesis', element: page(<FeatureRoute feature="phd.thesis_plagiarism"><PhdScholarThesisPage /></FeatureRoute>) },
           { path: 'fellowship', element: page(<FeatureRoute feature="phd.fellowships"><PhdScholarFellowshipPage /></FeatureRoute>) },
           { path: 'requests', element: page(<FeatureRoute feature="phd.extensions_guide_change"><PhdScholarRequestsPage /></FeatureRoute>) },
-          { path: 'documents', element: page(<FeatureRoute feature="documents.templates"><MyDocumentsPage /></FeatureRoute>) },
         ],
       },
       {
@@ -1306,6 +1338,7 @@ export const router = createBrowserRouter([
         element: <PortalRoute roles={['recruiter']} title="Recruiter" />,
         // Phase 28 — recruiter portal {placement.recruiter_portal}: own company drives, consented applicants, rounds, offers
         children: [
+          ...portalPages(),
           { index: true, element: page(<FeatureRoute feature="placement.recruiter_portal"><PlRecruiterDrivesPage /></FeatureRoute>) },
           { path: 'drives', element: page(<FeatureRoute feature="placement.recruiter_portal"><PlRecruiterDrivesPage /></FeatureRoute>) },
           { path: 'drives/:id', element: page(<FeatureRoute feature="placement.recruiter_portal"><PlRecruiterDrivePage /></FeatureRoute>) },
@@ -1316,12 +1349,14 @@ export const router = createBrowserRouter([
         element: <PortalRoute roles={['applicant']} title="Admissions" />,
         // Phase 08 — applicant portal: status, timeline, allotment decisions, payments (mobile deep link /apply/:cycle)
         children: [
+          ...portalPages(),
           { index: true, element: page(<ApplicantStatusPage />) },
           { path: ':cycle/status', element: page(<ApplicantStatusPage />) },
         ],
       },
     ],
   },
+  { path: '/offline', element: page(<OfflinePage />) },
   { path: '*', element: page(<NotFoundPage />) },
 ]);
 

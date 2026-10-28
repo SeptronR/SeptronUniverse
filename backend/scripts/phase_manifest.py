@@ -346,6 +346,9 @@ PHASES: dict[str, list[str]] = {
     ],
     # super admin & SaaS operations: the rest of section 32 (website tables are Phase 40); invoices, usage extras, caps
     # and ticket / registration facts without columns live in platform_settings / institution_settings (saas_meta)
+    # portals, PWA, notification centre & guided help: no tables — device tokens / notifications / preferences /
+    # announcements / help / feedback of sections 3 / 6 / 23; tour and portal state in users.preferences
+    "39": [],
     "38": [
         "platform_settings",
         "platform_announcements",
