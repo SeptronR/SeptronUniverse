@@ -14,7 +14,7 @@ final opsOverviewProvider = FutureProvider.autoDispose<Map<String, dynamic>>((re
 
 final opsIncidentsProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
   final r = await ref.watch(dioProvider).get<Map<String, dynamic>>('/platform/ops/incidents');
-  return ((r.data?['data'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+  return ((r.data?['data'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
 });
 
 class OpsScreen extends ConsumerWidget {
@@ -42,7 +42,7 @@ class OpsScreen extends ConsumerWidget {
             loading: () => const LinearProgressIndicator(),
             error: (e, _) => Text('$e'),
             data: (o) {
-              final queues = ((o['queues'] as List?) ?? const []).cast<Map>();
+              final queues = ((o['queues'] as List?) ?? const []).cast<Map<dynamic, dynamic>>();
               final alerts = ((o['alerts_active'] as List?) ?? const []).length;
               final backup = (o['backups'] as Map?)?['age_min'];
               return Card(

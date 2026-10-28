@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'db.dart';
 import 'sync_service.dart';
-import 'write_queue_repository.dart';
 
 /// The offline-capable writes (Prompts/42 §42.4 write-queue targets) with their conflict policies. Screens call
 /// these instead of dio so the write survives airplane mode and replays with the same `Idempotency-Key`.

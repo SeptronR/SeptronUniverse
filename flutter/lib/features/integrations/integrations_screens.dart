@@ -7,7 +7,7 @@ import '../../core/providers.dart';
 /// status and last error, with a "test" action per connection. Configuration stays on the web.
 final integrationsHealthProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
   final r = await ref.watch(dioProvider).get<Map<String, dynamic>>('/integrations/capabilities');
-  return ((r.data?['data'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+  return ((r.data?['data'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
 });
 
 class IntegrationsHealthScreen extends ConsumerWidget {

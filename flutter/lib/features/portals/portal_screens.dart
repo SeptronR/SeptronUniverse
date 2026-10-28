@@ -33,7 +33,7 @@ class PortalRepository {
   Future<List<Map<String, dynamic>>> notifications(String? category) async {
     final r = await _dio.get<Map<String, dynamic>>('/notifications',
         queryParameters: {if (category != null) 'category': category, 'page_size': 50});
-    return ((r.data?['data'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+    return ((r.data?['data'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
   }
 
   Future<Map<String, dynamic>> open(String id) => _obj('/notifications/$id');
@@ -178,7 +178,7 @@ class _NotificationPreferencesScreenState extends ConsumerState<NotificationPref
           if (snap.hasError) return Center(child: Text(_error(snap.error!)));
           if (!snap.hasData) return const Center(child: CircularProgressIndicator());
           final p = snap.data!;
-          final cats = ((p['categories'] as List?) ?? const []).cast<Map>();
+          final cats = ((p['categories'] as List?) ?? const []).cast<Map<dynamic, dynamic>>();
           final channels = ((p['available_channels'] as List?) ?? const []).cast<String>();
           return ListView(children: [
             ListTile(

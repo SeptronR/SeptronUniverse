@@ -19,7 +19,7 @@ String _error(Object e) {
 
 List<Map<String, dynamic>> _list(dynamic data) {
   final items = data is Map ? (data['items'] ?? data['data']) : data;
-  return ((items as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+  return ((items as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
 }
 
 class SaasRepository {

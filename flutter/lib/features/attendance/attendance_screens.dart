@@ -113,9 +113,8 @@ class AttendanceRepository {
   }
 }
 
-final _cache = CacheRepository();
 final attendanceRepositoryProvider =
-    Provider<AttendanceRepository>((ref) => AttendanceRepository(ref.watch(dioProvider), _cache));
+    Provider<AttendanceRepository>((ref) => AttendanceRepository(ref.watch(dioProvider), ref.watch(cacheRepositoryProvider)));
 
 // ---- faculty -------------------------------------------------------------------------------------------------------------
 class FacultyAttendanceScreen extends ConsumerStatefulWidget {
