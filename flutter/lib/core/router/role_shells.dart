@@ -76,11 +76,189 @@ const _staffTabs = [
       titleKey: 'more', icon: Icons.grid_view_outlined, route: AppRoutes.more),
 ];
 
-/// Tabs per role (§3). Phase 42 fills the per-role tab sets; every role has the common shell until then.
+ShellTab _t(String key, IconData icon, String route, {String? permission, String? feature}) =>
+    ShellTab(titleKey: key, icon: icon, route: route, permission: permission, feature: feature);
+
+final _home = _t('home', Icons.home_outlined, AppRoutes.home);
+final _more = _t('more', Icons.grid_view_outlined, AppRoutes.more);
+final _approvals = _t('approvals', Icons.fact_check_outlined, AppRoutes.approvals);
+final _alerts = _t('notifications', Icons.notifications_outlined, AppRoutes.notifications);
+
+/// Tabs per role — docs/Mobile_App_UI_Structure.md §3 / Prompts/42 §42.6 (≤ 5 each; tabs whose feature or
+/// permission the principal lacks are dropped by [RoleShellScaffold]). Unlisted roles get the staff shell.
+final Map<String, List<ShellTab>> roleTabs = {
+  Roles.student: [
+    _home,
+    _t('timetable', Icons.calendar_view_week_outlined, AppRoutes.myTimetable, feature: 'timetable.core'),
+    _t('fees', Icons.payments_outlined, AppRoutes.myFees, feature: 'fees.core'),
+    _t('results', Icons.school_outlined, AppRoutes.myResults),
+    _more,
+  ],
+  Roles.parent: [
+    _home,
+    _t('attendance', Icons.fact_check_outlined, AppRoutes.myAttendance),
+    _t('fees', Icons.payments_outlined, AppRoutes.myFees, feature: 'fees.core'),
+    _alerts,
+    _more,
+  ],
+  Roles.faculty: [
+    _home,
+    _t('attendance', Icons.how_to_reg_outlined, AppRoutes.attendance, feature: 'attendance.core'),
+    _t('marks', Icons.edit_note_outlined, AppRoutes.facultyMarks),
+    _t('courses', Icons.menu_book_outlined, AppRoutes.myCourses),
+    _more,
+  ],
+  Roles.guestFaculty: [
+    _home,
+    _t('attendance', Icons.how_to_reg_outlined, AppRoutes.attendance, feature: 'attendance.core'),
+    _t('marks', Icons.edit_note_outlined, AppRoutes.facultyMarks),
+    _more,
+  ],
+  Roles.hod: [
+    _home,
+    _approvals,
+    _t('department', Icons.groups_outlined, AppRoutes.studentsSearch, permission: 'students:view'),
+    _t('reports', Icons.insights_outlined, AppRoutes.reports),
+    _more,
+  ],
+  Roles.dean: [_home, _approvals, _t('reports', Icons.insights_outlined, AppRoutes.reports), _more],
+  Roles.registrar: [
+    _home,
+    _approvals,
+    _t('students', Icons.person_search_outlined, AppRoutes.studentsSearch, permission: 'students:view'),
+    _t('reports', Icons.insights_outlined, AppRoutes.reports),
+    _more,
+  ],
+  Roles.institutionAdmin: [
+    _home,
+    _approvals,
+    _t('students', Icons.person_search_outlined, AppRoutes.studentsSearch, permission: 'students:view'),
+    _t('reports', Icons.insights_outlined, AppRoutes.reports),
+    _more,
+  ],
+  Roles.controllerOfExaminations: [
+    _home,
+    _t('sessions', Icons.event_note_outlined, AppRoutes.examConduct),
+    _t('valuation', Icons.rate_review_outlined, AppRoutes.evaluation),
+    _t('results', Icons.workspace_premium_outlined, AppRoutes.resultRuns),
+    _more,
+  ],
+  Roles.examCell: [
+    _home,
+    _t('sessions', Icons.event_note_outlined, AppRoutes.examConduct),
+    _t('valuation', Icons.rate_review_outlined, AppRoutes.evaluation),
+    _more,
+  ],
+  Roles.accountant: [
+    _home,
+    _t('collect', Icons.point_of_sale_outlined, AppRoutes.feeCollect, feature: 'fees.core'),
+    _t('fees', Icons.receipt_long_outlined, AppRoutes.feeReconcile, feature: 'fees.core'),
+    _t('hr', Icons.badge_outlined, AppRoutes.hrTab, permission: 'hr:view_all'),
+    _more,
+  ],
+  Roles.hrOfficer: [
+    _home,
+    _t('staff', Icons.badge_outlined, AppRoutes.hrTab),
+    _t('leaves', Icons.event_busy_outlined, AppRoutes.hrLeaves),
+    _t('attendance', Icons.fingerprint, AppRoutes.hrAttendance),
+    _more,
+  ],
+  Roles.admissionsOfficer: [
+    _home,
+    _t('applicants', Icons.assignment_ind_outlined, AppRoutes.applicantsSearch),
+    _t('enquiries', Icons.support_agent_outlined, AppRoutes.enquiries),
+    _more,
+  ],
+  Roles.placementOfficer: [
+    _home,
+    _t('drives', Icons.work_outline, AppRoutes.placementDrives),
+    _t('students', Icons.person_search_outlined, AppRoutes.studentsSearch, permission: 'students:view'),
+    _more,
+  ],
+  Roles.hostelWarden: [
+    _home,
+    _t('outPasses', Icons.exit_to_app, AppRoutes.outPasses),
+    _t('rollCall', Icons.checklist, AppRoutes.rollCall),
+    _t('gate', Icons.qr_code_scanner, AppRoutes.hostelGate),
+    _more,
+  ],
+  Roles.hostelGateStaff: [
+    _t('gate', Icons.qr_code_scanner, AppRoutes.hostelGate),
+    _t('outPasses', Icons.today_outlined, AppRoutes.outPasses),
+    _t('settings', Icons.settings_outlined, AppRoutes.settings),
+  ],
+  Roles.librarian: [
+    _home,
+    _t('circulation', Icons.qr_code_scanner, AppRoutes.libraryCirculation),
+    _t('library', Icons.local_library_outlined, AppRoutes.myLibrary),
+    _more,
+  ],
+  Roles.iqacCoordinator: [
+    _home,
+    _t('iqac', Icons.verified_outlined, AppRoutes.iqacHub),
+    _t('reports', Icons.insights_outlined, AppRoutes.reports),
+    _approvals,
+    _more,
+  ],
+  Roles.researchScholar: [
+    _home,
+    _t('progress', Icons.timeline_outlined, AppRoutes.scholarHub),
+    _t('research', Icons.science_outlined, AppRoutes.research),
+    _alerts,
+    _more,
+  ],
+  Roles.alumni: [
+    _home,
+    _t('alumni', Icons.diversity_3_outlined, AppRoutes.alumniHub),
+    _t('events', Icons.event_outlined, AppRoutes.campusEvents),
+    _t('profile', Icons.person_outline, AppRoutes.profile),
+    _more,
+  ],
+  Roles.driver: [
+    _home,
+    _t('route', Icons.directions_bus_outlined, AppRoutes.driverTrips),
+    _t('settings', Icons.settings_outlined, AppRoutes.settings),
+  ],
+  Roles.externalExaminer: [
+    _t('bundles', Icons.inventory_2_outlined, AppRoutes.evaluation),
+    _t('duties', Icons.assignment_outlined, AppRoutes.myDuties),
+    _t('profile', Icons.person_outline, AppRoutes.profile),
+  ],
+  Roles.recruiter: [
+    _t('drives', Icons.work_outline, AppRoutes.placementDrives),
+    _alerts,
+    _t('profile', Icons.person_outline, AppRoutes.profile),
+  ],
+  Roles.superAdmin: [
+    _t('institutions', Icons.apartment_outlined, AppRoutes.platformHub),
+    _t('support', Icons.support_agent_outlined, AppRoutes.tenantSupport),
+    _alerts,
+    _more,
+  ],
+  Roles.supportAgent: [
+    _t('institutions', Icons.apartment_outlined, AppRoutes.platformHub),
+    _t('support', Icons.support_agent_outlined, AppRoutes.tenantSupport),
+    _more,
+  ],
+};
+
+/// Tabs for the principal's primary role (multi-role users switch view from More).
 List<ShellTab> tabsForRole(String role) {
+  final tabs = roleTabs[role];
+  if (tabs != null) return tabs;
   if (Roles.portalOnly.contains(role)) return _commonTabs;
   return _staffTabs;
 }
+
+/// Roles whose lists open details in a side pane on tablets (`mobile.tablet_layout`).
+const masterDetailRoles = {
+  Roles.hod,
+  Roles.controllerOfExaminations,
+  Roles.examCell,
+  Roles.accountant,
+  Roles.registrar,
+  Roles.institutionAdmin,
+};
 
 /// More-grid modules registered by the phases (`moreMenuModules.add(...)` in NN.10).
 final List<MoreMenuModule> moreMenuModules = [

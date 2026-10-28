@@ -1,0 +1,177 @@
+{
+  "02": {
+    "features": [
+      "auth"
+    ],
+    "roles": [],
+    "routes": []
+  },
+  "03": {
+    "features": [
+      "settings"
+    ],
+    "roles": [],
+    "routes": []
+  },
+  "04": {
+    "features": [
+      "announcements",
+      "approvals",
+      "notifications"
+    ],
+    "roles": [],
+    "routes": []
+  },
+  "05": {
+    "features": [
+      "academic_structure"
+    ],
+    "roles": [],
+    "routes": []
+  },
+  "06": {
+    "features": [],
+    "roles": [
+      "accountant",
+      "faculty",
+      "hr_officer"
+    ],
+    "routes": []
+  },
+  "07": {
+    "features": [],
+    "roles": [
+      "parent",
+      "student"
+    ],
+    "routes": []
+  },
+  "08": {
+    "features": [],
+    "roles": [
+      "admissions_officer"
+    ],
+    "routes": []
+  },
+  "12": {
+    "features": [],
+    "roles": [
+      "accountant"
+    ],
+    "routes": []
+  },
+  "14": {
+    "features": [],
+    "roles": [
+      "controller_of_examinations"
+    ],
+    "routes": []
+  },
+  "15": {
+    "features": [],
+    "roles": [
+      "controller_of_examinations"
+    ],
+    "routes": []
+  },
+  "17": {
+    "features": [],
+    "roles": [
+      "hod",
+      "iqac_coordinator"
+    ],
+    "routes": []
+  },
+  "18": {
+    "features": [],
+    "roles": [
+      "registrar"
+    ],
+    "routes": []
+  },
+  "19": {
+    "features": [],
+    "roles": [
+      "librarian"
+    ],
+    "routes": []
+  },
+  "20": {
+    "features": [],
+    "roles": [
+      "hostel_gate_staff",
+      "hostel_warden"
+    ],
+    "routes": []
+  },
+  "21": {
+    "features": [],
+    "roles": [
+      "driver"
+    ],
+    "routes": []
+  },
+  "23": {
+    "features": [],
+    "roles": [
+      "accountant"
+    ],
+    "routes": []
+  },
+  "28": {
+    "features": [],
+    "roles": [
+      "placement_officer"
+    ],
+    "routes": []
+  },
+  "29": {
+    "features": [],
+    "roles": [
+      "alumni"
+    ],
+    "routes": []
+  },
+  "31": {
+    "features": [],
+    "roles": [
+      "research_scholar"
+    ],
+    "routes": []
+  },
+  "32": {
+    "features": [],
+    "roles": [
+      "iqac_coordinator"
+    ],
+    "routes": []
+  },
+  "36": {
+    "features": [],
+    "roles": [
+      "accountant",
+      "controller_of_examinations",
+      "hod",
+      "iqac_coordinator",
+      "placement_officer",
+      "registrar"
+    ],
+    "routes": []
+  },
+  "37": {
+    "features": [],
+    "roles": [
+      "institution_admin",
+      "registrar"
+    ],
+    "routes": []
+  },
+  "38": {
+    "features": [],
+    "roles": [
+      "super_admin",
+      "support_agent"
+    ],
+    "routes": []
+  }
+}

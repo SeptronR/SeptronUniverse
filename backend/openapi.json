@@ -122653,6 +122653,11 @@
       },
       "MobileConfigResponse": {
         "properties": {
+          "biometric_timeout_minutes": {
+            "default": 5,
+            "title": "Biometric Timeout Minutes",
+            "type": "integer"
+          },
           "cache_ttl_seconds": {
             "default": 300,
             "title": "Cache Ttl Seconds",
@@ -122694,10 +122699,22 @@
             "title": "Min Versions",
             "type": "object"
           },
+          "mobile_enabled": {
+            "default": true,
+            "title": "Mobile Enabled",
+            "type": "boolean"
+          },
           "read_only": {
             "default": false,
             "title": "Read Only",
             "type": "boolean"
+          },
+          "screenshot_block_routes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Screenshot Block Routes",
+            "type": "array"
           },
           "store_urls": {
             "additionalProperties": {
@@ -122709,6 +122726,13 @@
           "update_available": {
             "title": "Update Available",
             "type": "boolean"
+          },
+          "write_queue": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Write Queue",
+            "type": "object"
           }
         },
         "required": [

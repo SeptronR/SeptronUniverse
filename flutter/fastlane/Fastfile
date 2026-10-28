@@ -1,0 +1,44 @@
+# Fastlane lanes for the SeptronUniverse app (Prompts/42 §42.10 step 9; CI wiring in Phase 44 mobile-release.yml).
+# Secrets come from CI: ANDROID_KEYSTORE_BASE64 / ANDROID_KEY_ALIAS / ANDROID_KEY_PASSWORD / PLAY_JSON_KEY,
+# APP_STORE_CONNECT_API_KEY (JSON), MATCH_PASSWORD. Nothing is committed.
+default_platform(:android)
+
+DART_DEFINES = "--dart-define=APP_ENV=production --dart-define=APP_API_URL=#{ENV.fetch('APP_API_URL', 'https://api.septron.in/api/v1')}" \
+               " --dart-define=APP_SENTRY_DSN=#{ENV.fetch('APP_SENTRY_DSN', '')} --dart-define=APP_VERSION=#{ENV.fetch('APP_VERSION', '1.0.0')}"
+
+platform :android do
+  desc "Internal testing track"
+  lane :beta do
+    sh("cd .. && flutter build appbundle --release #{DART_DEFINES}")
+    upload_to_play_store(track: "internal", aab: "../build/app/outputs/bundle/release/app-release.aab",
+                         json_key_data: ENV["PLAY_JSON_KEY"], skip_upload_metadata: true)
+  end
+
+  desc "Production with staged rollout (10 % → 50 % → 100 % via `promote`)"
+  lane :release do |options|
+    rollout = options[:rollout] || "0.1"
+    upload_to_play_store(track: "production", rollout: rollout, aab: "../build/app/outputs/bundle/release/app-release.aab",
+                         json_key_data: ENV["PLAY_JSON_KEY"])
+  end
+
+  lane :promote do |options|
+    upload_to_play_store(track: "production", rollout: options[:rollout] || "0.5", skip_upload_aab: true,
+                         json_key_data: ENV["PLAY_JSON_KEY"])
+  end
+end
+
+platform :ios do
+  desc "TestFlight"
+  lane :beta do
+    api_key = app_store_connect_api_key(key_content: ENV["APP_STORE_CONNECT_API_KEY"], is_key_content_base64: true)
+    match(type: "appstore", readonly: true, api_key: api_key)
+    sh("cd .. && flutter build ipa --release #{DART_DEFINES} --export-options-plist=ios/ExportOptions.plist")
+    upload_to_testflight(api_key: api_key, ipa: "../build/ios/ipa/septron_universe.ipa", skip_waiting_for_build_processing: true)
+  end
+
+  desc "App Store with phased release (7-day automatic phasing)"
+  lane :release do
+    api_key = app_store_connect_api_key(key_content: ENV["APP_STORE_CONNECT_API_KEY"], is_key_content_base64: true)
+    deliver(api_key: api_key, submit_for_review: true, phased_release: true, automatic_release: false, force: true)
+  end
+end

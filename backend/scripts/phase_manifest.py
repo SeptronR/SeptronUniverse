@@ -364,6 +364,8 @@ PHASES: dict[str, list[str]] = {
     # integrations hub, platform APIs & migration toolkit: no tables — section 32 integration_connections / api_keys /
     # webhooks / webhook_deliveries / data_imports; extras in institution_settings (integrations_meta)
     "41": [],
+    # flutter mobile app: no tables — device_tokens / users / platform_settings / idempotency_keys (sections 3 / 6 / 32)
+    "42": [],
     "38": [
         "platform_settings",
         "platform_announcements",
