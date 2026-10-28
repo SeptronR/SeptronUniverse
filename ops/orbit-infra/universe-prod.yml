@@ -1,0 +1,43 @@
+# orbit-infra template — compose/apps/universe-prod.yml (Prompts/44 §44.6 docker 4). Same services as
+# docker-compose.prod.yml, routed by Traefik instead of the bundled nginx. Copy into orbit-infra; envs dev / demo use
+# the same file with ENV=<env> and their own .env.<env>.
+#   docker compose -f compose/apps/universe-prod.yml --env-file /srv/vault/universe/.env.prod up -d
+include:
+  - path: ../../universe/docker-compose.prod.yml   # orbit-infra checks out the release tag of this repo next to it
+    env_file: /srv/vault/universe/.env.prod
+
+services:
+  api:
+    networks: [internal, traefik]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.universe-api.rule=Host(`api.${UNIVERSE_DOMAIN}`) || (Host(`app.${UNIVERSE_DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/ws`) || PathPrefix(`/uploads`) || PathPrefix(`/site`) || PathPrefix(`/.well-known`)))
+      - traefik.http.routers.universe-api.entrypoints=websecure
+      - traefik.http.routers.universe-api.tls.certresolver=letsencrypt
+      - traefik.http.routers.universe-api.middlewares=universe-headers@file,universe-ratelimit@file,universe-compress@file
+      - traefik.http.services.universe-api.loadbalancer.server.port=8000
+      - traefik.http.services.universe-api.loadbalancer.healthcheck.path=/ready
+      - traefik.http.services.universe-api.loadbalancer.healthcheck.interval=10s
+  web:
+    networks: [internal, traefik]
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.universe-web.rule=Host(`app.${UNIVERSE_DOMAIN}`)
+      - traefik.http.routers.universe-web.priority=1
+      - traefik.http.routers.universe-web.entrypoints=websecure
+      - traefik.http.routers.universe-web.tls.certresolver=letsencrypt
+      - traefik.http.services.universe-web.loadbalancer.server.port=80
+  flower:
+    networks: [internal, traefik]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.universe-flower.rule=Host(`ops.${UNIVERSE_DOMAIN}`) && PathPrefix(`/flower`)
+      - traefik.http.routers.universe-flower.middlewares=ops-sso@file
+      - traefik.http.services.universe-flower.loadbalancer.server.port=5555
+  nginx:
+    profiles: [standalone]   # Traefik replaces the bundled nginx
+
+networks:
+  traefik: { external: true }

@@ -369,6 +369,8 @@ PHASES: dict[str, list[str]] = {
     # testing, security & privacy hardening: no tables — consent_records / data_subject_requests / audit_logs (section 6);
     # DSR timelines in institution_settings privacy_meta, posture in security_meta
     "43": [],
+    # deployment, CI/CD & operations: no tables — ops state in platform_settings ring buffers (section 32)
+    "44": [],
     "38": [
         "platform_settings",
         "platform_announcements",

@@ -33,3 +33,4 @@ structlog==25.5.0
 websockets==16.0
 python-dotenv==1.2.2
 pywebpush>=2.0.0  # Phase 39 web push (VAPID)
+PyYAML>=6.0  # Phase 44: ops alert-rule catalogue (ops/alerts/*.yml)

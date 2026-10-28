@@ -3539,7 +3539,23 @@ HARDENING_EVENTS: tuple[EventDef, ...] = (
     EventDef("qa.suite_finished", "system", "Verification suite finished", "{{ suite }} finished", "The {{ suite }} suite finished with {{ failed }} failure(s).", ("suite", "failed"), ("in_app",), link="/admin/qa"),
 )
 
+OPS_EVENTS: tuple[EventDef, ...] = (
+    EventDef("ops.deploy_started", "system", "Deploy started", "Deploy {{ env }} {{ sha }} started", "Rolling update to {{ env }} started.", ("env", "sha"), ("in_app",), link="/super-admin/ops/deploys"),
+    EventDef("ops.deploy_finished", "system", "Deploy finished", "Deploy {{ env }} {{ sha }} finished", "Rolling update to {{ env }} finished.", ("env", "sha"), ("in_app",), link="/super-admin/ops/deploys"),
+    EventDef("ops.deploy_failed", "system", "Deploy failed", "Deploy {{ env }} {{ sha }} failed", "The deploy failed; see the deploy record.", ("env", "sha"), ("in_app", "email"), link="/super-admin/ops/deploys"),
+    EventDef("ops.rollback", "system", "Deploy rolled back", "{{ env }} rolled back to {{ rollback_to }}", "Readiness failed after the deploy; the previous images are serving again.", ("env", "rollback_to"), ("in_app", "email", "sms"), link="/super-admin/ops/deploys"),
+    EventDef("ops.backup_failed", "system", "Backup failed", "Backup ({{ kind }}) failed", "The {{ kind }} backup reported a failure at {{ at }}.", ("kind", "at"), ("in_app", "email", "sms"), link="/super-admin/ops/backups"),
+    EventDef("ops.restore_drill_result", "system", "Restore drill", "Restore drill {{ status }}", "RPO {{ rpo }} min, RTO {{ rto }} min.", ("status", "rpo", "rto"), ("in_app", "email"), link="/super-admin/ops/backups"),
+    EventDef("ops.alert", "system", "Operations alert", "{{ rule }} ({{ severity }})", "{{ summary }}", ("rule", "severity", "summary"), ("in_app", "email", "sms"), link="/super-admin/ops/alerts"),
+    EventDef("ops.status_incident_opened", "system", "Incident opened", "Incident: {{ title }}", "{{ message }}", ("title", "message"), ("in_app", "email"), link="/status"),
+    EventDef("ops.status_incident_updated", "system", "Incident update", "Update: {{ title }}", "{{ message }}", ("title", "message"), ("in_app",), link="/status"),
+    EventDef("ops.status_incident_resolved", "system", "Incident resolved", "Resolved: {{ title }}", "{{ message }}", ("title", "message"), ("in_app", "email"), link="/status"),
+    EventDef("ops.release_notes", "system", "Release notes", "SeptronUniverse {{ version }}", "{{ notes }}", ("version", "notes"), ("in_app", "email"), link="/admin/settings/platform"),
+)
+
 EVENTS = (
+    OPS_EVENTS
+    +
     HARDENING_EVENTS
     +
     EVENTS

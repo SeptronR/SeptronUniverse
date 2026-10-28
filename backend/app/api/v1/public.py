@@ -12,6 +12,16 @@ PUBLIC_ROUTES: set[str] = {
     "GET /api/v1/public/privacy/notices/{key}",
     "POST /api/v1/security/csp-report",
     "POST /api/v1/internal/security/scans",  # X-Ops-Token (CI)
+    # Phase 44: public status page and the internal ops reports (X-Ops-Token)
+    "GET /api/v1/public/status",
+    "GET /api/v1/public/status/history",
+    "GET /api/v1/public/status/feed.rss",
+    "POST /api/v1/internal/ops/deploy-report",
+    "POST /api/v1/internal/ops/backup-report",
+    "POST /api/v1/internal/ops/restore-drill",
+    "POST /api/v1/internal/ops/alert-events",
+    "POST /api/v1/internal/ops/heartbeat/{queue}",
+    "POST /api/v1/internal/ops/release",
     # Phase 40 — public website (tenant by ?slug / verified custom host / header; published rows, aggregates and tokens
     # only; the enquiry form and result lookup are captcha + rate limited), marketing / pricing (platform) and the
     # edge endpoints (X-Edge-Token)

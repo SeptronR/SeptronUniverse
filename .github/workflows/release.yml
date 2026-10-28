@@ -3,7 +3,8 @@
 #
 # Flow: release-please opens/updates a release PR on main; merging it creates the tag vX.Y.Z, which (1) triggers build.yml
 # (staging images :X.Y.Z, prod after approval) and (2) runs `publish` below.
-# Phase 44 completes: deprecation entries (`deprecation_notice_days` = 90) and POST /platform/releases/{version}/announce.
+# Announcement: POST /api/v1/internal/ops/release (X-Ops-Token) records the release and announces it to institution admins
+# (platform_settings['ops'].release.announce_to_institutions; deprecations carry `deprecation_notice_days` = 90).
 
 name: Release
 
@@ -83,9 +84,9 @@ jobs:
           version = os.environ["GITHUB_REF_NAME"].lstrip("v")
           body = {"version": version, "notes_md": open("RELEASE_NOTES.md", encoding="utf-8").read(),
                   "sbom_url": f"{os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/releases/tag/v{version}"}
-          req = urllib.request.Request(f"{os.environ['PLATFORM_API_URL']}/platform/releases/{version}/announce",
+          req = urllib.request.Request(f"{os.environ['PLATFORM_API_URL']}/internal/ops/release",
                                        data=json.dumps(body).encode(), method="POST",
-                                       headers={"Content-Type": "application/json", "X-Internal-Token": os.environ["INTERNAL_OPS_TOKEN"]})
+                                       headers={"Content-Type": "application/json", "X-Ops-Token": os.environ["INTERNAL_OPS_TOKEN"]})
           with urllib.request.urlopen(req, timeout=30) as r:
               print(r.status, r.read()[:200])
           EOF

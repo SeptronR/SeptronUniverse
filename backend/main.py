@@ -158,6 +158,25 @@ os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 Instrumentator().instrument(app).expose(app, endpoint="/metrics", include_in_schema=False)
 
 
+@app.middleware("http")
+async def metrics_guard(request: Request, call_next: Any) -> Any:
+    """Phase 44: bearer-protected scrape (``METRICS_TOKEN``) + custom ops gauges refreshed at scrape time."""
+    if request.url.path == "/metrics":
+        import hmac
+
+        token = settings.METRICS_TOKEN
+        given = request.headers.get("authorization", "").removeprefix("Bearer ").strip()
+        if token and not hmac.compare_digest(given, token):
+            return error_response(request, 401, ErrorCode.UNAUTHENTICATED, "Metrics token required")
+        if settings.is_production and not token:
+            return error_response(request, 401, ErrorCode.UNAUTHENTICATED, "Metrics are disabled without METRICS_TOKEN")
+        from app.core.ops_metrics import refresh
+
+        with contextlib.suppress(Exception):
+            await refresh()
+    return await call_next(request)
+
+
 @app.get("/health", include_in_schema=False)
 async def health() -> dict[str, str]:
     return {"status": "ok", "environment": settings.APP_ENV}

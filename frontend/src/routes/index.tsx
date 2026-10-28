@@ -52,6 +52,8 @@ const WebsiteCataloguePage = lazy(() => import('@/features/website/pages/Website
 const WebsiteDisclosuresPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDisclosuresPage })));
 const WebsiteDomainsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDomainsPage })));
 const WebsiteAnalyticsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteAnalyticsPage })));
+const OpsConsolePage = lazy(() => import('@/features/ops/pages/OpsPages').then((m) => ({ default: m.OpsConsolePage })));
+const StatusPage = lazy(() => import('@/features/ops/pages/OpsPages').then((m) => ({ default: m.StatusPage })));
 const PrivacyOfficePage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.PrivacyOfficePage })));
 const SecurityPosturePage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.SecurityPosturePage })));
 const QaPage = lazy(() => import('@/features/privacy/pages/PrivacyPages').then((m) => ({ default: m.QaPage })));
@@ -604,6 +606,8 @@ export const router = createBrowserRouter([
   { path: '/grievance', element: page(<SsPublicGrievancePage />) },
   { path: '/grievance/track', element: page(<SsGrievanceTrackPage />) },
   { path: '/verify', element: page(<VerifyLandingPage />) },
+  // Phase 44 — public status page
+  { path: '/status', element: page(<StatusPage />) },
   // Phase 26 — unified verification over the issued-document register (all types)
   { path: '/verify/:token', element: page(<DocVerifyPage />) },
   // Phase 31 — external examiner invitation / report (unguessable token; tenant by ?institution=<slug>)
@@ -1213,6 +1217,8 @@ export const router = createBrowserRouter([
           { path: 'health', element: page(<SaasHealthPage />) },
           { path: 'read-only', element: page(<SaasReadOnlyPage />) },
           { path: 'marketing', element: page(<MarketingSitePage />) },
+          // Phase 44 — operations console (writes super-admin only; support agents read)
+          { path: 'ops', element: page(<OpsConsolePage />) },
           { path: 'settings', element: page(<SaasSettingsPage />) },
           { path: 'registrations', element: page(<SaasRegistrationsPage />) },
           { path: 'demo-requests', element: page(<SaasDemoRequestsPage />) },

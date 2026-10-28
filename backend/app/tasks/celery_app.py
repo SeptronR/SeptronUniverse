@@ -58,6 +58,7 @@ celery = Celery(
         "app.tasks.website",
         "app.tasks.integrations",
         "app.tasks.hardening",
+        "app.tasks.ops",
     ],
 )
 celery.conf.update(
@@ -89,3 +90,33 @@ celery.conf.update(
         "jobs.*": {"queue": "reports"},
     },
 )
+
+
+# ---- Phase 44: worker heartbeats (worker:{queue}:heartbeat, TTL 120 s) for /ready, the status page and alerts ----------
+from celery.signals import worker_ready  # noqa: E402
+
+
+@worker_ready.connect
+def _start_heartbeat(sender: object = None, **_: object) -> None:
+    import threading
+    from datetime import UTC, datetime
+
+    import redis
+
+    from app.core.config import settings
+
+    # the sender is the worker's Consumer; its task consumer lists the queues this worker serves (-Q …)
+    task_consumer = getattr(sender, "task_consumer", None)
+    queues = [q.name for q in getattr(task_consumer, "queues", [])]
+    client = redis.Redis.from_url(settings.REDIS_URL)
+
+    def beat() -> None:
+        while True:
+            try:
+                for q in queues:
+                    client.set(f"worker:{q}:heartbeat", datetime.now(UTC).isoformat(), ex=120)
+            except Exception:  # noqa: BLE001, S110 - heartbeats are best effort
+                pass
+            threading.Event().wait(30)
+
+    threading.Thread(target=beat, name="ops-heartbeat", daemon=True).start()

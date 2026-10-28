@@ -244,3 +244,18 @@ python scripts/verify_prompts_vs_schema.py               # every prompt's table 
 - [ ] NN.12 UI checklist walked per role (Playwright round suite green from Phase 43)
 - [ ] `export_openapi.py` · `gen_access_matrix.py` · `npm run gen:api`
 - [ ] commit `feat(phase-NN): …` · `PROGRESS.md` Stage 2 row ticked with results
+
+## Phase 44 checklist (complete, run after every phase)
+
+1. `alembic upgrade head` (or `python scripts/migrate_with_lock.py`) — heads = 1, `check_schema_drift.py --phase NN` = 0.
+2. `python scripts/seed_demo_institution.py --only <module>` (REDIS_URL pointing at a live Redis / fakeredis).
+3. Guards: `check_authz_coverage.py`, `check_feature_registry.py`, `check_metric_registry.py`, `check_report_registry.py`,
+   `check_adapter_registry.py`, `check_audit_coverage.py`, `check_pii_masking.py`, `check_access_matrix.py`,
+   `check_migration_safety.py`, `check_tokens_sync.py`, `extract_mobile_screens.py --check` — or all at once:
+   `python scripts/verify/run_all.py --suite static` (+ `golden`, `visibility`, `immutability`).
+4. Lint / types: `ruff check`, `ruff format --check`, `mypy` on changed modules; `npx tsc --noEmit`, `npx eslint`;
+   `flutter analyze` + `dart run tool/check_screen_registry.dart` when mobile changed.
+5. API verification: `pwsh scripts/verify/NN_*.ps1` (or `run_all.py --suite api_round_N`); UI checklist NN.12.
+6. Artefacts: `export_openapi.py`, `gen_access_matrix.py`, `npm run gen:api:file`.
+7. Commit `feat(phase-NN): …`, PROGRESS.md row + decision entry, merge, push.
+

@@ -310,6 +310,11 @@ from app.api.v1.endpoints import hardening  # noqa: E402
 
 api_router.include_router(hardening.router, dependencies=[feature_required("core.settings")])
 api_router.include_router(hardening.public_router)
+# Phase 44: ops console (platform-only dependencies on every route), public status page + internal ops reports
+from app.api.v1.endpoints import ops  # noqa: E402
+
+api_router.include_router(ops.router, dependencies=[feature_required("core.background_jobs")])
+api_router.include_router(ops.public_router)
 if not settings.is_production:
     api_router.include_router(hardening.dev_router, dependencies=[feature_required("core.settings")])
 

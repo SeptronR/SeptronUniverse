@@ -1,0 +1,31 @@
+# orbit-infra — .github/workflows/universe-deploy.yml: receives `repository_dispatch: universe-deploy` from this repo's
+# build.yml ({env, api_tag, web_tag, sha, migrations_risky}) and runs the rolling update on the target host.
+name: Universe deploy
+on:
+  repository_dispatch:
+    types: [universe-deploy]
+jobs:
+  deploy:
+    runs-on: [self-hosted, "${{ github.event.client_payload.env }}"]
+    environment: ${{ github.event.client_payload.env }}   # prod requires reviewers + CHANGE_TICKET
+    concurrency: universe-deploy-${{ github.event.client_payload.env }}
+    steps:
+      - name: Check out the universe release
+        uses: actions/checkout@v4
+        with: { repository: septronr/septronuniverse, ref: "${{ github.event.client_payload.sha }}", path: universe }
+      - name: Rolling update with rollback
+        working-directory: universe
+        env:
+          ENV: ${{ github.event.client_payload.env }}
+          API_TAG: ${{ github.event.client_payload.api_tag }}
+          WEB_TAG: ${{ github.event.client_payload.web_tag }}
+          SHA: ${{ github.event.client_payload.sha }}
+          RISKY: ${{ github.event.client_payload.migrations_risky && '1' || '0' }}
+          OPS_API_URL: ${{ vars.UNIVERSE_API_URL }}
+          INTERNAL_OPS_TOKEN: ${{ secrets.UNIVERSE_INTERNAL_OPS_TOKEN }}
+        run: |
+          cp /srv/vault/universe/.env.$ENV .env.prod
+          ./backend/scripts/ops/deploy.sh
+      - name: Smoke
+        working-directory: universe
+        run: python3 backend/scripts/verify/run_all.py --suite smoke --base-url "${{ vars.UNIVERSE_API_URL }}/api/v1"

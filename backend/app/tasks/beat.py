@@ -433,3 +433,10 @@ register_beat("security.mfa_enforcement_scan", "beat.security.mfa_enforcement_sc
 register_beat("privacy.dsr_due_reminders", "beat.privacy.dsr_due_reminders", crontab(hour=3, minute=20))  # 08:50 IST
 register_beat("privacy.minor_recompute", "beat.privacy.minor_recompute", crontab(hour=18, minute=40))  # 00:10 IST
 register_beat("privacy.consent_version_reminders", "beat.privacy.consent_version_reminders", crontab(hour=4, minute=10, day_of_week=1))
+
+# ---- Phase 44 operations (app/tasks/ops.py) -------------------------------------------------------------------------------------
+register_beat("ops.capacity_snapshot_daily", "beat.ops.capacity_snapshot_daily", crontab(hour=23, minute=30))  # 05:00 IST
+register_beat("ops.backup_age_check", "beat.ops.backup_age_check", crontab(minute="*/30"))
+register_beat("ops.status_probe", "beat.ops.status_probe", crontab(minute="*"))
+register_beat("ops.worker_heartbeat_check", "beat.ops.worker_heartbeat_check", crontab(minute="*"))
+register_beat("ops.cert_expiry_check", "beat.ops.cert_expiry_check", crontab(hour=1, minute=40))  # 07:10 IST

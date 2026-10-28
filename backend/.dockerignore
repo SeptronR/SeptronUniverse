@@ -1,8 +1,11 @@
-.venv/
-__pycache__/
+.venv
+__pycache__
 *.pyc
 .env
-uploads/
-.mypy_cache/
-.ruff_cache/
-openapi.json
+.env.*
+!.env.example
+reports
+uploads
+.mypy_cache
+.ruff_cache
+.pytest_cache
