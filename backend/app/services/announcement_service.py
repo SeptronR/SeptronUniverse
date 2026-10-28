@@ -144,6 +144,30 @@ class AnnouncementService:
             await self.repo.upsert_ack(self.inst, a.id, self.principal.id, acknowledge=False)
         return await self._response(a, with_stats=True)
 
+    async def mine(self, pending_ack: bool = False) -> list[AnnouncementResponse]:
+        """Phase 39 ``GET /announcements/me``: published announcements addressed to me; ``pending_ack`` keeps the
+        ``requires_ack`` ones I have not acknowledged (pinned in the portal until acked)."""
+        stmt = self.repo.published(self.inst).order_by(Announcement.is_pinned.desc(), Announcement.publish_at.desc())
+        if pending_ack:
+            stmt = stmt.where(Announcement.requires_ack.is_(True))
+        rows = [
+            a
+            for a in (await self.db.execute(stmt.limit(200))).scalars()
+            if await self.audience.member_of(self.inst, self.principal.id, _rules(a))
+        ]
+        acks = await self.repo.my_acks([a.id for a in rows], self.principal.id)
+        out = []
+        for a in rows:
+            ack = acks.get(a.id)
+            if pending_ack and ack is not None and ack.acknowledged_at is not None:
+                continue
+            r = AnnouncementResponse.model_validate(a)
+            r.status = _status(a)
+            if ack is not None:
+                r.my_read_at, r.my_acknowledged_at = ack.read_at, ack.acknowledged_at
+            out.append(r)
+        return out
+
     # ---- rule 1 / 5 -----------------------------------------------------------------------------------------------
     async def create(self, body: AnnouncementCreate) -> AnnouncementResponse:
         a = Announcement(

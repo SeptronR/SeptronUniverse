@@ -25,6 +25,10 @@ async def create_feedback(
     principal: Principal = Depends(permission_required("dashboard", "view")),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
+    from app.core.rate_limit import check_rate
+    from app.enums.portals import FEEDBACK_RATE
+
+    await check_rate("feedback", str(principal.id), *FEEDBACK_RATE)  # Phase 39: 10 per 10 minutes per user
     row = await FeedbackService(db, principal).create(body, request)
     response = ok(FeedbackResponse.model_validate(row), message="Thanks for the feedback")
     await store(request, response, db, 201)

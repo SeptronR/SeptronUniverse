@@ -179,3 +179,27 @@
     break-after: page;
   }
 }
+
+/* Phase 39 portals: print previews of My documents / timetable / receipts (no shell chrome, cards unsplit, links
+ * spelled out) and reduced motion */
+@media print {
+  #portal-main {
+    padding: 0 !important;
+  }
+  .break-inside-avoid {
+    break-inside: avoid;
+  }
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.75em;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

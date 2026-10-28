@@ -8190,6 +8190,99 @@
         "title": "AppraisalStatus",
         "type": "string"
       },
+      "ApprovalItem": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "entity_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Id"
+          },
+          "entity_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Entity Type"
+          },
+          "instance_id": {
+            "format": "uuid",
+            "title": "Instance Id",
+            "type": "string"
+          },
+          "route": {
+            "title": "Route",
+            "type": "string"
+          },
+          "sla_due_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sla Due At"
+          },
+          "step_id": {
+            "format": "uuid",
+            "title": "Step Id",
+            "type": "string"
+          },
+          "step_order": {
+            "title": "Step Order",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "workflow": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Workflow"
+          }
+        },
+        "required": [
+          "step_id",
+          "instance_id",
+          "title",
+          "step_order",
+          "route"
+        ],
+        "title": "ApprovalItem",
+        "type": "object"
+      },
       "ApprovalStatus": {
         "enum": [
           "provisional",
@@ -16090,6 +16183,66 @@
         "title": "BounceRequest",
         "type": "object"
       },
+      "BrandingOut": {
+        "properties": {
+          "app_name": {
+            "title": "App Name",
+            "type": "string"
+          },
+          "background_color": {
+            "default": "#f8fafc",
+            "title": "Background Color",
+            "type": "string"
+          },
+          "icons": {
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "title": "Icons",
+            "type": "array"
+          },
+          "logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Url"
+          },
+          "short_name": {
+            "title": "Short Name",
+            "type": "string"
+          },
+          "splash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Splash"
+          },
+          "theme_color": {
+            "default": "#4f46e5",
+            "title": "Theme Color",
+            "type": "string"
+          }
+        },
+        "required": [
+          "app_name",
+          "short_name"
+        ],
+        "title": "BrandingOut",
+        "type": "object"
+      },
       "BrokenLink": {
         "properties": {
           "id": {
@@ -17890,120 +18043,6 @@
         "title": "CalendarFeedTokenOut",
         "type": "object"
       },
-      "CalendarItem": {
-        "description": "One merged entry of ``GET /calendar`` (manual rows and every registered source).",
-        "properties": {
-          "all_day": {
-            "default": false,
-            "title": "All Day",
-            "type": "boolean"
-          },
-          "college_id": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "College Id"
-          },
-          "color": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Color"
-          },
-          "editable": {
-            "default": false,
-            "title": "Editable",
-            "type": "boolean"
-          },
-          "ends_at": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Ends At"
-          },
-          "event_type": {
-            "title": "Event Type",
-            "type": "string"
-          },
-          "key": {
-            "title": "Key",
-            "type": "string"
-          },
-          "link": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Link"
-          },
-          "location": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Location"
-          },
-          "source_id": {
-            "anyOf": [
-              {
-                "format": "uuid",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Source Id"
-          },
-          "source_type": {
-            "title": "Source Type",
-            "type": "string"
-          },
-          "starts_at": {
-            "format": "date-time",
-            "title": "Starts At",
-            "type": "string"
-          },
-          "title": {
-            "title": "Title",
-            "type": "string"
-          }
-        },
-        "required": [
-          "key",
-          "title",
-          "event_type",
-          "source_type",
-          "starts_at"
-        ],
-        "title": "CalendarItem",
-        "type": "object"
-      },
       "CalendarJobAccepted": {
         "properties": {
           "job_id": {
@@ -18036,7 +18075,7 @@
           },
           "items": {
             "items": {
-              "$ref": "#/components/schemas/CalendarItem"
+              "$ref": "#/components/schemas/app__schemas__calendar__CalendarItem"
             },
             "title": "Items",
             "type": "array"
@@ -19704,6 +19743,63 @@
           "fee_preview"
         ],
         "title": "CatalogResponse",
+        "type": "object"
+      },
+      "CategoryChannels": {
+        "properties": {
+          "available": {
+            "items": {
+              "enum": [
+                "in_app",
+                "sms",
+                "whatsapp",
+                "email",
+                "push"
+              ],
+              "type": "string"
+            },
+            "title": "Available",
+            "type": "array"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string"
+          },
+          "channels": {
+            "items": {
+              "enum": [
+                "in_app",
+                "sms",
+                "whatsapp",
+                "email",
+                "push"
+              ],
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "locked": {
+            "description": "cells the policy keeps on",
+            "items": {
+              "enum": [
+                "in_app",
+                "sms",
+                "whatsapp",
+                "email",
+                "push"
+              ],
+              "type": "string"
+            },
+            "title": "Locked",
+            "type": "array"
+          }
+        },
+        "required": [
+          "category",
+          "channels"
+        ],
+        "title": "CategoryChannels",
         "type": "object"
       },
       "CentreAllocationRun": {
@@ -53072,6 +53168,80 @@
         "title": "Envelope[HelpArticleResponse]",
         "type": "object"
       },
+      "Envelope_HelpContextOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HelpContextOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[HelpContextOut]",
+        "type": "object"
+      },
+      "Envelope_HelpfulOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HelpfulOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[HelpfulOut]",
+        "type": "object"
+      },
       "Envelope_HoldResponse_": {
         "properties": {
           "data": {
@@ -55403,6 +55573,43 @@
         "title": "Envelope[LoanOut]",
         "type": "object"
       },
+      "Envelope_LocalePackOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LocalePackOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[LocalePackOut]",
+        "type": "object"
+      },
       "Envelope_LoginResponse_": {
         "properties": {
           "data": {
@@ -55588,6 +55795,43 @@
         "title": "Envelope[ManifestResponse]",
         "type": "object"
       },
+      "Envelope_MarkReadOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MarkReadOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[MarkReadOut]",
+        "type": "object"
+      },
       "Envelope_MarkResult_": {
         "properties": {
           "data": {
@@ -55734,6 +55978,43 @@
           }
         },
         "title": "Envelope[MeResponse]",
+        "type": "object"
+      },
+      "Envelope_MeUpdateOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MeUpdateOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[MeUpdateOut]",
         "type": "object"
       },
       "Envelope_MedalResponse_": {
@@ -56735,6 +57016,117 @@
         "title": "Envelope[MouOut]",
         "type": "object"
       },
+      "Envelope_MyCalendarOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MyCalendarOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[MyCalendarOut]",
+        "type": "object"
+      },
+      "Envelope_MyPaymentsOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MyPaymentsOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[MyPaymentsOut]",
+        "type": "object"
+      },
+      "Envelope_MyRequestsOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MyRequestsOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[MyRequestsOut]",
+        "type": "object"
+      },
       "Envelope_MyResultsResponse_": {
         "properties": {
           "data": {
@@ -56912,6 +57304,80 @@
           }
         },
         "title": "Envelope[NoneType]",
+        "type": "object"
+      },
+      "Envelope_NotificationCounts_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NotificationCounts"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[NotificationCounts]",
+        "type": "object"
+      },
+      "Envelope_NotificationDetail_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/NotificationDetail"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[NotificationDetail]",
         "type": "object"
       },
       "Envelope_NumberSequenceNext_": {
@@ -58838,6 +59304,43 @@
         "title": "Envelope[PolicyOut]",
         "type": "object"
       },
+      "Envelope_PortalConfigOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PortalConfigOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[PortalConfigOut]",
+        "type": "object"
+      },
       "Envelope_PostOut_": {
         "properties": {
           "data": {
@@ -58910,6 +59413,43 @@
           }
         },
         "title": "Envelope[PreferenceResponse]",
+        "type": "object"
+      },
+      "Envelope_PreferencesOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PreferencesOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[PreferencesOut]",
         "type": "object"
       },
       "Envelope_ProgramApprovalCheck_": {
@@ -59911,6 +60451,43 @@
         "title": "Envelope[PunchIngestResult]",
         "type": "object"
       },
+      "Envelope_PushSubscribeOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PushSubscribeOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[PushSubscribeOut]",
+        "type": "object"
+      },
       "Envelope_PushSummary_": {
         "properties": {
           "data": {
@@ -59948,6 +60525,43 @@
         "title": "Envelope[PushSummary]",
         "type": "object"
       },
+      "Envelope_PushTestOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PushTestOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[PushTestOut]",
+        "type": "object"
+      },
       "Envelope_PushToMarksResult_": {
         "properties": {
           "data": {
@@ -59983,6 +60597,43 @@
           }
         },
         "title": "Envelope[PushToMarksResult]",
+        "type": "object"
+      },
+      "Envelope_PwaConfigOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PwaConfigOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[PwaConfigOut]",
         "type": "object"
       },
       "Envelope_QpAssignmentResponse_": {
@@ -65202,6 +65853,43 @@
         "title": "Envelope[TimetableResponse]",
         "type": "object"
       },
+      "Envelope_TourStateOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TourStateOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[TourStateOut]",
+        "type": "object"
+      },
       "Envelope_TraceResponse_": {
         "properties": {
           "data": {
@@ -66330,6 +67018,43 @@
           }
         },
         "title": "Envelope[ValuationStatus]",
+        "type": "object"
+      },
+      "Envelope_VapidKeyOut_": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/VapidKeyOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[VapidKeyOut]",
         "type": "object"
       },
       "Envelope_VehicleFuelOut_": {
@@ -68103,6 +68828,47 @@
           }
         },
         "title": "Envelope[list[AppraisalOut]]",
+        "type": "object"
+      },
+      "Envelope_list_ApprovalItem__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/ApprovalItem"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[ApprovalItem]]",
         "type": "object"
       },
       "Envelope_list_ArchiveManifestOut__": {
@@ -82947,6 +83713,47 @@
         "title": "Envelope[list[TicketOut]]",
         "type": "object"
       },
+      "Envelope_list_TimelineItem__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/TimelineItem"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[TimelineItem]]",
+        "type": "object"
+      },
       "Envelope_list_TimetableResponse__": {
         "properties": {
           "data": {
@@ -82986,6 +83793,47 @@
           }
         },
         "title": "Envelope[list[TimetableResponse]]",
+        "type": "object"
+      },
+      "Envelope_list_TourDef__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/TourDef"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[TourDef]]",
         "type": "object"
       },
       "Envelope_list_TranscriptResponse__": {
@@ -83273,6 +84121,47 @@
           }
         },
         "title": "Envelope[list[UndertakingStatus]]",
+        "type": "object"
+      },
+      "Envelope_list_UnifiedDocumentItem__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/UnifiedDocumentItem"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[UnifiedDocumentItem]]",
         "type": "object"
       },
       "Envelope_list_UnmatchedPunch__": {
@@ -83806,6 +84695,47 @@
           }
         },
         "title": "Envelope[list[WalletTxnOut]]",
+        "type": "object"
+      },
+      "Envelope_list_WardOut__": {
+        "properties": {
+          "data": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/WardOut"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Data"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "meta": {
+            "additionalProperties": true,
+            "title": "Meta",
+            "type": "object"
+          },
+          "success": {
+            "default": true,
+            "title": "Success",
+            "type": "boolean"
+          }
+        },
+        "title": "Envelope[list[WardOut]]",
         "type": "object"
       },
       "Envelope_list_WardSummary__": {
@@ -94736,6 +95666,19 @@
             ],
             "title": "Page"
           },
+          "persona": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Phase 39: portal persona of the page",
+            "title": "Persona"
+          },
           "rating": {
             "anyOf": [
               {
@@ -100018,6 +100961,46 @@
         "title": "HelpAudience",
         "type": "object"
       },
+      "HelpContextOut": {
+        "properties": {
+          "article": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Article"
+          },
+          "related": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Related",
+            "type": "array"
+          },
+          "route": {
+            "title": "Route",
+            "type": "string"
+          },
+          "tours": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tours",
+            "type": "array"
+          }
+        },
+        "required": [
+          "route"
+        ],
+        "title": "HelpContextOut",
+        "type": "object"
+      },
       "HelpImport": {
         "properties": {
           "articles": {
@@ -100033,6 +101016,40 @@
           "articles"
         ],
         "title": "HelpImport",
+        "type": "object"
+      },
+      "HelpfulIn": {
+        "properties": {
+          "helpful": {
+            "default": true,
+            "title": "Helpful",
+            "type": "boolean"
+          }
+        },
+        "title": "HelpfulIn",
+        "type": "object"
+      },
+      "HelpfulOut": {
+        "properties": {
+          "helpful": {
+            "title": "Helpful",
+            "type": "integer"
+          },
+          "not_helpful": {
+            "title": "Not Helpful",
+            "type": "integer"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "helpful",
+          "not_helpful"
+        ],
+        "title": "HelpfulOut",
         "type": "object"
       },
       "HodAssign": {
@@ -104286,6 +105303,28 @@
           "inspection_on"
         ],
         "title": "InspectionSchedule",
+        "type": "object"
+      },
+      "InstallPing": {
+        "properties": {
+          "outcome": {
+            "default": "installed",
+            "enum": [
+              "accepted",
+              "dismissed",
+              "installed"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "platform": {
+            "default": "web",
+            "maxLength": 20,
+            "title": "Platform",
+            "type": "string"
+          }
+        },
+        "title": "InstallPing",
         "type": "object"
       },
       "InstallRequest": {
@@ -111822,6 +112861,32 @@
         "title": "LoanType",
         "type": "string"
       },
+      "LocalePackOut": {
+        "properties": {
+          "locale": {
+            "title": "Locale",
+            "type": "string"
+          },
+          "overrides": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Overrides",
+            "type": "object"
+          },
+          "strings": {
+            "additionalProperties": true,
+            "title": "Strings",
+            "type": "object"
+          }
+        },
+        "required": [
+          "locale",
+          "strings"
+        ],
+        "title": "LocalePackOut",
+        "type": "object"
+      },
       "LockRequest": {
         "additionalProperties": false,
         "properties": {
@@ -112870,6 +113935,56 @@
         "title": "MarkItem",
         "type": "object"
       },
+      "MarkReadIn": {
+        "properties": {
+          "all": {
+            "default": false,
+            "title": "All",
+            "type": "boolean"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "maxItems": 500,
+            "title": "Ids",
+            "type": "array"
+          }
+        },
+        "title": "MarkReadIn",
+        "type": "object"
+      },
+      "MarkReadOut": {
+        "properties": {
+          "marked": {
+            "title": "Marked",
+            "type": "integer"
+          },
+          "unread": {
+            "title": "Unread",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "marked",
+          "unread"
+        ],
+        "title": "MarkReadOut",
+        "type": "object"
+      },
       "MarkResult": {
         "properties": {
           "attendance_status": {
@@ -113336,6 +114451,91 @@
           "user"
         ],
         "title": "MeResponse",
+        "type": "object"
+      },
+      "MeUpdateIn": {
+        "properties": {
+          "locale": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z]{2}(-[A-Z]{2})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locale"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "enum": [
+                  "light",
+                  "dark",
+                  "system"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone"
+          }
+        },
+        "title": "MeUpdateIn",
+        "type": "object"
+      },
+      "MeUpdateOut": {
+        "properties": {
+          "locale": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locale"
+          },
+          "theme": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Theme"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone"
+          }
+        },
+        "title": "MeUpdateOut",
         "type": "object"
       },
       "MeUser": {
@@ -118327,6 +119527,33 @@
         "title": "MouUpdate",
         "type": "object"
       },
+      "MyCalendarOut": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/app__schemas__portals__CalendarItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "subscribe_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subscribe Url"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "MyCalendarOut",
+        "type": "object"
+      },
       "MyMarksRow": {
         "properties": {
           "cia_max": {
@@ -118454,6 +119681,80 @@
           "created_at"
         ],
         "title": "MyMessageOut",
+        "type": "object"
+      },
+      "MyPaymentsOut": {
+        "properties": {
+          "invoices": {
+            "items": {
+              "$ref": "#/components/schemas/UnifiedPaymentItem"
+            },
+            "title": "Invoices",
+            "type": "array"
+          },
+          "payments": {
+            "items": {
+              "$ref": "#/components/schemas/UnifiedPaymentItem"
+            },
+            "title": "Payments",
+            "type": "array"
+          },
+          "refunds": {
+            "items": {
+              "$ref": "#/components/schemas/UnifiedPaymentItem"
+            },
+            "title": "Refunds",
+            "type": "array"
+          },
+          "totals": {
+            "$ref": "#/components/schemas/PaymentTotals"
+          }
+        },
+        "required": [
+          "invoices",
+          "payments",
+          "refunds",
+          "totals"
+        ],
+        "title": "MyPaymentsOut",
+        "type": "object"
+      },
+      "MyRequestsOut": {
+        "properties": {
+          "by_module": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "By Module",
+            "type": "object"
+          },
+          "by_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "By Status",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/UnifiedRequestItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "launchers": {
+            "description": "'raise new' entries",
+            "items": {
+              "$ref": "#/components/schemas/PortalNavEntry"
+            },
+            "title": "Launchers",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "MyRequestsOut",
         "type": "object"
       },
       "MyResultsResponse": {
@@ -119025,6 +120326,131 @@
         "title": "NoticeSend",
         "type": "object"
       },
+      "NotificationCounts": {
+        "properties": {
+          "pending_ack": {
+            "default": 0,
+            "title": "Pending Ack",
+            "type": "integer"
+          },
+          "snoozed": {
+            "additionalProperties": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Snoozed",
+            "type": "object"
+          },
+          "unread": {
+            "title": "Unread",
+            "type": "integer"
+          },
+          "unread_by_category": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Unread By Category",
+            "type": "object"
+          }
+        },
+        "required": [
+          "unread",
+          "unread_by_category"
+        ],
+        "title": "NotificationCounts",
+        "type": "object"
+      },
+      "NotificationDetail": {
+        "properties": {
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "category": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Category"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "event_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Event Type"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_read": {
+            "title": "Is Read",
+            "type": "boolean"
+          },
+          "priority": {
+            "default": "normal",
+            "title": "Priority",
+            "type": "string"
+          },
+          "read_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Read At"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "is_read",
+          "created_at"
+        ],
+        "title": "NotificationDetail",
+        "type": "object"
+      },
       "NotificationResponse": {
         "properties": {
           "body": {
@@ -119121,6 +120547,32 @@
           "created_at"
         ],
         "title": "NotificationResponse",
+        "type": "object"
+      },
+      "NotificationTestIn": {
+        "properties": {
+          "category": {
+            "default": "system",
+            "maxLength": 40,
+            "title": "Category",
+            "type": "string"
+          },
+          "channels": {
+            "items": {
+              "enum": [
+                "in_app",
+                "sms",
+                "whatsapp",
+                "email",
+                "push"
+              ],
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          }
+        },
+        "title": "NotificationTestIn",
         "type": "object"
       },
       "NumberSequenceCreate": {
@@ -123476,6 +124928,32 @@
           "status"
         ],
         "title": "PaymentResult",
+        "type": "object"
+      },
+      "PaymentTotals": {
+        "properties": {
+          "balance_paise": {
+            "default": 0,
+            "title": "Balance Paise",
+            "type": "integer"
+          },
+          "invoiced_paise": {
+            "default": 0,
+            "title": "Invoiced Paise",
+            "type": "integer"
+          },
+          "paid_paise": {
+            "default": 0,
+            "title": "Paid Paise",
+            "type": "integer"
+          },
+          "refunded_paise": {
+            "default": 0,
+            "title": "Refunded Paise",
+            "type": "integer"
+          }
+        },
+        "title": "PaymentTotals",
         "type": "object"
       },
       "PayrollBulkAction": {
@@ -129995,6 +131473,182 @@
         "title": "PolicyUpdate",
         "type": "object"
       },
+      "PortalConfigOut": {
+        "properties": {
+          "admin_switch": {
+            "default": false,
+            "title": "Admin Switch",
+            "type": "boolean"
+          },
+          "branding": {
+            "$ref": "#/components/schemas/BrandingOut"
+          },
+          "features_missing": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Features Missing",
+            "type": "array"
+          },
+          "home": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Home"
+          },
+          "home_widgets": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Home Widgets",
+            "type": "array"
+          },
+          "language": {
+            "default": "en",
+            "title": "Language",
+            "type": "string"
+          },
+          "locales": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Locales",
+            "type": "array"
+          },
+          "more": {
+            "items": {
+              "$ref": "#/components/schemas/PortalNavEntry"
+            },
+            "title": "More",
+            "type": "array"
+          },
+          "persona": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Persona"
+          },
+          "personas": {
+            "description": "every persona the user holds (role switch)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Personas",
+            "type": "array"
+          },
+          "push_enabled": {
+            "default": false,
+            "title": "Push Enabled",
+            "type": "boolean"
+          },
+          "tabs": {
+            "items": {
+              "$ref": "#/components/schemas/PortalNavEntry"
+            },
+            "title": "Tabs",
+            "type": "array"
+          },
+          "term": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TermChip"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tours_enabled": {
+            "default": false,
+            "title": "Tours Enabled",
+            "type": "boolean"
+          },
+          "unified": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unified",
+            "type": "array"
+          },
+          "ward_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ward Id"
+          }
+        },
+        "required": [
+          "branding"
+        ],
+        "title": "PortalConfigOut",
+        "type": "object"
+      },
+      "PortalNavEntry": {
+        "properties": {
+          "feature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feature"
+          },
+          "icon": {
+            "title": "Icon",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label_key": {
+            "title": "Label Key",
+            "type": "string"
+          },
+          "permission": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Permission"
+          },
+          "route": {
+            "title": "Route",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "label_key",
+          "route",
+          "icon"
+        ],
+        "title": "PortalNavEntry",
+        "type": "object"
+      },
       "PostIn": {
         "properties": {
           "attachments": {
@@ -130318,6 +131972,100 @@
           "items"
         ],
         "title": "PreferenceUpdate",
+        "type": "object"
+      },
+      "PreferencesIn": {
+        "properties": {
+          "categories": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryChannels"
+            },
+            "maxItems": 40,
+            "title": "Categories",
+            "type": "array"
+          },
+          "clear_quiet_hours": {
+            "default": false,
+            "title": "Clear Quiet Hours",
+            "type": "boolean"
+          },
+          "digest": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "daily",
+                  "weekly"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Digest"
+          },
+          "quiet_hours": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/QuietHours"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "title": "PreferencesIn",
+        "type": "object"
+      },
+      "PreferencesOut": {
+        "properties": {
+          "available_channels": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Available Channels",
+            "type": "array"
+          },
+          "categories": {
+            "items": {
+              "$ref": "#/components/schemas/CategoryChannels"
+            },
+            "title": "Categories",
+            "type": "array"
+          },
+          "digest": {
+            "default": "none",
+            "enum": [
+              "none",
+              "daily",
+              "weekly"
+            ],
+            "title": "Digest",
+            "type": "string"
+          },
+          "push_subscribed": {
+            "default": false,
+            "title": "Push Subscribed",
+            "type": "boolean"
+          },
+          "quiet_hours": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/QuietHours"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "categories",
+          "available_channels"
+        ],
+        "title": "PreferencesOut",
         "type": "object"
       },
       "PreferencesReplace": {
@@ -135056,6 +136804,96 @@
         "title": "PunchIngestResult",
         "type": "object"
       },
+      "PushKeys": {
+        "properties": {
+          "auth": {
+            "maxLength": 100,
+            "title": "Auth",
+            "type": "string"
+          },
+          "p256dh": {
+            "maxLength": 200,
+            "title": "P256Dh",
+            "type": "string"
+          }
+        },
+        "required": [
+          "p256dh",
+          "auth"
+        ],
+        "title": "PushKeys",
+        "type": "object"
+      },
+      "PushSubscribeIn": {
+        "properties": {
+          "endpoint": {
+            "maxLength": 1000,
+            "pattern": "^https://",
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "keys": {
+            "$ref": "#/components/schemas/PushKeys"
+          },
+          "platform": {
+            "default": "web",
+            "maxLength": 20,
+            "title": "Platform",
+            "type": "string"
+          },
+          "topics": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Topics",
+            "type": "array"
+          }
+        },
+        "required": [
+          "endpoint",
+          "keys"
+        ],
+        "title": "PushSubscribeIn",
+        "type": "object"
+      },
+      "PushSubscribeOut": {
+        "properties": {
+          "created": {
+            "default": false,
+            "title": "Created",
+            "type": "boolean"
+          },
+          "endpoint": {
+            "title": "Endpoint",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean"
+          },
+          "topics": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Topics",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "endpoint",
+          "topics",
+          "is_active"
+        ],
+        "title": "PushSubscribeOut",
+        "type": "object"
+      },
       "PushSummary": {
         "properties": {
           "acknowledged": {
@@ -135102,6 +136940,64 @@
         "title": "PushSummary",
         "type": "object"
       },
+      "PushTestOut": {
+        "properties": {
+          "devices": {
+            "title": "Devices",
+            "type": "integer"
+          },
+          "log_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "title": "Log Ids",
+            "type": "array"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          }
+        },
+        "required": [
+          "devices",
+          "log_ids",
+          "payload"
+        ],
+        "title": "PushTestOut",
+        "type": "object"
+      },
+      "PushTestRequest": {
+        "properties": {
+          "body": {
+            "default": "Push notifications are working.",
+            "maxLength": 400,
+            "title": "Body",
+            "type": "string"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "title": {
+            "default": "Test notification",
+            "maxLength": 120,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "PushTestRequest",
+        "type": "object"
+      },
       "PushToMarksResult": {
         "properties": {
           "skipped": {
@@ -135116,6 +137012,75 @@
           }
         },
         "title": "PushToMarksResult",
+        "type": "object"
+      },
+      "PushUnsubscribeIn": {
+        "properties": {
+          "endpoint": {
+            "maxLength": 1000,
+            "title": "Endpoint",
+            "type": "string"
+          }
+        },
+        "required": [
+          "endpoint"
+        ],
+        "title": "PushUnsubscribeIn",
+        "type": "object"
+      },
+      "PwaConfigOut": {
+        "properties": {
+          "background_sync": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Background Sync",
+            "type": "array"
+          },
+          "cache_ttl": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Cache Ttl",
+            "type": "object"
+          },
+          "offline_route": {
+            "default": "/offline",
+            "title": "Offline Route",
+            "type": "string"
+          },
+          "precache": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Precache",
+            "type": "array"
+          },
+          "push_enabled": {
+            "title": "Push Enabled",
+            "type": "boolean"
+          },
+          "swr_routes": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Swr Routes",
+            "type": "object"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "version",
+          "cache_ttl",
+          "swr_routes",
+          "precache",
+          "background_sync",
+          "push_enabled"
+        ],
+        "title": "PwaConfigOut",
         "type": "object"
       },
       "QpAssignmentCreate": {
@@ -152844,6 +154809,28 @@
         "title": "SlotType",
         "type": "string"
       },
+      "SnoozeIn": {
+        "properties": {
+          "category": {
+            "maxLength": 40,
+            "title": "Category",
+            "type": "string"
+          },
+          "hours": {
+            "description": "0 clears the snooze",
+            "maximum": 168.0,
+            "minimum": 0.0,
+            "title": "Hours",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "category",
+          "hours"
+        ],
+        "title": "SnoozeIn",
+        "type": "object"
+      },
       "SosBroadcast": {
         "additionalProperties": false,
         "properties": {
@@ -164924,6 +166911,25 @@
         "title": "TenantResetRequest",
         "type": "object"
       },
+      "TermChip": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "TermChip",
+        "type": "object"
+      },
       "TermCloseCheck": {
         "properties": {
           "detail": {
@@ -166169,6 +168175,52 @@
         "title": "TicketStatusChange",
         "type": "object"
       },
+      "TimelineItem": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "module": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Module"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at",
+          "kind",
+          "title"
+        ],
+        "title": "TimelineItem",
+        "type": "object"
+      },
       "TimetableCreate": {
         "additionalProperties": false,
         "properties": {
@@ -166392,6 +168444,147 @@
           }
         },
         "title": "Totals",
+        "type": "object"
+      },
+      "TourDef": {
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "roles": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Roles",
+            "type": "array"
+          },
+          "route": {
+            "title": "Route",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/TourStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "key",
+          "route",
+          "roles",
+          "version",
+          "steps"
+        ],
+        "title": "TourDef",
+        "type": "object"
+      },
+      "TourStateIn": {
+        "properties": {
+          "completed": {
+            "default": false,
+            "title": "Completed",
+            "type": "boolean"
+          },
+          "dismissed": {
+            "default": false,
+            "title": "Dismissed",
+            "type": "boolean"
+          },
+          "key": {
+            "maxLength": 80,
+            "title": "Key",
+            "type": "string"
+          },
+          "reset": {
+            "default": false,
+            "title": "Reset",
+            "type": "boolean"
+          },
+          "version": {
+            "maximum": 1000.0,
+            "minimum": 1.0,
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "key",
+          "version"
+        ],
+        "title": "TourStateIn",
+        "type": "object"
+      },
+      "TourStateOut": {
+        "properties": {
+          "completed": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Completed",
+            "type": "object"
+          },
+          "disabled_routes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Disabled Routes",
+            "type": "array"
+          },
+          "dismissed": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Dismissed",
+            "type": "array"
+          }
+        },
+        "title": "TourStateOut",
+        "type": "object"
+      },
+      "TourStep": {
+        "properties": {
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "placement": {
+            "default": "bottom",
+            "title": "Placement",
+            "type": "string"
+          },
+          "target": {
+            "title": "Target",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "target",
+          "title",
+          "body"
+        ],
+        "title": "TourStep",
         "type": "object"
       },
       "TracePoint": {
@@ -168458,6 +170651,328 @@
         "title": "UndertakingType",
         "type": "string"
       },
+      "UnifiedDocumentItem": {
+        "properties": {
+          "document_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Document Number"
+          },
+          "download_route": {
+            "title": "Download Route",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "issued_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Issued At"
+          },
+          "person_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Id"
+          },
+          "person_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Type"
+          },
+          "template_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Template Type"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "verification_token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verification Token"
+          },
+          "verify_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Verify Url"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "download_route"
+        ],
+        "title": "UnifiedDocumentItem",
+        "type": "object"
+      },
+      "UnifiedPaymentItem": {
+        "properties": {
+          "amount_paise": {
+            "title": "Amount Paise",
+            "type": "integer"
+          },
+          "at": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "At"
+          },
+          "balance_paise": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Balance Paise"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "due_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Due Date"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "invoice",
+              "payment",
+              "refund"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          },
+          "payable": {
+            "default": false,
+            "title": "Payable",
+            "type": "boolean"
+          },
+          "receipt_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Receipt Url"
+          },
+          "source_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Type"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "student_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Id"
+          }
+        },
+        "required": [
+          "kind",
+          "id",
+          "amount_paise",
+          "status"
+        ],
+        "title": "UnifiedPaymentItem",
+        "type": "object"
+      },
+      "UnifiedRequestItem": {
+        "properties": {
+          "created_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Created At"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          },
+          "raw_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Raw Status"
+          },
+          "route": {
+            "title": "Route",
+            "type": "string"
+          },
+          "source_module": {
+            "title": "Source Module",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "student_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Student Id"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source_module",
+          "type",
+          "id",
+          "title",
+          "status",
+          "route"
+        ],
+        "title": "UnifiedRequestItem",
+        "type": "object"
+      },
       "UniversityPortfolio": {
         "properties": {
           "applications_by_status": {
@@ -170181,6 +172696,24 @@
           "marks"
         ],
         "title": "ValuationSubmit",
+        "type": "object"
+      },
+      "VapidKeyOut": {
+        "properties": {
+          "configured": {
+            "title": "Configured",
+            "type": "boolean"
+          },
+          "public_key": {
+            "title": "Public Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "public_key",
+          "configured"
+        ],
+        "title": "VapidKeyOut",
         "type": "object"
       },
       "VaultDocument": {
@@ -172551,6 +175084,57 @@
         "title": "WalletTxnOut",
         "type": "object"
       },
+      "WardOut": {
+        "properties": {
+          "active": {
+            "default": false,
+            "title": "Active",
+            "type": "boolean"
+          },
+          "consent": {
+            "title": "Consent",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "program": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Program"
+          },
+          "registration_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Registration Number"
+          },
+          "student_id": {
+            "format": "uuid",
+            "title": "Student Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "student_id",
+          "name",
+          "consent"
+        ],
+        "title": "WardOut",
+        "type": "object"
+      },
       "WardSummary": {
         "properties": {
           "academic_standing": {
@@ -172649,6 +175233,20 @@
           "status"
         ],
         "title": "WardSummary",
+        "type": "object"
+      },
+      "WardSwitchIn": {
+        "properties": {
+          "student_id": {
+            "format": "uuid",
+            "title": "Student Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "student_id"
+        ],
+        "title": "WardSwitchIn",
         "type": "object"
       },
       "WeekPattern": {
@@ -175555,6 +178153,120 @@
         "title": "RefreshRequest",
         "type": "object"
       },
+      "app__schemas__calendar__CalendarItem": {
+        "description": "One merged entry of ``GET /calendar`` (manual rows and every registered source).",
+        "properties": {
+          "all_day": {
+            "default": false,
+            "title": "All Day",
+            "type": "boolean"
+          },
+          "college_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "College Id"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "editable": {
+            "default": false,
+            "title": "Editable",
+            "type": "boolean"
+          },
+          "ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ends At"
+          },
+          "event_type": {
+            "title": "Event Type",
+            "type": "string"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "link": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Link"
+          },
+          "location": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Location"
+          },
+          "source_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Id"
+          },
+          "source_type": {
+            "title": "Source Type",
+            "type": "string"
+          },
+          "starts_at": {
+            "format": "date-time",
+            "title": "Starts At",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "title",
+          "event_type",
+          "source_type",
+          "starts_at"
+        ],
+        "title": "CalendarItem",
+        "type": "object"
+      },
       "app__schemas__common__Envelope_AllocationSummary___1": {
         "properties": {
           "data": {
@@ -177612,6 +180324,70 @@
         "title": "TimelineEntry",
         "type": "object"
       },
+      "app__schemas__portals__CalendarItem": {
+        "properties": {
+          "end": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "End"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "route": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Route"
+          },
+          "start": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "format": "date",
+                "type": "string"
+              }
+            ],
+            "title": "Start"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "start",
+          "kind"
+        ],
+        "title": "CalendarItem",
+        "type": "object"
+      },
       "app__schemas__projects__MemberIn": {
         "properties": {
           "members": {
@@ -178332,6 +181108,44 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/.well-known/apple-app-site-association": {
+      "get": {
+        "operationId": "apple_app_site_association__well_known_apple_app_site_association_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "iOS universal links",
+        "tags": [
+          "portals-public"
+        ]
+      }
+    },
+    "/.well-known/assetlinks.json": {
+      "get": {
+        "operationId": "assetlinks__well_known_assetlinks_json_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Android App Links",
+        "tags": [
+          "portals-public"
+        ]
+      }
+    },
     "/api/v1/_dev/admissions/lapse-allotments": {
       "post": {
         "operationId": "dev_lapse_allotments_api_v1__dev_admissions_lapse_allotments_post",
@@ -196988,6 +199802,54 @@
         "summary": "Draft an announcement",
         "tags": [
           "announcements"
+        ]
+      }
+    },
+    "/api/v1/announcements/me": {
+      "get": {
+        "operationId": "my_announcements_api_v1_announcements_me_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "pending_ack",
+            "required": false,
+            "schema": {
+              "default": false,
+              "title": "Pending Ack",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_AnnouncementResponse__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Announcements addressed to me (pending_ack: still to acknowledge)",
+        "tags": [
+          "portals"
         ]
       }
     },
@@ -239760,6 +242622,118 @@
         ]
       }
     },
+    "/api/v1/help/context": {
+      "get": {
+        "operationId": "help_context_api_v1_help_context_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "route",
+            "required": true,
+            "schema": {
+              "maxLength": 200,
+              "title": "Route",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_HelpContextOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Contextual article for a route",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/help/helpful/{slug}": {
+      "post": {
+        "operationId": "help_helpful_api_v1_help_helpful__slug__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/HelpfulIn"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_HelpfulOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Was this helpful?",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
     "/api/v1/holidays": {
       "get": {
         "operationId": "list_holidays_api_v1_holidays_get",
@@ -257424,6 +260398,148 @@
         ]
       }
     },
+    "/api/v1/notifications/counts": {
+      "get": {
+        "operationId": "notification_counts_api_v1_notifications_counts_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NotificationCounts_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Unread by category",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/notifications/mark-read": {
+      "post": {
+        "operationId": "notification_mark_read_api_v1_notifications_mark_read_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MarkReadIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_MarkReadOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mark read (ids, or all / per category)",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/notifications/preferences": {
+      "get": {
+        "operationId": "notification_preferences_api_v1_notifications_preferences_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PreferencesOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Category × channel matrix, quiet hours, digest",
+        "tags": [
+          "portals"
+        ]
+      },
+      "put": {
+        "operationId": "notification_preferences_update_api_v1_notifications_preferences_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreferencesIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PreferencesOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update the matrix (policy-locked cells → 422)",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
     "/api/v1/notifications/read-all": {
       "post": {
         "operationId": "read_all_api_v1_notifications_read_all_post",
@@ -257450,6 +260566,98 @@
         ]
       }
     },
+    "/api/v1/notifications/snooze": {
+      "post": {
+        "operationId": "notification_snooze_api_v1_notifications_snooze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SnoozeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NotificationCounts_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mute a category's push / e-mail for N hours",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/notifications/test": {
+      "post": {
+        "operationId": "notification_test_api_v1_notifications_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationTestIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Send myself a test notification",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
     "/api/v1/notifications/unread-count": {
       "get": {
         "operationId": "unread_count_api_v1_notifications_unread_count_get",
@@ -257473,6 +260681,54 @@
         "summary": "Unread notifications",
         "tags": [
           "notifications"
+        ]
+      }
+    },
+    "/api/v1/notifications/{id}": {
+      "get": {
+        "operationId": "notification_open_api_v1_notifications__id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NotificationDetail_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Open a notification (marks it read, returns the route)",
+        "tags": [
+          "portals"
         ]
       }
     },
@@ -271836,6 +275092,478 @@
         ]
       }
     },
+    "/api/v1/portal/config": {
+      "get": {
+        "operationId": "portal_config_api_v1_portal_config_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PortalConfigOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Persona shell config (tabs / more / branding / language)",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/me/approvals": {
+      "get": {
+        "operationId": "my_approvals_api_v1_portal_me_approvals_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_ApprovalItem__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Approval steps assigned to me",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/me/calendar": {
+      "get": {
+        "operationId": "my_calendar_api_v1_portal_me_calendar_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_MyCalendarOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My personal calendar",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/me/documents": {
+      "get": {
+        "operationId": "my_documents_api_v1_portal_me_documents_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_UnifiedDocumentItem__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My issued documents",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/me/payments": {
+      "get": {
+        "operationId": "my_payments_api_v1_portal_me_payments_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 20,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_MyPaymentsOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My invoices, payments and refunds",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/me/requests": {
+      "get": {
+        "operationId": "my_requests_api_v1_portal_me_requests_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(draft|pending|in_progress|approved|rejected|completed|cancelled)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "module",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Module"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_MyRequestsOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My requests across modules",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/me/timeline": {
+      "get": {
+        "operationId": "my_timeline_api_v1_portal_me_timeline_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_TimelineItem__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My activity (last 90 days)",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/wards": {
+      "get": {
+        "operationId": "portal_wards_api_v1_portal_wards_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_WardOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Parent: consented wards",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/portal/wards/switch": {
+      "post": {
+        "operationId": "portal_ward_switch_api_v1_portal_wards_switch_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WardSwitchIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_WardOut__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Parent: switch the active ward",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
     "/api/v1/posts/{id}/mark-answer": {
       "post": {
         "operationId": "mark_answer_api_v1_posts__id__mark_answer_post",
@@ -274198,6 +277926,113 @@
         ]
       }
     },
+    "/api/v1/public/locales/{lng}.json": {
+      "get": {
+        "operationId": "public_locale_api_v1_public_locales__lng__json_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "lng",
+            "required": true,
+            "schema": {
+              "title": "Lng",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "institution",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Institution"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_LocalePackOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Locale pack + institution overrides",
+        "tags": [
+          "portals-public"
+        ]
+      }
+    },
+    "/api/v1/public/manifest.json": {
+      "get": {
+        "operationId": "public_manifest_api_v1_public_manifest_json_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "institution",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Institution"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Web App Manifest per institution",
+        "tags": [
+          "portals-public"
+        ]
+      }
+    },
     "/api/v1/public/plans": {
       "get": {
         "operationId": "public_plans_api_v1_public_plans_get",
@@ -274216,6 +278051,127 @@
         "summary": "Active plans (pricing page)",
         "tags": [
           "public-saas"
+        ]
+      }
+    },
+    "/api/v1/public/push/vapid-key": {
+      "get": {
+        "operationId": "public_vapid_key_api_v1_public_push_vapid_key_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_VapidKeyOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "VAPID public key",
+        "tags": [
+          "portals-public"
+        ]
+      }
+    },
+    "/api/v1/public/pwa-config": {
+      "get": {
+        "operationId": "public_pwa_config_api_v1_public_pwa_config_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "institution",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Institution"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PwaConfigOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Service-worker strategy config",
+        "tags": [
+          "portals-public"
+        ]
+      }
+    },
+    "/api/v1/public/pwa-icons/{institution_id}/{size}.png": {
+      "get": {
+        "operationId": "public_pwa_icon_api_v1_public_pwa_icons__institution_id___size__png_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "institution_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Institution Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "size",
+            "required": true,
+            "schema": {
+              "title": "Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "PWA icon (institution logo)",
+        "tags": [
+          "portals-public"
         ]
       }
     },
@@ -274481,6 +278437,188 @@
         "summary": "Published rank list (masked; public when allowed)",
         "tags": [
           "public"
+        ]
+      }
+    },
+    "/api/v1/push/subscribe": {
+      "delete": {
+        "operationId": "push_unsubscribe_api_v1_push_subscribe_delete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushUnsubscribeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Unregister this browser",
+        "tags": [
+          "portals"
+        ]
+      },
+      "post": {
+        "operationId": "push_subscribe_api_v1_push_subscribe_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushSubscribeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PushSubscribeOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Register this browser for web push",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/push/test": {
+      "post": {
+        "operationId": "push_test_api_v1_push_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PushTestRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_PushTestOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Send a test push to my browsers",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/pwa/installed": {
+      "post": {
+        "operationId": "pwa_installed_api_v1_pwa_installed_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InstallPing"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_NoneType_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Install analytics ping",
+        "tags": [
+          "portals"
         ]
       }
     },
@@ -302714,6 +306852,131 @@
         ]
       }
     },
+    "/api/v1/tours/definitions": {
+      "get": {
+        "operationId": "tour_definitions_api_v1_tours_definitions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "route",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 200,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Route"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_TourDef__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Tours for a route (role-filtered)",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
+    "/api/v1/tours/state": {
+      "get": {
+        "operationId": "tour_state_api_v1_tours_state_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_TourStateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My tour progress",
+        "tags": [
+          "portals"
+        ]
+      },
+      "put": {
+        "operationId": "tour_state_update_api_v1_tours_state_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TourStateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_TourStateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Complete / dismiss / reset a tour",
+        "tags": [
+          "portals"
+        ]
+      }
+    },
     "/api/v1/training/me": {
       "get": {
         "operationId": "mine_api_v1_training_me_get",
@@ -306570,6 +310833,52 @@
         "summary": "Generate credential sheets (background job)",
         "tags": [
           "rbac"
+        ]
+      }
+    },
+    "/api/v1/users/me": {
+      "put": {
+        "operationId": "update_me_api_v1_users_me_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeUpdateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_MeUpdateOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My language / timezone / theme",
+        "tags": [
+          "portals"
         ]
       }
     },

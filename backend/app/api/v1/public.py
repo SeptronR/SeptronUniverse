@@ -6,6 +6,13 @@ Phases append their public routes (login/OTP, public config, website, verificati
 """
 
 PUBLIC_ROUTES: set[str] = {
+    # Phase 39 — PWA manifest / service-worker config / VAPID public key / icons and locale packs (tenant by
+    # ?institution=<slug> or header; no PII)
+    "GET /api/v1/public/manifest.json",
+    "GET /api/v1/public/pwa-config",
+    "GET /api/v1/public/push/vapid-key",
+    "GET /api/v1/public/pwa-icons/{institution_id}/{size}.png",
+    "GET /api/v1/public/locales/{lng}.json",
     # Phase 38 — self-serve registration / demo requests / pricing (captcha + rate limits) and the platform gateway
     # webhook (provider signature verified)
     "GET /api/v1/public/plans",

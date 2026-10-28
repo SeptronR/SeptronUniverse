@@ -102,6 +102,9 @@ class AppRoutes {
   static const examAudit = '/app/exam-audit';
   // Phase 38 — platform hub (super admin / support agent), tenant support and billing (institution admin)
   static const platformHub = '/app/platform';
+  // Phase 39 — notification centre (categories / snooze) + preference matrix
+  static const notificationCentre = '/app/notification-centre';
+  static const notificationSettings = '/app/notification-settings';
   static const tenantSupport = '/app/support';
   static const tenantBilling = '/app/billing';
   static const myInspections = '/app/inspections';

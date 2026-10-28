@@ -24,5 +24,6 @@ export default defineConfig({
     { name: 'round3', testMatch: /round3\/.*\.spec\.ts/ },
     { name: 'round4', testMatch: /round4\/.*\.spec\.ts/ },
     { name: 'round5', testMatch: /round5\/.*\.spec\.ts/ },
+    { name: 'portals', testMatch: /portals\/.*\.spec\.ts/ },
   ],
 });

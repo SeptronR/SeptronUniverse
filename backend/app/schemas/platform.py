@@ -97,6 +97,7 @@ class FeedbackCreate(BaseModel):
     message: str = Field(min_length=3, max_length=4000)
     screenshot_url: str | None = Field(default=None, max_length=2000)
     client: Literal["web", "mobile", "pwa"] = "web"
+    persona: str | None = Field(default=None, max_length=20, description="Phase 39: portal persona of the page")
 
 
 class FeedbackResponse(ORMModel):

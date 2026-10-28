@@ -25,6 +25,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core import events
 from app.core.config import settings
 from app.db.session import redis_client
+from app.integrations.webpush import PushGone
 from app.models.communication import MessageLog
 from app.repositories.message_log_repository import MessageLogRepository
 from app.repositories.template_repository import TemplateRepository
@@ -123,11 +124,16 @@ async def deliver(db: AsyncSession, log_id: uuid.UUID) -> str:
     parked = await redis_client.get(body_key(row.id))
     content = json.loads(parked) if parked else {"subject": row.subject, "body": row.body_preview or ""}
     provider = await provider_for(db, row.institution_id, row.channel)
+    if row.channel == "push" and row.recipient.startswith("webpush:"):
+        provider = "webpush"  # Phase 39: browser subscriptions always go through the VAPID adapter
     row.provider = provider
     try:
         extra = await _compliance(db, row, provider)
         adapter = get_adapter(row.channel, provider)
         to = row.recipient.split(":", 1)[1] if row.channel == "push" and ":" in row.recipient else row.recipient
+        to = content.get("to") or to  # Phase 39: full web-push subscription (the recipient column is 200 chars)
+        if row.channel == "push" and provider == "webpush":
+            extra = {**extra, **(content.get("push") or {})}
         result = await adapter.send(to=to, body=content.get("body") or "", subject=content.get("subject"), **extra)
         row.status = "sent"
         row.sent_at = datetime.now(UTC)
@@ -138,6 +144,12 @@ async def deliver(db: AsyncSession, log_id: uuid.UUID) -> str:
                 row.cost_paise = int(result["cost_paise"])
     except DeliveryError as exc:
         row.status, row.error = "failed", f"{exc.code}: {exc}"
+    except PushGone as exc:  # Phase 39: 404 / 410 → the subscription is pruned (``push.prune_expired`` too)
+        row.status, row.error = "failed", f"PUSH_GONE: {str(exc)[:200]}"
+        await db.execute(
+            text("UPDATE device_tokens SET is_active = FALSE, updated_at = NOW() WHERE provider = 'webpush' AND token = :t"),
+            {"t": to},
+        )
     except Exception as exc:  # noqa: BLE001 - provider errors are recorded and retried
         row.status, row.error = "failed", f"PROVIDER_ERROR: {str(exc)[:400]}"
     await db.flush()
@@ -187,6 +199,8 @@ async def retry_due(db: AsyncSession) -> dict[str, int]:
                     continue  # digest rows go out with notifications.digest
                 if pref is not None and in_quiet_hours(pref.quiet_hours, tz):
                     continue
+                if await redis_client.exists(f"snooze:{row.user_id}:{category_of(row.event_type or '')}"):
+                    continue  # Phase 39 snooze still running
             counts["deferred"] += 1
         row.status = "queued"
         send_after_commit(

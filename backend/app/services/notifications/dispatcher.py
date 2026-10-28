@@ -46,6 +46,14 @@ def body_key(log_id: uuid.UUID | str) -> str:
     return f"msgbody:{log_id}"
 
 
+async def _snoozed(user_id: uuid.UUID, category: str) -> bool:
+    """Phase 39 notification-centre snooze (``snooze:{user}:{category}``): external channels are deferred."""
+    try:
+        return bool(await redis_client.exists(f"snooze:{user_id}:{category}"))
+    except Exception:  # noqa: BLE001 - a Redis hiccup never loses a notification
+        return False
+
+
 def in_quiet_hours(quiet: dict[str, str] | None, tz: str) -> bool:
     if not quiet or not quiet.get("from") or not quiet.get("to"):
         return False
@@ -123,10 +131,9 @@ class Dispatcher:
                         )
                         counts["in_app"] += 1
                     continue
-                deferred = (
-                    not mandatory
-                    and pref is not None
-                    and (in_quiet_hours(pref.quiet_hours, tz) or (pref.digest or "none") != "none")
+                deferred = not mandatory and (
+                    (pref is not None and (in_quiet_hours(pref.quiet_hours, tz) or (pref.digest or "none") != "none"))
+                    or (r.user_id is not None and await _snoozed(r.user_id, category))
                 )
                 targets = self._targets(channel, r, by_user.get(r.user_id, []) if r.user_id else [])
                 for to in targets:
@@ -142,9 +149,22 @@ class Dispatcher:
                         status="deferred" if deferred else "queued",
                         event_id=event.get("event_id"),
                     )
-                    await redis_client.set(
-                        body_key(row.id), json.dumps({"subject": subject, "body": body}), ex=BODY_TTL
-                    )
+                    parked: dict[str, Any] = {"subject": subject, "body": body}
+                    if channel == "push":  # Phase 39 web-push payload {title, body, route, category, tag}
+                        parked["to"] = to.split(":", 1)[1] if ":" in to else to
+                        ev_def = BY_KEY.get(event_type)
+                        route = render(ev_def.link, ctx) if ev_def and ev_def.link else ctx.get("route")
+                        parked["push"] = {
+                            "payload": {
+                                "title": subject,
+                                "body": body[:400],
+                                "route": route or "/",
+                                "category": category,
+                                "tag": f"{category}:{ctx.get('id') or event_type}"[:64],
+                            },
+                            "urgency": "high" if payload.get("priority") in ("high", "urgent") else "normal",
+                        }
+                    await redis_client.set(body_key(row.id), json.dumps(parked, default=str), ex=BODY_TTL)
                     if deferred:
                         counts["deferred"] += 1
                     else:
@@ -227,6 +247,7 @@ class Dispatcher:
             sent_at=datetime.now(UTC),
             event_id=event_id,  # the in-app row belongs to the same notification.requested event as the others
         )
+        await redis_client.delete(f"ncount:{r.user_id}")  # Phase 39 unread-by-category cache
         await publish(
             f"notifications:{r.user_id}",
             {

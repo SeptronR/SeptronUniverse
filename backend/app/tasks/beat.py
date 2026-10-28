@@ -406,3 +406,11 @@ register_beat("registrations.expire", "beat.registrations.expire", crontab(minut
 register_beat("demo.reset_nightly", "beat.demo.reset_nightly", crontab(minute="*/15"))  # fires on demo.reset_cron (UTC)
 register_beat("platform.health_rollup", "beat.platform.health_rollup", 300.0)  # every 5 min
 register_beat("impersonation.auto_stop", "beat.impersonation.auto_stop", 60.0)  # + scheduled read-only windows
+
+# ---- Phase 39 portals / PWA / notification centre (app/tasks/portals.py) -----------------------------------------------------
+# the Phase 04 digest entries are replaced: the portal digest bundles the deferred rows *and* sends the unread summary
+BEAT_SCHEDULE.pop("notifications.digest", None)
+BEAT_SCHEDULE.pop("notifications.digest_weekly", None)
+register_beat("notifications.digest_daily", "beat.notifications.digest_portal", crontab(hour=2, minute=0), kwargs={"period": "daily"})  # 07:30 IST
+register_beat("notifications.digest_weekly", "beat.notifications.digest_portal", crontab(hour=2, minute=5, day_of_week=1), kwargs={"period": "weekly"})  # Mon 07:35 IST
+register_beat("push.prune_expired", "beat.push.prune_expired", crontab(hour=21, minute=40))  # 03:10 IST

@@ -33,6 +33,7 @@ import '../../features/affiliation/affiliation_screens.dart';
 import '../../features/analytics/analytics_screens.dart';
 import '../../features/reports/reports_screens.dart';
 import '../../features/audit/audit_screens.dart';
+import '../../features/portals/portal_screens.dart';
 import '../../features/saas/saas_screens.dart';
 import '../../features/governance/governance_screens.dart';
 import '../../features/iqac/iqac_screens.dart';
@@ -524,6 +525,19 @@ class ScreenRegistry {
       feature: 'exams.sessions',
       permission: 'exams:audit',
       builder: (_, __) => const ExamAuditSummaryScreen(),
+    ),
+    // Phase 39 — notification centre + preferences (self only)
+    AppRoutes.notificationCentre: ScreenEntry(
+      route: AppRoutes.notificationCentre,
+      titleKey: 'notifications',
+      feature: 'core.notifications_inapp',
+      builder: (_, __) => const NotificationCentreScreen(),
+    ),
+    AppRoutes.notificationSettings: ScreenEntry(
+      route: AppRoutes.notificationSettings,
+      titleKey: 'notifications',
+      feature: 'comms.preferences',
+      builder: (_, __) => const NotificationPreferencesScreen(),
     ),
     // Phase 38 — platform hub, tenant support / billing
     AppRoutes.platformHub: ScreenEntry(
