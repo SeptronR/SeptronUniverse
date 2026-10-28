@@ -47,6 +47,7 @@ def upgrade() -> None:
 
     conn = op.get_bind()
     for table in ("payroll_components", "staff_payroll_items"):
+        # contract-of: 0001 — widening VARCHAR(20) → VARCHAR(30) is metadata-only in PostgreSQL (reviewed, Phase 44 lint)
         op.execute(f"ALTER TABLE {table} ALTER COLUMN component_type TYPE VARCHAR(30)")
     _, grants = seed_role_templates(conn)
     backfilled = backfill_role_grants(conn, "0006")

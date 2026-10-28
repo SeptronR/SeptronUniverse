@@ -26158,6 +26158,36 @@
         "title": "ComponentCategory",
         "type": "string"
       },
+      "ComponentIn": {
+        "properties": {
+          "message": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "state": {
+            "anyOf": [
+              {
+                "pattern": "^(operational|degraded|outage|maintenance)$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State"
+          }
+        },
+        "title": "ComponentIn",
+        "type": "object"
+      },
       "ComponentType": {
         "enum": [
           "earning",
@@ -41441,6 +41471,71 @@
           }
         },
         "title": "DonorRef",
+        "type": "object"
+      },
+      "DrillIn": {
+        "properties": {
+          "report_url": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Url"
+          },
+          "rpo_observed_min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rpo Observed Min"
+          },
+          "rto_observed_min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rto Observed Min"
+          },
+          "source_backup": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Backup"
+          },
+          "target_env": {
+            "default": "scratch",
+            "maxLength": 40,
+            "title": "Target Env",
+            "type": "string"
+          },
+          "verified_checks": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Verified Checks",
+            "type": "array"
+          }
+        },
+        "title": "DrillIn",
         "type": "object"
       },
       "DrilldownOut": {
@@ -108421,6 +108516,58 @@
         "title": "IncentiveType",
         "type": "string"
       },
+      "IncidentIn": {
+        "properties": {
+          "components": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Components",
+            "type": "array"
+          },
+          "message": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Message",
+            "type": "string"
+          },
+          "state": {
+            "default": "investigating",
+            "pattern": "^(investigating|identified|monitoring)$",
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 200,
+            "minLength": 3,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ],
+        "title": "IncidentIn",
+        "type": "object"
+      },
+      "IncidentUpdateIn": {
+        "properties": {
+          "message": {
+            "default": "",
+            "maxLength": 4000,
+            "title": "Message",
+            "type": "string"
+          },
+          "state": {
+            "default": "monitoring",
+            "pattern": "^(investigating|identified|monitoring|resolved)$",
+            "title": "State",
+            "type": "string"
+          }
+        },
+        "title": "IncidentUpdateIn",
+        "type": "object"
+      },
       "IncomeRecordIn": {
         "additionalProperties": false,
         "properties": {
@@ -117442,6 +117589,38 @@
         "title": "LogoUploadResponse",
         "type": "object"
       },
+      "MaintenanceIn": {
+        "properties": {
+          "ends_at": {
+            "title": "Ends At",
+            "type": "string"
+          },
+          "notice_hours": {
+            "default": 24,
+            "maximum": 720.0,
+            "minimum": 0.0,
+            "title": "Notice Hours",
+            "type": "integer"
+          },
+          "reason": {
+            "maxLength": 200,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          },
+          "starts_at": {
+            "title": "Starts At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason",
+          "starts_at",
+          "ends_at"
+        ],
+        "title": "MaintenanceIn",
+        "type": "object"
+      },
       "MalpracticeCaseCreate": {
         "additionalProperties": false,
         "properties": {
@@ -124684,6 +124863,21 @@
           "dues_paise"
         ],
         "title": "NoDuesSignoffOut",
+        "type": "object"
+      },
+      "NoteIn": {
+        "properties": {
+          "note": {
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "note"
+        ],
+        "title": "NoteIn",
         "type": "object"
       },
       "NoticeBulkAction": {
@@ -147563,6 +147757,52 @@
         "title": "RejectedMark",
         "type": "object"
       },
+      "ReleaseIn": {
+        "properties": {
+          "deprecations": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Deprecations",
+            "type": "array"
+          },
+          "images": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Images",
+            "type": "object"
+          },
+          "notes_md": {
+            "default": "",
+            "maxLength": 50000,
+            "title": "Notes Md",
+            "type": "string"
+          },
+          "sbom_url": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sbom Url"
+          },
+          "version": {
+            "pattern": "^v?\\d+\\.\\d+\\.\\d+(-[\\w.]+)?$",
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "version"
+        ],
+        "title": "ReleaseIn",
+        "type": "object"
+      },
       "RemunerationSummary": {
         "properties": {
           "by_role": {
@@ -156975,6 +157215,25 @@
           }
         },
         "title": "ScriptRetentionRequest",
+        "type": "object"
+      },
+      "ScriptRunIn": {
+        "properties": {
+          "params": {
+            "additionalProperties": true,
+            "title": "Params",
+            "type": "object"
+          },
+          "script": {
+            "maxLength": 40,
+            "title": "Script",
+            "type": "string"
+          }
+        },
+        "required": [
+          "script"
+        ],
+        "title": "ScriptRunIn",
         "type": "object"
       },
       "ScriptValuationResponse": {
@@ -256346,6 +256605,111 @@
         ]
       }
     },
+    "/api/v1/internal/ops/alert-events": {
+      "post": {
+        "operationId": "alert_events_api_v1_internal_ops_alert_events_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Alertmanager webhook",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/internal/ops/backup-report": {
+      "post": {
+        "operationId": "backup_report_api_v1_internal_ops_backup_report_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Backup record from the backup sidecar",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/internal/ops/deploy-report": {
+      "post": {
+        "operationId": "deploy_report_api_v1_internal_ops_deploy_report_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Deploy record from the dispatch receiver",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/internal/ops/heartbeat/{queue}": {
+      "post": {
+        "operationId": "heartbeat_api_v1_internal_ops_heartbeat__queue__post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "queue",
+            "required": true,
+            "schema": {
+              "title": "Queue",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Worker heartbeat",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/internal/ops/release": {
+      "post": {
+        "operationId": "release_report_api_v1_internal_ops_release_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Tagged release from release.yml (records + announces)",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/internal/ops/restore-drill": {
+      "post": {
+        "operationId": "drill_report_api_v1_internal_ops_restore_drill_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Restore-drill record from restore_drill.sh",
+        "tags": [
+          "public"
+        ]
+      }
+    },
     "/api/v1/internal/security/scans": {
       "post": {
         "operationId": "internal_scans_api_v1_internal_security_scans_post",
@@ -283091,6 +283455,52 @@
         ]
       }
     },
+    "/api/v1/platform/maintenance": {
+      "post": {
+        "operationId": "maintenance_api_v1_platform_maintenance_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MaintenanceIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Schedule a platform maintenance window (read-only + announcement)",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
     "/api/v1/platform/marketing": {
       "get": {
         "operationId": "marketing_get_api_v1_platform_marketing_get",
@@ -283242,6 +283652,855 @@
         "summary": "Features a template + plan would enable (diff vs plan)",
         "tags": [
           "platform-console"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/alerts": {
+      "get": {
+        "operationId": "alerts_api_v1_platform_ops_alerts_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "active",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Active"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Alert events",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/alerts/rules": {
+      "get": {
+        "operationId": "alert_rules_api_v1_platform_ops_alerts_rules_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Alert rule catalogue (ops/alerts/*.yml)",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/alerts/test": {
+      "post": {
+        "operationId": "alert_test_api_v1_platform_ops_alerts_test_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "rule",
+            "required": true,
+            "schema": {
+              "maxLength": 80,
+              "title": "Rule",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Test-fire an alert rule",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/backups": {
+      "get": {
+        "operationId": "backups_api_v1_platform_ops_backups_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Backups (summary + log)",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/cache-warm": {
+      "post": {
+        "operationId": "cache_warm_api_v1_platform_ops_cache_warm_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Warm caches (job)",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/capacity": {
+      "get": {
+        "operationId": "capacity_api_v1_platform_ops_capacity_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Capacity snapshots, projections, recommendations",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/capacity/snapshot": {
+      "post": {
+        "operationId": "capacity_snapshot_api_v1_platform_ops_capacity_snapshot_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Take a capacity snapshot",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/config": {
+      "get": {
+        "operationId": "config_api_v1_platform_ops_config_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Non-secret configuration",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/deploys": {
+      "get": {
+        "operationId": "deploys_api_v1_platform_ops_deploys_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Deploy history",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/deploys/{id}/notes": {
+      "post": {
+        "operationId": "deploy_note_api_v1_platform_ops_deploys__id__notes_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Annotate a deploy",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/incidents": {
+      "get": {
+        "operationId": "incidents_api_v1_platform_ops_incidents_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Incidents",
+        "tags": [
+          "ops"
+        ]
+      },
+      "post": {
+        "operationId": "incident_open_api_v1_platform_ops_incidents_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncidentIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Open an incident",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/incidents/{id}/resolve": {
+      "post": {
+        "operationId": "incident_resolve_api_v1_platform_ops_incidents__id__resolve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncidentUpdateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Resolve an incident",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/incidents/{id}/update": {
+      "post": {
+        "operationId": "incident_update_api_v1_platform_ops_incidents__id__update_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IncidentUpdateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Post an incident update",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/overview": {
+      "get": {
+        "operationId": "overview_api_v1_platform_ops_overview_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Operations overview",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/partitions": {
+      "get": {
+        "operationId": "partitions_api_v1_platform_ops_partitions_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Partition status",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/partitions/ensure": {
+      "post": {
+        "operationId": "partitions_ensure_api_v1_platform_ops_partitions_ensure_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create next month's partitions (job)",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/restore-drills": {
+      "get": {
+        "operationId": "drills_api_v1_platform_ops_restore_drills_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Restore drills",
+        "tags": [
+          "ops"
+        ]
+      },
+      "post": {
+        "operationId": "drill_record_api_v1_platform_ops_restore_drills_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DrillIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record a restore drill",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/scripts/run": {
+      "post": {
+        "operationId": "script_run_api_v1_platform_ops_scripts_run_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScriptRunIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run an ops script (job; four-eyes for destructive ones)",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/scripts/runs": {
+      "get": {
+        "operationId": "script_runs_api_v1_platform_ops_scripts_runs_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Script runs",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/scripts/runs/{id}/approve": {
+      "post": {
+        "operationId": "script_approve_api_v1_platform_ops_scripts_runs__id__approve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Approve a four-eyes script run",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/ops/status/components/{key}": {
+      "put": {
+        "operationId": "component_api_v1_platform_ops_status_components__key__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Override a status component (null state = automatic)",
+        "tags": [
+          "ops"
         ]
       }
     },
@@ -283857,6 +285116,123 @@
         "summary": "Verify / provision / expire / retry a registration",
         "tags": [
           "platform-console"
+        ]
+      }
+    },
+    "/api/v1/platform/releases": {
+      "get": {
+        "operationId": "releases_api_v1_platform_releases_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Releases",
+        "tags": [
+          "ops"
+        ]
+      },
+      "post": {
+        "operationId": "release_add_api_v1_platform_releases_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReleaseIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Record a release",
+        "tags": [
+          "ops"
+        ]
+      }
+    },
+    "/api/v1/platform/releases/{version}/announce": {
+      "post": {
+        "operationId": "release_announce_api_v1_platform_releases__version__announce_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "title": "Version",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Announce a release to institution admins",
+        "tags": [
+          "ops"
         ]
       }
     },
@@ -289823,6 +291199,101 @@
         "summary": "Affiliated-college programme verification",
         "tags": [
           "website-public"
+        ]
+      }
+    },
+    "/api/v1/public/status": {
+      "get": {
+        "operationId": "public_status_api_v1_public_status_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_dict_str__Any__"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Public status (components, incidents, maintenance)",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/public/status/feed.rss": {
+      "get": {
+        "operationId": "public_feed_api_v1_public_status_feed_rss_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Status incidents RSS",
+        "tags": [
+          "public"
+        ]
+      }
+    },
+    "/api/v1/public/status/history": {
+      "get": {
+        "operationId": "public_history_api_v1_public_status_history_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "component",
+            "required": true,
+            "schema": {
+              "maxLength": 20,
+              "title": "Component",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "default": 90,
+              "maximum": 90,
+              "minimum": 1,
+              "title": "Days",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Envelope_list_dict_str__Any___"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Daily uptime per component",
+        "tags": [
+          "public"
         ]
       }
     },

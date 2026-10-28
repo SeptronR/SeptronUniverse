@@ -35,6 +35,7 @@ import '../../features/reports/reports_screens.dart';
 import '../../features/audit/audit_screens.dart';
 import '../../features/portals/portal_screens.dart';
 import '../../features/integrations/integrations_screens.dart';
+import '../../features/ops/ops_screens.dart';
 import '../../features/privacy/privacy_screens.dart';
 import '../../features/website/website_screens.dart';
 import '../../features/saas/saas_screens.dart';
@@ -536,6 +537,13 @@ class ScreenRegistry {
       feature: 'website.core',
       permission: 'website:manage|website:publish',
       builder: (_, __) => const WebsiteQuickScreen(),
+    ),
+    // Phase 44 — operations overview + incidents (super admin / support agent)
+    AppRoutes.ops: ScreenEntry(
+      route: AppRoutes.ops,
+      titleKey: 'operations',
+      roles: ['super_admin', 'support_agent'],
+      builder: (_, __) => const OpsScreen(),
     ),
     // Phase 43 — my consents / data requests (every signed-in user)
     AppRoutes.privacy: ScreenEntry(

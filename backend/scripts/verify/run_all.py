@@ -5,7 +5,7 @@ API and the database-level suites in-process, and writes a JUnit XML + Markdown 
 
     python scripts/verify/run_all.py --suite api_all [--base-url http://localhost:8000/api/v1] [--reset]
     python scripts/verify/run_all.py --suite api_round_2          # phases of one round (ROUNDS below)
-    python scripts/verify/run_all.py --suite golden|visibility|immutability|static
+    python scripts/verify/run_all.py --suite golden|visibility|immutability|static|smoke
     python scripts/verify/run_all.py --suite all                   # static + golden + visibility + immutability + api_all
 
 ``--reset`` re-seeds the demo tenant first (``seed_demo_institution.py --type <type> --all``). A failing phase is
@@ -104,6 +104,44 @@ def static_checks() -> list[Case]:
     return out
 
 
+def smoke(base_url: str) -> list[Case]:
+    """Post-deploy smoke: liveness, readiness, public status, OpenAPI — no credentials needed."""
+    import urllib.request
+
+    root = base_url.removesuffix("/api/v1")
+    out = []
+    for name, url in (
+        ("health", f"{root}/health"),
+        ("ready", f"{root}/ready"),
+        ("status", f"{base_url}/public/status"),
+        ("openapi", f"{base_url}/openapi.json"),
+    ):
+        t0 = time.monotonic()
+        try:
+            with urllib.request.urlopen(url, timeout=15) as r:  # noqa: S310 - operator-supplied base URL
+                ok, text = r.status == 200, f"{r.status}"
+        except Exception as e:  # noqa: BLE001
+            ok, text = False, str(e)
+        out.append(Case("smoke", name, ok, time.monotonic() - t0, text))
+    return out
+
+
+def load_scenarios(base_url: str) -> list[Case]:
+    """Weekly k6 scenarios (``load/*.js``); thresholds inside each script decide the exit code. Needs ``k6`` and the
+    ``--load`` fixtures / tokens (staging)."""
+    k6 = shutil.which("k6")
+    out = []
+    for script in sorted((BACKEND.parent / "load").glob("*.js")):
+        if script.name == "lib.js":
+            continue
+        if k6 is None:
+            out.append(Case("load", script.stem, True, 0, "k6 not installed", skipped=True))
+            continue
+        ok, text, secs = _run([k6, "run", "-e", f"BASE={base_url}", str(script)], timeout=3600)
+        out.append(Case("load", script.stem, ok, secs, text))
+    return out
+
+
 def inprocess(name: str, script: str) -> list[Case]:
     ok, text, secs = _run([PY, str(HERE / script)], timeout=900)
     return [Case(name, script, ok, secs, text)]
@@ -169,6 +207,8 @@ def main() -> int:
     ap.add_argument("--base-url", default=os.environ.get("VERIFY_BASE_URL", "http://localhost:8000/api/v1"))
     ap.add_argument("--reset", action="store_true")
     ap.add_argument("--type", default="university")
+    ap.add_argument("--env", default="dev", help="label only (dev | ci | staging); production is always refused")
+    ap.add_argument("--report-dir", default=None, help="also copy the report files here (CI artefacts)")
     args = ap.parse_args()
     if os.environ.get("APP_ENV") == "production":
         print("refusing to run verification suites against production")  # noqa: T201
@@ -180,6 +220,8 @@ def main() -> int:
         )
         cases.append(Case("seed", f"reset {args.type}", ok, secs, text))
     suite = args.suite
+    if suite == "smoke":
+        cases += smoke(args.base_url)
     if suite in ("static", "all"):
         cases += static_checks()
     if suite in ("golden", "all"):
@@ -193,7 +235,14 @@ def main() -> int:
     elif suite.startswith("api_round_"):
         lo, hi = ROUNDS[suite.removeprefix("api_round_")]
         cases += api_phases(lo, hi, args.base_url)
+    if suite == "load":
+        cases += load_scenarios(args.base_url)
     report = write_reports(suite, cases)
+    if args.report_dir:
+        dest = Path(args.report_dir)
+        dest.mkdir(parents=True, exist_ok=True)
+        for f in report.iterdir():
+            shutil.copy(f, dest / f"{suite}-{f.name}")
     failed = [c for c in cases if not c.ok and not c.skipped]
     print(f"{suite}: {len(cases)} checks, {len(failed)} failed → {report.relative_to(BACKEND)}")  # noqa: T201
     for c in failed:

@@ -1,0 +1,31 @@
+# Prometheus scrape config (Prompts/44 §44.6 observability 1). /metrics needs the bearer (METRICS_TOKEN) and is only
+# reachable on the internal network.
+global:
+  scrape_interval: 30s
+  evaluation_interval: 30s
+rule_files:
+  - /etc/prometheus/alerts/*.yml
+alerting:
+  alertmanagers:
+    - static_configs: [{ targets: ["alertmanager:9093"] }]
+scrape_configs:
+  - job_name: universe-api
+    metrics_path: /metrics
+    authorization: { type: Bearer, credentials_file: /etc/prometheus/metrics_token }
+    dns_sd_configs: [{ names: ["tasks.api", "api"], type: A, port: 8000 }]
+  - job_name: node
+    static_configs: [{ targets: ["node-exporter:9100"] }]
+  - job_name: postgres
+    static_configs: [{ targets: ["postgres-exporter:9187"] }]
+  - job_name: redis
+    static_configs: [{ targets: ["redis-exporter:9121"] }]
+  - job_name: celery
+    static_configs: [{ targets: ["celery-exporter:9808"] }]
+  - job_name: blackbox-ready
+    metrics_path: /probe
+    params: { module: [http_2xx] }
+    static_configs: [{ targets: ["http://api:8000/ready", "http://web/healthz"] }]
+    relabel_configs:
+      - { source_labels: [__address__], target_label: __param_target }
+      - { source_labels: [__param_target], target_label: instance }
+      - { target_label: __address__, replacement: "blackbox:9115" }

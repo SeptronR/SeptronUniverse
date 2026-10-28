@@ -1,114 +1,251 @@
-# SeptronUniverse — single-host production topology (skeleton; Phase 44 completes replicas, pgbouncer, exporters,
-# backup sidecar and the orbit-infra Traefik labels). Differences from docker-compose.yml:
-#   * no source mounts, prebuilt image ghcr.io/septronr/universe-api:<tag>, gunicorn + uvicorn workers
-#   * one Celery worker per queue, beat as a single instance, RUN_MIGRATIONS only on the api service
-#   * secrets from the host vault / .env.prod (never committed); Postgres/Redis are managed services or the
-#     hardened containers below with volumes on the host
+# SeptronUniverse — single-host production topology (Prompts/44 §44.6 docker 3). orbit-infra uses the same services
+# with Traefik labels (ops/orbit-infra/universe-prod.yml); this file runs standalone behind the bundled nginx.
 #
-#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod up -d                 # core
+#   docker compose -f docker-compose.prod.yml --env-file .env.prod --profile observability --profile clamav up -d
+#
+# * prebuilt images ghcr.io/septronr/universe-{api,web}:<tag>; secrets only in .env.prod (host vault, never committed)
+# * a one-shot `migrate` service runs the lock-protected migration; API replicas start after it (RUN_MIGRATIONS=0)
+# * one Celery worker per queue (concurrency from platform_settings['ops'].capacity), beat as a single instance
+# * PostgreSQL behind pgbouncer (transaction pooling — the RLS context is SET LOCAL per transaction, so it holds)
+# * Redis: AOF persistence; DB 0 cache (allkeys-lru via key TTLs), DB 1/2 Celery broker/results (never evicted —
+#   the instance runs `noeviction`; cache keys always carry a TTL)
+# * pgbackrest sidecar: full weekly, incremental 6-hourly, continuous WAL archive to S3, reports to the API
 
 name: universe-prod
 
-x-api: &api
+x-app: &app
   image: ${UNIVERSE_IMAGE:-ghcr.io/septronr/universe-api:latest}
   env_file: .env.prod
   restart: unless-stopped
-  depends_on:
-    postgres:
-      condition: service_healthy
-    redis:
-      condition: service_healthy
+  networks: [internal]
   volumes:
     - uploads:/app/uploads
   logging:
     driver: json-file
     options: { max-size: "20m", max-file: "5" }
+  stop_grace_period: 60s
+
+x-worker: &worker
+  <<: *app
+  environment: { RUN_MIGRATIONS: "0" }
+  depends_on:
+    migrate: { condition: service_completed_successfully }
+    redis: { condition: service_healthy }
+  healthcheck:
+    test: ["CMD-SHELL", "celery -A app.tasks.celery_app inspect ping -d celery@$$HOSTNAME -t 10 | grep -q pong"]
+    interval: 60s
+    timeout: 20s
+    retries: 3
 
 services:
   postgres:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     restart: unless-stopped
+    networks: [internal]
     environment:
       POSTGRES_DB: universe
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env.prod}
-    command: postgres -c shared_buffers=1GB -c work_mem=32MB -c max_connections=300 -c wal_level=replica -c archive_mode=on -c archive_command='true'
+    command: >
+      postgres -c config_file=/etc/postgresql/postgresql.conf
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - pgbackrest_spool:/var/spool/pgbackrest
       - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+      - ./ops/postgres/postgresql.conf:/etc/postgresql/postgresql.conf:ro
+      - ./ops/pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d universe"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 6
+    deploy:
+      resources: { limits: { memory: 6g } }
+
+  pgbouncer:
+    image: edoburu/pgbouncer:v1.23.1-p2
+    restart: unless-stopped
+    networks: [internal]
+    environment:
+      DATABASE_URL: postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/universe
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 2000
+      DEFAULT_POOL_SIZE: ${PGBOUNCER_POOL:-200}
+      AUTH_TYPE: scram-sha-256
+      IGNORE_STARTUP_PARAMETERS: extra_float_digits
+    depends_on:
+      postgres: { condition: service_healthy }
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
 
   redis:
-    image: redis:7-alpine
+    image: redis:7.4-alpine
     restart: unless-stopped
-    command: redis-server --appendonly yes --maxmemory 1gb --maxmemory-policy noeviction --requirepass ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env.prod}
+    networks: [internal]
+    command: >
+      redis-server --appendonly yes --appendfsync everysec --maxmemory ${REDIS_MAXMEMORY:-2gb}
+      --maxmemory-policy noeviction --requirepass ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env.prod}
     volumes:
       - redis_data:/data
     healthcheck:
       test: ["CMD-SHELL", "redis-cli -a $$REDIS_PASSWORD ping | grep PONG"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 6
+
+  migrate:
+    <<: *app
+    environment: { RUN_MIGRATIONS: "1" }
+    command: ["python", "-c", "print('migrations done')"]
+    restart: "no"
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
 
   api:
-    <<: *api
+    <<: *app
     environment:
-      RUN_MIGRATIONS: "1"
+      RUN_MIGRATIONS: "0"
       WEB_CONCURRENCY: ${WEB_CONCURRENCY:-4}
-    command: gunicorn -k uvicorn.workers.UvicornWorker -w ${WEB_CONCURRENCY:-4} -b 0.0.0.0:8000 --timeout 60 --graceful-timeout 30 --max-requests 5000 main:app
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+      pgbouncer: { condition: service_healthy }
+      redis: { condition: service_healthy }
     expose: ["8000"]
+    deploy:
+      replicas: ${API_REPLICAS:-2}
+      resources: { limits: { memory: 2g } }
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/health || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8000/ready || exit 1"]
       interval: 15s
       timeout: 5s
-      retries: 10
+      retries: 8
       start_period: 60s
 
   worker-notifications:
-    <<: *api
-    environment: { RUN_MIGRATIONS: "0" }
-    command: celery -A app.tasks.celery_app worker -Q notifications,emails -c 4 --max-tasks-per-child 500 --without-gossip --loglevel=info
+    <<: *worker
+    command: celery -A app.tasks.celery_app worker -Q notifications -c ${C_NOTIFICATIONS:-8} --max-tasks-per-child 500 --without-gossip --loglevel=info
+  worker-emails:
+    <<: *worker
+    command: celery -A app.tasks.celery_app worker -Q emails -c ${C_EMAILS:-4} --max-tasks-per-child 500 --without-gossip --loglevel=info
   worker-documents:
-    <<: *api
-    environment: { RUN_MIGRATIONS: "0" }
-    command: celery -A app.tasks.celery_app worker -Q documents -c 2 --max-tasks-per-child 200 --without-gossip --loglevel=info
+    <<: *worker
+    command: celery -A app.tasks.celery_app worker -Q documents -c ${C_DOCUMENTS:-4} --max-tasks-per-child 200 --without-gossip --loglevel=info
+    deploy:
+      resources: { limits: { memory: 3g } }
   worker-reports:
-    <<: *api
-    environment: { RUN_MIGRATIONS: "0" }
-    command: celery -A app.tasks.celery_app worker -Q reports,scheduled -c 2 --max-tasks-per-child 200 --without-gossip --loglevel=info
+    <<: *worker
+    command: celery -A app.tasks.celery_app worker -Q reports -c ${C_REPORTS:-4} --max-tasks-per-child 200 --without-gossip --loglevel=info
   worker-integrations:
-    <<: *api
-    environment: { RUN_MIGRATIONS: "0" }
-    command: celery -A app.tasks.celery_app worker -Q integrations -c 2 --max-tasks-per-child 500 --without-gossip --loglevel=info
+    <<: *worker
+    command: celery -A app.tasks.celery_app worker -Q integrations -c ${C_INTEGRATIONS:-4} --max-tasks-per-child 500 --without-gossip --loglevel=info
+  worker-scheduled:
+    <<: *worker
+    command: celery -A app.tasks.celery_app worker -Q scheduled -c ${C_SCHEDULED:-2} --max-tasks-per-child 500 --without-gossip --loglevel=info
+
   beat:
-    <<: *api
-    environment: { RUN_MIGRATIONS: "0" }
-    command: celery -A app.tasks.celery_app beat --loglevel=info
+    <<: *worker
+    command: celery -A app.tasks.celery_app beat --loglevel=info --schedule /tmp/celerybeat-schedule
     deploy:
       replicas: 1
+    healthcheck:
+      test: ["CMD-SHELL", "test -f /tmp/celerybeat-schedule"]
+      interval: 60s
+
+  flower:
+    <<: *worker
+    command: celery -A app.tasks.celery_app flower --port=5555 --basic-auth=${FLOWER_BASIC_AUTH:?user:password} --url_prefix=flower
+    expose: ["5555"]
+    profiles: [observability]
 
   web:
     image: ${UNIVERSE_WEB_IMAGE:-ghcr.io/septronr/universe-web:latest}
     restart: unless-stopped
+    networks: [internal]
     expose: ["80"]
 
   nginx:
-    image: nginx:alpine
+    image: nginx:1.27-alpine
     restart: unless-stopped
+    networks: [internal, edge]
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - uploads:/srv/uploads:ro
-    ports:
-      - "80:80"
+    ports: ["80:80", "443:443"]
+    depends_on: [api, web]
+
+  clamav:
+    image: clamav/clamav:1.4
+    restart: unless-stopped
+    networks: [internal]
+    profiles: [clamav]
+
+  backup:
+    image: woblerr/pgbackrest:2.54.0
+    restart: unless-stopped
+    networks: [internal]
+    env_file: .env.prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data:ro
+      - pgbackrest_spool:/var/spool/pgbackrest
+      - ./ops/pgbackrest/pgbackrest.conf:/etc/pgbackrest/pgbackrest.conf:ro
+      - ./scripts/ops:/ops:ro
+    entrypoint: ["/bin/sh", "/ops/backup_cron.sh"]
     depends_on:
-      - api
-      - web
+      postgres: { condition: service_healthy }
+
+  # ---- observability (profile) -----------------------------------------------------------------------------------
+  promtail:
+    image: grafana/promtail:3.2.1
+    restart: unless-stopped
+    networks: [internal]
+    profiles: [observability]
+    command: -config.file=/etc/promtail/promtail.yml
+    volumes:
+      - ./ops/loki/promtail.yml:/etc/promtail/promtail.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    restart: unless-stopped
+    networks: [internal]
+    profiles: [observability]
+    pid: host
+    volumes: ["/:/host:ro,rslave"]
+    command: ["--path.rootfs=/host"]
+  postgres-exporter:
+    image: quay.io/prometheuscommunity/postgres-exporter:v0.15.0
+    restart: unless-stopped
+    networks: [internal]
+    profiles: [observability]
+    environment:
+      DATA_SOURCE_NAME: postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/universe?sslmode=disable
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.66.0
+    restart: unless-stopped
+    networks: [internal]
+    profiles: [observability]
+    environment:
+      REDIS_ADDR: redis://redis:6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+  celery-exporter:
+    image: danihodovic/celery-exporter:0.10.14
+    restart: unless-stopped
+    networks: [internal]
+    profiles: [observability]
+    environment:
+      CE_BROKER_URL: ${CELERY_BROKER_URL}
+
+networks:
+  internal: {}
+  edge: {}
 
 volumes:
   postgres_data:
   redis_data:
   uploads:
+  pgbackrest_spool:

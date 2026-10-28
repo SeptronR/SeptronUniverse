@@ -1,0 +1,52 @@
+# Ephemeral stack for .github/workflows/verify.yml (Prompts/44 §44.6 cicd 1): the API image built from this commit,
+# PostgreSQL + Redis, one worker for every queue and beat; seeded with the demo institution by the workflow.
+#   docker compose -f docker-compose.ci.yml up -d --build --wait
+name: universe-ci
+
+x-app: &app
+  build: ./backend
+  environment: &env
+    APP_ENV: development
+    SECRET_KEY: ci-secret-key-not-for-production
+    INSTALL_SECRET_KEY: ci-install-secret
+    INTEGRATION_ENCRYPTION_KEY: Y2ktaW50ZWdyYXRpb24ta2V5LTMyLWJ5dGVzLW9rISE=
+    DATABASE_URL: postgresql+asyncpg://universe_app:pass@postgres:5432/universe
+    PLATFORM_DATABASE_URL: postgresql+asyncpg://universe_platform:pass@postgres:5432/universe
+    REDIS_URL: redis://redis:6379/0
+    CELERY_BROKER_URL: redis://redis:6379/1
+    CELERY_RESULT_BACKEND: redis://redis:6379/2
+    ALLOWED_ORIGINS: '["http://localhost:5173"]'
+    BREACHED_PASSWORD_CHECK: "false"
+  depends_on:
+    postgres: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment: { POSTGRES_DB: universe, POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres }
+    volumes: ["./docker/postgres/init:/docker-entrypoint-initdb.d:ro"]
+    healthcheck: { test: ["CMD-SHELL", "pg_isready -U postgres -d universe"], interval: 5s, retries: 20 }
+  redis:
+    image: redis:7.4-alpine
+    healthcheck: { test: ["CMD", "redis-cli", "ping"], interval: 5s, retries: 20 }
+  backend:
+    <<: *app
+    environment: { <<: *env, RUN_MIGRATIONS: "1", WEB_CONCURRENCY: "2" }
+    ports: ["8000:8000"]
+    healthcheck: { test: ["CMD-SHELL", "curl -fsS http://localhost:8000/ready || exit 1"], interval: 10s, retries: 30, start_period: 60s }
+  worker:
+    <<: *app
+    environment: { <<: *env, RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app worker -Q notifications,emails,documents,reports,integrations,scheduled -c 4 --loglevel=info
+    depends_on: { backend: { condition: service_healthy } }
+  beat:
+    <<: *app
+    environment: { <<: *env, RUN_MIGRATIONS: "0" }
+    command: celery -A app.tasks.celery_app beat --loglevel=info --schedule /tmp/celerybeat-schedule
+    depends_on: { backend: { condition: service_healthy } }
+  web:
+    build: { context: ./frontend, args: { MODE: development, VITE_API_URL: "http://localhost:8000/api/v1" } }
+    ports: ["5173:80"]
+    profiles: [web]
+

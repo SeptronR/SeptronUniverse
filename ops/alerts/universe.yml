@@ -1,0 +1,88 @@
+# Alert rules (Prompts/44 §44.6 observability 3). `component` labels degrade the matching status-page component while
+# firing (Alertmanager → POST /api/v1/internal/ops/alert-events). Validate: promtool check rules ops/alerts/*.yml
+groups:
+  - name: api
+    rules:
+      - alert: ApiErrorRateHigh
+        expr: sum(rate(http_requests_total{status=~"5.."}[5m])) / sum(rate(http_requests_total[5m])) > 0.01
+        for: 5m
+        labels: { severity: critical, component: api }
+        annotations: { summary: "API 5xx rate above 1 % for 5 minutes" }
+      - alert: ApiLatencyHigh
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket[10m]))) > 0.6
+        for: 10m
+        labels: { severity: warning, component: api }
+        annotations: { summary: "API p95 latency above 600 ms for 10 minutes" }
+      - alert: ReadinessFailing
+        expr: probe_success{instance=~".*/ready"} == 0
+        for: 2m
+        labels: { severity: critical, component: api }
+        annotations: { summary: "/ready failing" }
+  - name: workers
+    rules:
+      - alert: QueueBacklog
+        expr: max by (queue) (queue_depth) > 1000
+        for: 10m
+        labels: { severity: warning, component: workers }
+        annotations: { summary: "Queue {{ $labels.queue }} above 1 000 tasks for 10 minutes" }
+      - alert: WorkerHeartbeatMissing
+        expr: min by (queue) (worker_alive) == 0
+        for: 2m
+        labels: { severity: critical, component: workers }
+        annotations: { summary: "No worker heartbeat for queue {{ $labels.queue }}" }
+      - alert: OutboxLag
+        expr: max(outbox_lag_seconds) > 120
+        for: 5m
+        labels: { severity: critical, component: workers }
+        annotations: { summary: "Outbox relay lag above 120 s" }
+      - alert: DeadLetterGrowth
+        expr: sum(increase(dlq_size[1h])) > 50
+        labels: { severity: warning }
+        annotations: { summary: "Dead letters grew by more than 50 in an hour" }
+      - alert: WebhookFailureRatio
+        expr: max(webhook_failure_ratio) > 0.2
+        for: 15m
+        labels: { severity: warning }
+        annotations: { summary: "More than 20 % of webhook deliveries failing" }
+  - name: data
+    rules:
+      - alert: DbConnectionsHigh
+        expr: sum(pg_stat_activity_count) / max(pg_settings_max_connections) > 0.85
+        for: 5m
+        labels: { severity: warning, component: database }
+        annotations: { summary: "PostgreSQL connections above 85 % of max_connections" }
+      - alert: ReplicationLag
+        expr: max(pg_replication_lag_seconds) > 60
+        for: 5m
+        labels: { severity: warning, component: database }
+        annotations: { summary: "Replica lag above 60 s" }
+      - alert: DiskAlmostFull
+        expr: 1 - node_filesystem_avail_bytes{fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{fstype!~"tmpfs|overlay"} > 0.8
+        for: 10m
+        labels: { severity: warning, component: storage }
+        annotations: { summary: "Disk {{ $labels.mountpoint }} above 80 %" }
+      - alert: RedisMemoryHigh
+        expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.9
+        for: 5m
+        labels: { severity: warning, component: redis }
+        annotations: { summary: "Redis memory above 90 % of maxmemory" }
+      - alert: BackupTooOld
+        expr: max(backup_age_minutes) > 360
+        for: 15m
+        labels: { severity: critical, component: database }
+        annotations: { summary: "Last successful backup older than 6 hours" }
+      - alert: RestoreDrillOverdue
+        expr: (time() - max(restore_drill_last_success_timestamp)) / 86400 > 100
+        labels: { severity: warning }
+        annotations: { summary: "No successful restore drill in 100 days" }
+  - name: edge
+    rules:
+      - alert: CertificateExpiringSoon
+        expr: (probe_ssl_earliest_cert_expiry - time()) / 86400 < 14
+        labels: { severity: warning, component: web }
+        annotations: { summary: "TLS certificate for {{ $labels.instance }} expires in under 14 days" }
+      - alert: TenantsReadOnlyLonger
+        expr: max(tenants_read_only) > 0
+        for: 6h
+        labels: { severity: info }
+        annotations: { summary: "A read-only window has been active for more than 6 hours" }

@@ -564,6 +564,7 @@ export const NAV_GROUPS: NavGroup[] = [
         action: 'manage',
         feature: 'core.institution',
       },
+      { label: 'Operations', to: '/super-admin/ops', icon: Landmark, module: 'features', action: 'manage', feature: 'core.institution' },
       // Phase 02 — auth, RBAC, features, entitlements
       { label: 'Users', to: '/admin/users', icon: Users, module: 'users', action: 'view_all', feature: 'core.rbac' },
       { label: 'Roles', to: '/admin/roles', icon: ShieldCheck, module: 'roles', feature: 'core.rbac' },

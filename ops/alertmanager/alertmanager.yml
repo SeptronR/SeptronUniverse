@@ -1,0 +1,26 @@
+# Alertmanager routes (Prompts/44 §44.6 observability 3): critical pages on-call (SMS + e-mail), everything posts to the
+# API (status-page auto-degrade + ops console history). Secrets via environment substitution on the host.
+route:
+  receiver: universe-api
+  group_by: [alertname, queue]
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  routes:
+    - matchers: [severity="critical"]
+      receiver: oncall
+      continue: true
+receivers:
+  - name: universe-api
+    webhook_configs:
+      - url: http://api:8000/api/v1/internal/ops/alert-events
+        http_config: { authorization: { type: Bearer, credentials_file: /etc/alertmanager/ops_token } }
+        send_resolved: true
+  - name: oncall
+    email_configs:
+      - to: oncall@septronuniverse.in
+        send_resolved: true
+    webhook_configs:
+      - url: http://api:8000/api/v1/internal/ops/alert-events
+        http_config: { authorization: { type: Bearer, credentials_file: /etc/alertmanager/ops_token } }
+        send_resolved: true

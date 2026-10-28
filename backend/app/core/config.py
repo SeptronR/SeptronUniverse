@@ -62,6 +62,8 @@ class Settings(BaseSettings):
     EDGE_TOKEN: str = ""
     # Phase 43/44: CI / ops callers (scan summaries, backup status) authenticate with X-Ops-Token
     INTERNAL_OPS_TOKEN: str = ""
+    # Phase 44: Prometheus scrape bearer for /metrics (required in production)
+    METRICS_TOKEN: str = ""
     EDGE_HOSTNAME: str = "edge.septron.in"
     PAYMENT_PROVIDER: str = "mock"
     INTEGRATION_ENCRYPTION_KEY: str

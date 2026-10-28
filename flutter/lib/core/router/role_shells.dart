@@ -231,12 +231,14 @@ final Map<String, List<ShellTab>> roleTabs = {
   ],
   Roles.superAdmin: [
     _t('institutions', Icons.apartment_outlined, AppRoutes.platformHub),
+    _t('operations', Icons.monitor_heart_outlined, AppRoutes.ops),
     _t('support', Icons.support_agent_outlined, AppRoutes.tenantSupport),
     _alerts,
     _more,
   ],
   Roles.supportAgent: [
     _t('institutions', Icons.apartment_outlined, AppRoutes.platformHub),
+    _t('operations', Icons.monitor_heart_outlined, AppRoutes.ops),
     _t('support', Icons.support_agent_outlined, AppRoutes.tenantSupport),
     _more,
   ],

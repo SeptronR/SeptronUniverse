@@ -221,6 +221,12 @@ POST /api/v1/integrations/webhooks
 POST /api/v1/integrations/webhooks/{id}/rotate-secret
 POST /api/v1/integrations/webhooks/{id}/test
 POST /api/v1/internal/domains/{id}/ssl-status
+POST /api/v1/internal/ops/alert-events
+POST /api/v1/internal/ops/backup-report
+POST /api/v1/internal/ops/deploy-report
+POST /api/v1/internal/ops/heartbeat/{queue}
+POST /api/v1/internal/ops/release
+POST /api/v1/internal/ops/restore-drill
 POST /api/v1/internal/security/scans
 POST /api/v1/internships/{id}/noc
 POST /api/v1/internships/{id}/ppo
@@ -308,6 +314,7 @@ POST /api/v1/phd/viva/{vid}/result
 POST /api/v1/placement/applications/{id}/withdraw
 POST /api/v1/placement/drives/{id}/apply
 POST /api/v1/placement/profile/me/resume/render
+POST /api/v1/platform/maintenance
 POST /api/v1/policies/{id}/acknowledge
 POST /api/v1/policies/{id}/publish
 POST /api/v1/policies/{id}/submit

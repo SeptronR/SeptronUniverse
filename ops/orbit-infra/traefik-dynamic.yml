@@ -1,0 +1,15 @@
+# orbit-infra — traefik/dynamic/universe.yml: middlewares used by the routers above. Custom institution domains are
+# generated into traefik/dynamic/universe-domains.yml by backend/scripts/ops/gen_traefik_domains.py (cron, 5 min).
+http:
+  middlewares:
+    universe-headers:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        contentTypeNosniff: true
+        frameDeny: true
+        referrerPolicy: strict-origin-when-cross-origin
+    universe-ratelimit:
+      rateLimit: { average: 50, burst: 100, period: 1s }
+    universe-compress:
+      compress: {}
