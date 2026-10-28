@@ -129,7 +129,14 @@ async def deliver(db: AsyncSession, log_id: uuid.UUID) -> str:
     row.provider = provider
     try:
         extra = await _compliance(db, row, provider)
-        adapter = get_adapter(row.channel, provider)
+        from app.integrations.hub import resolve
+
+        tenant = None if provider == "webpush" else await resolve(db, row.channel, row.institution_id, fallback=False)
+        if tenant is not None:  # Phase 41: the tenant's default connection wins over the platform env provider
+            adapter, provider = tenant, str(getattr(tenant, "provider", provider))
+            row.provider = provider
+        else:
+            adapter = get_adapter(row.channel, provider)
         to = row.recipient.split(":", 1)[1] if row.channel == "push" and ":" in row.recipient else row.recipient
         to = content.get("to") or to  # Phase 39: full web-push subscription (the recipient column is 200 chars)
         if row.channel == "push" and provider == "webpush":

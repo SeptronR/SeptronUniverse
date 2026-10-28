@@ -80,8 +80,7 @@ async def _integrations_health(connection_ids: list[Any] | None = None) -> dict[
     """Health-check every configured integration connection (mock adapters until Phase 41 wires providers); Phase 38
     retries pass ``connection_ids`` and every run emits ``integrations.health_checked`` for the outage rollup."""
     from app.db.session import PlatformSessionLocal
-    from app.integrations.registry import get_adapter
-    from app.models.platform import IntegrationConnection, IntegrationHealthCheck
+    from app.models.platform import IntegrationConnection
 
     checked = healthy = 0
     async with PlatformSessionLocal() as db:
@@ -89,22 +88,20 @@ async def _integrations_health(connection_ids: list[Any] | None = None) -> dict[
         if connection_ids:
             stmt = stmt.where(IntegrationConnection.id.in_(connection_ids))
         rows = (await db.execute(stmt)).scalars().all()
+        from app.integrations.hub import build_adapter, decrypt_config
+        from app.services.integrations.connection_service import record_health
+
         for conn in rows:
             t0 = time.perf_counter()
             try:
-                adapter = get_adapter(conn.capability, conn.provider, **(conn.public_config or {}))
+                cfg = {**{k: v for k, v in (conn.public_config or {}).items() if k not in ("is_default", "kid")}, **decrypt_config(conn.config_encrypted)}
+                adapter = build_adapter(conn.capability, conn.provider, cfg, connection_id=conn.id, sandbox=conn.is_sandbox)
                 ok, detail = await adapter.health()
             except Exception as exc:  # noqa: BLE001 - an adapter error is a failed check, not a task failure
                 ok, detail = False, str(exc)[:500]
             latency = int((time.perf_counter() - t0) * 1000)
-            db.add(
-                IntegrationHealthCheck(
-                    institution_id=conn.institution_id, connection_id=conn.id, ok=ok, latency_ms=latency, detail=detail
-                )
-            )
-            conn.last_health_at = datetime.now(UTC)
-            conn.last_error = None if ok else detail
-            conn.status = "healthy" if ok else ("degraded" if conn.status == "healthy" else "failed")
+            # Phase 41: degraded after one failure, failed after three, recovery notices (connection_service rule 3)
+            await record_health(db, conn, ok, latency, detail)
             checked += 1
             healthy += int(ok)
         if checked:

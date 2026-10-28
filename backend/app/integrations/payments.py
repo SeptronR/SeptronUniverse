@@ -123,6 +123,34 @@ class RazorpayGateway:
             r.raise_for_status()
             return str(r.json().get("status") or "created")
 
+    async def refund(self, *, payment_id: str, amount_paise: int | None = None) -> dict[str, Any]:
+        """Phase 41: full / partial refund of a captured payment."""
+        import httpx
+
+        async with httpx.AsyncClient(timeout=15, auth=(self.key_id, self.key_secret)) as c:
+            r = await c.post(
+                f"{self.base}/payments/{payment_id}/refund", json={"amount": amount_paise} if amount_paise else {}
+            )
+            r.raise_for_status()
+            data = r.json()
+        return {"refund_id": data.get("id"), "status": data.get("status")}
+
+    @staticmethod
+    def webhook_parse(body: bytes) -> dict[str, Any]:
+        """Phase 41 inbound webhook → ``{event_id, type, order_id, payment_id, status, amount}``."""
+        import json
+
+        e = json.loads(body)
+        pay = ((e.get("payload") or {}).get("payment") or {}).get("entity") or {}
+        return {
+            "event_id": e.get("id") or pay.get("id"),
+            "type": e.get("event"),
+            "order_id": pay.get("order_id"),
+            "payment_id": pay.get("id"),
+            "status": pay.get("status"),
+            "amount": pay.get("amount"),
+        }
+
 
 class UpiCollect:
     """Dynamic UPI QR: ``upi://pay?pa=<vpa>&pn=<name>&am=<rupees>&tr=<ref>&cu=INR`` rendered as a PNG data URL."""

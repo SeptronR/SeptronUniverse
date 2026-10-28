@@ -41,6 +41,10 @@ CAPABILITIES = (
     "storage",
     "captcha",
     "maps",
+    # Phase 41: UPI collect, accounting export and LLM providers join the hub
+    "upi",
+    "accounting",
+    "llm",
 )
 
 Factory = Callable[..., Any]
