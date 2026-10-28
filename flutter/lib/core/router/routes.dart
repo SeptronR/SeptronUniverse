@@ -104,6 +104,8 @@ class AppRoutes {
   static const platformHub = '/app/platform';
   // Phase 39 — notification centre (categories / snooze) + preference matrix
   static const notificationCentre = '/app/notification-centre';
+  // Phase 40 — website quick actions (notice publish, enquiries)
+  static const websiteQuick = '/app/website';
   static const notificationSettings = '/app/notification-settings';
   static const tenantSupport = '/app/support';
   static const tenantBilling = '/app/billing';

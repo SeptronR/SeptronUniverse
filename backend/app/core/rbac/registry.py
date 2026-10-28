@@ -1427,6 +1427,21 @@ PHASE38_GRANTS: dict[str, set[str]] = {
 for _slug, _extra in PHASE38_GRANTS.items():
     ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra
 
+# Phase 40 (Prompts/40 "Visibility rules"): the registrar runs the website (``manage`` + ``publish``); college admins
+# edit their ``college:{code}`` sub-site and HODs their ``department:{code}`` pages (section scope checked in the
+# service); IQAC edits the disclosures; admissions officers / receptionists read enquiries through ``admissions:create``
+# (Phase 08 CRM); auditors read (``website:view`` via ``ALL("view")``). Institution admins hold it via ``ALL("manage")``.
+WEBSITE_EDITOR: set[str] = P("website", "view", "create", "update")
+PHASE40_GRANTS: dict[str, set[str]] = {
+    "registrar": P("website", "view", "view_all", "create", "update", "delete", "manage", "publish"),
+    "college_admin": WEBSITE_EDITOR | P("website", "publish"),
+    "hod": WEBSITE_EDITOR,
+    "iqac_coordinator": WEBSITE_EDITOR | P("accreditation", "manage"),
+    "admissions_officer": P("website", "view"),
+}
+for _slug, _extra in PHASE40_GRANTS.items():
+    ROLE_TEMPLATES[_slug] = ROLE_TEMPLATES[_slug] | _extra
+
 # ---- import-time invariants ------------------------------------------------------------------------------------
 assert set(ROLE_TEMPLATES) == set(ROLE_SLUGS), "ROLE_TEMPLATES must cover exactly the 53 role templates"
 for _slug, _grants in ROLE_TEMPLATES.items():
@@ -1437,6 +1452,7 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0040": frozenset(PHASE40_GRANTS["registrar"] | PHASE40_GRANTS["college_admin"] | PHASE40_GRANTS["iqac_coordinator"]),
     "0038": frozenset(SUPPORT_RAISE | P("support", "manage")),
     "0037": frozenset(AUDIT_SELF | P("exams", "audit") | P("audit_logs", "security") | P("settings", "view")),
     "0036": frozenset(REPORTS_STATUTORY | P("reports", "view_all")),

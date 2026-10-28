@@ -51,6 +51,9 @@ class Settings(BaseSettings):
     VAPID_PRIVATE_KEY: str = ""
     VAPID_SUBJECT: str = "mailto:support@septron.in"
     BUILD_HASH: str = "dev"
+    # Phase 40 edge integration (Traefik provider + ACME callback; Phase 44 wires the edge)
+    EDGE_TOKEN: str = ""
+    EDGE_HOSTNAME: str = "edge.septron.in"
     PAYMENT_PROVIDER: str = "mock"
     INTEGRATION_ENCRYPTION_KEY: str
     CAPTCHA_PROVIDER: str = "none"

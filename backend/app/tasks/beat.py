@@ -414,3 +414,10 @@ BEAT_SCHEDULE.pop("notifications.digest_weekly", None)
 register_beat("notifications.digest_daily", "beat.notifications.digest_portal", crontab(hour=2, minute=0), kwargs={"period": "daily"})  # 07:30 IST
 register_beat("notifications.digest_weekly", "beat.notifications.digest_portal", crontab(hour=2, minute=5, day_of_week=1), kwargs={"period": "weekly"})  # Mon 07:35 IST
 register_beat("push.prune_expired", "beat.push.prune_expired", crontab(hour=21, minute=40))  # 03:10 IST
+
+# ---- Phase 40 public website (app/tasks/website.py) ----------------------------------------------------------------------------
+register_beat("website.notices_schedule", "beat.website.notices_schedule", crontab(minute="*/5"))
+register_beat("website.domain_verify_retry", "beat.website.domain_verify_retry", crontab(minute="*/15"))
+register_beat("website.cache_sweep", "beat.website.cache_sweep", crontab(minute=25))
+register_beat("website.sitemap_daily", "beat.website.sitemap_daily", crontab(hour=21, minute=30))  # 03:00 IST
+register_beat("website.analytics_rollup", "beat.website.analytics_rollup", crontab(hour=19, minute=10))  # 00:40 IST

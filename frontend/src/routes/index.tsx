@@ -42,6 +42,17 @@ const TenantBillingPage = lazy(() => import('@/features/saas/pages/TenantPages')
 const AccessDeniedPage = lazy(() => import('@/pages/AccessDeniedPage'));
 const FeatureDisabledPage = lazy(() => import('@/pages/FeatureDisabledPage'));
 const PortalHomePage = lazy(() => import('@/pages/PortalHomePage'));
+const WebsiteBuilderPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteBuilderPage })));
+const WebsiteContentPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteContentPage })));
+const WebsiteNoticesPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteNoticesPage })));
+const WebsiteEventsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteEventsPage })));
+const WebsiteGalleryPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteGalleryPage })));
+const WebsiteEnquiriesPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteEnquiriesPage })));
+const WebsiteCataloguePage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteCataloguePage })));
+const WebsiteDisclosuresPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDisclosuresPage })));
+const WebsiteDomainsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteDomainsPage })));
+const WebsiteAnalyticsPage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.WebsiteAnalyticsPage })));
+const MarketingSitePage = lazy(() => import('@/features/website/pages/WebsitePages').then((m) => ({ default: m.MarketingSitePage })));
 const PortalUnified = (name: string) =>
   lazy(() => import('@/features/portals/pages/UnifiedPages').then((m) => ({ default: (m as unknown as Record<string, React.ComponentType>)[name] })));
 const PortalMorePage = PortalUnified('PortalMorePage');
@@ -670,6 +681,17 @@ export const router = createBrowserRouter([
               ['/admin/support/:id', 'core.settings', 'support', 'view', <SaasTicketPage key="st" tenant />],
               ['/admin/help-articles', 'platform.help_center', 'settings', 'manage', <SaasHelpPage key="ha" tenant />],
               ['/admin/read-only', 'platform.read_only_mode', 'settings', 'manage', <SaasReadOnlyPage key="ro" tenant />],
+              // Phase 40 — website administration (services refine manage / publish / section scope)
+              ['/admin/website', 'website.core', 'website', 'view', <WebsiteBuilderPage key="wb" />],
+              ['/admin/website/content', 'website.core', 'website', 'view', <WebsiteContentPage key="wc" />],
+              ['/admin/website/notices', 'website.core', 'website', 'view', <WebsiteNoticesPage key="wn" />],
+              ['/admin/website/events', 'website.core', 'website', 'view', <WebsiteEventsPage key="we" />],
+              ['/admin/website/gallery', 'website.core', 'website', 'view', <WebsiteGalleryPage key="wg" />],
+              ['/admin/website/enquiries', 'website.enquiry', 'website', 'view', <WebsiteEnquiriesPage key="wq" />],
+              ['/admin/website/catalogue', 'website.course_catalog', 'website', 'view', <WebsiteCataloguePage key="wk" />],
+              ['/admin/website/disclosures', 'website.core', 'website', 'view', <WebsiteDisclosuresPage key="wd" />],
+              ['/admin/website/domains', 'website.custom_domain', 'website', 'manage', <WebsiteDomainsPage key="wm" />],
+              ['/admin/website/analytics', 'website.core', 'website', 'view', <WebsiteAnalyticsPage key="wa" />],
             ] as const
           ).map(([path, feature, module, action, node]) => ({
             path,
@@ -1165,6 +1187,7 @@ export const router = createBrowserRouter([
           { path: 'announcements', element: page(<SaasAnnouncementsPage />) },
           { path: 'health', element: page(<SaasHealthPage />) },
           { path: 'read-only', element: page(<SaasReadOnlyPage />) },
+          { path: 'marketing', element: page(<MarketingSitePage />) },
           { path: 'settings', element: page(<SaasSettingsPage />) },
           { path: 'registrations', element: page(<SaasRegistrationsPage />) },
           { path: 'demo-requests', element: page(<SaasDemoRequestsPage />) },
