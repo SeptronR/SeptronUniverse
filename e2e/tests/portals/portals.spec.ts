@@ -16,7 +16,7 @@ const PAGES: [string, string[]][] = [
 async function login(page: Page, user: string, pass: string) {
   await page.goto('/login');
   await page.getByLabel(/username|email|phone/i).fill(user);
-  await page.getByLabel(/password/i).fill(pass);
+  await page.getByRole('textbox', { name: /password/i }).fill(pass);
   await page.getByRole('button', { name: /sign in/i }).click();
   await page.waitForURL((u) => !u.pathname.startsWith('/login'));
 }
@@ -31,6 +31,8 @@ for (const [persona, routes] of PAGES) {
         await login(page, user!, pass!);
         await page.goto(route);
         await expect(page.locator('#portal-main')).toBeVisible();
+        // post-login redirects (e.g. faculty term picker) can still be in flight; let the page settle before axe
+        await page.waitForLoadState('networkidle');
         const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa']).analyze();
         await info.attach('axe', { body: JSON.stringify(result.violations, null, 2), contentType: 'application/json' });
         const bad = result.violations.filter((v) => v.impact === 'serious' || v.impact === 'critical');
