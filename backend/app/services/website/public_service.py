@@ -111,12 +111,12 @@ async def affiliated_colleges(svc: Any, code: str | None = None) -> list[dict[st
         (
             await svc.db.execute(
                 text(
-                    "SELECT c.code, c.name, c.institution_type, json_agg(json_build_object('programme', p.code, 'name', p.name, "
+                    "SELECT c.code, c.name, c.college_type AS institution_type, json_agg(json_build_object('programme', p.code, 'name', p.name, "
                     "'intake', a.sanctioned_intake, 'valid_to', a.valid_to, 'order_no', a.order_no)) AS programmes "
                     "FROM affiliation_program_approvals a JOIN colleges c ON c.id = a.college_id JOIN programs p ON p.id = a.program_id "
                     "WHERE a.institution_id = :i AND a.approval_status = 'approved' AND (a.valid_to IS NULL OR a.valid_to >= CURRENT_DATE) "
                     + ("AND c.code = :c " if code else "")
-                    + "GROUP BY c.code, c.name, c.institution_type ORDER BY c.name"
+                    + "GROUP BY c.code, c.name, c.college_type ORDER BY c.name"
                 ),
                 {"i": svc.inst, "c": (code or "").upper()},
             )
