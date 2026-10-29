@@ -10,7 +10,10 @@ function Login($identifier, $password, $extra = @{}) {
   # Phase 02: POST /auth/login answers the principal envelope; the refresh token is an httpOnly cookie (web) or the
   # body's refresh_token (platform=android|ios). Phase scripts that need the cookie use their own helper.
   $body = (@{ identifier = $identifier; password = $password } + $extra) | ConvertTo-Json -Depth 6
-  (Invoke-RestMethod -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body $body).data.access_token
+  # pwsh 7.6+ error text no longer carries the status code, so surface it explicitly
+  $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body $body -SkipHttpErrorCheck
+  if ($r.StatusCode -ne 200) { throw "Login failed ($($r.StatusCode)): $($r.Content)" }
+  ($r.Content | ConvertFrom-Json).data.access_token
 }
 
 function Call($token, $method, $path, $body = $null, $expect = 200, $headers = @{}) {
@@ -37,12 +40,16 @@ function Assert($cond, $msg) {
   Write-Host "  assert: $msg"
 }
 
-function Get-DemoPassword($role) {
+function Get-DemoPassword($role, $identifier = $null) {
   # Demo credentials are written by scripts/seed_demo_institution.py (and seed_platform.py for super_admin) to
   # LOCAL_TEST_CREDENTIALS.md (git-ignored): | role | identifier | password |.
   $file = Join-Path $PSScriptRoot "../../../LOCAL_TEST_CREDENTIALS.md"
   if (-not (Test-Path $file)) { throw "LOCAL_TEST_CREDENTIALS.md not found - run scripts/seed_demo_institution.py --only base" }
-  $line = Get-Content $file | Where-Object { $_ -match "^\|\s*$role\s*\|" } | Select-Object -Last 1
+  $rows = Get-Content $file | Where-Object { $_ -match "^\|\s*$role\s*\|" }
+  # several accounts can share a role label (superadmin / superadmin.2): prefer the identifier's own row
+  $line = $null
+  if ($identifier) { $line = $rows | Where-Object { ($_ -split '\|')[2].Trim() -eq $identifier } | Select-Object -Last 1 }
+  if (-not $line) { $line = $rows | Select-Object -Last 1 }
   if (-not $line) { throw "no credentials for role '$role' in LOCAL_TEST_CREDENTIALS.md" }
   return (($line -split '\|')[3].Trim() -replace '`', '')
 }
@@ -73,7 +80,7 @@ function Login-Mfa($role, $identifier) {
   # (limited mfa_setup token -> setup -> confirm) and appends the TOTP secret to LOCAL_TEST_CREDENTIALS.md as role
   # "<role>_totp" (git-ignored), so later verification scripts sign in again without resetting MFA. A password-only
   # login (MFA not required) is returned as is. Returns the access token.
-  $pwd = Get-DemoPassword $role
+  $pwd = Get-DemoPassword $role $identifier
   $body = @{ identifier = $identifier; password = $pwd }
   $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body ($body | ConvertTo-Json) -SkipHttpErrorCheck
   $j = $r.Content | ConvertFrom-Json

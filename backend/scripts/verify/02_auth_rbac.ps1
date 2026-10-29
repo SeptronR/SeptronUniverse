@@ -57,7 +57,7 @@ try {
   & $Python scripts/verify/_sql.py --write ("DELETE FROM mfa_secrets WHERE user_id IN (SELECT id FROM users WHERE username = 'coe'); " +
     "UPDATE users SET mfa_enabled = FALSE WHERE username = 'coe'; " +
     "DELETE FROM impersonation_logs WHERE impersonator_id IN ($probes) OR target_user_id IN ($probes); " +
-    "DELETE FROM audit_logs WHERE user_id IN ($probes); DELETE FROM users WHERE username IN ('verify.temp','support.verify'); " +
+    "DELETE FROM audit_logs WHERE user_id IN ($probes); DELETE FROM feedback_entries WHERE user_id IN ($probes); DELETE FROM users WHERE username IN ('verify.temp','support.verify'); " +
     "DELETE FROM roles WHERE slug IN ('imp_probe','nope_role'); " +
     "UPDATE subscription_plans SET student_limit = 200000, staff_limit = 20000 WHERE code = 'university'; " +
     "UPDATE users SET valid_to = NOW() + INTERVAL '7 days' WHERE username = 'auditor.tmp'; " +
@@ -131,7 +131,8 @@ try {
   $admin = LoginFull 'inst.admin' (Get-DemoPassword 'institution_admin')
   $adminToken = $admin.Body.data.access_token
   $roles = Call $adminToken GET "/roles?page_size=200"
-  Assert ($roles.meta.pagination.total -eq 49) "inst.admin sees 49 institution roles"
+  # later phases add role templates, so 49 (Phase 02) is a floor
+  Assert ($roles.meta.pagination.total -ge 49) "inst.admin sees >= 49 institution roles ($($roles.meta.pagination.total))"
   $roleBySlug = @{}; foreach ($r in $roles.data) { $roleBySlug[$r.slug] = $r }
 
   Write-Host "== 7. permission matrix"
@@ -165,8 +166,10 @@ try {
   $tenant = @{ 'X-Institution-Id' = $instId }
   $flags = Call $saToken GET "/institutions/$instId/features" $null 200 $tenant
   Assert ($flags.data.flags.Count -ge 350) "$($flags.data.flags.Count) feature rows for the tenant"
-  Call $saToken PUT "/institutions/$instId/features/hostel.core" @{ enabled = $true } 200 $tenant | Out-Null
+  Call $saToken PUT "/institutions/$instId/features/hostel.core" @{ enabled = $true; confirm_dependencies = $true } 200 $tenant | Out-Null
   Call $adminToken GET "/hostels" $null 200 | Out-Null
+  # Phase 39: portals.warden depends on hostel.core and disabling does not cascade
+  Call $saToken PUT "/institutions/$instId/features/portals.warden" @{ enabled = $false; reason = 'verify 02' } 200 $tenant | Out-Null
   Call $saToken PUT "/institutions/$instId/features/hostel.core" @{ enabled = $false; reason = 'verify 02' } 200 $tenant | Out-Null
   $blocked = Call $adminToken GET "/hostels" $null 403
   Assert ($blocked.error.code -eq 'FEATURE_DISABLED') "GET /hostels -> 403 FEATURE_DISABLED"
@@ -175,6 +178,7 @@ try {
   $chain = Call $saToken PUT "/institutions/$instId/features/hostel.gate_qr" @{ enabled = $true } 409 $tenant
   Assert ($chain.error.details.missing_dependencies.Count -ge 1) "hostel.gate_qr lists its missing dependencies"
   Call $saToken PUT "/institutions/$instId/features/hostel.gate_qr" @{ enabled = $true; confirm_dependencies = $true } 200 $tenant | Out-Null
+  Call $saToken PUT "/institutions/$instId/features/portals.warden" @{ enabled = $true; confirm_dependencies = $true } 200 $tenant | Out-Null
 
   Write-Host "== 10. institution toggle"
   Call $saToken PUT "/institutions/$instId/features/hostel.mess" @{ enabled = $true; confirm_dependencies = $true } 200 $tenant | Out-Null
