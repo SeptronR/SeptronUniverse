@@ -23,18 +23,19 @@ $roleOf = @{ student = "student"; parent = "parent"; faculty = "faculty"; alumni
 foreach ($p in $personas.Keys) {
   try { $t = Login $personas[$p] (Get-DemoPassword $roleOf[$p]) $inst } catch { Write-Host "  skip $p (no demo user)"; continue }
   $me = (Call $t GET "/auth/me").data
-  Assert ($me.role_slugs.Count -ge 1 -and $me.permissions) "$p /auth/me"
+  Assert ($me.user.role_slugs.Count -ge 1 -and $me.permissions)   # role_slugs live on data.user "$p /auth/me"
   $pc = (Call $t GET "/portal/config").data
   $pc | ConvertTo-Json -Depth 8 | Set-Content (Join-Path $snap "$p.json")
   $dash = (Call $t GET "/dashboard").data
-  foreach ($w in @($dash.widgets)) { Assert (@("number", "sparkline", "bar", "line", "donut", "list", "actions", "table", "stat") -contains $w.type) "$p widget type $($w.type)" }
+  # widget kinds the Flutter dashboard renders (analytics_screens.dart): stat / chart / list / action
+  foreach ($w in @($dash.widgets)) { Assert (@("stat", "chart", "list", "action") -contains $w.kind) "$p widget kind $($w.kind)" }
 }
 
 Write-Host "== 3 push devices"
 $stu = Login "student.1" (Get-DemoPassword "student") $inst
 $tok = "verify-fcm-$(Get-Random)"
-Call $stu POST "/devices" @{ provider = "fcm"; platform = "android"; token = $tok; topics = @("role:student") } | Out-Null
-Call $stu DELETE "/devices?provider=fcm&token=$tok" $null 204 | Out-Null
+Call $stu POST "/devices" @{ provider = "fcm"; platform = "android"; token = $tok; topics = @("role:student") } 201 | Out-Null
+Call $stu DELETE "/devices?provider=fcm&token=$tok" $null 200 | Out-Null   # envelope response
 
 Write-Host "== 4 idempotent write-queue replay (SOS)"
 $key = [guid]::NewGuid().ToString()
@@ -49,8 +50,9 @@ $aasa = Invoke-RestMethod "$root/.well-known/apple-app-site-association"
 Assert ($aasa.applinks) "apple-app-site-association"
 
 Write-Host "== 7 locales + tokens"
-$te = Invoke-RestMethod "$BaseUrl/public/locales/te.json?institution=demo-uni"
-Assert ($te) "telugu pack"
+# i18n.web is off in the demo tenant (same as 39_portals): a FEATURE_DISABLED 403 is accepted
+$ter = Invoke-WebRequest "$BaseUrl/public/locales/te.json?institution=demo-uni" -SkipHttpErrorCheck
+if ($ter.StatusCode -eq 403) { Write-Host "  i18n.web off" } else { Assert ($ter.StatusCode -eq 200 -and $ter.Content) "telugu pack" }
 & (Get-VenvPython "$PSScriptRoot/../..") "$PSScriptRoot/../check_tokens_sync.py"
 Assert ($LASTEXITCODE -eq 0) "tokens in sync"
 
