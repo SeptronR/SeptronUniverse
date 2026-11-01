@@ -86,6 +86,8 @@ READMIT = any_permission_required((S, "manage"), (S, "self"))
 READMIT_DECIDE = permission_required(S, "manage")
 TR_SELF = any_permission_required((R, "transcript"), (R, "self"), (R, "view"))
 TR_OFFICE = permission_required(R, "transcript")
+# the queue is also readable institution-wide (auditor: Prompts/16 §16.11 step 13 "reads all queues; writes 403")
+TR_QUEUE_READ = any_permission_required((R, "transcript"), (R, "view_all"))
 RANK_READ = any_permission_required((R, "view_all"), (R, "manage"))
 RANK_PUBLISH = any_permission_required((R, "publish"), (R, "approve"), (R, "manage"))
 RANK_SELF = any_permission_required((R, "self"), (R, "view"))
@@ -667,7 +669,7 @@ async def transcript_request(
 async def transcript_queue(
     request: Request,
     status: str | None = None,
-    principal: Principal = Depends(TR_OFFICE),
+    principal: Principal = Depends(TR_QUEUE_READ),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, Any]:
     return ok(await TranscriptService(db, principal, request).queue(status))
