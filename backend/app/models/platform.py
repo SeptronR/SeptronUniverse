@@ -148,7 +148,10 @@ class Department(TenantModelMixin, Base):
 
 class InstitutionSetting(UUIDPrimaryKeyMixin, TenantMixin, CollegeScopedMixin, TimestampMixin, Base):
     __tablename__ = "institution_settings"
-    __table_args__ = (UniqueConstraint("institution_id", "college_id", "category", "key"),)
+    # NULLS NOT DISTINCT (0045): institution-wide rows (college_id NULL) must collide for ON CONFLICT upserts
+    __table_args__ = (
+        UniqueConstraint("institution_id", "college_id", "category", "key", postgresql_nulls_not_distinct=True),
+    )
 
     category: Mapped[str] = mapped_column(String(40), nullable=False)
     key: Mapped[str] = mapped_column(String(80), nullable=False)

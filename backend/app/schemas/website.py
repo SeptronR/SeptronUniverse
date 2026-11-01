@@ -4,7 +4,7 @@ import uuid
 from datetime import date, datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from app.schemas.common import ORMModel
 
@@ -208,7 +208,8 @@ class EnquiryStatusChange(BaseModel):
 
 class PublicEnquiryIn(BaseModel):
     name: str = Field(min_length=2, max_length=200)
-    email: str | None = Field(default=None, max_length=200)
+    # validated here (422): the CRM enquiry it becomes uses EmailStr, which otherwise raised a 500 inside the service
+    email: EmailStr | None = Field(default=None, max_length=200)
     phone: str | None = Field(default=None, max_length=20)
     subject: str | None = Field(default=None, max_length=200)
     message: str = Field(min_length=3, max_length=5000)
