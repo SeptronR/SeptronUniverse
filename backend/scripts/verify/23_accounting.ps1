@@ -24,7 +24,7 @@ if ($used.debit_paise -gt 0) { ExpectStatus 409 { Api PUT "/accounting/accounts/
 
 Step "3 postings"
 $gaps = Api GET "/accounting/postings/gaps" $acc
-Check ($gaps.data -ne $null) "gap check answers"
+Check ($null -ne $gaps.data) "gap check answers"
 
 Step "4 expenses"
 $heads = $mine.data | Where-Object { $_.status -eq "approved" -and $_.available_paise -gt 400000 } | Select-Object -First 1
@@ -51,7 +51,7 @@ if ($open) { ExpectStatus 409 { Api POST "/accounting/reconciliations/$($open.id
 
 Step "8 GST + statements"
 $gst = Api GET "/accounting/gst/summary?period=$((Get-Date).ToString('yyyy-MM'))" $acc
-Check ($gst.data -ne $null) "GST summary"
+Check ($null -ne $gst.data) "GST summary"
 $from = (Get-Date).AddMonths(-12).ToString("yyyy-MM-dd"); $to = (Get-Date).ToString("yyyy-MM-dd")
 $tb = Api GET "/accounting/trial-balance?from=$from&to=$to" $acc
 Check ($tb.data.balanced) "trial balance debits = credits"

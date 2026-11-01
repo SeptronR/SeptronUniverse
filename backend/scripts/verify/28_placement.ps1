@@ -49,7 +49,7 @@ if ($mine.my_eligibility.is_eligible) {
   $a1 = Api POST "/placement/drives/$($d.data.id)/apply" $stu @{} -Headers @{ "Idempotency-Key" = $key }
   $a2 = Api POST "/placement/drives/$($d.data.id)/apply" $stu @{} -Headers @{ "Idempotency-Key" = $key }
   Check ($a1.data.id -eq $a2.data.id) "idempotent apply"
-  Check ($a1.data.eligibility_snapshot.cgpa -ne $null) "snapshot stored"
+  Check ($null -ne $a1.data.eligibility_snapshot.cgpa) "snapshot stored"
   $w = Api POST "/placement/applications/$($a1.data.id)/withdraw" $stu
   Check ($w.data.status -eq "withdrawn") "withdraw before shortlist"
 } else {

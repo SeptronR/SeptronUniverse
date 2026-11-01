@@ -32,7 +32,7 @@ ExpectStatus 422 { Api POST "/facilities/room-bookings" $fac @{ room_id = $rooms
 
 Step "4 service desk"
 $sr = Api POST "/facilities/service-requests" $stu @{ category = "it"; description = "Wi-Fi down in library"; priority = "normal" }
-Check ($sr.data.ticket_number -ne $null) "ticket number"
+Check ($null -ne $sr.data.ticket_number) "ticket number"
 ExpectStatus 404 { Api GET "/facilities/service-requests/$($sr.data.id)" $stu2 }
 $d = Api GET "/facilities/service-desk/dashboard" $reg
 Check ($d.data.open -ge 1) "dashboard"

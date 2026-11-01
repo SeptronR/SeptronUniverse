@@ -36,7 +36,7 @@ Step "6 POs"
 $pos = Api GET "/inventory/purchase-orders" $mgr
 Check ($pos.data.Count -ge 20) "seeded POs"
 $vp = Api GET "/vendor/pos" $va
-Check ($vp.data -ne $null) "vendor sees own POs"
+Check ($null -ne $vp.data) "vendor sees own POs"
 
 Step "8 assets"
 $a = Api GET "/inventory/assets" $mgr
@@ -48,7 +48,7 @@ Step "11 bills"
 $b = Api GET "/inventory/vendor-bills" $acc
 Check ($b.data.Count -ge 30) "bills"
 $ag = Api GET "/inventory/vendor-bills/ageing" $acc
-Check ($ag.data.buckets -ne $null) "ageing"
+Check ($null -ne $ag.data.buckets) "ageing"
 $vb = Api GET "/vendor/bills" $va
 Check (@($vb.data | Where-Object { $_.supplier_id -ne $vb.data[0].supplier_id }).Count -eq 0) "vendor sees own bills only"
 

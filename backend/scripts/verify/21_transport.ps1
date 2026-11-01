@@ -31,7 +31,7 @@ ExpectStatus 409 { Api POST "/transport/allocations" $mgr @{ person_type = "stud
 Step "6 driver flow"
 $today = (Get-Date).ToString("yyyy-MM-dd")
 $dt = Api GET "/transport/driver/trips?date=$today" $d1
-Check ($dt.data -ne $null) "driver.1 trips"
+Check ($null -ne $dt.data) "driver.1 trips"
 $t = $dt.data | Where-Object { $_.status -eq "scheduled" } | Select-Object -First 1
 if ($t) {
     ExpectStatus 403 { Api POST "/transport/trips/$($t.id)/start" $d2 @{} }

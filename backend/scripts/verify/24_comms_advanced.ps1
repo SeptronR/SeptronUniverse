@@ -7,7 +7,7 @@ $reg = Login "registrar"; $hod = Login "hod.cse"; $stu = Login "student.1"; $par
 
 Step "1 segments"
 $f = Api GET "/comms/segments/fields" $reg
-Check ($f.data -ne $null) "segment fields"
+Check ($null -ne $f.data) "segment fields"
 $p = Api POST "/comms/segments/preview" $reg @{ person_types = @("student") }
 Check ($p.data.count -ge 1) "preview counts students"
 ExpectStatus 403 { Api POST "/comms/segments/preview" $stu @{ person_types = @("student") } }
@@ -22,7 +22,7 @@ Check ($chk.data.ok) "compliance ok for in-app"
 $s = Api POST "/comms/campaigns/$($c.data.id)/action" $reg @{ action = "send_now" }
 Check ($s.data.status -in @("sending", "sent", "pending_approval")) "send accepted"
 $r = Api GET "/comms/campaigns/$($c.data.id)/report" $reg
-Check ($r.data -ne $null) "report"
+Check ($null -ne $r.data) "report"
 ExpectStatus 403 { Api POST "/comms/campaigns" $stu @{ name = "x"; channels = @("sms") } }
 
 Step "3 HOD department limits"
@@ -37,17 +37,17 @@ Step "5 bot"
 $fl = Api GET "/comms/bot/flows" $reg
 Check ($fl.data.flows.Count -ge 3) "bot flows"
 $sim = Api POST "/comms/simulator/inbound-whatsapp" $reg @{ from = "+919000000101"; text = "hi" }
-Check ($sim.data -ne $null) "simulator replies"
+Check ($null -ne $sim.data) "simulator replies"
 
 Step "6 assistant"
 $me = Api GET "/assistant/me" $stu
-Check ($me.data -ne $null) "assistant status"
+Check ($null -ne $me.data) "assistant status"
 
 Step "7 analytics + my messages"
 $d = Api GET "/comms/analytics/delivery" $reg
-Check ($d.data -ne $null) "delivery analytics"
+Check ($null -ne $d.data) "delivery analytics"
 ExpectStatus 403 { Api GET "/comms/analytics/delivery" $stu }
 $mm = Api GET "/comms/me/messages" $par
-Check ($mm.data -ne $null) "my messages"
+Check ($null -ne $mm.data) "my messages"
 
 Summary

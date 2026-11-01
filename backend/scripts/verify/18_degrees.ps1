@@ -27,11 +27,11 @@ Step "6 convocation"
 $c = Api POST "/convocations" $reg @{ name = "Verify convocation"; fee_paise = 150000; registration_deadline = (Get-Date).AddDays(7).ToString("yyyy-MM-dd") }
 Api POST "/convocations/$($c.data.id)/status" $reg @{ status = "registration_open" } | Out-Null
 $rep = Api GET "/convocations/$($c.data.id)/reports/gowns" $reg
-Check ($rep.data -ne $null) "gown report"
+Check ($null -ne $rep.data) "gown report"
 
 Step "7 awards"
 $issued = $awards.data | Where-Object { $_.status -eq "issued" } | Select-Object -First 1
-Check ($issued.certificate_number -ne $null) "issued has certificate number"
+Check ($null -ne $issued.certificate_number) "issued has certificate number"
 ExpectStatus 403 { Api GET "/degrees/me" $acc }
 Api GET "/degrees/me" $par | Out-Null
 
@@ -45,7 +45,7 @@ if ($revoked) { $rv = Api GET "/verify/$($revoked.verification_token)" $null; Ch
 
 Step "12 credentials"
 $cr = Api GET "/credentials" $reg
-Check ($cr.data -ne $null) "credential board"
+Check ($null -ne $cr.data) "credential board"
 
 Step "14 stats"
 $s = Api GET "/degrees/stats" $reg

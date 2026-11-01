@@ -25,7 +25,7 @@ if ($oa.data.Count -ge 1) { ExpectStatus 404 { Api POST "/hostel-allocations/$($
 
 Step "6 leaves queue"
 $lv = Api GET "/hostel-leaves?status=requested" $warden
-Check ($lv.data -ne $null) "leave queue"
+Check ($null -ne $lv.data) "leave queue"
 
 Step "7 gate"
 ExpectStatus 404 { Api POST "/hostel-gate/scan" $gate @{ qr_token = "hl$('0' * 48)"; direction = "out" } }

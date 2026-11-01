@@ -26,7 +26,7 @@ if ($row.cia_level -ne $null -and $row.ese_level -ne $null -and $row.indirect_le
   $expected = [math]::Round((0.3 * $row.cia_level + 0.7 * $row.ese_level), 2)
   Check ([math]::Abs($expected - $row.direct_level) -le 0.01) "direct = 0.3 cia + 0.7 ese"
 }
-if ($row.final_level -ne $null) { Check ([math]::Abs(($row.target - $row.final_level) - $row.gap) -le 0.01) "gap = target - final" }
+if ($null -ne $row.final_level) { Check ([math]::Abs(($row.target - $row.final_level) - $row.gap) -le 0.01) "gap = target - final" }
 
 Step "5 visibility"
 Api GET "/course-offerings/$oid/attainment" $hod | Out-Null
@@ -34,7 +34,7 @@ ExpectStatus 403 { Api GET "/attainment/me?offering_id=$oid" $stu }
 
 Step "6 PO run"
 $batchRun = Api GET "/obe/gaps?program_id=$progId&threshold=0" $obe
-Check ($batchRun.data -ne $null) "gap list"
+Check ($null -ne $batchRun.data) "gap list"
 
 Step "10 CQI"
 $created = Api POST "/cqi-actions" $obe @{ scope_type = "program"; scope_id = $progId; action_text = "Verify script action"; due_on = (Get-Date).AddDays(30).ToString("yyyy-MM-dd") }

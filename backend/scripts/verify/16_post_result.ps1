@@ -7,9 +7,10 @@ $coe = Login "coe"; $cell = Login "exam.cell"; $reg = Login "registrar"; $stu = 
 
 Step "1 eligibility"
 $sessions = Api GET "/exam-sessions" $cell
-$sid = ($sessions.data | Select-Object -First 1).id
+# the seeded end-semester session (later scripts create newer verify sessions that sort first)
+$sid = (@($sessions.data | Where-Object { $_.name -like '*End-semester (regular)' }) + @($sessions.data))[0].id
 $el = Api GET "/reval/eligibility?session_id=$sid" $stu
-Check ($el.data.items -ne $null) "eligibility answers"
+Check ($null -ne $el.data.items) "eligibility answers"
 
 Step "2 session queue"
 $q = Api GET "/exam-sessions/$sid/reval-requests" $cell
@@ -22,7 +23,7 @@ ExpectStatus 404 { Api GET "/malpractice-cases/$($cases.data[0].id)" $stu }
 
 Step "8 withheld"
 $w = Api GET "/results/withheld?session_id=$sid" $coe
-Check ($w.data -ne $null) "withheld list"
+Check ($null -ne $w.data) "withheld list"
 
 Step "10 transcripts"
 $t = Api GET "/transcripts/requests" $reg
