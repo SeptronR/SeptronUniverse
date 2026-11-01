@@ -45,7 +45,7 @@ export function ChartCard({ title, description, table, children, actions, classN
       </CardHeader>
       <CardContent>
         {view === 'chart' ? (
-          <div style={{ height }} role="img" aria-label={`${title} chart`}>
+          <div style={{ height }} role="figure" aria-label={`${title} chart`} /* not img: charts render focusable children */>
             {children}
           </div>
         ) : (

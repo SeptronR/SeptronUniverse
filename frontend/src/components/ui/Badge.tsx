@@ -11,9 +11,10 @@ export const badgeVariants = cva(
         default: 'border-transparent bg-primary text-primary-foreground',
         secondary: 'border-transparent bg-secondary text-secondary-foreground',
         outline: 'text-foreground',
-        success: 'border-transparent bg-status-approved/15 text-status-approved',
-        warning: 'border-transparent bg-status-pending/15 text-status-pending',
-        destructive: 'border-transparent bg-status-rejected/15 text-status-rejected',
+        // text one shade darker than the reserved status colour so the 15 % tint keeps WCAG AA contrast
+        success: 'border-transparent bg-status-approved/15 text-[#166534] dark:text-[#4ade80]',
+        warning: 'border-transparent bg-status-pending/15 text-[#92400e] dark:text-[#fbbf24]',
+        destructive: 'border-transparent bg-status-rejected/15 text-[#991b1b] dark:text-[#f87171]',
         info: 'border-transparent bg-brand-100 text-brand-800 dark:bg-brand-900/40 dark:text-brand-200',
       },
     },
