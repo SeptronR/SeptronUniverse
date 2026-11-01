@@ -2,15 +2,18 @@ id,phase,role,page_or_endpoint,severity,status,owner,fixed_in
 QA-001,43,dean,GET /api/v1/qa/suites/runs,P2,fixed,platform,phase-43
 QA-002,43,(database),audit_logs grants,P1,fixed,platform,phase-43
 QA-003,04,(catalogue),notification catalogue duplicate keys results.published / results.reval_decided,P3,open,platform,
-QA-003,39,student/parent,/student /student/requests /student/payments /parent /parent/payments (axe color-contrast),P2,open,frontend,
-QA-004,39,student,/student/notifications (axe aria-required-children),P2,open,frontend,
-QA-005,39,faculty,/faculty (axe nested-interactive),P2,open,frontend,
-QA-006,39-40,registrar,39_portals.ps1 / 40_website.ps1 plain Login for MFA-required registrar; student.2 has no credential row,P3,open,qa,
-QA-007,41,institution_admin,POST /integrations/webhooks rejects event student.enrolled (41_integrations.ps1),P2,open,platform,
+QA-003,39,student/parent,/student /student/requests /student/payments /parent /parent/payments (axe color-contrast),P2,fixed,frontend,5325cf9
+QA-004,39,student,/student/notifications (axe aria-required-children),P2,fixed,frontend,5325cf9
+QA-005,39,faculty,/faculty (axe nested-interactive),P2,fixed,frontend,5325cf9
+QA-006,39-40,registrar,39_portals.ps1 / 40_website.ps1 plain Login for MFA-required registrar; student.2 has no credential row,P3,fixed,qa,51655c1 8cbdad4
+QA-007,41,institution_admin,POST /integrations/webhooks rejects event student.enrolled (41_integrations.ps1),P2,fixed,qa,3ea1a41
 QA-008,42,(mobile),lib/l10n: 10 locale ARBs missing 18 of 19 keys (check_l10n.dart),P3,open,mobile,
-QA-009,42,warden,42_mobile.ps1 warden /auth/me assert fails,P2,open,platform,
-QA-010,43,privacy_officer,seed writes no privacy_officer row to LOCAL_TEST_CREDENTIALS.md (43_hardening.ps1),P3,open,qa,
+QA-009,42,warden,42_mobile.ps1 warden /auth/me assert fails,P2,fixed,qa,91df8f3
+QA-010,43,privacy_officer,seed writes no privacy_officer row to LOCAL_TEST_CREDENTIALS.md (43_hardening.ps1),P3,fixed,qa,e57c091
 QA-011,44,(ops),Docker builds / compose stack / restore drill not runnable locally (no hypervisor),P3,blocked,ops,
-QA-012,02-38,(api),api_all 00-38 fixture drift: feature dependants added by later phases (e.g. comms.whatsapp / portals.*) break older toggles,P2,open,qa,
+QA-012,02-38,(api),api_all 00-38 fixture drift: feature dependants added by later phases (e.g. comms.whatsapp / portals.*) break older toggles,P2 - 02 fixed (13e5ef2); api_all 2026-11-01 37/46 fail (36 min) on per-script drift,open,qa,13e5ef2
 QA-013,40,(public),GET /site/demo-uni/catalogue 500 (colleges.institution_type),P1,fixed,platform,ba2fc60
 QA-014,34,(seed),affiliation seeder fails on soft-deleted demo colleges,P2,fixed,platform,6d6001b
+QA-015,40,(database),institution_settings UNIQUE treated college_id NULL as distinct: settings upserts duplicated rows; website publish never listed in versions,P1,fixed,platform,8cbdad4
+QA-016,39,student,PUT /users/me (language/theme) shadowed by rbac PUT /users/{id} -> 403,P2,fixed,platform,51655c1
+QA-017,40,(public),POST /public/site/enquiries invalid email -> 500 instead of 422,P2,fixed,platform,8cbdad4
