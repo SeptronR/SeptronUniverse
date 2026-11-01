@@ -9,10 +9,14 @@ $ErrorActionPreference = "Stop"
 $inst = @{ institution = "demo-uni" }
 $admin = Login "inst.admin" (Get-DemoPassword "institution_admin") $inst
 $stu = Login "student.1" (Get-DemoPassword "student") $inst
-$stu2 = Login "student.2" (Get-DemoPassword "student") $inst
+# a second demo-uni student: seeded students have unknown passwords, so give one the recorded student password
+$Python = Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))
+$s2name = (& $Python "$PSScriptRoot/_sql.py" "SELECT u.username FROM students s JOIN users u ON u.id = s.user_id JOIN institutions i ON i.id = s.institution_id WHERE i.slug = 'demo-uni' AND u.username <> 'student.1' ORDER BY u.username LIMIT 1" | ConvertFrom-Json)[0].username
+& $Python "$PSScriptRoot/_reset_password.py" $s2name (Get-DemoPassword "student") | Out-Null
+$stu2 = Login $s2name (Get-DemoPassword "student") $inst
 $par = Login "parent.1" (Get-DemoPassword "parent") $inst
 $fac = Login "faculty.1" (Get-DemoPassword "faculty") $inst
-$reg = Login "registrar" (Get-DemoPassword "registrar") $inst
+$reg = Login-Mfa 'registrar' 'registrar'   # MFA-required role in the demo tenant
 $root = $BaseUrl -replace "/api/v1$", ""
 
 Write-Host "== 1 portal config"
@@ -77,7 +81,8 @@ Call $stu DELETE "/push/subscribe" @{ endpoint = $ep } | Out-Null
 Write-Host "== 6 PWA endpoints"
 $m = Invoke-WebRequest "$BaseUrl/public/manifest.json?institution=demo-uni"
 Assert ($m.Headers["Content-Type"] -like "application/manifest+json*") "manifest MIME"
-$mj = $m.Content | ConvertFrom-Json
+# application/manifest+json is not a text type to pwsh: .Content is a byte[]
+$mj = [System.Text.Encoding]::UTF8.GetString($m.RawContentStream.ToArray()) | ConvertFrom-Json
 Assert ($mj.start_url -eq "/login?source=pwa") "start_url"
 $pc = Invoke-RestMethod "$BaseUrl/public/pwa-config?institution=demo-uni"
 Assert ($pc.data.version) "precache version"
