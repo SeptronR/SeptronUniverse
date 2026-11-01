@@ -28,6 +28,17 @@ from app.core.security import hash_password
 from app.models.platform import College, Department, Faculty, Institution, InstitutionSetting, Role, User, UserRole
 from app.models.saas import InstitutionSubscription, SubscriptionPlan
 
+def _recorded_identifiers() -> set[str]:
+    """Identifiers that already have a row in LOCAL_TEST_CREDENTIALS.md (| role | identifier | password |)."""
+    import _bootstrap
+
+    path = _bootstrap.REPO_ROOT / "LOCAL_TEST_CREDENTIALS.md"
+    if not path.exists():
+        return set()
+    cells = (line.split("|") for line in path.read_text(encoding="utf-8").splitlines())
+    return {c[2].strip() for c in cells if len(c) >= 5 and not c[1].strip().endswith("_totp")}
+
+
 # (username, display name, role slug, scope, user_type, valid_days)
 DEMO_USERS: list[tuple[str, str, str, str, str, int | None]] = [
     ("inst.admin", "Institution Admin", "institution_admin", "institution", "staff", None),
@@ -195,6 +206,7 @@ async def seed_base(ctx: SeedContext) -> None:
     }
 
     now = datetime.now(UTC)
+    recorded = _recorded_identifiers()
     for username, display_name, role_slug, scope, user_type, valid_days in DEMO_USERS:
         role = roles.get(role_slug)
         if role is None:
@@ -223,6 +235,12 @@ async def seed_base(ctx: SeedContext) -> None:
             ctx.db.add(user)
             await ctx.db.flush()
             ctx.count("users")
+            ctx.credentials.append((role_slug, username, password))
+        elif username not in recorded:
+            # created by an earlier run whose credentials never reached the sheet (e.g. a later phase added the role
+            # after the base seed): rotate to a known password so the verification scripts can sign in
+            user.password_hash = hash_password(password)
+            user.must_change_password = False
             ctx.credentials.append((role_slug, username, password))
         scope_type, scope_id = _scope(scope, colleges, faculties, departments)
         exists = (

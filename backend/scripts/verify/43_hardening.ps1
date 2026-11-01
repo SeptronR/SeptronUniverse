@@ -24,14 +24,18 @@ $g = (Call $admin POST "/qa/golden/run" @{}).data
 Assert ($g.passed -eq $g.total) "golden $($g.passed)/$($g.total)"
 
 Write-Host "== 7 security headers + CORS"
-$h = Invoke-WebRequest "$BaseUrl/health"
+$h = Invoke-WebRequest "$root/health"   # /health is mounted at the app root, not under /api/v1
 foreach ($k in "X-Content-Type-Options", "X-Frame-Options", "Referrer-Policy", "Permissions-Policy", "Cross-Origin-Opener-Policy") { Assert ($h.Headers[$k]) "header $k" }
 Assert ($h.Headers["Content-Security-Policy"] -or $h.Headers["Content-Security-Policy-Report-Only"]) "CSP header"
 $jw = Invoke-RestMethod "$root/.well-known/jwks.json"
 Assert ($null -ne $jw.keys) "jwks.json"
 
 Write-Host "== 9 input guards"
-try { Invoke-RestMethod "$BaseUrl/consents/bulk" -Method Post -Headers @{ Authorization = "Bearer $stu"; "Content-Type" = "application/json"; "Content-Length" = "27262976" } -Body "{}" | Out-Null } catch { Assert (@(400, 413) -contains $_.Exception.Response.StatusCode.value__) "oversized body refused" }
+# a real 26 MB body: pwsh 7 will not send a forged Content-Length that disagrees with the body
+$big = '{"x":"' + ('a' * 26MB) + '"}'
+$ob = Invoke-WebRequest "$BaseUrl/consents/bulk" -Method Post -Headers @{ Authorization = "Bearer $stu" } -ContentType "application/json" -Body $big -SkipHttpErrorCheck
+Assert (@(400, 413) -contains [int]$ob.StatusCode) "oversized body refused"
+$big = $null
 $deep = ("[" * 200) + ("]" * 200)
 try { Call $stu POST "/consents/bulk" $deep 400 | Out-Null } catch { }
 try { Call $admin POST "/integrations/webhooks" @{ name = "ssrf"; url = "https://10.0.0.1/hook"; events = @("ping") } 422 | Out-Null } catch { }
