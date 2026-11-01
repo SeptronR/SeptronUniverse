@@ -93,7 +93,9 @@ async def seed_affiliation(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PL
     year = (
         await db.execute(
             select(AcademicYear)
-            .where(AcademicYear.institution_id == inst.id)
+            # institution-level year: admission cycles (and so the Phase 08 intake gate) use it; college-level years
+            # can be rolled over on their own and must not decide which year the approvals belong to
+            .where(AcademicYear.institution_id == inst.id, AcademicYear.college_id.is_(None))
             .order_by(AcademicYear.is_current.desc(), AcademicYear.start_date.desc())
             .limit(1)
         )
