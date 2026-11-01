@@ -56,6 +56,18 @@ async def reset_all() -> None:
                 ),
                 {"h": hash_password(password), "u": username},
             )
+        # time-boxed demo accounts (auditor.tmp 7 d, examiner.ext 30 d) expire on the calendar: keep them usable
+        await conn.execute(
+            text("UPDATE users SET valid_to = NOW() + INTERVAL '7 days' WHERE valid_to < NOW() AND username = ANY(:u)"),
+            {"u": list(passwords)},
+        )
+        await conn.execute(
+            text(
+                "UPDATE user_roles SET valid_to = NOW() + INTERVAL '7 days' WHERE valid_to < NOW() "
+                "AND user_id IN (SELECT id FROM users WHERE username = ANY(:u))"
+            ),
+            {"u": list(passwords)},
+        )
         stale = "SELECT id FROM users WHERE is_super_admin OR NOT (username = ANY(:t))"
         await conn.execute(text(f"DELETE FROM mfa_secrets WHERE user_id IN ({stale})"), {"t": list(totp)})
         await conn.execute(
