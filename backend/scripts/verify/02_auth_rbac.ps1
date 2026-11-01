@@ -53,7 +53,7 @@ function Totp($secret) { (& $Python -c "import pyotp,sys;print(pyotp.TOTP(sys.ar
 try {
   Write-Host "== 0. reset the fixtures of a previous run (same list as 02_auth_rbac_inprocess.py step 0)"
   $probes = "SELECT id FROM users WHERE username IN ('verify.temp','support.verify')"
-  $touched = "feature_key LIKE 'hostel.%' OR feature_key IN ('comms.whatsapp','security.sso','fees.core')"
+  $touched = "feature_key LIKE 'hostel.%' OR feature_key LIKE 'comms.whatsapp%' OR feature_key IN ('security.sso','fees.core')"
   & $Python scripts/verify/_sql.py --write ("DELETE FROM mfa_secrets WHERE user_id IN (SELECT id FROM users WHERE username = 'coe'); " +
     "UPDATE users SET mfa_enabled = FALSE WHERE username = 'coe'; " +
     "DELETE FROM impersonation_logs WHERE impersonator_id IN ($probes) OR target_user_id IN ($probes); " +
@@ -184,7 +184,7 @@ try {
   Call $saToken PUT "/institutions/$instId/features/hostel.mess" @{ enabled = $true; confirm_dependencies = $true } 200 $tenant | Out-Null
   $off2 = Call $adminToken PUT "/features/hostel.mess/institution-toggle" @{ enabled = $false }
   Assert ($off2.data.effective -eq $false) "inst.admin switched hostel.mess off"
-  Call $saToken PUT "/institutions/$instId/features/comms.whatsapp" @{ enabled = $false } 200 $tenant | Out-Null
+  Call $saToken PUT "/institutions/$instId/features/comms.whatsapp" @{ enabled = $false; confirm_dependencies = $true } 200 $tenant | Out-Null
   $conflict = Call $adminToken PUT "/features/comms.whatsapp/institution-toggle" @{ enabled = $true } 409
   Assert ($conflict.error.code -eq 'RULE_VIOLATION') "enabling a platform-disabled key -> 409"
 
@@ -219,7 +219,7 @@ try {
   Assert ($ent.data.plan -eq 'university' -and $ent.data.status -eq 'active') "entitlements -> plan/status"
   Call $saToken PUT "/_dev/plans/university" @{ student_limit = 1 } | Out-Null
   # a valid Phase 07 StudentCreate body (2025 BTECH-CSE, no login) — 07's fixture reset soft-deletes 'Verify%' rows
-  $cse = (Call $adminToken GET "/programs?page_size=100").data | Where-Object { $_.code -eq 'BTECH-CSE' } | Select-Object -First 1
+  $cse = (Call $adminToken GET "/programs?page_size=100&q=BTECH-CSE").data | Where-Object { $_.code -eq 'BTECH-CSE' }   # later phases add >100 programmes | Select-Object -First 1
   $seatBody = @{ first_name = 'Seat'; last_name = 'VerifySeat'; dob = '2007-05-01'; gender = 'M'; program_id = $cse.id; admission_year = 2025; create_user = $false }
   $seat = Call $adminToken POST "/students" $seatBody 403
   Assert ($seat.error.details.code -eq 'SEAT_LIMIT') "POST /students -> 403 RULE_VIOLATION / SEAT_LIMIT"
