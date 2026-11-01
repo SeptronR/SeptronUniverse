@@ -123,7 +123,8 @@ class InstitutionAdminService(PlatformBase):
                       AND u.is_active AND u.user_type = 'staff') AS staff,
                    (SELECT m.storage_bytes FROM usage_meters m WHERE m.institution_id = i.id
                       ORDER BY m.period_month DESC LIMIT 1) AS storage,
-                   (SELECT max(lh.created_at) FROM login_history lh WHERE lh.institution_id = i.id AND lh.success) AS last_login,
+                   (SELECT max(lh.occurred_at) FROM login_history lh WHERE lh.institution_id = i.id
+                      AND lh.outcome IN ('success', 'otp', 'sso')) AS last_login,
                    (SELECT CASE WHEN bool_or(c.status = 'failed') THEN 'failing'
                                 WHEN bool_or(c.status = 'degraded') THEN 'degraded'
                                 WHEN count(*) > 0 THEN 'ok' ELSE 'none' END

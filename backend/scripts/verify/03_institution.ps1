@@ -223,9 +223,9 @@ try {
   Assert ($after.next_value -eq 53) "next_value = 53 after 52 reservations"
 
   Write-Host "== 10. settings"
-  $badSetting = Call $admin PUT "/settings" @{ items = @(@{ category = 'exams'; key = 'discrepancy_pct_default'; value = 'abc' }) } 422
+  $badSetting = Call $admin PUT "/settings" @{ items = @(@{ category = 'exams'; key = 'discrepancy_pct_default'; value = 'abc' }); reason = 'verify 03' } 422
   Assert ($badSetting.error.code -eq 'VALIDATION' -and $badSetting.error.details.errors[0].field -eq 'exams.discrepancy_pct_default') "exams.discrepancy_pct_default = 'abc' -> 422"
-  $goodSetting = Call $admin PUT "/settings" @{ items = @(@{ category = 'exams'; key = 'discrepancy_pct_default'; value = 15 }, @{ category = 'general'; key = 'theme'; value = 'ocean' }) }
+  $goodSetting = Call $admin PUT "/settings" @{ items = @(@{ category = 'exams'; key = 'discrepancy_pct_default'; value = 15 }, @{ category = 'general'; key = 'theme'; value = 'ocean' }); reason = 'verify 03' }   # phase 37: sensitive keys need a reason
   $exams = Call $admin GET "/settings?category=exams"
   Assert ((($exams.data[0].items | Where-Object { $_.key -eq 'discrepancy_pct_default' }).value) -eq 15) "= 15 -> 200 and read back"
   Call $student GET "/settings" $null 403 | Out-Null
@@ -249,7 +249,9 @@ try {
   Call $admin POST "/platform/institutions" $onboard 403 | Out-Null
   $new = Call $sa POST "/platform/institutions" $onboard 201
   $newId = $new.data.institution.id
-  Assert ($new.data.main_college_id -and $new.data.roles_created -eq 49) "POST /platform/institutions -> 201, main college + 49 roles (51 templates minus the 2 platform roles)"
+  # tenant roles = platform templates minus super_admin / support_agent (later phases add templates)
+  $expRoles = [int](Sql "SELECT count(*) AS n FROM roles WHERE institution_id IS NULL AND deleted_at IS NULL AND slug NOT IN ('super_admin', 'support_agent')")[0].n
+  Assert ($new.data.main_college_id -and $new.data.roles_created -eq $expRoles) "POST /platform/institutions -> 201, main college + $expRoles roles (templates minus the 2 platform roles)"
   $tenantCounts = Sql ("SELECT (SELECT count(*) FROM colleges WHERE institution_id = '$newId' AND is_main) AS mains, " +
     "(SELECT count(*) FROM roles WHERE institution_id = '$newId') AS roles, " +
     "(SELECT count(*) FROM role_permissions rp JOIN roles r ON r.id = rp.role_id WHERE r.institution_id = '$newId') AS grants, " +
@@ -259,13 +261,14 @@ try {
     "(SELECT count(*) FROM institution_feature_flags WHERE institution_id = '$newId' AND source = 'plan') AS flags, " +
     "(SELECT count(*) FROM message_logs WHERE institution_id = '$newId' AND event_type = 'institution.admin_credentials') AS mails")
   $c = $tenantCounts[0]
-  Assert ($c.mains -eq 1 -and $c.roles -eq 49 -and $c.grants -gt 1000) "1 main college, 49 roles, $($c.grants) grants"
-  Assert ($c.scales -eq 1 -and $c.settings -ge 25 -and $c.sequences -eq 7) "pack defaults: grading scale, $($c.settings) settings, 7 number sequences"
+  Assert ($c.mains -eq 1 -and $c.roles -eq $expRoles -and $c.grants -gt 1000) "1 main college, $expRoles roles, $($c.grants) grants"
+  Assert ($c.scales -eq 1 -and $c.settings -ge 25 -and $c.sequences -ge 7) "pack defaults: grading scale, $($c.settings) settings, $($c.sequences) number sequences (>= 7; later phases add more)"
   Assert ($c.flags -gt 100 -and $new.data.features_enabled -gt 50) "plan feature flags applied ($($c.flags) rows, $($new.data.features_enabled) effective)"
   Assert ($c.mails -eq 1 -and $new.data.admin_temp_password.Length -ge 12) "admin credential e-mail logged"
   Assert ($new.data.defaults.frameworks -contains 'NAAC_2024') "IN pack frameworks available (platform rows)"
   $list = Call $sa GET "/platform/institutions?q=$slug"
-  Assert ($list.data[0].plan_code -eq 'standard' -and $list.data[0].college_count -eq 1) "GET /platform/institutions lists the new tenant (plan standard)"
+  # phase 38 list shape: plan / subscription_status (the college count is asserted from the DB above)
+  Assert ($list.data[0].slug -eq $slug -and $list.data[0].plan -eq 'standard') "GET /platform/institutions lists the new tenant (plan standard)"
 
   Write-Host "== 13. suspend / activate"
   $before = Raw $null POST "/auth/login" @{ identifier = "admin.$run"; password = $new.data.admin_temp_password; institution_slug = $slug }
