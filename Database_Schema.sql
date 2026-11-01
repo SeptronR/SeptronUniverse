@@ -103,7 +103,7 @@ CREATE TABLE institution_settings (
   college_id UUID REFERENCES colleges(id) ON DELETE CASCADE,
   category VARCHAR(40) NOT NULL, key VARCHAR(80) NOT NULL, value JSONB, value_type VARCHAR(20) NOT NULL DEFAULT 'string', is_public BOOLEAN NOT NULL DEFAULT FALSE,
   updated_by UUID, created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  UNIQUE (institution_id, college_id, category, key)
+  UNIQUE NULLS NOT DISTINCT (institution_id, college_id, category, key) -- 0045: institution-wide rows (college_id NULL) collide
 );
 
 CREATE TABLE holidays (
@@ -300,9 +300,11 @@ CREATE TABLE workflow_instances (
   definition_id UUID NOT NULL REFERENCES workflow_definitions(id),
   entity_type VARCHAR(60) NOT NULL, entity_id UUID NOT NULL, title VARCHAR(200),
   status VARCHAR(20) NOT NULL DEFAULT 'pending', -- pending | approved | rejected | cancelled | escalated
-  current_step SMALLINT NOT NULL DEFAULT 1, started_by UUID, started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), closed_at TIMESTAMPTZ, context JSONB,
-  UNIQUE (entity_type, entity_id, definition_id)
+  current_step SMALLINT NOT NULL DEFAULT 1, started_by UUID, started_at TIMESTAMPTZ NOT NULL DEFAULT NOW(), closed_at TIMESTAMPTZ, context JSONB
 );
+-- 0046: one OPEN instance per record; a closed instance may be followed by a resubmission
+CREATE UNIQUE INDEX workflow_instances_one_open ON workflow_instances (entity_type, entity_id, definition_id)
+  WHERE status IN ('pending', 'escalated');
 
 CREATE TABLE workflow_steps (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
