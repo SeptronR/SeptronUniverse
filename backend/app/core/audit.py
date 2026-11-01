@@ -23,6 +23,10 @@ def _content_hash(*parts: Any) -> str:
     return hashlib.sha256(json.dumps(parts, default=str, sort_keys=True).encode()).hexdigest()
 
 
+def _jsonable(values: dict[str, Any] | None) -> dict[str, Any] | None:
+    return None if values is None else json.loads(json.dumps(values, default=str))
+
+
 def _client_ip(request: Request | None) -> str | None:
     if request is None:
         return None
@@ -45,6 +49,9 @@ async def log_audit(
     request: Request | None = None,
 ) -> AuditLog:
     """Explicit audit call from services. The DB trigger computes the hash chain."""
+    # JSON-safe values whatever the caller's snapshot holds (time / Decimal / enum / UUID): a raw ``time`` from a
+    # class-session snapshot made the JSONB insert raise and the whole request 500
+    old, new = _jsonable(old), _jsonable(new)
     user_id = getattr(principal, "id", None)
     institution_id = getattr(principal, "institution_id", None)
     row = AuditLog(

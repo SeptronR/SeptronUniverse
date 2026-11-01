@@ -116,7 +116,13 @@ async def api_error_handler(request: Request, exc: APIError) -> ORJSONResponse:
 
 @app.exception_handler(RequestValidationError)
 async def validation_handler(request: Request, exc: RequestValidationError) -> ORJSONResponse:
-    return error_response(request, 422, ErrorCode.VALIDATION, "Request validation failed", {"errors": exc.errors()})
+    # a validator that raises ValueError leaves the exception object in ``ctx.error``; orjson cannot encode it, which
+    # turned every such 422 into a 500 — keep its message instead
+    errors = [
+        {**e, "ctx": {k: (str(v) if isinstance(v, Exception) else v) for k, v in e["ctx"].items()}} if e.get("ctx") else e
+        for e in exc.errors()
+    ]
+    return error_response(request, 422, ErrorCode.VALIDATION, "Request validation failed", {"errors": errors})
 
 
 @app.exception_handler(IntegrityError)
