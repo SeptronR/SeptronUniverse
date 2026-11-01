@@ -76,8 +76,10 @@ $s2 = (Sql "SELECT e.id enrol FROM student_program_enrollments e WHERE e.institu
 
 # ---- 0. reset ------------------------------------------------------------------------------------------------------------
 Write-Host "== 0. reset"
-SqlW "DELETE FROM fee_structures WHERE name LIKE 'verify-12%'"
-SqlW "DELETE FROM fee_payments WHERE utr IN ('UTR123','UTR123X') OR reference_no LIKE 'verify-12%'"
+# FK-aware: the previous run's invoices / items reference these structures
+& $Py (Join-Path $PSScriptRoot "_purge.py") fee_structures "name LIKE 'verify-12%'" | Out-Null
+& $Py (Join-Path $PSScriptRoot "_purge.py") fee_payments "utr IN ('UTR123','UTR123X') OR reference_no LIKE 'verify-12%'" | Out-Null
+SqlW "DELETE FROM offline_payment_reconciliations WHERE utr IN ('UTR123','UTRNOPE')"
 SqlW "DELETE FROM offline_payment_reconciliations WHERE utr IN ('UTR123','UTRNOPE')"
 SqlW "DELETE FROM no_dues_requests WHERE student_program_enrollment_id='$($s1row.enrol)'"
 SqlW "DELETE FROM scholarship_applications WHERE student_program_enrollment_id='$($s1row.enrol)'"
@@ -98,8 +100,10 @@ Write-Host "== 2. structures"
 $heads = (Call $acct GET "/fee-heads").data
 $tuition = ($heads | Where-Object code -eq 'TUITION').id
 $items = @(@{ fee_head_id = $tuition; amount_paise = 1000000; instalment_no = 1; due_offset_days = 10 }, @{ fee_head_id = $tuition; amount_paise = 1000000; instalment_no = 2; due_offset_days = 70 })
-$st = (Call $acct POST "/fee-structures" @{ name = 'verify-12 batch'; batch_id = $s1row.batch_id; term_number = 9; effective_from = (Get-Date).ToString('yyyy-MM-dd'); items = $items }).data
-Expect $acct POST "/fee-structures" @{ name = 'verify-12 overlap'; batch_id = $s1row.batch_id; term_number = 9; effective_from = (Get-Date).AddDays(5).ToString('yyyy-MM-dd'); items = $items } 409 'CONFLICT' | Out-Null
+# programme too: a later seed's batch + programme rate (score 500) must lose to batch + programme + term
+$s1prog = (Sql "SELECT program_id FROM student_program_enrollments WHERE id = '$($s1row.enrol)'")[0].program_id
+$st = (Call $acct POST "/fee-structures" @{ name = 'verify-12 batch'; batch_id = $s1row.batch_id; program_id = $s1prog; term_number = 9; effective_from = (Get-Date).ToString('yyyy-MM-dd'); items = $items }).data
+Expect $acct POST "/fee-structures" @{ name = 'verify-12 overlap'; batch_id = $s1row.batch_id; program_id = $s1prog; term_number = 9; effective_from = (Get-Date).AddDays(5).ToString('yyyy-MM-dd'); items = $items } 409 'CONFLICT' | Out-Null
 $app = (Call $acct GET "/fee-structures/applicable?enrollment_id=$($s1row.enrol)&term_number=9").data
 Assert ($app.structure.id -eq $st.id) "the batch-specific structure wins"
 $as1 = (Call $acct POST "/fee-structures/$($st.id)/assign" @{ enrollment_ids = @($s1row.enrol) }).data
@@ -142,7 +146,7 @@ Assert ($ok.Status -eq 200) "valid webhook settles"
 $dup = Raw $null POST "/webhooks/payments/mock?institution=$slug" $null @{ 'X-Signature' = $sig } $payload
 Assert ($dup.Status -eq 200) "duplicate webhook idempotent"
 Assert ((Call $acct GET "/fees/invoices/$($l1.id)").data.status -eq 'paid') "invoice paid"
-Assert ((Sql "SELECT count(*) n FROM outbox_events WHERE event_type='fees.payment_received' AND payload->>'invoice_id'='$($l1.id)'")[0].n -ge 1) "fees.payment_received emitted"
+Assert ((Sql "SELECT count(*) n FROM domain_events WHERE event_type='fees.payment_received' AND payload->>'invoice_id'='$($l1.id)'")[0].n -ge 1) "fees.payment_received emitted"
 
 # ---- 6. UPI -------------------------------------------------------------------------------------------------------------------------
 Write-Host "== 6. UPI QR"
@@ -171,12 +175,19 @@ $after = (Call $acct GET "/fees/invoices/$($inv.id)").data
 Assert (@($after.items | Where-Object description -like 'Cheque bounce*').Count -eq 1) "bank charges item"
 
 # ---- 8. receipt cancellation --------------------------------------------------------------------------------------------------------
+function ApproveLater($path) {
+  # try the remaining approvers in turn: the institution admin, then the vice-chancellor (phase 33 seed)
+  foreach ($t in @($admin, (Login 'principal' (Get-DemoPassword 'vice_chancellor' 'principal')))) {
+    $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl$path" -Headers @{ Authorization = "Bearer $t" } -SkipHttpErrorCheck
+    if ($r.StatusCode -eq 200) { Write-Host "OK POST $path -> 200" }
+  }
+}
 Write-Host "== 8. cancel receipt"
 $cr = (Call $acct POST "/fees/payments/$($c1.payments[0].id)/cancel-request" @{ reason = 'Wrong student' }).data
 Assert ($cr.cancel_workflow_instance_id) "workflow started"
 Call $acct POST "/fees/payments/$($c1.payments[0].id)/cancel-request/approve" | Out-Null
 $wf = (Sql "SELECT status FROM workflow_instances WHERE id='$($cr.cancel_workflow_instance_id)'")[0].status
-if ($wf -ne 'approved') { Call $admin POST "/fees/payments/$($c1.payments[0].id)/cancel-request/approve" | Out-Null }
+if ($wf -ne 'approved') { ApproveLater "/fees/payments/$($c1.payments[0].id)/cancel-request/approve" }
 Assert ((Call $acct GET "/fees/payments/$($c1.payments[0].id)").data.status -eq 'cancelled') "receipt cancelled"
 $del = Raw $acct DELETE "/fees/payments/$($c1.payments[0].id)"
 Assert ($del.Status -eq 405) "no DELETE route (405)"
@@ -199,6 +210,8 @@ SqlW "UPDATE institution_settings SET value='0' WHERE institution_id='$inst' AND
 # ---- 10. discounts ----------------------------------------------------------------------------------------------------------------------
 Write-Host "== 10. discounts"
 $sib = ((Call $acct GET "/fee-discounts").data | Where-Object code -eq 'SIBLING').id
+# the previous run's sibling assignment (FK-aware: invoices may carry its discount lines)
+& $Py (Join-Path $PSScriptRoot "_purge.py") student_discount_assignments "reason = 'verify-12 sibling'" | Out-Null
 $da = (Call $acct POST "/fee-discounts/$sib/assign" @{ enrollment_id = $s2; reason = 'verify-12 sibling' }).data
 Assert ($da.status -eq 'pending') "concession waits for approval"
 Call $acct POST "/fee-discounts/assignments/$($da.id)/approve" | Out-Null
@@ -221,7 +234,8 @@ Assert ((Sql "SELECT count(*) n FROM fee_payments p JOIN fee_invoices i ON i.id=
 Write-Host "== 12. refund"
 $rf = (Call $acct POST "/fees/refunds" @{ invoice_id = $l1.id; amount_paise = (Call $acct GET "/fees/invoices/$($l1.id)").data.paid_paise; reason = 'verify-12 withdrawal' }).data
 Call $acct POST "/fees/refunds/$($rf.id)/approve" | Out-Null
-if ((Sql "SELECT status FROM fee_refunds WHERE id='$($rf.id)'")[0].status -ne 'approved') { Call $admin POST "/fees/refunds/$($rf.id)/approve" | Out-Null }
+# later steps resolve to the vice-chancellor once later phases seed one (principal), else to the institution admin
+if ((Sql "SELECT status FROM fee_refunds WHERE id='$($rf.id)'")[0].status -ne 'approved') { ApproveLater "/fees/refunds/$($rf.id)/approve" }
 $pr = (Call $acct POST "/fees/refunds/$($rf.id)/process" @{ refund_mode = 'neft'; reference_no = 'RFV12' }).data
 Assert ($pr.status -eq 'processed') "processed"
 Assert ((Call $acct GET "/fees/invoices/$($l1.id)").data.status -eq 'refunded') "invoice refunded"
