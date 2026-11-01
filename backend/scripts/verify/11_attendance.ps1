@@ -72,10 +72,20 @@ function SetFlag($key, $on) {
 }
 $term = (Sql "SELECT id FROM academic_terms WHERE institution_id='$inst' AND college_id IS NULL AND is_current AND deleted_at IS NULL")[0].id
 $f1staff = (Sql "SELECT s.id FROM staff s JOIN users u ON u.id=s.user_id WHERE u.username='faculty.1'")[0].id
+# faculty.1's own 2025 section A offerings hold at most student.hold (2025 CSE is not bulk-registered): make faculty.1 a
+# co-instructor of the fullest bulk-registered 2024 offering and give one of its students the demo student password, so
+# offering X has a real roster with a learner login
+$full = (Sql ("SELECT o.id FROM course_offerings o JOIN course_offering_faculty f0 ON f0.offering_id = o.id JOIN staff st ON st.id = f0.staff_id " +
+  "WHERE o.term_id = '$term' AND st.department_id = (SELECT department_id FROM staff WHERE id = '$f1staff') " +
+  "ORDER BY (SELECT count(*) FROM course_registration_items i WHERE i.offering_id = o.id AND i.status = 'confirmed') DESC, o.id LIMIT 1"))[0].id
+SqlW "INSERT INTO course_offering_faculty (institution_id, offering_id, staff_id, role, hours_per_week) SELECT institution_id, id, '$f1staff', 'instructor', 0 FROM course_offerings WHERE id = '$full' ON CONFLICT DO NOTHING"
+$rosterLogin = (Sql ("SELECT u.username FROM course_registration_items i JOIN course_registrations r ON r.id = i.registration_id JOIN student_program_enrollments e ON e.id = r.student_program_enrollment_id " +
+  "JOIN students s ON s.id = e.student_id JOIN users u ON u.id = s.user_id WHERE i.offering_id = '$full' AND i.status = 'confirmed' AND u.is_active ORDER BY u.username LIMIT 1"))[0].username
+& $Py (Join-Path $PSScriptRoot "_reset_password.py") $rosterLogin (Get-DemoPassword 'student') | Out-Null
 
 # learner logins with known passwords and their enrolments
 $learners = @()
-foreach ($pair in @(@('student.1', 'student'), @('A25BTECHCSE013', 'student_hold'), @('A24BTECHCSE200', 'student_arrear'))) {
+foreach ($pair in @(@($rosterLogin, 'student'), @('student.1', 'student'), @('A25BTECHCSE013', 'student_hold'), @('A24BTECHCSE200', 'student_arrear'))) {   # roster login first: its offering has the full roster
   $row = Sql "SELECT e.id enrol, s.id student, s.registration_number reg FROM students s JOIN student_program_enrollments e ON e.student_id=s.id LEFT JOIN users u ON u.id=s.user_id WHERE (u.username='$($pair[0])' OR s.registration_number='$($pair[0])') AND e.deleted_at IS NULL ORDER BY e.created_at DESC LIMIT 1"
   if ($row) { $learners += [pscustomobject]@{ login = $pair[0]; role = $pair[1]; enrol = $row[0].enrol; student = $row[0].student; reg = $row[0].reg } }
 }
@@ -107,7 +117,8 @@ $start = $now.AddMinutes(-5).ToString('HH:mm'); $end = $now.AddMinutes(50).ToStr
 $sX = (Call $f1 POST "/class-sessions/extra" @{ offering_id = $X; date = $now.ToString('yyyy-MM-dd'); start = $start; end = $end; topic = 'verify-11 live' } 201).data
 $sheet = (Call $f1 GET "/class-sessions/$($sX.id)/attendance").data
 $rosterIds = @($sheet.roster | ForEach-Object { $_.student_program_enrollment_id })
-$expected = (Sql "SELECT count(*) n FROM course_registration_items i JOIN course_registrations r ON r.id=i.registration_id WHERE i.offering_id='$X' AND i.status='confirmed' AND r.term_id='$term'")[0].n
+# soft-deleted students (later phases' fixtures) are not on a roster
+$expected = (Sql "SELECT count(*) n FROM course_registration_items i JOIN course_registrations r ON r.id=i.registration_id JOIN student_program_enrollments e ON e.id=r.student_program_enrollment_id JOIN students s ON s.id=e.student_id WHERE i.offering_id='$X' AND i.status='confirmed' AND r.term_id='$term' AND s.deleted_at IS NULL")[0].n
 Assert ($rosterIds.Count -eq $expected) "roster = confirmed items ($($rosterIds.Count) = $expected)"
 Expect $f3 GET "/class-sessions/$($sX.id)/attendance" $null 404 | Out-Null
 Call $hod GET "/class-sessions/$($sX.id)/attendance" | Out-Null
@@ -120,7 +131,8 @@ $key = [guid]::NewGuid().ToString()
 $m1 = (Call $f1 POST "/class-sessions/$($sX.id)/attendance" @{ marks = $marks; mark_rest_as = 'present'; source = 'manual' } 200 @{ 'Idempotency-Key' = $key }).data
 Assert ($m1.created -eq $rosterIds.Count) "all roster rows created ($($m1.created))"
 $replay = Raw $f1 POST "/class-sessions/$($sX.id)/attendance" @{ marks = $marks; mark_rest_as = 'present'; source = 'manual' } @{ 'Idempotency-Key' = $key }
-Assert ($replay.Status -eq 200 -and $replay.Body.error.code -eq 'IDEMPOTENT_REPLAY') "same Idempotency-Key replays"
+# platform replay contract (main.py): the stored 200 body with meta.idempotent_replay
+Assert ($replay.Status -eq 200 -and $replay.Body.meta.idempotent_replay -eq $true) "same Idempotency-Key replays"
 $m2 = (Call $f1 POST "/class-sessions/$($sX.id)/attendance" @{ marks = @(@{ student_program_enrollment_id = $absent[0]; status = 'present' }) }).data
 Assert ($m2.updated -eq 1) "changed status counts as updated"
 $stranger = if ($outX) { $outX.enrol } else { [guid]::NewGuid().ToString() }
@@ -233,7 +245,12 @@ Assert ($odMarks -eq @($oda.sessions_applied).Count) "sessions in range marked o
 
 # ---- 11. condonation ---------------------------------------------------------------------------------------------------------------
 Write-Host "== 11. condonation"
-$cand = (Sql "SELECT a.student_program_enrollment_id e, a.offering_id o, a.pct FROM attendance_summaries a JOIN course_offerings c ON c.id=a.offering_id WHERE c.term_id='$term' AND a.eligibility='condonable' AND NOT EXISTS (SELECT 1 FROM attendance_condonations x WHERE x.student_program_enrollment_id=a.student_program_enrollment_id AND x.offering_id=a.offering_id) LIMIT 1")
+# a live student in a section advisor.1 advises (the advisor files the request; others are outside their scope → 404)
+$cand = (Sql ("SELECT a.student_program_enrollment_id e, a.offering_id o, a.pct FROM attendance_summaries a JOIN course_offerings c ON c.id=a.offering_id " +
+  "JOIN student_program_enrollments en ON en.id = a.student_program_enrollment_id JOIN students st ON st.id = en.student_id AND st.deleted_at IS NULL " +
+  "JOIN student_term_records tr ON tr.student_program_enrollment_id = en.id AND tr.term_id = c.term_id JOIN batch_sections bs ON bs.id = tr.section_id " +
+  "JOIN staff sf ON sf.id = bs.class_advisor_staff_id JOIN users au ON au.id = sf.user_id AND au.username = 'advisor.1' " +
+  "WHERE c.term_id='$term' AND a.eligibility='condonable' AND NOT EXISTS (SELECT 1 FROM attendance_condonations x WHERE x.student_program_enrollment_id=a.student_program_enrollment_id AND x.offering_id=a.offering_id) LIMIT 1"))
 if ($cand) {
   $cd = (Call $advisor POST "/condonations" @{ offering_id = $cand[0].o; reason_type = 'medical'; reason = 'verify-11'; student_program_enrollment_id = $cand[0].e } 201).data
   Call $hod POST "/condonations/$($cd.id)/recommend" @{ comment = 'recommended' } | Out-Null
@@ -260,7 +277,9 @@ if ($detained.Count) { Assert ($detained[0].reason_codes -contains 'ATT_BELOW_MI
 $hold = $learners | Where-Object { $_.role -eq 'student_hold' }
 if ($hold) {
   $hr2 = Sql "SELECT t.reason_codes FROM term_eligibility t JOIN student_term_records r ON r.id=t.student_term_record_id WHERE r.student_program_enrollment_id='$($hold.enrol)' AND t.version=$(@($v1)[-1]) LIMIT 1"
-  if ($hr2) { Assert ("$($hr2[0].reason_codes)" -match 'HOLD_EXAM') "exam hold -> HOLD_EXAM" }
+  # only an open *exam* hold blocks eligibility (student.hold's seeded hold is a registration hold)
+  $examHold = Sql "SELECT 1 AS x FROM student_holds WHERE student_program_enrollment_id='$($hold.enrol)' AND hold_type='exam' AND released_at IS NULL"
+  if ($hr2) { Assert ((("$($hr2[0].reason_codes)" -match 'HOLD_EXAM') -eq [bool]$examHold)) "HOLD_EXAM only with an open exam hold ($([bool]$examHold))" }
 }
 $pick = $rows | Select-Object -First 1
 $dec = (Call $registrar POST "/eligibility/$($pick.id)/decide" @{ decision = 'eligible'; reason = 'verify-11 override' }).data
