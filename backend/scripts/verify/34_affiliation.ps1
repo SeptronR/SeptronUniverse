@@ -7,8 +7,8 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$reg = Login "registrar" (Get-DemoPassword "registrar")
-$coe = Login "coe" (Get-DemoPassword "controller_of_examinations")
+$reg = Login-Mfa 'registrar' 'registrar'
+$coe = Login-Mfa 'controller_of_examinations' 'coe'
 $acct = Login "accountant" (Get-DemoPassword "accountant")
 $iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
 $dean = Login "dean.eng" (Get-DemoPassword "dean")

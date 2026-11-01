@@ -1,7 +1,7 @@
 # Phase 16 — post-result services (Prompts/16 §16.11). Run after `seed_demo_institution.py --only post_result`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $coe = Login "coe"; $cell = Login "exam.cell"; $reg = Login "registrar"; $stu = Login "student.1"; $aud = Login "auditor"
 

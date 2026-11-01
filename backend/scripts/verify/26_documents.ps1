@@ -1,7 +1,7 @@
 # Phase 26 — document templates, certificates & requests (Prompts/26 §26.11). Run after `seed_demo_institution.py --only documents`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $office = Login "office.1"; $hod = Login "hod.cse"; $stu = Login "student.1"
 $hr = Login "hr"; $coe = Login "coe"; $staff = Login "staff.1"; $aud = Login "auditor.tmp"; $par = Login "parent.1"

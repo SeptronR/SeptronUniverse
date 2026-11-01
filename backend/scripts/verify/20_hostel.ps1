@@ -1,7 +1,7 @@
 # Phase 20 — hostel, mess & staff accommodation (Prompts/20 §20.11). Run after `seed_demo_institution.py --only hostel`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $warden = Login "warden.h1"; $gate = Login "gate.h1"; $hod = Login "hod.cse"; $aud = Login "auditor.tmp"; $par = Login "parent.1"
 

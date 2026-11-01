@@ -1,7 +1,7 @@
 # Phase 25 — calendar, events & facilities (Prompts/25 §25.11). Run after `seed_demo_institution.py --only facilities`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $hod = Login "hod.cse"; $stu = Login "student.1"; $stu2 = Login "student.2"; $fac = Login "faculty.1"
 

@@ -1,7 +1,7 @@
 # Phase 22 — inventory, procurement & bills (Prompts/22 §22.11). Run after `seed_demo_institution.py --only inventory`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $mgr = Login "inv.mgr"; $central = Login "store.central"; $cse = Login "store.cse"; $hod = Login "hod.cse"
 $fac = Login "faculty.1"; $acc = Login "accountant"; $va = Login "vendor.a"; $cab = Login "college.admin.b"; $aud = Login "auditor.tmp"

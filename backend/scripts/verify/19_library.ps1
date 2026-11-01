@@ -1,7 +1,7 @@
 # Phase 19 — library (Prompts/19 §19.11). Run after `seed_demo_institution.py --only library`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $lib = Login "librarian"; $hod = Login "hod.cse"; $acc = Login "accountant"; $stu = Login "student.1"; $fac = Login "faculty.1"; $par = Login "parent.1"; $aud = Login "auditor.tmp"
 

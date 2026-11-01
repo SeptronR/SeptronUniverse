@@ -6,9 +6,29 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1")
 $script:BaseUrl = $BaseUrl
 $script:Checks = 0
 
-function Login($identifier, $password, $extra = @{}) {
+function Get-IdentifierRow($identifier) {
+  # the credentials row of one identifier (last wins, *_totp rows skipped) → @{ role; password }, or $null
+  $alias = @{ 'auditor' = 'auditor.tmp' }   # names the phase 16-28 scripts use for seeded demo accounts
+  if ($alias.ContainsKey($identifier)) { $identifier = $alias[$identifier] }
+  $file = Join-Path $PSScriptRoot "../../../LOCAL_TEST_CREDENTIALS.md"
+  $row = Get-Content $file | Where-Object { $_ -match '^\|' } | ForEach-Object { , ($_ -split '\|') } |
+    Where-Object { $_.Count -ge 5 -and $_[2].Trim() -eq $identifier -and -not $_[1].Trim().EndsWith('_totp') } | Select-Object -Last 1
+  if ($row) { @{ role = $row[1].Trim(); password = ($row[3].Trim() -replace '`', '') } } else { $null }
+}
+
+function Login($identifier, $password = $null, $extra = @{}) {
   # Phase 02: POST /auth/login answers the principal envelope; the refresh token is an httpOnly cookie (web) or the
   # body's refresh_token (platform=android|ios). Phase scripts that need the cookie use their own helper.
+  # Phases 16-28 call Login "<identifier>" alone: the password comes from that identifier's credentials row, and an
+  # MFA-required role signs in through Login-Mfa.
+  if ($null -eq $password) {
+    $row = Get-IdentifierRow $identifier
+    if (-not $row) { throw "no credentials row for identifier '$identifier' in LOCAL_TEST_CREDENTIALS.md" }
+    if ($identifier -eq 'auditor') { $identifier = 'auditor.tmp' }
+    $password = $row.password
+    $probe = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body (@{ identifier = $identifier; password = $password } | ConvertTo-Json) -SkipHttpErrorCheck
+    if ($probe.StatusCode -eq 403 -and ($probe.Content | ConvertFrom-Json).error.code -eq 'MFA_REQUIRED') { return Login-Mfa $row.role $identifier }
+  }
   $body = (@{ identifier = $identifier; password = $password } + $extra) | ConvertTo-Json -Depth 6
   # pwsh 7.6+ error text no longer carries the status code, so surface it explicitly
   $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body $body -SkipHttpErrorCheck
@@ -53,6 +73,40 @@ function Get-DemoPassword($role, $identifier = $null) {
   if (-not $line) { throw "no credentials for role '$role' in LOCAL_TEST_CREDENTIALS.md" }
   return (($line -split '\|')[3].Trim() -replace '`', '')
 }
+
+# ---- helper dialect of the phase 16-28 scripts: Api / ExpectStatus / Step / Check ------------------------------------
+function Api($method, $path, $token, $body = $null, $headers = @{}) {
+  # JSON call returning the parsed envelope; any non-2xx throws "HTTP <status> …" (ExpectStatus reads the status)
+  $h = @{}
+  if ($token) { $h['Authorization'] = "Bearer $token" }
+  foreach ($k in $headers.Keys) { $h[$k] = $headers[$k] }
+  $p = @{ Method = $method; Uri = "$script:BaseUrl$path"; Headers = $h; SkipHttpErrorCheck = $true }
+  if ($null -ne $body) { $p['ContentType'] = 'application/json'; $p['Body'] = ($body | ConvertTo-Json -Depth 10) }
+  $r = Invoke-WebRequest @p
+  if ([int]$r.StatusCode -ge 400) { throw "HTTP $([int]$r.StatusCode) $method ${path}: $($r.Content)" }
+  $script:Checks++
+  if ($r.Content) {
+    $text = if ($r.Content -is [byte[]]) { [System.Text.Encoding]::UTF8.GetString($r.Content) } else { $r.Content }
+    try { return $text | ConvertFrom-Json } catch { return $text }
+  }
+  return $null
+}
+
+function ExpectStatus($status, [scriptblock]$block) {
+  $got = $null
+  try { & $block | Out-Null; $got = 200 } catch {
+    if ("$_" -match 'HTTP (\d{3})') { $got = [int]$Matches[1] }
+    elseif ($_.Exception.Response) { $got = [int]$_.Exception.Response.StatusCode }  # Invoke-RestMethod / -WebRequest
+    else { throw }
+  }
+  if ($got -ne $status) { throw "ASSERT FAILED: expected HTTP $status, got $got" }
+  $script:Checks++
+  Write-Host "  expect: HTTP $status"
+}
+
+function Step($name) { Write-Host "== $name" }
+
+function Check($cond, $msg) { Assert $cond $msg }
 
 function Summary($phase) {
   Write-Host ""

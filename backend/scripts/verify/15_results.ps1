@@ -51,22 +51,39 @@ function WaitJob($token, $jobId, $seconds = 300) {
 
 $coe = Login-Mfa 'controller_of_examinations' 'coe'
 $exam = Login 'exam.cell' (Get-DemoPassword 'exam_cell')
-$dec = Login 'decoder' (Get-DemoPassword 'exam_decoder')
+$dec = Login-Mfa 'exam_decoder' 'decoder'
 $f1 = Login 'faculty.1' (Get-DemoPassword 'faculty')
-$f5 = Login 'faculty.5' (Get-DemoPassword 'faculty')
-$f6 = Login 'faculty.6' (Get-DemoPassword 'faculty')
+# the demo seed has no faculty.5 / faculty.6: faculty.3 and faculty.2 (CSE faculty with logins) are the 2nd / 3rd evaluators
+$f5 = Login 'faculty.3'
+$f6 = Login 'faculty.2'
 $ext = Login 'examiner.ext' (Get-DemoPassword 'external_examiner')
 $hod = Login 'hod.cse' (Get-DemoPassword 'hod')
-$reg = Login 'registrar' (Get-DemoPassword 'registrar')
+$reg = Login-Mfa 'registrar' 'registrar'
 $s1 = Login 'student.1' (Get-DemoPassword 'student')
 $parent = Login 'parent.1' (Get-DemoPassword 'parent')
 $auditor = Login 'auditor.tmp' (Get-DemoPassword 'auditor')
 $inst = (Sql "SELECT id FROM institutions WHERE slug='demo-uni'")[0].id
 $term = (Sql "SELECT id FROM academic_terms WHERE institution_id='$inst' AND college_id IS NULL AND is_current AND deleted_at IS NULL")[0].id
 $S = (Sql "SELECT id FROM exam_sessions WHERE institution_id='$inst' AND exam_kind='regular' AND name LIKE '%End-semester (regular)' ORDER BY created_at LIMIT 1")[0]
-$s1row = (Sql "SELECT e.id AS enr, s.id AS sid, s.registration_number AS rno, s.dob FROM students s JOIN users u ON u.id=s.user_id JOIN student_program_enrollments e ON e.student_id=s.id WHERE u.username='student.1' LIMIT 1")[0]
+# the learner: a student who sits session S (student.1 when it does; 09's reset removes student.1's registrations), given
+# the demo student password; parent.1's ward check below stays on student.1
+$s1row = (Sql ("SELECT u.username AS login, e.id AS enr, s.id AS sid, s.registration_number AS rno, s.dob FROM exam_registrations er " +
+  "JOIN student_program_enrollments e ON e.id = er.student_program_enrollment_id JOIN students s ON s.id = e.student_id JOIN users u ON u.id = s.user_id " +
+  "WHERE er.exam_session_id = '$($S.id)' AND u.is_active AND s.deleted_at IS NULL AND s.dob IS NOT NULL ORDER BY (u.username = 'student.1') DESC, u.username LIMIT 1"))[0]
+if ($s1row.login -ne 'student.1') {
+  & (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_reset_password.py") $s1row.login (Get-DemoPassword 'student') | Out-Null
+  $s1 = Login $s1row.login (Get-DemoPassword 'student')
+}
+$ward = (Sql "SELECT s.id AS sid FROM students s JOIN users u ON u.id = s.user_id WHERE u.username = 'student.1'")[0]
 $staff = @{}
-foreach ($u in 'faculty.1', 'faculty.5', 'faculty.6') { $staff[$u] = (Sql "SELECT st.id FROM staff st JOIN users u ON u.id=st.user_id WHERE u.username='$u'")[0].id }
+foreach ($u in @(@('faculty.1', 'faculty.1'), @('faculty.5', 'faculty.3'), @('faculty.6', 'faculty.2'))) { $staff[$u[0]] = (Sql "SELECT st.id FROM staff st JOIN users u ON u.id=st.user_id WHERE u.username='$($u[1])'")[0].id }
+
+# reset: a previous run coded P2 — purge bundles made well after the seed (FK-aware: scripts, valuations, …) and the
+# moderation proposals of those papers, so the seeded uncoded paper is uncoded again
+$late = "exam_paper_id IN (SELECT id FROM exam_papers WHERE exam_session_id = '$($S.id)') AND created_at > (SELECT created_at + INTERVAL '6 hours' FROM exam_sessions WHERE id = '$($S.id)')"
+$Py15 = Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))
+& $Py15 (Join-Path $PSScriptRoot "_purge.py") moderation_actions "exam_paper_id IN (SELECT exam_paper_id FROM answer_script_bundles WHERE $late)" | Out-Null
+& $Py15 (Join-Path $PSScriptRoot "_purge.py") answer_script_bundles $late | Out-Null
 
 # P2 = the paper with hall attendance but no bundles (left by the seeder)
 $P2 = (Sql "SELECT p.id, p.course_id, p.max_marks, p.qp_pattern FROM exam_papers p WHERE p.exam_session_id='$($S.id)' AND EXISTS (SELECT 1 FROM exam_registration_items i JOIN exam_attendance a ON a.exam_registration_item_id=i.id WHERE i.exam_paper_id=p.id AND a.status='present') AND NOT EXISTS (SELECT 1 FROM answer_script_bundles b WHERE b.exam_paper_id=p.id) LIMIT 1")[0]
@@ -250,7 +267,7 @@ if ($c) {
 # ---- 14. access -------------------------------------------------------------------------------------------------------------------
 Write-Host "== 14. access"
 Expect $s1 GET "/results/me" $null 200 | Out-Null
-Expect $parent GET "/results/wards/$($s1row.sid)" $null 200 | Out-Null
+Expect $parent GET "/results/wards/$($ward.sid)" $null 200 | Out-Null
 $own = (Sql "SELECT f.offering_id FROM course_offering_faculty f JOIN staff st ON st.id=f.staff_id JOIN users u ON u.id=st.user_id WHERE u.username='faculty.1' LIMIT 1")
 if ($own) { Expect $f1 GET "/course-offerings/$($own[0].offering_id)/results" $null 200 | Out-Null }
 $foreign = (Sql "SELECT o.id FROM course_offerings o WHERE o.term_id='$term' AND NOT EXISTS (SELECT 1 FROM course_offering_faculty f JOIN staff st ON st.id=f.staff_id JOIN users u ON u.id=st.user_id WHERE f.offering_id=o.id AND u.username='faculty.1') LIMIT 1")
@@ -258,7 +275,9 @@ if ($foreign) { Expect $f1 GET "/course-offerings/$($foreign[0].id)/results" $nu
 SqlW "INSERT INTO institution_settings (id, institution_id, category, key, value, value_type) SELECT gen_random_uuid(), '$inst', 'exams', 'result_public_lookup', 'true', 'bool' WHERE NOT EXISTS (SELECT 1 FROM institution_settings WHERE institution_id='$inst' AND category='exams' AND key='result_public_lookup')"
 SqlW "UPDATE institution_settings SET value='true' WHERE institution_id='$inst' AND category='exams' AND key='result_public_lookup'"
 Expect $null POST "/public/results/lookup" @{ reg_no = $s1row.rno; dob = '1990-01-01'; institution = 'demo-uni' } 404 | Out-Null
-Expect $null POST "/public/results/lookup" @{ reg_no = $s1row.rno; dob = $s1row.dob; institution = 'demo-uni' } 200 | Out-Null
+# a student with a published term result in run F (student.1 is not in this exam session)
+$pubRow = (Sql "SELECT s.registration_number AS rno, s.dob FROM student_term_results t JOIN student_term_records r ON r.id = t.student_term_record_id JOIN student_program_enrollments e ON e.id = r.student_program_enrollment_id JOIN students s ON s.id = e.student_id WHERE t.run_id = '$F' AND t.status = 'published' AND t.is_current AND s.deleted_at IS NULL AND s.dob IS NOT NULL LIMIT 1")[0]
+Expect $null POST "/public/results/lookup" @{ reg_no = $pubRow.rno; dob = $pubRow.dob; institution = 'demo-uni' } 200 | Out-Null
 $cards = (Call $s1 GET "/grade-cards/me").data
 if ($cards.Count -eq 0) { WaitJob $coe (Call $coe POST "/result-runs/$F/grade-cards" $null 202).data.job_id | Out-Null; $cards = (Call $s1 GET "/grade-cards/me").data }
 Assert ($cards.Count -ge 1) "grade card"

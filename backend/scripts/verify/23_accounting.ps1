@@ -1,7 +1,7 @@
 # Phase 23 — accounting & budget (Prompts/23 §23.11). Run after `seed_demo_institution.py --only accounting`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $acc = Login "accountant"; $hod = Login "hod.cse"; $hodE = Login "hod.ece"; $fac = Login "faculty.1"; $iqac = Login "iqac"
 $cab = Login "college.admin.b"; $aud = Login "auditor.tmp"; $stu = Login "student.1"

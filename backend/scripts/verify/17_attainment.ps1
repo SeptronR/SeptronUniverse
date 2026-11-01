@@ -1,7 +1,7 @@
 # Phase 17 — OBE attainment & CQI (Prompts/17 §17.11). Run after `seed_demo_institution.py --only attainment`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $obe = Login "obe"; $hod = Login "hod.cse"; $fac = Login "faculty.1"; $iqac = Login "iqac"; $stu = Login "student.1"; $aud = Login "auditor.tmp"
 

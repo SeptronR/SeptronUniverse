@@ -8,8 +8,8 @@ $ErrorActionPreference = "Stop"
 
 $admin = Login "inst.admin" (Get-DemoPassword "institution_admin")
 $prin = Login "principal" (Get-DemoPassword "vice_chancellor")
-$reg = Login "registrar" (Get-DemoPassword "registrar")
-$coe = Login "coe" (Get-DemoPassword "controller_of_examinations")
+$reg = Login-Mfa 'registrar' 'registrar'
+$coe = Login-Mfa 'controller_of_examinations' 'coe'
 $cell = Login "exam.cell" (Get-DemoPassword "exam_cell")
 $hod = Login "hod.cse" (Get-DemoPassword "hod")
 $fac = Login "faculty.1" (Get-DemoPassword "faculty")

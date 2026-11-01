@@ -1,7 +1,7 @@
 # Phase 21 — transport (Prompts/21 §21.11). Run after `seed_demo_institution.py --only transport`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $mgr = Login "transport.mgr"; $d1 = Login "driver.1"; $d2 = Login "driver.2"; $acc = Login "accountant"
 $hod = Login "hod.cse"; $stu = Login "student.1"; $par = Login "parent.1"; $cab = Login "college.admin.b"; $aud = Login "auditor.tmp"

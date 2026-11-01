@@ -1,8 +1,8 @@
 # Phase 28 — placement, internships & training (Prompts/28 §28.11). Run after
 # `seed_demo_institution.py --only placement`. Written in the development-only run; not executed yet.
-param([string]$Base = "http://localhost:8000/api/v1", [string]$Institution = "demo-university")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1", [string]$Institution = "demo-uni")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $off = Login "placement"; $hod = Login "hod.cse"; $fac = Login "faculty.1"
 $stu = Login "student.1"; $par = Login "parent.1"; $aud = Login "auditor.tmp"; $iqac = Login "iqac"

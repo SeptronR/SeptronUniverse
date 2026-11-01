@@ -1,7 +1,7 @@
 # Phase 18 — degrees, convocation & digital credentials (Prompts/18 §18.11). Run after `seed_demo_institution.py --only degrees`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $coe = Login "coe"; $hod = Login "hod.cse"; $acc = Login "accountant"; $stu = Login "student.1"; $par = Login "parent.1"
 

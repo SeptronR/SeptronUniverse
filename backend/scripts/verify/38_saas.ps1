@@ -29,7 +29,7 @@ $agent = Login "support.agent" (Get-Pw "support_agent")
 $admin = Login "inst.admin" (Get-DemoPassword "institution_admin") @{ institution = "demo-uni" }
 $adminC = Login "inst.admin.c" (Get-Pw "institution_admin (demo-college)") @{ institution = "demo-college" }
 $colB = Login "college.admin.b" (Get-DemoPassword "college_admin") @{ institution = "demo-uni" }
-$reg = Login "registrar" (Get-DemoPassword "registrar") @{ institution = "demo-uni" }
+$reg = Login-Mfa 'registrar' 'registrar'
 $stu = Login "student.1" (Get-DemoPassword "student") @{ institution = "demo-uni" }
 
 $tenants = (Call $sa GET "/platform/institutions").data
