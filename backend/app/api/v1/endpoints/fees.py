@@ -804,6 +804,15 @@ async def reconcile_upload(
 ) -> Any:
     svc = PaymentService(db, principal, request)
     text = None
+    if file is None and body is None and request.headers.get("content-type", "").startswith("application/json"):
+        # with a File parameter FastAPI reads the body as a form, so a JSON body arrived as None (0 rows queued)
+        from fastapi.exceptions import RequestValidationError
+        from pydantic import ValidationError
+
+        try:
+            body = ReconcileUpload.model_validate(await request.json())
+        except ValidationError as exc:
+            raise RequestValidationError(exc.errors()) from exc
     if file is not None:
         from app.services.file_service import FileService
 
