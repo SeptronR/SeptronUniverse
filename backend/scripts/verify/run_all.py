@@ -87,6 +87,8 @@ def api_phases(lo: int, hi: int, base_url: str) -> list[Case]:
             ok, text, secs = _run([PY, str(twin)])
             out.append(Case("api", twin.stem, ok, secs, text))
             continue
+        # fixture reset: earlier scripts rotate demo passwords, lock accounts and enrol MFA
+        _run([PY, str(HERE / "_reset_password.py"), "--all"], timeout=300)
         ok, text, secs = _run([pwsh, "-NoProfile", "-File", str(script), "-BaseUrl", base_url])
         out.append(Case("api", script.stem, ok, secs, text))
     return out
