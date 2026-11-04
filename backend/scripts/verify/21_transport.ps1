@@ -34,7 +34,7 @@ $dt = Api GET "/transport/driver/trips?date=$today" $d1
 Check ($null -ne $dt.data) "driver.1 trips"
 $t = $dt.data | Where-Object { $_.status -eq "scheduled" } | Select-Object -First 1
 if ($t) {
-    ExpectStatus 403 { Api POST "/transport/trips/$($t.id)/start" $d2 @{} }
+    ExpectStatus 404 { Api POST "/transport/trips/$($t.id)/start" $d2 @{} }   # out of the driver's scope: 404 (QA-028)
     $s = Api POST "/transport/trips/$($t.id)/start" $d1 @{ odometer = 50000 }
     Check ($s.data.status -eq "in_progress") "trip started"
     $m = Api GET "/transport/trips/$($t.id)/manifest" $d1

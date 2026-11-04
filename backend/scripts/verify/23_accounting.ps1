@@ -57,7 +57,7 @@ $tb = Api GET "/accounting/trial-balance?from=$from&to=$to" $acc
 Check ($tb.data.balanced) "trial balance debits = credits"
 Api GET "/accounting/statements/receipts_payments?from=$from&to=$to" $iqac | Out-Null
 Api GET "/accounting/statements/income_expenditure?from=$from&to=$to" $cab | Out-Null
-ExpectStatus 403 { Api POST "/accounting/expenses" $aud @{ ledger_account_id = $cons.id; amount_paise = 100; spent_on = $to; payee = "x"; description = "xx" } }
+ExpectStatus 403 { Api POST "/accounting/expenses" $aud @{ ledger_account_id = $cons.id; amount_paise = 100; spent_on = $to; payee = "xx"; description = "xx" } }
 
 Step "dashboard"
 $db = Api GET "/accounting/dashboard" $acc

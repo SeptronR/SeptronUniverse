@@ -32,7 +32,7 @@ ExpectStatus 404 { Api POST "/hostel-gate/scan" $gate @{ qr_token = "hl$('0' * 4
 
 # 02 toggles hostel.core, which leaves this dependant off
 $saT = Login-SuperAdmin; $instId = (Api GET "/auth/me" $warden).data.user.institution_id
-Api PUT "/institutions/$instId/features/hostel.night_roll_call" $saT @{ enabled = $true; confirm_dependencies = $true; reason = "verify 20" } @{ "X-Institution" = "demo-uni" } | Out-Null
+foreach ($k in (Api GET "/institutions/$instId/features" $saT $null @{ "X-Institution" = "demo-uni" }).data.flags | Where-Object { $_.key -like "hostel.*" -and -not $_.effective } | ForEach-Object key) { Api PUT "/institutions/$instId/features/$k" $saT @{ enabled = $true; confirm_dependencies = $true; reason = "verify 20" } @{ "X-Institution" = "demo-uni" } | Out-Null }
 Start-Sleep -Seconds 8   # feature cache invalidates through the outbox
 Step "9 roll-call duplicate"
 $rc = Api GET "/hostel-roll-calls?hostel_id=$($h.id)" $warden

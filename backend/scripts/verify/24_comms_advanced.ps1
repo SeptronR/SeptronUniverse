@@ -35,10 +35,14 @@ $log = Api GET "/comms/emergency/log" $reg
 Check ($log.data.Count -ge 1) "emergency log"
 ExpectStatus 403 { Api POST "/comms/emergency/broadcast" $stu @{ message = "Not allowed"; audience = "all" } }
 
+# 02 cascades comms.whatsapp off with its dependants
+$saT = Login-SuperAdmin; $instId = (Api GET "/auth/me" $reg).data.user.institution_id
+foreach ($k in "comms.whatsapp", "comms.whatsapp_bot") { Api PUT "/institutions/$instId/features/$k" $saT @{ enabled = $true; confirm_dependencies = $true; reason = "verify 24" } @{ "X-Institution" = "demo-uni" } | Out-Null }
+Start-Sleep -Seconds 8   # feature cache invalidates through the outbox
 Step "5 bot"
 $fl = Api GET "/comms/bot/flows" $reg
 Check ($fl.data.flows.Count -ge 3) "bot flows"
-$sim = Api POST "/comms/simulator/inbound-whatsapp" $reg @{ from = "+919000000101"; text = "hi" }
+$sim = Api POST "/comms/simulator/inbound-whatsapp" $reg @{ phone = "+919000000101"; text = "hi" }
 Check ($null -ne $sim.data) "simulator replies"
 
 Step "6 assistant"

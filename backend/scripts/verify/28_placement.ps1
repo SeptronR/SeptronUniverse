@@ -29,7 +29,7 @@ if ($bl) { ExpectStatus 409 { Api POST "/placement/drives" $off @{ company_id = 
 
 Step "3 policy"
 $smeP = Api GET "/students/me" $stu
-$enrol = $smeP.data.enrollments[0]
+$enrol = $smeP.data.enrollment
 $eff = Api GET "/placement/policies/effective?batch_id=$($enrol.batch_id)&program_id=$($enrol.program_id)" $off
 Check ($eff.data.max_offers -ge 1 -and $eff.data.dream_ctc_threshold_paise -eq 100000000) "effective policy: one offer, 10 LPA dream"
 

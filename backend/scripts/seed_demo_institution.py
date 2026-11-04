@@ -114,6 +114,32 @@ def write_credentials(ctx: SeedContext) -> str | None:
     return str(path)
 
 
+# seeders write these numbers directly: move each sequence past them, or the first real record collides (UNIQUE number)
+SEEDED_NUMBERS = (
+    ("indent", "indents", "indent_number"),
+    ("po", "purchase_orders", "po_number"),
+    ("grn", "goods_receipts", "grn_number"),
+    ("grievance", "grievances", "ticket_number"),
+    ("disc_case", "disciplinary_cases", "case_number"),
+    ("rti", "rti_requests", "request_no"),
+    ("efile", "efiles", "file_no"),
+)
+
+
+async def sync_number_sequences(db: Any) -> None:
+    from sqlalchemy import text
+
+    for key, table, col in SEEDED_NUMBERS:
+        await db.execute(
+            text(
+                f"UPDATE number_sequences n SET next_value = GREATEST(n.next_value, m.v + 1) FROM (SELECT institution_id, "
+                f"max(substring({col} from '(\\d+)$')::bigint) AS v FROM {table} WHERE {col} ~ '/\\d+$' "
+                "GROUP BY institution_id) m WHERE n.institution_id = m.institution_id AND n.scope_key = :k "
+                "AND n.college_id IS NULL"
+            ),
+            {"k": key},
+        )
+
 async def run(institution_type: str, modules: list[str]) -> int:
     from app.db.session import SessionLocal
 
@@ -126,6 +152,8 @@ async def run(institution_type: str, modules: list[str]) -> int:
             print(f"-> seeding {name}")
             await fn(ctx)
             await db.commit()
+        await sync_number_sequences(db)
+        await db.commit()
     summary = ", ".join(f"{k}={v}" for k, v in sorted(ctx.created.items())) or "nothing new (already seeded)"
     print(f"done ({institution_type}): {summary}")
     creds = write_credentials(ctx)

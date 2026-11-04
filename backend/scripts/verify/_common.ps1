@@ -105,6 +105,8 @@ function ExpectStatus($status, [scriptblock]$block) {
   Write-Host "  expect: HTTP $status"
 }
 
+function Done { Summary "" }
+
 function Step($name) { Write-Host "== $name" }
 
 function Check($cond, $msg) { Assert $cond $msg }

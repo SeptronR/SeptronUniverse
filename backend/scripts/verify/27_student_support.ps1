@@ -10,13 +10,14 @@ $goff = Login "grievance.off"; $staff = Login "staff.1"
 
 Step "1 assignments"
 $me = Api GET "/students/me" $stu
-$enrol = $me.data.enrollments[0].id
+$enrol = $me.data.enrollment.id
 $mm = Api GET "/mentoring/me" $stu
 Check ($mm.data.mentor_staff_id) "student has a mentor"
-$prev = Api POST "/mentoring/assignments/bulk" $reg @{ term_id = $mm.data.term_id; rule = "round_robin"; ratio = 20; preview = $true }
+$madmin = Login "inst.admin"   # mentoring:manage (the registrar only reads)
+$prev = Api POST "/mentoring/assignments/bulk" $madmin @{ term_id = $mm.data.term_id; rule = "round_robin"; ratio = 20; preview = $true }
 Check ($prev.data.skipped_existing -ge 1) "bulk preview skips existing"
-ExpectStatus 409 { Api POST "/mentoring/assignments" $reg @{ mentor_staff_id = $mm.data.mentor_staff_id; enrollment_ids = @($enrol); term_id = $mm.data.term_id } }
-$load = Api GET "/mentoring/load?term_id=$($mm.data.term_id)" $reg
+ExpectStatus 409 { Api POST "/mentoring/assignments" $madmin @{ mentor_staff_id = $mm.data.mentor_staff_id; enrollment_ids = @($enrol); term_id = $mm.data.term_id } }
+$load = Api GET "/mentoring/load?term_id=$($mm.data.term_id)" $madmin
 Check ($load.data.rows.Count -ge 1) "load report"
 $own = Api GET "/mentoring/assignments" $fac
 Check ($own.meta.visibility.scopes -contains "own") "faculty ScopeTabs own"
@@ -92,7 +93,7 @@ Check ($led.data.total -ge 6) "ledger"
 
 Step "11 achievements"
 $ac = Api POST "/achievements" $stu @{ category = "hackathon"; title = "Smart India Hackathon finalist" }
-$dl = Api GET "/achievements?department_id=$($me.data.enrollments[0].department_id)" $hod
+$dl = Api GET "/achievements?department_id=$($me.data.enrollment.department_id)" $hod
 Check ($dl.data.Count -ge 1) "HOD department achievements"
 
 Step "12 stats"
