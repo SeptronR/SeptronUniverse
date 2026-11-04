@@ -4,20 +4,20 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$cell = Login "research.cell" (Get-DemoPassword "research_cell")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$hodE = Login "hod.ece" (Get-DemoPassword "hod_ece")
-$dean = Login "dean.eng" (Get-DemoPassword "dean")
-$prin = Login "principal" (Get-DemoPassword "vice_chancellor")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$fa = Login "faculty.a" (Get-DemoPassword "faculty_a")
-$fb = Login "faculty.b" (Get-DemoPassword "faculty_b")
-$fe = Login "faculty.ece" (Get-DemoPassword "faculty_ece")
-$chair = Login "ethics.chair" (Get-DemoPassword "ethics_chair")
-$member = Login "ethics.member" (Get-DemoPassword "ethics_member")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$cell = Login "research.cell"
+$hod = Login "hod.cse"
+$hodE = Login "hod.ece"
+$dean = Login "dean.eng"
+$prin = Login "principal"
+$acct = Login "accountant"
+$fa = Login "faculty.a"
+$fb = Login "faculty.b"
+$fe = Login "faculty.ece"
+$chair = Login "ethics.chair"
+$member = Login "ethics.member"
+$iqac = Login "iqac"
+$colB = Login "college.admin.b"
+$aud = Login "auditor.tmp"
 $year = (Get-Date).Year
 
 Write-Host "== 1 stats / scopes"

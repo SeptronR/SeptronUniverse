@@ -5,20 +5,20 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
 $reg = Login-Mfa 'registrar' 'registrar'
-$vc = Login "principal" (Get-DemoPassword "vice_chancellor")
-$secAc = Login "sec.ac" (Get-DemoPassword "committee_secretary_ac")
-$chairAc = Login "chair.ac" (Get-DemoPassword "committee_chair_ac")
-$memAc = Login "member.ac" (Get-DemoPassword "committee_member_ac")
-$memStu = Login "member.student" (Get-DemoPassword "committee_member_student")
-$secBos = Login "sec.bos.cse" (Get-DemoPassword "committee_secretary_bos_cse")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$legal = Login "legal.off" (Get-DemoPassword "legal_officer")
-$pio = Login "pio" (Get-DemoPassword "pio")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$vc = Login "principal"
+$secAc = Login "sec.ac"
+$chairAc = Login "chair.ac"
+$memAc = Login "member.ac"
+$memStu = Login "member.student"
+$secBos = Login "sec.bos.cse"
+$hod = Login "hod.cse"
+$fac = Login "faculty.1"
+$legal = Login "legal.off"
+$pio = Login "pio"
+$acct = Login "accountant"
+$iqac = Login "iqac"
+$colB = Login "college.admin.b"
+$aud = Login "auditor.tmp"
 $d = Get-Date
 $today = $d.ToString("yyyy-MM-dd")
 

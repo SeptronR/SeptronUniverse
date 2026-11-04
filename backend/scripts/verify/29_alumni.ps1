@@ -4,15 +4,15 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$coord = Login "alumni.coord" (Get-DemoPassword "alumni_coordinator")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$plc = Login "placement" (Get-DemoPassword "placement_officer")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$aa = Login "alumni.a" (Get-DemoPassword "alumni_a")
-$ab = Login "alumni.b" (Get-DemoPassword "alumni_b")
-$stu = Login "student.1" (Get-DemoPassword "student")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$coord = Login "alumni.coord"
+$acct = Login "accountant"
+$plc = Login "placement"
+$hod = Login "hod.cse"
+$iqac = Login "iqac"
+$aa = Login "alumni.a"
+$ab = Login "alumni.b"
+$stu = Login "student.1"
+$aud = Login "auditor.tmp"
 
 Write-Host "== 1 stats"
 $s = Call $coord GET "/alumni/stats"

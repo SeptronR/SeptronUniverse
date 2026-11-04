@@ -32,6 +32,8 @@ async def main(username: str, role: str, *, link_staff: bool, existing: bool) ->
             )
         ).scalar_one_or_none()
         if existing:
+            if uid is None:
+                raise SystemExit(f"no user {username}")
             await conn.execute(
                 text("UPDATE users SET password_hash = :h, must_change_password = FALSE WHERE id = :id"),
                 {"h": hash_password(pwd), "id": uid},

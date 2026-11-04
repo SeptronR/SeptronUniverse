@@ -4,20 +4,20 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$cell = Login "research.cell" (Get-DemoPassword "research_cell")
-$dean = Login "dean.res" (Get-DemoPassword "dean_research")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$ga = Login "guide.a" (Get-DemoPassword "research_guide_a")
-$gb = Login "guide.b" (Get-DemoPassword "research_guide_b")
-$gc = Login "guide.c" (Get-DemoPassword "research_guide_c")
-$s1 = Login "scholar.1" (Get-DemoPassword "research_scholar_1")
-$sNew = Login "scholar.new" (Get-DemoPassword "research_scholar_new")
-$sTh = Login "scholar.thesis" (Get-DemoPassword "research_scholar_thesis")
-$sUn = Login "scholar.unsat" (Get-DemoPassword "research_scholar_unsat")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$cell = Login "research.cell"
+$dean = Login "dean.res"
+$hod = Login "hod.cse"
+$acct = Login "accountant"
+$ga = Login "guide.a"
+$gb = Login "guide.b"
+$gc = Login "guide.c"
+$s1 = Login "scholar.1"
+$sNew = Login "scholar.new"
+$sTh = Login "scholar.thesis"
+$sUn = Login "scholar.unsat"
+$iqac = Login "iqac"
+$colB = Login "college.admin.b"
+$aud = Login "auditor.tmp"
 $today = (Get-Date).ToString("yyyy-MM-dd")
 $month = (Get-Date -Day 1).ToString("yyyy-MM-dd")
 

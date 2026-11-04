@@ -23,6 +23,11 @@ function Login($identifier, $password = $null, $extra = @{}) {
   # MFA-required role signs in through Login-Mfa.
   if ($null -eq $password) {
     $row = Get-IdentifierRow $identifier
+    if (-not $row) {
+      # a seeded user that predates the sheet: give it a password and record it
+      & (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_ensure_demo_user.py") $identifier "demo_user" --existing | Out-Null
+      $row = Get-IdentifierRow $identifier
+    }
     if (-not $row) { throw "no credentials row for identifier '$identifier' in LOCAL_TEST_CREDENTIALS.md" }
     if ($identifier -eq 'auditor') { $identifier = 'auditor.tmp' }
     if ($identifier -eq 'student.2') { $identifier = 'A25BTECHCSE007' }

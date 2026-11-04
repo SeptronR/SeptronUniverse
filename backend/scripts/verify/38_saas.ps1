@@ -26,11 +26,11 @@ function Wait-Job($session, $jobId, [int]$seconds = 180) {
 $sa = Login-SuperAdmin
 $sa2 = Login "superadmin.2" (Get-Pw "super_admin")
 $agent = Login "support.agent" (Get-Pw "support_agent")
-$admin = Login "inst.admin" (Get-DemoPassword "institution_admin") @{ institution = "demo-uni" }
+$admin = Login "inst.admin" @{ institution = "demo-uni" }
 $adminC = Login "inst.admin.c" (Get-Pw "institution_admin (demo-college)") @{ institution = "demo-college" }
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin") @{ institution = "demo-uni" }
+$colB = Login "college.admin.b" @{ institution = "demo-uni" }
 $reg = Login-Mfa 'registrar' 'registrar'
-$stu = Login "student.1" (Get-DemoPassword "student") @{ institution = "demo-uni" }
+$stu = Login "student.1" @{ institution = "demo-uni" }
 
 $tenants = (Call $sa GET "/platform/institutions").data
 $uni = $tenants | Where-Object { $_.slug -eq "demo-uni" }

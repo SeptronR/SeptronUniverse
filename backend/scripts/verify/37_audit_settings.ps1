@@ -6,20 +6,20 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$admin = Login "inst.admin" (Get-DemoPassword "institution_admin")
-$prin = Login "principal" (Get-DemoPassword "vice_chancellor")
+$admin = Login "inst.admin"
+$prin = Login "principal"
 $reg = Login-Mfa 'registrar' 'registrar'
 $coe = Login-Mfa 'controller_of_examinations' 'coe'
-$cell = Login "exam.cell" (Get-DemoPassword "exam_cell")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$sec = Login "security.off" (Get-DemoPassword "security_officer")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$stu = Login "student.1" (Get-DemoPassword "student")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
-$sa = Login "superadmin" (Get-DemoPassword "super_admin")
+$cell = Login "exam.cell"
+$hod = Login "hod.cse"
+$fac = Login "faculty.1"
+$acct = Login "accountant"
+$sec = Login "security.off"
+$colB = Login "college.admin.b"
+$iqac = Login "iqac"
+$stu = Login "student.1"
+$aud = Login "auditor.tmp"
+$sa = Login "superadmin"
 
 function Wait-Job($session, $jobId, [int]$seconds = 90) {
   for ($i = 0; $i -lt $seconds; $i += 2) {

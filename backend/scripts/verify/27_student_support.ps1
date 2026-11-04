@@ -73,7 +73,8 @@ Step "9 surveys"
 $pend = Api GET "/surveys/me/pending" $stu
 if ($pend.data.Count -ge 1) {
   $sv = $pend.data[0]; $tg = $sv.targets | Where-Object { -not $_.responded } | Select-Object -First 1
-  $form = Api GET "/surveys/$($sv.survey_id)/form?target_id=$($tg.target_id)" $stu
+  $tq = if ($tg.target_id) { "?target_id=$($tg.target_id)" } else { "" }   # institution-wide surveys have no target
+  $form = Api GET "/surveys/$($sv.survey_id)/form$tq" $stu
   $ans = @{}; foreach ($q in $form.data.questions) { if ($q.type -ne "text") { $ans[$q.id] = 4 } }
   Api POST "/surveys/$($sv.survey_id)/respond" $stu @{ target_id = $tg.target_id; answers = $ans } | Out-Null
   ExpectStatus 409 { Api POST "/surveys/$($sv.survey_id)/respond" $stu @{ target_id = $tg.target_id; answers = $ans } }

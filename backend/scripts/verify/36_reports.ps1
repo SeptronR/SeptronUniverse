@@ -5,23 +5,23 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$admin = Login "inst.admin" (Get-DemoPassword "institution_admin")
-$prin = Login "principal" (Get-DemoPassword "vice_chancellor")
+$admin = Login "inst.admin"
+$prin = Login "principal"
 $reg = Login-Mfa 'registrar' 'registrar'
 $coe = Login-Mfa 'controller_of_examinations' 'coe'
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$hodE = Login "hod.ece" (Get-DemoPassword "hod_ece")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$hr = Login "hr" (Get-DemoPassword "hr_officer")
-$plc = Login "placement" (Get-DemoPassword "placement_officer")
-$lib = Login "librarian" (Get-DemoPassword "librarian")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$pio = Login "pio" (Get-DemoPassword "pio")
-$rc = Login "research.cell" (Get-DemoPassword "research_cell")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$stu = Login "student.1" (Get-DemoPassword "student")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$hod = Login "hod.cse"
+$hodE = Login "hod.ece"
+$fac = Login "faculty.1"
+$acct = Login "accountant"
+$hr = Login "hr"
+$plc = Login "placement"
+$lib = Login "librarian"
+$iqac = Login "iqac"
+$pio = Login "pio"
+$rc = Login "research.cell"
+$colB = Login "college.admin.b"
+$stu = Login "student.1"
+$aud = Login "auditor.tmp"
 
 function Wait-Job($session, $jobId, [int]$seconds = 60) {
   for ($i = 0; $i -lt $seconds; $i += 2) {

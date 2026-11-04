@@ -4,15 +4,15 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$vc = Login "principal" (Get-DemoPassword "vice_chancellor")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$obe = Login "obe" (Get-DemoPassword "obe_coordinator")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$stu = Login "student.1" (Get-DemoPassword "student")
+$iqac = Login "iqac"
+$vc = Login "principal"
+$hod = Login "hod.cse"
+$fac = Login "faculty.1"
+$obe = Login "obe"
+$acct = Login "accountant"
+$aud = Login "auditor.tmp"
+$colB = Login "college.admin.b"
+$stu = Login "student.1"
 $d = Get-Date
 $ay = if ($d.Month -ge 6) { $d.Year } else { $d.Year - 1 }
 $period = "$ay-$((($ay + 1) % 100).ToString('00'))"
@@ -33,7 +33,7 @@ Assert (-not (@($defs.data) | Where-Object { -not $_.registered })) "every defin
 
 Write-Host "== 3 compute"
 $c = Call $iqac POST "/accreditation/metrics/compute?inline=true" @{ period_label = $period; framework_code = "NAAC_2024" }
-Assert ($c.data.computed -ge 1 -and @($c.data.failed).Count -eq 0) "NAAC compute: no failures"
+Assert ($c.data.computed -ge 1 -and @($c.data.failed).Count -eq 0) "NAAC compute: no failures ($(@($c.data.failed) | ConvertTo-Json -Compress -Depth 3))"
 $v = Call $iqac GET "/accreditation/metrics/faculty.fsr?period=$period"
 Assert ($v.data.numerator -ge 1 -and $v.data.denominator -ge 1) "FSR numerator (students) / denominator (teachers)"
 $c2 = Call $iqac POST "/accreditation/metrics/compute?inline=true" @{ period_label = $period; metric_keys = @("faculty.fsr") }
