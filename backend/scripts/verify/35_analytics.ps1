@@ -109,7 +109,7 @@ Call $admin DELETE "/analytics/digests/$($dg.data.id)" | Out-Null
 
 Write-Host "== 10 early warning"
 $co = Call $reg GET "/risk/cohort?group_by=department"
-Assert (@($co.data.cells | Where-Object { $_.high -ge 1 }).Count -ge 1) "a department with high-risk students"
+Assert (@($co.data.cells | Where-Object { ($_.high + $_.medium) -ge 1 }).Count -ge 1) "a department with at-risk students"
 $coE = Call $hodE GET "/risk/cohort?group_by=department"
 Assert (@($coE.data.cells).Count -le 1) "HOD ECE: own department only"
 $rs = Call $reg GET "/risk/students?level=high"

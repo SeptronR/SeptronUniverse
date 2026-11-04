@@ -69,7 +69,7 @@ Call $iqac POST "/accreditation/evidence/pack?criterion=3" $null 202 | Out-Null
 Write-Host "== 7 cycles"
 $cy = Call $iqac POST "/accreditation/cycles" @{ framework_code = "NAAC_2024"; name = "NAAC Cycle verify"; period_from = "$($ay - 4)-06-01"; period_to = "$($ay + 1)-05-31" } 201
 Call $iqac POST "/accreditation/cycles/$($cy.data.id)/status" @{ status = "data_collection" } | Out-Null
-$facStaff = (Call $fac GET "/hr/staff/me").data.id
+$facStaff = (Call $fac GET "/staff/me").data.id
 Call $iqac POST "/accreditation/cycles/$($cy.data.id)/criteria/assign" @{ criterion_codes = @("2.3.1"); owner_staff_id = $facStaff; due_on = $today } | Out-Null
 Call $fac PUT "/accreditation/cycles/$($cy.data.id)/criteria/2.3.1" @{ narrative = "<p>Experiential learning in every course.</p>" } | Out-Null
 $sub = Call $fac POST "/accreditation/cycles/$($cy.data.id)/criteria/2.3.1/submit"

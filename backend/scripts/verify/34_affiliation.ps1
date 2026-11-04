@@ -40,7 +40,7 @@ $D = @($colleges.data | Where-Object { $_.code -eq "D" })[0]
 
 Write-Host "== 2 application: checklist / fees / invoice / payment"
 $years = Call $reg GET "/academic-years"
-$cur = @($years.data | Where-Object { $_.is_current })[0]
+$cur = @($years.data | Where-Object { $_.is_current -and -not $_.college_id })[0]   # the institution-level year holds the approvals
 $apprB = Call $reg GET "/affiliation/program-approvals?college_id=$($B.college_id)&year=$($cur.id)"
 $pB = $apprB.data[0]
 $app = Call $colB POST "/affiliation/applications" @{

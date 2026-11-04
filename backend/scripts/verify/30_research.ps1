@@ -63,7 +63,7 @@ $sa = Call $cell POST "/research/projects/$($pr.data.id)/action" @{ action = "sa
 $inbox = Call $prin GET "/workflow/inbox"
 $wf = @($inbox.data | Where-Object { $_.instance_id -eq $sa.data.workflow_instance_id })[0]
 Call $prin POST "/workflow/instances/$($sa.data.workflow_instance_id)/act" @{ decision = "approve"; comment = "Acknowledged" } | Out-Null
-Start-Sleep -Seconds 3
+Start-Sleep -Seconds 15   # outbox relay runs every 5 s; the ledger consumer follows
 $prg = Call $fa GET "/research/projects/$($pr.data.id)"
 Assert ($prg.data.status -eq "sanctioned" -and $prg.data.grant_ledger_id) "sanctioned + Phase 23 ledger linked"
 Call $fe GET "/research/projects/$($pr.data.id)" $null 404 | Out-Null

@@ -32,12 +32,13 @@ function Wait-Job($session, $jobId, [int]$seconds = 90) {
 $from30 = (Get-Date).AddDays(-30).ToString("o")
 
 Write-Host "== 1 explorer scopes"
-$a = Call $admin GET "/audit-logs?from=$from30&page_size=50"
+$a = Call $admin GET "/audit-logs?from=$([uri]::EscapeDataString($from30))&page_size=50"
 Assert ($a.data.total -gt 0) "admin: rows"
 Assert ($a.meta.visibility.scopes -contains "all") "admin: All tab"
 Assert (@($a.data.items | Where-Object { $_.summary }).Count -eq @($a.data.items).Count) "summaries rendered"
+$facId = (Call $fac GET "/auth/me").data.user.id
 $fm = Call $fac GET "/audit-logs/me"
-Assert (@($fm.data.items | Where-Object { $_.user.id -ne $fac.UserId }).Count -eq 0) "faculty /me: own rows only"
+Assert (@($fm.data.items | Where-Object { $_.user.id -ne $facId }).Count -eq 0) "faculty /me: own rows only"
 $fa = Call $fac GET "/audit-logs"
 Assert (-not $fa.meta.visibility.scopes) "faculty: no ScopeTabs"
 $h = Call $hod GET "/audit-logs?scope=department&record_type=student"

@@ -53,7 +53,7 @@ $n = Call $secAc POST "/governance/meetings/$($m.data.id)/notice" @{ channels = 
 Assert ($n.data.short_notice) "3 days < 7 → short notice"
 Call $memAc GET "/governance/meetings/$($m.data.id)" | Out-Null
 Call $fac GET "/governance/meetings/$($m.data.id)" $null 404 | Out-Null
-Call $secBos POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "x" } 403 | Out-Null
+Call $secBos POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "xx" } 404 | Out-Null
 
 Write-Host "== 4 attendance / quorum / minutes"
 $det = Call $secAc GET "/governance/committees/$($ac.id)"

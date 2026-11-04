@@ -40,7 +40,7 @@ $cf = Call $fac GET "/reports/catalogue"
 Assert (@($cf.data | Where-Object { $_.key -eq "attendance.register" }).Count -eq 1) "faculty: attendance register"
 Call $stu GET "/reports/catalogue" $null 403 | Out-Null
 Push-Location "$PSScriptRoot/../.."
-python scripts/check_report_registry.py
+& (Get-VenvPython (Get-Location)) scripts/check_report_registry.py
 Assert ($LASTEXITCODE -eq 0) "check_report_registry.py: 0 missing"
 Pop-Location
 
@@ -57,7 +57,7 @@ Assert ($pb.data.params.college_id -ne $colA) "college A pick replaced by colleg
 Call $acct POST "/reports/run" @{ key = "fees.collection_register"; params = @{ from = $to; to = $from }; format = "xlsx"; inline_preview = $true } 422 | Out-Null
 
 Write-Host "== 3 job run + visibility + cancel"
-$offs = Call $hod GET "/offerings?size=1&scope=department"
+$offs = Call $hod GET "/course-offerings?size=1&scope=department"
 $off = $offs.data[0].id
 $month = (Get-Date).ToString("yyyy-MM")
 $j = Call $hod POST "/reports/run" @{ key = "attendance.register"; params = @{ offering_id = $off; month = $month }; format = "xlsx" } 202

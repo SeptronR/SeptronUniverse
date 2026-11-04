@@ -21,6 +21,7 @@ function Login($identifier, $password = $null, $extra = @{}) {
   # body's refresh_token (platform=android|ios). Phase scripts that need the cookie use their own helper.
   # Phases 16-28 call Login "<identifier>" alone: the password comes from that identifier's credentials row, and an
   # MFA-required role signs in through Login-Mfa.
+  if ($password -is [hashtable]) { $extra = $password; $password = $null }   # Login "x" @{ institution = … }
   if ($null -eq $password) {
     $row = Get-IdentifierRow $identifier
     if (-not $row) {
