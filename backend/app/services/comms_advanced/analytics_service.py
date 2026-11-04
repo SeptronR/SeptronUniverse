@@ -11,7 +11,7 @@ import uuid
 from datetime import datetime, timedelta
 from typing import Any
 
-from sqlalchemy import delete, func, select, text
+from sqlalchemy import delete, func, literal_column, select, text
 
 from app.core.config import settings
 from app.core.errors import APIError, ErrorCode
@@ -158,10 +158,10 @@ class CommsAnalyticsService(CommsBase):
             {"day": d.date().isoformat() if d else None, "count": int(n)}
             for d, n in (
                 await self.db.execute(
-                    select(func.date_trunc("day", MessageLog.created_at), func.count())
+                    select(func.date_trunc(literal_column("'day'"), MessageLog.created_at), func.count())
                     .where(*base)
-                    .group_by(func.date_trunc("day", MessageLog.created_at))
-                    .order_by(func.date_trunc("day", MessageLog.created_at))
+                    .group_by(func.date_trunc(literal_column("'day'"), MessageLog.created_at))
+                    .order_by(func.date_trunc(literal_column("'day'"), MessageLog.created_at))
                 )
             ).all()
         ]

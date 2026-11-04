@@ -613,7 +613,7 @@ class VendorBillOut(BaseModel):
     tax_paise: int
     tds_paise: int
     total_paise: int
-    net_payable_paise: int
+    net_payable_paise: int = 0  # set by the service (total - TDS), not a model column
     file_url: str | None = None
     status: str
     workflow_instance_id: uuid.UUID | None = None

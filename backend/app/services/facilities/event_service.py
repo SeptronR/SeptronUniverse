@@ -25,7 +25,7 @@ import uuid
 from collections.abc import Sequence
 from typing import Any
 
-from sqlalchemy import false, func, or_, select
+from sqlalchemy import false, func, literal_column, or_, select
 
 from app.core.errors import APIError, ErrorCode
 from app.core.workflow import engine as workflow_engine
@@ -142,14 +142,14 @@ class EventService(FacilitiesBase):
                 select(
                     EventRegistration.event_id,
                     EventRegistration.attended,
-                    EventRegistration.external["waitlisted"].astext,
+                    EventRegistration.external.op("->>")(literal_column("'waitlisted'")),
                     func.count(),
                 )
                 .where(EventRegistration.event_id.in_(ids or [uuid.uuid4()]))
                 .group_by(
                     EventRegistration.event_id,
                     EventRegistration.attended,
-                    EventRegistration.external["waitlisted"].astext,
+                    EventRegistration.external.op("->>")(literal_column("'waitlisted'")),
                 )
             )
         ).all():
@@ -565,7 +565,7 @@ class EventService(FacilitiesBase):
                 .where(
                     EventRegistration.event_id == e.id,
                     or_(
-                        EventRegistration.external.is_(None), EventRegistration.external["waitlisted"].astext != "true"
+                        EventRegistration.external.is_(None), EventRegistration.external.op("->>")(literal_column("'waitlisted'")) != "true"
                     ),
                 )
             )
