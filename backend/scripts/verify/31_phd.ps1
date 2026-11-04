@@ -37,7 +37,7 @@ if (-not $gbRow) { Write-Host "  no assistant guide at capacity in this data: sk
 Write-Host "== 2 create scholar / load limit"
 $newMe = Call $sNew GET "/phd/me"
 Assert ($newMe.data.status -eq "admitted") "scholar.new admitted"
-$busy = Call $cell POST "/phd/scholars" @{ enrollment_id = $newMe.data.enrollment_id; guide_staff_id = $gbRow.staff_id } 409
+if ($gbRow) { $busy = Call $cell POST "/phd/scholars" @{ enrollment_id = $newMe.data.enrollment_id; guide_staff_id = $gbRow.staff_id } 409 }
 Assert ($busy.error.details.code -in @("GUIDE_LOAD_EXCEEDED", "SCHOLAR_EXISTS")) "load limit enforced (or the shell exists)"
 
 Write-Host "== 3 coursework"

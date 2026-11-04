@@ -83,6 +83,7 @@ Call $iqac POST "/accreditation/cycles/$($cy.data.id)/export" @{ format = "naac_
 Call $iqac POST "/accreditation/cycles/$($cy.data.id)/export" @{ format = "nirf_dcf" } 202 | Out-Null
 
 Write-Host "== 9 submissions"
+& (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_purge.py") compliance_submissions "period_label = '$period' AND submission_type = 'aishe'" | Out-Null   # the previous run's open submission
 $s = Call $iqac POST "/accreditation/submissions" @{ period_label = $period; submission_type = "aishe" } 201
 $g = Call $iqac POST "/accreditation/submissions/$($s.data.id)/generate?inline=true"
 Assert ($g.data.status -eq "generated") "AISHE payload generated"

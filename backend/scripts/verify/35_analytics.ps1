@@ -90,7 +90,7 @@ Call $admin PUT "/analytics/targets" @{ targets = @{ attendance_pct = $t.data.ta
 
 Write-Host "== 8 layouts / pins"
 $lay = Call $admin GET "/dashboard/layouts/hod"
-$ws = @($lay.data.widgets | Where-Object { -not $_.hidden } | ForEach-Object { @{ key = $_.key; position = $_.position } })
+$ws = @($lay.data.widgets | Where-Object { -not $_.hidden -and $_.key -ne "research.publications_by_department" } | ForEach-Object { @{ key = $_.key; position = $_.position } })
 $ws += @{ key = "research.publications_by_department"; hidden = $true }
 Call $admin PUT "/dashboard/layouts/hod" @{ widgets = $ws } | Out-Null
 $h2 = Call $hod GET "/dashboard"

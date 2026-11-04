@@ -25,7 +25,7 @@ function Wait-Job($session, $jobId, [int]$seconds = 180) {
 
 $sa = Login-SuperAdmin
 $sa2 = Login "superadmin.2"   # by identifier: enrols MFA through Login-Mfa
-$agent = Login "support.agent" (Get-Pw "support_agent")
+$agent = Login "support.agent"
 $admin = Login "inst.admin" @{ institution = "demo-uni" }
 $adminC = Login "inst.admin.c" (Get-Pw "institution_admin (demo-college)") @{ institution = "demo-college" }
 $colB = Login "college.admin.b" @{ institution = "demo-uni" }

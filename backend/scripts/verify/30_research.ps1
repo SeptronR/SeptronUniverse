@@ -112,7 +112,7 @@ Assert (@($cmp.data).Count -gt 0) "compliance rows for CSE"
 Write-Host "== 9 MoUs"
 $m = Call $cell POST "/research/mous" @{ partner = "Verify Industries"; partner_type = "industry"; mou_type = "placement" } 201
 Call $cell POST "/research/mous/$($m.data.id)/submit" | Out-Null
-Call $prin POST "/workflow/instances/$((Call $cell GET "/research/mous/$($m.data.id)").data.workflow_instance_id)/act" @{ decision = "approve" } | Out-Null
+Call (Login "legal.off") POST "/workflow/instances/$((Call $cell GET "/research/mous/$($m.data.id)").data.workflow_instance_id)/act" @{ decision = "approve" } | Out-Null
 $sg = Call $cell POST "/research/mous/$($m.data.id)/sign" @{ signed_on = (Get-Date).ToString("yyyy-MM-dd"); valid_to = (Get-Date).AddDays(60).ToString("yyyy-MM-dd") }
 Assert ($sg.data.status -eq "active" -and $sg.data.expiry -eq "expiring") "active, expiring chip"
 Call $cell POST "/research/mous/$($m.data.id)/collaborations" @{ title = "Summer internships"; collaboration_type = "internship" } 201 | Out-Null

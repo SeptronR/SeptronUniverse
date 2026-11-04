@@ -64,7 +64,7 @@ Assert (-not $q.data.met) "quorum not met"
 Call $secAc POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "Minutes" } 409 | Out-Null
 $q = Call $secAc POST "/governance/meetings/$($m.data.id)/attendance" @{ present_member_ids = @($ids) }
 Assert ($q.data.met) "quorum met"
-$hodStaff = (Call $hod GET "/staff/me").data.id
+$hodStaff = (Call $fac GET "/staff/me").data.id   # hod.cse has no staff row in the demo seed
 Call $secAc POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "Minutes of the AC"; resolutions = @(
     @{ subject = "Curriculum revision"; text = "Resolved"; action_owner_staff_id = $hodStaff },
     @{ subject = "Regulation R2026"; text = "Approved" },

@@ -66,7 +66,9 @@ Assert ($done.status -eq "succeeded" -and $done.checksum) "attendance register j
 Call $hodE POST "/reports/run" @{ key = "attendance.register"; params = @{ offering_id = $off }; format = "xlsx"; inline_preview = $true } 404 | Out-Null
 $slow = Call $reg POST "/reports/run" @{ key = "students.list_export"; params = @{ slow = $true }; format = "csv" } 202
 Start-Sleep -Seconds 3
-Call $reg POST "/reports/runs/$($slow.data.job_id)/cancel" | Out-Null
+# the fast local worker may finish first: cancel answers 200, or 409 once the job has succeeded
+$cx = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/reports/runs/$($slow.data.job_id)/cancel" -Headers @{ Authorization = "Bearer $reg" } -SkipHttpErrorCheck
+Assert ([int]$cx.StatusCode -in 200, 409) "cancel answered ($([int]$cx.StatusCode))"
 $c = Wait-Job $reg $slow.data.job_id 90
 Assert ($c.status -eq "cancelled") "slow run cancelled"
 $log = Call $admin GET "/reports/access-log?key=attendance.register"
