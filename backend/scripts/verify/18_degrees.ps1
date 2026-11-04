@@ -9,9 +9,9 @@ Step "2 eligibility"
 $awards = Api GET "/degrees" $reg
 Check ($awards.data.Count -ge 1) "awards seeded"
 $batchCode = $awards.data[0].enrollment.batch_code
-$checks = Api GET "/degree-eligibility" $reg
-Check ($checks.data.Count -ge 1) "checks listed"
-$inel = $checks.data | Where-Object { -not $_.is_eligible } | Select-Object -First 1
+$eligChecks = Api GET "/degree-eligibility" $reg
+Check ($eligChecks.data.Count -ge 1) "checks listed"
+$inel = $eligChecks.data | Where-Object { -not $_.is_eligible } | Select-Object -First 1
 if ($inel) { Check ($inel.reasons.Count -ge 1) "ineligible has reasons" }
 Api GET "/degree-eligibility/me" $stu | Out-Null
 Api GET "/degree-eligibility" $hod | Out-Null

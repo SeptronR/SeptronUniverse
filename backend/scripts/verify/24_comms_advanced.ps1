@@ -19,6 +19,8 @@ $c = Api POST "/comms/campaigns" $reg @{ name = "Verify campaign"; channels = @(
 Check ($c.data.status -eq "draft") "draft"
 $chk = Api POST "/comms/campaigns/$($c.data.id)/compliance-check" $reg
 Check ($chk.data.ok) "compliance ok for in-app"
+$sb = Api POST "/comms/campaigns/$($c.data.id)/action" $reg @{ action = "submit" }
+if ($sb.data.status -eq "pending_approval") { Api POST "/comms/campaigns/$($c.data.id)/action" $reg @{ action = "approve" } | Out-Null }
 $s = Api POST "/comms/campaigns/$($c.data.id)/action" $reg @{ action = "send_now" }
 Check ($s.data.status -in @("sending", "sent", "pending_approval")) "send accepted"
 $r = Api GET "/comms/campaigns/$($c.data.id)/report" $reg

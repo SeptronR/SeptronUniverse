@@ -8,7 +8,7 @@ $script:Checks = 0
 
 function Get-IdentifierRow($identifier) {
   # the credentials row of one identifier (last wins, *_totp rows skipped) → @{ role; password }, or $null
-  $alias = @{ 'auditor' = 'auditor.tmp' }   # names the phase 16-28 scripts use for seeded demo accounts
+  $alias = @{ 'auditor' = 'auditor.tmp'; 'student.2' = 'A25BTECHCSE007' }   # names the phase 16-28 scripts use for seeded demo accounts
   if ($alias.ContainsKey($identifier)) { $identifier = $alias[$identifier] }
   $file = Join-Path $PSScriptRoot "../../../LOCAL_TEST_CREDENTIALS.md"
   $row = Get-Content $file | Where-Object { $_ -match '^\|' } | ForEach-Object { , ($_ -split '\|') } |
@@ -25,6 +25,7 @@ function Login($identifier, $password = $null, $extra = @{}) {
     $row = Get-IdentifierRow $identifier
     if (-not $row) { throw "no credentials row for identifier '$identifier' in LOCAL_TEST_CREDENTIALS.md" }
     if ($identifier -eq 'auditor') { $identifier = 'auditor.tmp' }
+    if ($identifier -eq 'student.2') { $identifier = 'A25BTECHCSE007' }
     $password = $row.password
     $probe = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body (@{ identifier = $identifier; password = $password } | ConvertTo-Json) -SkipHttpErrorCheck
     if ($probe.StatusCode -eq 403 -and ($probe.Content | ConvertFrom-Json).error.code -eq 'MFA_REQUIRED') { return Login-Mfa $row.role $identifier }

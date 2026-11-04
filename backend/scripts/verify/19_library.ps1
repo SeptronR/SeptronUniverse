@@ -2,6 +2,7 @@
 param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $Base
+$Institution = "demo-uni"
 
 $lib = Login "librarian"; $hod = Login "hod.cse"; $acc = Login "accountant"; $stu = Login "student.1"; $fac = Login "faculty.1"; $par = Login "parent.1"; $aud = Login "auditor.tmp"
 

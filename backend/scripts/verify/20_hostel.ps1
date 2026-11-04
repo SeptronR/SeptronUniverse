@@ -30,6 +30,10 @@ Check ($null -ne $lv.data) "leave queue"
 Step "7 gate"
 ExpectStatus 404 { Api POST "/hostel-gate/scan" $gate @{ qr_token = "hl$('0' * 48)"; direction = "out" } }
 
+# 02 toggles hostel.core, which leaves this dependant off
+$saT = Login-SuperAdmin; $instId = (Api GET "/auth/me" $warden).data.user.institution_id
+Api PUT "/institutions/$instId/features/hostel.night_roll_call" $saT @{ enabled = $true; confirm_dependencies = $true; reason = "verify 20" } @{ "X-Institution" = "demo-uni" } | Out-Null
+Start-Sleep -Seconds 8   # feature cache invalidates through the outbox
 Step "9 roll-call duplicate"
 $rc = Api GET "/hostel-roll-calls?hostel_id=$($h.id)" $warden
 Check ($rc.data.Count -ge 1) "roll-call history"

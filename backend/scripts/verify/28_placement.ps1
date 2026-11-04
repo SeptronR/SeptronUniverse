@@ -18,7 +18,7 @@ Check ($si.data.eligible -ge 0) "iqac reads stats"
 
 Step "2 companies / recruiters"
 $cos = Api GET "/placement/companies" $off
-$acme = @($cos.data | Where-Object { $_.name -like "Acme*" })[0]
+$acme = @($cos.data | Where-Object { $_.name -eq "Acme Technologies" })[0]
 Check ($acme) "ACME company exists"
 $inv = Api POST "/placement/companies/$($acme.id)/recruiters/invite" $off @{ email = "talent@acme.example.com"; name = "ACME Talent" }
 Check ($inv.data.company_id -eq $acme.id) "recruiter bound to ACME"

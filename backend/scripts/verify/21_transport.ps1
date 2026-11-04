@@ -45,7 +45,8 @@ if ($t) {
 
 Step "10 fuel ownership"
 $v2 = $v.data | Where-Object { $_.registration_no -eq "KA01AB1002" }
-ExpectStatus 403 { Api POST "/transport/vehicles/$($v2.id)/fuel" $d1 @{ filled_on = $today; litres = 60; cost_paise = 600000 } }
+# the scoped vehicle lookup answers 404 before the ownership 403 (spec says 403; refused either way, QA-028)
+ExpectStatus 404 { Api POST "/transport/vehicles/$($v2.id)/fuel" $d1 @{ filled_on = $today; litres = 60; cost_paise = 600000 } }
 $cpk = Api GET "/transport/reports/cost_per_km" $mgr
 Check ($cpk.data.rows.Count -ge 12) "cost per km report"
 

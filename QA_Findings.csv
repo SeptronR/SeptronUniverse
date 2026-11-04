@@ -17,3 +17,13 @@ QA-014,34,(seed),affiliation seeder fails on soft-deleted demo colleges,P2,fixed
 QA-015,40,(database),institution_settings UNIQUE treated college_id NULL as distinct: settings upserts duplicated rows; website publish never listed in versions,P1,fixed,platform,8cbdad4
 QA-016,39,student,PUT /users/me (language/theme) shadowed by rbac PUT /users/{id} -> 403,P2,fixed,platform,51655c1
 QA-017,40,(public),POST /public/site/enquiries invalid email -> 500 instead of 422,P2,fixed,platform,8cbdad4
+QA-018,03,super_admin,GET /platform/institutions?q= 500 (login_history.created_at / success columns),P2,fixed,platform,2eb4385
+QA-019,04,(workflow),workflow_instances UNIQUE blocked restarts after a closed instance (leave.approved substitution consumer stuck),P1,fixed,platform,048ef93
+QA-020,09,student,POST /registration/me/submit 500 when no fee (UnboundLocalError is_enabled),P1,fixed,platform,6e7f7ab
+QA-021,00,(api),validators raising ValueError answered 500 instead of 422; audit JSON of time values 500 (POST /class-sessions/extra),P1,fixed,platform,1575b6c
+QA-022,12,accountant,POST /fees/reconcile/upload dropped JSON bodies (0 rows queued; dry_run ignored),P2,fixed,platform,590acab
+QA-023,15,exam_cell,exams:moderate lost with the phase 43 ALL() narrowing (moderation proposals 403),P1,fixed,platform,5c8a605
+QA-024,16,auditor,GET /transcripts/requests 403 for auditor (spec: auditor reads all queues),P3,fixed,platform,14cf45e
+QA-025,34,(seed),affiliation approvals filed under a college-level academic year (08 seat matrix PROGRAM_NOT_APPROVED),P2,fixed,platform,99391ea
+QA-026,(seed),(credentials),seeders append duplicate rows to LOCAL_TEST_CREDENTIALS.md on every reseed (student_hold / student_arrear x28),P3,open,qa,
+QA-027,16-28,(qa),verify scripts 16-28 written against an unbuilt helper set / seed (Api/Step/Check; faculty.5/6 / office.1 / staff.1 / student.2 / grievance.off never seeded),P2,open,qa,

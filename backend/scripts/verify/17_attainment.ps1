@@ -8,7 +8,7 @@ $obe = Login "obe"; $hod = Login "hod.cse"; $fac = Login "faculty.1"; $iqac = Lo
 Step "1 configs"
 $runs = Api GET "/cqi-actions" $obe
 $progAction = $runs.data | Where-Object { $_.scope_type -eq "program" } | Select-Object -First 1
-$progId = $progAction.scope_id
+$progId = if ($progAction) { $progAction.scope_id } else { (Api GET "/programs?page_size=200&q=BTECH-CSE" $hod).data[0].id }
 $eff = Api GET "/attainment-configs/effective?program_id=$progId" $obe
 Check ($eff.data.levels.Count -ge 1) "effective config"
 $bad = @{ scope_type = "program"; scope_id = $progId; levels = @(@{ level = 1; min_pct = 60 }, @{ level = 2; min_pct = 50 }) }
