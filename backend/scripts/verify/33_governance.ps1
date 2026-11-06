@@ -87,9 +87,9 @@ Assert (@($lk.data | Where-Object { $_.id -eq $res.id }).Count -eq 1) "lookup re
 Call $reg GET "/governance/resolutions/$($res.id)/extract.pdf" | Out-Null
 
 Write-Host "== 6 ATR"
-$own = Call $hod GET "/governance/resolutions?scope=mine"
+$own = Call $fac GET "/governance/resolutions?scope=mine"   # action owner = faculty.1 (see $hodStaff)
 $r1 = @($own.data | Where-Object { $_.subject -eq "Curriculum revision" -and $_.status -ne "implemented" })[0]   # earlier runs leave implemented ones
-Call $hod POST "/governance/resolutions/$($r1.id)/atr" @{ report_text = "Revised scheme circulated" } 201 | Out-Null
+Call $fac POST "/governance/resolutions/$($r1.id)/atr" @{ report_text = "Revised scheme circulated" } 201 | Out-Null
 $r1d = Call $hod GET "/governance/resolutions/$($r1.id)"
 Call $secAc POST "/governance/atr/$($r1d.data.atr.id)/decide" @{ decision = "accepted" } | Out-Null
 Assert ((Call $hod GET "/governance/resolutions/$($r1.id)").data.status -eq "implemented") "implemented"

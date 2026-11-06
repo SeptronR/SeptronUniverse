@@ -115,6 +115,7 @@ $coE = Call $hodE GET "/risk/cohort?group_by=department"
 Assert (@($coE.data.cells).Count -le 1) "HOD ECE: own department only"
 $rs = Call $reg GET "/risk/students?level=high"
 $top = @($rs.data)[0]
+if (-not $top) { $top = @((Call $reg GET "/risk/students?level=medium").data)[0] }   # flags are recomputed; high may be empty
 Call $stu GET "/risk/students?level=high" $null 403 | Out-Null
 $iv = Call $hod POST "/risk/students/$($top.enrollment_id)/interventions" @{ intervention_type = "guardian_call"; notes = "verify 35" } 201
 $ivs = Call $hod GET "/risk/students/$($top.enrollment_id)/interventions"

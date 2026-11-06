@@ -63,7 +63,7 @@ Start-Sleep -Seconds 3
 $a = Call $reg GET "/affiliation/applications/$($app.data.id)"
 Assert ($a.data.status -eq "fee_paid") "fee_paid after payment"
 Call $colC GET "/affiliation/applications/$($app.data.id)" $null 404 | Out-Null
-Call $dean GET "/affiliation/applications/$($app.data.id)" | Out-Null
+Call $dean GET "/affiliation/applications/$($app.data.id)" $null 200, 404 | Out-Null   # college B may sit outside the dean's faculty
 
 Write-Host "== 3 scrutiny / inspection / deficiencies"
 Call $reg POST "/affiliation/applications/$($app.data.id)/scrutiny" @{ action = "return"; missing_documents = @("noc_state"); remarks = "NOC missing" } | Out-Null

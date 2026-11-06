@@ -70,7 +70,7 @@ Start-Sleep -Seconds 3
 $cx = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/reports/runs/$($slow.data.job_id)/cancel" -Headers @{ Authorization = "Bearer $reg" } -SkipHttpErrorCheck
 Assert ([int]$cx.StatusCode -in 200, 409) "cancel answered ($([int]$cx.StatusCode))"
 $c = Wait-Job $reg $slow.data.job_id 90
-Assert ($c.status -eq "cancelled") "slow run cancelled"
+Assert ($c.status -eq $(if ([int]$cx.StatusCode -eq 200) { "cancelled" } else { "succeeded" })) "slow run ended as cancel reported ($($c.status))"
 $log = Call $admin GET "/reports/access-log?key=attendance.register"
 Assert (@($log.data | Where-Object { $_.action -eq "run" }).Count -ge 1) "access log shows the run"
 

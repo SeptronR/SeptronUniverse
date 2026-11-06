@@ -55,7 +55,7 @@ $aff = Call $sa POST "/platform/institutions" @{ template = "affiliated"; plan_c
   institution = @{ name = "Verify Affiliated"; slug = "$slug-aff"; institution_type = "affiliated_college"; parent_university_name = "Verify University" }
   admin = @{ username = "admin"; email = "admin@$slug-aff.septronuniverse.in"; display_name = "Verify Admin" } } 201
 Assert ($null -ne $aff.data.main_college_id) "affiliated: main college"
-Call $sa POST "/platform/institutions" @{ template = "standalone"; institution = @{ name = "Dup"; slug = $slug; institution_type = "standalone_college" }; admin = @{ username = "admin"; email = "x@$slug.septronuniverse.in"; display_name = "X" } } 409 | Out-Null
+Call $sa POST "/platform/institutions" @{ template = "standalone"; institution = @{ name = "Dup"; slug = $slug; institution_type = "standalone_college" }; admin = @{ username = "admin"; email = "x@$slug.septronuniverse.in"; display_name = "XX" } } 409 | Out-Null
 
 Write-Host "== 3 lifecycle"
 Call $sa POST "/platform/institutions/$($col.id)/status" @{ action = "suspend"; reason = "verification" } | Out-Null

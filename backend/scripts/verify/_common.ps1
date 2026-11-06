@@ -54,7 +54,7 @@ function Call($token, $method, $path, $body = $null, $expect = 200, $headers = @
   }
   try { $r = Invoke-WebRequest @params }
   catch { throw "$method $path failed: $_" }
-  if ($r.StatusCode -ne $expect) { throw "$method $path expected $expect got $($r.StatusCode): $($r.Content)" }
+  if ([int]$r.StatusCode -notin @($expect)) { throw "$method $path expected $expect got $($r.StatusCode): $($r.Content)" }
   $script:Checks++
   Write-Host "OK $method $path -> $($r.StatusCode)"
   if ([string]::IsNullOrWhiteSpace($r.Content)) { return $null }
