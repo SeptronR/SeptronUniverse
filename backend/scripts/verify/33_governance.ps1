@@ -88,7 +88,7 @@ Call $reg GET "/governance/resolutions/$($res.id)/extract.pdf" | Out-Null
 
 Write-Host "== 6 ATR"
 $own = Call $hod GET "/governance/resolutions?scope=mine"
-$r1 = @($own.data | Where-Object { $_.subject -eq "Curriculum revision" })[0]
+$r1 = @($own.data | Where-Object { $_.subject -eq "Curriculum revision" -and $_.status -ne "implemented" })[0]   # earlier runs leave implemented ones
 Call $hod POST "/governance/resolutions/$($r1.id)/atr" @{ report_text = "Revised scheme circulated" } 201 | Out-Null
 $r1d = Call $hod GET "/governance/resolutions/$($r1.id)"
 Call $secAc POST "/governance/atr/$($r1d.data.atr.id)/decide" @{ decision = "accepted" } | Out-Null

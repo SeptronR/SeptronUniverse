@@ -58,7 +58,7 @@ $sub = Call $colB POST "/affiliation/applications/$($app.data.id)/action" @{ act
 Assert ($sub.data.status -eq "submitted") "submitted"
 $inv = Call $acct GET "/fees/invoices/$($sub.data.fee_invoice_id)"
 Assert ($inv.data.payer_type -eq "college" -and $inv.data.source_type -eq "affiliation_application") "college invoice"
-Call $acct POST "/fees/invoices/$($sub.data.fee_invoice_id)/collect" @{ mode = "neft"; amount_paise = $inv.data.balance_paise; reference = "DEV-NEFT-34" } | Out-Null
+Call $acct POST "/fees/collect" @{ invoice_id = $sub.data.fee_invoice_id; mode = "neft"; amount_paise = $inv.data.balance_paise; reference_no = "DEV-NEFT-34" } 200 @{ "Idempotency-Key" = [guid]::NewGuid().ToString() } | Out-Null
 Start-Sleep -Seconds 3
 $a = Call $reg GET "/affiliation/applications/$($app.data.id)"
 Assert ($a.data.status -eq "fee_paid") "fee_paid after payment"

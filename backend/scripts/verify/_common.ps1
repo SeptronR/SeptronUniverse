@@ -72,7 +72,7 @@ function Get-DemoPassword($role, $identifier = $null) {
   # LOCAL_TEST_CREDENTIALS.md (git-ignored): | role | identifier | password |.
   $file = Join-Path $PSScriptRoot "../../../LOCAL_TEST_CREDENTIALS.md"
   if (-not (Test-Path $file)) { throw "LOCAL_TEST_CREDENTIALS.md not found - run scripts/seed_demo_institution.py --only base" }
-  $rows = Get-Content $file | Where-Object { $_ -match "^\|\s*$role\s*\|" }
+  $rows = Get-Content $file | Where-Object { $_ -match "^\|\s*$([regex]::Escape($role))\s*\|" }
   # several accounts can share a role label (superadmin / superadmin.2): prefer the identifier's own row
   $line = $null
   if ($identifier) { $line = $rows | Where-Object { ($_ -split '\|')[2].Trim() -eq $identifier } | Select-Object -Last 1 }

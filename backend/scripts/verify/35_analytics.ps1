@@ -47,6 +47,7 @@ $df = Call $hod GET "/dashboard?role=faculty"
 Assert ($df.data.role -eq "faculty" -or $df.data.role -eq "hod") "role switch honoured when held"
 
 Write-Host "== 3 scope narrowing"
+$hod = Login "hod.cse"   # fresh token: the steps above can outlast the access token
 $hAll = Call $hod GET "/analytics/charts/students.enrolment_by_category?scope=all"
 Assert ($hAll.data.scope -eq "department") "HOD scope=all narrowed to department"
 $sl = Call $hod GET "/students?scope=department&size=1"

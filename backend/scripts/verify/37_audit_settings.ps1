@@ -45,7 +45,9 @@ $h = Call $hod GET "/audit-logs?scope=department&record_type=student"
 Assert ($h.meta.visibility.scopes -contains "department") "hod: department tab"
 $cb = Call $colB GET "/audit-logs?scope=college"
 Assert ($cb.meta.visibility.scopes -contains "college") "college admin B: college tab"
-Call $stu GET "/audit-logs" $null 403 | Out-Null
+# every user holds audit_logs:view: the explorer answers, limited to own rows
+$stuId = (Call $stu GET "/auth/me").data.user.id
+Assert (@((Call $stu GET "/audit-logs?page_size=100").data.items | Where-Object { $_.user.id -ne $stuId }).Count -eq 0) "student: own rows only"
 
 Write-Host "== 2 diff & masking + timeline"
 $st = (Call $reg GET "/students?size=1").data[0]

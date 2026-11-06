@@ -94,6 +94,7 @@ Call $fa POST "/research/ethics/approvals/$($app.data.id)/adverse-event" @{ kind
 
 Write-Host "== 7 incentives"
 $sci = @((Call $fa GET "/research/publications?indexing=sci&verified=true").data | Where-Object { $_.author_position -eq 1 })[0]
+& (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_purge.py") research_incentives "linked_entity->>'id' = '$($sci.id)'" | Out-Null   # previous run
 $inc = Call $fa POST "/research/incentives" @{ incentive_type = "publication_incentive"; linked_entity = @{ type = "publication"; id = $sci.id } } 201
 Assert ($inc.data.amount_paise -eq 2500000) "SCI first-author slab ₹25,000"
 Call $hod POST "/research/incentives/$($inc.data.id)/decide" @{ decision = "approve"; comment = "Recommended" } | Out-Null
