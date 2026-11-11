@@ -161,6 +161,12 @@ function Login-Mfa($role, $identifier) {
   }
   $body['mfa_code'] = Get-Totp $secret
   $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body ($body | ConvertTo-Json) -SkipHttpErrorCheck
+  if ($r.StatusCode -eq 401) {
+    # a code is accepted once (replay protection): several logins in one 30 s window need the next code
+    Start-Sleep -Seconds (31 - ([DateTimeOffset]::UtcNow.ToUnixTimeSeconds() % 30))
+    $body['mfa_code'] = Get-Totp $secret
+    $r = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/auth/login" -ContentType 'application/json' -Body ($body | ConvertTo-Json) -SkipHttpErrorCheck
+  }
   if ($r.StatusCode -ne 200) { throw "$identifier TOTP login failed: $($r.StatusCode) $($r.Content)" }
   return ($r.Content | ConvertFrom-Json).data.access_token
 }

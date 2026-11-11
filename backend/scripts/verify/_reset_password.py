@@ -68,7 +68,8 @@ async def reset_all() -> None:
             ),
             {"u": list(passwords)},
         )
-        stale = "SELECT id FROM users WHERE is_super_admin OR NOT (username = ANY(:t))"
+        # every demo enrolment is dropped: Login-Mfa re-enrols and records the new secret (a stored secret can go stale)
+        stale = "SELECT id FROM users WHERE is_super_admin OR username = ANY(:t) OR NOT (username = ANY(:t))"
         await conn.execute(text(f"DELETE FROM mfa_secrets WHERE user_id IN ({stale})"), {"t": list(totp)})
         await conn.execute(
             text(f"UPDATE users SET mfa_enabled = FALSE WHERE id IN ({stale}) AND mfa_enabled"), {"t": list(totp)}

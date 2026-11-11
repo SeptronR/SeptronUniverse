@@ -32,6 +32,10 @@ async def seed_super_admin(conn: AsyncConnection, reset: bool = False) -> str | 
     from app.core.config import settings
     from app.core.security import generate_temp_password, hash_password
 
+    # Production creates the first super admin through POST /install (INSTALL_SECRET_KEY) — a seeded one would make
+    # /install keep a password nobody knows, and the credentials file is not writable inside the image
+    if settings.APP_ENV == "production":
+        return None
     exists = (
         await conn.execute(
             text("SELECT id FROM users WHERE is_super_admin AND deleted_at IS NULL ORDER BY created_at LIMIT 1")
