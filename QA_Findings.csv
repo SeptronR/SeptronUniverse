@@ -11,7 +11,7 @@ QA-008,42,(mobile),lib/l10n: 10 locale ARBs missing 18 of 19 keys (check_l10n.da
 QA-009,42,warden,42_mobile.ps1 warden /auth/me assert fails,P2,fixed,qa,91df8f3
 QA-010,43,privacy_officer,seed writes no privacy_officer row to LOCAL_TEST_CREDENTIALS.md (43_hardening.ps1),P3,fixed,qa,e57c091
 QA-011,44,(ops),Docker builds / compose stack / restore drill not runnable locally (no hypervisor),P3,blocked,ops,
-QA-012,02-38,(api),api_all 00-38 fixture drift: feature dependants added by later phases (e.g. comms.whatsapp / portals.*) break older toggles,P2 - 02 fixed (13e5ef2); api_all 2026-11-01 37/46 fail (36 min) on per-script drift,open,qa,13e5ef2
+QA-012,02-38,(api),api_all 00-38 fixture drift: feature dependants added by later phases (e.g. comms.whatsapp / portals.*) break older toggles,P2 - 02 fixed (13e5ef2); api_all 2026-11-01 37/46 fail (36 min) on per-script drift - 2026-11-11 full run 22/46 fail (stall + TOTP cascade; fixed after); every script 00-38 passed individually at least once,open,qa,
 QA-013,40,(public),GET /site/demo-uni/catalogue 500 (colleges.institution_type),P1,fixed,platform,ba2fc60
 QA-014,34,(seed),affiliation seeder fails on soft-deleted demo colleges,P2,fixed,platform,6d6001b
 QA-015,40,(database),institution_settings UNIQUE treated college_id NULL as distinct: settings upserts duplicated rows; website publish never listed in versions,P1,fixed,platform,8cbdad4
@@ -27,3 +27,14 @@ QA-024,16,auditor,GET /transcripts/requests 403 for auditor (spec: auditor reads
 QA-025,34,(seed),affiliation approvals filed under a college-level academic year (08 seat matrix PROGRAM_NOT_APPROVED),P2,fixed,platform,99391ea
 QA-026,(seed),(credentials),seeders append duplicate rows to LOCAL_TEST_CREDENTIALS.md on every reseed (student_hold / student_arrear x28),P3,open,qa,
 QA-027,16-28,(qa),verify scripts 16-28 written against an unbuilt helper set / seed (Api/Step/Check; faculty.5/6 / office.1 / staff.1 / student.2 / grievance.off never seeded),P2,open,qa,
+QA-028,21,driver,driver acting on another vehicle / trip gets 404 (spec says 403); access refused either way,P3,open,platform,
+QA-029,23,faculty/hod,grant ledgers readable by every faculty / HOD (research:view_all reached via research:manage / department scope),P1,fixed,platform,615994b
+QA-030,24-25,(api),GROUP BY with bound parameters 500 (campaign report / delivery analytics / event counts / health trend); vendor bill list 500,P1,fixed,platform,3eb22f7
+QA-031,22-27,(seed),number sequences left at 1 behind directly seeded numbers (first real PO / GRN / grievance / indent collided),P2,fixed,platform,6b0a656
+QA-032,32,iqac,NAAC compute fails on obe.po_attainment NULL average,P2,fixed,platform,0a40208
+QA-033,29,accountant,80G receipt reissue always 409 (same issued document number),P2,fixed,platform,9954d76
+QA-034,37,hod/registrar/auditor/vc,existing tenants missed 5 template grants (audit_logs:view_all / verify_chain / support:view_all / facilities:counsel / settings:manage) - 0048 backfill,P2,fixed,platform,9954d76
+QA-035,36,hod,degree register runnable by HOD (spec 403),P2,fixed,platform,18a5e10
+QA-036,37,institution_admin,audit verify-chain: row chain intact (first_broken null) but stored daily digests 2026-11-03/04 differ from recomputed,P1,open,platform,
+QA-037,03,(api),api_all run stalled ~5 days inside 03_institution (earlier also a hang at 50 concurrent number-sequence next calls) - concurrency / pool hang suspected,P1,open,platform,
+QA-038,(dev),(ops),Celery worker on the dev fakeredis stalls after days (725 pending outbox events); restart drains,P3,open,ops,
