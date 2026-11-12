@@ -9,13 +9,9 @@
 
 name: Frontend Deploy
 
+# Manual only: production web ships as the universe-web image (build.yml → orbit-infra), so pushes must not also run a
+# static lane.
 on:
-  push:
-    branches: [develop, main, 'release/**']
-    tags: ['v*']
-    paths:
-      - 'frontend/**'
-      - '.github/workflows/frontend-deploy.yml'
   workflow_dispatch:
     inputs:
       env:
