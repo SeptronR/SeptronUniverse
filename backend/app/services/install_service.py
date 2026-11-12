@@ -16,7 +16,9 @@ and from the ``/install`` endpoint. Everything is idempotent (``ON CONFLICT DO N
 Business rules of ``InstallService`` (rule 1 of the prompt): ``POST /install`` is guarded by ``INSTALL_SECRET_KEY``,
 runs once (``platform_settings['installed']`` → ``409 CONFLICT`` afterwards), seeds the registries, creates the
 super admin with ``must_change_password`` — an **existing** super admin is never touched, so the install key can
-never reset live platform credentials — and records the install stamp.
+never reset live platform credentials; the one exception is the schema-seeded placeholder while it still has its
+published password, which is taken over with the installer's username / email / password — and records the install
+stamp.
 """
 
 import json
@@ -33,7 +35,10 @@ from app.core.config import settings
 from app.core.errors import APIError, ErrorCode
 from app.core.feature_doc import load_doc_features
 from app.core.rbac.registry import PERMISSIONS, ROLE_META, ROLE_TEMPLATES, template_permissions
-from app.core.security import check_password_policy, hash_password
+from app.core.security import check_password_policy, hash_password, verify_password
+
+# Database_Schema.sql §36.7 seeds `superadmin` with this published password; /install replaces that placeholder
+SCHEMA_BOOTSTRAP_PASSWORD = "ChangeMe@1234"  # noqa: S105 - public by design, only used to recognise the placeholder
 
 TIER_ORDER = ["starter", "standard", "professional", "university"]
 PLANS: tuple[tuple[str, str, str, int, int, int, int], ...] = (  # §36.3 (code, name, tier, students, staff, gb, sms)
@@ -242,9 +247,25 @@ class InstallService:
         check_password_policy(password)
         counts = await conn.run_sync(seed_registries)
         existing = (
-            await self.db.execute(text("SELECT id FROM users WHERE is_super_admin AND deleted_at IS NULL LIMIT 1"))
+            await self.db.execute(
+                text(
+                    "SELECT id, password_hash FROM users WHERE is_super_admin AND deleted_at IS NULL "
+                    "ORDER BY created_at LIMIT 1"
+                )
+            )
         ).first()
-        if existing:
+        if existing and verify_password(SCHEMA_BOOTSTRAP_PASSWORD, existing[1]):
+            # The Database_Schema.sql §36.7 placeholder (revision 0001) still has its published password, so it is not a
+            # live credential: take it over with the installer's identity instead of leaving the default in place.
+            super_admin_id = uuid.UUID(str(existing[0]))
+            await self.db.execute(
+                text(
+                    "UPDATE users SET username = :username, email = :email, password_hash = :hash, "
+                    "must_change_password = TRUE, password_changed_at = NOW(), updated_at = NOW() WHERE id = :id"
+                ),
+                {"id": super_admin_id, "username": username, "email": email, "hash": hash_password(password)},
+            )
+        elif existing:
             # A super admin already exists (seed_platform / a previous install): the install key must never be able to
             # reset live platform credentials — the account is kept untouched and only the registries are (re)seeded.
             super_admin_id = uuid.UUID(str(existing[0]))
