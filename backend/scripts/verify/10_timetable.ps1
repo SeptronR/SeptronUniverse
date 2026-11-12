@@ -80,7 +80,7 @@ SqlW "UPDATE course_offering_faculty SET hours_per_week=GREATEST(hours_per_week,
 Write-Host "== 1. rooms"
 $r1 = (Call $estate POST "/rooms" @{ college_id = $cse.college_id; code = 'VR1'; name = 'Verify room 1'; room_type = 'classroom'; capacity = 70; exam_capacity = 35 } 201).data
 $r2 = (Call $estate POST "/rooms" @{ college_id = $cse.college_id; code = 'VR2'; name = 'Verify room 2'; room_type = 'classroom'; capacity = 70 } 201).data
-$small = (Call $estate POST "/rooms" @{ college_id = $cse.college_id; code = 'VR3'; name = 'Verify small room'; room_type = 'classroom'; capacity = 10 } 201).data
+$small = (Call $estate POST "/rooms" @{ college_id = $cse.college_id; code = 'VR3'; name = 'Verify small room'; room_type = 'classroom'; capacity = 1 } 201).data   # smaller than any real class (enrolled or section size)
 Err $estate POST "/rooms" @{ college_id = $cse.college_id; code = 'VR9'; name = 'Bad'; capacity = 40; exam_capacity = 50 } 422 | Out-Null
 Err $estate POST "/rooms" @{ college_id = $cse.college_id; code = 'VR1'; name = 'Dup'; capacity = 40 } 409 | Out-Null
 Err $f1 POST "/rooms" @{ college_id = $cse.college_id; code = 'VR8'; name = 'Nope'; capacity = 40 } 403 | Out-Null
@@ -121,7 +121,7 @@ Write-Host "== 4. faculty + capacity"
 $e = Err $hod POST "/timetables/$($tt.id)/entries" @{ offering_id = $cs201A; day_of_week = 6; time_slot_id = $P['P6']; room_id = $r1.id; staff_id = $f3staff } 422
 Assert ($e.error.details.reason -eq 'staff_not_allocated') "staff not in course_offering_faculty → 422"
 $cap = (Call $hod POST "/timetables/$($tt.id)/entries" @{ offering_id = $ma201A; section_id = $secA; day_of_week = 6; time_slot_id = $P['P7']; room_id = $small.id; staff_id = $f1staff } 201).data
-Assert ($cap.warnings.capacity.Count -ge 1) "room of 10 < class size → warnings.capacity"
+Assert ($cap.warnings.capacity.Count -ge 1) "room of 1 < class size → warnings.capacity"
 
 # ---- 5. publish + sessions --------------------------------------------------------------------------------------------------
 Write-Host "== 5. publish"
@@ -203,7 +203,8 @@ Err $hod POST "/substitutions/$($sub2.id)/approve" @{ substitute_staff_id = $f2s
 
 # ---- 9. auto from leave -----------------------------------------------------------------------------------------------------------------
 Write-Host "== 9. leave → substitutions"
-$two = (Sql "SELECT session_date FROM class_sessions WHERE staff_id='$f1staff' AND status='scheduled' AND session_date > CURRENT_DATE + 7 AND timetable_entry_id IS NOT NULL ORDER BY session_date LIMIT 1")[0].session_date
+# first date without open substitutions (06's leave for faculty.1 already raised some)
+$two = (Sql "SELECT session_date FROM class_sessions c WHERE staff_id='$f1staff' AND status='scheduled' AND session_date > CURRENT_DATE + 7 AND timetable_entry_id IS NOT NULL AND NOT EXISTS (SELECT 1 FROM timetable_substitutions s WHERE s.timetable_entry_id = c.timetable_entry_id AND s.on_date = c.session_date AND s.status IN ('requested', 'approved')) ORDER BY session_date LIMIT 1")[0].session_date
 $from = ([datetime]$two).ToString('yyyy-MM-dd')
 $expectedAuto = (Sql "SELECT COUNT(*) AS n FROM class_sessions c WHERE c.staff_id='$f1staff' AND c.status='scheduled' AND c.timetable_entry_id IS NOT NULL AND c.session_date='$from' AND NOT EXISTS (SELECT 1 FROM timetable_substitutions s WHERE s.timetable_entry_id=c.timetable_entry_id AND s.on_date=c.session_date AND s.status IN ('requested','approved'))")[0].n
 $lt = (Sql "SELECT id FROM leave_types WHERE institution_id='$inst' LIMIT 1")[0].id

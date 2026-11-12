@@ -559,6 +559,9 @@ class ReportService(ReportsBase):
         key = REGISTER_KEYS.get(body.register_name)
         if key is None:
             raise not_found("Register")
+        # the degree register is an office record: read access to degrees (HOD) does not cover it (Prompts/36 step 6)
+        if body.register_name == "degree" and not (self.can("degrees", "award") or self.can("degrees", "manage")):
+            raise forbidden("degrees:award required")
         params = dict(body.scope)
         if body.period:
             if body.period.from_:

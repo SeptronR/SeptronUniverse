@@ -1,7 +1,7 @@
 # Phase 26 — document templates, certificates & requests (Prompts/26 §26.11). Run after `seed_demo_institution.py --only documents`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $office = Login "office.1"; $hod = Login "hod.cse"; $stu = Login "student.1"
 $hr = Login "hr"; $coe = Login "coe"; $staff = Login "staff.1"; $aud = Login "auditor.tmp"; $par = Login "parent.1"
@@ -26,8 +26,8 @@ ExpectStatus 403 { Api POST "/documents/templates" $reg @{ template_type = "bona
 
 Step "3 render API"
 $me = Api GET "/students/me" $stu
-$r1 = Api POST "/documents/render" $office @{ template_type = "bonafide"; entity_type = "student_program_enrollment"; entity_id = $me.data.enrollments[0].id; register = "bonafide" }
-$r2 = Api POST "/documents/render" $office @{ template_type = "bonafide"; entity_type = "student_program_enrollment"; entity_id = $me.data.enrollments[0].id; register = "bonafide" }
+$r1 = Api POST "/documents/render" $office @{ template_type = "bonafide"; entity_type = "student_program_enrollment"; entity_id = $me.data.enrollment.id; register = "bonafide" }
+$r2 = Api POST "/documents/render" $office @{ template_type = "bonafide"; entity_type = "student_program_enrollment"; entity_id = $me.data.enrollment.id; register = "bonafide" }
 Check ($r1.data.issued_document_id -eq $r2.data.issued_document_id) "idempotent"
 ExpectStatus 403 { Api POST "/documents/render" $stu @{ template_type = "bonafide"; entity_type = "student"; entity_id = $me.data.id } }
 
@@ -55,6 +55,8 @@ Check ($rc.data.reserved -ge 5) "reconcile"
 Step "8 requests"
 $types = Api GET "/certificate-requests/types" $stu
 Check (($types.data | Where-Object { $_.template_type -eq "bonafide" }).allowed) "bonafide allowed"
+# reset: the previous run's open requests (FK-aware)
+& (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_purge.py") certificate_requests "template_type IN ('conduct', 'experience') AND status <> 'issued' AND created_at > NOW() - INTERVAL '14 days'" | Out-Null
 $q = Api POST "/certificate-requests" $stu @{ template_type = "conduct"; copies = 2; purpose = "verify" }
 Check ($q.data.status -eq "fee_pending") "fee pending"
 ExpectStatus 409 { Api POST "/certificate-requests" $stu @{ template_type = "conduct" } }
@@ -64,5 +66,6 @@ $hq = Api GET "/certificate-requests?template_type=experience" $hr
 Check ($hq.data.id -contains $x.data.id) "hr queue"
 
 Step "11 verification"
-ExpectStatus 404 { Invoke-RestMethod "$Base/verify/deadbeef" }
+$bad = Invoke-RestMethod "$Base/verify/deadbeef"   # public check: 200 with valid=false and no holder data
+Check (-not $bad.data.valid -and -not $bad.data.holder_name) "bad token is invalid, discloses nothing"
 Done

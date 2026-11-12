@@ -298,12 +298,15 @@ export function PortalNotificationsPage() {
           </CardContent>
         </Card>
       ))}
-      <div className="flex flex-wrap items-center gap-2" role="tablist">
-        {['', ...cats].map((k) => (
-          <button key={k || 'all'} role="tab" aria-selected={cat === k} className={`rounded-full border px-3 py-1 text-xs ${cat === k ? 'bg-primary text-primary-foreground' : ''}`} onClick={() => setCat(k)}>
-            {k || 'All'} {k ? `(${c.unread_by_category[k]})` : c ? `(${c.unread})` : ''}
-          </button>
-        ))}
+      <div className="flex flex-wrap items-center gap-2">
+        {/* only role="tab" children may live inside the tablist (axe aria-required-children) */}
+        <div className="flex flex-wrap items-center gap-2" role="tablist" aria-label="Categories">
+          {['', ...cats].map((k) => (
+            <button key={k || 'all'} role="tab" aria-selected={cat === k} className={`rounded-full border px-3 py-1 text-xs ${cat === k ? 'bg-primary text-primary-foreground' : ''}`} onClick={() => setCat(k)}>
+              {k || 'All'} {k ? `(${c.unread_by_category[k]})` : c ? `(${c.unread})` : ''}
+            </button>
+          ))}
+        </div>
         <label className="ml-auto flex items-center gap-2 text-xs"><Switch checked={unread} onCheckedChange={setUnread} /> Unread only</label>
         {cat && (
           c?.snoozed?.[cat]

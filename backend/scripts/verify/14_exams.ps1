@@ -62,6 +62,8 @@ $s1enrol = (Sql "SELECT e.id FROM students s JOIN users u ON u.id=s.user_id JOIN
 
 # ---- 0. reset ------------------------------------------------------------------------------------------------------------
 SqlW "DELETE FROM exam_sessions WHERE name LIKE 'verify-14%'"
+# phase 12's overdue-fee job places exam holds on student.1 (seeded invoices): clear them for the registration flow
+SqlW "UPDATE student_holds SET released_at = NOW() WHERE student_program_enrollment_id = '$s1enrol' AND hold_type = 'exam' AND released_at IS NULL"
 
 # ---- 1. sessions ---------------------------------------------------------------------------------------------------------
 Write-Host "== 1. sessions"

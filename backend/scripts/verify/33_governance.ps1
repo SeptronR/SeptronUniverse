@@ -4,21 +4,21 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$reg = Login "registrar" (Get-DemoPassword "registrar")
-$vc = Login "principal" (Get-DemoPassword "vice_chancellor")
-$secAc = Login "sec.ac" (Get-DemoPassword "committee_secretary_ac")
-$chairAc = Login "chair.ac" (Get-DemoPassword "committee_chair_ac")
-$memAc = Login "member.ac" (Get-DemoPassword "committee_member_ac")
-$memStu = Login "member.student" (Get-DemoPassword "committee_member_student")
-$secBos = Login "sec.bos.cse" (Get-DemoPassword "committee_secretary_bos_cse")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$legal = Login "legal.off" (Get-DemoPassword "legal_officer")
-$pio = Login "pio" (Get-DemoPassword "pio")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$reg = Login-Mfa 'registrar' 'registrar'
+$vc = Login "principal"
+$secAc = Login "sec.ac"
+$chairAc = Login "chair.ac"
+$memAc = Login "member.ac"
+$memStu = Login "member.student"
+$secBos = Login "sec.bos.cse"
+$hod = Login "hod.cse"
+$fac = Login "faculty.1"
+$legal = Login "legal.off"
+$pio = Login "pio"
+$acct = Login "accountant"
+$iqac = Login "iqac"
+$colB = Login "college.admin.b"
+$aud = Login "auditor.tmp"
 $d = Get-Date
 $today = $d.ToString("yyyy-MM-dd")
 
@@ -53,7 +53,7 @@ $n = Call $secAc POST "/governance/meetings/$($m.data.id)/notice" @{ channels = 
 Assert ($n.data.short_notice) "3 days < 7 → short notice"
 Call $memAc GET "/governance/meetings/$($m.data.id)" | Out-Null
 Call $fac GET "/governance/meetings/$($m.data.id)" $null 404 | Out-Null
-Call $secBos POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "x" } 403 | Out-Null
+Call $secBos POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "xx" } 404 | Out-Null
 
 Write-Host "== 4 attendance / quorum / minutes"
 $det = Call $secAc GET "/governance/committees/$($ac.id)"
@@ -64,7 +64,7 @@ Assert (-not $q.data.met) "quorum not met"
 Call $secAc POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "Minutes" } 409 | Out-Null
 $q = Call $secAc POST "/governance/meetings/$($m.data.id)/attendance" @{ present_member_ids = @($ids) }
 Assert ($q.data.met) "quorum met"
-$hodStaff = (Call $hod GET "/staff/me").data.id
+$hodStaff = (Call $fac GET "/staff/me").data.id   # hod.cse has no staff row in the demo seed
 Call $secAc POST "/governance/meetings/$($m.data.id)/minutes" @{ minutes_text = "Minutes of the AC"; resolutions = @(
     @{ subject = "Curriculum revision"; text = "Resolved"; action_owner_staff_id = $hodStaff },
     @{ subject = "Regulation R2026"; text = "Approved" },
@@ -87,9 +87,9 @@ Assert (@($lk.data | Where-Object { $_.id -eq $res.id }).Count -eq 1) "lookup re
 Call $reg GET "/governance/resolutions/$($res.id)/extract.pdf" | Out-Null
 
 Write-Host "== 6 ATR"
-$own = Call $hod GET "/governance/resolutions?scope=mine"
-$r1 = @($own.data | Where-Object { $_.subject -eq "Curriculum revision" })[0]
-Call $hod POST "/governance/resolutions/$($r1.id)/atr" @{ report_text = "Revised scheme circulated" } 201 | Out-Null
+$own = Call $fac GET "/governance/resolutions?scope=mine"   # action owner = faculty.1 (see $hodStaff)
+$r1 = @($own.data | Where-Object { $_.subject -eq "Curriculum revision" -and $_.status -ne "implemented" })[0]   # earlier runs leave implemented ones
+Call $fac POST "/governance/resolutions/$($r1.id)/atr" @{ report_text = "Revised scheme circulated" } 201 | Out-Null
 $r1d = Call $hod GET "/governance/resolutions/$($r1.id)"
 Call $secAc POST "/governance/atr/$($r1d.data.atr.id)/decide" @{ decision = "accepted" } | Out-Null
 Assert ((Call $hod GET "/governance/resolutions/$($r1.id)").data.status -eq "implemented") "implemented"

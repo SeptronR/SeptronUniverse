@@ -19,7 +19,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUTF8=1 \
     PIP_NO_CACHE_DIR=1 \
     APP_VERSION=${APP_VERSION} \
-    WEB_CONCURRENCY=4
+    WEB_CONCURRENCY=4 \
+    SCHEMA_SQL_PATH=/app/Database_Schema.sql \
+    FEATURE_DOC_PATH=/app/docs/Feature_Flags.md
 
 # WeasyPrint (pango / cairo / gdk-pixbuf), python-magic, Noto fonts incl. Indic scripts for certificates / hall
 # tickets, curl for healthchecks, tini as PID 1, pg client for the restore drill / ops scripts
@@ -32,8 +34,11 @@ WORKDIR /app
 COPY --from=builder /wheels /wheels
 RUN pip install --no-index --find-links=/wheels /wheels/*.whl && rm -rf /wheels
 
+# The build context is backend/; CI copies Database_Schema.sql (revision 0001) and docs/Feature_Flags.md into it first
+# (see .github/workflows/build.yml) so the image migrates a fresh database without the repository checkout.
 COPY . .
-RUN groupadd --system app && useradd --system --gid app --home /app app \
+# Fixed uid/gid 10002: orbit-infra chowns the bind-mounted uploads directory to it
+RUN groupadd --system --gid 10002 app && useradd --system --uid 10002 --gid app --home /app app \
     && mkdir -p /app/uploads /app/reports && chown -R app:app /app/uploads /app/reports \
     && chmod +x /app/docker-entrypoint.sh
 USER app

@@ -28,14 +28,14 @@ class ReportsRepository {
 
   Future<List<Map<String, dynamic>>> catalogue() async {
     final r = await _dio.get<Map<String, dynamic>>('/reports/catalogue');
-    return ((r.data?['data'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+    return ((r.data?['data'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
   }
 
   Future<List<Map<String, dynamic>>> runs() async {
     final r = await _dio.get<Map<String, dynamic>>('/reports/runs', queryParameters: {'scope': 'mine', 'size': 50});
     final data = r.data?['data'];
     final items = data is Map ? data['items'] : data;
-    return ((items as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+    return ((items as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
   }
 
   Future<Map<String, dynamic>> run(String key, Map<String, dynamic> params, String format) async {

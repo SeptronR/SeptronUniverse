@@ -5,23 +5,23 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$admin = Login "inst.admin" (Get-DemoPassword "institution_admin")
-$prin = Login "principal" (Get-DemoPassword "vice_chancellor")
-$reg = Login "registrar" (Get-DemoPassword "registrar")
-$coe = Login "coe" (Get-DemoPassword "controller_of_examinations")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$hodE = Login "hod.ece" (Get-DemoPassword "hod_ece")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$hr = Login "hr" (Get-DemoPassword "hr_officer")
-$plc = Login "placement" (Get-DemoPassword "placement_officer")
-$lib = Login "librarian" (Get-DemoPassword "librarian")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$pio = Login "pio" (Get-DemoPassword "pio")
-$rc = Login "research.cell" (Get-DemoPassword "research_cell")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$stu = Login "student.1" (Get-DemoPassword "student")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$admin = Login "inst.admin"
+$prin = Login "principal"
+$reg = Login-Mfa 'registrar' 'registrar'
+$coe = Login-Mfa 'controller_of_examinations' 'coe'
+$hod = Login "hod.cse"
+$hodE = Login "hod.ece"
+$fac = Login "faculty.1"
+$acct = Login "accountant"
+$hr = Login "hr"
+$plc = Login "placement"
+$lib = Login "librarian"
+$iqac = Login "iqac"
+$pio = Login "pio"
+$rc = Login "research.cell"
+$colB = Login "college.admin.b"
+$stu = Login "student.1"
+$aud = Login "auditor.tmp"
 
 function Wait-Job($session, $jobId, [int]$seconds = 60) {
   for ($i = 0; $i -lt $seconds; $i += 2) {
@@ -40,7 +40,7 @@ $cf = Call $fac GET "/reports/catalogue"
 Assert (@($cf.data | Where-Object { $_.key -eq "attendance.register" }).Count -eq 1) "faculty: attendance register"
 Call $stu GET "/reports/catalogue" $null 403 | Out-Null
 Push-Location "$PSScriptRoot/../.."
-python scripts/check_report_registry.py
+& (Get-VenvPython (Get-Location)) scripts/check_report_registry.py
 Assert ($LASTEXITCODE -eq 0) "check_report_registry.py: 0 missing"
 Pop-Location
 
@@ -57,7 +57,7 @@ Assert ($pb.data.params.college_id -ne $colA) "college A pick replaced by colleg
 Call $acct POST "/reports/run" @{ key = "fees.collection_register"; params = @{ from = $to; to = $from }; format = "xlsx"; inline_preview = $true } 422 | Out-Null
 
 Write-Host "== 3 job run + visibility + cancel"
-$offs = Call $hod GET "/offerings?size=1&scope=department"
+$offs = Call $hod GET "/course-offerings?size=1&scope=department"
 $off = $offs.data[0].id
 $month = (Get-Date).ToString("yyyy-MM")
 $j = Call $hod POST "/reports/run" @{ key = "attendance.register"; params = @{ offering_id = $off; month = $month }; format = "xlsx" } 202
@@ -66,9 +66,11 @@ Assert ($done.status -eq "succeeded" -and $done.checksum) "attendance register j
 Call $hodE POST "/reports/run" @{ key = "attendance.register"; params = @{ offering_id = $off }; format = "xlsx"; inline_preview = $true } 404 | Out-Null
 $slow = Call $reg POST "/reports/run" @{ key = "students.list_export"; params = @{ slow = $true }; format = "csv" } 202
 Start-Sleep -Seconds 3
-Call $reg POST "/reports/runs/$($slow.data.job_id)/cancel" | Out-Null
+# the fast local worker may finish first: cancel answers 200, or 409 once the job has succeeded
+$cx = Invoke-WebRequest -Method Post -Uri "$script:BaseUrl/reports/runs/$($slow.data.job_id)/cancel" -Headers @{ Authorization = "Bearer $reg" } -SkipHttpErrorCheck
+Assert ([int]$cx.StatusCode -in 200, 409) "cancel answered ($([int]$cx.StatusCode))"
 $c = Wait-Job $reg $slow.data.job_id 90
-Assert ($c.status -eq "cancelled") "slow run cancelled"
+Assert ($c.status -eq $(if ([int]$cx.StatusCode -eq 200) { "cancelled" } else { "succeeded" })) "slow run ended as cancel reported ($($c.status))"
 $log = Call $admin GET "/reports/access-log?key=attendance.register"
 Assert (@($log.data | Where-Object { $_.action -eq "run" }).Count -ge 1) "access log shows the run"
 

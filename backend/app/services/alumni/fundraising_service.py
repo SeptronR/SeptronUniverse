@@ -849,7 +849,7 @@ class FundraisingService(AlumniBase):
             )
         return Receipt80GOut(donation_id=d.id, receipt_no=d.receipt_no, receipt_document_id=doc_id)
 
-    async def _render(self, d: Donation, *, supersedes: Any = None) -> uuid.UUID | None:
+    async def _render(self, d: Donation, *, supersedes: Any = None, revision: int = 0) -> uuid.UUID | None:
         from app.services.documents.render_service import RenderService
 
         try:
@@ -857,7 +857,8 @@ class FundraisingService(AlumniBase):
                 "donation_receipt_80g",
                 "donation",
                 d.id,
-                document_number=d.receipt_no,
+                # issued_documents numbers are unique: a reissue keeps the donation's receipt number, its document gets /R<n>
+                document_number=f"{d.receipt_no}/R{revision}" if revision else d.receipt_no,
                 supersedes=supersedes,
                 issued_by=self.actor_id,
             )
@@ -896,7 +897,7 @@ class FundraisingService(AlumniBase):
         )
         await self.put_meta("donation", d.id, m)
         await self.db.flush()
-        new_id = await self._render(d, supersedes=old)
+        new_id = await self._render(d, supersedes=old, revision=len(m["receipts"]))
         await self._audit(
             "receipt_80g_reissue", ENTITY, d.id, before, {**body.model_dump(exclude={"pan"}), "pan": bool(body.pan)}
         )

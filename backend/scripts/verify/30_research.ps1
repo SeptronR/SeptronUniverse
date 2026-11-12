@@ -4,20 +4,20 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$cell = Login "research.cell" (Get-DemoPassword "research_cell")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$hodE = Login "hod.ece" (Get-DemoPassword "hod_ece")
-$dean = Login "dean.eng" (Get-DemoPassword "dean")
-$prin = Login "principal" (Get-DemoPassword "vice_chancellor")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$fa = Login "faculty.a" (Get-DemoPassword "faculty_a")
-$fb = Login "faculty.b" (Get-DemoPassword "faculty_b")
-$fe = Login "faculty.ece" (Get-DemoPassword "faculty_ece")
-$chair = Login "ethics.chair" (Get-DemoPassword "ethics_chair")
-$member = Login "ethics.member" (Get-DemoPassword "ethics_member")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$cell = Login "research.cell"
+$hod = Login "hod.cse"
+$hodE = Login "hod.ece"
+$dean = Login "dean.eng"
+$prin = Login "principal"
+$acct = Login "accountant"
+$fa = Login "faculty.a"
+$fb = Login "faculty.b"
+$fe = Login "faculty.ece"
+$chair = Login "ethics.chair"
+$member = Login "ethics.member"
+$iqac = Login "iqac"
+$colB = Login "college.admin.b"
+$aud = Login "auditor.tmp"
 $year = (Get-Date).Year
 
 Write-Host "== 1 stats / scopes"
@@ -63,7 +63,7 @@ $sa = Call $cell POST "/research/projects/$($pr.data.id)/action" @{ action = "sa
 $inbox = Call $prin GET "/workflow/inbox"
 $wf = @($inbox.data | Where-Object { $_.instance_id -eq $sa.data.workflow_instance_id })[0]
 Call $prin POST "/workflow/instances/$($sa.data.workflow_instance_id)/act" @{ decision = "approve"; comment = "Acknowledged" } | Out-Null
-Start-Sleep -Seconds 3
+Start-Sleep -Seconds 15   # outbox relay runs every 5 s; the ledger consumer follows
 $prg = Call $fa GET "/research/projects/$($pr.data.id)"
 Assert ($prg.data.status -eq "sanctioned" -and $prg.data.grant_ledger_id) "sanctioned + Phase 23 ledger linked"
 Call $fe GET "/research/projects/$($pr.data.id)" $null 404 | Out-Null
@@ -94,6 +94,7 @@ Call $fa POST "/research/ethics/approvals/$($app.data.id)/adverse-event" @{ kind
 
 Write-Host "== 7 incentives"
 $sci = @((Call $fa GET "/research/publications?indexing=sci&verified=true").data | Where-Object { $_.author_position -eq 1 })[0]
+& (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_purge.py") research_incentives "linked_entity->>'id' = '$($sci.id)'" | Out-Null   # previous run
 $inc = Call $fa POST "/research/incentives" @{ incentive_type = "publication_incentive"; linked_entity = @{ type = "publication"; id = $sci.id } } 201
 Assert ($inc.data.amount_paise -eq 2500000) "SCI first-author slab ₹25,000"
 Call $hod POST "/research/incentives/$($inc.data.id)/decide" @{ decision = "approve"; comment = "Recommended" } | Out-Null
@@ -112,7 +113,9 @@ Assert (@($cmp.data).Count -gt 0) "compliance rows for CSE"
 Write-Host "== 9 MoUs"
 $m = Call $cell POST "/research/mous" @{ partner = "Verify Industries"; partner_type = "industry"; mou_type = "placement" } 201
 Call $cell POST "/research/mous/$($m.data.id)/submit" | Out-Null
-Call $prin POST "/workflow/instances/$((Call $cell GET "/research/mous/$($m.data.id)").data.workflow_instance_id)/act" @{ decision = "approve" } | Out-Null
+$mw = (Call $cell GET "/research/mous/$($m.data.id)").data.workflow_instance_id
+Call $cell POST "/workflow/instances/$mw/act" @{ decision = "approve" } | Out-Null                 # step 1 research cell
+Call (Login "legal.off") POST "/workflow/instances/$mw/act" @{ decision = "approve" } | Out-Null   # step 2 legal officer
 $sg = Call $cell POST "/research/mous/$($m.data.id)/sign" @{ signed_on = (Get-Date).ToString("yyyy-MM-dd"); valid_to = (Get-Date).AddDays(60).ToString("yyyy-MM-dd") }
 Assert ($sg.data.status -eq "active" -and $sg.data.expiry -eq "expiring") "active, expiring chip"
 Call $cell POST "/research/mous/$($m.data.id)/collaborations" @{ title = "Summer internships"; collaboration_type = "internship" } 201 | Out-Null

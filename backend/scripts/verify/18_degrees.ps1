@@ -1,7 +1,7 @@
 # Phase 18 — degrees, convocation & digital credentials (Prompts/18 §18.11). Run after `seed_demo_institution.py --only degrees`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $coe = Login "coe"; $hod = Login "hod.cse"; $acc = Login "accountant"; $stu = Login "student.1"; $par = Login "parent.1"
 
@@ -9,9 +9,9 @@ Step "2 eligibility"
 $awards = Api GET "/degrees" $reg
 Check ($awards.data.Count -ge 1) "awards seeded"
 $batchCode = $awards.data[0].enrollment.batch_code
-$checks = Api GET "/degree-eligibility" $reg
-Check ($checks.data.Count -ge 1) "checks listed"
-$inel = $checks.data | Where-Object { -not $_.is_eligible } | Select-Object -First 1
+$eligChecks = Api GET "/degree-eligibility" $reg
+Check ($eligChecks.data.Count -ge 1) "checks listed"
+$inel = $eligChecks.data | Where-Object { -not $_.is_eligible } | Select-Object -First 1
 if ($inel) { Check ($inel.reasons.Count -ge 1) "ineligible has reasons" }
 Api GET "/degree-eligibility/me" $stu | Out-Null
 Api GET "/degree-eligibility" $hod | Out-Null
@@ -27,11 +27,11 @@ Step "6 convocation"
 $c = Api POST "/convocations" $reg @{ name = "Verify convocation"; fee_paise = 150000; registration_deadline = (Get-Date).AddDays(7).ToString("yyyy-MM-dd") }
 Api POST "/convocations/$($c.data.id)/status" $reg @{ status = "registration_open" } | Out-Null
 $rep = Api GET "/convocations/$($c.data.id)/reports/gowns" $reg
-Check ($rep.data -ne $null) "gown report"
+Check ($null -ne $rep.data) "gown report"
 
 Step "7 awards"
 $issued = $awards.data | Where-Object { $_.status -eq "issued" } | Select-Object -First 1
-Check ($issued.certificate_number -ne $null) "issued has certificate number"
+Check ($null -ne $issued.certificate_number) "issued has certificate number"
 ExpectStatus 403 { Api GET "/degrees/me" $acc }
 Api GET "/degrees/me" $par | Out-Null
 
@@ -45,7 +45,7 @@ if ($revoked) { $rv = Api GET "/verify/$($revoked.verification_token)" $null; Ch
 
 Step "12 credentials"
 $cr = Api GET "/credentials" $reg
-Check ($cr.data -ne $null) "credential board"
+Check ($null -ne $cr.data) "credential board"
 
 Step "14 stats"
 $s = Api GET "/degrees/stats" $reg

@@ -49,7 +49,7 @@ class CatalogueService(WebsiteBase):
             (
                 await self.db.execute(
                     text(
-                        "SELECT p.id, p.code, p.sanctioned_intake, c.institution_type FROM programs p "
+                        "SELECT p.id, p.code, p.sanctioned_intake, c.college_type AS institution_type FROM programs p "
                         "JOIN colleges c ON c.id = p.college_id WHERE p.institution_id = :i AND p.deleted_at IS NULL"
                     ),
                     {"i": self.inst},

@@ -79,9 +79,8 @@ class TimetableRepository {
           options: _once);
 }
 
-final _cache = CacheRepository();
 final timetableRepositoryProvider = Provider<TimetableRepository>(
-    (ref) => TimetableRepository(ref.watch(dioProvider), _cache));
+    (ref) => TimetableRepository(ref.watch(dioProvider), ref.watch(cacheRepositoryProvider)));
 
 String _iso(DateTime d) => d.toIso8601String().substring(0, 10);
 

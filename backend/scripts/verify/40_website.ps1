@@ -10,7 +10,7 @@ $inst = @{ institution = "demo-uni" }
 $root = $BaseUrl -replace "/api/v1$", ""
 $sa = Login-SuperAdmin
 $admin = Login "inst.admin" (Get-DemoPassword "institution_admin") $inst
-$reg = Login "registrar" (Get-DemoPassword "registrar") $inst
+$reg = Login-Mfa 'registrar' 'registrar'   # MFA-required role in the demo tenant
 $stu = Login "student.1" (Get-DemoPassword "student") $inst
 
 Write-Host "== 1 public site + SSR"
@@ -20,8 +20,9 @@ Assert ($site.data.sections.Count -ge 3) "sections"
 $r = Invoke-WebRequest "$root/site/demo-uni/"
 Assert ($r.Content -match "<title>") "SSR title"
 Assert ($r.Content -match "CollegeOrUniversity") "JSON-LD"
-$etag = $r.Headers["ETag"]
-try { Invoke-WebRequest "$root/site/demo-uni/" -Headers @{ "If-None-Match" = $etag } | Out-Null; throw "expected 304" } catch { Assert ($_.Exception.Response.StatusCode.value__ -eq 304) "304 on If-None-Match" }
+$etag = [string]$r.Headers["ETag"]   # pwsh 7 headers are string[]
+$r304 = Invoke-WebRequest "$root/site/demo-uni/" -Headers @{ "If-None-Match" = $etag } -SkipHttpErrorCheck
+Assert ($r304.StatusCode -eq 304) "304 on If-None-Match"
 
 Write-Host "== 2 draft / preview / publish / rollback"
 $cfg = (Call $reg GET "/website/config").data
@@ -45,7 +46,7 @@ $rss = Invoke-WebRequest "$BaseUrl/public/site/notices.rss?slug=demo-uni"
 Assert ($rss.Headers["Content-Type"] -like "application/rss+xml*") "RSS"
 
 Write-Host "== 6 enquiries"
-$e = Invoke-RestMethod -Method Post "$BaseUrl/public/site/enquiries?slug=demo-uni" -ContentType "application/json" -Body (@{ name = "Verify"; email = "v@example.test"; message = "Fee details please" } | ConvertTo-Json)
+$e = Invoke-RestMethod -Method Post "$BaseUrl/public/site/enquiries?slug=demo-uni" -ContentType "application/json" -Body (@{ name = "Verify"; email = "v@example.com"; message = "Fee details please" } | ConvertTo-Json)
 Assert ($e.data.reference) "reference"
 Call $stu GET "/website/enquiries" $null 403 | Out-Null
 

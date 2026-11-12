@@ -127,6 +127,9 @@ try {
   $brkIds = ($brk | ForEach-Object { "'$($_.id)'" }) -join ','
   $std = Marker 'DEMO0010'
   $trf = Marker 'DEMO0050'
+  # the previous run's re-entry enrolment collects later-phase rows (fee invoices, transport, …): purge them with it
+  & $Python scripts/verify/_purge.py student_program_enrollments "entry_type = 'exit_reentry' AND student_id IN ($brkIds)" | Out-Null
+  if ($LASTEXITCODE -ne 0) { throw "purge of the previous re-entry enrolment failed" }
   SqlWrite ("UPDATE students SET guardian_portal_consent = TRUE WHERE id = '$($s1.id)'; " +
     "DELETE FROM student_holds WHERE student_program_enrollment_id IN (SELECT id FROM student_program_enrollments WHERE student_id = '$($s1.id)'); " +
     "DELETE FROM student_undertakings WHERE student_id = '$($s1.id)' AND undertaking_type = 'conduct'; " +
@@ -137,7 +140,6 @@ try {
     "UPDATE students SET status = 'active' WHERE status = 'detained' AND id IN (SELECT student_id FROM student_program_enrollments WHERE batch_id = '$b2024'); " +
     "UPDATE student_program_enrollments SET status = 'active' WHERE batch_id = '$b2024' AND status = 'detained'; " +
     "UPDATE batches SET current_term_number = 5 WHERE id = '$b2024'; " +
-    "DELETE FROM student_program_enrollments WHERE entry_type = 'exit_reentry' AND student_id IN ($brkIds); " +
     "UPDATE student_program_enrollments SET status = 'break', exit_award = NULL, exit_date = NULL WHERE batch_id = '$b2024' AND student_id IN ($brkIds); " +
     "UPDATE students SET status = 'on_break' WHERE id IN ($brkIds); UPDATE users SET is_active = TRUE WHERE id IN (SELECT user_id FROM students WHERE id IN ($brkIds)); " +
     "DELETE FROM student_holds WHERE student_program_enrollment_id = '$($std.enrollment_id)'; " +

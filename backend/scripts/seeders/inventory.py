@@ -16,7 +16,7 @@ from datetime import UTC, datetime, timedelta
 from decimal import Decimal
 
 from seed_demo_institution import SeedContext, seeder
-from sqlalchemy import func, select
+from sqlalchemy import func, select, text
 
 USERS = [
     # (username, display, role slug, scope, credential label, employee id)
@@ -437,6 +437,11 @@ async def seed_inventory(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PLR0
         indents.append(ind)
     await db.flush()
     ctx.count("indents", len(indents))
+    # the numbers above are written directly: move the sequence past them or the first real indent collides
+    await db.execute(
+        text("UPDATE number_sequences SET next_value = GREATEST(next_value, :n) WHERE institution_id = :i AND scope_key = 'indent'"),
+        {"n": len(indents) + 1, "i": inst.id},
+    )
 
     # quotations for approved indents above the three-quote threshold
     active_sup = [s for s in suppliers if s.status == "active"]

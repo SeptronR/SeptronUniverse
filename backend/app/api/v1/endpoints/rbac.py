@@ -198,7 +198,8 @@ async def credential_sheets(
     return ok(await UserService(db, principal).credential_sheets(body, request), message="Credential sheet queued")
 
 
-@router.get("/users/{id}", summary="User detail with role assignments", response_model=Envelope[UserDetailResponse])
+# {id:uuid}: keep /users/me (portals: language / timezone / theme) from matching this route
+@router.get("/users/{id:uuid}", summary="User detail with role assignments", response_model=Envelope[UserDetailResponse])
 async def get_user(
     id: uuid.UUID,
     principal: Principal = Depends(permission_required("users", "view_all")),
@@ -207,7 +208,7 @@ async def get_user(
     return ok(await UserService(db, principal).get(id))
 
 
-@router.put("/users/{id}", summary="Update a user", response_model=Envelope[UserDetailResponse])
+@router.put("/users/{id:uuid}", summary="Update a user", response_model=Envelope[UserDetailResponse])
 async def update_user(
     id: uuid.UUID,
     body: UserUpdate,

@@ -4,15 +4,15 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$coord = Login "alumni.coord" (Get-DemoPassword "alumni_coordinator")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$plc = Login "placement" (Get-DemoPassword "placement_officer")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$aa = Login "alumni.a" (Get-DemoPassword "alumni_a")
-$ab = Login "alumni.b" (Get-DemoPassword "alumni_b")
-$stu = Login "student.1" (Get-DemoPassword "student")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
+$coord = Login "alumni.coord"
+$acct = Login "accountant"
+$plc = Login "placement"
+$hod = Login "hod.cse"
+$iqac = Login "iqac"
+$aa = Login "alumni.a"
+$ab = Login "alumni.b"
+$stu = Login "student.1"
+$aud = Login "auditor.tmp"
 
 Write-Host "== 1 stats"
 $s = Call $coord GET "/alumni/stats"
@@ -32,6 +32,8 @@ Assert ((Call $aa GET "/alumni/me/engagement").data.score -ge 0) "engagement rec
 Write-Host "== 3 claim (public)"
 Call $null POST "/alumni/claim?institution=$Institution" @{ registration_number = "NOPE-000"; graduation_year = 2020; email = "x@example.com" } 404 | Out-Null
 $legacy = (Call $coord GET "/alumni/profiles?q=ALM-LEGACY-0001").data[0]
+# rerun: the previous run left this legacy profile claimed (claim_status lives in alumni_meta)
+& (Get-VenvPython (Resolve-Path (Join-Path $PSScriptRoot "..\.."))) (Join-Path $PSScriptRoot "_sql.py") --write "UPDATE institution_settings SET value = value - 'claim_status' WHERE category = 'alumni_meta' AND key = 'profile:$($legacy.id)'" | Out-Null
 $claim = Call $null POST "/alumni/claim?institution=$Institution" @{ registration_number = "ALM-LEGACY-0001"; graduation_year = $legacy.graduation_year; email = "legacy.alumnus@example.com" }
 Assert ($claim.data.claim_token) "OTP sent for the legacy profile"
 1..3 | ForEach-Object { Call $null POST "/alumni/claim/verify?institution=$Institution" @{ claim_token = $claim.data.claim_token; otp = "000000" } 422 | Out-Null }

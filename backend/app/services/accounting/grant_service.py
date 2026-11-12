@@ -26,7 +26,7 @@ from app.schemas.accounting import (
     GrantReallocate,
     GrantReceipt,
 )
-from app.services.accounting.common import AccountingBase, all_access, now_utc, rule
+from app.services.accounting.common import AccountingBase, all_access, institution_scope, now_utc, rule
 
 HEAD_ACCOUNTS = {
     "manpower": "5200",
@@ -56,7 +56,9 @@ class GrantService(AccountingBase):
 
     async def visible(self, g: GrantLedger, meta: dict[str, Any] | None = None) -> bool:
         p = self.principal
-        if all_access(p) or self.can("accounting", "manage") or self.can("research", "view_all"):
+        # research readers only at institution level (research_cell): faculty reach view_all through research:manage and
+        # HODs hold it at department scope, and both may see only the grants they are PI of (Prompts/23 visibility)
+        if all_access(p) or self.can("accounting", "manage") or (self.can("research", "view_all") and institution_scope(p)):
             return True
         mine = await self.my_staff_id()
         return mine is not None and mine == await self._pi(g, meta)

@@ -1003,6 +1003,7 @@ ROLE_TEMPLATES: dict[str, set[str]] = {
         "code",
         "custody",
         "valuation_assign",
+        "moderate",  # proposes moderation (Prompts/15 §15.11 step 6); was only reachable through ALL() before 0043
         "reval",
         "malpractice",
         "export",
@@ -1491,6 +1492,13 @@ for _slug, _grants in ROLE_TEMPLATES.items():
 # Grants added to templates by a later phase that must also reach the roles already cloned into tenants (revision
 # ``0003`` backfills them; grants an administrator removed afterwards are not re-added by later revisions).
 BACKFILL_GRANTS: dict[str, frozenset[str]] = {
+    "0048": frozenset(
+        P("audit_logs", "view_all", "verify_chain")
+        | P("support", "view_all")
+        | P("facilities", "counsel")
+        | P("settings", "manage")
+    ),
+    "0047": frozenset(P("exams", "moderate")),
     "0043": frozenset(PHASE43_GRANTS["institution_admin"] | PHASE43_GRANTS["security_officer"] | PHASE43_GRANTS["auditor"]),
     "0040": frozenset(PHASE40_GRANTS["registrar"] | PHASE40_GRANTS["college_admin"] | PHASE40_GRANTS["iqac_coordinator"]),
     "0038": frozenset(SUPPORT_RAISE | P("support", "manage")),

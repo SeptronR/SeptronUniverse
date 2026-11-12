@@ -96,7 +96,7 @@ class TransportRepository {
   }
 }
 
-final transportRepositoryProvider = Provider<TransportRepository>((ref) => TransportRepository(ref.watch(dioProvider), CacheRepository()));
+final transportRepositoryProvider = Provider<TransportRepository>((ref) => TransportRepository(ref.watch(dioProvider), ref.watch(cacheRepositoryProvider)));
 
 void _snack(BuildContext context, String m) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(m)));
 

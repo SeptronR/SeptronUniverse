@@ -84,7 +84,7 @@ class LibraryRepository {
   }
 }
 
-final libraryRepositoryProvider = Provider<LibraryRepository>((ref) => LibraryRepository(ref.watch(dioProvider), CacheRepository()));
+final libraryRepositoryProvider = Provider<LibraryRepository>((ref) => LibraryRepository(ref.watch(dioProvider), ref.watch(cacheRepositoryProvider)));
 
 void _snack(BuildContext context, String msg) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 

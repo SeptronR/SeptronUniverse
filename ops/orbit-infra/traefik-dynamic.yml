@@ -1,3 +1,5 @@
+# SUPERSEDED (2026-11-11): the live deployment is orbit-infra/compose/apps/universe-prod.yml, deployed by orbit-infra
+# deploy.yml + scripts/update.sh universe (see docs/Runbooks/production_deploy_vps.md). Kept as Phase 44 reference only.
 # orbit-infra — traefik/dynamic/universe.yml: middlewares used by the routers above. Custom institution domains are
 # generated into traefik/dynamic/universe-domains.yml by backend/scripts/ops/gen_traefik_domains.py (cron, 5 min).
 http:

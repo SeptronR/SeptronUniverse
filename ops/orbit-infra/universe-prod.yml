@@ -1,3 +1,5 @@
+# SUPERSEDED (2026-11-11): the live deployment is orbit-infra/compose/apps/universe-prod.yml, deployed by orbit-infra
+# deploy.yml + scripts/update.sh universe (see docs/Runbooks/production_deploy_vps.md). Kept as Phase 44 reference only.
 # orbit-infra template — compose/apps/universe-prod.yml (Prompts/44 §44.6 docker 4). Same services as
 # docker-compose.prod.yml, routed by Traefik instead of the bundled nginx. Copy into orbit-infra; envs dev / demo use
 # the same file with ENV=<env> and their own .env.<env>.

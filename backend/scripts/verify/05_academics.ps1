@@ -79,10 +79,11 @@ try {
   $instId = (Call $admin GET "/auth/me").data.user.institution_id
   $tenant = @{ 'X-Institution-Id' = $instId }
   $facultyId = (Call $faculty GET "/auth/me").data.user.id
-  $depts = (Call $admin GET "/departments?page_size=100").data
-  $cse = ($depts | Where-Object { $_.code -eq 'CSE' }).id
-  $ece = ($depts | Where-Object { $_.code -eq 'ECE' }).id
-  $collegeA = ($depts | Where-Object { $_.code -eq 'CSE' }).college_id
+  # phase 34 affiliated colleges carry their own CSE / ECE departments: pin the demo college A
+  $collegeA = ((Call $admin GET "/colleges?scope=all&page_size=200").data | Where-Object { $_.code -eq 'A' } | Select-Object -First 1).id
+  $depts = (Call $admin GET "/departments?page_size=200&college_id=$collegeA").data | Where-Object { $_.college_id -eq $collegeA }
+  $cse = ($depts | Where-Object { $_.code -eq 'CSE' } | Select-Object -First 1).id
+  $ece = ($depts | Where-Object { $_.code -eq 'ECE' } | Select-Object -First 1).id
   function SetFlag($key, $on) {
     Call $sa PUT "/institutions/$instId/features/$key" @{ enabled = $on; confirm_dependencies = $true; reason = "verify 05" } 200 $tenant | Out-Null
   }
@@ -91,7 +92,7 @@ try {
   Assert ($cse -and $ece) "fixtures: CSE and ECE departments (seed --only institution)"
 
   Write-Host "== 1. programmes are institution-wide readable"
-  $progs = Call $faculty GET "/programs?page_size=100"
+  $progs = Call $faculty GET "/programs?page_size=200"
   Assert (($progs.data | Where-Object { $_.code -eq 'BTECH-CSE' }) -and ($progs.data | Where-Object { $_.code -eq 'MBA' })) "faculty.1 reads BTECH-CSE and MBA (seed --only academics)"
   Assert ($progs.meta.visibility.scopes -contains 'all') "meta.visibility offers the all tab"
   $newProg = @{ college_id = $collegeA; department_id = $cse; code = "VP$run"; name = "Verification Programme $run"; degree_name = 'B.Voc'; level = 'ug'; duration_years = 1; total_terms = 2 }

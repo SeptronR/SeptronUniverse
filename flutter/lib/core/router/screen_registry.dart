@@ -33,7 +33,8 @@ import '../../features/affiliation/affiliation_screens.dart';
 import '../../features/analytics/analytics_screens.dart';
 import '../../features/reports/reports_screens.dart';
 import '../../features/audit/audit_screens.dart';
-import '../../features/portals/portal_screens.dart';
+import '../../features/portals/portal_screens.dart' hide NotificationPreferencesScreen;
+import '../../features/portals/portal_screens.dart' as portals show NotificationPreferencesScreen;
 import '../../features/integrations/integrations_screens.dart';
 import '../../features/ops/ops_screens.dart';
 import '../../features/privacy/privacy_screens.dart';
@@ -571,7 +572,7 @@ class ScreenRegistry {
       route: AppRoutes.notificationSettings,
       titleKey: 'notifications',
       feature: 'comms.preferences',
-      builder: (_, __) => const NotificationPreferencesScreen(),
+      builder: (_, __) => const portals.NotificationPreferencesScreen(),
     ),
     // Phase 38 — platform hub, tenant support / billing
     AppRoutes.platformHub: ScreenEntry(

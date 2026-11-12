@@ -17,6 +17,7 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    Index,
     Integer,
     LargeBinary,
     PrimaryKeyConstraint,
@@ -25,6 +26,7 @@ from sqlalchemy import (
     Text,
     UniqueConstraint,
     func,
+    text,
 )
 from sqlalchemy.dialects.postgresql import CIDR, INET, JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column
@@ -148,7 +150,10 @@ class Department(TenantModelMixin, Base):
 
 class InstitutionSetting(UUIDPrimaryKeyMixin, TenantMixin, CollegeScopedMixin, TimestampMixin, Base):
     __tablename__ = "institution_settings"
-    __table_args__ = (UniqueConstraint("institution_id", "college_id", "category", "key"),)
+    # NULLS NOT DISTINCT (0045): institution-wide rows (college_id NULL) must collide for ON CONFLICT upserts
+    __table_args__ = (
+        UniqueConstraint("institution_id", "college_id", "category", "key", postgresql_nulls_not_distinct=True),
+    )
 
     category: Mapped[str] = mapped_column(String(40), nullable=False)
     key: Mapped[str] = mapped_column(String(80), nullable=False)
@@ -518,7 +523,17 @@ class WorkflowDefinition(UUIDPrimaryKeyMixin, TenantMixin, TimestampMixin, Base)
 
 class WorkflowInstance(UUIDPrimaryKeyMixin, TenantMixin, Base):
     __tablename__ = "workflow_instances"
-    __table_args__ = (UniqueConstraint("entity_type", "entity_id", "definition_id"),)
+    # one OPEN instance per record (0046): a closed one may be followed by a resubmission
+    __table_args__ = (
+        Index(
+            "workflow_instances_one_open",
+            "entity_type",
+            "entity_id",
+            "definition_id",
+            unique=True,
+            postgresql_where=text("status IN ('pending', 'escalated')"),
+        ),
+    )
 
     definition_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True), ForeignKey("workflow_definitions.id"), nullable=False

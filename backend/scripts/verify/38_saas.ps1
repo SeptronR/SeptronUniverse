@@ -24,13 +24,13 @@ function Wait-Job($session, $jobId, [int]$seconds = 180) {
 }
 
 $sa = Login-SuperAdmin
-$sa2 = Login "superadmin.2" (Get-Pw "super_admin")
-$agent = Login "support.agent" (Get-Pw "support_agent")
-$admin = Login "inst.admin" (Get-DemoPassword "institution_admin") @{ institution = "demo-uni" }
-$adminC = Login "inst.admin.c" (Get-Pw "institution_admin (demo-college)") @{ institution = "demo-college" }
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin") @{ institution = "demo-uni" }
-$reg = Login "registrar" (Get-DemoPassword "registrar") @{ institution = "demo-uni" }
-$stu = Login "student.1" (Get-DemoPassword "student") @{ institution = "demo-uni" }
+$sa2 = Login "superadmin.2"   # by identifier: enrols MFA through Login-Mfa
+$agent = Login "support.agent"
+$admin = Login "inst.admin" @{ institution = "demo-uni" }
+$adminC = Login-Mfa "institution_admin (demo-college)" "inst.admin.c"
+$colB = Login "college.admin.b" @{ institution = "demo-uni" }
+$reg = Login-Mfa 'registrar' 'registrar'
+$stu = Login "student.1" @{ institution = "demo-uni" }
 
 $tenants = (Call $sa GET "/platform/institutions").data
 $uni = $tenants | Where-Object { $_.slug -eq "demo-uni" }
@@ -55,13 +55,13 @@ $aff = Call $sa POST "/platform/institutions" @{ template = "affiliated"; plan_c
   institution = @{ name = "Verify Affiliated"; slug = "$slug-aff"; institution_type = "affiliated_college"; parent_university_name = "Verify University" }
   admin = @{ username = "admin"; email = "admin@$slug-aff.septronuniverse.in"; display_name = "Verify Admin" } } 201
 Assert ($null -ne $aff.data.main_college_id) "affiliated: main college"
-Call $sa POST "/platform/institutions" @{ template = "standalone"; institution = @{ name = "Dup"; slug = $slug; institution_type = "standalone_college" }; admin = @{ username = "admin"; email = "x@$slug.septronuniverse.in"; display_name = "X" } } 409 | Out-Null
+Call $sa POST "/platform/institutions" @{ template = "standalone"; institution = @{ name = "Dup"; slug = $slug; institution_type = "standalone_college" }; admin = @{ username = "admin"; email = "x@$slug.septronuniverse.in"; display_name = "XX" } } 409 | Out-Null
 
 Write-Host "== 3 lifecycle"
 Call $sa POST "/platform/institutions/$($col.id)/status" @{ action = "suspend"; reason = "verification" } | Out-Null
 Call $null POST "/auth/login" @{ identifier = "inst.admin.c"; password = (Get-Pw "institution_admin (demo-college)"); institution = "demo-college" } 403 | Out-Null
 Call $sa POST "/platform/institutions/$($col.id)/status" @{ action = "activate"; reason = "verification done" } | Out-Null
-$adminC = Login "inst.admin.c" (Get-Pw "institution_admin (demo-college)") @{ institution = "demo-college" }
+$adminC = Login-Mfa "institution_admin (demo-college)" "inst.admin.c"
 Call $sa POST "/platform/institutions/$($on.data.institution.id)/status" @{ action = "archive"; reason = "no export" } $null 409 | Out-Null
 $ex = Call $sa POST "/platform/institutions/$($on.data.institution.id)/export" @{ include = @("db", "files"); format = "json" } 202
 $job = Wait-Job $sa $ex.data.job_id

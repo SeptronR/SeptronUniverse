@@ -718,7 +718,7 @@ class RegistrationService(RegistrationBase):
         )
         if preview.total_paise > 0:
             # Phase 12: the fee order becomes a real invoice (source course_registration; fee_invoice_id set)
-            from app.core.features import is_enabled
+            # (no local import of is_enabled: it made the name function-local and unbound below when there is no fee)
             from app.services.fees.invoice_service import InvoiceService
 
             if await is_enabled(self.inst, "fees.core"):

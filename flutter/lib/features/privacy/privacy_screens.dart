@@ -16,7 +16,7 @@ final consentBannerProvider = FutureProvider.autoDispose<Map<String, dynamic>?>(
 
 final myDsrsProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
   final r = await ref.watch(dioProvider).get<Map<String, dynamic>>('/data-subject-requests/me');
-  return ((r.data?['data'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+  return ((r.data?['data'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
 });
 
 String _label(String key) => key.replaceAll('_', ' ');
@@ -66,7 +66,7 @@ class _ConsentSheet extends ConsumerStatefulWidget {
 
 class _ConsentSheetState extends ConsumerState<_ConsentSheet> {
   late final List<Map<String, dynamic>> _purposes =
-      ((widget.data['purposes'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+      ((widget.data['purposes'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
   late final Map<String, bool> _grants = {
     for (final p in _purposes)
       '${p['key']}': p['mandatory'] == true || ((widget.data['current'] as Map?)?['${p['key']}'] == true),
@@ -159,7 +159,7 @@ class PrivacyScreen extends ConsumerWidget {
             data: (b) => b == null
                 ? [const ListTile(title: Text('Not available'))]
                 : [
-                    for (final p in ((b['purposes'] as List?) ?? const []).cast<Map>())
+                    for (final p in ((b['purposes'] as List?) ?? const []).cast<Map<dynamic, dynamic>>())
                       SwitchListTile(
                         value: p['mandatory'] == true || (b['current'] as Map?)?['${p['key']}'] == true,
                         onChanged: p['mandatory'] == true || b['is_minor'] == true

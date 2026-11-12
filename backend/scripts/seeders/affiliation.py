@@ -93,7 +93,9 @@ async def seed_affiliation(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PL
     year = (
         await db.execute(
             select(AcademicYear)
-            .where(AcademicYear.institution_id == inst.id)
+            # institution-level year: admission cycles (and so the Phase 08 intake gate) use it; college-level years
+            # can be rolled over on their own and must not decide which year the approvals belong to
+            .where(AcademicYear.institution_id == inst.id, AcademicYear.college_id.is_(None))
             .order_by(AcademicYear.is_current.desc(), AcademicYear.start_date.desc())
             .limit(1)
         )
@@ -136,12 +138,10 @@ async def seed_affiliation(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PL
         )
 
     # ---- colleges ----------------------------------------------------------------------------------------------------
-    colleges = {
-        c.code: c
-        for c in (
-            await db.execute(select(College).where(College.institution_id == inst.id, College.deleted_at.is_(None)))
-        ).scalars()
-    }
+    # include soft-deleted rows: (institution_id, code) is unique regardless of deleted_at
+    all_colleges = list((await db.execute(select(College).where(College.institution_id == inst.id))).scalars())
+    by_code = {c.code: c for c in all_colleges}
+    colleges = {c.code: c for c in all_colleges if c.deleted_at is None}
     base_lat, base_lng = 13.05, 80.22
 
     def geo(i: int) -> dict[str, Any]:
@@ -159,6 +159,11 @@ async def seed_affiliation(ctx: SeedContext) -> None:  # noqa: C901, PLR0912, PL
     specs += [(f"K{i}", f"Constituent College {i}", "constituent") for i in range(1, CONSTITUENT_EXTRA + 1)]
     for i, (code, name, ctype) in enumerate(specs, start=1):
         if code in colleges:
+            continue
+        if code in by_code:  # a demo college soft-deleted by an earlier test run: revive it
+            by_code[code].deleted_at = None
+            by_code[code].is_active = True
+            colleges[code] = by_code[code]
             continue
         c = College(
             institution_id=inst.id,

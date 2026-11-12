@@ -58,6 +58,10 @@ foreach ($e in @($s1e, $holdE)) {
   SqlW "UPDATE workflow_instances SET status='cancelled' WHERE entity_type='course_registration' AND status IN ('pending','escalated') AND entity_id IN (SELECT id FROM course_registrations WHERE student_program_enrollment_id='$e'); DELETE FROM offering_waitlists WHERE student_program_enrollment_id='$e'; DELETE FROM course_registration_items WHERE registration_id IN (SELECT id FROM course_registrations WHERE student_program_enrollment_id='$e'); DELETE FROM course_registrations WHERE student_program_enrollment_id='$e'"
 }
 SqlW "DELETE FROM course_prerequisites WHERE relation IN ('antirequisite','corequisite') AND course_id IN (SELECT id FROM courses WHERE code IN ('CS203','CS204'))"
+# step 11's real PE-I allocation of the previous run: back to submitted choice forms, allocated items removed, seats recounted
+SqlW ("DELETE FROM course_registration_items i USING elective_choice_forms f, course_offerings o WHERE f.term_id = '$term' AND f.status = 'allocated' AND o.id = i.offering_id AND o.term_id = f.term_id AND o.course_id = f.allocated_course_id AND i.registration_id IN (SELECT id FROM course_registrations r WHERE r.student_program_enrollment_id = f.student_program_enrollment_id); " +
+  "UPDATE elective_choice_forms SET status = 'submitted', allocated_course_id = NULL, allocation_run_id = NULL WHERE term_id = '$term' AND status IN ('allocated', 'manual'); " +
+  "UPDATE course_offerings o SET enrolled_count = (SELECT count(*) FROM course_registration_items i WHERE i.offering_id = o.id AND i.status IN ('selected', 'confirmed')) WHERE o.term_id = '$term' AND o.course_id IN (SELECT id FROM courses WHERE code IN ('CS351', 'CS352'))")
 SqlW "UPDATE registration_windows SET status='open', ends_at=NOW() + INTERVAL '20 days', starts_at=LEAST(starts_at, NOW() - INTERVAL '1 hour') WHERE term_id='$term'"
 SqlW "UPDATE institution_settings SET value='""warn""' WHERE category='hr' AND key='workload_enforce'"
 $admin = Login-Mfa 'registrar' 'registrar'
@@ -104,15 +108,15 @@ Assert ($null -ne $cat.data.fee_preview) "fee preview present"
 $catH = Call $sHold GET "/registration/me/catalog"
 Assert ($catH.data.holds -contains 'registration') "student.hold catalog reports the registration hold"
 # accept pending undertakings of student.1 (the seed keeps 'conduct' pending)
-foreach ($u in $cat.data.undertakings_pending) { Call $s1 POST "/students/me/undertakings" @{ undertaking_type = $u; accepted = $true } 201 | Out-Null }
+foreach ($u in $cat.data.undertakings_pending) { Call $s1 POST "/students/me/undertakings" @{ undertaking_type = $u } 201 | Out-Null }
 
 # ---- 4. cart -------------------------------------------------------------------------------------------------------------
 Write-Host "== 4. cart"
 $byCode = @{}; foreach ($c in $cat.data.curriculum) { $byCode[$c.code] = $c }
 function Off($code) { ($byCode[$code].offerings | Where-Object { $_.targeted } | Select-Object -First 1).offering_id ?? $byCode[$code].offerings[0].offering_id }
-$cs101 = (Sql "SELECT id FROM courses WHERE code='CS101' AND status='active' LIMIT 1")[0].id
-$cs203c = (Sql "SELECT id FROM courses WHERE code='CS203' AND status='active' LIMIT 1")[0].id
-$cs204c = (Sql "SELECT id FROM courses WHERE code='CS204' AND status='active' LIMIT 1")[0].id
+$cs101 = (Sql "SELECT id FROM courses WHERE code='CS101' AND status='active' ORDER BY (SELECT count(*) FROM course_offerings o WHERE o.course_id = courses.id) DESC, version LIMIT 1")[0].id
+$cs203c = (Sql "SELECT id FROM courses WHERE code='CS203' AND status='active' ORDER BY (SELECT count(*) FROM course_offerings o WHERE o.course_id = courses.id) DESC, version LIMIT 1")[0].id
+$cs204c = (Sql "SELECT id FROM courses WHERE code='CS204' AND status='active' ORDER BY (SELECT count(*) FROM course_offerings o WHERE o.course_id = courses.id) DESC, version LIMIT 1")[0].id
 SqlW "INSERT INTO course_prerequisites (institution_id, course_id, related_course_id, relation, is_hard) SELECT institution_id, '$cs203c', '$cs101', 'antirequisite', TRUE FROM courses WHERE id='$cs203c'"
 $e = Err $s1 POST "/registration/me/items" @{ offering_id = (Off 'CS203') } 409
 Assert ($e.error.details.code -eq 'ANTIREQUISITE') "antirequisite of a passed course → 409"
@@ -122,21 +126,24 @@ foreach ($code in @('CS201', 'CS202', 'MA201')) { Call $s1 POST "/registration/m
 $after = (Call $registrar GET "/course-offerings/$(Off 'CS201')").data.enrolled_count
 Assert ($after -eq $before + 1) "enrolled_count increments"
 # prerequisite: CS301 (prereq CS201 — not passed) offered as a fixture
-$cs301 = (Sql "SELECT id FROM courses WHERE code='CS301' AND status='active' LIMIT 1")[0].id
+$cs301 = (Sql "SELECT id FROM courses WHERE code='CS301' AND status='active' ORDER BY (SELECT count(*) FROM course_offerings o WHERE o.course_id = courses.id) DESC, version LIMIT 1")[0].id
 $o301 = (Call $registrar GET "/course-offerings?term_id=$term&course_id=$cs301").data | Select-Object -First 1
 if (-not $o301) { $o301 = (Call $registrar POST "/course-offerings" @{ term_id = $term; course_id = $cs301; section_code = 'V9' } 201).data; Call $registrar POST "/course-offerings/$($o301.id)/status" @{ status = 'open' } | Out-Null }
 $e = Err $s1 POST "/registration/me/items" @{ offering_id = $o301.id } 409
 Assert ($e.error.details.code -eq 'PREREQUISITE_NOT_MET') "prerequisite not met → 409"
 # full offering → waitlist: CS304 fixture with 1 seat taken by student.hold
-$cs304 = (Sql "SELECT id FROM courses WHERE code='CS304' AND status='active' LIMIT 1")[0].id
+$cs304 = (Sql "SELECT id FROM courses WHERE code='CS304' AND status='active' ORDER BY (SELECT count(*) FROM course_offerings o WHERE o.course_id = courses.id) DESC, version LIMIT 1")[0].id
 $o304 = (Call $registrar GET "/course-offerings?term_id=$term&course_id=$cs304").data | Select-Object -First 1
 if (-not $o304) { $o304 = (Call $registrar POST "/course-offerings" @{ term_id = $term; course_id = $cs304; section_code = 'V9'; max_seats = 1 } 201).data; Call $registrar POST "/course-offerings/$($o304.id)/status" @{ status = 'open' } | Out-Null }
+# a reused offering keeps the previous run's counters / waitlist: recount live seats and clear the queue
+SqlW ("DELETE FROM offering_waitlists WHERE offering_id = '$($o304.id)'; " +
+  "UPDATE course_offerings o SET waitlist_count = 0, enrolled_count = (SELECT count(*) FROM course_registration_items i WHERE i.offering_id = o.id AND i.status NOT IN ('dropped', 'withdrawn', 'cancelled', 'waitlisted')) WHERE o.id = '$($o304.id)'")
 Call $sHold POST "/registration/me/items" @{ offering_id = $o304.id } 201 | Out-Null
 $w = Call $s1 POST "/registration/me/items" @{ offering_id = $o304.id } 201
 $wItem = $w.data.items | Where-Object { $_.offering_id -eq $o304.id }
 Assert ($wItem.status -eq 'waitlisted' -and $wItem.waitlist.position -ge 1) "full offering → waitlisted (position $($wItem.waitlist.position))"
 # credit limit: CS309 (3 cr) on top → above max?
-$cs309 = (Sql "SELECT id FROM courses WHERE code='CS309' AND status='active' LIMIT 1")[0].id
+$cs309 = (Sql "SELECT id FROM courses WHERE code='CS309' AND status='active' ORDER BY (SELECT count(*) FROM course_offerings o WHERE o.course_id = courses.id) DESC, version LIMIT 1")[0].id
 $o309 = (Call $registrar GET "/course-offerings?term_id=$term&course_id=$cs309").data | Select-Object -First 1
 if (-not $o309) { $o309 = (Call $registrar POST "/course-offerings" @{ term_id = $term; course_id = $cs309; section_code = 'V9' } 201).data; Call $registrar POST "/course-offerings/$($o309.id)/status" @{ status = 'open' } | Out-Null }
 Call $s1 POST "/registration/me/items" @{ offering_id = (Off 'CS204') } 201 | Out-Null
@@ -182,7 +189,7 @@ Assert ($wd.data.confirmed_courses.Count -ge 5) "parent sees confirmed courses"
 Write-Host "== 7. hold + override"
 $catH = (Call $sHold GET "/registration/me/catalog").data
 foreach ($c in $catH.curriculum) { $o = $c.offerings | Select-Object -First 1; if ($o -and -not $c.in_cart) { Invoke-WebRequest -Method Post -Uri "$BaseUrl/registration/me/items" -Headers @{ Authorization = "Bearer $sHold" } -ContentType 'application/json' -Body (@{ offering_id = $o.offering_id } | ConvertTo-Json) -SkipHttpErrorCheck | Out-Null } }
-foreach ($u in $catH.undertakings_pending) { Call $sHold POST "/students/me/undertakings" @{ undertaking_type = $u; accepted = $true } 201 | Out-Null }
+foreach ($u in $catH.undertakings_pending) { Call $sHold POST "/students/me/undertakings" @{ undertaking_type = $u } 201 | Out-Null }
 $e = Err $sHold POST "/registration/me/submit" $null 409
 Assert ($e.error.code -eq 'HOLD_BLOCKED' -or $e.error.details.code -eq 'CREDIT_LIMIT') "student.hold submit blocked ($($e.error.code))"
 $hreg = (Call $sHold GET "/registration/me").data
@@ -198,6 +205,12 @@ $wl = (Call $s1 GET "/registration/me/waitlist").data | Where-Object { $_.offeri
 Assert ($wl.status -eq 'offered' -and $wl.offered_until) "seat released → student.1 offered"
 $acc = Call $s1 POST "/registration/me/waitlist/$($wl.id)/accept"
 Assert ((($acc.data.items | Where-Object { $_.offering_id -eq $o304.id }).status) -eq 'confirmed') "accept → confirmed"
+# with the override the hold student can submit; the approval confirms section A — faculty.1's roster (11 / 13 learner)
+$hs = (Call $sHold POST "/registration/me/submit").data
+Assert ($hs.status -in @('submitted', 'advisor_pending', 'approved')) "student.hold submits after the override ($($hs.status))"
+# section A has no class advisor: the class_advisor step resolves to the HOD
+if ($hs.status -ne 'approved') { $hs = (Call (Login 'hod.cse' (Get-DemoPassword 'hod')) POST "/registration/$($hreg.id)/approve" @{ decision = 'approve' }).data }
+Assert ($hs.status -eq 'approved') "student.hold registration approved (section A confirmed)"
 
 # ---- 9. lock -----------------------------------------------------------------------------------------------------------------
 Write-Host "== 9. lock"

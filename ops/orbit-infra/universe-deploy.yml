@@ -1,3 +1,5 @@
+# SUPERSEDED (2026-11-11): the live deployment is orbit-infra/compose/apps/universe-prod.yml, deployed by orbit-infra
+# deploy.yml + scripts/update.sh universe (see docs/Runbooks/production_deploy_vps.md). Kept as Phase 44 reference only.
 # orbit-infra — .github/workflows/universe-deploy.yml: receives `repository_dispatch: universe-deploy` from this repo's
 # build.yml ({env, api_tag, web_tag, sha, migrations_risky}) and runs the rolling update on the target host.
 name: Universe deploy

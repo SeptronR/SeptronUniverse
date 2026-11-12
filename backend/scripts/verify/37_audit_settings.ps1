@@ -6,20 +6,20 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$admin = Login "inst.admin" (Get-DemoPassword "institution_admin")
-$prin = Login "principal" (Get-DemoPassword "vice_chancellor")
-$reg = Login "registrar" (Get-DemoPassword "registrar")
-$coe = Login "coe" (Get-DemoPassword "controller_of_examinations")
-$cell = Login "exam.cell" (Get-DemoPassword "exam_cell")
-$hod = Login "hod.cse" (Get-DemoPassword "hod")
-$fac = Login "faculty.1" (Get-DemoPassword "faculty")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$sec = Login "security.off" (Get-DemoPassword "security_officer")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$stu = Login "student.1" (Get-DemoPassword "student")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
-$sa = Login "superadmin" (Get-DemoPassword "super_admin")
+$admin = Login "inst.admin"
+$prin = Login "principal"
+$reg = Login-Mfa 'registrar' 'registrar'
+$coe = Login-Mfa 'controller_of_examinations' 'coe'
+$cell = Login "exam.cell"
+$hod = Login "hod.cse"
+$fac = Login "faculty.1"
+$acct = Login "accountant"
+$sec = Login "security.off"
+$colB = Login "college.admin.b"
+$iqac = Login "iqac"
+$stu = Login "student.1"
+$aud = Login "auditor.tmp"
+$sa = Login "superadmin"
 
 function Wait-Job($session, $jobId, [int]$seconds = 90) {
   for ($i = 0; $i -lt $seconds; $i += 2) {
@@ -32,19 +32,22 @@ function Wait-Job($session, $jobId, [int]$seconds = 90) {
 $from30 = (Get-Date).AddDays(-30).ToString("o")
 
 Write-Host "== 1 explorer scopes"
-$a = Call $admin GET "/audit-logs?from=$from30&page_size=50"
+$a = Call $admin GET "/audit-logs?from=$([uri]::EscapeDataString($from30))&page_size=50"
 Assert ($a.data.total -gt 0) "admin: rows"
 Assert ($a.meta.visibility.scopes -contains "all") "admin: All tab"
 Assert (@($a.data.items | Where-Object { $_.summary }).Count -eq @($a.data.items).Count) "summaries rendered"
+$facId = (Call $fac GET "/auth/me").data.user.id
 $fm = Call $fac GET "/audit-logs/me"
-Assert (@($fm.data.items | Where-Object { $_.user.id -ne $fac.UserId }).Count -eq 0) "faculty /me: own rows only"
+Assert (@($fm.data.items | Where-Object { $_.user.id -ne $facId }).Count -eq 0) "faculty /me: own rows only"
 $fa = Call $fac GET "/audit-logs"
 Assert (-not $fa.meta.visibility.scopes) "faculty: no ScopeTabs"
 $h = Call $hod GET "/audit-logs?scope=department&record_type=student"
 Assert ($h.meta.visibility.scopes -contains "department") "hod: department tab"
 $cb = Call $colB GET "/audit-logs?scope=college"
 Assert ($cb.meta.visibility.scopes -contains "college") "college admin B: college tab"
-Call $stu GET "/audit-logs" $null 403 | Out-Null
+# every user holds audit_logs:view: the explorer answers, limited to own rows
+$stuId = (Call $stu GET "/auth/me").data.user.id
+Assert (@((Call $stu GET "/audit-logs?page_size=100").data.items | Where-Object { $_.user.id -ne $stuId }).Count -eq 0) "student: own rows only"
 
 Write-Host "== 2 diff & masking + timeline"
 $st = (Call $reg GET "/students?size=1").data[0]

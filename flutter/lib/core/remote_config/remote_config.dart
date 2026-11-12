@@ -8,7 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../config/env.dart';
 import '../offline/write_queue_repository.dart';
-import '../providers.dart';
 
 /// `GET /mobile/config` (Prompts/42 §42.6 bootstrap): min versions / force update, maintenance banner, read-only
 /// flag, feature hints, cache TTL, write-queue limits, biometric timeout, screenshot-blocked routes, `mobile.app`.

@@ -49,9 +49,20 @@ $inst = (Sql "SELECT id FROM institutions WHERE slug='demo-uni'")[0].id
 $term = (Sql "SELECT id FROM academic_terms WHERE institution_id='$inst' AND college_id IS NULL AND is_current AND deleted_at IS NULL")[0].id
 $f1staff = (Sql "SELECT s.id FROM staff s JOIN users u ON u.id=s.user_id WHERE u.username='faculty.1'")[0].id
 
+# faculty.1's own 2025 section A offerings hold at most student.hold (2025 CSE is not bulk-registered): as in
+# 11_attendance.ps1, faculty.1 co-instructs the fullest bulk-registered offering of the department and one of its
+# students gets the demo student password, so offering X has a real roster with a learner login
+$full = (Sql ("SELECT o.id FROM course_offerings o JOIN course_offering_faculty f0 ON f0.offering_id = o.id JOIN staff st ON st.id = f0.staff_id " +
+  "WHERE o.term_id = '$term' AND st.department_id = (SELECT department_id FROM staff WHERE id = '$f1staff') " +
+  "ORDER BY (SELECT count(*) FROM course_registration_items i WHERE i.offering_id = o.id AND i.status = 'confirmed') DESC, o.id LIMIT 1"))[0].id
+SqlW "INSERT INTO course_offering_faculty (institution_id, offering_id, staff_id, role, hours_per_week) SELECT institution_id, id, '$f1staff', 'instructor', 0 FROM course_offerings WHERE id = '$full' ON CONFLICT DO NOTHING"
+$rosterLogin = (Sql ("SELECT u.username FROM course_registration_items i JOIN course_registrations r ON r.id = i.registration_id JOIN student_program_enrollments e ON e.id = r.student_program_enrollment_id " +
+  "JOIN students s ON s.id = e.student_id JOIN users u ON u.id = s.user_id WHERE i.offering_id = '$full' AND i.status = 'confirmed' AND u.is_active AND s.deleted_at IS NULL ORDER BY u.username LIMIT 1"))[0].username
+& $Py (Join-Path $PSScriptRoot "_reset_password.py") $rosterLogin (Get-DemoPassword 'student') | Out-Null
+
 # offering X: a faculty.1 offering whose roster holds a learner login
 $learners = @()
-foreach ($pair in @(@('student.1', 'student'), @('A25BTECHCSE013', 'student_hold'), @('A24BTECHCSE200', 'student_arrear'))) {
+foreach ($pair in @(@($rosterLogin, 'student'), @('student.1', 'student'), @('A25BTECHCSE013', 'student_hold'), @('A24BTECHCSE200', 'student_arrear'))) {
   $row = Sql "SELECT e.id enrol FROM students s JOIN student_program_enrollments e ON e.student_id=s.id LEFT JOIN users u ON u.id=s.user_id WHERE (u.username='$($pair[0])' OR s.registration_number='$($pair[0])') AND e.deleted_at IS NULL LIMIT 1"
   if ($row) { $learners += [pscustomobject]@{ login = $pair[0]; role = $pair[1]; enrol = $row[0].enrol } }
 }
@@ -121,7 +132,7 @@ Write-Host "== 5. change request"
 $mark = (Call $f1 GET "/offering-assessments/$($A.id)/marks").data.rows | Where-Object { $_.mark_id -and $_.marks -ne $null } | Select-Object -First 1
 $cr = (Call $f1 POST "/marks-change-requests" @{ target_id = $mark.mark_id; new_value = @{ marks = [math]::Min([double]$A.max_marks, [double]$mark.marks + 1) }; reason = 'Totalling error'; evidence_url = 'https://example.invalid/script.pdf' }).data
 Call $hod POST "/marks-change-requests/$($cr.id)/approve" @{} | Out-Null
-$coe = Login 'coe' (Get-DemoPassword 'controller_of_examinations')
+$coe = Login-Mfa 'controller_of_examinations' 'coe'   # MFA-required role in the demo tenant
 Call $coe POST "/marks-change-requests/$($cr.id)/approve" @{} | Out-Null
 $ap = (Call $coe POST "/marks-change-requests/$($cr.id)/apply").data
 Assert ($ap.status -eq 'applied') "change applied"
@@ -154,7 +165,10 @@ $bad = @($co.cos | Select-Object -Skip 1 | ForEach-Object { @{ co_id = $_.id; ou
 Expect $admin PUT "/courses/$course/co-po-matrix" @{ cells = $bad } 422 'CO_UNMAPPED' | Out-Null
 $good = @($co.cos | ForEach-Object { @{ co_id = $_.id; outcome_id = $co.program_outcomes[0].id; level = 2; justification = 'core' } })
 Call $admin PUT "/courses/$course/co-po-matrix" @{ cells = $good } | Out-Null
-Expect $f3 PUT "/courses/$course/outcomes" @{ outcomes = @(@{ code = 'CO1'; statement = 'x x x' }) } 403 | Out-Null
+# faculty.3 is CSE faculty: allowed in principle, but an active regulation freezes the COs (409); else 403 off-department
+$regActive = (Sql "SELECT r.status IN ('active','approved','published') AS a FROM courses c JOIN regulations r ON r.id = c.regulation_id WHERE c.id = '$course'")[0].a
+if ($regActive) { Expect $f3 PUT "/courses/$course/outcomes" @{ outcomes = @(@{ code = 'CO1'; statement = 'x x x' }) } 409 'RULE_VIOLATION' | Out-Null }
+else { Expect $f3 PUT "/courses/$course/outcomes" @{ outcomes = @(@{ code = 'CO1'; statement = 'x x x' }) } 403 | Out-Null }
 
 # ---- 9. LMS ------------------------------------------------------------------------------------------------------------------------
 Write-Host "== 9. LMS"

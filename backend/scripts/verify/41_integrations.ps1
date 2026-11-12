@@ -28,7 +28,7 @@ Call $admin DELETE "/integrations/api-keys/$($k.id)" $null 204 | Out-Null
 try { Invoke-RestMethod "$BaseUrl/students?limit=1" -Headers @{ "X-API-Key" = $k.secret } | Out-Null; throw "expected 401" } catch { Assert ($_.Exception.Response.StatusCode.value__ -eq 401) "revoked key refused" }
 
 Write-Host "== 3 webhooks (signed test delivery, retry)"
-$w = (Call $admin POST "/integrations/webhooks" @{ name = "verify"; url = "https://hooks.example.test/verify"; events = @("student.enrolled") } 201).data
+$w = (Call $admin POST "/integrations/webhooks" @{ name = "verify"; url = "https://hooks.example.test/verify"; events = @("student.created") } 201).data
 Assert ($w.secret) "secret shown once"
 Call $admin POST "/integrations/webhooks/$($w.id)/test" @{ event_type = "ping" } | Out-Null
 $d = (Call $admin GET "/integrations/deliveries?webhook_id=$($w.id)").data

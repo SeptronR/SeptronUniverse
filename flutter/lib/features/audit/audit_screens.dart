@@ -19,7 +19,7 @@ String _error(Object e) {
 
 List<Map<String, dynamic>> _list(dynamic data) {
   final items = data is Map ? (data['items'] ?? data['data']) : data;
-  return ((items as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+  return ((items as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
 }
 
 class AuditRepository {
@@ -152,7 +152,7 @@ class _AuditListState extends ConsumerState<_AuditList> {
           if (snap.hasError) return Padding(padding: const EdgeInsets.all(16), child: Text(_error(snap.error!)));
           if (!snap.hasData) return const SizedBox(height: 160, child: Center(child: CircularProgressIndicator()));
           final d = snap.data!;
-          final diff = ((d['diff'] as List?) ?? const []).cast<Map>();
+          final diff = ((d['diff'] as List?) ?? const []).cast<Map<dynamic, dynamic>>();
           return SafeArea(
             child: ListView(padding: const EdgeInsets.all(16), shrinkWrap: true, children: [
               Text('${d['module']}:${d['action']}', style: Theme.of(context).textTheme.titleMedium),

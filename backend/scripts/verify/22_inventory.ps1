@@ -1,7 +1,7 @@
 # Phase 22 — inventory, procurement & bills (Prompts/22 §22.11). Run after `seed_demo_institution.py --only inventory`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $mgr = Login "inv.mgr"; $central = Login "store.central"; $cse = Login "store.cse"; $hod = Login "hod.cse"
 $fac = Login "faculty.1"; $acc = Login "accountant"; $va = Login "vendor.a"; $cab = Login "college.admin.b"; $aud = Login "auditor.tmp"
@@ -36,7 +36,7 @@ Step "6 POs"
 $pos = Api GET "/inventory/purchase-orders" $mgr
 Check ($pos.data.Count -ge 20) "seeded POs"
 $vp = Api GET "/vendor/pos" $va
-Check ($vp.data -ne $null) "vendor sees own POs"
+Check ($null -ne $vp.data) "vendor sees own POs"
 
 Step "8 assets"
 $a = Api GET "/inventory/assets" $mgr
@@ -48,7 +48,7 @@ Step "11 bills"
 $b = Api GET "/inventory/vendor-bills" $acc
 Check ($b.data.Count -ge 30) "bills"
 $ag = Api GET "/inventory/vendor-bills/ageing" $acc
-Check ($ag.data.buckets -ne $null) "ageing"
+Check ($null -ne $ag.data.buckets) "ageing"
 $vb = Api GET "/vendor/bills" $va
 Check (@($vb.data | Where-Object { $_.supplier_id -ne $vb.data[0].supplier_id }).Count -eq 0) "vendor sees own bills only"
 

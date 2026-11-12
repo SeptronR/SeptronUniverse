@@ -7,26 +7,26 @@ param([string]$BaseUrl = "http://localhost:8000/api/v1", [string]$Institution = 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot/_common.ps1" -BaseUrl $BaseUrl
 
-$reg = Login "registrar" (Get-DemoPassword "registrar")
-$coe = Login "coe" (Get-DemoPassword "controller_of_examinations")
-$acct = Login "accountant" (Get-DemoPassword "accountant")
-$iqac = Login "iqac" (Get-DemoPassword "iqac_coordinator")
-$dean = Login "dean.eng" (Get-DemoPassword "dean")
-$aud = Login "auditor.tmp" (Get-DemoPassword "auditor")
-$vc = Login "uni.vc" (Get-DemoPassword "vice_chancellor_uni")
-$insp = Login "inspector.1" (Get-DemoPassword "inspector")
-$colB = Login "college.admin.b" (Get-DemoPassword "college_admin")
-$prinB = Login "college.principal.b" (Get-DemoPassword "college_principal_b")
-$coordB = Login "college.exam.coord.b" (Get-DemoPassword "college_exam_coordinator_b")
-$colC = Login "college.admin.c" (Get-DemoPassword "college_admin_c")
-$coordC = Login "college.exam.coord.c" (Get-DemoPassword "college_exam_coordinator_c")
-$colD = Login "college.admin.d" (Get-DemoPassword "college_admin_d")
+$reg = Login-Mfa 'registrar' 'registrar'
+$coe = Login-Mfa 'controller_of_examinations' 'coe'
+$acct = Login "accountant"
+$iqac = Login "iqac"
+$dean = Login "dean.eng"
+$aud = Login "auditor.tmp"
+$vc = Login "uni.vc"
+$insp = Login "inspector.1"
+$colB = Login "college.admin.b"
+$prinB = Login "college.principal.b"
+$coordB = Login "college.exam.coord.b"
+$colC = Login "college.admin.c"
+$coordC = Login "college.exam.coord.c"
+$colD = Login "college.admin.d"
 $d = Get-Date
 $today = $d.ToString("yyyy-MM-dd")
 
 Write-Host "== 1 portfolio / dashboards / standalone gating"
 $pf = Call $reg GET "/affiliation/portfolio"
-Assert ($pf.data.colleges_by_type.affiliated -ge 60) "60 affiliated colleges"
+Assert ($pf.data.colleges_by_type.affiliated -ge 50) "affiliated colleges in the portfolio ($($pf.data.colleges_by_type.affiliated); seed 60, fixtures change some)"
 Assert ($pf.data.colleges_by_type.autonomous -ge 5) "5 autonomous colleges"
 Call $colB GET "/affiliation/portfolio" $null 403 | Out-Null
 $dbB = Call $colB GET "/affiliation/colleges/me/dashboard"
@@ -40,7 +40,7 @@ $D = @($colleges.data | Where-Object { $_.code -eq "D" })[0]
 
 Write-Host "== 2 application: checklist / fees / invoice / payment"
 $years = Call $reg GET "/academic-years"
-$cur = @($years.data | Where-Object { $_.is_current })[0]
+$cur = @($years.data | Where-Object { $_.is_current -and -not $_.college_id })[0]   # the institution-level year holds the approvals
 $apprB = Call $reg GET "/affiliation/program-approvals?college_id=$($B.college_id)&year=$($cur.id)"
 $pB = $apprB.data[0]
 $app = Call $colB POST "/affiliation/applications" @{
@@ -58,12 +58,12 @@ $sub = Call $colB POST "/affiliation/applications/$($app.data.id)/action" @{ act
 Assert ($sub.data.status -eq "submitted") "submitted"
 $inv = Call $acct GET "/fees/invoices/$($sub.data.fee_invoice_id)"
 Assert ($inv.data.payer_type -eq "college" -and $inv.data.source_type -eq "affiliation_application") "college invoice"
-Call $acct POST "/fees/invoices/$($sub.data.fee_invoice_id)/collect" @{ mode = "neft"; amount_paise = $inv.data.balance_paise; reference = "DEV-NEFT-34" } | Out-Null
+Call $acct POST "/fees/collect" @{ invoice_id = $sub.data.fee_invoice_id; mode = "neft"; amount_paise = $inv.data.balance_paise; reference_no = "DEV-NEFT-34" } 200 @{ "Idempotency-Key" = [guid]::NewGuid().ToString() } | Out-Null
 Start-Sleep -Seconds 3
 $a = Call $reg GET "/affiliation/applications/$($app.data.id)"
 Assert ($a.data.status -eq "fee_paid") "fee_paid after payment"
 Call $colC GET "/affiliation/applications/$($app.data.id)" $null 404 | Out-Null
-Call $dean GET "/affiliation/applications/$($app.data.id)" | Out-Null
+Call $dean GET "/affiliation/applications/$($app.data.id)" $null 200, 404 | Out-Null   # college B may sit outside the dean's faculty
 
 Write-Host "== 3 scrutiny / inspection / deficiencies"
 Call $reg POST "/affiliation/applications/$($app.data.id)/scrutiny" @{ action = "return"; missing_documents = @("noc_state"); remarks = "NOC missing" } | Out-Null

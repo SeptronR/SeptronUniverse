@@ -92,7 +92,7 @@ class InventoryRepository {
   }
 }
 
-final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) => InventoryRepository(ref.watch(dioProvider), CacheRepository()));
+final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) => InventoryRepository(ref.watch(dioProvider), ref.watch(cacheRepositoryProvider)));
 
 void _snack(BuildContext context, String m) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(m)));
 

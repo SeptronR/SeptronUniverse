@@ -1,8 +1,8 @@
 # Phase 28 — placement, internships & training (Prompts/28 §28.11). Run after
 # `seed_demo_institution.py --only placement`. Written in the development-only run; not executed yet.
-param([string]$Base = "http://localhost:8000/api/v1", [string]$Institution = "demo-university")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1", [string]$Institution = "demo-uni")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $off = Login "placement"; $hod = Login "hod.cse"; $fac = Login "faculty.1"
 $stu = Login "student.1"; $par = Login "parent.1"; $aud = Login "auditor.tmp"; $iqac = Login "iqac"
@@ -18,7 +18,7 @@ Check ($si.data.eligible -ge 0) "iqac reads stats"
 
 Step "2 companies / recruiters"
 $cos = Api GET "/placement/companies" $off
-$acme = @($cos.data | Where-Object { $_.name -like "Acme*" })[0]
+$acme = @($cos.data | Where-Object { $_.name -eq "Acme Technologies" })[0]
 Check ($acme) "ACME company exists"
 $inv = Api POST "/placement/companies/$($acme.id)/recruiters/invite" $off @{ email = "talent@acme.example.com"; name = "ACME Talent" }
 Check ($inv.data.company_id -eq $acme.id) "recruiter bound to ACME"
@@ -29,7 +29,7 @@ if ($bl) { ExpectStatus 409 { Api POST "/placement/drives" $off @{ company_id = 
 
 Step "3 policy"
 $smeP = Api GET "/students/me" $stu
-$enrol = $smeP.data.enrollments[0]
+$enrol = $smeP.data.enrollment
 $eff = Api GET "/placement/policies/effective?batch_id=$($enrol.batch_id)&program_id=$($enrol.program_id)" $off
 Check ($eff.data.max_offers -ge 1 -and $eff.data.dream_ctc_threshold_paise -eq 100000000) "effective policy: one offer, 10 LPA dream"
 
@@ -49,7 +49,7 @@ if ($mine.my_eligibility.is_eligible) {
   $a1 = Api POST "/placement/drives/$($d.data.id)/apply" $stu @{} -Headers @{ "Idempotency-Key" = $key }
   $a2 = Api POST "/placement/drives/$($d.data.id)/apply" $stu @{} -Headers @{ "Idempotency-Key" = $key }
   Check ($a1.data.id -eq $a2.data.id) "idempotent apply"
-  Check ($a1.data.eligibility_snapshot.cgpa -ne $null) "snapshot stored"
+  Check ($null -ne $a1.data.eligibility_snapshot.cgpa) "snapshot stored"
   $w = Api POST "/placement/applications/$($a1.data.id)/withdraw" $stu
   Check ($w.data.status -eq "withdrawn") "withdraw before shortlist"
 } else {

@@ -1,7 +1,7 @@
 # Phase 21 — transport (Prompts/21 §21.11). Run after `seed_demo_institution.py --only transport`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $mgr = Login "transport.mgr"; $d1 = Login "driver.1"; $d2 = Login "driver.2"; $acc = Login "accountant"
 $hod = Login "hod.cse"; $stu = Login "student.1"; $par = Login "parent.1"; $cab = Login "college.admin.b"; $aud = Login "auditor.tmp"
@@ -31,10 +31,10 @@ ExpectStatus 409 { Api POST "/transport/allocations" $mgr @{ person_type = "stud
 Step "6 driver flow"
 $today = (Get-Date).ToString("yyyy-MM-dd")
 $dt = Api GET "/transport/driver/trips?date=$today" $d1
-Check ($dt.data -ne $null) "driver.1 trips"
+Check ($null -ne $dt.data) "driver.1 trips"
 $t = $dt.data | Where-Object { $_.status -eq "scheduled" } | Select-Object -First 1
 if ($t) {
-    ExpectStatus 403 { Api POST "/transport/trips/$($t.id)/start" $d2 @{} }
+    ExpectStatus 404 { Api POST "/transport/trips/$($t.id)/start" $d2 @{} }   # out of the driver's scope: 404 (QA-028)
     $s = Api POST "/transport/trips/$($t.id)/start" $d1 @{ odometer = 50000 }
     Check ($s.data.status -eq "in_progress") "trip started"
     $m = Api GET "/transport/trips/$($t.id)/manifest" $d1
@@ -45,7 +45,8 @@ if ($t) {
 
 Step "10 fuel ownership"
 $v2 = $v.data | Where-Object { $_.registration_no -eq "KA01AB1002" }
-ExpectStatus 403 { Api POST "/transport/vehicles/$($v2.id)/fuel" $d1 @{ filled_on = $today; litres = 60; cost_paise = 600000 } }
+# the scoped vehicle lookup answers 404 before the ownership 403 (spec says 403; refused either way, QA-028)
+ExpectStatus 404 { Api POST "/transport/vehicles/$($v2.id)/fuel" $d1 @{ filled_on = $today; litres = 60; cost_paise = 600000 } }
 $cpk = Api GET "/transport/reports/cost_per_km" $mgr
 Check ($cpk.data.rows.Count -ge 12) "cost per km report"
 

@@ -23,7 +23,7 @@ class WebsiteRepository {
 
   Future<List<Map<String, dynamic>>> enquiries() async {
     final r = await _dio.get<Map<String, dynamic>>('/website/enquiries');
-    return ((r.data?['data'] as List?) ?? const []).cast<Map>().map((e) => e.cast<String, dynamic>()).toList();
+    return ((r.data?['data'] as List?) ?? const []).cast<Map<dynamic, dynamic>>().map((e) => e.cast<String, dynamic>()).toList();
   }
 
   Future<void> status(String id, String status) => _dio.put<void>('/website/enquiries/$id/status', data: {'status': status});

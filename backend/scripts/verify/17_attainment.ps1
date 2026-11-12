@@ -1,14 +1,14 @@
 # Phase 17 — OBE attainment & CQI (Prompts/17 §17.11). Run after `seed_demo_institution.py --only attainment`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $obe = Login "obe"; $hod = Login "hod.cse"; $fac = Login "faculty.1"; $iqac = Login "iqac"; $stu = Login "student.1"; $aud = Login "auditor.tmp"
 
 Step "1 configs"
 $runs = Api GET "/cqi-actions" $obe
 $progAction = $runs.data | Where-Object { $_.scope_type -eq "program" } | Select-Object -First 1
-$progId = $progAction.scope_id
+$progId = if ($progAction) { $progAction.scope_id } else { (Api GET "/programs?page_size=200&q=BTECH-CSE" $hod).data[0].id }
 $eff = Api GET "/attainment-configs/effective?program_id=$progId" $obe
 Check ($eff.data.levels.Count -ge 1) "effective config"
 $bad = @{ scope_type = "program"; scope_id = $progId; levels = @(@{ level = 1; min_pct = 60 }, @{ level = 2; min_pct = 50 }) }
@@ -26,7 +26,7 @@ if ($row.cia_level -ne $null -and $row.ese_level -ne $null -and $row.indirect_le
   $expected = [math]::Round((0.3 * $row.cia_level + 0.7 * $row.ese_level), 2)
   Check ([math]::Abs($expected - $row.direct_level) -le 0.01) "direct = 0.3 cia + 0.7 ese"
 }
-if ($row.final_level -ne $null) { Check ([math]::Abs(($row.target - $row.final_level) - $row.gap) -le 0.01) "gap = target - final" }
+if ($null -ne $row.final_level) { Check ([math]::Abs(($row.target - $row.final_level) - $row.gap) -le 0.01) "gap = target - final" }
 
 Step "5 visibility"
 Api GET "/course-offerings/$oid/attainment" $hod | Out-Null
@@ -34,7 +34,7 @@ ExpectStatus 403 { Api GET "/attainment/me?offering_id=$oid" $stu }
 
 Step "6 PO run"
 $batchRun = Api GET "/obe/gaps?program_id=$progId&threshold=0" $obe
-Check ($batchRun.data -ne $null) "gap list"
+Check ($null -ne $batchRun.data) "gap list"
 
 Step "10 CQI"
 $created = Api POST "/cqi-actions" $obe @{ scope_type = "program"; scope_id = $progId; action_text = "Verify script action"; due_on = (Get-Date).AddDays(30).ToString("yyyy-MM-dd") }

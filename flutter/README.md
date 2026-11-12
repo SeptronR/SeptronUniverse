@@ -18,6 +18,10 @@ Push needs `android/app/google-services.json` / `ios/Runner/GoogleService-Info.p
 
 ## Native hooks (add after `flutter create`)
 
+* **Core library desugaring** (required by `flutter_local_notifications`) — `android/app/build.gradle.kts`: add
+  `isCoreLibraryDesugaringEnabled = true` to `compileOptions` and
+  `dependencies { coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4") }`.
+
 * **SafeScreen** — channel `septron/secure_screen` (`enable` / `disable`). Android `MainActivity.kt`:
   ```kotlin
   MethodChannel(flutterEngine.dartExecutor.binaryMessenger, "septron/secure_screen").setMethodCallHandler { call, result ->

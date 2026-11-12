@@ -1,7 +1,7 @@
 # Phase 20 — hostel, mess & staff accommodation (Prompts/20 §20.11). Run after `seed_demo_institution.py --only hostel`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $reg = Login "registrar"; $warden = Login "warden.h1"; $gate = Login "gate.h1"; $hod = Login "hod.cse"; $aud = Login "auditor.tmp"; $par = Login "parent.1"
 
@@ -25,11 +25,15 @@ if ($oa.data.Count -ge 1) { ExpectStatus 404 { Api POST "/hostel-allocations/$($
 
 Step "6 leaves queue"
 $lv = Api GET "/hostel-leaves?status=requested" $warden
-Check ($lv.data -ne $null) "leave queue"
+Check ($null -ne $lv.data) "leave queue"
 
 Step "7 gate"
 ExpectStatus 404 { Api POST "/hostel-gate/scan" $gate @{ qr_token = "hl$('0' * 48)"; direction = "out" } }
 
+# 02 toggles hostel.core, which leaves this dependant off
+$saT = Login-SuperAdmin; $instId = (Api GET "/auth/me" $warden).data.user.institution_id
+foreach ($k in (Api GET "/institutions/$instId/features" $saT $null @{ "X-Institution" = "demo-uni" }).data.flags | Where-Object { $_.key -like "hostel.*" -and -not $_.effective } | ForEach-Object key) { Api PUT "/institutions/$instId/features/$k" $saT @{ enabled = $true; confirm_dependencies = $true; reason = "verify 20" } @{ "X-Institution" = "demo-uni" } | Out-Null }
+Start-Sleep -Seconds 8   # feature cache invalidates through the outbox
 Step "9 roll-call duplicate"
 $rc = Api GET "/hostel-roll-calls?hostel_id=$($h.id)" $warden
 Check ($rc.data.Count -ge 1) "roll-call history"

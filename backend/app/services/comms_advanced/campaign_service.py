@@ -25,7 +25,7 @@ import uuid
 from datetime import datetime, timedelta
 from typing import Any
 
-from sqlalchemy import func, select, update
+from sqlalchemy import func, literal_column, select, update
 
 from app.core.errors import APIError, ErrorCode
 from app.enums.comms_advanced import DEFAULT_RATES_PAISE, DEFAULT_THROTTLE, EMERGENCY_CONFIRM
@@ -678,10 +678,10 @@ class CampaignService(CommsBase):
             {"hour": h.isoformat() if h else None, "count": int(n)}
             for h, n in (
                 await self.db.execute(
-                    select(func.date_trunc("hour", MessageLog.sent_at), func.count())
+                    select(func.date_trunc(literal_column("'hour'"), MessageLog.sent_at), func.count())
                     .where(MessageLog.campaign_id == c.id, MessageLog.sent_at.is_not(None))
-                    .group_by(func.date_trunc("hour", MessageLog.sent_at))
-                    .order_by(func.date_trunc("hour", MessageLog.sent_at))
+                    .group_by(func.date_trunc(literal_column("'hour'"), MessageLog.sent_at))
+                    .order_by(func.date_trunc(literal_column("'hour'"), MessageLog.sent_at))
                 )
             ).all()
         ]

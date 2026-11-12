@@ -1,15 +1,16 @@
 # Phase 16 — post-result services (Prompts/16 §16.11). Run after `seed_demo_institution.py --only post_result`.
-param([string]$Base = "http://localhost:8000/api/v1")
+param([Alias("BaseUrl")][string]$Base = "http://localhost:8000/api/v1")
 $ErrorActionPreference = "Stop"
-. "$PSScriptRoot/_common.ps1"
+. "$PSScriptRoot/_common.ps1" -BaseUrl $Base
 
 $coe = Login "coe"; $cell = Login "exam.cell"; $reg = Login "registrar"; $stu = Login "student.1"; $aud = Login "auditor"
 
 Step "1 eligibility"
 $sessions = Api GET "/exam-sessions" $cell
-$sid = ($sessions.data | Select-Object -First 1).id
+# the seeded end-semester session (later scripts create newer verify sessions that sort first)
+$sid = (@($sessions.data | Where-Object { $_.name -like '*End-semester (regular)' }) + @($sessions.data))[0].id
 $el = Api GET "/reval/eligibility?session_id=$sid" $stu
-Check ($el.data.items -ne $null) "eligibility answers"
+Check ($null -ne $el.data.items) "eligibility answers"
 
 Step "2 session queue"
 $q = Api GET "/exam-sessions/$sid/reval-requests" $cell
@@ -22,7 +23,7 @@ ExpectStatus 404 { Api GET "/malpractice-cases/$($cases.data[0].id)" $stu }
 
 Step "8 withheld"
 $w = Api GET "/results/withheld?session_id=$sid" $coe
-Check ($w.data -ne $null) "withheld list"
+Check ($null -ne $w.data) "withheld list"
 
 Step "10 transcripts"
 $t = Api GET "/transcripts/requests" $reg

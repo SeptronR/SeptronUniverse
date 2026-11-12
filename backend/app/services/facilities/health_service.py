@@ -14,7 +14,7 @@ from collections.abc import Sequence
 from datetime import timedelta
 from typing import Any
 
-from sqlalchemy import func, select
+from sqlalchemy import func, literal_column, select
 
 from app.core.errors import APIError
 from app.models.facilities import CounsellingAppointment, HealthVisit, InsurancePolicy
@@ -270,10 +270,10 @@ class HealthService(FacilitiesBase):
             m: int(n)
             for m, n in (
                 await self.db.execute(
-                    select(func.to_char(HealthVisit.visited_at, "YYYY-MM"), func.count())
+                    select(func.to_char(HealthVisit.visited_at, literal_column("'YYYY-MM'")), func.count())
                     .where(HealthVisit.institution_id == self.inst)
-                    .group_by(func.to_char(HealthVisit.visited_at, "YYYY-MM"))
-                    .order_by(func.to_char(HealthVisit.visited_at, "YYYY-MM"))
+                    .group_by(func.to_char(HealthVisit.visited_at, literal_column("'YYYY-MM'")))
+                    .order_by(func.to_char(HealthVisit.visited_at, literal_column("'YYYY-MM'")))
                 )
             ).all()
         }

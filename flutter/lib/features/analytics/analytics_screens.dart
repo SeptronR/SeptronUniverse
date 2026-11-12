@@ -76,7 +76,7 @@ class AnalyticsRepository {
       _dio.post<Map<String, dynamic>>('/risk/students/$enrollmentId/interventions', data: {'intervention_type': type, if (notes != null && notes.isNotEmpty) 'notes': notes});
 }
 
-final analyticsRepositoryProvider = Provider<AnalyticsRepository>((ref) => AnalyticsRepository(ref.watch(dioProvider), CacheRepository()));
+final analyticsRepositoryProvider = Provider<AnalyticsRepository>((ref) => AnalyticsRepository(ref.watch(dioProvider), ref.watch(cacheRepositoryProvider)));
 
 /// Home tab for every role shell: the role dashboard from `GET /dashboard`.
 class DashboardHomeScreen extends ConsumerStatefulWidget {

@@ -315,7 +315,7 @@ async def po_attainment(ctx: MetricContext) -> MetricResult:
             params,
         )
     )[0]
-    if not out["n"]:
+    if not out["n"] or out["lvl"] is None:  # final_level not computed yet: the average is NULL
         return MetricResult.empty("no PO attainment run in the period")
     return MetricResult(
         round(Decimal(out["lvl"]), 4),
