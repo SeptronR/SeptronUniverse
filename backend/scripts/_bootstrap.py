@@ -7,7 +7,8 @@ from pathlib import Path
 
 BACKEND_DIR = Path(__file__).resolve().parents[1]
 REPO_ROOT = BACKEND_DIR.parent
-SCHEMA_SQL = REPO_ROOT / "Database_Schema.sql"
+# the image has no repository root: SCHEMA_SQL_PATH points at its copy (backend/Dockerfile)
+SCHEMA_SQL = Path(os.environ["SCHEMA_SQL_PATH"]) if os.environ.get("SCHEMA_SQL_PATH") else REPO_ROOT / "Database_Schema.sql"
 DOCS_DIR = REPO_ROOT / "docs"
 FRONTEND_DIR = REPO_ROOT / "frontend"
 
