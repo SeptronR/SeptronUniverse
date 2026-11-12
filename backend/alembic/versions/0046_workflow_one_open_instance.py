@@ -25,9 +25,11 @@ NEW = "workflow_instances_one_open"
 
 
 def upgrade() -> None:
-    op.execute(f"ALTER TABLE workflow_instances DROP CONSTRAINT {OLD}")
+    # IF [NOT] EXISTS: a fresh database gets Database_Schema.sql (revision 0001) in its current shape, which already has
+    # the partial index and no longer has the old constraint
+    op.execute(f"ALTER TABLE workflow_instances DROP CONSTRAINT IF EXISTS {OLD}")
     op.execute(
-        f"CREATE UNIQUE INDEX {NEW} ON workflow_instances (entity_type, entity_id, definition_id) "
+        f"CREATE UNIQUE INDEX IF NOT EXISTS {NEW} ON workflow_instances (entity_type, entity_id, definition_id) "
         "WHERE status IN ('pending', 'escalated')"
     )
 
